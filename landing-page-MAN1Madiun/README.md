@@ -49,12 +49,25 @@ Karena proyek ini adalah web statis, Anda tidak memerlukan instalasi backend ata
 2.  Buka folder `landing-page-MAN1Madiun`.
 3.  Klik dua kali pada file `index.html` untuk membukanya di browser favorit Anda (Chrome, Firefox, Edge, dll).
 
-## 📸 Pratinjau Bagian
+## 📸 Pratinjau Tampilan
 
-1.  **Hero Section**: Mengajak pengunjung dengan headline kuat dan visual kegiatan sekolah.
-2.  **Keunggulan (Cards)**: Menjelaskan 3 pilar utama (Akademik, Teknologi, Religius).
-3.  **Jalur PPDB**: Informasi singkat mengenai jalur Prestasi, Reguler, dan Afirmasi.
-4.  **Testimoni & Bukti**: Statistik prestasi dan kata-kata dari alumni/orang tua.
+Berikut adalah cuplikan tampilan dari landing page yang telah dibuat:
+
+### 1. Hero Section
+*Tampilan awal yang menyambut pengunjung dengan headline inspiratif.*
+![Hero Section](assets/herosection.png)
+
+### 2. Informasi Keunggulan & Fitur
+*Bagian yang menjelaskan keunggulan akademik, teknologi, dan nilai islami.*
+![Keunggulan](assets/information.png)
+
+### 3. Jalur Pendaftaran (PPDB)
+*Pilihan jalur masuk: Prestasi, Reguler, dan Afirmasi.*
+![Jalur PPDB](assets/ppdb.png)
+
+### 4. Footer & Kontak
+*Informasi kontak resmi dan ajakan bertindak (CTA) terakhir.*
+![Footer](assets/footer.png)
 
 ---
 *Dibuat untuk MAN 1 Kota Madiun - Menuju Generasi Emas Islami.*
