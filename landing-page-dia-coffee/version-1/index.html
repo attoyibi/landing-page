@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Dia — Honest Coffee & Bakes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5EFE0;
+    --cream-dark: #EDE4CC;
+    --brown-deep: #2C1A0E;
+    --brown-mid: #6B3D1E;
+    --brown-light: #C08A5E;
+    --sand: #D9C4A1;
+    --warm-white: #FBF7F0;
+    --accent: #A0522D;
+    --green-sage: #7A8C6E;
+    --text-dark: #1E1208;
+    --text-mid: #5C3D2A;
+    --text-light: #9B7B60;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(251,247,240,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(192,138,94,0.15);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--brown-deep);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--brown-light); font-style: italic; }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav a { text-decoration: none; font-size: 0.85rem; font-weight: 400; color: var(--text-mid); letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  nav a:hover { color: var(--brown-mid); }
+  .nav-cta {
+    background: var(--brown-deep) !important;
+    color: var(--cream) !important;
+    padding: 0.55rem 1.4rem !important;
+    border-radius: 50px !important;
+    letter-spacing: 0.05em !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    font-size: 0.88rem !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--brown-mid) !important; transform: translateY(-1px); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 3rem;
+    padding-top: 5rem;
+    background: var(--warm-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-circle {
+    position: absolute; border-radius: 50%;
+    background: var(--cream); z-index: 0;
+  }
+  .hero-bg-circle.c1 { width: 600px; height: 600px; right: -100px; top: -100px; opacity: 0.7; }
+  .hero-bg-circle.c2 { width: 300px; height: 300px; left: 5%; bottom: 5%; opacity: 0.5; }
+
+  .hero-content { position: relative; z-index: 1; padding-right: 2rem; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--brown-light); font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block; width: 30px; height: 1px;
+    background: var(--brown-light);
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.2rem; line-height: 1.12;
+    color: var(--brown-deep);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  h1 em { color: var(--brown-light); font-style: italic; }
+  .hero-desc {
+    font-size: 1.05rem; color: var(--text-mid);
+    line-height: 1.75; max-width: 420px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 1.2rem; }
+  .btn-primary {
+    background: var(--brown-deep); color: var(--cream);
+    padding: 0.9rem 2rem; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--brown-mid); transform: translateY(-2px); }
+  .btn-ghost {
+    color: var(--brown-mid); font-size: 0.9rem; text-decoration: none;
+    font-weight: 400; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--brown-deep); }
+  .btn-ghost svg { transition: transform 0.2s; }
+  .btn-ghost:hover svg { transform: translateX(4px); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--cream-dark);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--brown-deep);
+    display: block; line-height: 1;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+  }
+  .hero-card-main {
+    width: 360px; height: 460px;
+    background: var(--cream);
+    border-radius: 200px 200px 160px 160px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 40px 80px rgba(44,26,14,0.15);
+  }
+  .hero-card-main img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .hero-card-main::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(192,138,94,0.1) 0%, transparent 60%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-badge {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--brown-deep); color: var(--cream);
+    width: 110px; height: 110px; border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 10px;
+    box-shadow: 0 8px 24px rgba(44,26,14,0.25);
+    animation: spin-slow 15s linear infinite;
+  }
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .hero-badge span {
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; line-height: 1.4;
+    animation: spin-slow-reverse 15s linear infinite;
+  }
+  @keyframes spin-slow-reverse {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+  .hero-tag {
+    position: absolute; top: 30px; left: -30px;
+    background: var(--warm-white); border: 1px solid var(--cream-dark);
+    padding: 12px 16px; border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(44,26,14,0.08);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-sage); }
+  .hero-tag span { font-size: 0.78rem; color: var(--text-mid); font-weight: 500; }
+
+  /* MARQUEE */
+  .marquee-section {
+    background: var(--brown-deep);
+    padding: 1rem 0; overflow: hidden;
+    display: flex; gap: 0;
+  }
+  .marquee-track {
+    display: flex; gap: 2rem; align-items: center;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem; font-style: italic;
+    color: rgba(245,239,224,0.7); white-space: nowrap;
+  }
+  .marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brown-light); flex-shrink: 0; }
+
+  /* ABOUT */
+  #about {
+    padding: 8rem 3rem; max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+  .section-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--brown-light); font-weight: 500; margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; line-height: 1.18;
+    color: var(--brown-deep); margin-bottom: 1.5rem; font-weight: 700;
+  }
+  .about-text p {
+    font-size: 1rem; color: var(--text-mid); line-height: 1.85; margin-bottom: 1.2rem; font-weight: 300;
+  }
+  .about-values {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
+  }
+  .value-card {
+    background: var(--cream); border-radius: 16px;
+    padding: 1.2rem; border: 1px solid transparent;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .value-card:hover { border-color: var(--sand); transform: translateY(-3px); }
+  .value-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .value-title { font-size: 0.9rem; font-weight: 500; color: var(--brown-deep); margin-bottom: 4px; }
+  .value-desc { font-size: 0.78rem; color: var(--text-light); line-height: 1.5; }
+  .about-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    grid-template-rows: auto auto;
+  }
+  .about-card {
+    background: var(--cream); border-radius: 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    min-height: 180px;
+    transition: transform 0.2s;
+    position: relative;
+  }
+  .about-card:hover { transform: scale(1.02); }
+  .about-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transition: transform 0.4s;
+  }
+  .about-card:hover img { transform: scale(1.05); }
+  .about-card-overlay {
+    position: relative; z-index: 1;
+    width: 100%; padding: 1rem 1.2rem;
+    background: linear-gradient(to top, rgba(44,26,14,0.75) 0%, transparent 100%);
+  }
+  .about-card.tall { grid-row: span 2; }
+  .about-card.accent .about-card-overlay { background: linear-gradient(to top, rgba(160,82,45,0.8) 0%, transparent 100%); }
+
+  /* MENU */
+  #menu {
+    background: var(--cream); padding: 7rem 3rem;
+  }
+  .menu-inner { max-width: 1200px; margin: 0 auto; }
+  .menu-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 3.5rem;
+  }
+  .menu-tabs {
+    display: flex; gap: 0.5rem;
+    background: var(--cream-dark); padding: 4px; border-radius: 50px;
+  }
+  .menu-tab {
+    padding: 0.5rem 1.2rem; border-radius: 50px; border: none;
+    background: transparent; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; color: var(--text-light); font-weight: 400; transition: all 0.2s;
+  }
+  .menu-tab.active { background: var(--brown-deep); color: var(--cream); }
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .menu-item {
+    background: var(--warm-white); border-radius: 20px; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .menu-item:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(44,26,14,0.1); }
+  .menu-thumb {
+    height: 180px; background: var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    position: relative; overflow: hidden;
+  }
+  .menu-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .menu-item:hover .menu-thumb img { transform: scale(1.06); }
+  .menu-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(44,26,14,0.04));
+  }
+  .menu-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--brown-deep); color: var(--cream);
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px; font-weight: 500;
+  }
+  .menu-info { padding: 1.2rem 1.3rem; }
+  .menu-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 500; color: var(--brown-deep); margin-bottom: 4px;
+  }
+  .menu-desc { font-size: 0.78rem; color: var(--text-light); margin-bottom: 0.8rem; line-height: 1.5; }
+  .menu-footer { display: flex; justify-content: space-between; align-items: center; }
+  .menu-price { font-size: 0.95rem; font-weight: 500; color: var(--accent); }
+  .menu-add {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--brown-deep); color: var(--cream);
+    border: none; cursor: pointer; font-size: 1.1rem; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .menu-add:hover { background: var(--brown-mid); transform: scale(1.1); }
+
+  /* GALLERY */
+  #gallery { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .gallery-header { text-align: center; margin-bottom: 3rem; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 260px;
+    gap: 1rem;
+  }
+  .gallery-cell {
+    border-radius: 20px; overflow: hidden;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s;
+    position: relative;
+  }
+  .gallery-cell img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .gallery-cell:hover img { transform: scale(1.05); }
+  .gallery-cell:hover { transform: scale(0.99); }
+  .gallery-cell.big { grid-row: span 2; font-size: 6rem; }
+  .gallery-cell::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(44,26,14,0.05));
+    pointer-events: none;
+  }
+  .gallery-cell:nth-child(1) { background: #E8D5BB; }
+  .gallery-cell:nth-child(2) { background: #D4C4A8; }
+  .gallery-cell:nth-child(3) { background: #C9B99A; }
+  .gallery-cell:nth-child(4) { background: #E0CDB4; }
+  .gallery-cell:nth-child(5) { background: #CEC0A6; }
+
+  /* CATERING */
+  #catering {
+    background: var(--brown-deep); padding: 6rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .catering-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .catering-deco {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 40%; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .catering-content .section-eyebrow { color: var(--brown-light); }
+  .catering-content h2 { color: var(--cream); font-size: 2.8rem; }
+  .catering-content p { color: rgba(245,239,224,0.7); font-size: 1rem; line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
+  .catering-services {
+    display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;
+  }
+  .catering-service {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(192,138,94,0.2); border-radius: 12px;
+    transition: background 0.2s;
+  }
+  .catering-service:hover { background: rgba(255,255,255,0.08); }
+  .catering-service-icon { font-size: 1.5rem; }
+  .catering-service-text h4 { color: var(--cream); font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; }
+  .catering-service-text p { color: rgba(245,239,224,0.5); font-size: 0.78rem; margin: 0; }
+  .btn-cream {
+    background: var(--cream); color: var(--brown-deep);
+    padding: 0.9rem 2rem; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 500; text-decoration: none;
+    display: inline-block; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-cream:hover { background: var(--cream-dark); transform: translateY(-2px); }
+  .catering-visual {
+    display: flex; align-items: center; justify-content: center; position: relative;
+  }
+  .catering-plate {
+    width: 340px; height: 380px;
+    border-radius: 24px; overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  }
+  .catering-plate img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .catering-plate::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 24px;
+    border: 1px solid rgba(192,138,94,0.2);
+    pointer-events: none;
+  }
+
+  /* VISIT */
+  #visit { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .visit-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .visit-info h2 { margin-bottom: 2rem; }
+  .visit-detail {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .visit-detail:last-child { border-bottom: none; }
+  .visit-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: var(--cream); display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .visit-detail-text h4 { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 4px; }
+  .visit-detail-text p { font-size: 0.95rem; color: var(--brown-deep); font-weight: 400; line-height: 1.5; }
+  .visit-map {
+    background: var(--cream); border-radius: 24px;
+    height: 400px; overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-placeholder {
+    text-align: center;
+  }
+  .map-placeholder .map-pin { font-size: 3rem; margin-bottom: 1rem; }
+  .map-placeholder p { font-size: 0.9rem; color: var(--text-mid); margin-bottom: 1.2rem; }
+  .map-link {
+    display: inline-block;
+    background: var(--brown-deep); color: var(--cream);
+    padding: 0.7rem 1.5rem; border-radius: 50px;
+    text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .map-link:hover { background: var(--brown-mid); }
+
+  /* INSTAGRAM CTA */
+  #instagram { background: var(--cream); padding: 5rem 3rem; text-align: center; }
+  #instagram h2 { margin-bottom: 0.8rem; }
+  #instagram p { color: var(--text-mid); margin-bottom: 2rem; font-weight: 300; }
+  .ig-handle {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-style: italic; color: var(--brown-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .ig-handle:hover { color: var(--brown-deep); }
+
+  /* FOOTER */
+  footer {
+    background: var(--brown-deep); color: rgba(245,239,224,0.6);
+    padding: 3rem; text-align: center;
+    font-size: 0.82rem; letter-spacing: 0.04em;
+  }
+  footer strong { color: var(--cream); font-weight: 500; }
+  footer a { color: var(--brown-light); text-decoration: none; }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    #hero { grid-template-columns: 1fr; text-align: center; padding-top: 7rem; }
+    h1 { font-size: 2.8rem; }
+    .hero-desc { max-width: 100%; }
+    .hero-stats { justify-content: center; }
+    .hero-visual { display: none; }
+    #about, .visit-inner, .catering-inner { grid-template-columns: 1fr; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-cell.big { grid-row: span 1; }
+    nav { padding: 1rem 1.5rem; }
+    #hero, #about, #menu, #gallery, #visit, #instagram { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>Coffee</span> Dia</a>
+  <ul>
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#catering">Catering</a></li>
+    <li><a href="#visit">Kunjungi</a></li>
+  </ul>
+  <a href="https://wa.me/6281996223461" class="nav-cta" target="_blank">Pesan Sekarang</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Since 2020 · Jakarta Barat</div>
+    <h1>Honest Coffee<br>& <em>Homemade</em><br>Bakes</h1>
+    <p class="hero-desc">
+      Dibuat oleh baker & barista yang penuh cinta. Setiap cangkir dan setiap kue dibuat dengan jujur — apa adanya, tanpa basa-basi.
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Lihat Menu</a>
+      <a href="#visit" class="btn-ghost">
+        Cari Kami
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num">29K</span>
+        <div class="stat-label">Followers</div>
+      </div>
+      <div>
+        <span class="stat-num">4+</span>
+        <div class="stat-label">Tahun Berdiri</div>
+      </div>
+      <div>
+        <span class="stat-num">10–21</span>
+        <div class="stat-label">Jam Buka</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span>Buka Sekarang</span>
+    </div>
+    <div class="hero-card-main">
+      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=700&q=85" alt="Secangkir kopi Coffee Dia" loading="eager">
+    </div>
+    <div class="hero-badge">
+      <span>Honest Coffee & Bakes</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>Honest Coffee</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Homemade Bakes</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Made with Love</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Baker & Barista</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Since 2020</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Taman Daan Mogot</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Honest Coffee</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Homemade Bakes</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Made with Love</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Baker & Barista</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Since 2020</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Taman Daan Mogot</span><div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text fade-in">
+    <div class="section-eyebrow">Tentang Kami</div>
+    <h2>Dari Dapur ke Meja Kamu</h2>
+    <p>Coffee Dia lahir dari kecintaan mendalam terhadap kopi dan kue yang jujur. Didirikan sejak 2020 oleh seorang baker sekaligus barista, kami percaya bahwa minuman dan makanan yang baik tidak perlu bersembunyi di balik kemewahan yang berlebihan.</p>
+    <p>Setiap hari kami menyajikan kopi yang diseduh dengan telaten dan kue yang dipanggang fresh — untuk kamu yang menghargai rasa yang sungguhan.</p>
+    <div class="about-values">
+      <div class="value-card">
+        <div class="value-icon">☕</div>
+        <div class="value-title">Kopi Jujur</div>
+        <div class="value-desc">Diseduh dengan teknik yang tepat, bukan sekadar gaya</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🍰</div>
+        <div class="value-title">Bakes Homemade</div>
+        <div class="value-desc">Dipanggang sendiri setiap hari dengan bahan pilihan</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Penuh Cinta</div>
+        <div class="value-desc">Dari baker & barista yang menaruh hati di setiap sajian</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌿</div>
+        <div class="value-title">No Pretense</div>
+        <div class="value-desc">Apa adanya, hangat, dan menyambut siapa saja</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual fade-in">
+    <div class="about-card tall">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80" alt="Barista menyeduh kopi" loading="lazy">
+      <div class="about-card-overlay">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#FBF7F0;margin-bottom:3px;">Barista Berpengalaman</h3>
+        <p style="font-size:0.75rem;color:rgba(251,247,240,0.75);line-height:1.4;">Ratusan jam berlatih untuk setiap cangkir yang sempurna</p>
+      </div>
+    </div>
+    <div class="about-card">
+      <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&q=80" alt="Roti panggang segar" loading="lazy">
+      <div class="about-card-overlay">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1rem;color:#FBF7F0;margin-bottom:2px;">Fresh Daily</h3>
+        <p style="font-size:0.72rem;color:rgba(251,247,240,0.75);">Dipanggang setiap pagi</p>
+      </div>
+    </div>
+    <div class="about-card accent">
+      <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&q=80" alt="Suasana kafe yang cozy" loading="lazy">
+      <div class="about-card-overlay">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1rem;color:#FBF7F0;margin-bottom:2px;">Cozy Spot</h3>
+        <p style="font-size:0.72rem;color:rgba(251,247,240,0.75);">Tempat nongkrong yang hangat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-inner">
+    <div class="menu-header fade-in">
+      <div>
+        <div class="section-eyebrow">Menu Pilihan</div>
+        <h2>Yang Kami Sajikan</h2>
+      </div>
+      <div class="menu-tabs">
+        <button class="menu-tab active" onclick="filterMenu('all', this)">Semua</button>
+        <button class="menu-tab" onclick="filterMenu('coffee', this)">Kopi</button>
+        <button class="menu-tab" onclick="filterMenu('bakes', this)">Bakes</button>
+        <button class="menu-tab" onclick="filterMenu('nonkopi', this)">Non-Kopi</button>
+      </div>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+      <div class="menu-item fade-in" data-cat="coffee">
+        <div class="menu-thumb"><img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?w=500&q=80" alt="Signature Latte" loading="lazy"><span class="menu-badge">Favorit</span></div>
+        <div class="menu-info">
+          <div class="menu-name">Signature Latte</div>
+          <div class="menu-desc">Espresso lembut dengan milk yang creamy, balance sempurna</div>
+          <div class="menu-footer"><span class="menu-price">Rp 28.000</span><button class="menu-add">+</button></div>
+        </div>
+      </div>
+      <div class="menu-item fade-in" data-cat="coffee">
+        <div class="menu-thumb"><img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=500&q=80" alt="Black Coffee" loading="lazy"></div>
+        <div class="menu-info">
+          <div class="menu-name">Black Coffee</div>
+          <div class="menu-desc">Americano atau cold brew dengan biji pilihan yang honest</div>
+          <div class="menu-footer"><span class="menu-price">Rp 22.000</span><button class="menu-add">+</button></div>
+        </div>
+      </div>
+      <div class="menu-item fade-in" data-cat="bakes">
+        <div class="menu-thumb"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80" alt="Homemade Cake" loading="lazy"><span class="menu-badge">Andalan</span></div>
+        <div class="menu-info">
+          <div class="menu-name">Homemade Cake</div>
+          <div class="menu-desc">Kue buatan sendiri, dipanggang fresh setiap hari</div>
+          <div class="menu-footer"><span class="menu-price">Rp 25.000</span><button class="menu-add">+</button></div>
+        </div>
+      </div>
+      <div class="menu-item fade-in" data-cat="bakes">
+        <div class="menu-thumb"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&q=80" alt="Croissant & Pastry" loading="lazy"></div>
+        <div class="menu-info">
+          <div class="menu-name">Croissant & Pastry</div>
+          <div class="menu-desc">Pastry lapis-lapis yang renyah di luar, lembut di dalam</div>
+          <div class="menu-footer"><span class="menu-price">Rp 20.000</span><button class="menu-add">+</button></div>
+        </div>
+      </div>
+      <div class="menu-item fade-in" data-cat="nonkopi">
+        <div class="menu-thumb"><img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=500&q=80" alt="Matcha Latte" loading="lazy"></div>
+        <div class="menu-info">
+          <div class="menu-name">Matcha Latte</div>
+          <div class="menu-desc">Matcha grade premium, smooth dan tidak terlalu pahit</div>
+          <div class="menu-footer"><span class="menu-price">Rp 30.000</span><button class="menu-add">+</button></div>
+        </div>
+      </div>
+      <div class="menu-item fade-in" data-cat="nonkopi">
+        <div class="menu-thumb"><img src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=500&q=80" alt="Waffle Homemade" loading="lazy"></div>
+        <div class="menu-info">
+          <div class="menu-name">Waffle Homemade</div>
+          <div class="menu-desc">Waffle crispy dengan topping pilihan yang bikin nagih</div>
+          <div class="menu-footer"><span class="menu-price">Rp 35.000</span><button class="menu-add">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header fade-in">
+    <div class="section-eyebrow">Suasana</div>
+    <h2>Tempat yang Bikin Betah</h2>
+  </div>
+  <div class="gallery-grid fade-in">
+    <div class="gallery-cell big">
+      <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=80" alt="Suasana cafe" loading="lazy">
+    </div>
+    <div class="gallery-cell">
+      <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&q=80" alt="Kue buatan sendiri" loading="lazy">
+    </div>
+    <div class="gallery-cell">
+      <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&q=80" alt="Kopi latte art" loading="lazy">
+    </div>
+    <div class="gallery-cell">
+      <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=500&q=80" alt="Pastry segar" loading="lazy">
+    </div>
+    <div class="gallery-cell">
+      <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=500&q=80" alt="Barista membuat kopi" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- CATERING -->
+<section id="catering">
+  <div class="catering-deco"></div>
+  <div class="catering-inner">
+    <div class="catering-content fade-in">
+      <div class="section-eyebrow">@catering.dia</div>
+      <h2>Catering & Event</h2>
+      <p>Coffee Dia hadir juga untuk acara spesial kamu. Dari arisan, ulang tahun, meeting kantor, hingga wedding — kami siap membawa honest coffee & bakes ke tempatmu.</p>
+      <div class="catering-services">
+        <div class="catering-service">
+          <div class="catering-service-icon">🎉</div>
+          <div class="catering-service-text">
+            <h4>Corporate Event</h4>
+            <p>Coffee break dan snack box untuk meeting atau seminar</p>
+          </div>
+        </div>
+        <div class="catering-service">
+          <div class="catering-service-icon">💒</div>
+          <div class="catering-service-text">
+            <h4>Pernikahan & Pesta</h4>
+            <p>Dessert table dan coffee station untuk momen spesialmu</p>
+          </div>
+        </div>
+        <div class="catering-service">
+          <div class="catering-service-icon">📦</div>
+          <div class="catering-service-text">
+            <h4>Hampers & Snack Box</h4>
+            <p>Paket hampers kue untuk hadiah yang berkesan</p>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/6281996223461?text=Halo%2C%20saya%20ingin%20tanya%20tentang%20catering%20Coffee%20Dia" class="btn-cream" target="_blank">Tanya Catering →</a>
+    </div>
+    <div class="catering-visual">
+      <div class="catering-plate">
+        <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=700&q=80" alt="Dessert catering" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section id="visit">
+  <div class="visit-inner">
+    <div class="visit-info fade-in">
+      <div class="section-eyebrow">Kunjungi Kami</div>
+      <h2>Singgah & Nikmati</h2>
+      <div class="visit-detail">
+        <div class="visit-icon">📍</div>
+        <div class="visit-detail-text">
+          <h4>Lokasi</h4>
+          <p>Taman Daan Mogot I No. 5<br>Jakarta Barat</p>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-icon">🕙</div>
+        <div class="visit-detail-text">
+          <h4>Jam Buka</h4>
+          <p>Setiap Hari · 10.00 – 21.00 WIB</p>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-icon">📱</div>
+        <div class="visit-detail-text">
+          <h4>WhatsApp</h4>
+          <p><a href="https://wa.me/6281996223461" style="color:var(--accent);text-decoration:none;">0819-9622-3461</a></p>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-icon">📸</div>
+        <div class="visit-detail-text">
+          <h4>Instagram</h4>
+          <p><a href="https://instagram.com/coffee.dia" target="_blank" style="color:var(--accent);text-decoration:none;">@coffee.dia</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="visit-map fade-in">
+      <div class="map-placeholder">
+        <div class="map-pin">📍</div>
+        <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--brown-deep);margin-bottom:4px;">Taman Daan Mogot I No. 5</p>
+        <p>Jakarta Barat</p>
+        <a href="https://maps.google.com/?q=Taman+Daan+Mogot+I+No+5+Jakarta+Barat" target="_blank" class="map-link">Buka di Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IG CTA -->
+<section id="instagram">
+  <div class="section-eyebrow" style="display:block;margin-bottom:1rem;">Follow & Stay Updated</div>
+  <h2>Ikuti Perjalanan Kami</h2>
+  <p>Lihat menu terbaru, promo, dan behind the scenes di Instagram kami</p>
+  <a href="https://instagram.com/coffee.dia" target="_blank" class="ig-handle">
+    <span style="font-size:1.4rem;">📸</span>
+    @coffee.dia
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:8px;"><strong>Coffee Dia</strong> — Honest Coffee & Bakes</p>
+  <p>Taman Daan Mogot I No. 5, Jakarta Barat · 10.00–21.00</p>
+  <p style="margin-top:8px;">WA: <a href="https://wa.me/6281996223461">0819-9622-3461</a> · IG: <a href="https://instagram.com/coffee.dia" target="_blank">@coffee.dia</a> · Catering: <a href="https://instagram.com/catering.dia" target="_blank">@catering.dia</a></p>
+  <p style="margin-top:1.5rem;opacity:0.4;font-size:0.72rem;">© 2025 Coffee Dia. Made with ☕ & 🍰</p>
+</footer>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Menu filter
+  function filterMenu(cat, btn) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-item').forEach(item => {
+      const show = cat === 'all' || item.dataset.cat === cat;
+      item.style.display = show ? 'block' : 'none';
+    });
+  }
+
+  // Add to cart animation
+  document.querySelectorAll('.menu-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.textContent = '✓';
+      btn.style.background = '#7A8C6E';
+      setTimeout(() => {
+        btn.textContent = '+';
+        btn.style.background = '';
+      }, 1200);
+    });
+  });
+</script>
+</body>
+</html>
