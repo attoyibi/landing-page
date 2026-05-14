@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hakui Kopi — Setiap Cangkir Punya Ceritanya</title>
+  <meta name="description" content="Hakui Kopi — Coffee shop modern di Tulungagung, Jombang, dan Madiun. Nikmati suasana hangat, produk favoritmu, dan buat setiap singgah jadi lebih berarti." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="navbar">
+    <div class="nav__logo">
+      <img src="https://i.imgur.com/hakui-placeholder.png" alt="Hakui Kopi Logo" class="nav__logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+      <div class="nav__logo-text" style="display:flex; align-items:center; gap:8px;">
+        <div class="nav__icon">⊞</div>
+        <span>HAKUI<span class="nav__logo-sub">KOPI</span></span>
+      </div>
+    </div>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#about" class="nav__link">Tentang</a></li>
+      <li><a href="#menu" class="nav__link">Menu</a></li>
+      <li><a href="#location" class="nav__link">Lokasi</a></li>
+      <li><a href="#gallery" class="nav__link">Galeri</a></li>
+    </ul>
+    <a href="https://www.instagram.com/hakuikopi/" target="_blank" class="btn btn--outline nav__cta">@ Instagram</a>
+    <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <div class="hero__img-wrap">
+        <img
+          src="https://scontent.cdninstagram.com/v/t51.2885-15/481827849_18480095434044218_8668785831494183023_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=18de74&_nc_ohc=example&_nc_ht=scontent.cdninstagram.com&oh=00_example&oe=example"
+          alt="Hakui Kopi Interior"
+          class="hero__bg-img"
+          onerror="this.parentElement.style.background='linear-gradient(135deg, #1a1209 0%, #2d1f0e 40%, #1a1209 100%)'"
+        />
+      </div>
+      <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content">
+      <div class="hero__badge">☕ Coffee Shop · Est. Tulungagung</div>
+      <h1 class="hero__title">
+        Setiap Cangkir<br />
+        <em>Punya Ceritanya</em>
+      </h1>
+      <p class="hero__subtitle">
+        Tempat di mana setiap obrolan terasa lebih hangat, waktu berjalan lebih santai,
+        dan setiap ide berkembang bersama secangkir kopi terbaik.
+      </p>
+      <div class="hero__actions">
+        <a href="#menu" class="btn btn--primary">Lihat Menu</a>
+        <a href="#location" class="btn btn--ghost">Temukan Kami</a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <span class="hero__stat-num">15.7K</span>
+          <span class="hero__stat-label">Followers</span>
+        </div>
+        <div class="hero__stat-divider"></div>
+        <div class="hero__stat">
+          <span class="hero__stat-num">514</span>
+          <span class="hero__stat-label">Posts</span>
+        </div>
+        <div class="hero__stat-divider"></div>
+        <div class="hero__stat">
+          <span class="hero__stat-num">3</span>
+          <span class="hero__stat-label">Cabang</span>
+        </div>
+      </div>
+    </div>
+    <a href="#about" class="hero__scroll" aria-label="Scroll down">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__visual">
+          <div class="about__img-main">
+            <img
+              src="https://scontent.cdninstagram.com/v/t51.2885-15/487965040_18482988897044218_3278462440047738849_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=18de74&_nc_ohc=example&_nc_ht=scontent.cdninstagram.com&oh=00_example&oe=example"
+              alt="Hakui Kopi Suasana"
+              onerror="this.src='https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80'"
+            />
+          </div>
+          <div class="about__img-accent">
+            <img
+              src="https://scontent.cdninstagram.com/v/t51.2885-15/example2.jpg"
+              alt="Barista Hakui Kopi"
+              onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80'"
+            />
+          </div>
+          <div class="about__tag">
+            <span>☕</span>
+            <span>Specialty Coffee</span>
+          </div>
+        </div>
+        <div class="about__content">
+          <div class="section__label">Tentang Kami</div>
+          <h2 class="section__title">Hakuikopi®<br /><em>Lebih dari Sekadar Kopi</em></h2>
+          <p class="about__text">
+            Kalau kamu sedang berada di Tulungagung, Jombang, atau Madiun, jangan lupa mampir ke Hakui Kopi. Kami hadir sebagai ruang di mana setiap obrolan terasa lebih hangat dan setiap singgah jadi pengalaman yang tak terlupakan.
+          </p>
+          <p class="about__text">
+            Nikmati suasana modern yang nyaman, produk favoritmu, dan buat setiap momen jadi lebih berarti bersama Hakui Kopi.
+          </p>
+          <div class="about__features">
+            <div class="about__feature">
+              <div class="about__feature-icon">🏪</div>
+              <div>
+                <strong>3 Cabang</strong>
+                <span>Tulungagung, Jombang, Madiun</span>
+              </div>
+            </div>
+            <div class="about__feature">
+              <div class="about__feature-icon">🕐</div>
+              <div>
+                <strong>Buka Setiap Hari</strong>
+                <span>07.00 – 23.00 WIB</span>
+              </div>
+            </div>
+            <div class="about__feature">
+              <div class="about__feature-icon">✨</div>
+              <div>
+                <strong>Specialty Coffee</strong>
+                <span>Kopi pilihan terbaik</span>
+              </div>
+            </div>
+          </div>
+          <div class="about__social">
+            <a href="https://www.instagram.com/hakuikopi/" target="_blank" class="about__social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              @hakuikopi
+            </a>
+            <a href="https://www.tiktok.com/@hakuikopi" target="_blank" class="about__social-link">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.73a4.85 4.85 0 01-1.02-.04z"/></svg>
+              @hakuikopi
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu section" id="menu">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__label">Menu Kami</div>
+        <h2 class="section__title">Temukan Minuman<br /><em>Favoritmu</em></h2>
+        <p class="section__desc">Dari espresso klasik hingga kreasi signature kami, setiap tegukan dirancang untuk membuatmu kembali lagi.</p>
+      </div>
+
+      <div class="menu__tabs" id="menuTabs">
+        <button class="menu__tab menu__tab--active" data-cat="all">Semua</button>
+        <button class="menu__tab" data-cat="coffee">Coffee</button>
+        <button class="menu__tab" data-cat="noncoffee">Non-Coffee</button>
+        <button class="menu__tab" data-cat="special">Signature</button>
+      </div>
+
+      <div class="menu__grid" id="menuGrid">
+        <!-- Akan diisi oleh JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery section" id="gallery">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__label">Galeri</div>
+        <h2 class="section__title">Momen di<br /><em>Hakui Kopi</em></h2>
+      </div>
+    </div>
+    <div class="gallery__grid" id="galleryGrid">
+      <!-- diisi JS -->
+    </div>
+    <div class="container">
+      <div class="gallery__cta">
+        <a href="https://www.instagram.com/hakuikopi/" target="_blank" class="btn btn--primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Lihat Semua di Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location section" id="location">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__label">Lokasi</div>
+        <h2 class="section__title">Temukan Kami<br /><em>di Kotamu</em></h2>
+      </div>
+      <div class="location__grid">
+        <div class="location__card" id="loc-tl">
+          <div class="location__icon">📍</div>
+          <h3 class="location__name">0KM · Tulungagung</h3>
+          <p class="location__addr">Jl. 0KM, Tulungagung, Jawa Timur</p>
+          <div class="location__hours">
+            <span class="location__hours-badge">🕐 07.00 – 23.00</span>
+            <span class="location__days">Setiap Hari</span>
+          </div>
+          <a href="https://maps.google.com/?q=Hakui+Kopi+Tulungagung" target="_blank" class="location__map-btn">Buka di Maps →</a>
+        </div>
+        <div class="location__card location__card--featured" id="loc-jb">
+          <div class="location__badge-ribbon">Flagship</div>
+          <div class="location__icon">📍</div>
+          <h3 class="location__name">Jombang</h3>
+          <p class="location__addr">Jombang, Jawa Timur</p>
+          <div class="location__hours">
+            <span class="location__hours-badge">🕐 07.00 – 23.00</span>
+            <span class="location__days">Setiap Hari</span>
+          </div>
+          <a href="https://maps.google.com/?q=Hakui+Kopi+Jombang" target="_blank" class="location__map-btn">Buka di Maps →</a>
+        </div>
+        <div class="location__card" id="loc-md">
+          <div class="location__icon">📍</div>
+          <h3 class="location__name">Stasiun · Madiun</h3>
+          <p class="location__addr">Area Stasiun Madiun, Jawa Timur</p>
+          <div class="location__hours">
+            <span class="location__hours-badge">🕐 09.00 – 23.00</span>
+            <span class="location__days">Setiap Hari</span>
+          </div>
+          <a href="https://maps.google.com/?q=Hakui+Kopi+Madiun" target="_blank" class="location__map-btn">Buka di Maps →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="container">
+      <div class="cta-section__content">
+        <div class="cta-section__label">Selalu Di Hakui</div>
+        <h2 class="cta-section__title">Ikuti Perjalanan<br />Hakui Kopi</h2>
+        <p class="cta-section__desc">Dapatkan info menu terbaru, promo menarik, dan momen spesial kami di Instagram dan TikTok.</p>
+        <div class="cta-section__actions">
+          <a href="https://www.instagram.com/hakuikopi/" target="_blank" class="btn btn--primary btn--lg">Instagram</a>
+          <a href="https://www.tiktok.com/@hakuikopi" target="_blank" class="btn btn--outline btn--lg">TikTok</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">⊞ HAKUIKOPI®</div>
+          <p class="footer__tagline">Setiap Cangkir Punya Ceritanya</p>
+          <div class="footer__socials">
+            <a href="https://www.instagram.com/hakuikopi/" target="_blank" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@hakuikopi" target="_blank" aria-label="TikTok">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.73a4.85 4.85 0 01-1.02-.04z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="#about">Tentang</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#gallery">Galeri</a></li>
+            <li><a href="#location">Lokasi</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Jam Buka</h4>
+          <ul>
+            <li>0KM & Jombang: 07.00–23.00</li>
+            <li>Stasiun & Madiun: 09.00–23.00</li>
+            <li>Buka Setiap Hari</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2025 Hakuikopi® — Hakuikopi, Tulungagung</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
