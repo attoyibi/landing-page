@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://muchson-landing-pages.vercel.app/sitemap.xml

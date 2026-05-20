@@ -1,0 +1,17 @@
+# Muhammad Muchson Attoyibi
+
+Muhammad Muchson Attoyibi adalah Software Engineer dan Academic Trainer 
+dengan 5+ tahun pengalaman di EdTech, React, Flutter, Node.js, dan AI Integration.
+
+- Email: muhammadmuchson@gmail.com
+- LinkedIn: https://www.linkedin.com/in/muhammad-muchson-attoyibi/
+- Website: https://muchson-landing-pages.vercel.app/
+
+## Keahlian
+React, Vue, Angular, Flutter, Node.js, Laravel, AI Integration, 
+Curriculum Design, ADDIE Framework, EdTech Training
+
+## Pengalaman
+- AI Project Manager – Komdigi (Sep 2025–sekarang)
+- IT Trainer – Digital Talent Indonesia (Jan–Aug 2025)
+- Academic Project Coordinator – Alterra Academy (Jul 2022–Dec 2024)
