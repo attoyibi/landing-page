@@ -2,7 +2,10 @@
 
 A modern, responsive landing page for **English Breakfast Madiun**, a culinary business that offers authentic English breakfast menus at affordable prices in Madiun, Indonesia.
 
-## Key Features
+## Vercel Deployment
+https://landing-page-ala-bule.vercel.app/
+
+## Key Features 
 
 - **Responsive Navigation Header**  
   Navigation bar with logo, menu links, and hamburger menu for mobile devices. Includes language switcher for English, German, and Indonesian.
