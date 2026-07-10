@@ -1,4 +1,35 @@
-// Smooth scrolling untuk navigation links
+// Language switching functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const languageButtons = document.querySelectorAll('.lang-btn');
+
+    // Set active button based on current language
+    const updateActiveButton = () => {
+        const currentLang = i18n.currentLanguage;
+        languageButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-lang') === currentLang) {
+                btn.classList.add('active');
+            }
+        });
+    };
+
+    // Initialize active button
+    updateActiveButton();
+
+    // Add click event to language buttons
+    languageButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const lang = this.getAttribute('data-lang');
+            i18n.setLanguage(lang);
+            updateActiveButton();
+        });
+    });
+
+    // Update active button when language changes
+    document.addEventListener('languageChange', updateActiveButton);
+});
+
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -13,7 +44,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Header scroll effect
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const header = document.querySelector('.header');
     if (window.scrollY > 100) {
         header.style.background = 'rgba(255, 255, 255, 0.98)';
@@ -28,26 +59,26 @@ window.addEventListener('scroll', function() {
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', function() {
+hamburger.addEventListener('click', function () {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
 });
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function () {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
     });
 });
 
-// Intersection Observer untuk animasi scroll
+// Intersection Observer for scroll animations
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = new IntersectionObserver(function(entries) {
+const observer = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
@@ -56,7 +87,7 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-// Observe semua elemen yang ingin dianimasi
+// Observe all elements to animate
 document.querySelectorAll('.menu-item, .info-card, .contact-method').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
@@ -64,11 +95,11 @@ document.querySelectorAll('.menu-item, .info-card, .contact-method').forEach(el 
     observer.observe(el);
 });
 
-// Counter animation untuk statistik
+// Counter animation for statistics
 function animateCounter(element, target, duration = 2000) {
     let start = 0;
     const increment = target / (duration / 16);
-    
+
     function updateCounter() {
         start += increment;
         if (start < target) {
@@ -78,12 +109,12 @@ function animateCounter(element, target, duration = 2000) {
             element.textContent = target + (element.textContent.includes('+') ? '+' : '');
         }
     }
-    
+
     updateCounter();
 }
 
-// Trigger counter animation saat section terlihat
-const statsObserver = new IntersectionObserver(function(entries) {
+// Trigger counter animation when section is visible
+const statsObserver = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const counters = entry.target.querySelectorAll('.stat h3');
@@ -101,8 +132,8 @@ if (aboutStats) {
     statsObserver.observe(aboutStats);
 }
 
-// Parallax effect untuk hero section
-window.addEventListener('scroll', function() {
+// Parallax effect for hero section
+window.addEventListener('scroll', function () {
     const scrolled = window.pageYOffset;
     const heroImage = document.querySelector('.hero-image');
     if (heroImage) {
@@ -111,23 +142,22 @@ window.addEventListener('scroll', function() {
 });
 
 // Loading animation
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     document.body.classList.add('loaded');
 });
 
 // WhatsApp click tracking
 document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-    link.addEventListener('click', function() {
-        // Analytics tracking bisa ditambahkan di sini
+    link.addEventListener('click', function () {
         console.log('WhatsApp link clicked');
     });
 });
 
-// Form validation (jika ada form di masa depan)
+// Form validation
 function validateForm(form) {
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     let isValid = true;
-    
+
     inputs.forEach(input => {
         if (!input.value.trim()) {
             input.classList.add('error');
@@ -136,13 +166,13 @@ function validateForm(form) {
             input.classList.remove('error');
         }
     });
-    
+
     return isValid;
 }
 
-// Lazy loading untuk gambar
+// Lazy loading for images
 if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver(function(entries) {
+    const imageObserver = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
@@ -152,7 +182,7 @@ if ('IntersectionObserver' in window) {
             }
         });
     });
-    
+
     document.querySelectorAll('img[data-src]').forEach(img => {
         imageObserver.observe(img);
     });
@@ -180,10 +210,10 @@ function createScrollToTop() {
         z-index: 1000;
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
     `;
-    
+
     document.body.appendChild(scrollBtn);
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         if (window.pageYOffset > 300) {
             scrollBtn.style.opacity = '1';
             scrollBtn.style.visibility = 'visible';
@@ -192,8 +222,8 @@ function createScrollToTop() {
             scrollBtn.style.visibility = 'hidden';
         }
     });
-    
-    scrollBtn.addEventListener('click', function() {
+
+    scrollBtn.addEventListener('click', function () {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -206,25 +236,25 @@ createScrollToTop();
 
 // Menu item hover effects
 document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('mouseenter', function() {
+    item.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-10px) scale(1.02)';
     });
-    
-    item.addEventListener('mouseleave', function() {
+
+    item.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0) scale(1)';
     });
 });
 
 // Contact method click effects
 document.querySelectorAll('.contact-method').forEach(method => {
-    method.addEventListener('click', function(e) {
+    method.addEventListener('click', function (e) {
         // Create ripple effect
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
-        
+
         ripple.style.cssText = `
             position: absolute;
             width: ${size}px;
@@ -237,16 +267,17 @@ document.querySelectorAll('.contact-method').forEach(method => {
             animation: ripple 0.6s linear;
             pointer-events: none;
         `;
-        
+
         this.style.position = 'relative';
         this.style.overflow = 'hidden';
         this.appendChild(ripple);
-        
+
         setTimeout(() => {
             ripple.remove();
         }, 600);
     });
 });
+
 
 // Add ripple animation CSS
 const style = document.createElement('style');

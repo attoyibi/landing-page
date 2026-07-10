@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarapan Ala Bule Madiun - Cita Rasa Bule, Harga Lokal</title>
+    <title>English Breakfast Madiun - Authentic Flavors, Local Prices</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="i18n.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -14,14 +15,19 @@
         <nav class="navbar">
             <div class="nav-container">
                 <div class="logo">
-                    <h2>Sarapan Ala Bule</h2>
+                    <h2>English Breakfast</h2>
                     <span>Madiun</span>
                 </div>
                 <div class="nav-menu">
-                    <a href="#home" class="nav-link">Beranda</a>
-                    <a href="#menu" class="nav-link">Menu</a>
-                    <a href="#lokasi" class="nav-link">Lokasi</a>
-                    <a href="#kontak" class="nav-link">Kontak</a>
+                    <a href="#home" class="nav-link" data-i18n="nav_home">Home</a>
+                    <a href="#menu" class="nav-link" data-i18n="nav_menu">Menu</a>
+                    <a href="#location" class="nav-link" data-i18n="nav_location">Location</a>
+                    <a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+                    <div class="language-switcher">
+                        <button class="lang-btn" data-lang="en">English</button>
+                        <button class="lang-btn" data-lang="de">Deutsch</button>
+                        <button class="lang-btn" data-lang="id">Indonesia</button>
+                    </div>
                 </div>
                 <div class="hamburger">
                     <span></span>
@@ -36,35 +42,35 @@
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="hero-title">Nikmati Sarapan Ala Bule Terbaik di Madiun</h1>
-                <p class="hero-subtitle">Cita rasa English Breakfast autentik dengan harga terjangkau. Dibuat oleh chef berpengalaman dengan bahan-bahan berkualitas.</p>
+                <h1 class="hero-title" data-i18n="hero_title">Enjoy the Best English Breakfast in Madiun</h1>
+                <p class="hero-subtitle" data-i18n="hero_subtitle">Authentic English breakfast flavors at affordable prices. Prepared by experienced chefs with quality ingredients.</p>
                 <div class="hero-features">
                     <div class="feature">
                         <i class="fas fa-clock"></i>
-                        <span>Buka 06:30 - 11:00</span>
+                        <span data-i18n="hero_opening">Open 06:30 - 11:00</span>
                     </div>
                     <div class="feature">
                         <i class="fas fa-money-bill-wave"></i>
-                        <span>Mulai Rp 15.000</span>
+                        <span data-i18n="hero_price">Starting from Rp 15,000</span>
                     </div>
                     <div class="feature">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Lapangan Gulun</span>
+                        <span data-i18n="hero_location">Lapangan Gulun</span>
                     </div>
                 </div>
                 <div class="hero-buttons">
-                    <a href="#menu" class="btn btn-primary">Lihat Menu</a>
+                    <a href="#menu" class="btn btn-primary" data-i18n="hero_menu_btn">View Menu</a>
                     <a href="https://wa.me/6285743360490" class="btn btn-secondary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                        <i class="fab fa-whatsapp"></i> <span data-i18n="hero_order_btn">Order Now</span>
                     </a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="images/food_1.jpg" alt="Sarapan Ala Bule Madiun">
+                <img src="images/food_1.jpg" alt="English Breakfast Madiun">
                 <div class="floating-card">
                     <div class="card-content">
                         <i class="fas fa-star"></i>
-                        <span>Menu Favorit</span>
+                        <span data-i18n="menu_fresh">Fresh</span>
                         <p>English Breakfast</p>
                     </div>
                 </div>
@@ -76,75 +82,75 @@
     <section id="menu" class="menu">
         <div class="container">
             <div class="section-header">
-                <h2>Menu Spesial Kami</h2>
-                <p>Nikmati berbagai pilihan sarapan ala bule dengan cita rasa autentik</p>
+                <h2 data-i18n="menu_title">Our Special Menu</h2>
+                <p data-i18n="menu_subtitle">Enjoy various English breakfast options with authentic flavors</p>
             </div>
             
             <div class="menu-grid">
                 <div class="menu-item">
                     <div class="menu-image">
-                        <img src="images/food_1.jpg" alt="Omelette Lengkap">
+                        <img src="images/food_1.jpg" alt="Complete Omelette">
                         <div class="menu-overlay">
-                            <span class="price">Rp 15.000</span>
+                            <span class="price">Rp 15,000</span>
                         </div>
                     </div>
                     <div class="menu-content">
-                        <h3>Omelette Lengkap</h3>
-                        <p>Telur dadar lembut dengan isian keju, sayuran segar, dan roti panggang</p>
+                        <h3 data-i18n="menu_omelette">Complete Omelette</h3>
+                        <p data-i18n="menu_omelette_desc">Fluffy omelette with cheese, fresh vegetables, and toast</p>
                         <div class="menu-features">
-                            <span><i class="fas fa-leaf"></i> Segar</span>
-                            <span><i class="fas fa-heart"></i> Sehat</span>
+                            <span><i class="fas fa-leaf"></i> <span data-i18n="menu_fresh">Fresh</span></span>
+                            <span><i class="fas fa-heart"></i> <span data-i18n="menu_healthy">Healthy</span></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="menu-item">
                     <div class="menu-image">
-                        <img src="images/food_2.jpg" alt="Salad Sayuran">
+                        <img src="images/food_2.jpg" alt="Vegetable Salad">
                         <div class="menu-overlay">
-                            <span class="price">Rp 15.000</span>
+                            <span class="price">Rp 15,000</span>
                         </div>
                     </div>
                     <div class="menu-content">
-                        <h3>Salad Sayuran</h3>
-                        <p>Campuran sayuran segar dengan jagung manis dan dressing spesial</p>
+                        <h3 data-i18n="menu_salad">Vegetable Salad</h3>
+                        <p data-i18n="menu_salad_desc">Mix of fresh vegetables with sweet corn and special dressing</p>
                         <div class="menu-features">
-                            <span><i class="fas fa-seedling"></i> Organik</span>
-                            <span><i class="fas fa-apple-alt"></i> Bergizi</span>
+                            <span><i class="fas fa-seedling"></i> <span data-i18n="menu_organic">Organic</span></span>
+                            <span><i class="fas fa-apple-alt"></i> <span data-i18n="menu_nutritious">Nutritious</span></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="menu-item">
                     <div class="menu-image">
-                        <img src="images/food_3.jpg" alt="Sandwich Telur">
+                        <img src="images/food_3.jpg" alt="Egg Sandwich">
                         <div class="menu-overlay">
-                            <span class="price">Rp 15.000</span>
+                            <span class="price">Rp 15,000</span>
                         </div>
                     </div>
                     <div class="menu-content">
-                        <h3>Sandwich Telur</h3>
-                        <p>Roti panggang dengan telur, sosis, dan sayuran segar</p>
+                        <h3 data-i18n="menu_sandwich">Egg Sandwich</h3>
+                        <p data-i18n="menu_sandwich_desc">Toast with egg, sausage, and fresh vegetables</p>
                         <div class="menu-features">
-                            <span><i class="fas fa-fire"></i> Hangat</span>
-                            <span><i class="fas fa-thumbs-up"></i> Populer</span>
+                            <span><i class="fas fa-fire"></i> <span data-i18n="menu_warm">Warm</span></span>
+                            <span><i class="fas fa-thumbs-up"></i> <span data-i18n="menu_popular">Popular</span></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="menu-item">
                     <div class="menu-image">
-                        <img src="images/food_4.jpg" alt="Paket Lengkap">
+                        <img src="images/food_4.jpg" alt="Complete Package">
                         <div class="menu-overlay">
-                            <span class="price">Rp 15.000</span>
+                            <span class="price">Rp 15,000</span>
                         </div>
                     </div>
                     <div class="menu-content">
-                        <h3>Paket Lengkap</h3>
-                        <p>Kombinasi sosis, kentang goreng, telur, dan salad dalam satu piring</p>
+                        <h3 data-i18n="menu_package">Complete Package</h3>
+                        <p data-i18n="menu_package_desc">Combination of sausage, fried potatoes, egg, and salad on one plate</p>
                         <div class="menu-features">
-                            <span><i class="fas fa-utensils"></i> Lengkap</span>
-                            <span><i class="fas fa-medal"></i> Terbaik</span>
+                            <span><i class="fas fa-utensils"></i> <span data-i18n="menu_complete">Complete</span></span>
+                            <span><i class="fas fa-medal"></i> <span data-i18n="menu_best">Best</span></span>
                         </div>
                     </div>
                 </div>
@@ -157,21 +163,21 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-text">
-                    <h2>Tentang Kami</h2>
-                    <p class="about-intro">Didirikan oleh <strong>Dwi Suprapto</strong>, seorang chef berpengalaman yang pernah bekerja di hotel ternama di Jawa Timur.</p>
-                    <p>Dengan pengalaman bertahun-tahun di industri kuliner, kami menghadirkan cita rasa English Breakfast autentik dengan sentuhan lokal yang istimewa.</p>
+                    <h2 data-i18n="about_title">About Us</h2>
+                    <p class="about-intro" data-i18n="about_intro">Founded by Dwi Suprapto, an experienced chef who has worked at renowned hotels in East Java.</p>
+                    <p data-i18n="about_description">With years of experience in the culinary industry, we bring authentic English breakfast flavors with a special local touch.</p>
                     <div class="about-stats">
                         <div class="stat">
                             <h3>5+</h3>
-                            <p>Tahun Pengalaman</p>
+                            <p data-i18n="about_experience">Years of Experience</p>
                         </div>
                         <div class="stat">
-                            <h3>25kg</h3>
-                            <p>Telur Per Hari</p>
+                            <h3>25</h3>
+                            <p data-i18n="about_eggs">Eggs Per Day</p>
                         </div>
                         <div class="stat">
                             <h3>100+</h3>
-                            <p>Pelanggan Harian</p>
+                            <p data-i18n="about_customers">Daily Customers</p>
                         </div>
                     </div>
                 </div>
@@ -183,38 +189,39 @@
     </section>
 
     <!-- Location Section -->
-    <section id="lokasi" class="location">
+    <section id="location" class="location">
         <div class="container">
             <div class="section-header">
-                <h2>Lokasi & Jam Buka</h2>
-                <p>Temukan kami di lokasi strategis di pusat kota Madiun</p>
+                <h2 data-i18n="location_title">Location & Opening Hours</h2>
+                <p data-i18n="location_subtitle">Find us in a strategic location in the center of Madiun city</p>
             </div>
             
             <div class="location-content">
                 <div class="location-info">
                     <div class="info-card">
                         <i class="fas fa-map-marker-alt"></i>
-                        <h3>Alamat</h3>
-                        <p>Lapangan Gulun<br>Kota Madiun, Jawa Timur</p>
+                        <h3 data-i18n="location_address">Address</h3>
+                        <p data-i18n="location_address_detail">Lapangan Gulun, Madiun City, East Java</p>
                     </div>
                     
                     <div class="info-card">
                         <i class="fas fa-clock"></i>
-                        <h3>Jam Buka</h3>
-                        <p>Setiap Hari<br>06:30 - 11:00 WIB</p>
+                        <h3 data-i18n="location_hours">Opening Hours</h3>
+                        <p data-i18n="location_hours_detail">Every Day 06:30 - 11:00 WIB</p>
                     </div>
                     
                     <div class="info-card">
                         <i class="fas fa-phone"></i>
-                        <h3>Kontak</h3>
-                        <p>WhatsApp<br>085743360490</p>
+                        <h3 data-i18n="location_contact">Contact</h3>
+                        <p data-i18n="location_contact_detail">WhatsApp</p>
+                        <p>085743360490</p>
                     </div>
                 </div>
                 
                 <div class="location-map">
                     <div class="map-placeholder">
                         <i class="fas fa-map"></i>
-                        <p>Peta Lokasi</p>
+                        <p data-i18n="location_map">Location Map</p>
                         <span>Lapangan Gulun, Madiun</span>
                     </div>
                 </div>
@@ -223,18 +230,18 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="kontak" class="contact">
+    <section id="contact" class="contact">
         <div class="container">
             <div class="contact-content">
                 <div class="contact-info">
-                    <h2>Hubungi Kami</h2>
-                    <p>Siap melayani pesanan dan pertanyaan Anda</p>
+                    <h2 data-i18n="contact_title">Contact Us</h2>
+                    <p data-i18n="contact_subtitle">Ready to serve your orders and questions</p>
                     
                     <div class="contact-methods">
                         <a href="https://wa.me/6285743360490" class="contact-method" target="_blank">
                             <i class="fab fa-whatsapp"></i>
                             <div>
-                                <h4>WhatsApp</h4>
+                                <h4 data-i18n="contact_whatsapp">WhatsApp</h4>
                                 <p>085743360490</p>
                             </div>
                         </a>
@@ -242,7 +249,7 @@
                         <a href="https://instagram.com/sarapan_ala_bule_official" class="contact-method" target="_blank">
                             <i class="fab fa-instagram"></i>
                             <div>
-                                <h4>Instagram</h4>
+                                <h4 data-i18n="contact_instagram">Instagram</h4>
                                 <p>@sarapan_ala_bule_official</p>
                             </div>
                         </a>
@@ -250,10 +257,10 @@
                 </div>
                 
                 <div class="contact-cta">
-                    <h3>Pesan Sekarang!</h3>
-                    <p>Jangan sampai kehabisan! Menu terbatas setiap hari.</p>
+                    <h3 data-i18n="contact_cta_title">Order Now!</h3>
+                    <p data-i18n="contact_cta_subtitle">Don't miss out! Limited menu daily.</p>
                     <a href="https://wa.me/6285743360490" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                        <i class="fab fa-whatsapp"></i> <span data-i18n="contact_order_btn">Order via WhatsApp</span>
                     </a>
                 </div>
             </div>
@@ -265,19 +272,19 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Sarapan Ala Bule Madiun</h3>
-                    <p>Cita rasa English Breakfast autentik dengan harga terjangkau di Madiun.</p>
+                    <h3>English Breakfast Madiun</h3>
+                    <p data-i18n="footer_description">Authentic English breakfast flavors at affordable prices in Madiun.</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Kontak</h4>
+                    <h4 data-i18n="footer_contact">Contact</h4>
                     <p><i class="fas fa-map-marker-alt"></i> Lapangan Gulun, Madiun</p>
                     <p><i class="fas fa-phone"></i> 085743360490</p>
                     <p><i class="fas fa-clock"></i> 06:30 - 11:00 WIB</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Ikuti Kami</h4>
+                    <h4 data-i18n="footer_follow">Follow Us</h4>
                     <div class="social-links">
                         <a href="https://instagram.com/sarapan_ala_bule_official" target="_blank">
                             <i class="fab fa-instagram"></i>
@@ -290,11 +297,12 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 Sarapan Ala Bule Madiun. Semua hak dilindungi.</p>
+                <p data-i18n="footer_copyright">© 2025 English Breakfast Madiun. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
