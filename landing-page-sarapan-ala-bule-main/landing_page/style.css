@@ -732,18 +732,27 @@ body {
     .menu-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .menu-image {
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .floating-card {
+        right: 20px;
+    }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .nav-menu {
         display: none;
     }
-    
+
     .nav-menu.active {
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 60px;
+        top: 100%;
         left: 0;
         right: 0;
         background: white;
@@ -751,7 +760,7 @@ body {
         gap: 1rem;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     .language-switcher {
         flex-direction: row;
         margin: 0;
@@ -763,17 +772,73 @@ body {
         padding-top: 1rem;
         margin-top: 1rem;
     }
-    
+
     .hamburger {
         display: flex;
     }
-    
+
+    .hero {
+        padding-top: 120px;
+        padding-bottom: 4rem;
+    }
+
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 2rem;
+        gap: 3rem;
     }
-    
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .hero-features {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-image {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    .hero-image img {
+        height: auto;
+        aspect-ratio: 8 / 5;
+    }
+
+    .about-image img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    .about-content,
+    .location-content,
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .about-image {
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    .about-text h2,
+    .about-text > p,
+    .contact-info h2,
+    .contact-info > p {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
     }
@@ -788,21 +853,13 @@ body {
         flex-wrap: wrap;
     }
     
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .about-content,
     .location-content,
     .contact-content {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
-    .about-stats {
-        grid-template-columns: 1fr;
-    }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -818,6 +875,16 @@ body {
     
     body {
         margin-top: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-stats {
+        grid-template-columns: 1fr;
     }
 }
 
