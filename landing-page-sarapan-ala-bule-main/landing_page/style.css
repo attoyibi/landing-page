@@ -308,6 +308,8 @@ body {
 }
 
 .menu-item {
+    display: flex;
+    flex-direction: column;
     background: white;
     border-radius: 20px;
     overflow: hidden;
@@ -349,6 +351,9 @@ body {
 }
 
 .menu-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     padding: 2rem;
 }
 
@@ -367,7 +372,9 @@ body {
 
 .menu-features {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: auto;
 }
 
 .menu-features span {
