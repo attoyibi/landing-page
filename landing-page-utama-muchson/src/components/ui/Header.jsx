@@ -3,6 +3,7 @@ import { PERSONAL_INFO } from '../../constants';
 
 const NAV = [
     { href: '#about', label: 'About' },
+    { href: '#teaching', label: 'Teaching' },
     { href: '#projects', label: 'Work' },
 ];
 

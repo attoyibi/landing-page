@@ -140,6 +140,23 @@ body {
 }
 .chip-lavender { background: var(--lavender-100); }
 .chip-lime { background: var(--lime-100); }
+/* Link chip (day links): white on tinted cards, brand on hover */
+.chip-link {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--surface-000);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 150ms, color 150ms;
+}
+.chip-link:hover { border-color: var(--brand-600); color: var(--brand-600); }
+
 .hero-chip {
   padding: var(--space-2) 20px;
   font-size: 14px;
