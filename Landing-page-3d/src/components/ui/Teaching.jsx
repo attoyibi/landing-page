@@ -22,9 +22,9 @@ const Course = ({ course }) => {
 
             <div className="pb-5">
                 <ul className="flex flex-wrap gap-2 list-none m-0 p-0">
-                    {course.playgrounds.map(([label, href]) => (
+                    {course.playgrounds.map(([label, href], i) => (
                         <li key={href}>
-                            <a href={href} target="_blank" rel="noopener noreferrer" className="chip-link">
+                            <a href={`#/aion/${course.id}/${i}`} className="chip-link">
                                 {label}
                             </a>
                         </li>
@@ -75,11 +75,10 @@ const MaterialCard = ({ item, index }) => {
                         <a
                             key={link.href}
                             href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            {...(link.internal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                             className={`btn ${i === 0 ? 'btn-primary' : 'btn-secondary'}`}
                         >
-                            {link.label} <ExternalLink size={14} aria-hidden="true" />
+                            {link.label} {!link.internal && <ExternalLink size={14} aria-hidden="true" />}
                         </a>
                     ))}
                 </div>

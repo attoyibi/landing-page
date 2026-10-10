@@ -156,6 +156,11 @@ body {
   transition: border-color 150ms, color 150ms;
 }
 .chip-link:hover { border-color: var(--brand-600); color: var(--brand-600); }
+.chip-link-active, .chip-link-active:hover {
+  background: var(--brand-600);
+  border-color: var(--brand-600);
+  color: var(--ink-inverse);
+}
 
 .hero-chip {
   padding: var(--space-2) 20px;

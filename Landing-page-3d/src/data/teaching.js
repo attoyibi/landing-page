@@ -8,9 +8,14 @@
 // Card fields
 //   id, audience (small label), title, description, meta (small line, optional),
 //   tint (true = light-blue card, use for at most one card),
-//   links   buttons on the card: [{ label, href }], first one is the primary button,
+//   links   buttons on the card: [{ label, href, internal? }], first one is the primary button,
+//           internal: true = a route inside this site (#/...), opens in the same tab,
 //   courses (optional) groups of playgrounds, shown collapsed so the page stays calm:
 //           [{ id, title, repo (GitHub link), playgrounds: [[label, href], ...] }]
+//           Each playground opens inside this site at #/aion/<course id>/<position>.
+
+// Address of the Latihan Python website that is shown inside this site at #/latihan.
+export const LATIHAN_URL = 'https://latihan-usg.vercel.app/';
 
 export const MATERIALS = [
     {
@@ -22,7 +27,8 @@ export const MATERIALS = [
         meta: 'Algorithms & programming · Bahasa Indonesia',
         tint: false,
         links: [
-            { label: 'Open website', href: 'https://latihan-usg.vercel.app/' },
+            // internal: opens inside this site (see components/pages/LatihanPage.jsx)
+            { label: 'Open website', href: '#/latihan', internal: true },
             { label: 'Source', href: 'https://github.com/attoyibi/latihan-python-usg' },
         ],
         courses: [],
