@@ -12,7 +12,6 @@ import {
 import githubImg from '../assets/github.PNG';
 import iwapiImg from '../assets/iwapi.PNG';
 import unwomenImg from '../assets/unwomen.PNG';
-import kampusmerdekaImg from '../assets/kampus-merdeka.PNG';
 import curhatImg from '../assets/curhat-ai.PNG';
 
 export const PERSONAL_INFO = {
@@ -22,6 +21,7 @@ export const PERSONAL_INFO = {
     email: "muhammadmuchson@gmail.com",
     phone: "+6289679165530",
     linkedin: "https://www.linkedin.com/in/muhammad-muchson-attoyibi/",
+    github: "https://github.com/attoyibi",
     summary: "Experienced Academic and Software Engineer with over 5 years of expertise in education technology, curriculum design, learning and development, and full-stack software development. Passionate about using AI to enhance learning experiences."
 };
 
@@ -33,7 +33,7 @@ export const ABOUT_CONTENT = [
     },
     {
         title: "Full Stack Engineer",
-        description: " proficient in JavaScript, React, Vue, Angular, Flutter, Node.js, and Laravel. I build scalable web and mobile solutions from scratch.",
+        description: "Proficient in JavaScript, React, Vue, Angular, Flutter, Node.js, and Laravel. I build scalable web and mobile solutions from scratch.",
         icon: "Code"
     },
     {

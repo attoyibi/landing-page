@@ -1,20 +1,25 @@
 import React from 'react';
+import { MotionConfig } from 'framer-motion';
+import Header from './components/ui/Header';
 import Hero from './components/ui/Hero';
 import About from './components/ui/About';
-import Skills from './components/ui/Skills';
 import Projects from './components/ui/Projects';
 import Contact from './components/ui/Contact';
 
 function App() {
-  return (
-    <div className="bg-neutral-950 text-white min-h-screen selection:bg-indigo-500 selection:text-white">
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
-    </div>
-  );
+    return (
+        <MotionConfig reducedMotion="user">
+            <div className="bg-surface-000 text-ink min-h-screen">
+                <Header />
+                <main>
+                    <Hero />
+                    <About />
+                    <Projects />
+                    <Contact />
+                </main>
+            </div>
+        </MotionConfig>
+    );
 }
 
 export default App;

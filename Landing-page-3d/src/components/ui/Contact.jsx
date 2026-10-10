@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, Twitter, Send } from 'lucide-react';
+import { Linkedin, Github, Send, Check } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
-import ContactScene from '../canvas/ContactScene';
 
 import { PERSONAL_INFO } from '../../constants';
 
 const Contact = () => {
     const [state, handleSubmit] = useForm("mblnnvvy");
-    const [hasSubmitted, setHasSubmitted] = useState(false);
-
-    useEffect(() => {
-        const submitted = localStorage.getItem('contact_form_submitted');
-        if (submitted) {
-            setHasSubmitted(true);
+    const [previouslySubmitted] = useState(() => {
+        try {
+            return Boolean(localStorage.getItem('contact_form_submitted'));
+        } catch {
+            return false; // storage unavailable
         }
-    }, []);
+    });
+    const hasSubmitted = previouslySubmitted || state.succeeded;
 
     useEffect(() => {
         if (state.succeeded) {
-            localStorage.setItem('contact_form_submitted', 'true');
-            setHasSubmitted(true);
+            try { localStorage.setItem('contact_form_submitted', 'true'); } catch { /* ignore */ }
         }
     }, [state.succeeded]);
 
@@ -31,7 +29,7 @@ const Contact = () => {
         const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!re.test(String(email).toLowerCase())) return false;
 
-        // Block usage of "test@test.com" or similar obvious fakes if needed
+        // Block obvious fake domains
         const blockList = ['test.com', 'example.com', 'abalabal.com'];
         const domain = email.split('@')[1];
         if (blockList.includes(domain)) return false;
@@ -53,103 +51,98 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="min-h-screen py-20 w-full relative flex items-center justify-center overflow-hidden bg-gradient-to-t from-black to-neutral-900">
+        <section id="contact" className="section on-dark dot-grid dot-grid-dark relative overflow-hidden bg-surface-inverse text-ink-inverse">
 
-
-            {/* Background Particles */}
-            <div className="absolute inset-0 z-0 opacity-50">
-                <ContactScene />
-            </div>
-
-            <div className="relative z-10 container mx-auto px-6">
-                <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10 container-page">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                     {/* Left Side: Contact Info */}
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-                            Let's Create Something <span className="text-indigo-500">Extraordinary</span>
+                        <p className="overline text-ink-inverse-muted mb-2">Contact</p>
+                        <h2 className="h1 text-ink-inverse mb-6">
+                            Let's create something extraordinary
                         </h2>
-                        <p className="text-gray-400 mb-8 text-lg leading-relaxed">
+                        <p className="body-lg text-ink-inverse-muted mb-8 max-w-[34rem]">
                             Whether you have a project in mind, need a consultation, or just want to say hi, I'm always open to discussing new ideas and opportunities.
                         </p>
 
-                        <div className="flex gap-4">
+                        <div className="flex flex-wrap gap-4">
                             <a
                                 href={PERSONAL_INFO.linkedin}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-full transition-all group"
+                                className="btn btn-secondary"
                             >
-                                <Linkedin size={20} className="text-gray-400 group-hover:text-white transition-colors" />
-                                <span className="text-gray-300 group-hover:text-white font-medium">LinkedIn</span>
+                                <Linkedin size={18} aria-hidden="true" /> LinkedIn
                             </a>
                             <a
-                                href="https://github.com/attoyibi"
+                                href={PERSONAL_INFO.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-full transition-all group"
+                                className="btn btn-secondary"
                             >
-                                <Github size={20} className="text-gray-400 group-hover:text-white transition-colors" />
-                                <span className="text-gray-300 group-hover:text-white font-medium">GitHub</span>
+                                <Github size={18} aria-hidden="true" /> GitHub
                             </a>
                         </div>
                     </motion.div>
 
                     {/* Right Side: Contact Form */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="bg-neutral-900/50 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-2xl"
+                        transition={{ duration: 0.6, delay: 0.15 }}
+                        className="bg-surface-000 text-ink p-6 md:p-8 rounded-lg shadow-card"
                     >
-                        {state.succeeded || hasSubmitted ? (
-                            <div className="text-center py-12 flex flex-col items-center justify-center h-full">
-                                <div className="bg-green-500/10 text-green-400 p-4 rounded-full mb-6">
-                                    <Send size={48} />
+                        {hasSubmitted ? (
+                            <div role="status" className="text-center py-12 flex flex-col items-center justify-center">
+                                <div className="bg-lime-100 text-ink p-4 rounded-full mb-6">
+                                    <Check size={40} aria-hidden="true" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-                                <p className="text-gray-400">Thanks for reaching out! You've already sent a message.</p>
+                                <h3 className="h2 text-ink mb-2">Message sent</h3>
+                                <p className="body text-ink-muted">Thanks for reaching out! You've already sent a message.</p>
                             </div>
                         ) : (
                             <form onSubmit={handleCustomSubmit} className="space-y-5">
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">
-                                        Email Address
+                                    <label htmlFor="email" className="label block text-ink mb-2">
+                                        Email address
                                     </label>
                                     <input
                                         id="email"
                                         type="email"
                                         name="email"
-                                        className={`w-full bg-black/40 border ${emailError ? 'border-red-500' : 'border-white/10'} rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none`}
+                                        className="field"
                                         placeholder="john@example.com"
+                                        aria-invalid={emailError ? 'true' : 'false'}
+                                        aria-describedby={emailError ? 'email-error' : undefined}
                                         required
                                     />
                                     {emailError && (
-                                        <p className="text-red-400 text-sm mt-1">{emailError}</p>
+                                        <p id="email-error" className="caption text-[#b42318] mt-1">{emailError}</p>
                                     )}
                                     <ValidationError
                                         prefix="Email"
                                         field="email"
                                         errors={state.errors}
-                                        className="text-red-400 text-sm mt-1"
+                                        className="caption text-[#b42318] mt-1"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">
-                                        Your Message
+                                    <label htmlFor="message" className="label block text-ink mb-2">
+                                        Your message
                                     </label>
                                     <textarea
                                         id="message"
                                         name="message"
                                         rows={4}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none resize-none"
+                                        className="field resize-none"
                                         placeholder="Tell me about your project..."
                                         required
                                     />
@@ -157,29 +150,27 @@ const Contact = () => {
                                         prefix="Message"
                                         field="message"
                                         errors={state.errors}
-                                        className="text-red-400 text-sm mt-1"
+                                        className="caption text-[#b42318] mt-1"
                                     />
                                 </div>
 
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                <button
                                     type="submit"
                                     disabled={state.submitting}
-                                    className="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-indigo-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+                                    className="btn btn-primary w-full"
                                 >
-                                    {state.submitting ? 'Sending...' : 'Send Message'}
-                                    {!state.submitting && <Send size={18} />}
-                                </motion.button>
+                                    {state.submitting ? 'Sending...' : 'Send message'}
+                                    {!state.submitting && <Send size={16} aria-hidden="true" />}
+                                </button>
                             </form>
                         )}
                     </motion.div>
                 </div>
-            </div>
 
-            <footer className="absolute bottom-8 left-0 w-full text-center text-white/90 text-sm">
-                © {new Date().getFullYear()} {PERSONAL_INFO.name}. Built with React Three Fiber.
-            </footer>
+                <footer className="caption text-ink-inverse-muted text-center mt-12 pt-8 border-t border-white/15">
+                    © {new Date().getFullYear()} {PERSONAL_INFO.name}. Built with React Three Fiber.
+                </footer>
+            </div>
         </section>
     );
 };
