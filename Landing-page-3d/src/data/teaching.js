@@ -41,7 +41,7 @@ export const MATERIALS = [
             'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Three courses are published, one playground per course day.',
         meta: 'English and German',
         tint: true,
-        links: [],
+        links: [{ label: 'AION website prototype', href: 'https://aion-dl.vercel.app/' }],
         courses: [
             {
                 id: 'customer-success',
