@@ -38,10 +38,10 @@ export const MATERIALS = [
         audience: 'Corporate training',
         title: 'Teaching materials, playgrounds and tasks for AION',
         description:
-            'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Three courses are published, one playground per course day.',
+            'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Four courses are published, one playground per course day.',
         meta: 'English and German',
         tint: true,
-        links: [{ label: 'AION website prototype', href: 'https://aion-dl.vercel.app/' }],
+        links: [],
         courses: [
             {
                 id: 'customer-success',
@@ -104,6 +104,12 @@ export const MATERIALS = [
                     ['Day 15', 'https://aion-green-it-day15.vercel.app/'],
                     ['Day 16', 'https://aion-green-it-day16.vercel.app/'],
                 ],
+            },
+            {
+                // One website (aion-dl.vercel.app) with a route per day: /day/1/ ... /day/16/
+                id: 'digital-learning',
+                title: 'Digital Learning',
+                playgrounds: Array.from({ length: 16 }, (_, i) => [`Day ${i + 1}`, `https://aion-dl.vercel.app/day/${i + 1}/`]),
             },
         ],
     },

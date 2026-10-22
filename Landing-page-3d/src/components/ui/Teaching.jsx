@@ -11,7 +11,7 @@ const Course = ({ course }) => {
             <summary className="flex items-center justify-between gap-4 py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                 <span>
                     <span className="h3 text-ink block">{course.title}</span>
-                    <span className="caption text-ink-muted">{course.playgrounds.length} playgrounds</span>
+                    <span className="caption text-ink-muted">{course.playgrounds.length} {course.playgrounds.length === 1 ? 'playground' : 'playgrounds'}</span>
                 </span>
                 <ChevronDown
                     size={20}
