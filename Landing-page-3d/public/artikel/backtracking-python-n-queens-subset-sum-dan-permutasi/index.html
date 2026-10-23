@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backtracking: N-Queens, Subset Sum, dan Pemangkasan</title>
+<meta name="description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.">
+<meta name="keywords" content="backtracking, N-Queens, subset sum, pemangkasan, rekursi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/">
+<meta property="og:title" content="Backtracking: N-Queens, Subset Sum, dan Pemangkasan">
+<meta property="og:description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.">
+<meta property="og:image" content="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Backtracking: N-Queens, Subset Sum, dan Pemangkasan">
+<meta name="twitter:description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Backtracking: N-Queens, Subset Sum, dan Pemangkasan","description":"Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.","image":["https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"backtracking, N-Queens, subset sum, pemangkasan, rekursi","articleSection":"Algoritma & Pemrograman Python","wordCount":316,"mainEntityOfPage":"https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Backtracking: N-Queens, Subset Sum, dan Pemangkasan","item":"https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya backtracking dan DFS?","acceptedAnswer":{"@type":"Answer","text":"Backtracking adalah DFS pada pohon keputusan implisit yang membangun dan membatalkan kandidat sambil memangkas cabang."}},{"@type":"Question","name":"Apakah sudoku dapat diselesaikan dengan backtracking?","acceptedAnswer":{"@type":"Answer","text":"Ya. Isi sel kosong berurutan dengan angka 1–9 yang sah, mundur bila buntu. Solver praktis menambah heuristik memilih sel dengan pilihan paling sedikit."}},{"@type":"Question","name":"Mengapa jumlah solusi N-Queens dihitung 92 padahal ada simetri?","acceptedAnswer":{"@type":"Answer","text":"Dihitung semua penempatan berbeda; bila rotasi dan pencerminan dianggap sama ada 12 solusi unik."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#kerangka-umum">Kerangka umum</a></li><li><a href="#n-queens">N-Queens</a></li><li><a href="#seberapa-besar-pemangkasan-menolong">Seberapa besar pemangkasan menolong?</a></li><li><a href="#subset-sum">Subset sum</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Backtracking: N-Queens, Subset Sum, dan Pemangkasan</h1>
+<p class="lead">Backtracking menyusun solusi sedikit demi sedikit dan langsung mundur begitu sebuah pilihan pasti tidak mengarah ke jawaban. Ia seperti brute force yang cerdas: tetap menjelajahi pohon kemungkinan, tetapi memangkas cabang yang sia-sia.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> rekursi, list, Menara Hanoi dan permutasi</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Backtracking: N-Queens, Subset Sum, dan Pemangkasan" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menggambarkan ruang pencarian sebagai pohon keputusan</li><li>menulis kerangka umum backtracking (pilih, jelajah, batalkan)</li><li>menyelesaikan N-Queens dan subset sum</li><li>menjelaskan pemangkasan dan dampaknya terhadap jumlah simpul yang dikunjungi</li></ul></div>
+<h2 id="kerangka-umum">Kerangka umum</h2>
+<figure class="codebox"><pre data-lang="python"><code>def cari(keadaan):
+    if selesai(keadaan):
+        simpan(keadaan)
+        return
+    for pilihan in pilihan_yang_mungkin(keadaan):
+        if sah(keadaan, pilihan):          # pemangkasan: lewati bila sudah pasti gagal
+            terapkan(keadaan, pilihan)      # 1. pilih
+            cari(keadaan)                   # 2. jelajahi
+            batalkan(keadaan, pilihan)      # 3. batalkan (backtrack)</code></pre></figure>
+<h2 id="n-queens">N-Queens</h2>
+<p>Letakkan N ratu pada papan N × N sehingga tidak ada dua ratu saling menyerang (sebaris, sekolom, atau sediagonal). Kita menaruh satu ratu per baris dan hanya memilih kolom yang aman.</p>
+<figure class="codebox"><pre data-lang="python"><code>def n_queens(n):
+    solusi, kolom = [], []                 # kolom[r] = kolom ratu pada baris r
+
+    def aman(r, c):
+        for rr, cc in enumerate(kolom):
+            if cc == c or abs(cc - c) == r - rr:   # sekolom atau sediagonal
+                return False
+        return True
+
+    def cari(r):
+        if r == n:
+            solusi.append(kolom[:])
+            return
+        for c in range(n):
+            if aman(r, c):
+                kolom.append(c)
+                cari(r + 1)
+                kolom.pop()                 # backtrack
+
+    cari(0)
+    return solusi
+
+for n in [4, 6, 8]:
+    s = n_queens(n)
+    print(f&quot;N={n}: {len(s)} solusi, contoh {s[0]}&quot;)
+
+papan = n_queens(8)[0]
+for c in papan:
+    print(&quot; &quot;.join(&quot;Q&quot; if i == c else &quot;.&quot; for i in range(8)))</code></pre><pre class="runout" data-lang="keluaran"><code>N=4: 2 solusi, contoh [1, 3, 0, 2]
+N=6: 4 solusi, contoh [1, 3, 5, 0, 2, 4]
+N=8: 92 solusi, contoh [0, 4, 7, 5, 2, 6, 1, 3]
+Q . . . . . . .
+. . . . Q . . .
+. . . . . . . Q
+. . . . . Q . .
+. . Q . . . . .
+. . . . . . Q .
+. Q . . . . . .
+. . . Q . . . .</code></pre><figcaption>Jumlah solusi 4 → 2, 6 → 4, 8 → 92.</figcaption></figure>
+<h2 id="seberapa-besar-pemangkasan-menolong">Seberapa besar pemangkasan menolong?</h2>
+<figure class="codebox"><pre data-lang="python"><code>from itertools import permutations
+
+def brute_force(n):
+    hitung = 0
+    for p in permutations(range(n)):        # semua penempatan satu ratu per baris dan kolom
+        hitung += 1
+        if all(abs(p[i] - p[j]) != j - i for i in range(n) for j in range(i + 1, n)):
+            pass
+    return hitung
+
+def simpul_backtracking(n):
+    kolom, hitung = [], [0]
+    def cari(r):
+        hitung[0] += 1
+        if r == n: return
+        for c in range(n):
+            if all(cc != c and abs(cc - c) != r - rr for rr, cc in enumerate(kolom)):
+                kolom.append(c); cari(r + 1); kolom.pop()
+    cari(0)
+    return hitung[0]
+
+for n in [6, 8]:
+    print(f&quot;N={n}: brute force memeriksa {brute_force(n)} susunan; backtracking mengunjungi {simpul_backtracking(n)} simpul&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>N=6: brute force memeriksa 720 susunan; backtracking mengunjungi 153 simpul
+N=8: brute force memeriksa 40320 susunan; backtracking mengunjungi 2057 simpul</code></pre></figure>
+<h2 id="subset-sum">Subset sum</h2>
+<p>Dari sekumpulan bilangan, cari himpunan bagian yang jumlahnya tepat T. Setiap elemen punya dua pilihan: ikut atau tidak. Cabang dipangkas bila jumlah sudah melebihi T (untuk bilangan positif).</p>
+<figure class="codebox"><pre data-lang="python"><code>def subset_sum(angka, target):
+    angka = sorted(angka)
+    hasil = []
+
+    def cari(i, sisa, terpilih):
+        if sisa == 0:
+            hasil.append(terpilih[:]); return
+        if i == len(angka) or angka[i] &gt; sisa:     # pemangkasan
+            return
+        terpilih.append(angka[i])
+        cari(i + 1, sisa - angka[i], terpilih)      # ikut
+        terpilih.pop()
+        cari(i + 1, sisa, terpilih)                 # tidak ikut
+
+    cari(0, target, [])
+    return hasil
+
+print(subset_sum([3, 34, 4, 12, 5, 2], 9))</code></pre><pre class="runout" data-lang="keluaran"><code>[[2, 3, 4], [4, 5]]</code></pre></figure>
+<div data-w="compare"><script type="application/json">{"title":"Backtracking vs brute force vs DP","tabs":[{"label":"Brute force","html":"Membangkitkan semua kandidat lengkap lalu menguji. Sederhana tetapi memeriksa banyak kandidat yang jelas salah."},{"label":"Backtracking","html":"Menguji kandidat parsial dan membuang cabang yang tidak mungkin. Kasus terburuk tetap eksponensial, tetapi biasanya jauh lebih cepat."},{"label":"DP","html":"Dipakai bila submasalah tumpang tindih dan hanya perlu nilai optimum atau banyak solusi. Backtracking dipakai bila kita perlu menyebutkan semua solusi itu sendiri."}]}</script></div>
+<div class="callout warn"><b>Peringatan</b><p>Backtracking tidak menjamin cepat. Pada pengetesan terburuk (misalnya tidak ada solusi), ia tetap bisa menjelajahi hampir seluruh pohon. Pemangkasan yang baik dan urutan pilihan yang cerdas sangat menentukan.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Langkah \"batalkan\" dalam backtracking berguna untuk...","options":["Mengembalikan keadaan agar pilihan lain dapat dicoba","Menghapus rekursi","Mempercepat sorting"],"answer":0,"why":"Tanpa membatalkan, keadaan tercemar pilihan sebelumnya."},{"q":"Jumlah solusi N-Queens untuk N=8?","options":["8","40","92"],"answer":2,"why":"Ada 92 solusi (12 yang unik hingga rotasi dan pencerminan)."},{"q":"Apa yang dimaksud pemangkasan?","options":["Membuang cabang yang pasti gagal","Menghapus variabel","Menyingkat kode"],"answer":0,"why":"Menghindari penjelajahan yang sia-sia."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Berapa solusi N-Queens untuk N = 5?</summary><div>10 solusi.</div></details><details><summary>2. Modifikasi n_queens agar hanya mengembalikan solusi pertama dan berhenti.</summary><div>Kembalikan True dari cari saat n tercapai dan hentikan loop bila pemanggilan rekursif mengembalikan True.</div></details><details><summary>3. Gunakan backtracking untuk membangkitkan semua kombinasi kurung seimbang dari n pasang.</summary><div>Tambahkan "(" bila jumlah buka < n; tambahkan ")" bila jumlah tutup < jumlah buka.</div></details><details><summary>4. Mengapa subset_sum memerlukan syarat angka positif untuk pemangkasan angka[i] > sisa?</summary><div>Dengan bilangan negatif, jumlah masih dapat turun lagi sehingga cabang itu mungkin masih berhasil.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Backtracking: pilih, jelajahi, batalkan; mundur saat jalan buntu.</li><li>Pemangkasan menghemat jauh dibanding brute force.</li><li>N-Queens dan subset sum adalah contoh klasik.</li><li>Kasus terburuk tetap eksponensial.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya backtracking dan DFS?</summary><div>Backtracking adalah DFS pada pohon keputusan implisit yang membangun dan membatalkan kandidat sambil memangkas cabang.</div></details>
+<details class="faq"><summary>Apakah sudoku dapat diselesaikan dengan backtracking?</summary><div>Ya. Isi sel kosong berurutan dengan angka 1–9 yang sah, mundur bila buntu. Solver praktis menambah heuristik memilih sel dengan pilihan paling sedikit.</div></details>
+<details class="faq"><summary>Mengapa jumlah solusi N-Queens dihitung 92 padahal ada simetri?</summary><div>Dihitung semua penempatan berbeda; bila rotasi dan pencerminan dianggap sama ada 12 solusi unik.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li>Anany Levitin, Introduction to the Design and Analysis of Algorithms (Pearson)</li><li><a href="https://algs4.cs.princeton.edu/" rel="noopener" target="_blank">Sedgewick dan Wayne, Algorithms (edisi ke-4), algs4.cs.princeton.edu</a></li><li><a href="https://docs.python.org/3/library/itertools.html#itertools.permutations" rel="noopener" target="_blank">Dokumentasi Python: itertools.permutations</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/merge-sort-divide-and-conquer-python-implementasi-dan-analisis/"><img src="/artikel/merge-sort-divide-and-conquer-python-implementasi-dan-analisis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Merge Sort: Divide and Conquer, Implementasi, dan Analisis</span></a><a href="/artikel/menara-hanoi-dan-rekursi-lanjutan-python/"><img src="/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Menara Hanoi dan Rekursi Lanjutan di Python</span></a><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

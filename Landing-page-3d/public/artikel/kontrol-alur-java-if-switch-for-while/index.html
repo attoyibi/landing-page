@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontrol Alur Java: if, switch, for, while · Muhammad Muchson</title>
+<meta name="description" content="Pelajari percabangan dan perulangan di Java: if/else, switch klasik dan ekspresi switch modern, for, while, do-while, break, continue, label, dan pola umum perulangan.">
+<meta name="keywords" content="Java, if, switch, for, while">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/">
+<meta property="og:title" content="Kontrol Alur Java: if, switch, for, while">
+<meta property="og:description" content="Pelajari percabangan dan perulangan di Java: if/else, switch klasik dan ekspresi switch modern, for, while, do-while, break, continue, label, dan pola umum perulangan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kontrol Alur Java: if, switch, for, while">
+<meta name="twitter:description" content="Pelajari percabangan dan perulangan di Java: if/else, switch klasik dan ekspresi switch modern, for, while, do-while, break, continue, label, dan pola umum perulangan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kontrol Alur Java: if, switch, for, while","description":"Pelajari percabangan dan perulangan di Java: if/else, switch klasik dan ekspresi switch modern, for, while, do-while, break, continue, label, dan pola umum perulangan.","image":["https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, if, switch, for, while","articleSection":"PBO dengan Java","wordCount":274,"mainEntityOfPage":"https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Kontrol Alur Java: if, switch, for, while","item":"https://muchson.web.id/artikel/kontrol-alur-java-if-switch-for-while/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah switch bisa dipakai untuk String?","acceptedAnswer":{"@type":"Answer","text":"Ya, sejak Java 7. Java modern juga mendukung pencocokan pola pada switch."}},{"@type":"Question","name":"Kapan memakai for-each?","acceptedAnswer":{"@type":"Answer","text":"Bila hanya perlu membaca elemen tanpa indeks. Jika perlu mengubah elemen larik atau memerlukan indeks, pakai for biasa."}},{"@type":"Question","name":"Bagaimana menghindari perulangan tak berhingga?","acceptedAnswer":{"@type":"Answer","text":"Pastikan variabel dalam kondisi berubah menuju kondisi berhenti di setiap iterasi."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#percabangan-if">Percabangan: if</a></li><li><a href="#switch-klasik-dan-jebakan-fall-through">switch klasik dan jebakan fall-through</a></li><li><a href="#ekspresi-switch-modern">Ekspresi switch modern</a></li><li><a href="#perulangan">Perulangan</a></li><li><a href="#perulangan-bersarang-dan-label">Perulangan bersarang dan label</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Kontrol Alur Java: if, switch, for, while</h1>
+<p class="lead">Program yang berguna harus bisa memutuskan dan mengulang. Java menyediakan if dan switch untuk memilih jalur, serta for, while, dan do-while untuk berulang. Java modern juga menambahkan ekspresi switch yang lebih aman dan ringkas.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> tipe data dan operator Java</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Kontrol Alur Java: if, switch, for, while" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis if/else bertingkat dan ekspresi ternary</li><li>memakai switch klasik dan ekspresi switch modern</li><li>memilih for, while, atau do-while sesuai kebutuhan</li><li>memakai break, continue, dan label dengan tepat</li><li>menghindari kesalahan umum seperti off-by-one dan fall-through</li></ul></div>
+<h2 id="percabangan-if">Percabangan: if</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    static String grade(int nilai) {
+        if (nilai &gt;= 85) return &quot;A&quot;;
+        else if (nilai &gt;= 70) return &quot;B&quot;;
+        else if (nilai &gt;= 55) return &quot;C&quot;;
+        else return &quot;D&quot;;
+    }
+
+    public static void main(String[] args) {
+        int[] nilai = {92, 74, 55, 30};
+        for (int n : nilai) {
+            System.out.println(n + &quot; -&gt; &quot; + grade(n));
+        }
+        int umur = 17;
+        String status = (umur &gt;= 17) ? &quot;boleh membuat KTP&quot; : &quot;belum&quot;;
+        System.out.println(status);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>92 -&gt; A
+74 -&gt; B
+55 -&gt; C
+30 -&gt; D
+boleh membuat KTP</code></pre></figure>
+<h2 id="switch-klasik-dan-jebakan-fall-through">switch klasik dan jebakan fall-through</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        int hari = 3;
+        switch (hari) {
+            case 1:
+                System.out.println(&quot;Senin&quot;);
+                break;
+            case 2:
+                System.out.println(&quot;Selasa&quot;);
+            case 3:
+                System.out.println(&quot;Rabu&quot;);      // tanpa break, lanjut ke case berikutnya
+            case 4:
+                System.out.println(&quot;Kamis&quot;);
+                break;
+            default:
+                System.out.println(&quot;lainnya&quot;);
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Rabu
+Kamis</code></pre><figcaption>Hari = 3 mencetak Rabu dan Kamis karena case 3 tidak diakhiri break. Itulah fall-through.</figcaption></figure>
+<h2 id="ekspresi-switch-modern">Ekspresi switch modern</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        for (int bulan : new int[]{2, 4, 12}) {
+            int hari = switch (bulan) {
+                case 1, 3, 5, 7, 8, 10, 12 -&gt; 31;
+                case 4, 6, 9, 11 -&gt; 30;
+                case 2 -&gt; 28;                       // abaikan tahun kabisat
+                default -&gt; throw new IllegalArgumentException(&quot;bulan tidak valid&quot;);
+            };
+            System.out.println(&quot;bulan &quot; + bulan + &quot;: &quot; + hari + &quot; hari&quot;);
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>bulan 2: 28 hari
+bulan 4: 30 hari
+bulan 12: 31 hari</code></pre><figcaption>Tanda panah -> tidak fall-through, dan switch menghasilkan nilai. Kompiler memastikan semua kasus tercakup.</figcaption></figure>
+<h2 id="perulangan">Perulangan</h2>
+<table><thead><tr><th>Jenis</th><th>Kapan dipakai</th><th>Pola</th></tr></thead><tbody><tr><td>for</td><td>Jumlah iterasi diketahui</td><td>for (int i = 0; i < n; i++)</td></tr><tr><td>for-each</td><td>Menelusuri larik atau koleksi</td><td>for (T x : koleksi)</td></tr><tr><td>while</td><td>Berulang selama kondisi benar</td><td>while (kondisi) { ... }</td></tr><tr><td>do-while</td><td>Minimal satu kali dijalankan</td><td>do { ... } while (kondisi);</td></tr></tbody></table>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        // for: tabel kuadrat
+        for (int i = 1; i &lt;= 5; i++) System.out.print(i * i + &quot; &quot;);
+        System.out.println();
+
+        // while: jumlah digit
+        int n = 4821, jumlah = 0;
+        while (n &gt; 0) { jumlah += n % 10; n /= 10; }
+        System.out.println(&quot;jumlah digit: &quot; + jumlah);
+
+        // do-while: dijalankan minimal sekali
+        int k = 10;
+        do { System.out.println(&quot;k = &quot; + k); k++; } while (k &lt; 5);
+
+        // break &amp; continue
+        for (int i = 1; i &lt;= 10; i++) {
+            if (i % 2 == 0) continue;     // lewati genap
+            if (i &gt; 7) break;             // berhenti
+            System.out.print(i + &quot; &quot;);
+        }
+        System.out.println();
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>1 4 9 16 25 
+jumlah digit: 15
+k = 10
+1 3 5 7 </code></pre></figure>
+<h2 id="perulangan-bersarang-dan-label">Perulangan bersarang dan label</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        for (int baris = 1; baris &lt;= 4; baris++) {
+            for (int kolom = 1; kolom &lt;= baris; kolom++) System.out.print(&quot;*&quot;);
+            System.out.println();
+        }
+
+        // label: keluar dari dua perulangan sekaligus
+        int[][] m = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        cari:
+        for (int[] baris : m) {
+            for (int x : baris) {
+                if (x == 5) { System.out.println(&quot;ditemukan 5&quot;); break cari; }
+            }
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>*
+**
+***
+****
+ditemukan 5</code></pre></figure>
+<div class="callout warn"><b>Jebakan umum</b><p>Kesalahan off-by-one: untuk larik berukuran n, indeks sah 0 sampai n−1. Memakai <code>i <= n</code> memicu ArrayIndexOutOfBoundsException. Pakai for-each bila indeks tidak diperlukan.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Kapan do-while berguna?","options":["Saat badan perulangan harus berjalan minimal sekali","Saat jumlah iterasi tetap","Pada larik saja"],"answer":0,"why":"Kondisi diperiksa setelah badan dijalankan."},{"q":"Apa penyebab fall-through pada switch klasik?","options":["Tidak ada break","Terlalu banyak case","Tidak ada default"],"answer":0,"why":"Eksekusi berlanjut ke case berikutnya."},{"q":"continue melakukan...","options":["Mengakhiri seluruh perulangan","Melompat ke iterasi berikutnya","Mengulang dari awal program"],"answer":1,"why":"Sisa badan iterasi dilewati."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis FizzBuzz 1..15 dengan for dan if.</summary><div>Cek kelipatan 15 lebih dulu, lalu 3, lalu 5, selain itu cetak angkanya.</div></details><details><summary>2. Tulis perulangan yang menjumlahkan bilangan 1..100.</summary><div>Hasil 5050; for dengan jumlah += i.</div></details><details><summary>3. Ubah grade() memakai ekspresi switch? Mengapa tidak cocok?</summary><div>Switch bekerja pada nilai diskret; rentang nilai lebih alami memakai if/else atau switch dengan pola dan guard pada Java modern.</div></details><details><summary>4. Cetak segitiga bintang terbalik 4 baris.</summary><div>Perulangan luar turun dari 4 ke 1, perulangan dalam mencetak sebanyak nomor baris.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>if/else untuk keputusan, ternary untuk ekspresi singkat.</li><li>Ekspresi switch modern dengan -> lebih aman daripada switch klasik.</li><li>for untuk jumlah pasti, while untuk kondisi, do-while minimal sekali.</li><li>break, continue, dan label mengatur lompatan; awas off-by-one.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah switch bisa dipakai untuk String?</summary><div>Ya, sejak Java 7. Java modern juga mendukung pencocokan pola pada switch.</div></details>
+<details class="faq"><summary>Kapan memakai for-each?</summary><div>Bila hanya perlu membaca elemen tanpa indeks. Jika perlu mengubah elemen larik atau memerlukan indeks, pakai for biasa.</div></details>
+<details class="faq"><summary>Bagaimana menghindari perulangan tak berhingga?</summary><div>Pastikan variabel dalam kondisi berubah menuju kondisi berhenti di setiap iterasi.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html" rel="noopener" target="_blank">Oracle: Control Flow Statements</a></li><li><a href="https://dev.java/learn/language-basics/switch-expression/" rel="noopener" target="_blank">dev.java: Switch Expressions</a></li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li><li><a href="https://introcs.cs.princeton.edu/java/home/" rel="noopener" target="_blank">Sedgewick dan Wayne, Introduction to Programming in Java</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/array-dan-arraylist-java-ukuran-tetap-vs-dinamis/"><img src="/artikel/array-dan-arraylist-java-ukuran-tetap-vs-dinamis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Array dan ArrayList di Java: Tetap vs Dinamis</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

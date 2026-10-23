@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynamic Programming: Memoization, LCS, dan Knapsack</title>
+<meta name="description" content="Kuasai dynamic programming dengan Fibonacci, memoization vs tabulation, LCS, dan 0/1 knapsack. Ada tabel DP interaktif, kode Python yang dijalankan, dan analisis kompleksitas.">
+<meta name="keywords" content="dynamic programming, memoization, LCS, knapsack, optimasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/">
+<meta property="og:title" content="Dynamic Programming: Memoization, LCS, dan Knapsack">
+<meta property="og:description" content="Kuasai dynamic programming dengan Fibonacci, memoization vs tabulation, LCS, dan 0/1 knapsack. Ada tabel DP interaktif, kode Python yang dijalankan, dan analisis kompleksitas.">
+<meta property="og:image" content="https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dynamic Programming: Memoization, LCS, dan Knapsack">
+<meta name="twitter:description" content="Kuasai dynamic programming dengan Fibonacci, memoization vs tabulation, LCS, dan 0/1 knapsack. Ada tabel DP interaktif, kode Python yang dijalankan, dan analisis kompleksitas.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Dynamic Programming: Memoization, LCS, dan Knapsack","description":"Kuasai dynamic programming dengan Fibonacci, memoization vs tabulation, LCS, dan 0/1 knapsack. Ada tabel DP interaktif, kode Python yang dijalankan, dan analisis kompleksitas.","image":["https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"dynamic programming, memoization, LCS, knapsack, optimasi","articleSection":"Algoritma & Pemrograman Python","wordCount":382,"mainEntityOfPage":"https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Dynamic Programming: Memoization, LCS, dan Knapsack","item":"https://muchson.web.id/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kapan memilih DP daripada greedy?","acceptedAnswer":{"@type":"Answer","text":"Saat pilihan lokal terbaik tidak menjamin optimum global, misalnya knapsack 0/1 atau koin dengan pecahan sembarang."}},{"@type":"Question","name":"Mengapa disebut \"dynamic programming\"?","acceptedAnswer":{"@type":"Answer","text":"Richard Bellman memilih nama itu pada 1950-an; \"programming\" di sini berarti perencanaan bertahap (tabular), bukan menulis program."}},{"@type":"Question","name":"Apakah lru_cache cukup untuk semua kasus?","acceptedAnswer":{"@type":"Answer","text":"Untuk prototipe ya, tetapi rekursi dalam dapat melampaui batas kedalaman dan cache tak terbatas memakan memori."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#masalah-awal-fibonacci-yang-boros">Masalah awal: Fibonacci yang boros</a></li><li><a href="#memoization-simpan-hasil-yang-sudah-dihitung">Memoization: simpan hasil yang sudah dihitung</a></li><li><a href="#tabulation-isi-tabel-dari-bawah">Tabulation: isi tabel dari bawah</a></li><li><a href="#resep-menyusun-solusi-dp">Resep menyusun solusi DP</a></li><li><a href="#contoh-longest-common-subsequence-lcs">Contoh: Longest Common Subsequence (LCS)</a></li><li><a href="#contoh-0-1-knapsack">Contoh: 0/1 Knapsack</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Dynamic Programming: Memoization, LCS, dan Knapsack</h1>
+<p class="lead">Dynamic programming (DP) adalah rekursi yang tidak lupa. Banyak masalah memecah dirinya menjadi submasalah yang sama berulang kali; DP menyimpan jawabannya agar tiap submasalah dihitung sekali. Hasilnya: dari eksponensial menjadi polinomial.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> rekursi, list 2 dimensi, dictionary, kompleksitas</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Dynamic Programming: Memoization, LCS, dan Knapsack" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengenali submasalah yang tumpang tindih dan substruktur optimal</li><li>menerapkan memoization (top-down) dan tabulation (bottom-up)</li><li>menyelesaikan LCS dan 0/1 knapsack dengan tabel DP</li><li>merekonstruksi solusi (bukan hanya nilainya) dari tabel</li><li>menganalisis waktu dan memori solusi DP</li></ul></div>
+<h2 id="masalah-awal-fibonacci-yang-boros">Masalah awal: Fibonacci yang boros</h2>
+<figure class="codebox"><pre data-lang="python"><code>import time
+
+def fib(n):
+    return n if n &lt; 2 else fib(n - 1) + fib(n - 2)
+
+pemanggilan = 0
+def fib_hitung(n):
+    global pemanggilan
+    pemanggilan += 1
+    return n if n &lt; 2 else fib_hitung(n - 1) + fib_hitung(n - 2)
+
+for n in [10, 20, 25]:
+    pemanggilan = 0
+    fib_hitung(n)
+    print(f&quot;fib({n}) membutuhkan {pemanggilan} pemanggilan&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>fib(10) membutuhkan 177 pemanggilan
+fib(20) membutuhkan 21891 pemanggilan
+fib(25) membutuhkan 242785 pemanggilan</code></pre><figcaption>Jumlah pemanggilan tumbuh eksponensial karena fib(k) yang sama dihitung berulang kali.</figcaption></figure>
+<h2 id="memoization-simpan-hasil-yang-sudah-dihitung">Memoization: simpan hasil yang sudah dihitung</h2>
+<figure class="codebox"><pre data-lang="python"><code>from functools import lru_cache
+
+pemanggilan = 0
+@lru_cache(maxsize=None)
+def fib_memo(n):
+    global pemanggilan
+    pemanggilan += 1
+    return n if n &lt; 2 else fib_memo(n - 1) + fib_memo(n - 2)
+
+print(fib_memo(90), &quot;dengan&quot;, pemanggilan, &quot;perhitungan nyata&quot;)   # linear, bukan eksponensial</code></pre><pre class="runout" data-lang="keluaran"><code>2880067194370816120 dengan 91 perhitungan nyata</code></pre></figure>
+<h2 id="tabulation-isi-tabel-dari-bawah">Tabulation: isi tabel dari bawah</h2>
+<figure class="codebox"><pre data-lang="python"><code>def fib_tabel(n):
+    if n &lt; 2: return n
+    sebelum, sekarang = 0, 1
+    for _ in range(2, n + 1):
+        sebelum, sekarang = sekarang, sebelum + sekarang
+    return sekarang
+
+print(fib_tabel(90))</code></pre><pre class="runout" data-lang="keluaran"><code>2880067194370816120</code></pre><figcaption>Karena hanya dua nilai terakhir yang dipakai, memori cukup O(1).</figcaption></figure>
+<div data-w="compare"><script type="application/json">{"title":"Top-down atau bottom-up?","tabs":[{"label":"Memoization (top-down)","html":"Tulis rekursi apa adanya lalu tambahkan cache. Hanya menghitung submasalah yang dibutuhkan. Batas kedalaman rekursi bisa jadi kendala."},{"label":"Tabulation (bottom-up)","html":"Isi tabel dari submasalah terkecil secara iteratif. Tanpa rekursi, sering lebih cepat dan memudahkan optimasi memori, tetapi menghitung semua submasalah."}]}</script></div>
+<h2 id="resep-menyusun-solusi-dp">Resep menyusun solusi DP</h2>
+<figure class="diagram"><svg viewBox="0 0 542 228" role="img" aria-label="Lima langkah DP" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Definisikan state</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">apa arti dp[i] atau</tspan><tspan x="85" dy="14">dp[i][j]?</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Tulis rekurensi</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">hubungkan state dengan</tspan><tspan x="271" dy="14">state lebih kecil</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Tentukan kasus</tspan><tspan x="457" dy="16">dasar</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">nilai awal tabel</tspan></text><path d="M457 98 V124 H85 V130" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="150" r="11" fill="#7a3fb4"/><text x="26" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Tentukan urutan</tspan><tspan x="85" dy="16">isi</tspan></text><text x="85" y="210" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">dari kecil ke besar</tspan></text><line x1="164" y1="176" x2="192" y2="176" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="150" r="11" fill="#b3261e"/><text x="212" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Baca jawaban</tspan></text><text x="271" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">dan rekonstruksi bila</tspan><tspan x="271" dy="14">perlu</tspan></text></svg></figure>
+<h2 id="contoh-longest-common-subsequence-lcs">Contoh: Longest Common Subsequence (LCS)</h2>
+<p>LCS dua string adalah subsekuens terpanjang yang muncul di keduanya dengan urutan tetap (tidak harus berurutan rapat). Misalnya LCS dari "ABCBDAB" dan "BDCABA" panjangnya 4. Aplikasinya: perbandingan berkas (diff), bioinformatika.</p>
+<p class="formula">dp[i][j] = dp[i−1][j−1] + 1  bila a[i] = b[j];  jika tidak,  max(dp[i−1][j], dp[i][j−1])</p>
+<figure class="codebox"><pre data-lang="python"><code>def lcs(a, b):
+    m, n = len(a), len(b)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if a[i - 1] == b[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    # rekonstruksi: telusuri dari pojok kanan bawah
+    hasil, i, j = [], m, n
+    while i &gt; 0 and j &gt; 0:
+        if a[i - 1] == b[j - 1]:
+            hasil.append(a[i - 1]); i -= 1; j -= 1
+        elif dp[i - 1][j] &gt;= dp[i][j - 1]:
+            i -= 1
+        else:
+            j -= 1
+    return dp, &quot;&quot;.join(reversed(hasil))
+
+dp, seq = lcs(&quot;ABCBDAB&quot;, &quot;BDCABA&quot;)
+print(&quot;panjang:&quot;, dp[-1][-1], &quot; contoh LCS:&quot;, seq)
+for baris in dp:
+    print(baris)</code></pre><pre class="runout" data-lang="keluaran"><code>panjang: 4  contoh LCS: BCBA
+[0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 1, 1]
+[0, 1, 1, 1, 1, 2, 2]
+[0, 1, 1, 2, 2, 2, 2]
+[0, 1, 1, 2, 2, 3, 3]
+[0, 1, 2, 2, 2, 3, 3]
+[0, 1, 2, 2, 3, 3, 4]
+[0, 1, 2, 2, 3, 4, 4]</code></pre><figcaption>Tabel dp berukuran (m+1) × (n+1): waktu dan memori O(m·n).</figcaption></figure>
+<h2 id="contoh-0-1-knapsack">Contoh: 0/1 Knapsack</h2>
+<p>Sebuah ransel berkapasitas W. Setiap barang punya berat dan nilai; ambil subset dengan total nilai maksimum tanpa melampaui kapasitas (tiap barang diambil atau tidak, sehingga "0/1"). Greedy berdasarkan nilai per berat <b>tidak</b> menjamin optimal di sini.</p>
+<figure class="codebox"><pre data-lang="python"><code>def knapsack(barang, kapasitas):
+    n = len(barang)
+    dp = [[0] * (kapasitas + 1) for _ in range(n + 1)]
+    for i, (nama, berat, nilai) in enumerate(barang, 1):
+        for w in range(kapasitas + 1):
+            dp[i][w] = dp[i - 1][w]                          # tidak ambil
+            if berat &lt;= w:
+                dp[i][w] = max(dp[i][w], dp[i - 1][w - berat] + nilai)   # ambil
+    # rekonstruksi barang terpilih
+    w, dipilih = kapasitas, []
+    for i in range(n, 0, -1):
+        if dp[i][w] != dp[i - 1][w]:
+            nama, berat, nilai = barang[i - 1]
+            dipilih.append(nama); w -= berat
+    return dp[n][kapasitas], dipilih[::-1]
+
+barang = [(&quot;laptop&quot;, 3, 40), (&quot;kamera&quot;, 2, 28), (&quot;buku&quot;, 1, 10), (&quot;jaket&quot;, 2, 12)]
+print(knapsack(barang, 5))
+
+# bukti greedy rasio nilai/berat bisa salah
+barang2 = [(&quot;A&quot;, 10, 60), (&quot;B&quot;, 20, 100), (&quot;C&quot;, 30, 120)]     # rasio nilai/berat: 6, 5, 4
+print(&quot;DP kapasitas 50:&quot;, knapsack(barang2, 50), &quot;(greedy rasio: A+B = 160)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>(68, ['laptop', 'kamera'])
+DP kapasitas 50: (220, ['B', 'C']) (greedy rasio: A+B = 160)</code></pre><figcaption>Greedy rasio memilih A lalu B (nilai 160), padahal B+C bernilai 220. DP menemukan optimum.</figcaption></figure>
+<div class="callout info"><b>Catatan teori</b><p>Kompleksitas knapsack O(n·W) disebut <b>pseudo-polinomial</b>: polinomial terhadap nilai W, tetapi eksponensial terhadap jumlah bit yang menyatakan W. Masalah 0/1 knapsack tergolong NP-hard.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Dua ciri masalah yang cocok untuk DP?","options":["Submasalah tumpang tindih dan substruktur optimal","Data terurut dan unik","Hanya angka bulat"],"answer":0,"why":"Itu syarat klasik DP."},{"q":"Kompleksitas waktu LCS dua string panjang m dan n?","options":["O(m + n)","O(m·n)","O(2^m)"],"answer":1,"why":"Setiap sel tabel dihitung sekali."},{"q":"Perbedaan memoization dan tabulation?","options":["Memoization top-down dengan cache, tabulation bottom-up dengan tabel","Tidak ada beda","Tabulation memakai rekursi"],"answer":0,"why":"Arah penyelesaian yang berbeda."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat fungsi untuk menghitung jumlah cara menaiki tangga n anak tangga bila boleh naik 1 atau 2 anak tangga sekaligus.</summary><div>dp[n] = dp[n-1] + dp[n-2] dengan dp[0] = dp[1] = 1; setara Fibonacci.</div></details><details><summary>2. Hitung LCS "AGGTAB" dan "GXTXAYB" secara manual.</summary><div>LCS = "GTAB", panjang 4.</div></details><details><summary>3. Optimalkan memori knapsack menjadi O(W).</summary><div>Pakai satu baris dp, perbarui kapasitas dari besar ke kecil agar tiap barang dipakai satu kali.</div></details><details><summary>4. Ubah min_koin pada materi greedy menjadi menghitung banyaknya cara menukar suatu nilai.</summary><div>dp[0] = 1; untuk setiap koin, untuk n dari koin sampai nilai: dp[n] += dp[n - koin].</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>DP menyimpan hasil submasalah agar tidak dihitung ulang.</li><li>Memoization (top-down, cache) dan tabulation (bottom-up, tabel).</li><li>Resep: state, rekurensi, kasus dasar, urutan isi, rekonstruksi.</li><li>LCS O(m·n); knapsack O(n·W), pseudo-polinomial.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Kapan memilih DP daripada greedy?</summary><div>Saat pilihan lokal terbaik tidak menjamin optimum global, misalnya knapsack 0/1 atau koin dengan pecahan sembarang.</div></details>
+<details class="faq"><summary>Mengapa disebut &quot;dynamic programming&quot;?</summary><div>Richard Bellman memilih nama itu pada 1950-an; "programming" di sini berarti perencanaan bertahap (tabular), bukan menulis program.</div></details>
+<details class="faq"><summary>Apakah lru_cache cukup untuk semua kasus?</summary><div>Untuk prototipe ya, tetapi rekursi dalam dapat melampaui batas kedalaman dan cache tak terbatas memakan memori.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li>Jon Kleinberg dan Éva Tardos, Algorithm Design (Pearson)</li><li><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" rel="noopener" target="_blank">MIT OpenCourseWare 6.006: Introduction to Algorithms</a></li><li><a href="https://docs.python.org/3/library/functools.html#functools.lru_cache" rel="noopener" target="_blank">Dokumentasi Python: functools.lru_cache</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/"><img src="/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma Greedy: Koin, Activity Selection, dan Batasannya</span></a><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

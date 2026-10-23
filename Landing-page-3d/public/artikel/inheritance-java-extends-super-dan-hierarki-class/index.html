@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inheritance Java: extends, super, dan Hierarki</title>
+<meta name="description" content="Pelajari pewarisan di Java: extends, super, urutan konstruktor, overriding, protected, class Object, dan kapan komposisi lebih baik, dengan hierarki pegawai yang dijalankan.">
+<meta name="keywords" content="Java, inheritance, extends, super, overriding">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/">
+<meta property="og:title" content="Inheritance Java: extends, super, dan Hierarki">
+<meta property="og:description" content="Pelajari pewarisan di Java: extends, super, urutan konstruktor, overriding, protected, class Object, dan kapan komposisi lebih baik, dengan hierarki pegawai yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Inheritance Java: extends, super, dan Hierarki">
+<meta name="twitter:description" content="Pelajari pewarisan di Java: extends, super, urutan konstruktor, overriding, protected, class Object, dan kapan komposisi lebih baik, dengan hierarki pegawai yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Inheritance Java: extends, super, dan Hierarki","description":"Pelajari pewarisan di Java: extends, super, urutan konstruktor, overriding, protected, class Object, dan kapan komposisi lebih baik, dengan hierarki pegawai yang dijalankan.","image":["https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, inheritance, extends, super, overriding","articleSection":"PBO dengan Java","wordCount":340,"mainEntityOfPage":"https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Inheritance Java: extends, super, dan Hierarki","item":"https://muchson.web.id/artikel/inheritance-java-extends-super-dan-hierarki-class/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya overriding dan overloading?","acceptedAnswer":{"@type":"Answer","text":"Overriding mengganti method induk pada subclass (tanda tangan sama); overloading menyediakan beberapa versi dengan parameter berbeda dalam satu class."}},{"@type":"Question","name":"Apakah private ikut diwarisi?","acceptedAnswer":{"@type":"Answer","text":"Anggota private ada pada objek tetapi tidak dapat diakses langsung oleh subclass; gunakan method yang diwariskan untuk mengaksesnya."}},{"@type":"Question","name":"Berapa dalam hierarki yang wajar?","acceptedAnswer":{"@type":"Answer","text":"Semakin dangkal semakin baik; tiga tingkat sudah patut dipertanyakan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#hubungan-adalah-sebuah">Hubungan &quot;adalah sebuah&quot;</a></li><li><a href="#aturan-overriding">Aturan overriding</a></li><li><a href="#semua-class-mewarisi-object">Semua class mewarisi Object</a></li><li><a href="#pewarisan-atau-komposisi">Pewarisan atau komposisi?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Inheritance Java: extends, super, dan Hierarki</h1>
+<p class="lead">Pewarisan memungkinkan class baru memakai dan memperluas class yang sudah ada. Dipakai tepat, ia menghilangkan duplikasi dan memodelkan hubungan "adalah sebuah". Dipakai berlebihan, ia menghasilkan hierarki kaku yang sulit diubah.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> enkapsulasi, konstruktor</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Inheritance Java: extends, super, dan Hierarki" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat subclass dengan extends dan memanggil super</li><li>memprediksi urutan pemanggilan konstruktor</li><li>melakukan overriding dengan @Override dan memahami aturannya</li><li>menjelaskan class Object dan method toString/equals</li><li>menilai kapan memilih komposisi dibanding pewarisan</li></ul></div>
+<h2 id="hubungan-adalah-sebuah">Hubungan "adalah sebuah"</h2>
+<figure class="diagram"><svg viewBox="0 0 560 245" role="img" aria-label="Hierarki pegawai" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="5u76g-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="5u76g-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="5u76g-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="5u76g-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="5u76g-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="168.9,155 230,100" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#5u76g-open)"/><rect x="171.34444444444446" y="118.5" width="56.199999999999996" height="17" rx="4" fill="#fff" opacity=".92"/><text x="199.44444444444446" y="131.5" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">extends</text><polyline points="391.1,155 330,100" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#5u76g-open)"/><rect x="332.4555555555555" y="118.5" width="56.199999999999996" height="17" rx="4" fill="#fff" opacity=".92"/><text x="360.55555555555554" y="131.5" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">extends</text><rect x="185" y="10" width="190" height="90" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Pegawai</text><line x1="185" y1="38" x2="375" y2="38" stroke="#1e5ab2" stroke-width="1.5"/><text x="193" y="53" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">nama</text><text x="193" y="70" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">gajiPokok</text><line x1="185" y1="79" x2="375" y2="79" stroke="#1e5ab2" stroke-width="1.5"/><text x="193" y="94" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">gaji()</text><rect x="35" y="155" width="190" height="70" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="174" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Manajer</text><line x1="35" y1="183" x2="225" y2="183" stroke="#1e5ab2" stroke-width="1.5"/><text x="43" y="198" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">tunjangan</text><line x1="35" y1="207" x2="225" y2="207" stroke="#1e5ab2" stroke-width="1.5"/><text x="43" y="222" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">gaji()</text><rect x="335" y="155" width="190" height="70" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="430" y="174" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Teknisi</text><line x1="335" y1="183" x2="525" y2="183" stroke="#1e5ab2" stroke-width="1.5"/><text x="343" y="198" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">jamLembur</text><line x1="335" y1="207" x2="525" y2="207" stroke="#1e5ab2" stroke-width="1.5"/><text x="343" y="222" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">gaji()</text></svg><figcaption>Manajer adalah sebuah Pegawai; ia mewarisi nama dan gajiPokok dan menambah tunjangan.</figcaption></figure>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Pegawai {
+    protected String nama;
+    protected double gajiPokok;
+
+    Pegawai(String nama, double gajiPokok) {
+        this.nama = nama;
+        this.gajiPokok = gajiPokok;
+        System.out.println(&quot;  konstruktor Pegawai&quot;);
+    }
+
+    double gaji() { return gajiPokok; }
+
+    @Override public String toString() { return nama + &quot; menerima Rp&quot; + String.format(&quot;%.0f&quot;, gaji()); }
+}
+
+class Manajer extends Pegawai {
+    private double tunjangan;
+
+    Manajer(String nama, double gajiPokok, double tunjangan) {
+        super(nama, gajiPokok);              // wajib di baris pertama
+        this.tunjangan = tunjangan;
+        System.out.println(&quot;  konstruktor Manajer&quot;);
+    }
+
+    @Override double gaji() { return super.gaji() + tunjangan; }   // memperluas perilaku induk
+}
+
+class Teknisi extends Pegawai {
+    private int jamLembur;
+    Teknisi(String nama, double gajiPokok, int jamLembur) {
+        super(nama, gajiPokok);
+        this.jamLembur = jamLembur;
+    }
+    @Override double gaji() { return gajiPokok + jamLembur * 50_000; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(&quot;membuat Manajer:&quot;);
+        Pegawai m = new Manajer(&quot;Rina&quot;, 8_000_000, 3_000_000);
+        Pegawai t = new Teknisi(&quot;Dodi&quot;, 5_000_000, 10);
+        System.out.println(m);
+        System.out.println(t);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>membuat Manajer:
+  konstruktor Pegawai
+  konstruktor Manajer
+  konstruktor Pegawai
+Rina menerima Rp11000000
+Dodi menerima Rp5500000</code></pre><figcaption>Konstruktor induk selalu berjalan lebih dulu. Jika Anda tidak menulis super(...), Java menyisipkan super() tanpa argumen.</figcaption></figure>
+<h2 id="aturan-overriding">Aturan overriding</h2>
+<ul><li>Gunakan <code>@Override</code>: kompiler akan memberi error bila method tidak benar-benar menimpa (salah ketik nama atau parameter).</li><li>Nama, parameter, dan (kompatibel) tipe kembalian harus sama dengan method induk.</li><li>Akses tidak boleh lebih sempit (public tidak bisa menjadi private).</li><li>Method <code>final</code> tidak bisa ditimpa; class <code>final</code> tidak bisa diwarisi.</li><li>Method <code>static</code> tidak ditimpa tetapi disembunyikan (hiding).</li></ul>
+<h2 id="semua-class-mewarisi-object">Semua class mewarisi Object</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Titik {
+    final int x, y;
+    Titik(int x, int y) { this.x = x; this.y = y; }
+}
+
+class TitikBaik {
+    final int x, y;
+    TitikBaik(int x, int y) { this.x = x; this.y = y; }
+    @Override public boolean equals(Object o) {
+        return o instanceof TitikBaik t &amp;&amp; t.x == x &amp;&amp; t.y == y;
+    }
+    @Override public int hashCode() { return 31 * x + y; }
+    @Override public String toString() { return &quot;(&quot; + x + &quot;, &quot; + y + &quot;)&quot;; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new Titik(1, 2).equals(new Titik(1, 2)));          // pakai equals bawaan Object (alamat)
+        System.out.println(new TitikBaik(1, 2).equals(new TitikBaik(1, 2)));
+        System.out.println(new TitikBaik(3, 4));                               // toString kustom
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>false
+true
+(3, 4)</code></pre><figcaption>Ketika equals ditimpa, hashCode juga harus ditimpa agar objek bekerja benar di HashMap dan HashSet.</figcaption></figure>
+<h2 id="pewarisan-atau-komposisi">Pewarisan atau komposisi?</h2>
+<div data-w="compare"><script type="application/json">{"title":"Pilih yang tepat","tabs":[{"label":"Pewarisan","html":"Cocok bila subclass benar-benar \u003cb>jenis\u003c/b> dari induk dan dapat dipakai di mana pun induk dipakai (prinsip substitusi Liskov). Contoh: Manajer adalah Pegawai."},{"label":"Komposisi","html":"Cocok bila hubungannya \"memiliki\" atau sekadar ingin memakai ulang perilaku. Contoh: Mobil \u003cb>memiliki\u003c/b> Mesin. Lebih fleksibel dan tidak mengikat ke hierarki. Pedoman klasik: utamakan komposisi dibanding pewarisan."}]}</script></div>
+<div class="callout warn"><b>Pelajaran dari pustaka standar</b><p>Contoh peringatan: kelas Stack yang mewarisi Vector (di pustaka lama Java) membuka semua method Vector sehingga pengguna dapat menyisip di tengah dan merusak sifat LIFO. Desain yang baik memakai komposisi.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Kata kunci untuk mewarisi class?","options":["extends","implements","inherits"],"answer":0,"why":"implements untuk interface."},{"q":"Konstruktor mana yang berjalan lebih dulu saat membuat Manajer?","options":["Manajer","Pegawai (induk)","Object saja"],"answer":1,"why":"Induk diinisialisasi sebelum anak."},{"q":"Fungsi @Override?","options":["Mempercepat method","Meminta kompiler memeriksa bahwa method benar-benar menimpa","Membuat method static"],"answer":1,"why":"Menangkap salah ketik pada tanda tangan method."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan class Direktur yang mewarisi Manajer dengan bonus tahunan di gaji.</summary><div>Subclass baru dengan super(...) dan override gaji() yang memanggil super.gaji() + bonus.</div></details><details><summary>2. Mengapa Java tidak mendukung pewarisan class ganda?</summary><div>Menghindari ambiguitas (masalah berlian) saat dua induk punya method yang sama; kebutuhan itu diselesaikan dengan interface.</div></details><details><summary>3. Apa yang terjadi bila subclass tidak memanggil super(...) dan induk tidak punya konstruktor tanpa parameter?</summary><div>Error kompilasi: konstruktor induk yang tanpa argumen tidak ditemukan.</div></details><details><summary>4. Tulis equals dan hashCode untuk class Mahasiswa dengan kunci nim.</summary><div>Bandingkan nim di equals (dengan pemeriksaan tipe) dan hashCode dari nim.hashCode().</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>extends mewarisi atribut dan method; super mengakses induk dan memanggil konstruktornya.</li><li>Konstruktor induk berjalan sebelum anak.</li><li>Overriding dengan @Override; ikuti aturan akses dan tanda tangan.</li><li>Pewarisan memodelkan is-a; utamakan komposisi bila hubungannya has-a.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya overriding dan overloading?</summary><div>Overriding mengganti method induk pada subclass (tanda tangan sama); overloading menyediakan beberapa versi dengan parameter berbeda dalam satu class.</div></details>
+<details class="faq"><summary>Apakah private ikut diwarisi?</summary><div>Anggota private ada pada objek tetapi tidak dapat diakses langsung oleh subclass; gunakan method yang diwariskan untuk mengaksesnya.</div></details>
+<details class="faq"><summary>Berapa dalam hierarki yang wajar?</summary><div>Semakin dangkal semakin baik; tiga tingkat sudah patut dipertanyakan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/IandI/index.html" rel="noopener" target="_blank">Oracle: Inheritance (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" rel="noopener" target="_blank">Java SE API: Object</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OOP di Python: Class, Inheritance, dan Polimorfisme</title>
+<meta name="description" content="Pelajari pemrograman berorientasi objek di Python: class, objek, enkapsulasi, pewarisan, polimorfisme, metode khusus, dan dataclass, dengan contoh yang dijalankan dan latihan.">
+<meta name="keywords" content="OOP, class, inheritance, polimorfisme, dataclass, Python">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/">
+<meta property="og:title" content="OOP di Python: Class, Inheritance, dan Polimorfisme">
+<meta property="og:description" content="Pelajari pemrograman berorientasi objek di Python: class, objek, enkapsulasi, pewarisan, polimorfisme, metode khusus, dan dataclass, dengan contoh yang dijalankan dan latihan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OOP di Python: Class, Inheritance, dan Polimorfisme">
+<meta name="twitter:description" content="Pelajari pemrograman berorientasi objek di Python: class, objek, enkapsulasi, pewarisan, polimorfisme, metode khusus, dan dataclass, dengan contoh yang dijalankan dan latihan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"OOP di Python: Class, Inheritance, dan Polimorfisme","description":"Pelajari pemrograman berorientasi objek di Python: class, objek, enkapsulasi, pewarisan, polimorfisme, metode khusus, dan dataclass, dengan contoh yang dijalankan dan latihan.","image":["https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"OOP, class, inheritance, polimorfisme, dataclass, Python","articleSection":"Algoritma & Pemrograman Python","wordCount":284,"mainEntityOfPage":"https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"OOP di Python: Class, Inheritance, dan Polimorfisme","item":"https://muchson.web.id/artikel/pemrograman-berorientasi-objek-python-class-inheritance-dan-polimorfisme/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Python punya private?","acceptedAnswer":{"@type":"Answer","text":"Tidak sejati. Awalan _ adalah konvensi; awalan __ melakukan name mangling tetapi tetap bisa diakses bila sengaja."}},{"@type":"Question","name":"Apa beda metode, classmethod, dan staticmethod?","acceptedAnswer":{"@type":"Answer","text":"Metode biasa menerima self (objek); classmethod menerima cls (kelas); staticmethod tidak menerima keduanya dan hanya berada di namespace kelas."}},{"@type":"Question","name":"Apakah Python mendukung multiple inheritance?","acceptedAnswer":{"@type":"Answer","text":"Ya, dengan urutan pencarian metode (MRO) yang ditentukan algoritma C3. Gunakan hemat."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#class-dan-objek">Class dan objek</a></li><li><a href="#enkapsulasi-dengan-property">Enkapsulasi dengan property</a></li><li><a href="#pewarisan-dan-polimorfisme">Pewarisan dan polimorfisme</a></li><li><a href="#duck-typing">Duck typing</a></li><li><a href="#metode-khusus-dan-dataclass">Metode khusus dan dataclass</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>OOP di Python: Class, Inheritance, dan Polimorfisme</h1>
+<p class="lead">OOP mengorganisasi program sebagai kumpulan objek yang menyimpan data sekaligus perilaku. Python mendukungnya dengan sintaks ringkas. Materi ini menjadi jembatan menuju materi PBO dengan Java: konsepnya sama, hanya sintaksnya yang berbeda.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi, list dan dictionary</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="OOP di Python: Class, Inheritance, dan Polimorfisme" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat class dengan atribut dan metode</li><li>menerapkan enkapsulasi lewat konvensi dan property</li><li>memakai pewarisan dan super()</li><li>menunjukkan polimorfisme lewat overriding dan duck typing</li><li>memakai metode khusus (__str__, __eq__, __lt__) dan dataclass</li></ul></div>
+<h2 id="class-dan-objek">Class dan objek</h2>
+<figure class="codebox"><pre data-lang="python"><code>class Mahasiswa:
+    jumlah = 0                                  # atribut kelas (milik semua objek)
+
+    def __init__(self, nim, nama):
+        self.nim = nim                          # atribut objek
+        self.nama = nama
+        self._nilai = []                        # awalan _ : konvensi &quot;internal&quot;
+        Mahasiswa.jumlah += 1
+
+    def tambah_nilai(self, n):
+        if not 0 &lt;= n &lt;= 100:
+            raise ValueError(&quot;nilai harus 0..100&quot;)
+        self._nilai.append(n)
+
+    def rata_rata(self):
+        return sum(self._nilai) / len(self._nilai) if self._nilai else 0.0
+
+    def __str__(self):
+        return f&quot;{self.nim} - {self.nama} (rata-rata {self.rata_rata():.1f})&quot;
+
+a = Mahasiswa(&quot;A01&quot;, &quot;Ani&quot;)
+b = Mahasiswa(&quot;A02&quot;, &quot;Budi&quot;)
+for n in (80, 90, 100): a.tambah_nilai(n)
+b.tambah_nilai(70)
+print(a); print(b)
+print(&quot;jumlah objek:&quot;, Mahasiswa.jumlah)</code></pre><pre class="runout" data-lang="keluaran"><code>A01 - Ani (rata-rata 90.0)
+A02 - Budi (rata-rata 70.0)
+jumlah objek: 2</code></pre></figure>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri pembuatan objek","desc":"Perhatikan self menunjuk ke objek yang dibuat dan atribut terisi saat __init__ berjalan.","code":"class Titik:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    def geser(self, dx):\n        self.x = self.x + dx\n\np = Titik(1, 2)\np.geser(5)\nprint(p.x, p.y)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":1,"stack":[{"name":"(modul)","vars":{}},{"name":"Titik","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{}},{"name":"Titik","vars":{}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{}},{"name":"Titik","vars":{}}],"out":""},{"line":8,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{}},{"name":"__init__","vars":{"self":"\u003c__main__.Titik object at 0x000001D90880EBA0>","x":"1","y":"2"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{}},{"name":"__init__","vars":{"self":"\u003c__main__.Titik object at 0x000001D90880EBA0>","x":"1","y":"2"}}],"out":""},{"line":9,"stack":[{"name":"(modul)","vars":{"p":"\u003c__main__.Titik object at 0x000001D90880EBA0>"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"p":"\u003c__main__.Titik object at 0x000001D90880EBA0>"}},{"name":"geser","vars":{"self":"\u003c__main__.Titik object at 0x000001D90880EBA0>","dx":"5"}}],"out":""},{"line":10,"stack":[{"name":"(modul)","vars":{"p":"\u003c__main__.Titik object at 0x000001D90880EBA0>"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"p":"\u003c__main__.Titik object at 0x000001D90880EBA0>"}}],"out":"6 2\n"}]}</script></div>
+<h2 id="enkapsulasi-dengan-property">Enkapsulasi dengan property</h2>
+<figure class="codebox"><pre data-lang="python"><code>class Rekening:
+    def __init__(self, saldo=0):
+        self._saldo = saldo
+
+    @property
+    def saldo(self):                 # dibaca seperti atribut biasa
+        return self._saldo
+
+    def setor(self, jumlah):
+        if jumlah &lt;= 0:
+            raise ValueError(&quot;jumlah harus positif&quot;)
+        self._saldo += jumlah
+
+    def tarik(self, jumlah):
+        if jumlah &gt; self._saldo:
+            raise ValueError(&quot;saldo tidak cukup&quot;)
+        self._saldo -= jumlah
+
+r = Rekening(100)
+r.setor(50)
+print(r.saldo)
+try:
+    r.tarik(500)
+except ValueError as e:
+    print(&quot;ditolak:&quot;, e)
+try:
+    r.saldo = 1_000_000              # property tanpa setter: tidak bisa diubah langsung
+except AttributeError as e:
+    print(&quot;AttributeError&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>150
+ditolak: saldo tidak cukup
+AttributeError</code></pre><figcaption>Python tidak punya private sejati; awalan _ adalah kesepakatan, dan property membatasi akses lewat metode.</figcaption></figure>
+<h2 id="pewarisan-dan-polimorfisme">Pewarisan dan polimorfisme</h2>
+<figure class="diagram"><svg viewBox="0 0 560 200" role="img" aria-label="Hierarki bentuk" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="42x1c-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="42x1c-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="42x1c-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="42x1c-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="42x1c-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="157.5,128 252.5,52" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#42x1c-arrow)"/><polyline points="402.5,128 307.5,52" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#42x1c-arrow)"/><rect x="205" y="8" width="150" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="34.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="280" dy="0">Bentuk</tspan></text><rect x="55" y="128" width="150" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="154.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">Lingkaran</tspan></text><rect x="355" y="128" width="150" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="430" y="154.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="430" dy="0">Persegi</tspan></text></svg><figcaption>Panah berarti "adalah sebuah" (is-a): Lingkaran adalah sebuah Bentuk.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>import math
+
+class Bentuk:
+    def __init__(self, nama):
+        self.nama = nama
+    def luas(self):
+        raise NotImplementedError(&quot;subkelas harus mengimplementasikan luas()&quot;)
+    def __str__(self):
+        return f&quot;{self.nama}: luas {self.luas():.2f}&quot;
+
+class Lingkaran(Bentuk):
+    def __init__(self, r):
+        super().__init__(&quot;Lingkaran&quot;)
+        self.r = r
+    def luas(self):
+        return math.pi * self.r ** 2
+
+class Persegi(Bentuk):
+    def __init__(self, s):
+        super().__init__(&quot;Persegi&quot;)
+        self.s = s
+    def luas(self):
+        return self.s ** 2
+
+for bentuk in [Lingkaran(1), Persegi(3), Lingkaran(2.5)]:
+    print(bentuk)                 # satu kode, perilaku sesuai jenis objek (polimorfisme)
+print(sum(b.luas() for b in [Lingkaran(1), Persegi(3)]))</code></pre><pre class="runout" data-lang="keluaran"><code>Lingkaran: luas 3.14
+Persegi: luas 9.00
+Lingkaran: luas 19.63
+12.141592653589793</code></pre></figure>
+<h2 id="duck-typing">Duck typing</h2>
+<p>Python tidak mewajibkan hubungan pewarisan agar objek dapat dipakai: "jika berjalan seperti bebek dan bersuara seperti bebek, ia bebek". Selama objek memiliki metode yang dibutuhkan, ia dapat dipakai.</p>
+<figure class="codebox"><pre data-lang="python"><code>class Anjing:
+    def suara(self): return &quot;guk&quot;
+class Robot:
+    def suara(self): return &quot;bip&quot;
+
+def bunyikan(sesuatu):
+    print(sesuatu.suara())         # tidak peduli kelasnya, asal punya suara()
+
+for x in (Anjing(), Robot()):
+    bunyikan(x)</code></pre><pre class="runout" data-lang="keluaran"><code>guk
+bip</code></pre></figure>
+<h2 id="metode-khusus-dan-dataclass">Metode khusus dan dataclass</h2>
+<figure class="codebox"><pre data-lang="python"><code>from dataclasses import dataclass
+
+@dataclass(order=True, frozen=True)
+class Versi:
+    mayor: int
+    minor: int = 0
+
+print(Versi(1, 2) &lt; Versi(1, 10))        # perbandingan otomatis (order=True)
+print(Versi(2) == Versi(2, 0))           # kesetaraan otomatis
+print(Versi(3, 1))                       # repr otomatis
+
+class Vektor:
+    def __init__(self, x, y): self.x, self.y = x, y
+    def __add__(self, o):  return Vektor(self.x + o.x, self.y + o.y)
+    def __eq__(self, o):   return (self.x, self.y) == (o.x, o.y)
+    def __repr__(self):    return f&quot;Vektor({self.x}, {self.y})&quot;
+
+print(Vektor(1, 2) + Vektor(3, 4))
+print(Vektor(1, 1) == Vektor(1, 1))</code></pre><pre class="runout" data-lang="keluaran"><code>True
+True
+Versi(mayor=3, minor=1)
+Vektor(4, 6)
+True</code></pre></figure>
+<div data-w="compare"><script type="application/json">{"title":"Komposisi atau pewarisan?","tabs":[{"label":"Pewarisan (is-a)","html":"Cocok bila subkelas benar-benar jenis dari kelas induk (Lingkaran adalah Bentuk). Hati-hati: hierarki dalam membuat kode kaku dan sulit diubah."},{"label":"Komposisi (has-a)","html":"Objek memuat objek lain (Mobil memiliki Mesin). Lebih fleksibel; panduan umum desain: utamakan komposisi dibanding pewarisan."}]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"self pada metode merujuk ke...","options":["Kelas","Objek yang memanggil metode","Modul"],"answer":1,"why":"self adalah objek saat ini."},{"q":"Memanggil konstruktor kelas induk dilakukan dengan...","options":["super().__init__(...)","parent()","base.init()"],"answer":0,"why":"super() mengakses kelas induk."},{"q":"Polimorfisme berarti...","options":["Satu antarmuka, banyak perilaku sesuai jenis objek","Satu objek banyak variabel","Banyak file"],"answer":0,"why":"Pemanggilan yang sama memberi perilaku berbeda."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan kelas Segitiga ke hierarki Bentuk.</summary><div>Subkelas dengan alas dan tinggi, luas() = 0.5 * alas * tinggi, panggil super().__init__("Segitiga").</div></details><details><summary>2. Mengapa Bentuk.luas() melempar NotImplementedError?</summary><div>Menandakan metode abstrak: subkelas wajib menggantinya. Untuk penegakan ketat gunakan modul abc.</div></details><details><summary>3. Tambahkan __lt__ pada Mahasiswa agar bisa diurutkan menurut rata-rata.</summary><div><code>def __lt__(self, o): return self.rata_rata() < o.rata_rata()</code> lalu <code>sorted(daftar)</code>.</div></details><details><summary>4. Kapan atribut kelas lebih tepat daripada atribut objek?</summary><div>Untuk nilai yang dipakai bersama semua objek, seperti penghitung jumlah objek atau konstanta.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Class mengemas data dan perilaku; objek adalah instansinya.</li><li>Enkapsulasi dengan konvensi _ dan property.</li><li>Pewarisan memodelkan is-a; polimorfisme melalui overriding dan duck typing.</li><li>Metode khusus dan dataclass mengurangi kode berulang.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Python punya private?</summary><div>Tidak sejati. Awalan _ adalah konvensi; awalan __ melakukan name mangling tetapi tetap bisa diakses bila sengaja.</div></details>
+<details class="faq"><summary>Apa beda metode, classmethod, dan staticmethod?</summary><div>Metode biasa menerima self (objek); classmethod menerima cls (kelas); staticmethod tidak menerima keduanya dan hanya berada di namespace kelas.</div></details>
+<details class="faq"><summary>Apakah Python mendukung multiple inheritance?</summary><div>Ya, dengan urutan pencarian metode (MRO) yang ditentukan algoritma C3. Gunakan hemat.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/classes.html" rel="noopener" target="_blank">Dokumentasi Python: Tutorial, Classes</a></li><li><a href="https://docs.python.org/3/library/dataclasses.html" rel="noopener" target="_blank">Dokumentasi Python: dataclasses</a></li><li><a href="https://docs.python.org/3/reference/datamodel.html" rel="noopener" target="_blank">Dokumentasi Python: Data model (metode khusus)</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Think Python 3e, Allen Downey</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/linked-list-python-node-pointer-dan-operasinya/"><img src="/artikel/linked-list-python-node-pointer-dan-operasinya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Linked List di Python: Node, Pointer, dan Operasinya</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enkapsulasi Java: Access Modifier dan Immutability</title>
+<meta name="description" content="Pahami enkapsulasi: private, getter dan setter yang bermakna, validasi, access modifier, package, dan objek immutable, dengan contoh rekening yang menjaga invariannya.">
+<meta name="keywords" content="Java, enkapsulasi, access modifier, getter setter, immutable">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/">
+<meta property="og:title" content="Enkapsulasi Java: Access Modifier dan Immutability">
+<meta property="og:description" content="Pahami enkapsulasi: private, getter dan setter yang bermakna, validasi, access modifier, package, dan objek immutable, dengan contoh rekening yang menjaga invariannya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Enkapsulasi Java: Access Modifier dan Immutability">
+<meta name="twitter:description" content="Pahami enkapsulasi: private, getter dan setter yang bermakna, validasi, access modifier, package, dan objek immutable, dengan contoh rekening yang menjaga invariannya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Enkapsulasi Java: Access Modifier dan Immutability","description":"Pahami enkapsulasi: private, getter dan setter yang bermakna, validasi, access modifier, package, dan objek immutable, dengan contoh rekening yang menjaga invariannya.","image":["https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, enkapsulasi, access modifier, getter setter, immutable","articleSection":"PBO dengan Java","wordCount":311,"mainEntityOfPage":"https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Enkapsulasi Java: Access Modifier dan Immutability","item":"https://muchson.web.id/artikel/enkapsulasi-java-access-modifier-getter-setter-dan-immutability/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah semua atribut harus private?","acceptedAnswer":{"@type":"Answer","text":"Praktik umum: ya, kecuali konstanta static final. Pengecualian jarang dan harus disengaja."}},{"@type":"Question","name":"Bagaimana dengan record?","acceptedAnswer":{"@type":"Answer","text":"Record (Java 16+) adalah class immutable ringkas dengan komponen final dan accessor otomatis; cocok untuk data pembawa nilai."}},{"@type":"Question","name":"Apa bedanya protected dan package-private?","acceptedAnswer":{"@type":"Answer","text":"protected juga mengizinkan subclass di package lain, package-private (tanpa modifier) hanya package yang sama."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#masalah-tanpa-enkapsulasi">Masalah tanpa enkapsulasi</a></li><li><a href="#solusi-sembunyikan-data-kendalikan-perubahan">Solusi: sembunyikan data, kendalikan perubahan</a></li><li><a href="#empat-tingkat-akses">Empat tingkat akses</a></li><li><a href="#getter-dan-setter-jangan-otomatis">Getter dan setter: jangan otomatis</a></li><li><a href="#objek-immutable">Objek immutable</a></li><li><a href="#bocornya-representasi-internal">Bocornya representasi internal</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Enkapsulasi Java: Access Modifier dan Immutability</h1>
+<p class="lead">Enkapsulasi bukan sekadar membuat atribut private. Tujuannya menjaga <b>invarian</b>, aturan yang harus selalu benar tentang sebuah objek (misalnya saldo tidak boleh negatif), dengan hanya mengizinkan perubahan lewat jalur yang dapat divalidasi.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> class dan konstruktor</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Enkapsulasi Java: Access Modifier dan Immutability" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan manfaat enkapsulasi dan menyebut empat access modifier</li><li>merancang class yang menjaga invarian lewat konstruktor dan method</li><li>membedakan getter/setter yang berguna dari yang hanya formalitas</li><li>membuat class immutable</li><li>menghindari kebocoran representasi internal</li></ul></div>
+<h2 id="masalah-tanpa-enkapsulasi">Masalah tanpa enkapsulasi</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class RekeningRapuh {
+    public double saldo;                      // siapa pun dapat mengubah
+}
+
+public class Main {
+    public static void main(String[] args) {
+        RekeningRapuh r = new RekeningRapuh();
+        r.saldo = 100_000;
+        r.saldo = -5_000_000;                 // tidak ada yang mencegah
+        System.out.println(&quot;saldo: &quot; + r.saldo);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>saldo: -5000000.0</code></pre><figcaption>Saldo negatif tidak masuk akal, tetapi kode di mana pun bisa membuatnya.</figcaption></figure>
+<h2 id="solusi-sembunyikan-data-kendalikan-perubahan">Solusi: sembunyikan data, kendalikan perubahan</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Rekening {
+    private final String nomor;
+    private double saldo;
+
+    Rekening(String nomor, double saldoAwal) {
+        if (saldoAwal &lt; 0) throw new IllegalArgumentException(&quot;saldo awal tidak boleh negatif&quot;);
+        this.nomor = nomor;
+        this.saldo = saldoAwal;
+    }
+
+    public double getSaldo() { return saldo; }
+    public String getNomor() { return nomor; }
+
+    public void setor(double jumlah) {
+        if (jumlah &lt;= 0) throw new IllegalArgumentException(&quot;jumlah setoran harus positif&quot;);
+        saldo += jumlah;
+    }
+
+    public void tarik(double jumlah) {
+        if (jumlah &lt;= 0) throw new IllegalArgumentException(&quot;jumlah penarikan harus positif&quot;);
+        if (jumlah &gt; saldo) throw new IllegalStateException(&quot;saldo tidak cukup&quot;);
+        saldo -= jumlah;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Rekening r = new Rekening(&quot;001&quot;, 100_000);
+        r.setor(50_000);
+        r.tarik(30_000);
+        System.out.println(r.getSaldo());
+        try { r.tarik(1_000_000); }
+        catch (IllegalStateException e) { System.out.println(&quot;ditolak: &quot; + e.getMessage()); }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>120000.0
+ditolak: saldo tidak cukup</code></pre><figcaption>Tidak ada setSaldo(). Saldo hanya berubah lewat setor dan tarik, yang menjaga invarian saldo >= 0.</figcaption></figure>
+<h2 id="empat-tingkat-akses">Empat tingkat akses</h2>
+<table><thead><tr><th>Modifier</th><th>Class sendiri</th><th>Package</th><th>Subclass</th><th>Dari mana saja</th></tr></thead><tbody><tr><td>private</td><td>Ya</td><td>Tidak</td><td>Tidak</td><td>Tidak</td></tr><tr><td>(tanpa modifier)</td><td>Ya</td><td>Ya</td><td>Tidak</td><td>Tidak</td></tr><tr><td>protected</td><td>Ya</td><td>Ya</td><td>Ya</td><td>Tidak</td></tr><tr><td>public</td><td>Ya</td><td>Ya</td><td>Ya</td><td>Ya</td></tr></tbody></table>
+<div class="callout good"><b>Prinsip</b><p>Mulai dengan akses seketat mungkin (<b>private</b>) dan longgarkan hanya bila perlu. Semakin sedikit yang terbuka, semakin leluasa Anda mengubah isi class tanpa merusak kode lain.</p></div>
+<h2 id="getter-dan-setter-jangan-otomatis">Getter dan setter: jangan otomatis</h2>
+<p>Membuat getter dan setter untuk setiap atribut sama saja dengan membuat atribut public. Pertimbangkan: apakah nilai ini memang perlu dibaca dari luar? Apakah perlu diubah, dan dengan aturan apa? Sering kali method bermakna seperti <code>setor()</code> lebih baik daripada <code>setSaldo()</code>.</p>
+<h2 id="objek-immutable">Objek immutable</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>final class Uang {                       // final: tidak dapat diwarisi
+    private final long jumlah;                // tidak dapat berubah setelah dibuat
+    private final String mataUang;
+
+    Uang(long jumlah, String mataUang) {
+        this.jumlah = jumlah;
+        this.mataUang = mataUang;
+    }
+
+    Uang tambah(Uang lain) {                  // menghasilkan objek BARU
+        if (!mataUang.equals(lain.mataUang)) throw new IllegalArgumentException(&quot;mata uang berbeda&quot;);
+        return new Uang(jumlah + lain.jumlah, mataUang);
+    }
+
+    @Override public String toString() { return jumlah + &quot; &quot; + mataUang; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Uang a = new Uang(1000, &quot;IDR&quot;);
+        Uang b = a.tambah(new Uang(500, &quot;IDR&quot;));
+        System.out.println(a + &quot; | &quot; + b);     // a tidak berubah
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>1000 IDR | 1500 IDR</code></pre><figcaption>String, Integer, dan LocalDate di pustaka standar juga immutable. Objek immutable aman dibagikan dan aman untuk thread.</figcaption></figure>
+<h2 id="bocornya-representasi-internal">Bocornya representasi internal</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+class Kelas {
+    private final List&lt;String&gt; peserta = new ArrayList&lt;&gt;();
+    void daftar(String nama) { peserta.add(nama); }
+
+    List&lt;String&gt; bocor()   { return peserta; }                            // memberi akses ke daftar asli
+    List&lt;String&gt; aman()    { return Collections.unmodifiableList(peserta); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Kelas k = new Kelas();
+        k.daftar(&quot;Ani&quot;);
+        k.bocor().add(&quot;Penyusup&quot;);             // mengubah isi internal tanpa lewat daftar()
+        System.out.println(k.aman());
+        try { k.aman().add(&quot;Lain&quot;); }
+        catch (UnsupportedOperationException e) { System.out.println(&quot;tidak boleh diubah&quot;); }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>[Ani, Penyusup]
+tidak boleh diubah</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tujuan utama enkapsulasi?","options":["Menjaga invarian dan menyembunyikan detail","Membuat kode lebih pendek","Mempercepat program"],"answer":0,"why":"Perubahan dikendalikan lewat antarmuka yang jelas."},{"q":"Modifier yang hanya mengizinkan akses dalam class sendiri?","options":["private","protected","public"],"answer":0,"why":"private paling ketat."},{"q":"Ciri class immutable?","options":["Atribut final dan tidak ada setter","Semua method static","Semua atribut public"],"answer":0,"why":"Keadaannya tidak berubah setelah dibuat."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Rancang class Suhu yang menyimpan derajat Celcius dan menolak nilai di bawah −273,15.</summary><div>Validasi di konstruktor dan setter; sediakan getFahrenheit() yang dihitung.</div></details><details><summary>2. Apa risiko mengembalikan array internal dari getter?</summary><div>Pemanggil dapat mengubah isi array sehingga invarian rusak. Kembalikan salinan (clone atau Arrays.copyOf).</div></details><details><summary>3. Sebutkan keuntungan class immutable.</summary><div>Aman dibagi, aman untuk multithread, mudah dipikirkan, cocok sebagai kunci HashMap.</div></details><details><summary>4. Mengapa class Uang dideklarasikan final?</summary><div>Agar subkelas tidak bisa menambahkan keadaan yang dapat diubah sehingga merusak sifat immutable.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Enkapsulasi menjaga invarian: sembunyikan data, ubah lewat method yang memvalidasi.</li><li>Mulai dari private; longgarkan hanya bila perlu.</li><li>Hindari getter/setter otomatis; pilih method bermakna.</li><li>Class immutable dan kopi defensif mencegah kebocoran representasi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah semua atribut harus private?</summary><div>Praktik umum: ya, kecuali konstanta static final. Pengecualian jarang dan harus disengaja.</div></details>
+<details class="faq"><summary>Bagaimana dengan record?</summary><div>Record (Java 16+) adalah class immutable ringkas dengan komponen final dan accessor otomatis; cocok untuk data pembawa nilai.</div></details>
+<details class="faq"><summary>Apa bedanya protected dan package-private?</summary><div>protected juga mengizinkan subclass di package lain, package-private (tanpa modifier) hanya package yang sama.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html" rel="noopener" target="_blank">Oracle: Controlling Access to Members of a Class</a></li><li><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/immutable.html" rel="noopener" target="_blank">Oracle: A Strategy for Defining Immutable Objects</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

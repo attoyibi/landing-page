@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algoritma Greedy: Koin, Activity Selection, dan Batasannya</title>
+<meta name="description" content="Pelajari strategi greedy lewat penukaran koin dan activity selection, kapan hasilnya optimal, dan kapan gagal. Dilengkapi kode Python, contoh tandingan, dan argumen exchange.">
+<meta name="keywords" content="greedy, activity selection, penukaran koin, optimasi, algoritma">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/">
+<meta property="og:title" content="Algoritma Greedy: Koin, Activity Selection, dan Batasannya">
+<meta property="og:description" content="Pelajari strategi greedy lewat penukaran koin dan activity selection, kapan hasilnya optimal, dan kapan gagal. Dilengkapi kode Python, contoh tandingan, dan argumen exchange.">
+<meta property="og:image" content="https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Algoritma Greedy: Koin, Activity Selection, dan Batasannya">
+<meta name="twitter:description" content="Pelajari strategi greedy lewat penukaran koin dan activity selection, kapan hasilnya optimal, dan kapan gagal. Dilengkapi kode Python, contoh tandingan, dan argumen exchange.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Algoritma Greedy: Koin, Activity Selection, dan Batasannya","description":"Pelajari strategi greedy lewat penukaran koin dan activity selection, kapan hasilnya optimal, dan kapan gagal. Dilengkapi kode Python, contoh tandingan, dan argumen exchange.","image":["https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"greedy, activity selection, penukaran koin, optimasi, algoritma","articleSection":"Algoritma & Pemrograman Python","wordCount":475,"mainEntityOfPage":"https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Algoritma Greedy: Koin, Activity Selection, dan Batasannya","item":"https://muchson.web.id/artikel/algoritma-greedy-python-koin-activity-selection-dan-batasannya/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Algoritma terkenal apa saja yang greedy?","acceptedAnswer":{"@type":"Answer","text":"Kruskal dan Prim (pohon rentang minimum), Dijkstra (bobot tak negatif), kode Huffman, dan fractional knapsack."}},{"@type":"Question","name":"Apakah greedy selalu lebih cepat dari DP?","acceptedAnswer":{"@type":"Answer","text":"Biasanya, karena tidak menyimpan tabel submasalah. Tetapi kecepatan tidak berguna bila hasilnya tidak optimal."}},{"@type":"Question","name":"Bagaimana mengenali masalah yang cocok untuk greedy?","acceptedAnswer":{"@type":"Answer","text":"Coba cari strategi pemilihan sederhana lalu uji dengan contoh tandingan dan coba buktikan dengan argumen pertukaran."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#ide-greedy">Ide greedy</a></li><li><a href="#contoh-1-penukaran-koin">Contoh 1: penukaran koin</a></li><li><a href="#contoh-2-activity-selection">Contoh 2: activity selection</a></li><li><a href="#mengapa-mengurutkan-menurut-waktu-selesai">Mengapa mengurutkan menurut waktu selesai?</a></li><li><a href="#greedy-dp-dan-brute-force">Greedy, DP, dan brute force</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Algoritma Greedy: Koin, Activity Selection, dan Batasannya</h1>
+<p class="lead">Algoritma greedy selalu memilih opsi yang tampak terbaik saat ini tanpa menengok ke belakang. Sering kali cepat dan sederhana, tetapi tidak selalu benar. Memahami kapan greedy terbukti optimal, dan kapan ia menipu, adalah inti materi ini.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> list dan sorting, fungsi, kompleksitas dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Algoritma Greedy: Koin, Activity Selection, dan Batasannya" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan prinsip pilihan greedy dan substruktur optimal</li><li>menyelesaikan activity selection dengan greedy dan memahami alasan ia optimal</li><li>menunjukkan contoh tandingan ketika greedy gagal (penukaran koin)</li><li>membedakan greedy dari dynamic programming dan brute force</li></ul></div>
+<h2 id="ide-greedy">Ide greedy</h2>
+<p>Pada setiap langkah, ambil pilihan yang paling menjanjikan saat itu dan jangan pernah mengubahnya. Dua syarat agar greedy benar: <b>sifat pilihan greedy</b> (ada solusi optimal yang memuat pilihan itu) dan <b>substruktur optimal</b> (sisa masalah setelah pilihan itu berbentuk masalah serupa yang lebih kecil).</p>
+<h2 id="contoh-1-penukaran-koin">Contoh 1: penukaran koin</h2>
+<figure class="codebox"><pre data-lang="python"><code>def tukar_greedy(nilai, koin):
+    hasil = []
+    for k in sorted(koin, reverse=True):     # mulai dari koin terbesar
+        while nilai &gt;= k:
+            nilai -= k
+            hasil.append(k)
+    return hasil if nilai == 0 else None
+
+rupiah = [1000, 500, 200, 100]
+print(tukar_greedy(1800, rupiah))
+print(tukar_greedy(1300, rupiah))</code></pre><pre class="runout" data-lang="keluaran"><code>[1000, 500, 200, 100]
+[1000, 200, 100]</code></pre><figcaption>Dengan pecahan rupiah (1000, 500, 200, 100) greedy menghasilkan jumlah koin minimum.</figcaption></figure>
+<div class="callout warn"><b>Contoh tandingan</b><p>Greedy pada koin bergantung pada <b>sistem pecahannya</b>. Pada pecahan {1, 3, 4}, uang 6 ditukar greedy menjadi 4+1+1 (3 koin), padahal 3+3 (2 koin) lebih baik.</p></div>
+<figure class="codebox"><pre data-lang="python"><code>print(&quot;greedy :&quot;, tukar_greedy(6, [1, 3, 4]))
+
+# solusi benar via DP sederhana (jumlah koin minimum)
+def min_koin(nilai, koin):
+    INF = float(&quot;inf&quot;)
+    dp = [0] + [INF] * nilai
+    for n in range(1, nilai + 1):
+        for k in koin:
+            if k &lt;= n and dp[n - k] + 1 &lt; dp[n]:
+                dp[n] = dp[n - k] + 1
+    return dp[nilai]
+
+print(&quot;optimal:&quot;, min_koin(6, [1, 3, 4]), &quot;koin&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>greedy : [4, 1, 1]
+optimal: 2 koin</code></pre></figure>
+<h2 id="contoh-2-activity-selection">Contoh 2: activity selection</h2>
+<p>Diberikan kegiatan dengan waktu mulai dan selesai. Pilih sebanyak mungkin kegiatan yang tidak bertabrakan. Strategi greedy yang benar: urutkan berdasarkan <b>waktu selesai paling awal</b>, lalu ambil setiap kegiatan yang tidak bertabrakan dengan yang terakhir diambil.</p>
+<figure class="codebox"><pre data-lang="python"><code>def pilih_kegiatan(kegiatan):
+    terurut = sorted(kegiatan, key=lambda k: k[1])      # urut waktu selesai
+    dipilih, selesai_terakhir = [], float(&quot;-inf&quot;)
+    for mulai, selesai, nama in terurut:
+        if mulai &gt;= selesai_terakhir:                   # tidak bertabrakan
+            dipilih.append(nama)
+            selesai_terakhir = selesai
+    return dipilih
+
+kegiatan = [(1, 4, &quot;A&quot;), (3, 5, &quot;B&quot;), (0, 6, &quot;C&quot;), (5, 7, &quot;D&quot;),
+            (3, 9, &quot;E&quot;), (5, 9, &quot;F&quot;), (6, 10, &quot;G&quot;), (8, 11, &quot;H&quot;), (8, 12, &quot;I&quot;), (2, 14, &quot;J&quot;), (12, 16, &quot;K&quot;)]
+print(pilih_kegiatan(kegiatan))</code></pre><pre class="runout" data-lang="keluaran"><code>['A', 'D', 'H', 'K']</code></pre></figure>
+<figure class="diagram"><svg viewBox="0 0 600 316" role="img" aria-label="Kegiatan terpilih" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><line x1="110" y1="20" x2="110" y2="292" stroke="#dde3ee" stroke-width="4"/><text x="96" y="35" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">1–4</text><circle cx="110" cy="30" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="31" font-size="15" font-weight="700" fill="#0f1a33">Kegiatan A</text><text x="132" y="52" font-size="12.5" fill="#4a5568">selesai paling awal, dipilih</text><text x="96" y="109" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">5–7</text><circle cx="110" cy="104" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="105" font-size="15" font-weight="700" fill="#0f1a33">Kegiatan D</text><text x="132" y="126" font-size="12.5" fill="#4a5568">mulai setelah A selesai</text><text x="96" y="183" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">8–11</text><circle cx="110" cy="178" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="179" font-size="15" font-weight="700" fill="#0f1a33">Kegiatan H</text><text x="132" y="200" font-size="12.5" fill="#4a5568">mulai setelah D selesai</text><text x="96" y="257" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">12–16</text><circle cx="110" cy="252" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="253" font-size="15" font-weight="700" fill="#0f1a33">Kegiatan K</text><text x="132" y="274" font-size="12.5" fill="#4a5568">mulai setelah H selesai</text></svg><figcaption>Pilih A (selesai 4), lalu D (mulai 5, selesai 7), lalu H (mulai 8, selesai 11), lalu K (mulai 12). Empat kegiatan tanpa tabrakan.</figcaption></figure>
+<h2 id="mengapa-mengurutkan-menurut-waktu-selesai">Mengapa mengurutkan menurut waktu selesai?</h2>
+<p>Strategi yang tampak menggoda tetapi salah: ambil yang <i>mulai paling awal</i> atau yang <i>paling singkat</i>. Kegiatan J (2–14) mulai awal tetapi memakan hampir seluruh waktu; kegiatan pendek bisa saja berada di tengah dua kegiatan lain dan menghalangi keduanya. Kegiatan yang selesai paling awal menyisakan waktu terbanyak bagi sisanya.</p>
+<figure class="codebox"><pre data-lang="python"><code>def salah_mulai_awal(kegiatan):
+    dipilih, selesai_terakhir = [], float(&quot;-inf&quot;)
+    for mulai, selesai, nama in sorted(kegiatan):         # urut waktu mulai
+        if mulai &gt;= selesai_terakhir:
+            dipilih.append(nama); selesai_terakhir = selesai
+    return dipilih
+
+print(&quot;urut mulai  :&quot;, salah_mulai_awal(kegiatan))
+print(&quot;urut selesai:&quot;, pilih_kegiatan(kegiatan))</code></pre><pre class="runout" data-lang="keluaran"><code>urut mulai  : ['C', 'G', 'K']
+urut selesai: ['A', 'D', 'H', 'K']</code></pre></figure>
+<p><b>Argumen pertukaran (exchange argument)</b>: ambil solusi optimal mana pun. Kegiatan pertamanya bisa ditukar dengan kegiatan yang selesai paling awal tanpa menimbulkan tabrakan dan tanpa mengurangi jumlah kegiatan. Maka ada solusi optimal yang memuat pilihan greedy; sisanya adalah masalah yang sama pada kegiatan setelahnya.</p>
+<h2 id="greedy-dp-dan-brute-force">Greedy, DP, dan brute force</h2>
+<table><thead><tr><th>Pendekatan</th><th>Cara kerja</th><th>Kecepatan</th><th>Selalu optimal?</th></tr></thead><tbody><tr><td>Brute force</td><td>Coba semua kemungkinan</td><td>Sangat lambat (eksponensial)</td><td>Ya</td></tr><tr><td>Greedy</td><td>Pilih terbaik saat ini</td><td>Cepat</td><td>Hanya bila terbukti</td></tr><tr><td>Dynamic programming</td><td>Simpan hasil submasalah, pilih terbaik dari semua</td><td>Polinomial</td><td>Ya (bila ada substruktur optimal)</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pada activity selection, kegiatan diurutkan menurut...","options":["Waktu mulai","Durasi","Waktu selesai"],"answer":2,"why":"Selesai paling awal menyisakan ruang terbanyak."},{"q":"Greedy untuk koin {1,3,4} dan nilai 6 menghasilkan...","options":["3+3","4+1+1","6"],"answer":1,"why":"Greedy mengambil 4 dulu, padahal 3+3 lebih sedikit."},{"q":"Cara membuktikan greedy benar?","options":["Mencoba beberapa contoh","Argumen pertukaran atau induksi","Menjalankan lebih cepat"],"answer":1,"why":"Contoh tidak membuktikan; perlu bukti formal."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tukar 2.700 rupiah dengan pecahan {1000, 500, 200, 100} secara greedy.</summary><div>1000+1000+500+200 = 2.700, empat koin.</div></details><details><summary>2. Cari satu sistem pecahan dan nilai di mana greedy tidak optimal selain contoh di atas.</summary><div>Pecahan {1, 5, 6} untuk nilai 10: greedy 6+1+1+1+1 (5 koin), optimal 5+5 (2 koin).</div></details><details><summary>3. Mengapa mengurutkan menurut durasi terpendek tidak menjamin optimal pada activity selection?</summary><div>Kegiatan pendek di tengah dapat menabrak dua kegiatan lain yang bila dipilih keduanya menghasilkan lebih banyak.</div></details><details><summary>4. Berapa kompleksitas pilih_kegiatan?</summary><div>O(n log n) karena pengurutan; pemindaian setelahnya O(n).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Greedy memilih terbaik lokal; benar hanya bila ada sifat pilihan greedy dan substruktur optimal.</li><li>Activity selection: urut waktu selesai, ambil yang tidak bertabrakan.</li><li>Koin: greedy optimal untuk sistem pecahan tertentu, tidak untuk semua.</li><li>Contoh tandingan membantah greedy; bukti formal (exchange argument) menegakkannya.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Algoritma terkenal apa saja yang greedy?</summary><div>Kruskal dan Prim (pohon rentang minimum), Dijkstra (bobot tak negatif), kode Huffman, dan fractional knapsack.</div></details>
+<details class="faq"><summary>Apakah greedy selalu lebih cepat dari DP?</summary><div>Biasanya, karena tidak menyimpan tabel submasalah. Tetapi kecepatan tidak berguna bila hasilnya tidak optimal.</div></details>
+<details class="faq"><summary>Bagaimana mengenali masalah yang cocok untuk greedy?</summary><div>Coba cari strategi pemilihan sederhana lalu uji dengan contoh tandingan dan coba buktikan dengan argumen pertukaran.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li>Jon Kleinberg dan Éva Tardos, Algorithm Design (Pearson)</li><li>Anany Levitin, Introduction to the Design and Analysis of Algorithms (Pearson)</li><li><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" rel="noopener" target="_blank">MIT OpenCourseWare 6.006: Introduction to Algorithms</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/"><img src="/artikel/dynamic-programming-python-memoization-tabulation-lcs-knapsack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Dynamic Programming: Memoization, LCS, dan Knapsack</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
