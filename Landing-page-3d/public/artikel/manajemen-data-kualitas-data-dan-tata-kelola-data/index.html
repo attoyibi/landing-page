@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manajemen Data: Kualitas Data dan Tata Kelola Data</title>
+<meta name="description" content="Pelajari manajemen data: dimensi kualitas data, profiling data dengan Python, master data, tata kelola data (pemilik, steward, kebijakan), katalog data, dan siklus hidup data dalam organisasi.">
+<meta name="keywords" content="kualitas data, tata kelola data, master data, data profiling, DAMA">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/">
+<meta property="og:title" content="Manajemen Data: Kualitas Data dan Tata Kelola Data">
+<meta property="og:description" content="Pelajari manajemen data: dimensi kualitas data, profiling data dengan Python, master data, tata kelola data (pemilik, steward, kebijakan), katalog data, dan siklus hidup data dalam organisasi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Manajemen Data: Kualitas Data dan Tata Kelola Data">
+<meta name="twitter:description" content="Pelajari manajemen data: dimensi kualitas data, profiling data dengan Python, master data, tata kelola data (pemilik, steward, kebijakan), katalog data, dan siklus hidup data dalam organisasi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Manajemen Data: Kualitas Data dan Tata Kelola Data","description":"Pelajari manajemen data: dimensi kualitas data, profiling data dengan Python, master data, tata kelola data (pemilik, steward, kebijakan), katalog data, dan siklus hidup data dalam organisasi.","image":["https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kualitas data, tata kelola data, master data, data profiling, DAMA","articleSection":"Sistem Informasi","wordCount":460,"mainEntityOfPage":"https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Manajemen Data: Kualitas Data dan Tata Kelola Data","item":"https://muchson.web.id/artikel/manajemen-data-kualitas-data-dan-tata-kelola-data/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Alat apa yang membantu kualitas data?","acceptedAnswer":{"@type":"Answer","text":"Skrip Python/pandas, Great Expectations, dbt tests, serta fitur profiling pada alat ETL dan BI."}},{"@type":"Question","name":"Apakah perlu seluruh program tata kelola formal?","acceptedAnswer":{"@type":"Answer","text":"Tidak sejak awal. Mulailah dari satu domain penting (misalnya pelanggan atau mahasiswa), tunjuk pemilik, tentukan beberapa aturan kualitas, dan ukur."}},{"@type":"Question","name":"Bagaimana hubungannya dengan UU PDP?","acceptedAnswer":{"@type":"Answer","text":"Tata kelola data memudahkan pemenuhan: Anda tahu data pribadi apa yang dimiliki, di mana, untuk apa, dan siapa yang berwenang."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-kualitas-data-penting">Mengapa kualitas data penting</a></li><li><a href="#dimensi-kualitas-data">Dimensi kualitas data</a></li><li><a href="#profiling-data-dengan-python">Profiling data dengan Python</a></li><li><a href="#master-data-dan-reference-data">Master data dan reference data</a></li><li><a href="#tata-kelola-data">Tata kelola data</a></li><li><a href="#siklus-hidup-data">Siklus hidup data</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Manajemen Data: Kualitas Data dan Tata Kelola Data</h1>
+<p class="lead">Organisasi sering mengatakan "kami kaya data" padahal data itu tersebar, tidak konsisten, dan tidak dipercaya. Sistem pintar dan dasbor sebagus apa pun tidak menolong bila data dasarnya salah. Manajemen data memperlakukan data sebagai aset yang dirawat sepanjang siklus hidupnya.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> ERD dan normalisasi, SQL dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Manajemen Data: Kualitas Data dan Tata Kelola Data" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyebut dimensi kualitas data dan mengukurnya</li><li>melakukan profiling data sederhana dengan Python</li><li>menjelaskan master data dan reference data</li><li>menjelaskan peran tata kelola data: pemilik, steward, kebijakan</li><li>merancang kontrol kualitas data pada titik masuk dan pada pipeline</li></ul></div>
+<h2 id="mengapa-kualitas-data-penting">Mengapa kualitas data penting</h2>
+<ul><li>Keputusan salah akibat laporan yang salah ("garbage in, garbage out").</li><li>Pelanggan yang sama muncul sebagai tiga record, sehingga surat ganda dan layanan terputus.</li><li>Waktu analis habis untuk membersihkan data, bukan menganalisis.</li><li>Risiko kepatuhan dan audit bila data tidak dapat ditelusuri atau tidak akurat.</li></ul>
+<h2 id="dimensi-kualitas-data">Dimensi kualitas data</h2>
+<table><thead><tr><th>Dimensi</th><th>Pertanyaan</th><th>Ukuran</th><th>Contoh cacat</th></tr></thead><tbody><tr><td>Kelengkapan</td><td>Apakah nilai wajib terisi?</td><td>% nilai tidak kosong</td><td>Nomor telepon kosong</td></tr><tr><td>Keunikan</td><td>Apakah ada duplikat?</td><td>% record unik</td><td>Pelanggan ganda</td></tr><tr><td>Validitas</td><td>Apakah sesuai format dan aturan?</td><td>% lolos aturan</td><td>Surel tanpa @</td></tr><tr><td>Akurasi</td><td>Apakah mencerminkan kenyataan?</td><td>% cocok dengan sumber tepercaya</td><td>Alamat salah</td></tr><tr><td>Konsistensi</td><td>Apakah sama di semua sistem?</td><td>% cocok antar sistem</td><td>Status berbeda di dua sistem</td></tr><tr><td>Ketepatan waktu</td><td>Apakah cukup baru?</td><td>Umur data</td><td>Stok semalam padahal butuh real-time</td></tr></tbody></table>
+<h2 id="profiling-data-dengan-python">Profiling data dengan Python</h2>
+<figure class="codebox"><pre data-lang="python"><code>import csv, io, re, collections
+
+data = &quot;&quot;&quot;id,nama,email,telepon,kota,tgl_daftar
+1,Ani Lestari,ani@contoh.id,081234567890,Madiun,2025-03-10
+2,Budi Santoso,budi.contoh.id,0812-3456,madiun,2025-04-02
+3,Citra Dewi,citra@contoh.id,,Surabaya,2025/05/01
+4,Ani Lestari,ani@contoh.id,081234567890,Madiun,2025-03-10
+5,Dodi,dodi@contoh.id,085611223344,MADIUN,2025-06-15
+6,Eka Putri,,087755443322,Surabaya,2025-13-40
+&quot;&quot;&quot;
+baris = list(csv.DictReader(io.StringIO(data)))
+n = len(baris)
+
+# 1. kelengkapan
+print(&quot;Kelengkapan:&quot;)
+for kolom in baris[0]:
+    kosong = sum(1 for b in baris if not b[kolom].strip())
+    print(f&quot;  {kolom:&lt;10} terisi {100 * (n - kosong) / n:5.1f}%&quot;)
+
+# 2. keunikan (duplikat pada kombinasi nama+email)
+kunci = collections.Counter((b[&quot;nama&quot;], b[&quot;email&quot;]) for b in baris)
+dup = [k for k, v in kunci.items() if v &gt; 1]
+print(&quot;Duplikat:&quot;, dup)
+
+# 3. validitas
+pola_email = re.compile(r&quot;^[^@\s]+@[^@\s]+\.[a-z]{2,}$&quot;)
+pola_hp = re.compile(r&quot;^08\d{8,11}$&quot;)
+pola_tgl = re.compile(r&quot;^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$&quot;)
+print(&quot;Validitas:&quot;)
+print(&quot;  surel tidak valid  :&quot;, [b[&quot;id&quot;] for b in baris if b[&quot;email&quot;] and not pola_email.match(b[&quot;email&quot;])])
+print(&quot;  telepon tidak valid:&quot;, [b[&quot;id&quot;] for b in baris if b[&quot;telepon&quot;] and not pola_hp.match(b[&quot;telepon&quot;])])
+print(&quot;  tanggal tidak valid:&quot;, [b[&quot;id&quot;] for b in baris if not pola_tgl.match(b[&quot;tgl_daftar&quot;])])
+
+# 4. konsistensi penulisan
+print(&quot;Variasi penulisan kota:&quot;, dict(collections.Counter(b[&quot;kota&quot;] for b in baris)))
+print(&quot;Setelah dibakukan     :&quot;, dict(collections.Counter(b[&quot;kota&quot;].strip().title() for b in baris)))</code></pre><pre class="runout" data-lang="keluaran"><code>Kelengkapan:
+  id         terisi 100.0%
+  nama       terisi 100.0%
+  email      terisi  83.3%
+  telepon    terisi  83.3%
+  kota       terisi 100.0%
+  tgl_daftar terisi 100.0%
+Duplikat: [('Ani Lestari', 'ani@contoh.id')]
+Validitas:
+  surel tidak valid  : ['2']
+  telepon tidak valid: ['2']
+  tanggal tidak valid: ['3', '6']
+Variasi penulisan kota: {'Madiun': 2, 'madiun': 1, 'Surabaya': 2, 'MADIUN': 1}
+Setelah dibakukan     : {'Madiun': 4, 'Surabaya': 2}</code></pre><figcaption>Profiling mengubah rasa "datanya kayaknya berantakan" menjadi angka dan daftar baris spesifik yang dapat diperbaiki, serta menunjukkan aturan validasi yang hilang pada formulir pendaftaran.</figcaption></figure>
+<div class="callout good"><b>Prinsip</b><p>Aturan emas: <b>cegah di sumber</b>. Memperbaiki data di gudang data itu mahal dan berulang; menambahkan validasi di formulir, pilihan baku (dropdown kota), dan batasan di basis data (NOT NULL, UNIQUE, CHECK) jauh lebih murah.</p></div>
+<h2 id="master-data-dan-reference-data">Master data dan reference data</h2>
+<table><thead><tr><th>Jenis</th><th>Arti</th><th>Contoh</th></tr></thead><tbody><tr><td>Master data</td><td>Entitas inti yang dipakai banyak sistem dan relatif jarang berubah</td><td>Pelanggan, produk, pemasok, pegawai</td></tr><tr><td>Reference data</td><td>Daftar nilai baku untuk klasifikasi</td><td>Kode provinsi, mata uang, status pesanan</td></tr><tr><td>Data transaksi</td><td>Peristiwa yang terjadi</td><td>Pesanan, pembayaran, absensi</td></tr><tr><td>Metadata</td><td>Data tentang data</td><td>Definisi kolom, sumber, pemilik, tanggal pembaruan</td></tr></tbody></table>
+<figure class="diagram"><svg viewBox="0 0 640 220" role="img" aria-label="Master data tunggal" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="9vqc7-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="9vqc7-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="9vqc7-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="9vqc7-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="9vqc7-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="150,58.3 267.4,94" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#9vqc7-arrow)" marker-start="url(#9vqc7-arrow)"/><polyline points="150,161.7 267.4,126" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#9vqc7-arrow)" marker-start="url(#9vqc7-arrow)"/><polyline points="490,58.3 372.6,94" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#9vqc7-arrow)" marker-start="url(#9vqc7-arrow)"/><polyline points="490,161.7 372.6,126" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#9vqc7-arrow)" marker-start="url(#9vqc7-arrow)"/><ellipse cx="320" cy="110" rx="55" ry="55" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="320" y="106.5" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="320" dy="0">Master data</tspan><tspan x="320" dy="15">pelanggan</tspan></text><rect x="30" y="20" width="120" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">CRM</tspan></text><rect x="30" y="160" width="120" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="184.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">ERP</tspan></text><rect x="490" y="20" width="120" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="550" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="550" dy="0">Toko online</tspan></text><rect x="490" y="160" width="120" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="550" y="184.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="550" dy="0">Sistem layanan</tspan></text></svg><figcaption>Master Data Management (MDM) menjaga satu versi tepercaya ("golden record") yang dibagi ke semua sistem, alih-alih setiap sistem memelihara sendiri.</figcaption></figure>
+<h2 id="tata-kelola-data">Tata kelola data</h2>
+<p>Tata kelola data menetapkan <b>siapa yang bertanggung jawab atas data, aturan apa yang berlaku, dan bagaimana ketaatannya dipantau</b>. Tanpa itu, kualitas data menjadi "tugas semua orang", yang berarti tidak ada yang mengerjakannya.</p>
+<div data-w="cards"><script type="application/json">{"title":"Peran utama (ketuk kartu)","items":[{"tag":"Data owner","front":"Pemilik data","backTag":"Tanggung jawab","back":"Pejabat bisnis yang akuntabel atas suatu domain data (misalnya Kepala Akademik untuk data mahasiswa): menetapkan kebijakan akses dan mutu."},{"tag":"Data steward","front":"Penjaga data","backTag":"Tanggung jawab","back":"Mengelola keseharian: definisi, aturan kualitas, penyelesaian masalah data."},{"tag":"Data custodian","front":"Pengelola teknis","backTag":"Tanggung jawab","back":"Tim TI yang menyimpan, mengamankan, dan memulihkan data."},{"tag":"Pengguna data","front":"Analis dan aplikasi","backTag":"Tanggung jawab","back":"Memakai data sesuai kebijakan dan melaporkan masalah mutu."}]}</script></div>
+<ul><li><b>Kamus data dan katalog data</b>: definisi bisnis setiap istilah, sumber, pemilik, dan klasifikasi sensitivitas.</li><li><b>Kebijakan</b>: kualitas, akses, retensi, berbagi, dan keamanan data.</li><li><b>Garis keturunan data (lineage)</b>: dari mana data berasal dan transformasi apa yang dilaluinya.</li><li><b>Pengukuran dan pelaporan kualitas</b> secara berkala dengan ambang batas dan tindak lanjut.</li></ul>
+<h2 id="siklus-hidup-data">Siklus hidup data</h2>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Siklus hidup data" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M289.95828026329735 76.76596467718915 Q322.86174265592996 73.47823391906641 331.8998726319136 107.23831522525397" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M348.4178893949067 162.7712862362522 Q361.71243620934376 193.04837387624883 332.39762665238845 212.07658514012257" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M284.6869805962839 244.94678440936949 Q260 266.94678440936946 232.84432134408775 244.94678440936949" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M186.8395036932059 209.7287137637478 Q158.28756379065624 193.04837387624883 170.81924095068769 160.42341485987745" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M190.0973460523062 105.78725091344138 Q197.13825734407004 73.47823391906643 232.03893842092248 75.31490036537656" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="54" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Buat atau</tspan><tspan x="260" dy="15">kumpulkan</tspan></text><rect x="297.8609342109911" y="105.55321559063051" width="124" height="54" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="359.8609342109911" y="123.55321559063051" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="359.8609342109911" dy="0">Simpan dan</tspan><tspan x="359.8609342109911" dy="15">lindungi</tspan></text><rect x="259.71745149070966" y="222.94678440936949" width="124" height="54" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="321.71745149070966" y="240.94678440936949" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="321.71745149070966" dy="0">Gunakan dan</tspan><tspan x="321.71745149070966" dy="15">bagikan</tspan></text><rect x="136.28254850929034" y="222.94678440936949" width="124" height="39" rx="10" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><text x="198.28254850929034" y="240.94678440936949" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="198.28254850929034" dy="0">Arsipkan</tspan></text><rect x="98.13906578900887" y="105.55321559063054" width="124" height="54" rx="10" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><text x="160.13906578900887" y="123.55321559063054" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="160.13906578900887" dy="0">Hapus sesuai</tspan><tspan x="160.13906578900887" dy="15">retensi</tspan></text></svg><figcaption>Setiap tahap memiliki kontrol: validasi saat dibuat, enkripsi saat disimpan, otorisasi saat dipakai, retensi saat diarsipkan atau dihapus.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pelanggan yang sama tercatat tiga kali melanggar dimensi...","options":["Keunikan","Ketepatan waktu","Validitas"],"answer":0,"why":"Duplikat."},{"q":"Peran yang akuntabel atas suatu domain data di sisi bisnis?","options":["Data owner","Data custodian","Pengguna"],"answer":0,"why":"Pemilik data menentukan kebijakan."},{"q":"Cara paling murah meningkatkan kualitas data?","options":["Mencegah kesalahan di titik masuk","Membersihkan di akhir","Menambah laporan"],"answer":0,"why":"Cegah di sumber."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Dari profiling di atas, aturan validasi apa yang sebaiknya ditambahkan pada formulir pendaftaran?</summary><div>Validasi format surel, telepon, dan tanggal; daftar pilihan baku untuk kota; deteksi duplikat berdasarkan surel.</div></details><details><summary>2. Mengapa kolom kota perlu daftar baku?</summary><div>Pengetikan bebas menghasilkan variasi (madiun, MADIUN, Madiun) yang merusak pengelompokan dan laporan.</div></details><details><summary>3. Sebutkan tiga isi kamus data untuk kolom ipk.</summary><div>Definisi (rata-rata nilai berbobot SKS), tipe dan rentang (0,00–4,00; dua desimal), sumber dan pemilik (sistem akademik, Bagian Akademik).</div></details><details><summary>4. Apa perbedaan data owner dan data steward?</summary><div>Owner bertanggung jawab atas keputusan kebijakan; steward menjalankan pengelolaan harian sesuai kebijakan itu.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Kualitas data: kelengkapan, keunikan, validitas, akurasi, konsistensi, ketepatan waktu.</li><li>Profiling mengukur masalah secara nyata; cegah di sumber.</li><li>Master data menyediakan satu versi tepercaya untuk banyak sistem.</li><li>Tata kelola data menetapkan peran, kebijakan, kamus data, dan pengukuran.</li><li>Kelola data sepanjang siklus hidupnya sampai penghapusan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Alat apa yang membantu kualitas data?</summary><div>Skrip Python/pandas, Great Expectations, dbt tests, serta fitur profiling pada alat ETL dan BI.</div></details>
+<details class="faq"><summary>Apakah perlu seluruh program tata kelola formal?</summary><div>Tidak sejak awal. Mulailah dari satu domain penting (misalnya pelanggan atau mahasiswa), tunjuk pemilik, tentukan beberapa aturan kualitas, dan ukur.</div></details>
+<details class="faq"><summary>Bagaimana hubungannya dengan UU PDP?</summary><div>Tata kelola data memudahkan pemenuhan: Anda tahu data pribadi apa yang dimiliki, di mana, untuk apa, dan siapa yang berwenang.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.dama.org/cpages/body-of-knowledge" rel="noopener" target="_blank">DAMA International, DAMA-DMBOK: Data Management Body of Knowledge</a></li><li><a href="https://docs.greatexpectations.io/" rel="noopener" target="_blank">Great Expectations: dokumentasi pengujian kualitas data</a></li><li>Thomas Redman, Data Driven: Profiting from Your Most Important Business Asset (Harvard Business Press, 2008)</li><li>Kenneth C. Laudon dan Jane P. Laudon, Management Information Systems: Managing the Digital Firm (Pearson)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a><a href="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/"><img src="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SDLC: Waterfall, Agile, dan Model Pengembangan Lain</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
