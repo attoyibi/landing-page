@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Pattern Java: Singleton, Factory, Strategy, Observer</title>
+<meta name="description" content="Kenali empat pola desain yang paling sering dipakai: Singleton, Factory Method, Strategy, dan Observer, dengan implementasi Java, diagram UML, dan peringatan penyalahgunaan.">
+<meta name="keywords" content="Java, design pattern, Strategy, Observer, Factory">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/">
+<meta property="og:title" content="Design Pattern Java: Singleton, Factory, Strategy, Observer">
+<meta property="og:description" content="Kenali empat pola desain yang paling sering dipakai: Singleton, Factory Method, Strategy, dan Observer, dengan implementasi Java, diagram UML, dan peringatan penyalahgunaan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Design Pattern Java: Singleton, Factory, Strategy, Observer">
+<meta name="twitter:description" content="Kenali empat pola desain yang paling sering dipakai: Singleton, Factory Method, Strategy, dan Observer, dengan implementasi Java, diagram UML, dan peringatan penyalahgunaan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Design Pattern Java: Singleton, Factory, Strategy, Observer","description":"Kenali empat pola desain yang paling sering dipakai: Singleton, Factory Method, Strategy, dan Observer, dengan implementasi Java, diagram UML, dan peringatan penyalahgunaan.","image":["https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, design pattern, Strategy, Observer, Factory","articleSection":"PBO dengan Java","wordCount":285,"mainEntityOfPage":"https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Design Pattern Java: Singleton, Factory, Strategy, Observer","item":"https://muchson.web.id/artikel/design-pattern-java-singleton-factory-strategy-observer/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ada berapa pola desain?","acceptedAnswer":{"@type":"Answer","text":"Buku Gang of Four (1994) memuat 23 pola dalam tiga kategori: creational, structural, behavioral."}},{"@type":"Question","name":"Apakah pola desain masih relevan dengan lambda?","acceptedAnswer":{"@type":"Answer","text":"Ya, hanya bentuknya yang lebih ringkas. Strategy dan Observer sering menjadi satu baris lambda."}},{"@type":"Question","name":"Bagaimana mempelajarinya?","acceptedAnswer":{"@type":"Answer","text":"Mulailah dari yang dibahas di sini, lalu cari contohnya dalam pustaka yang sudah Anda pakai."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#singleton">Singleton</a></li><li><a href="#factory-method">Factory Method</a></li><li><a href="#strategy">Strategy</a></li><li><a href="#observer">Observer</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Design Pattern Java: Singleton, Factory, Strategy, Observer</h1>
+<p class="lead">Pola desain adalah solusi yang teruji untuk masalah desain yang berulang. Nilai utamanya bukan kode siap tempel, melainkan kosakata bersama: ketika seorang rekan berkata "pakai Strategy di sini", seluruh struktur langsung terbayang.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> interface, polimorfisme, SOLID</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Design Pattern Java: Singleton, Factory, Strategy, Observer" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan tujuan dan struktur Singleton, Factory Method, Strategy, dan Observer</li><li>mengimplementasikan masing-masing dalam Java</li><li>mengenali kapan sebuah pola tepat dan kapan berlebihan</li><li>membaca diagram UML pola tersebut</li></ul></div>
+<table><thead><tr><th>Pola</th><th>Kategori</th><th>Masalah yang diselesaikan</th></tr></thead><tbody><tr><td>Singleton</td><td>Creational</td><td>Memastikan hanya ada satu instance</td></tr><tr><td>Factory Method</td><td>Creational</td><td>Memisahkan pembuatan objek dari pemakaiannya</td></tr><tr><td>Strategy</td><td>Behavioral</td><td>Mengganti algoritma saat berjalan</td></tr><tr><td>Observer</td><td>Behavioral</td><td>Memberi tahu banyak pihak ketika sesuatu berubah</td></tr></tbody></table>
+<h2 id="singleton">Singleton</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Konfigurasi {
+    private static final Konfigurasi INSTANCE = new Konfigurasi();   // dibuat sekali saat class dimuat
+    private final String bahasa = &quot;id&quot;;
+    private Konfigurasi() { System.out.println(&quot;Konfigurasi dibuat&quot;); }
+    static Konfigurasi get() { return INSTANCE; }
+    String bahasa() { return bahasa; }
+}
+
+enum Logger {            // cara paling ringkas dan aman: enum dengan satu konstanta
+    INSTANCE;
+    void log(String s) { System.out.println(&quot;[LOG] &quot; + s); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Konfigurasi a = Konfigurasi.get(), b = Konfigurasi.get();
+        System.out.println(a == b);
+        Logger.INSTANCE.log(&quot;halo&quot;);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Konfigurasi dibuat
+true
+[LOG] halo</code></pre></figure>
+<div class="callout warn"><b>Peringatan</b><p>Singleton pada dasarnya adalah <b>keadaan global</b>: sulit diuji dan menyembunyikan dependensi. Pertimbangkan menyuntikkan satu objek bersama melalui konstruktor (lihat DIP) alih-alih memanggil <code>get()</code> dari mana-mana.</p></div>
+<h2 id="factory-method">Factory Method</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>interface Notifikasi { void kirim(String pesan); }
+class Email implements Notifikasi { public void kirim(String p) { System.out.println(&quot;EMAIL: &quot; + p); } }
+class Sms implements Notifikasi { public void kirim(String p) { System.out.println(&quot;SMS: &quot; + p); } }
+class Push implements Notifikasi { public void kirim(String p) { System.out.println(&quot;PUSH: &quot; + p); } }
+
+class PabrikNotifikasi {
+    static Notifikasi buat(String jenis) {
+        return switch (jenis) {
+            case &quot;email&quot; -&gt; new Email();
+            case &quot;sms&quot; -&gt; new Sms();
+            case &quot;push&quot; -&gt; new Push();
+            default -&gt; throw new IllegalArgumentException(&quot;jenis tidak dikenal: &quot; + jenis);
+        };
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        for (String j : new String[]{&quot;email&quot;, &quot;sms&quot;, &quot;push&quot;})
+            PabrikNotifikasi.buat(j).kirim(&quot;pesanan dikirim&quot;);      // pemakai tidak tahu class konkretnya
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>EMAIL: pesanan dikirim
+SMS: pesanan dikirim
+PUSH: pesanan dikirim</code></pre><figcaption>Pemakai hanya mengenal interface Notifikasi. Menambah jenis baru hanya mengubah pabrik.</figcaption></figure>
+<h2 id="strategy">Strategy</h2>
+<figure class="diagram"><svg viewBox="0 0 620 230" role="img" aria-label="Pola Strategy" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="od8l3-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="od8l3-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="od8l3-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="od8l3-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="od8l3-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="195,75.3 305,56.4" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#od8l3-diaf)"/><polyline points="340,160 385,70" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#od8l3-open)"/><polyline points="477.1,160 419.3,70" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#od8l3-open)"/><rect x="25" y="55" width="170" height="70" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="74" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Keranjang</text><line x1="25" y1="83" x2="195" y2="83" stroke="#1e5ab2" stroke-width="1.5"/><text x="33" y="98" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">-strategi</text><line x1="25" y1="107" x2="195" y2="107" stroke="#1e5ab2" stroke-width="1.5"/><text x="33" y="122" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">total()</text><rect x="305" y="10" width="190" height="60" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="400" y="24" text-anchor="middle" font-size="11" fill="#0f1a33">«interface»</text><text x="400" y="43" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Pengiriman</text><line x1="305" y1="52" x2="495" y2="52" stroke="#1e5ab2" stroke-width="1.5"/><line x1="305" y1="76" x2="495" y2="76" stroke="#1e5ab2" stroke-width="1.5"/><text x="313" y="91" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">biaya(berat)</text><rect x="265" y="160" width="130" height="40" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="330" y="179" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Reguler</text><line x1="265" y1="188" x2="395" y2="188" stroke="#1e5ab2" stroke-width="1.5"/><line x1="265" y1="212" x2="395" y2="212" stroke="#1e5ab2" stroke-width="1.5"/><rect x="425" y="160" width="130" height="40" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="490" y="179" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Ekspres</text><line x1="425" y1="188" x2="555" y2="188" stroke="#1e5ab2" stroke-width="1.5"/><line x1="425" y1="212" x2="555" y2="212" stroke="#1e5ab2" stroke-width="1.5"/></svg><figcaption>Keranjang memiliki sebuah strategi pengiriman yang dapat diganti kapan saja.</figcaption></figure>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.function.DoubleUnaryOperator;
+
+interface Pengiriman { double biaya(double beratKg); }
+
+class Keranjang {
+    private Pengiriman strategi;
+    private final double beratKg;
+    Keranjang(double beratKg, Pengiriman strategi) { this.beratKg = beratKg; this.strategi = strategi; }
+    void ganti(Pengiriman s) { this.strategi = s; }
+    double ongkir() { return strategi.biaya(beratKg); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Pengiriman reguler = b -&gt; 9_000 * b;                  // strategi sebagai lambda
+        Pengiriman ekspres = b -&gt; 15_000 + 12_000 * b;
+        Keranjang k = new Keranjang(2, reguler);
+        System.out.println(&quot;reguler: &quot; + k.ongkir());
+        k.ganti(ekspres);                                      // ganti algoritma saat berjalan
+        System.out.println(&quot;ekspres: &quot; + k.ongkir());
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>reguler: 18000.0
+ekspres: 39000.0</code></pre><figcaption>Karena Pengiriman adalah functional interface, strategi sederhana cukup berupa lambda. Pola ini menggantikan rantai if/else berdasarkan jenis algoritma.</figcaption></figure>
+<h2 id="observer">Observer</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+class Berita {
+    private final List&lt;Consumer&lt;String&gt;&gt; pelanggan = new ArrayList&lt;&gt;();
+    void berlangganan(Consumer&lt;String&gt; p) { pelanggan.add(p); }
+    void terbit(String judul) {
+        System.out.println(&quot;-- terbit: &quot; + judul);
+        for (Consumer&lt;String&gt; p : pelanggan) p.accept(judul);         // memberi tahu semua pengamat
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Berita redaksi = new Berita();
+        redaksi.berlangganan(j -&gt; System.out.println(&quot;  [email] &quot; + j));
+        redaksi.berlangganan(j -&gt; System.out.println(&quot;  [aplikasi] &quot; + j.toUpperCase()));
+        redaksi.terbit(&quot;Java 25 dirilis&quot;);
+        redaksi.berlangganan(j -&gt; System.out.println(&quot;  [arsip] &quot; + j.length() + &quot; karakter&quot;));
+        redaksi.terbit(&quot;Belajar pola desain&quot;);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>-- terbit: Java 25 dirilis
+  [email] Java 25 dirilis
+  [aplikasi] JAVA 25 DIRILIS
+-- terbit: Belajar pola desain
+  [email] Belajar pola desain
+  [aplikasi] BELAJAR POLA DESAIN
+  [arsip] 19 karakter</code></pre><figcaption>Subjek tidak tahu siapa pengamatnya. Pola ini ada di balik event listener GUI, MVC, dan pemrograman reaktif.</figcaption></figure>
+<div data-w="compare"><script type="application/json">{"title":"Ringkasan kapan memakai","tabs":[{"label":"Strategy","html":"Bila ada beberapa cara melakukan hal yang sama (pengurutan, diskon, ongkir) dan pilihannya berubah."},{"label":"Observer","html":"Bila satu perubahan perlu diketahui beberapa pihak yang tidak boleh saling terikat."},{"label":"Factory","html":"Bila pembuatan objek rumit atau bergantung kondisi, dan pemakai tidak perlu tahu class konkretnya."},{"label":"Singleton","html":"Hampir selalu ada alternatif lebih baik (injeksi dependensi). Pakai hanya untuk sumber daya yang memang tunggal."}]}</script></div>
+<div class="callout warn"><b>Jangan berlebihan</b><p>Bahaya terbesar pola desain adalah <b>patternitis</b>: memakai pola karena ingin, bukan karena perlu. Pola mencegah satu masalah dengan harga kerumitan. Pastikan masalahnya benar-benar ada.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pola yang menggantikan if/else untuk memilih algoritma?","options":["Strategy","Singleton","Observer"],"answer":0,"why":"Setiap algoritma menjadi objek yang bisa ditukar."},{"q":"Event listener GUI adalah contoh pola...","options":["Observer","Factory","Adapter"],"answer":0,"why":"Banyak pendengar diberi tahu saat kejadian terjadi."},{"q":"Cara paling aman membuat Singleton di Java?","options":["Enum dengan satu konstanta","Variabel public static non-final","Konstruktor public"],"answer":0,"why":"Tahan terhadap refleksi dan serialisasi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan strategi pengiriman "gratis di atas 500 ribu" yang bergantung pada total belanja.</summary><div>Ubah interface agar menerima total belanja atau tambahkan parameter; ini menunjukkan strategi dapat membutuhkan konteks.</div></details><details><summary>2. Apa perbedaan Strategy dan Factory?</summary><div>Strategy memilih perilaku yang dapat ditukar saat berjalan; Factory memilih objek mana yang dibuat.</div></details><details><summary>3. Mengapa Observer yang tidak pernah berhenti berlangganan dapat menyebabkan kebocoran memori?</summary><div>Subjek menyimpan referensi pengamat sehingga pengamat tidak bisa dibersihkan garbage collector.</div></details><details><summary>4. Cari satu pola desain di pustaka standar Java.</summary><div>Iterator (Iterator), Comparator (Strategy), Collections.unmodifiableList (Decorator), BufferedReader (Decorator).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Pola desain adalah kosakata solusi yang teruji.</li><li>Singleton: satu instance (hati-hati keadaan global).</li><li>Factory: pisahkan pembuatan dari pemakaian.</li><li>Strategy: algoritma yang dapat ditukar; Observer: pemberitahuan banyak pihak.</li><li>Pakai bila masalahnya nyata.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Ada berapa pola desain?</summary><div>Buku Gang of Four (1994) memuat 23 pola dalam tiga kategori: creational, structural, behavioral.</div></details>
+<details class="faq"><summary>Apakah pola desain masih relevan dengan lambda?</summary><div>Ya, hanya bentuknya yang lebih ringkas. Strategy dan Observer sering menjadi satu baris lambda.</div></details>
+<details class="faq"><summary>Bagaimana mempelajarinya?</summary><div>Mulailah dari yang dibahas di sini, lalu cari contohnya dalam pustaka yang sudah Anda pakai.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Gamma, Helm, Johnson, Vlissides, Design Patterns: Elements of Reusable Object-Oriented Software (Addison-Wesley, 1994)</li><li>Eric Freeman dan Elisabeth Robson, Head First Design Patterns (O'Reilly, edisi ke-2)</li><li><a href="https://refactoring.guru/design-patterns" rel="noopener" target="_blank">Refactoring Guru: Design Patterns</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

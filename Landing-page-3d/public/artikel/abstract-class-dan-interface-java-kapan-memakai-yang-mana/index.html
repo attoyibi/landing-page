@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abstract Class dan Interface Java: Pilih yang Mana?</title>
+<meta name="description" content="Bedakan abstract class dan interface di Java: kontrak, default method, pewarisan ganda tipe, contoh nyata, dan panduan memilih, dengan diagram UML dan kode yang dijalankan.">
+<meta name="keywords" content="Java, abstract class, interface, default method, UML">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/">
+<meta property="og:title" content="Abstract Class dan Interface Java: Pilih yang Mana?">
+<meta property="og:description" content="Bedakan abstract class dan interface di Java: kontrak, default method, pewarisan ganda tipe, contoh nyata, dan panduan memilih, dengan diagram UML dan kode yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Abstract Class dan Interface Java: Pilih yang Mana?">
+<meta name="twitter:description" content="Bedakan abstract class dan interface di Java: kontrak, default method, pewarisan ganda tipe, contoh nyata, dan panduan memilih, dengan diagram UML dan kode yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Abstract Class dan Interface Java: Pilih yang Mana?","description":"Bedakan abstract class dan interface di Java: kontrak, default method, pewarisan ganda tipe, contoh nyata, dan panduan memilih, dengan diagram UML dan kode yang dijalankan.","image":["https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, abstract class, interface, default method, UML","articleSection":"PBO dengan Java","wordCount":266,"mainEntityOfPage":"https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Abstract Class dan Interface Java: Pilih yang Mana?","item":"https://muchson.web.id/artikel/abstract-class-dan-interface-java-kapan-memakai-yang-mana/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah interface bisa mewarisi interface lain?","acceptedAnswer":{"@type":"Answer","text":"Ya, dengan extends, termasuk dari beberapa interface sekaligus."}},{"@type":"Question","name":"Apa itu functional interface?","acceptedAnswer":{"@type":"Answer","text":"Interface dengan tepat satu method abstrak (misalnya Runnable, Comparator); dapat dipakai dengan lambda."}},{"@type":"Question","name":"Kapan abstract class tidak diperlukan lagi?","acceptedAnswer":{"@type":"Answer","text":"Bila tidak ada keadaan bersama, interface dengan default method sering cukup."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#abstract-class-kerangka-dengan-bagian-yang-wajib-diisi">Abstract class: kerangka dengan bagian yang wajib diisi</a></li><li><a href="#interface-kontrak-murni-tentang-kemampuan">Interface: kontrak murni tentang kemampuan</a></li><li><a href="#hubungan-dalam-diagram-uml">Hubungan dalam diagram UML</a></li><li><a href="#membandingkan-keduanya">Membandingkan keduanya</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Abstract Class dan Interface Java: Pilih yang Mana?</h1>
+<p class="lead">Abstract class dan interface sama-sama mendefinisikan kontrak yang harus dipenuhi class lain, tetapi dipakai untuk tujuan berbeda. Memahami perbedaannya adalah salah satu pertanyaan wawancara PBO yang paling sering muncul.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> inheritance, polimorfisme</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Abstract Class dan Interface Java: Pilih yang Mana?" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mendefinisikan dan memakai abstract class dengan method abstrak</li><li>mendefinisikan dan mengimplementasikan interface</li><li>menjelaskan default method, static method, dan multiple interface</li><li>memilih antara abstract class dan interface berdasarkan kebutuhan</li><li>membaca diagram kelas UML sederhana</li></ul></div>
+<h2 id="abstract-class-kerangka-dengan-bagian-yang-wajib-diisi">Abstract class: kerangka dengan bagian yang wajib diisi</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>abstract class Pembayaran {
+    protected final double jumlah;
+    Pembayaran(double jumlah) { this.jumlah = jumlah; }
+
+    abstract double biayaAdmin();                 // wajib diimplementasikan subclass
+
+    final double total() {                         // algoritma tetap (template), memakai bagian abstrak
+        return jumlah + biayaAdmin();
+    }
+}
+
+class KartuKredit extends Pembayaran {
+    KartuKredit(double j) { super(j); }
+    double biayaAdmin() { return jumlah * 0.02; }
+}
+class TransferBank extends Pembayaran {
+    TransferBank(double j) { super(j); }
+    double biayaAdmin() { return 2_500; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // new Pembayaran(1000);   // error: class abstrak tidak bisa diinstansiasi
+        Pembayaran[] p = { new KartuKredit(100_000), new TransferBank(100_000) };
+        for (Pembayaran x : p) System.out.println(x.getClass().getSimpleName() + &quot;: &quot; + x.total());
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>KartuKredit: 102000.0
+TransferBank: 102500.0</code></pre><figcaption>Abstract class boleh punya atribut, konstruktor, dan method konkret. Contoh ini adalah pola Template Method.</figcaption></figure>
+<h2 id="interface-kontrak-murni-tentang-kemampuan">Interface: kontrak murni tentang kemampuan</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>interface DapatDicetak {
+    void cetak();                                  // otomatis public abstract
+}
+interface DapatDisimpan {
+    void simpan(String lokasi);
+    default void simpanCadangan() {                // default method: implementasi bawaan
+        simpan(&quot;cadangan/&quot;);
+    }
+    static String format() { return &quot;txt&quot;; }       // static method pada interface
+}
+
+class Laporan implements DapatDicetak, DapatDisimpan {     // boleh banyak interface
+    public void cetak() { System.out.println(&quot;mencetak laporan&quot;); }
+    public void simpan(String lokasi) { System.out.println(&quot;menyimpan ke &quot; + lokasi); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Laporan l = new Laporan();
+        l.cetak();
+        l.simpan(&quot;dokumen/&quot;);
+        l.simpanCadangan();
+        DapatDicetak c = l;                         // variabel bertipe interface
+        c.cetak();
+        System.out.println(DapatDisimpan.format());
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>mencetak laporan
+menyimpan ke dokumen/
+menyimpan ke cadangan/
+mencetak laporan
+txt</code></pre><figcaption>Satu class boleh mengimplementasikan banyak interface tetapi hanya mewarisi satu class.</figcaption></figure>
+<h2 id="hubungan-dalam-diagram-uml">Hubungan dalam diagram UML</h2>
+<figure class="diagram"><svg viewBox="0 0 620 250" role="img" aria-label="Diagram kelas" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="v51w6-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="v51w6-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="v51w6-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="v51w6-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="v51w6-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="243.6,170 298.6,100" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#v51w6-open)"/><polyline points="416.4,170 195,90.5" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#v51w6-open)"/><rect x="25" y="25" width="170" height="70" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="39" text-anchor="middle" font-size="11" fill="#0f1a33">«interface»</text><text x="110" y="58" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">DapatDicetak</text><line x1="25" y1="67" x2="195" y2="67" stroke="#1e5ab2" stroke-width="1.5"/><line x1="25" y1="91" x2="195" y2="91" stroke="#1e5ab2" stroke-width="1.5"/><text x="33" y="106" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">cetak()</text><rect x="245" y="20" width="170" height="80" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="330" y="39" text-anchor="middle" font-size="14" font-weight="700" font-style="italic" fill="#0f1a33">Pembayaran</text><line x1="245" y1="48" x2="415" y2="48" stroke="#1e5ab2" stroke-width="1.5"/><text x="253" y="63" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">#jumlah</text><line x1="245" y1="72" x2="415" y2="72" stroke="#1e5ab2" stroke-width="1.5"/><text x="253" y="87" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">biayaAdmin()</text><text x="253" y="104" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">total()</text><rect x="135" y="170" width="170" height="60" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="220" y="189" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">KartuKredit</text><line x1="135" y1="198" x2="305" y2="198" stroke="#1e5ab2" stroke-width="1.5"/><line x1="135" y1="222" x2="305" y2="222" stroke="#1e5ab2" stroke-width="1.5"/><text x="143" y="237" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">biayaAdmin()</text><rect x="415" y="170" width="170" height="60" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="189" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Laporan</text><line x1="415" y1="198" x2="585" y2="198" stroke="#1e5ab2" stroke-width="1.5"/><line x1="415" y1="222" x2="585" y2="222" stroke="#1e5ab2" stroke-width="1.5"/><text x="423" y="237" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">cetak()</text></svg><figcaption>Garis solid dengan segitiga kosong: pewarisan (extends). Garis putus-putus dengan segitiga kosong: realisasi (implements).</figcaption></figure>
+<h2 id="membandingkan-keduanya">Membandingkan keduanya</h2>
+<table><thead><tr><th>Aspek</th><th>Abstract class</th><th>Interface</th></tr></thead><tbody><tr><td>Hubungan</td><td>Pewarisan satu induk (extends)</td><td>Implementasi banyak (implements)</td></tr><tr><td>Atribut</td><td>Boleh atribut instance dengan keadaan</td><td>Hanya konstanta (public static final)</td></tr><tr><td>Konstruktor</td><td>Ada</td><td>Tidak ada</td></tr><tr><td>Method</td><td>Abstrak dan konkret</td><td>Abstrak, default, static, private</td></tr><tr><td>Cocok untuk</td><td>Keluarga class sejenis yang berbagi kode dan keadaan</td><td>Kemampuan atau peran yang dapat dimiliki class tak berkaitan</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Latihan memilih","questions":[{"q":"Beberapa jenis pegawai berbagi atribut nama dan gaji pokok serta sebagian logika gaji.","options":["Abstract class","Interface"],"answer":0,"why":"Ada keadaan dan kode yang dibagi."},{"q":"Class Mobil, Printer, dan Laporan semuanya bisa \"Dicetak\" padahal tak berkerabat.","options":["Abstract class","Interface"],"answer":1,"why":"Kemampuan lintas hierarki."},{"q":"Anda ingin menyediakan antarmuka yang bisa diganti implementasinya (misalnya penyimpanan ke file atau basis data).","options":["Abstract class","Interface"],"answer":1,"why":"Kontrak murni memudahkan penggantian dan pengujian."}]}</script></div>
+<div class="callout good"><b>Prinsip desain</b><p>Aturan praktis: <b>program ke interface, bukan ke implementasi</b>. Deklarasikan variabel sebagai <code>List</code> atau <code>DapatDicetak</code>, dan pilih class konkretnya hanya saat membuat objek.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Berapa interface yang boleh diimplementasikan satu class?","options":["Satu","Banyak","Tidak ada"],"answer":1,"why":"Banyak, dipisah koma."},{"q":"Bisakah abstract class diinstansiasi dengan new?","options":["Ya","Tidak","Hanya jika public"],"answer":1,"why":"Hanya subclass konkretnya yang dapat dibuat."},{"q":"Default method pada interface berguna untuk...","options":["Menambah perilaku tanpa memecahkan implementasi lama","Mengganti konstruktor","Membuat atribut"],"answer":0,"why":"Interface dapat berevolusi tanpa merusak kode lama."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ubah nama DapatDicetak menjadi Cetakan? Mengapa penamaan interface sebagai sifat (kata sifat) umum?</summary><div>Interface biasanya menyatakan kemampuan: Comparable, Runnable, Serializable.</div></details><details><summary>2. Sebutkan interface standar yang sering dipakai.</summary><div>Comparable, Comparator, Runnable, Iterable, List, Map, AutoCloseable.</div></details><details><summary>3. Mengapa abstract class dapat punya konstruktor?</summary><div>Untuk menginisialisasi atribut bersama yang dipanggil oleh konstruktor subclass lewat super(...).</div></details><details><summary>4. Dua interface punya default method bernama sama; class mengimplementasikan keduanya. Apa yang terjadi?</summary><div>Error kompilasi kecuali class menimpa method itu (dan dapat memanggil salah satunya lewat NamaInterface.super.method()).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Abstract class: kerangka dengan keadaan dan kode bersama, sebagian method wajib diisi subclass.</li><li>Interface: kontrak kemampuan; satu class dapat mengimplementasikan banyak.</li><li>Pilih abstract class untuk keluarga sejenis, interface untuk peran lintas hierarki.</li><li>Program ke interface, bukan ke implementasi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah interface bisa mewarisi interface lain?</summary><div>Ya, dengan extends, termasuk dari beberapa interface sekaligus.</div></details>
+<details class="faq"><summary>Apa itu functional interface?</summary><div>Interface dengan tepat satu method abstrak (misalnya Runnable, Comparator); dapat dipakai dengan lambda.</div></details>
+<details class="faq"><summary>Kapan abstract class tidak diperlukan lagi?</summary><div>Bila tidak ada keadaan bersama, interface dengan default method sering cukup.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html" rel="noopener" target="_blank">Oracle: Interfaces (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html" rel="noopener" target="_blank">Oracle: Abstract Methods and Classes</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

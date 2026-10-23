@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lambda dan Stream API Java: Gaya Fungsional · Muhammad Muchson</title>
+<meta name="description" content="Pelajari lambda, functional interface, method reference, dan Stream API di Java: filter, map, reduce, collect, groupingBy, serta kapan stream membantu dan kapan merugikan.">
+<meta name="keywords" content="Java, lambda, stream, functional interface, collectors">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/">
+<meta property="og:title" content="Lambda dan Stream API Java: Gaya Fungsional">
+<meta property="og:description" content="Pelajari lambda, functional interface, method reference, dan Stream API di Java: filter, map, reduce, collect, groupingBy, serta kapan stream membantu dan kapan merugikan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lambda dan Stream API Java: Gaya Fungsional">
+<meta name="twitter:description" content="Pelajari lambda, functional interface, method reference, dan Stream API di Java: filter, map, reduce, collect, groupingBy, serta kapan stream membantu dan kapan merugikan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Lambda dan Stream API Java: Gaya Fungsional","description":"Pelajari lambda, functional interface, method reference, dan Stream API di Java: filter, map, reduce, collect, groupingBy, serta kapan stream membantu dan kapan merugikan.","image":["https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, lambda, stream, functional interface, collectors","articleSection":"PBO dengan Java","wordCount":291,"mainEntityOfPage":"https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Lambda dan Stream API Java: Gaya Fungsional","item":"https://muchson.web.id/artikel/lambda-dan-stream-api-java-pemrograman-fungsional/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah stream lebih cepat dari for?","acceptedAnswer":{"@type":"Answer","text":"Tidak otomatis. Untuk data kecil keduanya setara; stream menang di keterbacaan, bukan kecepatan."}},{"@type":"Question","name":"Apa itu Optional?","acceptedAnswer":{"@type":"Answer","text":"Pembungkus untuk nilai yang mungkin tidak ada, mengurangi null. Banyak terminal operation (findFirst, max) mengembalikannya."}},{"@type":"Question","name":"Bagaimana men-debug stream?","acceptedAnswer":{"@type":"Answer","text":"Gunakan peek sementara atau pecah pipeline menjadi variabel antara."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#lambda-fungsi-sebagai-nilai">Lambda: fungsi sebagai nilai</a></li><li><a href="#stream-pipeline-tiga-tahap">Stream: pipeline tiga tahap</a></li><li><a href="#malas-dan-satu-kali-pakai">Malas dan satu kali pakai</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Lambda dan Stream API Java: Gaya Fungsional</h1>
+<p class="lead">Sejak Java 8, Java dapat mengekspresikan perilaku sebagai nilai (lambda) dan memproses koleksi dengan alur deklaratif (Stream). Hasilnya kode yang menyatakan apa yang diinginkan, bukan bagaimana mengulanginya langkah demi langkah.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> interface, collections, generics dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Lambda dan Stream API Java: Gaya Fungsional" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis lambda dan method reference</li><li>mengenali functional interface standar (Predicate, Function, Consumer, Supplier)</li><li>membangun pipeline stream: filter, map, sorted, limit</li><li>memakai terminal operation: collect, reduce, count, anyMatch</li><li>mengelompokkan data dengan Collectors.groupingBy dan menilai kapan stream tepat dipakai</li></ul></div>
+<h2 id="lambda-fungsi-sebagai-nilai">Lambda: fungsi sebagai nilai</h2>
+<p>Lambda adalah implementasi ringkas dari <b>functional interface</b>, yaitu interface dengan satu method abstrak.</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+import java.util.function.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // cara lama: kelas anonim
+        Comparator&lt;String&gt; lama = new Comparator&lt;&gt;() {
+            public int compare(String a, String b) { return a.length() - b.length(); }
+        };
+        // lambda
+        Comparator&lt;String&gt; baru = (a, b) -&gt; a.length() - b.length();
+        // method reference
+        Comparator&lt;String&gt; ref = Comparator.comparingInt(String::length);
+
+        List&lt;String&gt; kata = new ArrayList&lt;&gt;(List.of(&quot;semangka&quot;, &quot;apel&quot;, &quot;kiwi&quot;, &quot;durian&quot;));
+        kata.sort(baru);
+        System.out.println(kata);
+
+        Predicate&lt;String&gt; panjang = s -&gt; s.length() &gt; 4;
+        Function&lt;String, Integer&gt; hitung = String::length;
+        Consumer&lt;String&gt; cetak = s -&gt; System.out.println(&quot;-&gt; &quot; + s);
+        Supplier&lt;String&gt; pembuat = () -&gt; &quot;dibuat saat dibutuhkan&quot;;
+        BiFunction&lt;Integer, Integer, Integer&gt; tambah = (a, b) -&gt; a + b;
+
+        System.out.println(panjang.test(&quot;durian&quot;) + &quot; &quot; + hitung.apply(&quot;kiwi&quot;) + &quot; &quot; + tambah.apply(2, 3));
+        cetak.accept(pembuat.get());
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>[apel, kiwi, durian, semangka]
+true 4 5
+-&gt; dibuat saat dibutuhkan</code></pre></figure>
+<table><thead><tr><th>Interface</th><th>Method</th><th>Makna</th><th>Contoh lambda</th></tr></thead><tbody><tr><td>Predicate<T></td><td>boolean test(T)</td><td>Uji kondisi</td><td>s -> s.isEmpty()</td></tr><tr><td>Function<T,R></td><td>R apply(T)</td><td>Ubah T menjadi R</td><td>s -> s.length()</td></tr><tr><td>Consumer<T></td><td>void accept(T)</td><td>Pakai nilai (efek samping)</td><td>s -> System.out.println(s)</td></tr><tr><td>Supplier<T></td><td>T get()</td><td>Hasilkan nilai</td><td>() -> new ArrayList<>()</td></tr><tr><td>Comparator<T></td><td>int compare(T,T)</td><td>Bandingkan dua nilai</td><td>(a,b) -> a - b</td></tr></tbody></table>
+<h2 id="stream-pipeline-tiga-tahap">Stream: pipeline tiga tahap</h2>
+<figure class="diagram"><svg viewBox="0 0 542 104" role="img" aria-label="Pipeline stream" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Sumber</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">list.stream(),</tspan><tspan x="85" dy="14">Stream.of,</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Operasi antara</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">filter, map, sorted,</tspan><tspan x="271" dy="14">distinct, limit</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Operasi terminal</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">collect, count,</tspan><tspan x="457" dy="14">reduce, forEach</tspan></text></svg><figcaption>Operasi antara bersifat malas: tidak ada yang berjalan sampai ada operasi terminal.</figcaption></figure>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+import java.util.stream.*;
+
+record Mahasiswa(String nama, String jurusan, double ipk) { }
+
+public class Main {
+    public static void main(String[] args) {
+        List&lt;Mahasiswa&gt; data = List.of(
+            new Mahasiswa(&quot;Ani&quot;, &quot;TI&quot;, 3.8), new Mahasiswa(&quot;Budi&quot;, &quot;SI&quot;, 3.1),
+            new Mahasiswa(&quot;Citra&quot;, &quot;TI&quot;, 3.5), new Mahasiswa(&quot;Dewi&quot;, &quot;SI&quot;, 3.9),
+            new Mahasiswa(&quot;Eko&quot;, &quot;TI&quot;, 2.9));
+
+        List&lt;String&gt; berprestasi = data.stream()
+            .filter(m -&gt; m.ipk() &gt;= 3.5)
+            .sorted(Comparator.comparingDouble(Mahasiswa::ipk).reversed())
+            .map(Mahasiswa::nama)
+            .collect(Collectors.toList());
+        System.out.println(berprestasi);
+
+        double rata = data.stream().mapToDouble(Mahasiswa::ipk).average().orElse(0);
+        System.out.printf(&quot;rata-rata %.2f%n&quot;, rata);
+
+        System.out.println(data.stream().anyMatch(m -&gt; m.ipk() &lt; 3.0));
+        System.out.println(data.stream().map(Mahasiswa::jurusan).distinct().count());
+
+        Map&lt;String, List&lt;String&gt;&gt; perJurusan = data.stream()
+            .collect(Collectors.groupingBy(Mahasiswa::jurusan, TreeMap::new,
+                     Collectors.mapping(Mahasiswa::nama, Collectors.toList())));
+        System.out.println(perJurusan);
+
+        Map&lt;String, Double&gt; rataPerJurusan = data.stream()
+            .collect(Collectors.groupingBy(Mahasiswa::jurusan, TreeMap::new, Collectors.averagingDouble(Mahasiswa::ipk)));
+        rataPerJurusan.forEach((j, r) -&gt; System.out.printf(&quot;%s: %.2f%n&quot;, j, r));
+
+        int jumlahKuadrat = IntStream.rangeClosed(1, 5).map(x -&gt; x * x).sum();
+        System.out.println(jumlahKuadrat);
+        System.out.println(Stream.of(1, 2, 3, 4).reduce(0, Integer::sum));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>[Dewi, Ani, Citra]
+rata-rata 3.44
+true
+2
+{SI=[Budi, Dewi], TI=[Ani, Citra, Eko]}
+SI: 3.50
+TI: 3.40
+55
+10</code></pre></figure>
+<h2 id="malas-dan-satu-kali-pakai">Malas dan satu kali pakai</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.stream.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Stream&lt;Integer&gt; s = Stream.of(1, 2, 3, 4, 5, 6)
+            .peek(x -&gt; System.out.println(&quot;filter melihat &quot; + x))
+            .filter(x -&gt; x % 2 == 0)
+            .peek(x -&gt; System.out.println(&quot;  lolos &quot; + x));
+        System.out.println(&quot;pipeline dibuat, belum ada yang berjalan&quot;);
+        System.out.println(&quot;hasil: &quot; + s.limit(2).collect(Collectors.toList()));   // berhenti setelah dua lolos
+
+        try { s.count(); }
+        catch (IllegalStateException e) { System.out.println(&quot;stream hanya dapat dipakai sekali&quot;); }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>pipeline dibuat, belum ada yang berjalan
+filter melihat 1
+filter melihat 2
+  lolos 2
+filter melihat 3
+filter melihat 4
+  lolos 4
+hasil: [2, 4]
+stream hanya dapat dipakai sekali</code></pre><figcaption>Setelah dua elemen genap terkumpul, pemrosesan berhenti (short-circuit): angka 5 dan 6 tidak pernah diperiksa.</figcaption></figure>
+<div data-w="compare"><script type="application/json">{"title":"Stream atau for biasa?","tabs":[{"label":"Stream cocok","html":"Transformasi data berurutan (filter-map-collect), pengelompokan, agregasi. Hasilnya lebih ringkas dan menyatakan maksud."},{"label":"for biasa cocok","html":"Logika kompleks dengan banyak variabel yang berubah, pemakaian indeks, break/continue, atau penanganan exception checked di tengah. Memaksakan stream membuat kode lebih sulit dibaca."}]}</script></div>
+<div class="callout warn"><b>Peringatan</b><p>Lambda tidak boleh mengubah variabel lokal luar (harus efektif final). Hindari efek samping di dalam <code>map</code>/<code>filter</code>; gunakan operasi terminal seperti <code>collect</code> untuk membentuk hasil. <code>parallelStream()</code> bukan jalan pintas cepat: ia membantu hanya untuk pekerjaan CPU yang besar dan bebas efek samping.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Functional interface adalah interface dengan...","options":["Satu method abstrak","Tepat dua method","Tanpa method"],"answer":0,"why":"Lambda mengimplementasikan method abstrak tunggal itu."},{"q":"Kapan pipeline stream benar-benar berjalan?","options":["Saat dibuat","Saat operasi terminal dipanggil","Saat kompilasi"],"answer":1,"why":"Operasi antara bersifat malas."},{"q":"String::length adalah...","options":["Method reference","Atribut","Konstruktor"],"answer":0,"why":"Setara s -> s.length()."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Dari list angka 1..20, ambil kuadrat dari yang genap dan kumpulkan ke List.</summary><div><code>IntStream.rangeClosed(1,20).filter(x -> x % 2 == 0).map(x -> x*x).boxed().collect(Collectors.toList())</code></div></details><details><summary>2. Hitung jumlah kata yang diawali huruf "a" dari List<String>.</summary><div><code>kata.stream().filter(s -> s.startsWith("a")).count()</code></div></details><details><summary>3. Mengapa variabel lokal yang dipakai lambda harus efektif final?</summary><div>Lambda menangkap salinan nilai; mengubahnya membuat salinan dan aslinya tidak sinkron, sehingga bahasa melarangnya.</div></details><details><summary>4. Apa beda map dan flatMap?</summary><div>map mengubah satu elemen menjadi satu elemen; flatMap mengubah satu elemen menjadi stream lalu meratakannya.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Lambda mengimplementasikan functional interface; method reference menyingkatnya.</li><li>Stream: sumber → operasi antara (malas) → operasi terminal.</li><li>Collectors.groupingBy untuk pengelompokan dan agregasi.</li><li>Gunakan stream untuk transformasi data, for biasa untuk logika rumit.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah stream lebih cepat dari for?</summary><div>Tidak otomatis. Untuk data kecil keduanya setara; stream menang di keterbacaan, bukan kecepatan.</div></details>
+<details class="faq"><summary>Apa itu Optional?</summary><div>Pembungkus untuk nilai yang mungkin tidak ada, mengurangi null. Banyak terminal operation (findFirst, max) mengembalikannya.</div></details>
+<details class="faq"><summary>Bagaimana men-debug stream?</summary><div>Gunakan peek sementara atau pecah pipeline menjadi variabel antara.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html" rel="noopener" target="_blank">Oracle: Lambda Expressions (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/javase/tutorial/collections/streams/index.html" rel="noopener" target="_blank">Oracle: Aggregate Operations (Streams)</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html" rel="noopener" target="_blank">Java SE API: java.util.stream</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
