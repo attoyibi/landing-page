@@ -4,3 +4,5 @@ export const isArticleList = pathname => pathname.split('/').filter(Boolean)[0] 
 
 export const formatDate = iso =>
     new Date(`${iso}T00:00:00`).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+export const categorySlug = c => c.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

@@ -148,3 +148,4 @@ details.faq div { padding: 0 0 14px; color: var(--muted); }
 .top .brand { white-space: nowrap; font-size: 16px; }
 .top nav { white-space: nowrap; gap: 14px; font-size: 13.5px; }
 @media (min-width: 480px) { .top .brand { font-size: 17px; } .top nav { gap: 20px; font-size: 14px; } }
+.rel small { display: block; padding: 0 14px 14px; color: var(--muted); font-size: 14px; line-height: 1.5; }

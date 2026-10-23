@@ -10,7 +10,7 @@ const articleFolders = () => ({
   name: 'article-folders',
   configureServer(server) {
     server.middlewares.use((req, res, next) => {
-      const m = (req.url || '').split('?')[0].match(/^\/artikel\/([a-z0-9-]+)\/?$/)
+      const m = (req.url || '').split('?')[0].match(/^\/artikel\/([a-z0-9-]+(?:\/[a-z0-9-]+)?)\/?$/)
       const file = m && path.join(server.config.publicDir, 'artikel', m[1], 'index.html')
       if (file && fs.existsSync(file)) {
         res.setHeader('Content-Type', 'text/html; charset=utf-8')
