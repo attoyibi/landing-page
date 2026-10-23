@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linked List di Python: Node, Pointer, dan Operasinya</title>
+<meta name="description" content="Pelajari linked list tunggal: node dan pointer, implementasi Python, operasi sisip, hapus, cari, dan balik, perbandingan biaya dengan list, dengan simulasi interaktif.">
+<meta name="keywords" content="linked list, struktur data, node, pointer, Python">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/">
+<meta property="og:title" content="Linked List di Python: Node, Pointer, dan Operasinya">
+<meta property="og:description" content="Pelajari linked list tunggal: node dan pointer, implementasi Python, operasi sisip, hapus, cari, dan balik, perbandingan biaya dengan list, dengan simulasi interaktif.">
+<meta property="og:image" content="https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linked List di Python: Node, Pointer, dan Operasinya">
+<meta name="twitter:description" content="Pelajari linked list tunggal: node dan pointer, implementasi Python, operasi sisip, hapus, cari, dan balik, perbandingan biaya dengan list, dengan simulasi interaktif.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Linked List di Python: Node, Pointer, dan Operasinya","description":"Pelajari linked list tunggal: node dan pointer, implementasi Python, operasi sisip, hapus, cari, dan balik, perbandingan biaya dengan list, dengan simulasi interaktif.","image":["https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"linked list, struktur data, node, pointer, Python","articleSection":"Algoritma & Pemrograman Python","wordCount":464,"mainEntityOfPage":"https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Linked List di Python: Node, Pointer, dan Operasinya","item":"https://muchson.web.id/artikel/linked-list-python-node-pointer-dan-operasinya/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya pointer di Python dengan di C?","acceptedAnswer":{"@type":"Answer","text":"Python tidak menyediakan aritmetika pointer. Atribut seperti next adalah referensi ke objek, dan Python mengelola memorinya (garbage collection)."}},{"@type":"Question","name":"Bagaimana mencegah kebocoran memori pada list yang sangat panjang?","acceptedAnswer":{"@type":"Answer","text":"Python membersihkan objek yang tidak lagi dirujuk. Namun penghapusan list yang sangat panjang secara rekursif dapat menimbulkan RecursionError; hapus secara iteratif."}},{"@type":"Question","name":"Apakah deque sama dengan linked list?","acceptedAnswer":{"@type":"Answer","text":"Mirip dalam kegunaan (operasi O(1) di kedua ujung), tetapi collections.deque diimplementasikan sebagai blok-blok array terhubung sehingga lebih efisien dalam memori."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#struktur-node-yang-saling-menunjuk">Struktur: node yang saling menunjuk</a></li><li><a href="#implementasi">Implementasi</a></li><li><a href="#coba-sendiri">Coba sendiri</a></li><li><a href="#membalik-linked-list-tiga-pointer">Membalik linked list: tiga pointer</a></li><li><a href="#linked-list-vs-list-python">Linked list vs list Python</a></li><li><a href="#varian">Varian</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Linked List di Python: Node, Pointer, dan Operasinya</h1>
+<p class="lead">List Python menyimpan elemen berdampingan di memori sehingga akses indeks sangat cepat, tetapi menyisipkan di depan mahal. Linked list membalik pertukaran itu: sisip di depan murah, tetapi akses indeks mahal. Memahaminya melatih cara berpikir tentang referensi dan memori yang menjadi dasar struktur data lain seperti stack, queue, dan tree.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> kelas dan objek dasar, list Python, kompleksitas</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Linked List di Python: Node, Pointer, dan Operasinya" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan struktur node dan hubungannya melalui pointer (referensi)</li><li>mengimplementasikan linked list tunggal dengan operasi sisip, cari, hapus, dan balik</li><li>menganalisis kompleksitas tiap operasi dan membandingkannya dengan list Python</li><li>menjelaskan kapan linked list lebih cocok dan kapan tidak</li></ul></div>
+<h2 id="struktur-node-yang-saling-menunjuk">Struktur: node yang saling menunjuk</h2>
+<p>Setiap <b>node</b> menyimpan dua hal: data dan referensi (pointer) ke node berikutnya. List hanya perlu menyimpan <code>head</code>, referensi ke node pertama. Node terakhir menunjuk <code>None</code>.</p>
+<figure class="diagram"><svg viewBox="0 0 640 130" role="img" aria-label="Linked list tunggal berisi 3, 8, 5" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="co20y-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="co20y-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="co20y-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="co20y-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="co20y-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="110,60 105,60" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#co20y-arrow)"/><polyline points="215,60 275,60" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#co20y-arrow)"/><rect x="226.8" y="51" width="36.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="245" y="64" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">next</text><polyline points="385,60 445,60" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#co20y-arrow)"/><rect x="396.8" y="51" width="36.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="415" y="64" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">next</text><text x="50" y="64.33333333333333" text-anchor="middle" font-size="13" font-weight="700" fill="#1e5ab2"><tspan x="50" dy="0">head</tspan></text><rect x="105" y="33" width="110" height="54" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="160" y="52" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">3</text><line x1="105" y1="61" x2="215" y2="61" stroke="#1e5ab2" stroke-width="1.5"/><line x1="105" y1="85" x2="215" y2="85" stroke="#1e5ab2" stroke-width="1.5"/><rect x="275" y="33" width="110" height="54" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="330" y="52" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">8</text><line x1="275" y1="61" x2="385" y2="61" stroke="#1e5ab2" stroke-width="1.5"/><line x1="275" y1="85" x2="385" y2="85" stroke="#1e5ab2" stroke-width="1.5"/><rect x="445" y="33" width="110" height="54" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="52" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">5</text><line x1="445" y1="61" x2="555" y2="61" stroke="#1e5ab2" stroke-width="1.5"/><line x1="445" y1="85" x2="555" y2="85" stroke="#1e5ab2" stroke-width="1.5"/><text x="600" y="64.33333333333333" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5568"><tspan x="600" dy="0">None</tspan></text></svg><figcaption>Node tidak berdampingan di memori; hubungannya hanya lewat pointer next.</figcaption></figure>
+<h2 id="implementasi">Implementasi</h2>
+<figure class="codebox"><pre data-lang="python"><code>class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    def prepend(self, data):                 # sisip di depan: O(1)
+        self.head = Node(data, self.head)
+        self.size += 1
+
+    def append(self, data):                  # sisip di belakang: O(n)
+        baru = Node(data)
+        if self.head is None:
+            self.head = baru
+        else:
+            cur = self.head
+            while cur.next:
+                cur = cur.next
+            cur.next = baru
+        self.size += 1
+
+    def find(self, data):                    # O(n)
+        cur, i = self.head, 0
+        while cur:
+            if cur.data == data:
+                return i
+            cur, i = cur.next, i + 1
+        return -1
+
+    def remove(self, data):                  # O(n) mencari, O(1) mengaitkan ulang
+        prev, cur = None, self.head
+        while cur:
+            if cur.data == data:
+                if prev:
+                    prev.next = cur.next
+                else:
+                    self.head = cur.next
+                self.size -= 1
+                return True
+            prev, cur = cur, cur.next
+        return False
+
+    def reverse(self):                       # O(n), ruang O(1)
+        prev, cur = None, self.head
+        while cur:
+            cur.next, prev, cur = prev, cur, cur.next
+        self.head = prev
+
+    def __iter__(self):
+        cur = self.head
+        while cur:
+            yield cur.data
+            cur = cur.next
+
+    def __repr__(self):
+        return &quot; -&gt; &quot;.join(map(str, self)) + &quot; -&gt; None&quot;
+
+ll = LinkedList()
+for x in [5, 8, 3]:
+    ll.prepend(x)
+ll.append(10)
+print(ll, &quot;| ukuran&quot;, ll.size)
+print(&quot;cari 8:&quot;, ll.find(8), &quot;| cari 99:&quot;, ll.find(99))
+ll.remove(8); print(&quot;setelah hapus 8:&quot;, ll)
+ll.reverse(); print(&quot;dibalik:&quot;, ll)</code></pre><pre class="runout" data-lang="keluaran"><code>3 -&gt; 8 -&gt; 5 -&gt; 10 -&gt; None | ukuran 4
+cari 8: 1 | cari 99: -1
+setelah hapus 8: 3 -&gt; 5 -&gt; 10 -&gt; None
+dibalik: 10 -&gt; 5 -&gt; 3 -&gt; None</code></pre></figure>
+<h2 id="coba-sendiri">Coba sendiri</h2>
+<div data-w="linked"><script type="application/json">{"title":"Simulasi linked list","desc":"Sisip, hapus, dan cari. Perhatikan jumlah langkah penelusuran, lalu aktifkan pointer tail untuk melihat bagaimana biaya sisip di belakang berubah.","values":[3,8,5]}</script></div>
+<h2 id="membalik-linked-list-tiga-pointer">Membalik linked list: tiga pointer</h2>
+<p>Pembalikan menggeser arah semua pointer. Gunakan tiga penunjuk: <code>prev</code>, <code>cur</code>, dan simpan <code>next</code> sebelum mengubah arah. Pada kode di atas, penugasan bersamaan <code>cur.next, prev, cur = prev, cur, cur.next</code> melakukan semuanya dalam satu baris.</p>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Langkah membalik: sebelum dan sesudah" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="dnl4i-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="dnl4i-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="dnl4i-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="dnl4i-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="dnl4i-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="88,40 142,40" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dnl4i-arrow)"/><polyline points="198,40 252,40" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dnl4i-arrow)"/><polyline points="252,140 198,140" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dnl4i-arrow)"/><polyline points="142,140 88,140" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dnl4i-arrow)"/><rect x="32" y="22" width="56" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="60" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="60" dy="0">1</tspan></text><rect x="142" y="22" width="56" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="170" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="170" dy="0">2</tspan></text><rect x="252" y="22" width="56" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="280" dy="0">3</tspan></text><text x="480" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="480" dy="0">Sebelum: 1 → 2 → 3</tspan></text><rect x="32" y="122" width="56" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="60" y="144.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="60" dy="0">1</tspan></text><rect x="142" y="122" width="56" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="170" y="144.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="170" dy="0">2</tspan></text><rect x="252" y="122" width="56" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="144.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="280" dy="0">3</tspan></text><text x="480" y="144.33333333333334" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="480" dy="0">Sesudah: 3 → 2 → 1</tspan></text></svg><figcaption>Tidak ada data yang dipindah; hanya arah pointer yang dibalik. Waktu O(n), ruang tambahan O(1).</figcaption></figure>
+<h2 id="linked-list-vs-list-python">Linked list vs list Python</h2>
+<table><thead><tr><th>Operasi</th><th>List Python (array dinamis)</th><th>Linked list tunggal</th></tr></thead><tbody><tr><td>Akses indeks i</td><td>O(1)</td><td>O(n)</td></tr><tr><td>Sisip di depan</td><td>O(n)</td><td>O(1)</td></tr><tr><td>Sisip di belakang</td><td>O(1) amortisasi</td><td>O(n), atau O(1) dengan pointer tail</td></tr><tr><td>Sisip di tengah (sudah memegang posisinya)</td><td>O(n)</td><td>O(1)</td></tr><tr><td>Cari nilai</td><td>O(n)</td><td>O(n)</td></tr><tr><td>Memori</td><td>Padat, ramah cache</td><td>Overhead pointer per node, tersebar</td></tr></tbody></table>
+<div class="callout warn"><b>Jujur soal kegunaannya</b><p>Dalam praktik, <b>list Python (array dinamis) hampir selalu lebih cepat</b> karena data berdampingan di memori (ramah cache). Linked list lebih penting sebagai konsep: dasar untuk stack, queue, graf berdaftar tetangga, dan struktur di sistem operasi. Untuk antrean Python, gunakan <code>collections.deque</code>.</p></div>
+<h2 id="varian">Varian</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk kartu untuk penjelasan","items":[{"tag":"Varian","front":"Doubly linked list","backTag":"Ciri","back":"Tiap node punya next dan prev. Bisa dijelajahi dua arah dan penghapusan node yang sudah dipegang O(1). Dasar dari collections.deque di banyak implementasi."},{"tag":"Varian","front":"Circular linked list","backTag":"Ciri","back":"Node terakhir menunjuk kembali ke head. Cocok untuk penjadwalan round-robin."},{"tag":"Teknik","front":"Deteksi siklus (Floyd)","backTag":"Ciri","back":"Dua penunjuk: lambat (1 langkah) dan cepat (2 langkah). Bila bertemu, ada siklus. Waktu O(n), ruang O(1)."}]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Operasi paling murah pada linked list tunggal tanpa tail?","options":["Sisip di depan","Akses indeks ke-100","Sisip di belakang"],"answer":0,"why":"Hanya mengubah head: O(1)."},{"q":"Mengapa akses indeks pada linked list O(n)?","options":["Data terurut","Harus menelusuri pointer dari head","Python lambat"],"answer":1,"why":"Tidak ada lompatan langsung ke indeks."},{"q":"Apa isi pointer next pada node terakhir?","options":["Node pertama","None","Nilai node itu sendiri"],"answer":1,"why":"None menandai akhir."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis metode <code>panjang_rekursif(node)</code> yang menghitung panjang list secara rekursif.</summary><div><code>def panjang(node): return 0 if node is None else 1 + panjang(node.next)</code>. Hati-hati: kedalaman rekursi sebesar panjang list.</div></details><details><summary>2. Tulis metode yang mengembalikan elemen tengah list dalam satu kali lewat.</summary><div>Pakai dua penunjuk: lambat maju 1, cepat maju 2. Saat cepat mencapai akhir, lambat berada di tengah.</div></details><details><summary>3. Mengapa menghapus node dengan <code>remove</code> harus mengingat node sebelumnya (prev)?</summary><div>Karena list tunggal tidak bisa mundur. Untuk melewati node yang dihapus, prev.next harus diarahkan ke cur.next.</div></details><details><summary>4. Hitung jumlah langkah penelusuran untuk append pada list berisi 1000 node tanpa tail.</summary><div>999 langkah menelusuri sampai node terakhir, lalu 1 untuk mengaitkan: O(n).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Linked list: rangkaian node berisi data dan pointer next; hanya head yang disimpan.</li><li>Sisip di depan O(1); akses indeks, cari, dan sisip di belakang tanpa tail O(n).</li><li>Pembalikan memakai tiga penunjuk dalam O(n) waktu dan O(1) ruang.</li><li>Di Python, list bawaan lebih cepat; linked list penting untuk memahami referensi dan struktur data lanjutan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya pointer di Python dengan di C?</summary><div>Python tidak menyediakan aritmetika pointer. Atribut seperti next adalah referensi ke objek, dan Python mengelola memorinya (garbage collection).</div></details>
+<details class="faq"><summary>Bagaimana mencegah kebocoran memori pada list yang sangat panjang?</summary><div>Python membersihkan objek yang tidak lagi dirujuk. Namun penghapusan list yang sangat panjang secara rekursif dapat menimbulkan RecursionError; hapus secara iteratif.</div></details>
+<details class="faq"><summary>Apakah deque sama dengan linked list?</summary><div>Mirip dalam kegunaan (operasi O(1) di kedua ujung), tetapi collections.deque diimplementasikan sebagai blok-blok array terhubung sehingga lebih efisien dalam memori.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li><a href="https://algs4.cs.princeton.edu/" rel="noopener" target="_blank">Robert Sedgewick dan Kevin Wayne, Algorithms (edisi ke-4), materi pendamping algs4.cs.princeton.edu</a></li><li><a href="https://docs.python.org/3/library/collections.html#collections.deque" rel="noopener" target="_blank">Dokumentasi Python: collections.deque</a></li><li><a href="https://docs.python.org/3/tutorial/classes.html" rel="noopener" target="_blank">Dokumentasi Python: Classes (tutorial)</a></li><li><a href="https://wiki.python.org/moin/TimeComplexity" rel="noopener" target="_blank">Python Wiki: TimeComplexity</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/list-python-operasi-slicing-dan-list-comprehension/"><img src="/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>List Python: Operasi, Slicing, dan List Comprehension</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

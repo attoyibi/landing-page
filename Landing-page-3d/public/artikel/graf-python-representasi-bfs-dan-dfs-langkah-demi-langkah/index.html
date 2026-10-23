@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graf di Python: Representasi, BFS, dan DFS · Muhammad Muchson</title>
+<meta name="description" content="Pelajari graf: representasi matriks dan daftar ketetanggaan, penjelajahan BFS dan DFS dengan animasi langkah demi langkah, jalur terpendek tak berbobot, dan komponen terhubung.">
+<meta name="keywords" content="graf, BFS, DFS, daftar ketetanggaan, jalur terpendek">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/">
+<meta property="og:title" content="Graf di Python: Representasi, BFS, dan DFS">
+<meta property="og:description" content="Pelajari graf: representasi matriks dan daftar ketetanggaan, penjelajahan BFS dan DFS dengan animasi langkah demi langkah, jalur terpendek tak berbobot, dan komponen terhubung.">
+<meta property="og:image" content="https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Graf di Python: Representasi, BFS, dan DFS">
+<meta name="twitter:description" content="Pelajari graf: representasi matriks dan daftar ketetanggaan, penjelajahan BFS dan DFS dengan animasi langkah demi langkah, jalur terpendek tak berbobot, dan komponen terhubung.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Graf di Python: Representasi, BFS, dan DFS","description":"Pelajari graf: representasi matriks dan daftar ketetanggaan, penjelajahan BFS dan DFS dengan animasi langkah demi langkah, jalur terpendek tak berbobot, dan komponen terhubung.","image":["https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"graf, BFS, DFS, daftar ketetanggaan, jalur terpendek","articleSection":"Algoritma & Pemrograman Python","wordCount":390,"mainEntityOfPage":"https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Graf di Python: Representasi, BFS, dan DFS","item":"https://muchson.web.id/artikel/graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana dengan graf berbobot?","acceptedAnswer":{"@type":"Answer","text":"BFS tidak cukup. Gunakan algoritma Dijkstra (bobot tak negatif) dengan priority queue, atau Bellman-Ford bila ada bobot negatif."}},{"@type":"Question","name":"Apa itu pengurutan topologis?","acceptedAnswer":{"@type":"Answer","text":"Mengurutkan simpul graf berarah tanpa siklus (DAG) agar setiap sisi mengarah ke depan, misalnya urutan mengambil mata kuliah berprasyarat. Dapat dilakukan dengan DFS."}},{"@type":"Question","name":"Mengapa DFS rekursif bisa gagal pada graf besar?","acceptedAnswer":{"@type":"Answer","text":"Python membatasi kedalaman rekursi (bawaan sekitar 1000). Pakai versi iteratif dengan tumpukan eksplisit."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#istilah-dasar">Istilah dasar</a></li><li><a href="#representasi-matriks-vs-daftar-ketetanggaan">Representasi: matriks vs daftar ketetanggaan</a></li><li><a href="#penjelajahan-langkah-demi-langkah">Penjelajahan langkah demi langkah</a></li><li><a href="#bfs-lapis-demi-lapis-dengan-antrean">BFS: lapis demi lapis dengan antrean</a></li><li><a href="#dfs-menyelam-dulu-dengan-rekursi-atau-tumpukan">DFS: menyelam dulu dengan rekursi atau tumpukan</a></li><li><a href="#jalur-terpendek-dengan-bfs">Jalur terpendek dengan BFS</a></li><li><a href="#komponen-terhubung">Komponen terhubung</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Graf di Python: Representasi, BFS, dan DFS</h1>
+<p class="lead">Peta jalan, jaringan pertemanan, hubungan antar halaman web, dan jadwal kuliah dengan prasyarat semuanya adalah graf. Dua algoritma penjelajahan, BFS dan DFS, menjadi dasar hampir semua algoritma graf lanjutan. Materi ini menunjukkan keduanya bekerja langkah demi langkah, lalu memakainya menyelesaikan masalah nyata.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> stack dan queue, dictionary dan set, rekursi</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Graf di Python: Representasi, BFS, dan DFS" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan simpul, sisi, graf berarah dan tak berarah</li><li>membandingkan matriks dan daftar ketetanggaan serta memilih yang tepat</li><li>mengimplementasikan BFS dan DFS (rekursif dan iteratif)</li><li>mencari jalur terpendek pada graf tak berbobot dengan BFS</li><li>menghitung komponen terhubung</li><li>menganalisis kompleksitas O(V + E)</li></ul></div>
+<h2 id="istilah-dasar">Istilah dasar</h2>
+<figure class="diagram"><svg viewBox="0 0 560 150" role="img" aria-label="Graf kecil dengan 6 simpul" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="22tid-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="22tid-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="22tid-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="22tid-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="22tid-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="110.2,84.1 189.8,60.9" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="110.2,95.9 189.8,119.1" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="231,55 319,55" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="228.5,65 321.5,115" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="231,125 319,125" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="360.2,60.9 439.8,84.1" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="360.2,119.1 439.8,95.9" fill="none" stroke="#0f1a33" stroke-width="1.8"/><ellipse cx="90" cy="90" rx="21" ry="21" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="94" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">A</tspan></text><ellipse cx="210" cy="55" rx="21" ry="21" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="210" y="59" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="210" dy="0">B</tspan></text><ellipse cx="210" cy="125" rx="21" ry="21" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="210" y="129" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="210" dy="0">C</tspan></text><ellipse cx="340" cy="55" rx="21" ry="21" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="59" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="340" dy="0">D</tspan></text><ellipse cx="340" cy="125" rx="21" ry="21" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="129" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="340" dy="0">E</tspan></text><ellipse cx="460" cy="90" rx="21" ry="21" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="94" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">F</tspan></text></svg><figcaption>Graf tak berarah dengan simpul (vertex) A sampai F dan 7 sisi (edge). Pada graf berarah, sisi punya arah (panah).</figcaption></figure>
+<h2 id="representasi-matriks-vs-daftar-ketetanggaan">Representasi: matriks vs daftar ketetanggaan</h2>
+<figure class="codebox"><pre data-lang="python"><code>graf = {
+    &quot;A&quot;: [&quot;B&quot;, &quot;C&quot;],
+    &quot;B&quot;: [&quot;A&quot;, &quot;D&quot;, &quot;E&quot;],
+    &quot;C&quot;: [&quot;A&quot;, &quot;E&quot;],
+    &quot;D&quot;: [&quot;B&quot;, &quot;F&quot;],
+    &quot;E&quot;: [&quot;B&quot;, &quot;C&quot;, &quot;F&quot;],
+    &quot;F&quot;: [&quot;D&quot;, &quot;E&quot;],
+}
+# matriks ketetanggaan untuk graf yang sama
+simpul = sorted(graf)
+matriks = [[1 if v in graf[u] else 0 for v in simpul] for u in simpul]
+print(&quot;   &quot;, *simpul)
+for u, baris in zip(simpul, matriks):
+    print(u, &quot; &quot;, *baris)
+print(&quot;jumlah sisi:&quot;, sum(len(t) for t in graf.values()) // 2)</code></pre><pre class="runout" data-lang="keluaran"><code>    A B C D E F
+A   0 1 1 0 0 0
+B   1 0 0 1 1 0
+C   1 0 0 0 1 0
+D   0 1 0 0 0 1
+E   0 1 1 0 0 1
+F   0 0 0 1 1 0
+jumlah sisi: 7</code></pre></figure>
+<table><thead><tr><th>Aspek</th><th>Daftar ketetanggaan</th><th>Matriks ketetanggaan</th></tr></thead><tbody><tr><td>Memori</td><td>O(V + E)</td><td>O(V²)</td></tr><tr><td>Cek sisi u–v</td><td>O(derajat u)</td><td>O(1)</td></tr><tr><td>Daftar tetangga u</td><td>O(derajat u)</td><td>O(V)</td></tr><tr><td>Cocok untuk</td><td>Graf jarang (sedikit sisi), kasus umum</td><td>Graf padat, cek sisi sangat sering</td></tr></tbody></table>
+<h2 id="penjelajahan-langkah-demi-langkah">Penjelajahan langkah demi langkah</h2>
+<div data-w="graphsearch"><script type="application/json">{"title":"BFS dan DFS pada graf yang sama","desc":"Pilih BFS atau DFS lalu tekan Maju. Bandingkan urutan kunjungan dan isi antrean atau tumpukan.","nodes":[{"id":"A","x":50,"y":70},{"id":"B","x":170,"y":35},{"id":"C","x":170,"y":105},{"id":"D","x":300,"y":35},{"id":"E","x":300,"y":105},{"id":"F","x":420,"y":70}],"edges":[["A","B"],["A","C"],["B","D"],["B","E"],["C","E"],["D","F"],["E","F"]],"start":"A"}</script></div>
+<h2 id="bfs-lapis-demi-lapis-dengan-antrean">BFS: lapis demi lapis dengan antrean</h2>
+<figure class="codebox"><pre data-lang="python"><code>from collections import deque
+
+def bfs(graf, mulai):
+    dikunjungi, urutan = {mulai}, []
+    antre = deque([mulai])
+    while antre:
+        u = antre.popleft()
+        urutan.append(u)
+        for v in sorted(graf[u]):
+            if v not in dikunjungi:
+                dikunjungi.add(v)         # tandai saat dimasukkan agar tidak masuk dua kali
+                antre.append(v)
+    return urutan
+
+print(bfs(graf, &quot;A&quot;))</code></pre><pre class="runout" data-lang="keluaran"><code>['A', 'B', 'C', 'D', 'E', 'F']</code></pre></figure>
+<h2 id="dfs-menyelam-dulu-dengan-rekursi-atau-tumpukan">DFS: menyelam dulu dengan rekursi atau tumpukan</h2>
+<figure class="codebox"><pre data-lang="python"><code>def dfs_rekursif(graf, u, dikunjungi=None, urutan=None):
+    dikunjungi = dikunjungi if dikunjungi is not None else set()
+    urutan = urutan if urutan is not None else []
+    dikunjungi.add(u); urutan.append(u)
+    for v in sorted(graf[u]):
+        if v not in dikunjungi:
+            dfs_rekursif(graf, v, dikunjungi, urutan)
+    return urutan
+
+def dfs_iteratif(graf, mulai):
+    dikunjungi, urutan, tumpuk = set(), [], [mulai]
+    while tumpuk:
+        u = tumpuk.pop()
+        if u in dikunjungi:
+            continue
+        dikunjungi.add(u); urutan.append(u)
+        for v in sorted(graf[u], reverse=True):     # dibalik agar yang kecil diproses lebih dulu
+            if v not in dikunjungi:
+                tumpuk.append(v)
+    return urutan
+
+print(dfs_rekursif(graf, &quot;A&quot;))
+print(dfs_iteratif(graf, &quot;A&quot;))</code></pre><pre class="runout" data-lang="keluaran"><code>['A', 'B', 'D', 'F', 'E', 'C']
+['A', 'B', 'D', 'F', 'E', 'C']</code></pre></figure>
+<div data-w="compare"><script type="application/json">{"title":"BFS atau DFS?","tabs":[{"label":"BFS","html":"\u003cb>Struktur:\u003c/b> antrean (FIFO).\u003cbr>\u003cb>Menjelajah:\u003c/b> per lapisan jarak dari awal.\u003cbr>\u003cb>Cocok:\u003c/b> jalur terpendek pada graf tak berbobot, \"berapa langkah\", jaringan sosial (teman tingkat 2).\u003cbr>\u003cb>Memori:\u003c/b> bisa besar bila graf lebar."},{"label":"DFS","html":"\u003cb>Struktur:\u003c/b> tumpukan atau rekursi (LIFO).\u003cbr>\u003cb>Menjelajah:\u003c/b> sedalam mungkin sebelum mundur.\u003cbr>\u003cb>Cocok:\u003c/b> deteksi siklus, pengurutan topologis, komponen terhubung, backtracking, labirin.\u003cbr>\u003cb>Memori:\u003c/b> sebesar kedalaman."}]}</script></div>
+<h2 id="jalur-terpendek-dengan-bfs">Jalur terpendek dengan BFS</h2>
+<figure class="codebox"><pre data-lang="python"><code>from collections import deque
+
+def jalur_terpendek(graf, asal, tujuan):
+    induk = {asal: None}
+    antre = deque([asal])
+    while antre:
+        u = antre.popleft()
+        if u == tujuan:
+            break
+        for v in sorted(graf[u]):
+            if v not in induk:
+                induk[v] = u
+                antre.append(v)
+    if tujuan not in induk:
+        return None
+    jalur, x = [], tujuan
+    while x is not None:          # susun mundur dari tujuan lewat induk
+        jalur.append(x); x = induk[x]
+    return jalur[::-1]
+
+print(jalur_terpendek(graf, &quot;A&quot;, &quot;F&quot;))   # 3 sisi: A-B-D-F
+print(jalur_terpendek(graf, &quot;C&quot;, &quot;D&quot;))</code></pre><pre class="runout" data-lang="keluaran"><code>['A', 'B', 'D', 'F']
+['C', 'A', 'B', 'D']</code></pre><figcaption>BFS menemukan jalur dengan jumlah sisi paling sedikit karena simpul ditemukan berurutan menurut jaraknya.</figcaption></figure>
+<h2 id="komponen-terhubung">Komponen terhubung</h2>
+<figure class="codebox"><pre data-lang="python"><code>def komponen(graf):
+    terlihat, hasil = set(), []
+    for s in sorted(graf):
+        if s not in terlihat:
+            grup = dfs_rekursif(graf, s)          # semua yang terjangkau dari s
+            terlihat.update(grup)
+            hasil.append(sorted(grup))
+    return hasil
+
+g2 = {&quot;A&quot;: [&quot;B&quot;], &quot;B&quot;: [&quot;A&quot;], &quot;C&quot;: [&quot;D&quot;], &quot;D&quot;: [&quot;C&quot;], &quot;E&quot;: []}
+print(komponen(g2))            # tiga kelompok terpisah
+print(len(komponen(graf)))     # graf utama: satu kelompok</code></pre><pre class="runout" data-lang="keluaran"><code>[['A', 'B'], ['C', 'D'], ['E']]
+1</code></pre></figure>
+<div class="callout info"><b>Kompleksitas</b><p>Baik BFS maupun DFS mengunjungi tiap simpul sekali dan memeriksa tiap sisi sekali (dua kali pada graf tak berarah), sehingga waktunya <b>O(V + E)</b> dengan daftar ketetanggaan. Dengan matriks, waktunya O(V²).</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Struktur data pendamping BFS?","options":["Stack","Queue","Heap"],"answer":1,"why":"Antrean menjaga urutan lapisan."},{"q":"Algoritma untuk jalur terpendek (jumlah sisi) pada graf tak berbobot?","options":["DFS","BFS","Keduanya selalu"],"answer":1,"why":"BFS menemukan simpul berurutan menurut jaraknya."},{"q":"Mengapa perlu menandai simpul yang sudah dikunjungi?","options":["Agar lebih rapi","Agar tidak berputar tanpa henti pada siklus","Wajib oleh Python"],"answer":1,"why":"Tanpa penanda, graf bersiklus membuat penjelajahan tak berhingga."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Pada graf contoh, tuliskan urutan BFS dari F (tetangga diurutkan abjad).</summary><div>F; tetangga D, E; lalu dari D: B; dari E: B (sudah), C; hasil: F, D, E, B, C, A.</div></details><details><summary>2. Berapa jumlah sisi pada graf lengkap dengan 6 simpul? Berapa elemen matriksnya yang bernilai 1?</summary><div>Sisi = 6×5/2 = 15. Pada matriks, setiap sisi muncul dua kali: 30 elemen bernilai 1.</div></details><details><summary>3. Ubah bfs agar menghitung jarak (jumlah sisi) tiap simpul dari awal.</summary><div>Simpan dict jarak: <code>jarak = {mulai: 0}</code>, dan saat menemukan v dari u: <code>jarak[v] = jarak[u] + 1</code>.</div></details><details><summary>4. Bagaimana mendeteksi apakah graf tak berarah memiliki siklus dengan DFS?</summary><div>Saat menjelajah dari u ke v, bila v sudah dikunjungi dan bukan induk u, berarti ada siklus.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Graf: simpul dan sisi; representasi daftar ketetanggaan hemat untuk graf jarang.</li><li>BFS (antrean) menjelajah per lapisan dan menemukan jalur terpendek tak berbobot.</li><li>DFS (tumpukan atau rekursi) menyelam dalam; berguna untuk siklus, komponen, dan backtracking.</li><li>Keduanya O(V + E); tandai simpul yang sudah dikunjungi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana dengan graf berbobot?</summary><div>BFS tidak cukup. Gunakan algoritma Dijkstra (bobot tak negatif) dengan priority queue, atau Bellman-Ford bila ada bobot negatif.</div></details>
+<details class="faq"><summary>Apa itu pengurutan topologis?</summary><div>Mengurutkan simpul graf berarah tanpa siklus (DAG) agar setiap sisi mengarah ke depan, misalnya urutan mengambil mata kuliah berprasyarat. Dapat dilakukan dengan DFS.</div></details>
+<details class="faq"><summary>Mengapa DFS rekursif bisa gagal pada graf besar?</summary><div>Python membatasi kedalaman rekursi (bawaan sekitar 1000). Pakai versi iteratif dengan tumpukan eksplisit.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li><a href="https://algs4.cs.princeton.edu/" rel="noopener" target="_blank">Robert Sedgewick dan Kevin Wayne, Algorithms (edisi ke-4), materi pendamping algs4.cs.princeton.edu</a></li><li><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" rel="noopener" target="_blank">MIT OpenCourseWare 6.006: Introduction to Algorithms</a></li><li><a href="https://docs.python.org/3/library/collections.html" rel="noopener" target="_blank">Dokumentasi Python: Design and History FAQ, why must self be explicit (konteks pemodelan data), lihat juga collections</a></li><li><a href="https://www.python.org/doc/essays/graphs/" rel="noopener" target="_blank">Python.org: Python Patterns, Implementing Graphs (essay klasik Guido van Rossum)</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bfs-pencarian-jalur-terpendek-di-peta/"><img src="/artikel/bfs-pencarian-jalur-terpendek-di-peta/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)</span></a><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

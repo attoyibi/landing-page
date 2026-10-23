@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Search Tree: Insert, Search, Delete, dan Traversal</title>
+<meta name="description" content="Pelajari binary search tree: sifatnya, operasi sisip, cari, hapus (tiga kasus), tiga traversal DFS dan BFS, kompleksitas seimbang vs miring, dengan visualisasi interaktif dan kode Python.">
+<meta name="keywords" content="binary search tree, BST, pohon biner, traversal, struktur data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/">
+<meta property="og:title" content="Binary Search Tree: Insert, Search, Delete, dan Traversal">
+<meta property="og:description" content="Pelajari binary search tree: sifatnya, operasi sisip, cari, hapus (tiga kasus), tiga traversal DFS dan BFS, kompleksitas seimbang vs miring, dengan visualisasi interaktif dan kode Python.">
+<meta property="og:image" content="https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Binary Search Tree: Insert, Search, Delete, dan Traversal">
+<meta name="twitter:description" content="Pelajari binary search tree: sifatnya, operasi sisip, cari, hapus (tiga kasus), tiga traversal DFS dan BFS, kompleksitas seimbang vs miring, dengan visualisasi interaktif dan kode Python.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Binary Search Tree: Insert, Search, Delete, dan Traversal","description":"Pelajari binary search tree: sifatnya, operasi sisip, cari, hapus (tiga kasus), tiga traversal DFS dan BFS, kompleksitas seimbang vs miring, dengan visualisasi interaktif dan kode Python.","image":["https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"binary search tree, BST, pohon biner, traversal, struktur data","articleSection":"Algoritma & Pemrograman Python","wordCount":460,"mainEntityOfPage":"https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Binary Search Tree: Insert, Search, Delete, dan Traversal","item":"https://muchson.web.id/artikel/binary-search-tree-python-insert-search-delete-dan-traversal/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya BST dengan binary heap?","acceptedAnswer":{"@type":"Answer","text":"Heap hanya menjamin akar adalah minimum (atau maksimum), tidak menyusun urutan kiri-kanan, sehingga cocok untuk priority queue tetapi tidak untuk pencarian umum."}},{"@type":"Question","name":"Mengapa tidak memakai dict saja?","acceptedAnswer":{"@type":"Answer","text":"dict (hash table) memberi pencarian rata-rata O(1) tetapi tidak menjaga urutan kunci. BST memungkinkan pertanyaan terurut: minimum, penerus, dan rentang nilai."}},{"@type":"Question","name":"Bagaimana BST menangani duplikat?","acceptedAnswer":{"@type":"Answer","text":"Bergantung desain: diabaikan, ditolak, atau disimpan dengan penghitung atau dalam subpohon tertentu (misalnya kanan)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#sifat-bst">Sifat BST</a></li><li><a href="#implementasi-sisip-cari-minimum-tinggi">Implementasi: sisip, cari, minimum, tinggi</a></li><li><a href="#traversal">Traversal</a></li><li><a href="#menghapus-node-tiga-kasus">Menghapus node: tiga kasus</a></li><li><a href="#kompleksitas-semuanya-soal-tinggi-pohon">Kompleksitas: semuanya soal tinggi pohon</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Binary Search Tree: Insert, Search, Delete, dan Traversal</h1>
+<p class="lead">Binary search tree (BST) menggabungkan kecepatan pencarian biner dengan kemudahan menyisip dan menghapus pada linked list. Syaratnya satu aturan sederhana: semua nilai di kiri lebih kecil dan semua nilai di kanan lebih besar. Dari aturan itu lahir pencarian yang sangat cepat, selama pohonnya tidak melengkung.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> rekursi, kelas dan objek, binary search</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Binary Search Tree: Insert, Search, Delete, dan Traversal" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyatakan sifat BST dan memeriksa apakah sebuah pohon valid</li><li>mengimplementasikan sisip, cari, minimum, dan tinggi</li><li>menghapus node pada tiga kasus: daun, satu anak, dua anak</li><li>melakukan traversal in-order, pre-order, post-order, dan per tingkat</li><li>menjelaskan mengapa kompleksitas bergantung pada tinggi pohon</li></ul></div>
+<h2 id="sifat-bst">Sifat BST</h2>
+<figure class="diagram"><svg viewBox="0 0 560 250" role="img" aria-label="Contoh BST" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="ffcd1-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="ffcd1-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="ffcd1-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="ffcd1-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="ffcd1-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="260.9,42.8 179.1,97.2" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="299.1,42.8 380.9,97.2" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="146.2,128.4 113.8,171.6" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="173.8,128.4 206.2,171.6" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="386.2,128.4 353.8,171.6" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="413.8,128.4 446.2,171.6" fill="none" stroke="#0f1a33" stroke-width="1.8"/><ellipse cx="280" cy="30" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="34" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="280" dy="0">50</tspan></text><ellipse cx="160" cy="110" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="160" y="114" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="160" dy="0">30</tspan></text><ellipse cx="400" cy="110" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="400" y="114" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="400" dy="0">70</tspan></text><ellipse cx="100" cy="190" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">20</tspan></text><ellipse cx="220" cy="190" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="220" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="220" dy="0">40</tspan></text><ellipse cx="340" cy="190" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="340" dy="0">60</tspan></text><ellipse cx="460" cy="190" rx="23" ry="23" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">80</tspan></text></svg><figcaption>Untuk setiap node: semua nilai di subpohon kiri lebih kecil, semua nilai di subpohon kanan lebih besar.</figcaption></figure>
+<div data-w="bst"><script type="application/json">{"title":"Bangun dan jelajahi BST","desc":"Sisipkan nilai, cari, dan jalankan traversal. Coba \"Isi menaik\" untuk melihat apa yang terjadi bila data masuk terurut."}</script></div>
+<h2 id="implementasi-sisip-cari-minimum-tinggi">Implementasi: sisip, cari, minimum, tinggi</h2>
+<figure class="codebox"><pre data-lang="python"><code>class Node:
+    def __init__(self, nilai):
+        self.nilai, self.kiri, self.kanan = nilai, None, None
+
+def sisip(node, nilai):
+    if node is None:
+        return Node(nilai)
+    if nilai &lt; node.nilai:
+        node.kiri = sisip(node.kiri, nilai)
+    elif nilai &gt; node.nilai:
+        node.kanan = sisip(node.kanan, nilai)
+    return node                               # duplikat diabaikan
+
+def cari(node, nilai):
+    while node and node.nilai != nilai:
+        node = node.kiri if nilai &lt; node.nilai else node.kanan
+    return node is not None
+
+def minimum(node):
+    while node.kiri:
+        node = node.kiri
+    return node
+
+def tinggi(node):
+    return 0 if node is None else 1 + max(tinggi(node.kiri), tinggi(node.kanan))
+
+akar = None
+for v in [50, 30, 70, 20, 40, 60, 80]:
+    akar = sisip(akar, v)
+print(cari(akar, 60), cari(akar, 65), minimum(akar).nilai, tinggi(akar))</code></pre><pre class="runout" data-lang="keluaran"><code>True False 20 3</code></pre></figure>
+<h2 id="traversal">Traversal</h2>
+<table><thead><tr><th>Traversal</th><th>Urutan kunjungan</th><th>Kegunaan</th></tr></thead><tbody><tr><td>In-order</td><td>kiri → akar → kanan</td><td>Menghasilkan nilai <b>terurut</b> pada BST</td></tr><tr><td>Pre-order</td><td>akar → kiri → kanan</td><td>Menyalin atau menyimpan pohon</td></tr><tr><td>Post-order</td><td>kiri → kanan → akar</td><td>Menghapus pohon, menghitung ukuran subpohon</td></tr><tr><td>Per tingkat (BFS)</td><td>tingkat demi tingkat</td><td>Mencari jalur terpendek, mencetak per lapis</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>from collections import deque
+
+def inorder(n):   return inorder(n.kiri) + [n.nilai] + inorder(n.kanan) if n else []
+def preorder(n):  return [n.nilai] + preorder(n.kiri) + preorder(n.kanan) if n else []
+def postorder(n): return postorder(n.kiri) + postorder(n.kanan) + [n.nilai] if n else []
+def per_tingkat(n):
+    hasil, antre = [], deque([n] if n else [])
+    while antre:
+        x = antre.popleft(); hasil.append(x.nilai)
+        antre.extend(c for c in (x.kiri, x.kanan) if c)
+    return hasil
+
+print(&quot;in-order   :&quot;, inorder(akar))
+print(&quot;pre-order  :&quot;, preorder(akar))
+print(&quot;post-order :&quot;, postorder(akar))
+print(&quot;per tingkat:&quot;, per_tingkat(akar))</code></pre><pre class="runout" data-lang="keluaran"><code>in-order   : [20, 30, 40, 50, 60, 70, 80]
+pre-order  : [50, 30, 20, 40, 70, 60, 80]
+post-order : [20, 40, 30, 60, 80, 70, 50]
+per tingkat: [50, 30, 70, 20, 40, 60, 80]</code></pre><figcaption>Perhatikan bahwa in-order menghasilkan 20, 30, 40, 50, 60, 70, 80: terurut. Itu cara termudah memeriksa bahwa pohon benar-benar BST.</figcaption></figure>
+<h2 id="menghapus-node-tiga-kasus">Menghapus node: tiga kasus</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk kartu untuk penanganan tiap kasus","items":[{"tag":"Kasus 1","front":"Node daun (tanpa anak)","backTag":"Tindakan","back":"Cukup lepas dari induknya."},{"tag":"Kasus 2","front":"Node dengan satu anak","backTag":"Tindakan","back":"Sambungkan induk langsung ke anak tunggal itu."},{"tag":"Kasus 3","front":"Node dengan dua anak","backTag":"Tindakan","back":"Ganti nilainya dengan penerus in-order (minimum di subpohon kanan), lalu hapus penerus itu (yang pasti kasus 1 atau 2)."}]}</script></div>
+<figure class="codebox"><pre data-lang="python"><code>def hapus(node, nilai):
+    if node is None:
+        return None
+    if nilai &lt; node.nilai:
+        node.kiri = hapus(node.kiri, nilai)
+    elif nilai &gt; node.nilai:
+        node.kanan = hapus(node.kanan, nilai)
+    else:                                   # node ditemukan
+        if node.kiri is None:  return node.kanan     # kasus 1 dan 2
+        if node.kanan is None: return node.kiri
+        penerus = minimum(node.kanan)               # kasus 3
+        node.nilai = penerus.nilai
+        node.kanan = hapus(node.kanan, penerus.nilai)
+    return node
+
+akar = hapus(akar, 20)    # daun
+akar = hapus(akar, 70)    # dua anak (60 dan 80)
+akar = hapus(akar, 30)    # satu anak (40)
+print(inorder(akar), per_tingkat(akar))</code></pre><pre class="runout" data-lang="keluaran"><code>[40, 50, 60, 80] [50, 40, 80, 60]</code></pre></figure>
+<h2 id="kompleksitas-semuanya-soal-tinggi-pohon">Kompleksitas: semuanya soal tinggi pohon</h2>
+<p>Sisip, cari, dan hapus masing-masing butuh waktu <b>O(h)</b> dengan h tinggi pohon. Bila pohon seimbang, h ≈ log₂ n. Bila data masuk terurut, pohon melengkung seperti linked list dan h = n.</p>
+<figure class="codebox"><pre data-lang="python"><code>import random
+
+def tinggi_pohon(urutan):
+    akar = None
+    for v in urutan:
+        akar = sisip(akar, v)
+    return tinggi(akar)
+
+n = 500
+acak = random.Random(11).sample(range(n), n)
+print(&quot;data acak   : tinggi&quot;, tinggi_pohon(acak), &quot;(sekitar 2 log2 n =&quot;, round(2 * 8.97), &quot;)&quot;)
+import sys; sys.setrecursionlimit(5000)
+print(&quot;data terurut: tinggi&quot;, tinggi_pohon(list(range(n))), &quot;(= n, pohon melengkung)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>data acak   : tinggi 18 (sekitar 2 log2 n = 18 )
+data terurut: tinggi 500 (= n, pohon melengkung)</code></pre></figure>
+<div class="callout info"><b>Pohon seimbang</b><p>Untuk menjamin O(log n) pada semua masukan, dipakai <b>pohon seimbang otomatis</b> seperti AVL tree dan red-black tree, yang menata ulang pohon (rotasi) saat ketidakseimbangan terjadi. Pustaka standar banyak bahasa (misalnya TreeMap di Java) memakainya. Python tidak punya BST seimbang bawaan; <code>sorted()</code> dengan <code>bisect</code> sering cukup.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Hasil traversal in-order pada BST selalu...","options":["Acak","Terurut menaik","Terurut menurun"],"answer":1,"why":"Kiri (lebih kecil), akar, kanan (lebih besar)."},{"q":"Menghapus node dengan dua anak: diganti dengan...","options":["Anak kiri","Penerus in-order (minimum subpohon kanan)","Akar"],"answer":1,"why":"Penerus in-order mempertahankan sifat BST."},{"q":"Waktu pencarian pada BST dengan n node yang melengkung?","options":["O(log n)","O(n)","O(1)"],"answer":1,"why":"Tingginya n."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Sisipkan 8, 3, 10, 1, 6, 14, 4, 7, 13 ke BST kosong. Gambarkan pohonnya dan tuliskan traversal in-order.</summary><div>Akar 8; 3 dan 10 anaknya; 1 dan 6 anak 3; 14 anak kanan 10; 4 dan 7 anak 6; 13 anak kiri 14. In-order: 1, 3, 4, 6, 7, 8, 10, 13, 14.</div></details><details><summary>2. Berapa tinggi pohon pada soal sebelumnya?</summary><div>4 (jalur 8 → 3 → 6 → 4, atau 8 → 10 → 14 → 13).</div></details><details><summary>3. Tulis fungsi yang memeriksa apakah sebuah pohon biner adalah BST yang valid.</summary><div>Gunakan batas bawah dan atas: <code>def valid(n, lo=-inf, hi=inf): return n is None or (lo < n.nilai < hi and valid(n.kiri, lo, n.nilai) and valid(n.kanan, n.nilai, hi))</code>. Atau periksa bahwa in-order terurut ketat.</div></details><details><summary>4. Mengapa cukup memeriksa anak langsung tidak cukup untuk memvalidasi BST?</summary><div>Aturan berlaku untuk seluruh subpohon: cucu kanan dari anak kiri juga harus lebih kecil dari akar.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>BST: kiri lebih kecil, kanan lebih besar, untuk setiap node.</li><li>Sisip, cari, hapus berbiaya O(h); seimbang h ≈ log n, melengkung h = n.</li><li>Hapus: daun, satu anak, atau dua anak (ganti dengan penerus in-order).</li><li>In-order menghasilkan urutan terurut; pre-order, post-order, dan per tingkat punya kegunaan sendiri.</li><li>AVL dan red-black tree menjaga keseimbangan secara otomatis.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya BST dengan binary heap?</summary><div>Heap hanya menjamin akar adalah minimum (atau maksimum), tidak menyusun urutan kiri-kanan, sehingga cocok untuk priority queue tetapi tidak untuk pencarian umum.</div></details>
+<details class="faq"><summary>Mengapa tidak memakai dict saja?</summary><div>dict (hash table) memberi pencarian rata-rata O(1) tetapi tidak menjaga urutan kunci. BST memungkinkan pertanyaan terurut: minimum, penerus, dan rentang nilai.</div></details>
+<details class="faq"><summary>Bagaimana BST menangani duplikat?</summary><div>Bergantung desain: diabaikan, ditolak, atau disimpan dengan penghitung atau dalam subpohon tertentu (misalnya kanan).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li><a href="https://algs4.cs.princeton.edu/" rel="noopener" target="_blank">Robert Sedgewick dan Kevin Wayne, Algorithms (edisi ke-4), materi pendamping algs4.cs.princeton.edu</a></li><li><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" rel="noopener" target="_blank">MIT OpenCourseWare 6.006: Introduction to Algorithms</a></li><li><a href="https://docs.python.org/3/library/bisect.html" rel="noopener" target="_blank">Dokumentasi Python: bisect, Array bisection algorithm</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/list-python-operasi-slicing-dan-list-comprehension/"><img src="/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>List Python: Operasi, Slicing, dan List Comprehension</span></a><a href="/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/"><img src="/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana</span></a><a href="/artikel/linked-list-python-node-pointer-dan-operasinya/"><img src="/artikel/linked-list-python-node-pointer-dan-operasinya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Linked List di Python: Node, Pointer, dan Operasinya</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

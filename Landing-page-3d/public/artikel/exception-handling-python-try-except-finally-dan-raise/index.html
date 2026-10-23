@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exception Handling Python: try, except, finally, dan raise</title>
+<meta name="description" content="Pelajari penanganan kesalahan di Python: jenis exception umum, try/except/else/finally, raise, exception kustom, dan prinsip EAFP, dilengkapi penelusuran alur eksekusi.">
+<meta name="keywords" content="exception Python, try except, finally, raise, error handling">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/">
+<meta property="og:title" content="Exception Handling Python: try, except, finally, dan raise">
+<meta property="og:description" content="Pelajari penanganan kesalahan di Python: jenis exception umum, try/except/else/finally, raise, exception kustom, dan prinsip EAFP, dilengkapi penelusuran alur eksekusi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Exception Handling Python: try, except, finally, dan raise">
+<meta name="twitter:description" content="Pelajari penanganan kesalahan di Python: jenis exception umum, try/except/else/finally, raise, exception kustom, dan prinsip EAFP, dilengkapi penelusuran alur eksekusi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Exception Handling Python: try, except, finally, dan raise","description":"Pelajari penanganan kesalahan di Python: jenis exception umum, try/except/else/finally, raise, exception kustom, dan prinsip EAFP, dilengkapi penelusuran alur eksekusi.","image":["https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"exception Python, try except, finally, raise, error handling","articleSection":"Algoritma & Pemrograman Python","wordCount":366,"mainEntityOfPage":"https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Exception Handling Python: try, except, finally, dan raise","item":"https://muchson.web.id/artikel/exception-handling-python-try-except-finally-dan-raise/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kapan memakai assert dan kapan exception?","acceptedAnswer":{"@type":"Answer","text":"assert untuk memeriksa asumsi internal saat pengembangan (bisa dinonaktifkan). Exception untuk kesalahan yang bisa terjadi di dunia nyata, seperti masukan pengguna atau berkas."}},{"@type":"Question","name":"Apa itu exception chaining?","acceptedAnswer":{"@type":"Answer","text":"Dengan raise Baru from e, Python menyimpan exception asal sebagai penyebab sehingga traceback menampilkan keduanya."}},{"@type":"Question","name":"Apakah exception lambat?","acceptedAnswer":{"@type":"Answer","text":"Menangani exception lebih mahal daripada percabangan biasa, tetapi blok try yang tidak melempar exception hampir tanpa biaya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#apa-itu-exception">Apa itu exception?</a></li><li><a href="#try-except-else-finally">try, except, else, finally</a></li><li><a href="#menangkap-exception-tertentu-bukan-semuanya">Menangkap exception tertentu, bukan semuanya</a></li><li><a href="#raise-dan-exception-kustom">raise dan exception kustom</a></li><li><a href="#eafp-dan-lbyl">EAFP dan LBYL</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Exception Handling Python: try, except, finally, dan raise</h1>
+<p class="lead">Program yang baik tidak hanya benar saat masukannya benar, tetapi juga bersikap wajar saat ada yang salah: berkas tidak ada, pengguna mengetik huruf alih-alih angka, jaringan putus. Python menangani situasi ini dengan exception. Memahaminya berarti Anda bisa membuat program yang tangguh, bukan sekadar yang "jalan di komputer saya".</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi, percabangan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Exception Handling Python: try, except, finally, dan raise" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membaca pesan traceback dan mengenali jenis exception umum</li><li>memakai try, except, else, dan finally dengan benar</li><li>melempar exception dengan raise dan membuat exception kustom</li><li>memilih antara memeriksa dulu (LBYL) dan mencoba lalu menangani (EAFP)</li><li>menghindari kebiasaan buruk seperti except kosong</li></ul></div>
+<h2 id="apa-itu-exception">Apa itu exception?</h2>
+<p>Exception adalah kejadian yang mengganggu alur normal program. Bila tidak ditangani, program berhenti dan Python mencetak <b>traceback</b>: jejak pemanggilan yang berakhir pada jenis dan pesan kesalahan.</p>
+<figure class="codebox"><pre data-lang="python"><code>def bagi(a, b):
+    return a / b
+
+print(bagi(10, 2))
+print(bagi(1, 0))</code></pre><pre class="runout" data-lang="keluaran"><code>5.0
+ZeroDivisionError: division by zero</code></pre><figcaption>Baris terakhir keluaran adalah jenis dan pesan exception. Baca dari bawah ke atas saat men-debug.</figcaption></figure>
+<table><thead><tr><th>Exception</th><th>Penyebab umum</th><th>Contoh</th></tr></thead><tbody><tr><td>ValueError</td><td>Nilai valid secara tipe, tetapi tidak sesuai</td><td>int("abc")</td></tr><tr><td>TypeError</td><td>Operasi pada tipe yang salah</td><td>"a" + 1</td></tr><tr><td>ZeroDivisionError</td><td>Pembagian dengan nol</td><td>5 / 0</td></tr><tr><td>IndexError</td><td>Indeks di luar jangkauan</td><td>[1, 2][5]</td></tr><tr><td>KeyError</td><td>Kunci kamus tidak ada</td><td>{"a": 1}["b"]</td></tr><tr><td>FileNotFoundError</td><td>Berkas tidak ditemukan</td><td>open("tidak_ada.txt")</td></tr><tr><td>AttributeError</td><td>Atribut atau metode tidak ada</td><td>(5).append(1)</td></tr></tbody></table>
+<h2 id="try-except-else-finally">try, except, else, finally</h2>
+<figure class="diagram"><svg viewBox="0 0 640 250" role="img" aria-label="Alur try, except, else, finally" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="4giou-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="4giou-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="4giou-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4giou-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4giou-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="90,82 90,138" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4giou-arrow)"/><rect x="35.3" y="101" width="69.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="70" y="114" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">ada error</text><polyline points="150,60 230,60" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4giou-arrow)"/><rect x="165.2" y="51" width="49.599999999999994" height="17" rx="4" fill="#fff" opacity=".92"/><text x="190" y="64" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">sukses</text><polyline points="370,77.5 425,91.3" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4giou-arrow)"/><polyline points="150,175.7 300,215 500,215 500,132" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4giou-arrow)"/><rect x="30" y="38" width="120" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="64.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">try</tspan></text><rect x="30" y="138" width="120" height="44" rx="8" fill="#fde4e1" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">except</tspan></text><rect x="230" y="38" width="140" height="44" rx="8" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="300" y="64.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="300" dy="0">else</tspan></text><rect x="425" y="88" width="150" height="44" rx="8" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="500" dy="0">finally (selalu)</tspan></text><text x="300" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="300" dy="0">Bila exception terjadi</tspan></text><text x="300" y="29.333333333333332" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="300" dy="0">Bila tidak ada exception</tspan></text></svg><figcaption>finally berjalan dalam semua kasus, termasuk saat ada return atau exception yang tidak ditangkap.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>def baca_angka(teks):
+    try:
+        n = int(teks)
+    except ValueError:
+        print(f&quot;  '{teks}' bukan bilangan bulat&quot;)
+        return None
+    else:
+        print(f&quot;  berhasil: {n}&quot;)
+        return n
+    finally:
+        print(&quot;  (selesai memeriksa)&quot;)
+
+for t in [&quot;42&quot;, &quot;abc&quot;]:
+    print(repr(t), &quot;-&gt;&quot;, baca_angka(t))</code></pre><pre class="runout" data-lang="keluaran"><code>  berhasil: 42
+  (selesai memeriksa)
+'42' -&gt; 42
+  'abc' bukan bilangan bulat
+  (selesai memeriksa)
+'abc' -&gt; None</code></pre></figure>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri alur saat exception terjadi","desc":"Perhatikan bagaimana eksekusi melompat dari baris int() langsung ke blok except, dan blok else dilewati.","code":"teks = \"x7\"\ntry:\n    n = int(teks)\n    print(\"sukses\", n)\nexcept ValueError:\n    print(\"gagal\")\n    n = -1\nfinally:\n    print(\"selesai\")","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"teks":"'x7'"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"teks":"'x7'"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'x7'"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'x7'"}}],"out":""},{"line":7,"stack":[{"name":"(modul)","vars":{"teks":"'x7'"}}],"out":"gagal\n"},{"line":9,"stack":[{"name":"(modul)","vars":{"teks":"'x7'","n":"-1"}}],"out":"gagal\n"},{"line":0,"stack":[{"name":"(modul)","vars":{"teks":"'x7'","n":"-1"}}],"out":"gagal\nselesai\n"}]}</script></div>
+<h2 id="menangkap-exception-tertentu-bukan-semuanya">Menangkap exception tertentu, bukan semuanya</h2>
+<figure class="codebox"><pre data-lang="python"><code>def hitung(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return float(&quot;inf&quot;)
+    except TypeError as e:
+        print(&quot;Tipe salah:&quot;, e)
+        return None
+
+print(hitung(6, 3), hitung(1, 0), hitung(&quot;1&quot;, 2))</code></pre><pre class="runout" data-lang="keluaran"><code>Tipe salah: unsupported operand type(s) for /: 'str' and 'int'
+2.0 inf None</code></pre></figure>
+<div class="callout bad"><b>Kebiasaan buruk yang paling umum</b><p>Hindari <code>except:</code> kosong atau <code>except Exception: pass</code>. Ia menelan semua kesalahan, termasuk bug yang seharusnya Anda ketahui, sehingga program gagal diam-diam. Tangkap hanya yang bisa Anda tangani, dan catat (log) sisanya.</p></div>
+<h2 id="raise-dan-exception-kustom">raise dan exception kustom</h2>
+<figure class="codebox"><pre data-lang="python"><code>class SaldoKurang(Exception):
+    &quot;&quot;&quot;Dilempar bila saldo tidak cukup untuk penarikan.&quot;&quot;&quot;
+    def __init__(self, saldo, jumlah):
+        super().__init__(f&quot;Saldo {saldo} kurang dari {jumlah}&quot;)
+        self.kurang = jumlah - saldo
+
+def tarik(saldo, jumlah):
+    if jumlah &lt;= 0:
+        raise ValueError(&quot;jumlah harus positif&quot;)
+    if jumlah &gt; saldo:
+        raise SaldoKurang(saldo, jumlah)
+    return saldo - jumlah
+
+for j in [30, 500, -5]:
+    try:
+        print(&quot;sisa:&quot;, tarik(100, j))
+    except SaldoKurang as e:
+        print(&quot;Ditolak:&quot;, e, &quot;| kurang&quot;, e.kurang)
+    except ValueError as e:
+        print(&quot;Masukan salah:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>sisa: 70
+Ditolak: Saldo 100 kurang dari 500 | kurang 400
+Masukan salah: jumlah harus positif</code></pre></figure>
+<h2 id="eafp-dan-lbyl">EAFP dan LBYL</h2>
+<div data-w="compare"><script type="application/json">{"title":"Dua gaya menangani kemungkinan error","tabs":[{"label":"LBYL (Look Before You Leap)","html":"Periksa dulu, baru lakukan.\u003cbr>\u003ccode>if \"k\" in d: nilai = d[\"k\"]\u003c/code>\u003cbr>Cocok bila pemeriksaannya murah dan jelas. Rentan \"balapan\" bila keadaan berubah di antara pemeriksaan dan tindakan."},{"label":"EAFP (Easier to Ask Forgiveness than Permission)","html":"Coba saja, tangani bila gagal.\u003cbr>\u003ccode>try: nilai = d[\"k\"]\nexcept KeyError: nilai = None\u003c/code>\u003cbr>Gaya yang lazim di Python; ringkas dan tahan balapan, misalnya saat membuka berkas."}]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Blok mana yang berjalan hanya bila TIDAK ada exception?","options":["except","else","finally"],"answer":1,"why":"else dijalankan bila blok try selesai tanpa exception."},{"q":"Exception yang muncul pada \u003ccode>int(\"12a\")\u003c/code>?","options":["TypeError","ValueError","IndexError"],"answer":1,"why":"Tipenya benar (str) tetapi isinya tidak valid untuk int."},{"q":"Mengapa \u003ccode>except: pass\u003c/code> berbahaya?","options":["Memperlambat program","Menelan semua error termasuk bug tanpa jejak","Tidak valid"],"answer":1,"why":"Kesalahan hilang diam-diam sehingga sulit dilacak."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis fungsi <code>minta_angka()</code> yang terus bertanya sampai pengguna memasukkan bilangan bulat valid.</summary><div><code>def minta_angka():
+    while True:
+        try:
+            return int(input("Angka: "))
+        except ValueError:
+            print("Bukan bilangan bulat, coba lagi.")</code></div></details><details><summary>2. Ubah fungsi bagi agar mengembalikan None dan mencetak pesan bila pembagi nol, tanpa memakai if.</summary><div><code>try: return a / b
+except ZeroDivisionError: print("pembagi nol"); return None</code></div></details><details><summary>3. Apa yang tercetak: try berisi return 1 dan finally berisi print("F")?</summary><div>F tercetak lebih dulu, lalu fungsi mengembalikan 1. finally tetap berjalan sebelum return benar-benar keluar.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Exception menghentikan program bila tidak ditangani; traceback dibaca dari bawah.</li><li>try/except menangkap kesalahan tertentu, else untuk jalur sukses, finally untuk pembersihan yang selalu berjalan.</li><li>raise melempar exception; buat kelas turunan Exception untuk kesalahan domain.</li><li>Tangkap spesifik, jangan menelan semua error.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Kapan memakai assert dan kapan exception?</summary><div>assert untuk memeriksa asumsi internal saat pengembangan (bisa dinonaktifkan). Exception untuk kesalahan yang bisa terjadi di dunia nyata, seperti masukan pengguna atau berkas.</div></details>
+<details class="faq"><summary>Apa itu exception chaining?</summary><div>Dengan <code>raise Baru from e</code>, Python menyimpan exception asal sebagai penyebab sehingga traceback menampilkan keduanya.</div></details>
+<details class="faq"><summary>Apakah exception lambat?</summary><div>Menangani exception lebih mahal daripada percabangan biasa, tetapi blok try yang tidak melempar exception hampir tanpa biaya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/errors.html" rel="noopener" target="_blank">Dokumentasi Python: Errors and Exceptions (tutorial)</a></li><li><a href="https://docs.python.org/3/library/exceptions.html" rel="noopener" target="_blank">Dokumentasi Python: Built-in Exceptions</a></li><li><a href="https://docs.python.org/3/reference/compound_stmts.html#the-try-statement" rel="noopener" target="_blank">Dokumentasi Python: The try statement</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

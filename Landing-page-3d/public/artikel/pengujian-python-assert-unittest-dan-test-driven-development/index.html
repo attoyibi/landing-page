@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengujian Python: assert, unittest, dan Test-Driven Development</title>
+<meta name="description" content="Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.">
+<meta name="keywords" content="unittest, assert, TDD, pengujian perangkat lunak, testing Python">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/">
+<meta property="og:title" content="Pengujian Python: assert, unittest, dan Test-Driven Development">
+<meta property="og:description" content="Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pengujian Python: assert, unittest, dan Test-Driven Development">
+<meta name="twitter:description" content="Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pengujian Python: assert, unittest, dan Test-Driven Development","description":"Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.","image":["https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"unittest, assert, TDD, pengujian perangkat lunak, testing Python","articleSection":"Algoritma & Pemrograman Python","wordCount":351,"mainEntityOfPage":"https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Pengujian Python: assert, unittest, dan Test-Driven Development","item":"https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya unittest dan pytest?","acceptedAnswer":{"@type":"Answer","text":"unittest ada di pustaka standar dan bergaya kelas. pytest pihak ketiga, lebih ringkas (cukup fungsi dan assert biasa), dan sangat populer. Konsepnya sama."}},{"@type":"Question","name":"Berapa banyak tes yang cukup?","acceptedAnswer":{"@type":"Answer","text":"Tidak ada angka pasti. Fokus pada logika penting dan kasus tepi; cakupan (coverage) membantu melihat bagian yang belum diuji."}},{"@type":"Question","name":"Apakah menulis tes memperlambat pengembangan?","acceptedAnswer":{"@type":"Answer","text":"Di awal terasa lebih lambat, tetapi pada proyek yang bertahan lama justru menghemat waktu karena bug ditemukan lebih cepat."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-menguji">Mengapa menguji?</a></li><li><a href="#langkah-paling-sederhana-assert">Langkah paling sederhana: assert</a></li><li><a href="#merancang-kasus-uji">Merancang kasus uji</a></li><li><a href="#unittest-kerangka-pengujian-bawaan">unittest: kerangka pengujian bawaan</a></li><li><a href="#test-driven-development-tdd">Test-Driven Development (TDD)</a></li><li><a href="#menulis-kode-yang-mudah-diuji">Menulis kode yang mudah diuji</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Pengujian Python: assert, unittest, dan Test-Driven Development</h1>
+<p class="lead">"Berjalan" bukan berarti "benar". Pengujian otomatis adalah cara memastikan kode melakukan yang seharusnya, dan tetap melakukannya setelah Anda mengubahnya enam bulan lagi. Materi ini memperkenalkan pengujian dari yang paling sederhana (assert) sampai kerangka unittest dan alur TDD.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi, exception</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Pengujian Python: assert, unittest, dan Test-Driven Development" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis pernyataan assert sederhana</li><li>merancang kasus uji: normal, batas, dan error</li><li>menulis test case dengan unittest dan membaca hasilnya</li><li>menjelaskan siklus TDD: merah, hijau, refactor</li><li>menulis kode yang mudah diuji</li></ul></div>
+<h2 id="mengapa-menguji">Mengapa menguji?</h2>
+<ul><li>Menemukan bug lebih awal, saat memperbaikinya masih murah.</li><li>Memberi keberanian mengubah kode (refactoring) tanpa takut merusak hal lain.</li><li>Berfungsi sebagai dokumentasi hidup tentang perilaku yang diharapkan.</li><li>Memaksa Anda memikirkan kasus tepi di awal.</li></ul>
+<h2 id="langkah-paling-sederhana-assert">Langkah paling sederhana: assert</h2>
+<figure class="codebox"><pre data-lang="python"><code>def luas_persegi_panjang(p, l):
+    return p * l
+
+assert luas_persegi_panjang(3, 4) == 12
+assert luas_persegi_panjang(0, 5) == 0
+print(&quot;semua assert lolos&quot;)
+
+try:
+    assert luas_persegi_panjang(2, 2) == 5, &quot;harusnya 4&quot;
+except AssertionError as e:
+    print(&quot;gagal:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>semua assert lolos
+gagal: harusnya 4</code></pre></figure>
+<h2 id="merancang-kasus-uji">Merancang kasus uji</h2>
+<table><thead><tr><th>Jenis</th><th>Contoh untuk fungsi rata_rata(list)</th></tr></thead><tbody><tr><td>Normal</td><td>[2, 4, 6] → 4</td></tr><tr><td>Satu elemen</td><td>[7] → 7</td></tr><tr><td>Batas / nol</td><td>[0, 0] → 0</td></tr><tr><td>Negatif / pecahan</td><td>[-1, 1] → 0; [0.5, 1.5] → 1.0</td></tr><tr><td>Tidak valid</td><td>[] → seharusnya menimbulkan ValueError (bukan ZeroDivisionError yang membingungkan)</td></tr></tbody></table>
+<h2 id="unittest-kerangka-pengujian-bawaan">unittest: kerangka pengujian bawaan</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sys, unittest
+
+def rata_rata(data):
+    if not data:
+        raise ValueError(&quot;data tidak boleh kosong&quot;)
+    return sum(data) / len(data)
+
+class TesRataRata(unittest.TestCase):
+    def test_normal(self):
+        self.assertEqual(rata_rata([2, 4, 6]), 4)
+
+    def test_satu_elemen(self):
+        self.assertEqual(rata_rata([7]), 7)
+
+    def test_pecahan(self):
+        self.assertAlmostEqual(rata_rata([0.1, 0.2]), 0.15)   # aman untuk float
+
+    def test_kosong(self):
+        with self.assertRaises(ValueError):
+            rata_rata([])
+
+unittest.main(argv=[&quot;x&quot;], exit=False, testRunner=unittest.TextTestRunner(stream=sys.stdout, verbosity=2))</code></pre><pre class="runout" data-lang="keluaran"><code>test_kosong (__main__.TesRataRata.test_kosong) ... ok
+test_normal (__main__.TesRataRata.test_normal) ... ok
+test_pecahan (__main__.TesRataRata.test_pecahan) ... ok
+test_satu_elemen (__main__.TesRataRata.test_satu_elemen) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK</code></pre></figure>
+<div class="callout info"><b>Aturan unittest</b><p>Nama metode uji harus diawali <code>test</code> agar ditemukan otomatis. Gunakan <code>assertAlmostEqual</code> untuk float, bukan <code>assertEqual</code>, karena 0.1 + 0.2 tidak persis 0.3.</p></div>
+<h2 id="test-driven-development-tdd">Test-Driven Development (TDD)</h2>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Siklus TDD" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M291.5 86.5 Q328.05634918610406 91.94365081389596 335.6 130.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M333.5 191.5 Q328.05634918610406 228.05634918610406 289.4 235.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M228.5 233.5 Q191.94365081389594 228.05634918610406 184.4 189.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M186.5 128.5 Q191.94365081389594 91.94365081389596 230.6 84.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="54" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Merah: tulis</tspan><tspan x="260" dy="15">tes yang gagal</tspan></text><rect x="303" y="138" width="124" height="84" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="365" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="365" dy="0">Hijau: tulis</tspan><tspan x="365" dy="15">kode paling</tspan><tspan x="365" dy="15">sederhana agar</tspan><tspan x="365" dy="15">lulus</tspan></text><rect x="198" y="243" width="124" height="84" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="260" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Refactor:</tspan><tspan x="260" dy="15">rapikan tanpa</tspan><tspan x="260" dy="15">mengubah</tspan><tspan x="260" dy="15">perilaku</tspan></text><rect x="93" y="138" width="124" height="69" rx="10" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><text x="155" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="155" dy="0">Ulangi untuk</tspan><tspan x="155" dy="15">fitur</tspan><tspan x="155" dy="15">berikutnya</tspan></text></svg><figcaption>Tes ditulis lebih dulu sehingga ia menjadi spesifikasi yang bisa dijalankan.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code># Langkah 1 (merah): tes untuk fungsi yang belum ada
+# assert fizzbuzz(3) == &quot;Fizz&quot;; assert fizzbuzz(5) == &quot;Buzz&quot;; ...
+# Langkah 2 (hijau): implementasi
+def fizzbuzz(n):
+    if n % 15 == 0: return &quot;FizzBuzz&quot;
+    if n % 3 == 0: return &quot;Fizz&quot;
+    if n % 5 == 0: return &quot;Buzz&quot;
+    return str(n)
+
+assert fizzbuzz(3) == &quot;Fizz&quot; and fizzbuzz(5) == &quot;Buzz&quot;
+assert fizzbuzz(15) == &quot;FizzBuzz&quot; and fizzbuzz(7) == &quot;7&quot;
+print([fizzbuzz(i) for i in range(1, 16)])</code></pre><pre class="runout" data-lang="keluaran"><code>['1', '2', 'Fizz', '4', 'Buzz', 'Fizz', '7', '8', 'Fizz', 'Buzz', '11', 'Fizz', '13', '14', 'FizzBuzz']</code></pre></figure>
+<h2 id="menulis-kode-yang-mudah-diuji">Menulis kode yang mudah diuji</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Ciri kode yang mudah diuji","desc":"Centang yang sudah Anda terapkan. Progres tersimpan di browser ini.","items":["Fungsi mengembalikan nilai, bukan hanya mencetak.","Fungsi bergantung pada parameter, bukan variabel global.","Satu fungsi melakukan satu hal.","Masukan dari luar (berkas, jaringan, waktu) dipisahkan dari logika.","Ada tes untuk kasus normal, tepi, dan error.","Tes berjalan cepat dan bisa dijalankan kapan saja."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Urutan siklus TDD yang benar?","options":["Hijau, merah, refactor","Merah, hijau, refactor","Refactor, merah, hijau"],"answer":1,"why":"Tulis tes yang gagal (merah), buat lulus (hijau), lalu rapikan."},{"q":"Mengapa memakai \u003ccode>assertAlmostEqual\u003c/code> untuk float?","options":["Lebih cepat","Float tidak presisi persis","Wajib di unittest"],"answer":1,"why":"Selisih sangat kecil akibat representasi biner."},{"q":"Apakah kode yang lulus semua tes pasti bebas bug?","options":["Ya","Tidak, hanya terbukti benar pada kasus yang diuji","Hanya bila tesnya > 100"],"answer":1,"why":"Tes menunjukkan adanya bug, bukan ketiadaannya."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis tiga assert untuk fungsi <code>apakah_kabisat(tahun)</code> yang mencakup tahun 1900, 2000, dan 2024.</summary><div><code>assert not apakah_kabisat(1900)
+assert apakah_kabisat(2000)
+assert apakah_kabisat(2024)</code></div></details><details><summary>2. Rancang kasus uji untuk fungsi <code>nilai_maksimum(daftar)</code>.</summary><div>Normal [3, 9, 2] → 9; satu elemen [5] → 5; semua sama [4, 4] → 4; negatif [-3, -1] → -1; kosong [] → ValueError.</div></details><details><summary>3. Mengapa tes sebaiknya tidak bergantung satu sama lain?</summary><div>Agar urutan eksekusi tidak memengaruhi hasil, dan satu tes yang gagal tidak menyembunyikan yang lain. unittest menyiapkan keadaan baru lewat setUp.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>assert memeriksa asumsi dengan cepat; unittest menyusun tes menjadi test case yang bisa dijalankan otomatis.</li><li>Rancang kasus normal, batas, dan error.</li><li>TDD: tes gagal dulu, buat lulus, lalu rapikan.</li><li>Kode yang mengembalikan nilai dan tidak bergantung pada global lebih mudah diuji.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya unittest dan pytest?</summary><div>unittest ada di pustaka standar dan bergaya kelas. pytest pihak ketiga, lebih ringkas (cukup fungsi dan assert biasa), dan sangat populer. Konsepnya sama.</div></details>
+<details class="faq"><summary>Berapa banyak tes yang cukup?</summary><div>Tidak ada angka pasti. Fokus pada logika penting dan kasus tepi; cakupan (coverage) membantu melihat bagian yang belum diuji.</div></details>
+<details class="faq"><summary>Apakah menulis tes memperlambat pengembangan?</summary><div>Di awal terasa lebih lambat, tetapi pada proyek yang bertahan lama justru menghemat waktu karena bug ditemukan lebih cepat.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/library/unittest.html" rel="noopener" target="_blank">Dokumentasi Python: unittest, Unit testing framework</a></li><li><a href="https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement" rel="noopener" target="_blank">Dokumentasi Python: The assert statement</a></li><li>Kent Beck, Test-Driven Development: By Example (Addison-Wesley, 2002)</li><li><a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/" rel="noopener" target="_blank">MIT OpenCourseWare 6.0001: Introduction to Computer Science and Programming in Python</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

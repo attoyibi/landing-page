@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta</title>
+<meta name="description" content="Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.">
+<meta name="keywords" content="kompleksitas algoritma, Big-O, Omega, Theta, analisis algoritma">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/">
+<meta property="og:title" content="Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta">
+<meta property="og:description" content="Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta">
+<meta name="twitter:description" content="Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta","description":"Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.","image":["https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kompleksitas algoritma, Big-O, Omega, Theta, analisis algoritma","articleSection":"Algoritma & Pemrograman Python","wordCount":696,"mainEntityOfPage":"https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta","item":"https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa konstanta diabaikan padahal berpengaruh pada waktu nyata?","acceptedAnswer":{"@type":"Answer","text":"Notasi asimtotik menjawab pertanyaan \"bagaimana pertumbuhannya\" bukan \"berapa detiknya\". Dalam praktik, konstanta penting untuk n kecil, dan profil waktu nyata melengkapi analisis teori."}},{"@type":"Question","name":"Apakah O(n) selalu lebih cepat dari O(n²)?","acceptedAnswer":{"@type":"Answer","text":"Hanya untuk n yang cukup besar. Untuk n kecil, algoritma O(n²) dengan konstanta kecil bisa lebih cepat, itu sebabnya insertion sort dipakai untuk potongan kecil pada Timsort."}},{"@type":"Question","name":"Apa itu analisis amortisasi?","acceptedAnswer":{"@type":"Answer","text":"Menghitung biaya rata-rata per operasi atas serangkaian operasi. Contohnya append pada list dinamis: sesekali mahal (realokasi), tetapi rata-ratanya O(1)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#langkah-1-hitung-operasi-dasar-bukan-detik">Langkah 1: hitung operasi dasar, bukan detik</a></li><li><a href="#notasi-asimtotik">Notasi asimtotik</a></li><li><a href="#pertumbuhan-yang-perlu-dihafal-secara-visual">Pertumbuhan yang perlu dihafal secara visual</a></li><li><a href="#cara-menentukan-kelas-kompleksitas">Cara menentukan kelas kompleksitas</a></li><li><a href="#kasus-terbaik-rata-rata-dan-terburuk">Kasus terbaik, rata-rata, dan terburuk</a></li><li><a href="#rekurensi-kompleksitas-algoritma-rekursif">Rekurensi: kompleksitas algoritma rekursif</a></li><li><a href="#kompleksitas-ruang">Kompleksitas ruang</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta</h1>
+<p class="lead">Dua algoritma bisa sama-sama benar tetapi satu selesai dalam sedetik dan yang lain dalam sejam. Analisis kompleksitas adalah alat untuk memprediksi perilaku itu sebelum menjalankan apa pun, dan untuk membandingkan rancangan secara adil tanpa terpengaruh kecepatan komputer. Materi ini membangun definisinya dari hitungan langkah, bukan hafalan tabel.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> perulangan bersarang, rekursi dasar, fungsi</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menghitung jumlah operasi dasar sebuah algoritma sebagai fungsi dari n</li><li>menjelaskan notasi O, Ω, dan Θ beserta artinya</li><li>menentukan kelas kompleksitas dari perulangan tunggal, bersarang, dan pembagian dua</li><li>membedakan kasus terbaik, rata-rata, dan terburuk</li><li>menyusun dan menyelesaikan relasi rekurensi sederhana</li><li>membedakan kompleksitas waktu dan ruang</li></ul></div>
+<h2 id="langkah-1-hitung-operasi-dasar-bukan-detik">Langkah 1: hitung operasi dasar, bukan detik</h2>
+<p>Waktu nyata bergantung pada perangkat keras, bahasa, dan beban sistem. Karena itu kita menghitung <b>operasi dasar</b> (perbandingan, penugasan, aritmetika) sebagai fungsi dari ukuran masukan <code>n</code>. Mari hitung manual lalu verifikasi dengan program.</p>
+<figure class="codebox"><pre data-lang="python"><code>def cari_maks(data):
+    maks = data[0]                 # 1 penugasan
+    for x in data[1:]:             # n-1 putaran
+        if x &gt; maks:               #   1 perbandingan per putaran
+            maks = x               #   0..1 penugasan per putaran
+    return maks
+
+def cacah(n):
+    # menghitung jumlah perbandingan yang sebenarnya
+    perbandingan = 0
+    for _ in range(n - 1):
+        perbandingan += 1
+    return perbandingan
+
+for n in [10, 100, 1000]:
+    print(n, &quot;elemen -&gt;&quot;, cacah(n), &quot;perbandingan&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>10 elemen -&gt; 9 perbandingan
+100 elemen -&gt; 99 perbandingan
+1000 elemen -&gt; 999 perbandingan</code></pre><figcaption>Jumlah perbandingan tepat n - 1, tumbuh linear terhadap n. Kita menyebutnya O(n).</figcaption></figure>
+<h2 id="notasi-asimtotik">Notasi asimtotik</h2>
+<p>Notasi asimtotik menggambarkan perilaku fungsi untuk <b>n yang besar</b>, mengabaikan konstanta dan suku yang tidak dominan.</p>
+<table><thead><tr><th>Notasi</th><th>Makna informal</th><th>Definisi formal (ringkas)</th></tr></thead><tbody><tr><td>O(g(n))</td><td>Batas atas: tumbuh <b>tidak lebih cepat</b> dari g</td><td>Ada c, n₀ sehingga f(n) ≤ c · g(n) untuk semua n ≥ n₀</td></tr><tr><td>Ω(g(n))</td><td>Batas bawah: tumbuh <b>setidaknya secepat</b> g</td><td>Ada c, n₀ sehingga f(n) ≥ c · g(n) untuk semua n ≥ n₀</td></tr><tr><td>Θ(g(n))</td><td>Batas ketat: tumbuh <b>sama cepat</b> dengan g</td><td>f(n) adalah O(g(n)) sekaligus Ω(g(n))</td></tr></tbody></table>
+<p class="formula">f(n) = 3n² + 10n + 5  ⇒  f(n) = Θ(n²)</p>
+<p>Mengapa? Untuk n besar, suku 3n² mendominasi. Buktikan batas atas: untuk n ≥ 10, 10n ≤ n² dan 5 ≤ n², sehingga f(n) ≤ 3n² + n² + n² = 5n². Pilih c = 5 dan n₀ = 10; maka f(n) ∈ O(n²). Batas bawah: f(n) ≥ 3n² untuk semua n ≥ 1, sehingga f(n) ∈ Ω(n²).</p>
+<div class="callout info"><b>O bukan satu-satunya</b><p>Dalam percakapan sehari-hari, orang sering menyebut "Big-O" untuk semua kasus. Secara ketat, O adalah batas <b>atas</b>. Bila Anda ingin menyatakan bahwa sebuah algoritma <i>pasti</i> berkelas tepat n², gunakan Θ(n²).</p></div>
+<h2 id="pertumbuhan-yang-perlu-dihafal-secara-visual">Pertumbuhan yang perlu dihafal secara visual</h2>
+<figure class="diagram"><svg viewBox="0 0 520 260" role="img" aria-label="Grafik pertumbuhan fungsi kompleksitas" font-family="'Plus Jakarta Sans',Arial,sans-serif"><line x1="40" y1="230" x2="500" y2="230" stroke="#8a94a8"/><line x1="40" y1="20" x2="40" y2="230" stroke="#8a94a8"/><text x="40" y="248" font-size="12" fill="#4a5568" text-anchor="middle">n=1</text><text x="240" y="248" font-size="12" fill="#4a5568" text-anchor="middle">n=5</text><text x="490" y="248" font-size="12" fill="#4a5568" text-anchor="middle">n=10</text><polyline fill="none" stroke="#1f7a46" stroke-width="3" points="40,227.9 90,227.9 140,227.9 190,227.9 240,227.9 290,227.9 340,227.9 390,227.9 440,227.9 490,227.9"/><text x="492" y="60" font-size="13" font-weight="700" fill="#1f7a46" text-anchor="end">O(1)</text><polyline fill="none" stroke="#0b7285" stroke-width="3" points="40,230 90,221.6 140,216.6863149939423 190,213.2 240,210.49580400294616 290,208.28631499394228 340,206.41821865471613 390,204.8 440,203.37262998788458 490,202.09580400294615"/><text x="492" y="78" font-size="13" font-weight="700" fill="#0b7285" text-anchor="end">O(log n)</text><polyline fill="none" stroke="#1e5ab2" stroke-width="3" points="40,221.6 90,213.2 140,204.8 190,196.4 240,188 290,179.6 340,171.2 390,162.8 440,154.4 490,146"/><text x="492" y="96" font-size="13" font-weight="700" fill="#1e5ab2" text-anchor="end">O(n)</text><polyline fill="none" stroke="#9a5b00" stroke-width="3" points="40,230 90,223.7 140,215.02210436818507 190,204.8 240,193.42963250552404 290,181.14420873637016 340,168.09782396862983 390,154.4 440,140.13262620911044 490,125.35926501104808"/><text x="492" y="114" font-size="13" font-weight="700" fill="#9a5b00" text-anchor="end">O(n log n)</text><polyline fill="none" stroke="#7a3fb4" stroke-width="3" points="40,227.9 90,221.6 140,211.1 190,196.4 240,177.5 290,154.4 340,127.10000000000001 390,95.6 440,59.89999999999998 490,20"/><text x="492" y="132" font-size="13" font-weight="700" fill="#7a3fb4" text-anchor="end">O(n²)</text><polyline fill="none" stroke="#b3261e" stroke-width="3" points="40,229.58 90,229.16 140,228.32 190,226.64 240,223.28 290,216.56 340,203.12 390,176.24 440,122.48 490,20"/><text x="492" y="150" font-size="13" font-weight="700" fill="#b3261e" text-anchor="end">O(2ⁿ)</text></svg><figcaption>Pertumbuhan relatif pada n = 1..10 (grafik dipotong pada nilai 100; skala sebenarnya jauh lebih curam untuk n² dan 2ⁿ).</figcaption></figure>
+<div data-w="bigo"><script type="application/json">{"title":"Jumlah operasi dan perkiraan waktu","desc":"Geser n. Pada n sedang, 2ⁿ sudah tidak masuk akal. Itulah sebabnya kelas kompleksitas penting."}</script></div>
+<h2 id="cara-menentukan-kelas-kompleksitas">Cara menentukan kelas kompleksitas</h2>
+<table><thead><tr><th>Pola kode</th><th>Kompleksitas</th><th>Alasan</th></tr></thead><tbody><tr><td>Pernyataan tunggal</td><td>O(1)</td><td>Jumlah langkah tidak bergantung n</td></tr><tr><td>Satu perulangan 1..n</td><td>O(n)</td><td>n putaran × O(1)</td></tr><tr><td>Dua perulangan bersarang 1..n</td><td>O(n²)</td><td>n × n</td></tr><tr><td>Perulangan bersarang, dalam bergantung i</td><td>O(n²)</td><td>1 + 2 + ... + n = n(n+1)/2</td></tr><tr><td>Variabel dikali atau dibagi 2 tiap putaran</td><td>O(log n)</td><td>Berhenti setelah log₂ n putaran</td></tr><tr><td>Perulangan n kali, di dalamnya log n</td><td>O(n log n)</td><td>Perkalian</td></tr><tr><td>Dua perulangan berurutan</td><td>O(n) + O(m)</td><td>Dijumlah, ambil yang dominan</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>def hitung_langkah(n):
+    &quot;&quot;&quot;Menghitung berapa kali badan perulangan berjalan.&quot;&quot;&quot;
+    a = b = c = 0
+    for i in range(n):            # O(n)
+        a += 1
+    for i in range(n):            # O(n^2)
+        for j in range(n):
+            b += 1
+    k = n
+    while k &gt; 1:                  # O(log n)
+        k //= 2
+        c += 1
+    return a, b, c
+
+for n in [8, 64, 1024]:
+    print(n, hitung_langkah(n))</code></pre><pre class="runout" data-lang="keluaran"><code>8 (8, 64, 3)
+64 (64, 4096, 6)
+1024 (1024, 1048576, 10)</code></pre><figcaption>Untuk n = 1024: n = 1024, n² = 1.048.576, log₂ n = 10. Perbedaan skalanya sangat tajam.</figcaption></figure>
+<h2 id="kasus-terbaik-rata-rata-dan-terburuk">Kasus terbaik, rata-rata, dan terburuk</h2>
+<p>Banyak algoritma tidak selalu butuh waktu yang sama untuk ukuran masukan yang sama. Pencarian linear mencari nilai 7 dalam daftar:</p>
+<figure class="codebox"><pre data-lang="python"><code>def cari_linear(data, target):
+    langkah = 0
+    for i, x in enumerate(data):
+        langkah += 1
+        if x == target:
+            return i, langkah
+    return -1, langkah
+
+data = list(range(1, 1001))
+print(&quot;terbaik (di awal)  :&quot;, cari_linear(data, 1)[1], &quot;langkah&quot;)
+print(&quot;rata-rata (tengah) :&quot;, cari_linear(data, 500)[1], &quot;langkah&quot;)
+print(&quot;terburuk (di akhir):&quot;, cari_linear(data, 1000)[1], &quot;langkah&quot;)
+print(&quot;terburuk (tak ada) :&quot;, cari_linear(data, 5000)[1], &quot;langkah&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>terbaik (di awal)  : 1 langkah
+rata-rata (tengah) : 500 langkah
+terburuk (di akhir): 1000 langkah
+terburuk (tak ada) : 1000 langkah</code></pre></figure>
+<table><thead><tr><th>Kasus</th><th>Pencarian linear</th><th>Arti</th></tr></thead><tbody><tr><td>Terbaik</td><td>Θ(1) (target di awal)</td><td>Masukan paling menguntungkan</td></tr><tr><td>Rata-rata</td><td>Θ(n)</td><td>Dengan asumsi distribusi tertentu, biasanya posisi seragam</td></tr><tr><td>Terburuk</td><td>Θ(n)</td><td>Jaminan batas atas untuk semua masukan</td></tr></tbody></table>
+<h2 id="rekurensi-kompleksitas-algoritma-rekursif">Rekurensi: kompleksitas algoritma rekursif</h2>
+<p>Algoritma rekursif dianalisis dengan relasi rekurensi. Binary search membagi dua ukuran masalah dan melakukan kerja konstan: <code>T(n) = T(n/2) + c</code>. Merge sort membagi dua, menyelesaikan kedua bagian, lalu menggabung dalam waktu linear: <code>T(n) = 2T(n/2) + cn</code>.</p>
+<table><thead><tr><th>Rekurensi</th><th>Penyelesaian</th><th>Contoh</th></tr></thead><tbody><tr><td>T(n) = T(n - 1) + c</td><td>Θ(n)</td><td>Faktorial rekursif</td></tr><tr><td>T(n) = T(n/2) + c</td><td>Θ(log n)</td><td>Binary search</td></tr><tr><td>T(n) = 2T(n/2) + cn</td><td>Θ(n log n)</td><td>Merge sort</td></tr><tr><td>T(n) = T(n - 1) + cn</td><td>Θ(n²)</td><td>Quick sort kasus terburuk</td></tr><tr><td>T(n) = 2T(n - 1) + c</td><td>Θ(2ⁿ)</td><td>Fibonacci rekursif naif</td></tr></tbody></table>
+<div class="callout info"><b>Alat bukti</b><p>Penyelesaian dapat dibuktikan dengan metode <b>substitusi</b>, <b>pohon rekursi</b>, atau <b>Teorema Master</b> untuk bentuk T(n) = aT(n/b) + f(n). Pembuktiannya dibahas di buku CLRS dan kuliah MIT 6.006.</p></div>
+<h2 id="kompleksitas-ruang">Kompleksitas ruang</h2>
+<p>Selain waktu, algoritma memakai memori tambahan. Membalik list dengan membuat list baru memakai O(n) ruang; membalik di tempat memakai O(1). Rekursi juga memakan ruang pada call stack: kedalaman n berarti O(n).</p>
+<figure class="codebox"><pre data-lang="python"><code>def balik_baru(data):          # ruang tambahan O(n)
+    return data[::-1]
+
+def balik_di_tempat(data):     # ruang tambahan O(1)
+    i, j = 0, len(data) - 1
+    while i &lt; j:
+        data[i], data[j] = data[j], data[i]
+        i, j = i + 1, j - 1
+    return data
+
+print(balik_baru([1, 2, 3, 4]), balik_di_tempat([1, 2, 3, 4]))</code></pre><pre class="runout" data-lang="keluaran"><code>[4, 3, 2, 1] [4, 3, 2, 1]</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Kompleksitas \u003ccode>3n² + 10n + 5\u003c/code> dalam notasi Θ adalah...","options":["Θ(n)","Θ(n²)","Θ(3n²)"],"answer":1,"why":"Suku dominan n²; konstanta diabaikan."},{"q":"Perulangan \u003ccode>while k > 1: k //= 2\u003c/code> berjalan sekitar...","options":["n kali","log₂ n kali","n² kali"],"answer":1,"why":"Nilai dibelah dua tiap putaran."},{"q":"Notasi yang menyatakan batas ATAS pertumbuhan adalah...","options":["Ω","Θ","O"],"answer":2,"why":"O adalah batas atas."},{"q":"Rekurensi \u003ccode>T(n) = 2T(n/2) + n\u003c/code> menghasilkan...","options":["Θ(n)","Θ(n log n)","Θ(n²)"],"answer":1,"why":"Itu rekurensi merge sort."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tentukan kompleksitas: <code>for i in range(n): for j in range(i, n): x += 1</code>.</summary><div>Dalam berjalan n, n-1, ..., 1 kali: jumlah n(n+1)/2, yaitu Θ(n²).</div></details><details><summary>2. Tentukan kompleksitas: <code>i = 1
+while i < n:
+    i *= 3</code>.</summary><div>i membesar dikali 3 tiap putaran; berhenti setelah log₃ n putaran: Θ(log n).</div></details><details><summary>3. Sebuah algoritma membutuhkan 5n + 20 langkah dan lainnya 0,01n². Mana yang lebih baik untuk n kecil dan mana untuk n besar?</summary><div>Untuk n kecil (misalnya n = 100), 0,01n² = 100 lebih kecil dari 5n+20 = 520. Untuk n besar (n = 1000): 10.000 melawan 5.020, algoritma linear menang. Ini alasan "n besar" penting dalam definisi asimtotik.</div></details><details><summary>4. Mengapa f(n) = n log n termasuk O(n²) tetapi tidak Θ(n²)?</summary><div>n log n tumbuh lebih lambat dari n² sehingga n² adalah batas atas yang benar tetapi tidak ketat. Tidak ada konstanta c yang membuat n log n ≥ c · n² untuk n besar.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Hitung operasi dasar sebagai fungsi dari n, bukan waktu dalam detik.</li><li>O = batas atas, Ω = batas bawah, Θ = batas ketat; abaikan konstanta dan suku yang tidak dominan.</li><li>Perulangan bersarang mengalikan, perulangan berurutan menjumlah, pembagian dua menghasilkan log n.</li><li>Rekurensi menggambarkan algoritma rekursif: T(n) = 2T(n/2) + n menghasilkan n log n.</li><li>Pertimbangkan juga kasus terburuk dan kompleksitas ruang.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa konstanta diabaikan padahal berpengaruh pada waktu nyata?</summary><div>Notasi asimtotik menjawab pertanyaan "bagaimana pertumbuhannya" bukan "berapa detiknya". Dalam praktik, konstanta penting untuk n kecil, dan profil waktu nyata melengkapi analisis teori.</div></details>
+<details class="faq"><summary>Apakah O(n) selalu lebih cepat dari O(n²)?</summary><div>Hanya untuk n yang cukup besar. Untuk n kecil, algoritma O(n²) dengan konstanta kecil bisa lebih cepat, itu sebabnya insertion sort dipakai untuk potongan kecil pada Timsort.</div></details>
+<details class="faq"><summary>Apa itu analisis amortisasi?</summary><div>Menghitung biaya rata-rata per operasi atas serangkaian operasi. Contohnya append pada list dinamis: sesekali mahal (realokasi), tetapi rata-ratanya O(1).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li>Anany Levitin, Introduction to the Design and Analysis of Algorithms (buku teks)</li><li><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/" rel="noopener" target="_blank">MIT OpenCourseWare 6.006: Introduction to Algorithms</a></li><li><a href="https://algs4.cs.princeton.edu/" rel="noopener" target="_blank">Robert Sedgewick dan Kevin Wayne, Algorithms (edisi ke-4), materi pendamping algs4.cs.princeton.edu</a></li><li><a href="https://wiki.python.org/moin/TimeComplexity" rel="noopener" target="_blank">Python Wiki: TimeComplexity</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

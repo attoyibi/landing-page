@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stack dan Queue di Python: Implementasi dan Aplikasi</title>
+<meta name="description" content="Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.">
+<meta name="keywords" content="stack, queue, deque, postfix, struktur data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/">
+<meta property="og:title" content="Stack dan Queue di Python: Implementasi dan Aplikasi">
+<meta property="og:description" content="Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.">
+<meta property="og:image" content="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stack dan Queue di Python: Implementasi dan Aplikasi">
+<meta name="twitter:description" content="Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Stack dan Queue di Python: Implementasi dan Aplikasi","description":"Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.","image":["https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"stack, queue, deque, postfix, struktur data","articleSection":"Algoritma & Pemrograman Python","wordCount":428,"mainEntityOfPage":"https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Stack dan Queue di Python: Implementasi dan Aplikasi","item":"https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana mengubah infix menjadi postfix?","acceptedAnswer":{"@type":"Answer","text":"Dengan algoritma shunting-yard dari Dijkstra: stack operator dan keluaran, dengan membandingkan presedensi operator."}},{"@type":"Question","name":"Apakah ada batas ukuran stack?","acceptedAnswer":{"@type":"Answer","text":"Stack sebagai struktur data bebas, dibatasi memori. Call stack Python punya batas kedalaman rekursi (bawaan sekitar 1000)."}},{"@type":"Question","name":"Apa bedanya queue.Queue dan collections.deque?","acceptedAnswer":{"@type":"Answer","text":"queue.Queue aman digunakan antar thread dan menawarkan penguncian. Untuk satu thread, deque lebih ringan dan cepat."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#ulasan-cepat">Ulasan cepat</a></li><li><a href="#implementasi-dengan-kelas">Implementasi dengan kelas</a></li><li><a href="#aplikasi-1-memeriksa-kurung-seimbang">Aplikasi 1: memeriksa kurung seimbang</a></li><li><a href="#aplikasi-2-mengevaluasi-ekspresi-postfix">Aplikasi 2: mengevaluasi ekspresi postfix</a></li><li><a href="#aplikasi-3-simulasi-antrean">Aplikasi 3: simulasi antrean</a></li><li><a href="#priority-queue-yang-terpenting-keluar-dulu">Priority queue: yang terpenting keluar dulu</a></li><li><a href="#memilih-struktur">Memilih struktur</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Stack dan Queue di Python: Implementasi dan Aplikasi</h1>
+<p class="lead">Stack dan queue sederhana secara konsep, tetapi aplikasinya luas: kompiler memeriksa kurung dengan stack, sistem operasi menjadwalkan proses dengan queue, dan algoritma graf bergantung pada keduanya. Materi ini menjembatani konsep dengan implementasi dan menunjukkan masalah nyata yang diselesaikannya.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> list Python, kelas dasar, konsep stack dan queue</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Stack dan Queue di Python: Implementasi dan Aplikasi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengimplementasikan stack dengan list dan queue dengan deque</li><li>memakai stack untuk memeriksa kurung seimbang dan mengevaluasi ekspresi postfix</li><li>memakai queue untuk simulasi antrean</li><li>memakai priority queue dengan heapq</li><li>memilih struktur yang tepat berdasarkan pola akses</li></ul></div>
+<h2 id="ulasan-cepat">Ulasan cepat</h2>
+<div data-w="stack"><script type="application/json">{"title":"Stack dan queue: coba dulu","desc":"Tambahkan beberapa huruf, lalu ambil. Perhatikan siapa yang keluar duluan pada masing-masing mode."}</script></div>
+<h2 id="implementasi-dengan-kelas">Implementasi dengan kelas</h2>
+<figure class="codebox"><pre data-lang="python"><code>from collections import deque
+
+class Stack:
+    def __init__(self):
+        self._data = []
+    def push(self, x):  self._data.append(x)          # O(1)
+    def pop(self):
+        if not self._data:
+            raise IndexError(&quot;stack kosong&quot;)
+        return self._data.pop()                       # O(1)
+    def peek(self):     return self._data[-1]
+    def kosong(self):   return not self._data
+    def __len__(self):  return len(self._data)
+
+class Queue:
+    def __init__(self):
+        self._data = deque()
+    def enqueue(self, x): self._data.append(x)        # O(1)
+    def dequeue(self):    return self._data.popleft() # O(1); list.pop(0) akan O(n)
+    def kosong(self):     return not self._data
+    def __len__(self):    return len(self._data)
+
+s = Stack()
+for x in &quot;ABC&quot;: s.push(x)
+print([s.pop() for _ in range(3)])      # ['C', 'B', 'A']  (LIFO)
+q = Queue()
+for x in &quot;ABC&quot;: q.enqueue(x)
+print([q.dequeue() for _ in range(3)])  # ['A', 'B', 'C']  (FIFO)</code></pre><pre class="runout" data-lang="keluaran"><code>['C', 'B', 'A']
+['A', 'B', 'C']</code></pre></figure>
+<h2 id="aplikasi-1-memeriksa-kurung-seimbang">Aplikasi 1: memeriksa kurung seimbang</h2>
+<p>Setiap kurung tutup harus berpasangan dengan kurung buka <b>terakhir</b> yang belum tertutup, itu persis perilaku stack.</p>
+<figure class="codebox"><pre data-lang="python"><code>def seimbang(teks):
+    pasangan = {&quot;)&quot;: &quot;(&quot;, &quot;]&quot;: &quot;[&quot;, &quot;}&quot;: &quot;{&quot;}
+    tumpuk = []
+    for ch in teks:
+        if ch in &quot;([{&quot;:
+            tumpuk.append(ch)
+        elif ch in &quot;)]}&quot;:
+            if not tumpuk or tumpuk.pop() != pasangan[ch]:
+                return False
+    return not tumpuk              # harus kosong di akhir
+
+for t in [&quot;(a + b) * [c - d]&quot;, &quot;((a + b)&quot;, &quot;{[(])}&quot;, &quot;&quot;, &quot;(()())&quot;]:
+    print(f&quot;{t!r:22} -&gt; {seimbang(t)}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>'(a + b) * [c - d]'    -&gt; True
+'((a + b)'             -&gt; False
+'{[(])}'               -&gt; False
+''                     -&gt; True
+'(()())'               -&gt; True</code></pre></figure>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri pemeriksaan \"{[()]}\"","desc":"Perhatikan isi tumpuk bertambah saat kurung buka dan berkurang saat kurung tutup yang cocok.","code":"teks = \"{[()]}\"\npasangan = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\ntumpuk = []\nok = True\nfor ch in teks:\n    if ch in \"([{\":\n        tumpuk.append(ch)\n    else:\n        if not tumpuk or tumpuk.pop() != pasangan[ch]:\n            ok = False\nprint(ok and not tumpuk)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]","ok":"True"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]","ok":"True","ch":"'{'"}}],"out":""},{"line":7,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]","ok":"True","ch":"'{'"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{']","ok":"True","ch":"'{'"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{']","ok":"True","ch":"'['"}}],"out":""},{"line":7,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{']","ok":"True","ch":"'['"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[']","ok":"True","ch":"'['"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[']","ok":"True","ch":"'('"}}],"out":""},{"line":7,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[']","ok":"True","ch":"'('"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[', '(']","ok":"True","ch":"'('"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[', '(']","ok":"True","ch":"')'"}}],"out":""},{"line":9,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[', '(']","ok":"True","ch":"')'"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[']","ok":"True","ch":"')'"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[']","ok":"True","ch":"']'"}}],"out":""},{"line":9,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{', '[']","ok":"True","ch":"']'"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{']","ok":"True","ch":"']'"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{']","ok":"True","ch":"'}'"}}],"out":""},{"line":9,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"['{']","ok":"True","ch":"'}'"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]","ok":"True","ch":"'}'"}}],"out":""},{"line":11,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]","ok":"True","ch":"'}'"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"teks":"'{[()]}'","pasangan":"{')': '(', ']': '[', '}': '{'}","tumpuk":"[]","ok":"True","ch":"'}'"}}],"out":"True\n"}]}</script></div>
+<h2 id="aplikasi-2-mengevaluasi-ekspresi-postfix">Aplikasi 2: mengevaluasi ekspresi postfix</h2>
+<p>Notasi postfix (RPN) menaruh operator <i>setelah</i> operandnya, sehingga tidak perlu tanda kurung dan presedensi. Ekspresi <code>(3 + 4) * 2</code> menjadi <code>3 4 + 2 *</code>. Evaluasinya trivial dengan stack: angka di-push, operator mengambil dua angka teratas lalu mendorong hasilnya.</p>
+<figure class="codebox"><pre data-lang="python"><code>def hitung_postfix(ekspresi):
+    tumpuk = []
+    for token in ekspresi.split():
+        if token in &quot;+-*/&quot;:
+            b, a = tumpuk.pop(), tumpuk.pop()      # b diambil lebih dulu
+            tumpuk.append({&quot;+&quot;: a + b, &quot;-&quot;: a - b, &quot;*&quot;: a * b, &quot;/&quot;: a / b}[token])
+        else:
+            tumpuk.append(float(token))
+    return tumpuk.pop()
+
+print(hitung_postfix(&quot;3 4 + 2 *&quot;))         # (3 + 4) * 2 = 14
+print(hitung_postfix(&quot;5 1 2 + 4 * + 3 -&quot;)) # 5 + ((1 + 2) * 4) - 3 = 14
+print(hitung_postfix(&quot;10 2 8 * + 3 -&quot;))    # 10 + 2 * 8 - 3 = 23</code></pre><pre class="runout" data-lang="keluaran"><code>14.0
+14.0
+23.0</code></pre></figure>
+<div class="callout warn"><b>Jebakan umum</b><p>Urutan pengambilan penting untuk operator yang tidak komutatif: pada <code>8 3 -</code>, 3 di-pop lebih dulu (jadi b) dan 8 sebagai a, sehingga hasilnya 8 - 3 = 5, bukan -5.</p></div>
+<h2 id="aplikasi-3-simulasi-antrean">Aplikasi 3: simulasi antrean</h2>
+<figure class="codebox"><pre data-lang="python"><code>from collections import deque
+
+pelanggan = deque([(&quot;Ani&quot;, 3), (&quot;Budi&quot;, 2), (&quot;Citra&quot;, 4)])   # (nama, lama layanan menit)
+waktu = 0
+while pelanggan:
+    nama, lama = pelanggan.popleft()          # yang paling dulu datang dilayani lebih dulu
+    mulai = waktu
+    waktu += lama
+    print(f&quot;{nama:&lt;6} dilayani menit {mulai:&gt;2}-{waktu:&lt;2} (menunggu {mulai} menit)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>Ani    dilayani menit  0-3  (menunggu 0 menit)
+Budi   dilayani menit  3-5  (menunggu 3 menit)
+Citra  dilayani menit  5-9  (menunggu 5 menit)</code></pre></figure>
+<h2 id="priority-queue-yang-terpenting-keluar-dulu">Priority queue: yang terpenting keluar dulu</h2>
+<figure class="codebox"><pre data-lang="python"><code>import heapq
+
+igd = []
+heapq.heappush(igd, (3, &quot;Demam ringan&quot;))      # angka lebih kecil = lebih darurat
+heapq.heappush(igd, (1, &quot;Henti jantung&quot;))
+heapq.heappush(igd, (2, &quot;Patah tulang&quot;))
+while igd:
+    prioritas, kasus = heapq.heappop(igd)       # O(log n)
+    print(prioritas, kasus)</code></pre><pre class="runout" data-lang="keluaran"><code>1 Henti jantung
+2 Patah tulang
+3 Demam ringan</code></pre><figcaption>heapq mengimplementasikan min-heap pada list biasa. push dan pop masing-masing O(log n).</figcaption></figure>
+<h2 id="memilih-struktur">Memilih struktur</h2>
+<table><thead><tr><th>Kebutuhan</th><th>Struktur</th><th>Python</th></tr></thead><tbody><tr><td>Yang terakhir masuk keluar dulu (undo, rekursi, kurung)</td><td>Stack</td><td>list: append / pop</td></tr><tr><td>Yang pertama masuk keluar dulu (antrean, BFS)</td><td>Queue</td><td>collections.deque: append / popleft</td></tr><tr><td>Yang terpenting keluar dulu (penjadwalan, Dijkstra)</td><td>Priority queue</td><td>heapq</td></tr><tr><td>Ambil dari kedua ujung</td><td>Deque</td><td>collections.deque</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa queue sebaiknya memakai deque, bukan list, bila besar?","options":["deque lebih mudah ditulis","list.pop(0) O(n), deque.popleft() O(1)","list tidak bisa jadi queue"],"answer":1,"why":"Menghapus di depan list menggeser semua elemen."},{"q":"Hasil postfix \"6 2 /\"?","options":["3.0","0.333","8"],"answer":0,"why":"6 / 2 = 3."},{"q":"Struktur yang dipakai untuk memeriksa kurung seimbang?","options":["Queue","Stack","Set"],"answer":1,"why":"Kurung tutup cocok dengan kurung buka terakhir."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ubah <code>seimbang</code> agar mengembalikan posisi kesalahan pertama, atau -1 bila seimbang.</summary><div>Simpan pasangan (karakter, indeks) di tumpuk. Saat tidak cocok, kembalikan indeks karakter itu; di akhir, bila tumpuk tidak kosong, kembalikan indeks kurung buka teratas.</div></details><details><summary>2. Evaluasi manual postfix <code>4 5 + 2 3 * -</code>.</summary><div>4 5 + = 9; 2 3 * = 6; 9 6 - = 3.</div></details><details><summary>3. Tulis fungsi yang membalik string memakai stack.</summary><div><code>def balik(s):
+    t = list(s); hasil = ""
+    while t: hasil += t.pop()
+    return hasil</code></div></details><details><summary>4. Mengapa BFS memakai queue sedangkan DFS memakai stack?</summary><div>BFS menjelajah per lapisan jarak sehingga yang ditemukan lebih dulu diproses lebih dulu (FIFO); DFS menyelam ke simpul yang terakhir ditemukan (LIFO).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Stack (LIFO): list dengan append dan pop; queue (FIFO): deque dengan append dan popleft.</li><li>Stack untuk kurung seimbang, postfix, undo, dan rekursi; queue untuk antrean dan BFS.</li><li>Priority queue dengan heapq: operasi O(log n).</li><li>Pilih deque, bukan list, untuk antrean besar.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana mengubah infix menjadi postfix?</summary><div>Dengan algoritma shunting-yard dari Dijkstra: stack operator dan keluaran, dengan membandingkan presedensi operator.</div></details>
+<details class="faq"><summary>Apakah ada batas ukuran stack?</summary><div>Stack sebagai struktur data bebas, dibatasi memori. Call stack Python punya batas kedalaman rekursi (bawaan sekitar 1000).</div></details>
+<details class="faq"><summary>Apa bedanya queue.Queue dan collections.deque?</summary><div>queue.Queue aman digunakan antar thread dan menawarkan penguncian. Untuk satu thread, deque lebih ringan dan cepat.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/library/collections.html#collections.deque" rel="noopener" target="_blank">Dokumentasi Python: collections (deque)</a></li><li><a href="https://docs.python.org/3/library/heapq.html" rel="noopener" target="_blank">Dokumentasi Python: heapq, Heap queue algorithm</a></li><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li><a href="https://algs4.cs.princeton.edu/" rel="noopener" target="_blank">Robert Sedgewick dan Kevin Wayne, Algorithms (edisi ke-4), materi pendamping algs4.cs.princeton.edu</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/stack-dan-queue-struktur-data-dijelaskan/"><img src="/artikel/stack-dan-queue-struktur-data-dijelaskan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman</span></a><a href="/artikel/list-python-operasi-slicing-dan-list-comprehension/"><img src="/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>List Python: Operasi, Slicing, dan List Comprehension</span></a><a href="/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/"><img src="/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

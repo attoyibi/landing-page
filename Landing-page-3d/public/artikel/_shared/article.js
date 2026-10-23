@@ -203,9 +203,38 @@
     /* ---------- sort visualiser ---------- */
     function sortFrames(algo, a0) {
         const a = a0.slice(), f = [], n = a.length; let done = [];
-        const snap = (cmp, note) => f.push({ a: a.slice(), cmp: cmp || [], done: done.slice(), note: note || '' });
+        const snap = (cmp, note, pivot) => f.push({ a: a.slice(), cmp: cmp || [], done: done.slice(), note: note || '', pivot: pivot === undefined ? -1 : pivot });
         snap([], 'Susunan awal.');
-        if (algo === 'bubble') {
+        if (algo === 'merge') {
+            const merge = (lo, mid, hi) => {
+                const L = a.slice(lo, mid + 1), R = a.slice(mid + 1, hi + 1); let i = 0, j = 0, k = lo;
+                while (i < L.length && j < R.length) {
+                    const takeL = L[i] <= R[j];
+                    snap([k], `Gabung bagian [${lo}..${hi}]: bandingkan kiri ${L[i]} dan kanan ${R[j]}, ambil ${takeL ? L[i] : R[j]}.`);
+                    a[k++] = takeL ? L[i++] : R[j++];
+                }
+                while (i < L.length) { a[k++] = L[i++]; snap([k - 1], 'Salin sisa bagian kiri.'); }
+                while (j < R.length) { a[k++] = R[j++]; snap([k - 1], 'Salin sisa bagian kanan.'); }
+                snap([], `Bagian [${lo}..${hi}] sudah terurut.`);
+            };
+            const sortR = (lo, hi) => { if (lo >= hi) return; const mid = (lo + hi) >> 1; sortR(lo, mid); sortR(mid + 1, hi); merge(lo, mid, hi); };
+            sortR(0, n - 1);
+        } else if (algo === 'quick') {
+            const qs = (lo, hi) => {
+                if (lo >= hi) { if (lo === hi) done.push(lo); return; }
+                const p = a[hi]; let i = lo - 1;
+                snap([], `Pilih pivot ${p} (elemen terakhir bagian [${lo}..${hi}]).`, hi);
+                for (let j = lo; j < hi; j++) {
+                    snap([j], `Bandingkan ${a[j]} dengan pivot ${p}.`, hi);
+                    if (a[j] < p) { i++; [a[i], a[j]] = [a[j], a[i]]; snap([i, j], `${a[i]} lebih kecil dari pivot: tukar ke sisi kiri.`, hi); }
+                }
+                [a[i + 1], a[hi]] = [a[hi], a[i + 1]];
+                done.push(i + 1);
+                snap([], `Pivot ${p} menempati posisi akhirnya (indeks ${i + 1}).`);
+                qs(lo, i); qs(i + 2, hi);
+            };
+            qs(0, n - 1);
+        } else if (algo === 'bubble') {
             for (let i = 0; i < n - 1; i++) {
                 for (let j = 0; j < n - 1 - i; j++) {
                     snap([j, j + 1], `Bandingkan ${a[j]} dan ${a[j + 1]}.`);
@@ -242,7 +271,7 @@
         const info = el('div', { class: 'out' });
         const draw = () => {
             const fr = frames[k];
-            bars.innerHTML = fr.a.map((v, i) => `<i class="${fr.done.includes(i) ? 'sorted' : fr.cmp.includes(i) ? 'cmp' : ''}" style="height:${v * 1.5}px" title="${v}"></i>`).join('');
+            bars.innerHTML = fr.a.map((v, i) => `<i class="${fr.pivot === i && !fr.done.includes(i) ? 'pivot' : fr.done.includes(i) ? 'sorted' : fr.cmp.includes(i) ? 'cmp' : ''}" style="height:${v * 1.5}px" title="${v}"></i>`).join('');
             info.innerHTML = `<b>${esc(fr.note)}</b><br><small>Langkah ${k + 1} dari ${frames.length} · ${fr.a.join(', ')}</small>`;
             prev.disabled = k === 0; next.disabled = k === frames.length - 1;
         };
@@ -850,6 +879,135 @@
         [['String', s], ['Awal', a], ['Akhir (tidak termasuk)', b], ['Langkah', c]].forEach(([l, n]) => { const d = el('div'); d.append(el('label', {}, l), n); g.append(d); });
         body.append(g, out);
         draw();
+    };
+
+    /* ---------- linked: singly linked list with operations and step counts ---------- */
+    W.linked = (body, cfg) => {
+        let vals = (cfg.values || [3, 8, 5]).slice(), hl = -1, hasTail = false, busy = false;
+        const view = el('div', { class: 'out', style: 'overflow-x:auto;min-height:110px' });
+        const info = el('div', { class: 'out', style: 'margin-top:8px' });
+        const inp = el('input', { type: 'number', value: 7, 'aria-label': 'Nilai', style: 'max-width:110px' });
+        const draw = () => {
+            const node = (v, i) => `<div style="display:flex;align-items:center"><div style="border:2px solid ${i === hl ? '#e09b00' : '#1e5ab2'};border-radius:8px;display:flex;background:${i === hl ? '#fff1d6' : '#e8f1ff'}"><span style="padding:10px 14px;font-weight:700" class="mono">${v}</span><span style="padding:10px 8px;border-left:2px solid ${i === hl ? '#e09b00' : '#1e5ab2'};color:#4a5568">•</span></div><span style="margin:0 4px;color:#4a5568">→</span></div>`;
+            view.innerHTML = `<div style="display:flex;align-items:center;flex-wrap:nowrap;gap:0"><div style="margin-right:8px;font-size:12px;font-weight:700;color:var(--brand)">head →</div>${vals.map(node).join('') || ''}<div class="mono" style="padding:8px 10px;border:2px dashed #9aa3b5;border-radius:8px;color:#4a5568">None</div>${hasTail && vals.length ? '<div style="margin-left:8px;font-size:12px;font-weight:700;color:var(--good)">← tail</div>' : ''}</div>`;
+        };
+        const say = (t) => { info.innerHTML = t; };
+        const animate = (upto, done) => { busy = true; let i = 0; const t = setInterval(() => { hl = i; draw(); if (i >= upto) { clearInterval(t); busy = false; setTimeout(() => { hl = -1; draw(); }, 600); done && done(); } i++; }, 350); };
+        const num = () => { const v = Number(inp.value); return Number.isFinite(v) ? v : 0; };
+        const btn = (label, fn, ghost) => { const b = el('button', { class: 'btn' + (ghost ? ' ghost' : ''), type: 'button' }, label); b.onclick = () => { if (!busy) fn(); }; return b; };
+        const row = el('div', { class: 'row', style: 'margin:10px 0' });
+        row.append(inp,
+            btn('Sisip di depan', () => { vals.unshift(num()); draw(); say('<b>Sisip di depan (head)</b>: buat node baru, arahkan ke head lama, lalu head menunjuk node baru. <b>1 langkah, O(1)</b>, tak peduli panjang list.'); }),
+            btn('Sisip di belakang', () => { const n = vals.length; vals.push(num()); if (hasTail) { draw(); say('<b>Sisip di belakang dengan pointer tail</b>: tail.next diarahkan ke node baru. <b>1 langkah, O(1)</b>.'); } else { animate(Math.max(0, n - 1), () => say(`<b>Sisip di belakang tanpa tail</b>: harus menelusuri dari head sampai node terakhir: <b>${n} langkah, O(n)</b>.`)); draw(); } }),
+            btn('Hapus nilai', () => { const v = num(), i = vals.indexOf(v); if (i < 0) return say(`Nilai ${v} tidak ada di list. Pencarian memeriksa semua ${vals.length} node: O(n).`); animate(i, () => { vals.splice(i, 1); draw(); say(`<b>Hapus ${v}</b>: telusuri sampai node sebelumnya (${i + 1} langkah), lalu sambungkan ke node sesudahnya. Pencarian O(n), pengaitan ulang O(1).`); }); }, true),
+            btn('Cari nilai', () => { const v = num(), i = vals.indexOf(v); if (i < 0) { animate(vals.length - 1, () => say(`Nilai ${v} <b>tidak ditemukan</b> setelah memeriksa ${vals.length} node. O(n).`)); } else animate(i, () => say(`Nilai ${v} ditemukan di indeks ${i} setelah <b>${i + 1} langkah</b>. Linked list tidak bisa melompat ke indeks, tidak seperti array: akses O(n).`)); }, true));
+        const chk = el('label', { style: 'display:flex;gap:8px;align-items:center;font-weight:400' }, '<input type="checkbox"> Simpan pointer tail (sisip belakang jadi O(1))');
+        $('input', chk).onchange = e => { hasTail = e.target.checked; draw(); };
+        body.append(view, row, chk, info);
+        draw(); say('Coba sisip dan cari. Perhatikan jumlah langkah penelusuran pada tiap operasi.');
+    };
+
+    /* ---------- bst: binary search tree, insert / search / traversals ---------- */
+    W.bst = (body, cfg) => {
+        let root = null, hi = new Set(), seq = [], busy = false;
+        const ins = (n, v) => { if (!n) return { v, l: null, r: null }; if (v < n.v) n.l = ins(n.l, v); else if (v > n.v) n.r = ins(n.r, v); return n; };
+        const height = n => (n ? 1 + Math.max(height(n.l), height(n.r)) : 0);
+        const svg = el('div', { class: 'diagram', style: 'margin:10px 0;padding:8px;overflow-x:auto' });
+        const info = el('div', { class: 'out' });
+        const inp = el('input', { type: 'number', value: 45, 'aria-label': 'Nilai', style: 'max-width:110px' });
+        const layout = () => { const pos = new Map(); let x = 0; const go = (n, d) => { if (!n) return; go(n.l, d + 1); pos.set(n, [x++, d]); go(n.r, d + 1); }; go(root, 0); return pos; };
+        const draw = () => {
+            if (!root) { svg.innerHTML = '<p style="text-align:center;color:var(--muted);margin:30px 0">Pohon masih kosong. Sisipkan nilai.</p>'; return; }
+            const pos = layout(), W2 = Math.max(300, pos.size * 46 + 20), H2 = height(root) * 62 + 20; let s = `<svg viewBox="0 0 ${W2} ${H2}" style="min-width:${Math.min(W2, 700)}px" role="img" aria-label="Pohon biner pencarian">`;
+            const P = n => [20 + pos.get(n)[0] * 46 + 12, 30 + pos.get(n)[1] * 62];
+            pos.forEach((_, n) => { [n.l, n.r].forEach(c => { if (c) { const a = P(n), b = P(c); s += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#8a94a8" stroke-width="2"/>`; } }); });
+            pos.forEach((_, n) => { const [x, y] = P(n), on = hi.has(n.v); s += `<circle cx="${x}" cy="${y}" r="17" fill="${on ? '#ffd166' : '#e8f1ff'}" stroke="#1e5ab2" stroke-width="2"/><text x="${x}" y="${y + 5}" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33">${n.v}</text>`; });
+            svg.innerHTML = s + '</svg>';
+        };
+        const say = t => { info.innerHTML = t; };
+        const stats = () => `Jumlah node: <b>${seq.length}</b>, tinggi pohon: <b>${height(root)}</b>.`;
+        const run = (order, label, done) => { busy = true; let i = 0; hi = new Set(); const t = setInterval(() => { if (i >= order.length) { clearInterval(t); busy = false; setTimeout(() => { hi = new Set(); draw(); }, 500); return done && done(); } hi = new Set([order[i]]); draw(); i++; }, 450); };
+        const walk = { inorder: n => (n ? [...walk.inorder(n.l), n.v, ...walk.inorder(n.r)] : []), preorder: n => (n ? [n.v, ...walk.preorder(n.l), ...walk.preorder(n.r)] : []), postorder: n => (n ? [...walk.postorder(n.l), ...walk.postorder(n.r), n.v] : []), level: n => { const out = [], q = n ? [n] : []; while (q.length) { const c = q.shift(); out.push(c.v); if (c.l) q.push(c.l); if (c.r) q.push(c.r); } return out; } };
+        const num = () => Number(inp.value);
+        const btn = (label, fn, ghost) => { const b = el('button', { class: 'btn' + (ghost ? ' ghost' : ''), type: 'button' }, label); b.onclick = () => { if (!busy) fn(); }; return b; };
+        const insert = v => { if (!Number.isFinite(v) || seq.includes(v)) return false; seq.push(v); root = ins(root, v); return true; };
+        const row = el('div', { class: 'row', style: 'margin:6px 0' });
+        row.append(inp,
+            btn('Sisipkan', () => { const v = num(); if (insert(v)) { draw(); say(`Sisip ${v}: bandingkan dengan akar, ke kiri bila lebih kecil, ke kanan bila lebih besar, sampai menemukan tempat kosong. ${stats()}`); } else say('Nilai tidak valid atau sudah ada (BST ini tidak menyimpan duplikat).'); }),
+            btn('Cari', () => { const v = num(); const path = []; let n = root; while (n) { path.push(n.v); if (v === n.v) break; n = v < n.v ? n.l : n.r; } run(path, 'cari', () => say(path[path.length - 1] === v ? `<b>${v}</b> ditemukan setelah ${path.length} perbandingan (jalur: ${path.join(' → ')}). Pohon seimbang membuat jalurnya pendek: O(log n).` : `<b>${v}</b> tidak ada. Jalur yang diperiksa: ${path.join(' → ') || '(kosong)'}.`)); }, true),
+            btn('Isi contoh', () => { root = null; seq = []; [50, 30, 70, 20, 40, 60, 80].forEach(insert); draw(); say(`Pohon seimbang. ${stats()}`); }, true),
+            btn('Isi menaik (buruk)', () => { root = null; seq = []; [10, 20, 30, 40, 50, 60].forEach(insert); draw(); say(`Sisipan terurut membuat pohon melengkung menjadi "linked list": tinggi = jumlah node, pencarian O(n). ${stats()}`); }, true),
+            btn('Kosongkan', () => { root = null; seq = []; draw(); say('Dikosongkan.'); }, true));
+        const trow = el('div', { class: 'row', style: 'margin:6px 0' });
+        [['inorder', 'In-order (kiri, akar, kanan)'], ['preorder', 'Pre-order (akar, kiri, kanan)'], ['postorder', 'Post-order (kiri, kanan, akar)'], ['level', 'Per tingkat (BFS)']].forEach(([k, l]) => trow.append(btn(l, () => { if (!root) return; const o = walk[k](root); run(o, k, () => say(`<b>${l}</b>: ${o.join(', ')}${k === 'inorder' ? '. Perhatikan: hasil in-order BST selalu terurut menaik.' : ''}`)); }, true)));
+        body.append(row, svg, trow, info);
+        [50, 30, 70, 20, 40, 60, 80].forEach(insert); draw(); say(`Pohon contoh. ${stats()} Coba sisip nilai atau jalankan penelusuran.`);
+    };
+
+    /* ---------- graphsearch: BFS / DFS step by step on a small graph ---------- */
+    W.graphsearch = (body, cfg) => {
+        const N = cfg.nodes, E = cfg.edges, adj = {}; N.forEach(n => (adj[n.id] = [])); E.forEach(([a, b]) => { adj[a].push(b); adj[b].push(a); }); Object.values(adj).forEach(l => l.sort());
+        let mode = 'bfs', frames = [], k = 0, timer = null;
+        const build = () => {
+            frames = []; const seen = new Set([cfg.start]), order = []; const store = [cfg.start];
+            frames.push({ cur: null, seen: [...seen], order: [], store: [...store], note: `Mulai dari ${cfg.start}: masukkan ke ${mode === 'bfs' ? 'antrean' : 'tumpukan'}.` });
+            while (store.length) {
+                const u = mode === 'bfs' ? store.shift() : store.pop(); order.push(u);
+                frames.push({ cur: u, seen: [...seen], order: [...order], store: [...store], note: `Ambil ${u} dari ${mode === 'bfs' ? 'depan antrean' : 'puncak tumpukan'} dan kunjungi.` });
+                const nb = mode === 'bfs' ? adj[u] : [...adj[u]].reverse();
+                const added = []; nb.forEach(v => { if (!seen.has(v)) { seen.add(v); store.push(v); added.push(v); } });
+                frames.push({ cur: u, seen: [...seen], order: [...order], store: [...store], note: added.length ? `Tetangga ${u} yang belum dikunjungi (${mode === 'bfs' ? added : [...added].reverse()}) dimasukkan.` : `${u} tidak punya tetangga baru.` });
+            }
+            frames.push({ cur: null, seen: [...seen], order: [...order], store: [], note: `Selesai. Urutan kunjungan: ${order.join(' → ')}.` });
+            k = 0;
+        };
+        const view = el('div', { class: 'diagram', style: 'margin:10px 0' }), info = el('div', { class: 'out' });
+        const draw = () => {
+            const f = frames[k], W2 = Math.max(...N.map(n => n.x)) + 40, H2 = Math.max(...N.map(n => n.y)) + 40;
+            let s = `<svg viewBox="0 0 ${W2} ${H2}" role="img" aria-label="Graf yang dijelajahi">`;
+            E.forEach(([a, b]) => { const A = N.find(n => n.id === a), B = N.find(n => n.id === b); s += `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="#8a94a8" stroke-width="2.5"/>`; });
+            N.forEach(n => { const vis = f.order.includes(n.id), cur = f.cur === n.id, inS = f.store.includes(n.id); s += `<circle cx="${n.x}" cy="${n.y}" r="20" fill="${cur ? '#ffd166' : vis ? '#cfe0fb' : inS ? '#e4f6cc' : '#fff'}" stroke="${cur ? '#e09b00' : '#1e5ab2'}" stroke-width="2.5"/><text x="${n.x}" y="${n.y + 5}" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33">${n.id}</text>`; });
+            view.innerHTML = s + '</svg>';
+            info.innerHTML = `<b>${esc(f.note)}</b><div class="mono" style="margin-top:6px">${mode === 'bfs' ? 'Antrean (depan → belakang)' : 'Tumpukan (dasar → puncak)'}: [${f.store.join(', ')}]<br>Urutan kunjungan: ${f.order.join(', ') || '-'}</div><small style="color:var(--muted)">Kuning = sedang diproses, biru muda = sudah dikunjungi, hijau muda = sudah ditemukan menunggu giliran.</small>`;
+            next.disabled = k >= frames.length - 1; prev.disabled = k === 0;
+        };
+        const chips = el('div', { class: 'chips' });
+        [['bfs', 'BFS (antrean)'], ['dfs', 'DFS (tumpukan)']].forEach(([m, l]) => { const c = el('button', { class: 'chip', type: 'button', 'aria-pressed': m === mode }, l); c.onclick = () => { mode = m; stop(); $$('.chip', chips).forEach(x => x.setAttribute('aria-pressed', x === c)); build(); draw(); }; chips.append(c); });
+        const prev = el('button', { class: 'btn ghost', type: 'button' }, '◀ Mundur'), next = el('button', { class: 'btn', type: 'button' }, 'Maju ▶'), play = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis');
+        const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Putar otomatis'; };
+        prev.onclick = () => { stop(); k--; draw(); }; next.onclick = () => { stop(); k++; draw(); };
+        play.onclick = () => { if (timer) return stop(); play.textContent = 'Jeda'; timer = setInterval(() => { if (k >= frames.length - 1) return stop(); k++; draw(); }, 700); };
+        const row = el('div', { class: 'row', style: 'margin-top:8px' }); row.append(prev, next, play);
+        body.append(chips, view, info, row);
+        build(); draw();
+    };
+
+    /* ---------- hanoi: Tower of Hanoi ---------- */
+    W.hanoi = (body, cfg) => {
+        let n = cfg.n || 3, moves = [], k = 0, timer = null, pegs;
+        const view = el('div', { class: 'diagram', style: 'margin:10px 0' }), info = el('div', { class: 'out' });
+        const r = el('input', { type: 'range', min: 1, max: 6, value: n, 'aria-label': 'Jumlah cakram' }), lab = el('label', {});
+        const solve = (m, a, b, c) => { if (m === 0) return; solve(m - 1, a, c, b); moves.push([a, c, m]); solve(m - 1, b, a, c); };
+        const reset = () => { stop(); moves = []; solve(n, 0, 1, 2); pegs = [Array.from({ length: n }, (_, i) => n - i), [], []]; k = 0; draw(); };
+        const apply = i => { const [a, c] = moves[i]; pegs[c].push(pegs[a].pop()); };
+        const draw = () => {
+            lab.innerHTML = `Jumlah cakram: <b>${n}</b> · langkah minimum 2<sup>${n}</sup> − 1 = <b>${(1 << n) - 1}</b>`;
+            let s = `<svg viewBox="0 0 480 210" role="img" aria-label="Menara Hanoi">`; const names = ['A (asal)', 'B (bantu)', 'C (tujuan)'];
+            pegs.forEach((p, i) => { const cx = 80 + i * 160; s += `<rect x="${cx - 4}" y="40" width="8" height="140" rx="4" fill="#8a94a8"/><rect x="${cx - 70}" y="180" width="140" height="8" rx="4" fill="#4a5568"/><text x="${cx}" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#0f1a33">${names[i]}</text>`; p.forEach((d, h) => { const w = 18 + d * 20, y = 170 - h * 20, last = k > 0 && moves[k - 1][2] === d; s += `<rect x="${cx - w / 2}" y="${y}" width="${w}" height="16" rx="6" fill="${last ? '#ffd166' : ['#1e5ab2', '#1f7a46', '#9a5b00', '#7a3fb4', '#b3261e', '#0b7285'][(d - 1) % 6]}" stroke="#0f1a33" stroke-width="1"/><text x="${cx}" y="${y + 12}" text-anchor="middle" font-size="11" font-weight="700" fill="${last ? '#0f1a33' : '#fff'}">${d}</text>`; }); });
+            view.innerHTML = s + '</svg>';
+            const m = k > 0 ? moves[k - 1] : null;
+            info.innerHTML = m ? `Langkah <b>${k}</b> dari ${moves.length}: pindahkan cakram <b>${m[2]}</b> dari <b>${'ABC'[m[0]]}</b> ke <b>${'ABC'[m[1]]}</b>.` : 'Semua cakram di tiang A. Tujuan: pindahkan semuanya ke tiang C, satu cakram per langkah, tanpa menaruh cakram besar di atas yang lebih kecil.';
+            nx.disabled = k >= moves.length; pv.disabled = k === 0;
+        };
+        const pv = el('button', { class: 'btn ghost', type: 'button' }, '◀ Mundur'), nx = el('button', { class: 'btn', type: 'button' }, 'Maju ▶'), pl = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis');
+        const stop = () => { clearInterval(timer); timer = null; pl.textContent = 'Putar otomatis'; };
+        nx.onclick = () => { stop(); if (k < moves.length) { apply(k); k++; draw(); } };
+        pv.onclick = () => { stop(); if (k > 0) { k--; const [a, c] = moves[k]; pegs[a].push(pegs[c].pop()); draw(); } };
+        pl.onclick = () => { if (timer) return stop(); pl.textContent = 'Jeda'; timer = setInterval(() => { if (k >= moves.length) return stop(); apply(k); k++; draw(); }, 600); };
+        r.oninput = () => { n = Number(r.value); reset(); };
+        const row = el('div', { class: 'row', style: 'margin-top:8px' }); row.append(pv, nx, pl);
+        body.append(lab, r, view, info, row);
+        reset();
     };
 
     /* ---------- page chrome ---------- */

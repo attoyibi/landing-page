@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modul, Package, dan Import Python: Mengorganisasi Kode</title>
+<meta name="description" content="Pelajari cara memecah program menjadi modul dan package, bentuk-bentuk import, perilaku __name__, pustaka standar yang berguna, dan struktur proyek Python yang rapi.">
+<meta name="keywords" content="modul Python, package, import, __name__ main, struktur proyek">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/">
+<meta property="og:title" content="Modul, Package, dan Import Python: Mengorganisasi Kode">
+<meta property="og:description" content="Pelajari cara memecah program menjadi modul dan package, bentuk-bentuk import, perilaku __name__, pustaka standar yang berguna, dan struktur proyek Python yang rapi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Modul, Package, dan Import Python: Mengorganisasi Kode">
+<meta name="twitter:description" content="Pelajari cara memecah program menjadi modul dan package, bentuk-bentuk import, perilaku __name__, pustaka standar yang berguna, dan struktur proyek Python yang rapi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Modul, Package, dan Import Python: Mengorganisasi Kode","description":"Pelajari cara memecah program menjadi modul dan package, bentuk-bentuk import, perilaku __name__, pustaka standar yang berguna, dan struktur proyek Python yang rapi.","image":["https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"modul Python, package, import, __name__ main, struktur proyek","articleSection":"Algoritma & Pemrograman Python","wordCount":379,"mainEntityOfPage":"https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Modul, Package, dan Import Python: Mengorganisasi Kode","item":"https://muchson.web.id/artikel/modul-package-dan-import-python-mengorganisasi-kode/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya modul, package, dan library?","acceptedAnswer":{"@type":"Answer","text":"Modul satu berkas, package folder berisi modul, library (pustaka) istilah umum untuk kumpulan kode yang bisa dipakai ulang, bisa berupa satu atau banyak package."}},{"@type":"Question","name":"Mengapa import gagal padahal berkas ada?","acceptedAnswer":{"@type":"Answer","text":"Biasanya berkas tidak berada di jalur pencarian Python (sys.path). Jalankan dari folder proyek, atau gunakan struktur package dan python -m."}},{"@type":"Question","name":"Bagaimana memasang pustaka pihak ketiga?","acceptedAnswer":{"@type":"Answer","text":"Dengan pip di dalam virtual environment, misalnya pip install requests. Lihat materi virtual environment."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#bentuk-bentuk-import">Bentuk-bentuk import</a></li><li><a href="#membuat-modul-sendiri">Membuat modul sendiri</a></li><li><a href="#apa-arti-if-name-main">Apa arti if __name__ == &quot;__main__&quot;?</a></li><li><a href="#package-folder-berisi-modul">Package: folder berisi modul</a></li><li><a href="#pustaka-standar-yang-wajib-dikenal">Pustaka standar yang wajib dikenal</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Modul, Package, dan Import Python: Mengorganisasi Kode</h1>
+<p class="lead">Program kecil muat dalam satu berkas, tetapi program nyata tidak. Python mengorganisasi kode lewat modul (satu berkas) dan package (folder berisi modul). Materi ini menjelaskan cara memakai dan membuat keduanya, serta mengapa blok <code>if __name__ == "__main__"</code> ada di hampir setiap skrip yang rapi.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi Python</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Modul, Package, dan Import Python: Mengorganisasi Kode" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai pustaka standar lewat import, from-import, dan alias</li><li>membuat modul sendiri dan mengimpornya dari berkas lain</li><li>menjelaskan arti if __name__ == "__main__"</li><li>menyusun package dengan struktur folder yang benar</li><li>mengenali pustaka standar yang paling sering dipakai</li></ul></div>
+<h2 id="bentuk-bentuk-import">Bentuk-bentuk import</h2>
+<figure class="codebox"><pre data-lang="python"><code>import math
+from random import randint, seed
+import statistics as stat
+from datetime import date
+
+print(math.sqrt(144), math.pi)
+seed(1); print(randint(1, 6) in range(1, 7))
+print(stat.mean([2, 4, 6, 9]), stat.median([2, 4, 6, 9]))
+print(date(2026, 10, 23).strftime(&quot;%d %B %Y&quot;))</code></pre><pre class="runout" data-lang="keluaran"><code>12.0 3.141592653589793
+True
+5.25 5.0
+23 October 2026</code></pre></figure>
+<table><thead><tr><th>Bentuk</th><th>Efek</th><th>Kapan</th></tr></thead><tbody><tr><td>import math</td><td>Memakai math.sqrt(...): nama modul tetap tampak</td><td>Paling aman dan jelas</td></tr><tr><td>from math import sqrt</td><td>Memakai sqrt(...) langsung</td><td>Bila hanya butuh satu-dua nama</td></tr><tr><td>import numpy as np</td><td>Memberi alias pendek</td><td>Konvensi komunitas (np, pd)</td></tr><tr><td>from math import *</td><td>Mengimpor semua nama</td><td><b>Hindari</b>: mengotori namespace dan membingungkan sumber nama</td></tr></tbody></table>
+<h2 id="membuat-modul-sendiri">Membuat modul sendiri</h2>
+<p>Setiap berkas <code>.py</code> otomatis menjadi modul. Misalkan berkas <code>geometri.py</code> berisi fungsi-fungsi, lalu dipakai oleh <code>utama.py</code> di folder yang sama.</p>
+<figure class="codebox"><span class="codefile">geometri.py</span><pre data-lang="python"><code># geometri.py
+PI = 3.14159
+
+def luas_lingkaran(r):
+    return PI * r * r
+
+def keliling_persegi(s):
+    return 4 * s
+
+if __name__ == &quot;__main__&quot;:
+    # hanya berjalan bila berkas ini dijalankan langsung
+    print(&quot;Tes cepat:&quot;, luas_lingkaran(2))</code></pre></figure>
+<figure class="codebox"><span class="codefile">utama.py</span><pre data-lang="python"><code># utama.py
+import geometri
+from geometri import keliling_persegi
+
+print(geometri.luas_lingkaran(10))
+print(keliling_persegi(5))</code></pre></figure>
+<h2 id="apa-arti-if-name-main">Apa arti if __name__ == "__main__"?</h2>
+<p>Setiap modul punya variabel <code>__name__</code>. Bila berkas dijalankan langsung (<code>python geometri.py</code>), nilainya <code>"__main__"</code>. Bila diimpor dari berkas lain, nilainya nama modul (<code>"geometri"</code>). Blok tersebut membuat kode uji atau program utama tidak ikut berjalan ketika modul hanya diimpor.</p>
+<div data-w="compare"><script type="application/json">{"title":"Dua cara berkas dipakai","tabs":[{"label":"Dijalankan langsung","html":"\u003ccode>python geometri.py\u003c/code>\u003cbr>\u003ccode>__name__\u003c/code> bernilai \u003ccode>\"__main__\"\u003c/code>, jadi blok if dijalankan dan \"Tes cepat\" tercetak."},{"label":"Diimpor","html":"\u003ccode>import geometri\u003c/code>\u003cbr>\u003ccode>__name__\u003c/code> bernilai \u003ccode>\"geometri\"\u003c/code>, jadi blok if dilewati. Fungsi tetap tersedia, tanpa efek samping."}]}</script></div>
+<h2 id="package-folder-berisi-modul">Package: folder berisi modul</h2>
+<figure class="diagram"><svg viewBox="0 0 560 250" role="img" aria-label="Struktur sebuah package" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="71qnw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="71qnw-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="71qnw-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="71qnw-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="71qnw-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="90,48 90,72" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="153,48 237,72" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="357.6,108 402.4,122" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="328.8,108 431.2,172" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="319.9,108 444.6,221" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="15" y="12" width="150" height="36" rx="8" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="34.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">proyek/</tspan></text><rect x="15" y="72" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="94.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">utama.py</tspan></text><rect x="215" y="72" width="170" height="36" rx="8" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="300" y="94.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="300" dy="0">toko/ (package)</tspan></text><rect x="380" y="122" width="160" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="144.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">__init__.py</tspan></text><rect x="380" y="172" width="160" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="194.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">produk.py</tspan></text><rect x="380" y="221" width="160" height="28" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="239.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">harga.py</tspan></text></svg><figcaption>__init__.py menandai folder sebagai package (kini opsional untuk namespace package, tetapi tetap lazim dipakai).</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code># di utama.py
+from toko.produk import Produk
+from toko import harga
+import toko.harga as h</code></pre></figure>
+<h2 id="pustaka-standar-yang-wajib-dikenal">Pustaka standar yang wajib dikenal</h2>
+<table><thead><tr><th>Modul</th><th>Kegunaan</th></tr></thead><tbody><tr><td>math</td><td>Fungsi matematika (sqrt, sin, log, pi)</td></tr><tr><td>random</td><td>Bilangan acak</td></tr><tr><td>datetime</td><td>Tanggal dan waktu</td></tr><tr><td>collections</td><td>Counter, defaultdict, deque</td></tr><tr><td>itertools</td><td>Alat iterasi (permutations, combinations, product)</td></tr><tr><td>json</td><td>Membaca dan menulis JSON</td></tr><tr><td>csv</td><td>Membaca dan menulis CSV</td></tr><tr><td>os dan pathlib</td><td>Berkas dan folder</td></tr><tr><td>sys</td><td>Argumen baris perintah, interpreter</td></tr><tr><td>re</td><td>Ekspresi reguler</td></tr><tr><td>unittest</td><td>Pengujian</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>from itertools import permutations, combinations
+from collections import Counter
+print(list(permutations(&quot;ABC&quot;, 2)))
+print(list(combinations([1, 2, 3, 4], 2)))
+print(Counter(&quot;mississippi&quot;).most_common(2))</code></pre><pre class="runout" data-lang="keluaran"><code>[('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
+[(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]
+[('i', 4), ('s', 4)]</code></pre></figure>
+<div class="callout warn"><b>Jebakan umum</b><p>Jangan memberi nama berkas Anda sama dengan modul standar (misalnya <code>random.py</code> atau <code>math.py</code>). Python akan mengimpor berkas Anda, bukan pustaka standar, dan menimbulkan error yang membingungkan.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pada berkas yang diimpor, nilai \u003ccode>__name__\u003c/code> adalah...","options":["\"__main__\"","Nama modul","None"],"answer":1,"why":"Hanya saat dijalankan langsung nilainya \"__main__\"."},{"q":"Mengapa \u003ccode>from modul import *\u003c/code> tidak dianjurkan?","options":["Tidak valid di Python 3","Mengotori namespace dan menyamarkan asal nama","Terlalu lambat"],"answer":1,"why":"Sulit menelusuri dari mana sebuah nama berasal dan bisa menimpa nama lain."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat modul <code>suhu.py</code> berisi <code>celsius_ke_fahrenheit(c)</code> dan <code>fahrenheit_ke_celsius(f)</code> dengan blok uji di bawah <code>__main__</code>.</summary><div><code>def celsius_ke_fahrenheit(c): return c * 9 / 5 + 32
+def fahrenheit_ke_celsius(f): return (f - 32) * 5 / 9
+if __name__ == "__main__":
+    print(celsius_ke_fahrenheit(100))</code></div></details><details><summary>2. Apa bedanya <code>import math</code> dan <code>from math import sqrt</code> dari sisi cara memanggil?</summary><div>Dengan import math, panggil <code>math.sqrt(9)</code>. Dengan from math import sqrt, panggil <code>sqrt(9)</code> langsung.</div></details><details><summary>3. Pakai itertools untuk mencetak semua susunan dua huruf dari "XYZ" tanpa pengulangan.</summary><div><code>list(permutations("XYZ", 2))</code> menghasilkan 6 pasangan berurutan.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Import memberi akses ke modul; hindari from ... import *.</li><li>Setiap berkas .py adalah modul; folder berisi modul adalah package.</li><li>if __name__ == "__main__" memisahkan kode yang hanya berjalan saat dijalankan langsung.</li><li>Kenali pustaka standar sebelum memasang paket pihak ketiga.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya modul, package, dan library?</summary><div>Modul satu berkas, package folder berisi modul, library (pustaka) istilah umum untuk kumpulan kode yang bisa dipakai ulang, bisa berupa satu atau banyak package.</div></details>
+<details class="faq"><summary>Mengapa import gagal padahal berkas ada?</summary><div>Biasanya berkas tidak berada di jalur pencarian Python (sys.path). Jalankan dari folder proyek, atau gunakan struktur package dan <code>python -m</code>.</div></details>
+<details class="faq"><summary>Bagaimana memasang pustaka pihak ketiga?</summary><div>Dengan pip di dalam virtual environment, misalnya <code>pip install requests</code>. Lihat materi virtual environment.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/modules.html" rel="noopener" target="_blank">Dokumentasi Python: Modules (tutorial)</a></li><li><a href="https://docs.python.org/3/reference/import.html" rel="noopener" target="_blank">Dokumentasi Python: The Import System</a></li><li><a href="https://docs.python.org/3/library/__main__.html" rel="noopener" target="_blank">Dokumentasi Python: __main__ (Top-level code environment)</a></li><li><a href="https://docs.python.org/3/library/" rel="noopener" target="_blank">Dokumentasi Python: The Python Standard Library</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

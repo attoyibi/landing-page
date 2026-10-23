@@ -183,9 +183,15 @@ function renderBlock(b, ctx) {
         let out = '';
         if (b.run) {
             if (!['python', 'java'].includes(lang)) throw new Error('run membutuhkan lang python atau java');
-            const r = (lang === 'python' ? runPython : runJava)(b.code, { input: b.input || '', expectError: !!b.expectError });
+            // cont: true menjalankan blok ini setelah semua blok python sebelumnya (keluarannya disembunyikan)
+            let src = b.code;
+            if (lang === 'python' && b.cont && ctx.pycode?.length) {
+                src = `import sys as _s, io as _io\n_o = _s.stdout; _s.stdout = _io.StringIO()\nexec(${JSON.stringify(ctx.pycode.join('\n'))})\n_s.stdout = _o\n${b.code}`;
+            }
+            const r = (lang === 'python' ? runPython : runJava)(src, { input: b.input || '', expectError: !!b.expectError });
             out = r.out;
         }
+        if (lang === 'python' && !b.expectError && !b.input) (ctx.pycode ||= []).push(b.code);
         const label = b.file ? `<span class="codefile">${esc(b.file)}</span>` : '';
         return `<figure class="codebox">${label}<pre${lang ? ` data-lang="${lang}"` : ''}><code>${esc(b.code)}</code></pre>${b.run ? `<pre class="runout" data-lang="keluaran"><code>${esc(out.replace(/\n$/, ''))}</code></pre>` : ''}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
     }

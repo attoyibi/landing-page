@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menara Hanoi dan Rekursi Lanjutan di Python · Muhammad Muchson</title>
+<meta name="description" content="Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.">
+<meta name="keywords" content="Menara Hanoi, rekursi, permutasi, divide and conquer, recursion limit">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/">
+<meta property="og:title" content="Menara Hanoi dan Rekursi Lanjutan di Python">
+<meta property="og:description" content="Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Menara Hanoi dan Rekursi Lanjutan di Python">
+<meta name="twitter:description" content="Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Menara Hanoi dan Rekursi Lanjutan di Python","description":"Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.","image":["https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Menara Hanoi, rekursi, permutasi, divide and conquer, recursion limit","articleSection":"Algoritma & Pemrograman Python","wordCount":578,"mainEntityOfPage":"https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Menara Hanoi dan Rekursi Lanjutan di Python","item":"https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah ada solusi Hanoi tanpa rekursi?","acceptedAnswer":{"@type":"Answer","text":"Ada. Untuk setiap langkah ganjil pindahkan cakram terkecil searah putaran tetap (tergantung n), dan pada langkah genap lakukan satu-satunya langkah legal yang tidak melibatkan cakram terkecil."}},{"@type":"Question","name":"Mengapa Hanoi dipakai untuk mengajar rekursi?","acceptedAnswer":{"@type":"Answer","text":"Karena solusi rekursifnya ringkas dan elegan, sedangkan mencari urutannya tanpa rekursi sulit. Ia memaksa kita memercayai pemanggilan rekursif."}},{"@type":"Question","name":"Berapa batas rekursi yang aman?","acceptedAnswer":{"@type":"Answer","text":"Bergantung memori; bawaan 1000 aman. sys.setrecursionlimit dapat menaikkannya, tetapi nilai terlalu besar berisiko menghentikan interpreter secara paksa."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#aturan-permainan">Aturan permainan</a></li><li><a href="#berpikir-rekursif-percayai-masalah-yang-lebih-kecil">Berpikir rekursif: percayai masalah yang lebih kecil</a></li><li><a href="#mengapa-tepat-2-1-langkah">Mengapa tepat 2ⁿ − 1 langkah?</a></li><li><a href="#contoh-lain-semua-permutasi">Contoh lain: semua permutasi</a></li><li><a href="#batas-kedalaman-rekursi">Batas kedalaman rekursi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Menara Hanoi dan Rekursi Lanjutan di Python</h1>
+<p class="lead">Rekursi terasa mudah pada faktorial, tetapi baru sungguh teruji pada masalah yang tidak bisa dibayangkan langkah demi langkah di kepala. Menara Hanoi adalah contoh klasiknya: aturannya sederhana, namun urutan solusinya hampir mustahil ditebak tanpa berpikir rekursif. Di sini Anda belajar mempercayai rekursi: asumsikan masalah yang lebih kecil sudah beres.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi, rekursi dasar (faktorial, Fibonacci)</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Menara Hanoi dan Rekursi Lanjutan di Python" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyusun solusi rekursif dengan kasus dasar dan langkah rekursif yang benar</li><li>menyelesaikan Menara Hanoi dan membuktikan jumlah langkah minimum 2ⁿ − 1</li><li>menghasilkan permutasi dengan rekursi</li><li>menjelaskan batas kedalaman rekursi dan kapan beralih ke iterasi</li></ul></div>
+<h2 id="aturan-permainan">Aturan permainan</h2>
+<p>Ada tiga tiang dan n cakram bertumpuk menurun di tiang A. Pindahkan semuanya ke tiang C dengan aturan: pindahkan satu cakram per langkah, dan jangan pernah menaruh cakram besar di atas cakram yang lebih kecil. Mainkan sendiri (mulai dari 2 atau 3 cakram) sebelum membaca penjelasannya.</p>
+<div data-w="hanoi"><script type="application/json">{"n":3}</script></div>
+<h2 id="berpikir-rekursif-percayai-masalah-yang-lebih-kecil">Berpikir rekursif: percayai masalah yang lebih kecil</h2>
+<p>Untuk memindahkan n cakram dari A ke C: (1) pindahkan <b>n-1 cakram teratas</b> dari A ke B (bantu: C); (2) pindahkan cakram terbesar dari A ke C; (3) pindahkan n-1 cakram dari B ke C (bantu: A). Langkah 1 dan 3 adalah masalah yang sama persis dengan ukuran lebih kecil. Kasus dasar: 0 cakram, tidak perlu melakukan apa pun.</p>
+<figure class="diagram"><svg viewBox="0 0 542 104" role="img" aria-label="Tiga langkah rekursif Menara Hanoi" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Pindahkan n-1</tspan><tspan x="85" dy="16">cakram</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">dari A ke B (rekursif)</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Pindahkan cakram</tspan><tspan x="271" dy="16">terbesar</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">dari A ke C</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Pindahkan n-1</tspan><tspan x="457" dy="16">cakram</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">dari B ke C (rekursif)</tspan></text></svg><figcaption>Tidak perlu memikirkan detail langkah kecil: cukup percayai bahwa pemanggilan rekursif menyelesaikannya.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>def hanoi(n, asal, tujuan, bantu, langkah):
+    if n == 0:                                  # kasus dasar
+        return
+    hanoi(n - 1, asal, bantu, tujuan, langkah)  # 1. n-1 cakram ke tiang bantu
+    langkah.append((n, asal, tujuan))           # 2. cakram terbesar ke tujuan
+    hanoi(n - 1, bantu, tujuan, asal, langkah)  # 3. n-1 cakram dari bantu ke tujuan
+
+langkah = []
+hanoi(3, &quot;A&quot;, &quot;C&quot;, &quot;B&quot;, langkah)
+for i, (cakram, a, t) in enumerate(langkah, 1):
+    print(f&quot;{i}. cakram {cakram}: {a} -&gt; {t}&quot;)
+print(&quot;total:&quot;, len(langkah))</code></pre><pre class="runout" data-lang="keluaran"><code>1. cakram 1: A -&gt; C
+2. cakram 2: A -&gt; B
+3. cakram 1: C -&gt; B
+4. cakram 3: A -&gt; C
+5. cakram 1: B -&gt; A
+6. cakram 2: B -&gt; C
+7. cakram 1: A -&gt; C
+total: 7</code></pre></figure>
+<h2 id="mengapa-tepat-2-1-langkah">Mengapa tepat 2ⁿ − 1 langkah?</h2>
+<p>Misalkan T(n) adalah jumlah langkah. Dari tiga langkah rekursif di atas: <code>T(n) = T(n-1) + 1 + T(n-1) = 2T(n-1) + 1</code>, dengan <code>T(0) = 0</code>.</p>
+<table><thead><tr><th>n</th><th>T(n) = 2T(n-1) + 1</th><th>2ⁿ − 1</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>2·0 + 1 = 1</td><td>1</td></tr><tr><td>2</td><td>2·1 + 1 = 3</td><td>3</td></tr><tr><td>3</td><td>2·3 + 1 = 7</td><td>7</td></tr><tr><td>4</td><td>2·7 + 1 = 15</td><td>15</td></tr><tr><td>10</td><td></td><td>1.023</td></tr><tr><td>64</td><td></td><td>18.446.744.073.709.551.615</td></tr></tbody></table>
+<p class="formula">T(n) = 2T(n − 1) + 1,  T(0) = 0  ⇒  T(n) = 2ⁿ − 1</p>
+<p>Bukti dengan induksi: basis T(0) = 0 = 2⁰ − 1. Langkah: bila T(n−1) = 2ⁿ⁻¹ − 1, maka T(n) = 2(2ⁿ⁻¹ − 1) + 1 = 2ⁿ − 1. ∎ Pertumbuhan eksponensial inilah yang membuat legenda 64 cakram (dengan satu langkah per detik) memakan waktu sekitar 585 miliar tahun.</p>
+<figure class="codebox"><pre data-lang="python"><code>def jumlah_langkah(n):
+    return 0 if n == 0 else 2 * jumlah_langkah(n - 1) + 1
+
+for n in [1, 5, 10, 20, 30]:
+    print(n, jumlah_langkah(n), 2 ** n - 1 == jumlah_langkah(n))
+
+detik = 2 ** 64 - 1
+print(&quot;64 cakram, 1 langkah/detik:&quot;, round(detik / (365.25 * 24 * 3600) / 1e9), &quot;miliar tahun&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>1 1 True
+5 31 True
+10 1023 True
+20 1048575 True
+30 1073741823 True
+64 cakram, 1 langkah/detik: 585 miliar tahun</code></pre></figure>
+<h2 id="contoh-lain-semua-permutasi">Contoh lain: semua permutasi</h2>
+<p>Susunan semua huruf dari "ABC": pilih satu huruf sebagai awal, lalu permutasikan sisanya secara rekursif.</p>
+<figure class="codebox"><pre data-lang="python"><code>def permutasi(huruf):
+    if len(huruf) &lt;= 1:                  # kasus dasar
+        return [huruf]
+    hasil = []
+    for i, h in enumerate(huruf):
+        sisa = huruf[:i] + huruf[i + 1:]
+        for p in permutasi(sisa):        # permutasi dari sisanya
+            hasil.append(h + p)
+    return hasil
+
+print(permutasi(&quot;ABC&quot;))
+print(len(permutasi(&quot;ABCD&quot;)), &quot;= 4! =&quot;, 4 * 3 * 2 * 1)</code></pre><pre class="runout" data-lang="keluaran"><code>['ABC', 'ACB', 'BAC', 'BCA', 'CAB', 'CBA']
+24 = 4! = 24</code></pre></figure>
+<h2 id="batas-kedalaman-rekursi">Batas kedalaman rekursi</h2>
+<p>Setiap pemanggilan menambah satu frame pada call stack. Python membatasi kedalamannya (bawaan sekitar 1000) untuk mencegah kehabisan memori.</p>
+<figure class="codebox"><pre data-lang="python"><code>import sys
+print(&quot;batas bawaan:&quot;, sys.getrecursionlimit())
+
+def turun(n):
+    return 0 if n == 0 else 1 + turun(n - 1)
+
+print(turun(500))
+try:
+    turun(5000)
+except RecursionError as e:
+    print(&quot;RecursionError:&quot;, str(e)[:45])
+
+def turun_iteratif(n):          # versi iteratif tidak dibatasi call stack
+    hasil = 0
+    while n &gt; 0:
+        hasil, n = hasil + 1, n - 1
+    return hasil
+print(turun_iteratif(5000))</code></pre><pre class="runout" data-lang="keluaran"><code>batas bawaan: 1000
+500
+RecursionError: maximum recursion depth exceeded
+5000</code></pre></figure>
+<div data-w="compare"><script type="application/json">{"title":"Rekursi atau iterasi?","tabs":[{"label":"Pilih rekursi bila","html":"Strukturnya rekursif secara alami: pohon, graf, pembagian masalah (divide and conquer), backtracking. Kodenya lebih mirip definisi matematikanya."},{"label":"Pilih iterasi bila","html":"Kedalaman bisa sangat besar atau performa penting, dan masalahnya linear (menjumlahkan, mencari, menelusuri list). Iterasi tidak terbatas call stack dan lebih hemat memori."}]}</script></div>
+<div class="callout warn"><b>Perhatian</b><p>Python <b>tidak</b> mengoptimalkan rekursi ekor (tail recursion), sehingga rekursi sangat dalam harus diubah menjadi perulangan. Bahasa seperti Scheme menjamin optimasi tersebut.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Jumlah langkah minimum Menara Hanoi untuk 5 cakram?","options":["10","31","32"],"answer":1,"why":"2⁵ − 1 = 31."},{"q":"Kasus dasar Hanoi dalam kode di atas?","options":["n == 0 (tidak melakukan apa pun)","n == 1 saja","Tidak ada"],"answer":0,"why":"Tanpa cakram, tidak ada yang dipindah."},{"q":"Apa yang terjadi bila rekursi tidak punya kasus dasar?","options":["Berjalan lebih cepat","RecursionError setelah kedalaman melewati batas","Python menambahkannya otomatis"],"answer":1,"why":"Pemanggilan tak pernah berhenti."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Berapa langkah untuk 6 cakram? Berapa kali cakram terkecil berpindah?</summary><div>2⁶ − 1 = 63 langkah. Cakram terkecil berpindah di setiap langkah ganjil: 32 kali.</div></details><details><summary>2. Tulis fungsi rekursif untuk menghitung 2ⁿ tanpa operator ** (dengan perkalian saja).</summary><div><code>def pangkat2(n): return 1 if n == 0 else 2 * pangkat2(n - 1)</code>. Versi lebih cepat: <code>pangkat2(n//2)**2</code> dengan penanganan ganjil, O(log n).</div></details><details><summary>3. Tulis fungsi rekursif untuk membalik string.</summary><div><code>def balik(s): return s if len(s) <= 1 else balik(s[1:]) + s[0]</code></div></details><details><summary>4. Mengapa jumlah permutasi n huruf unik adalah n!?</summary><div>Ada n pilihan untuk posisi pertama, n-1 untuk kedua, dan seterusnya: n × (n-1) × ... × 1 = n!.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Berpikir rekursif: tentukan kasus dasar, lalu nyatakan masalah dengan masalah yang lebih kecil dan percayai hasilnya.</li><li>Hanoi: T(n) = 2T(n-1) + 1 menghasilkan 2ⁿ − 1 langkah, eksponensial.</li><li>Permutasi n unsur berjumlah n!.</li><li>Python membatasi kedalaman rekursi; ubah ke iterasi bila terlalu dalam.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah ada solusi Hanoi tanpa rekursi?</summary><div>Ada. Untuk setiap langkah ganjil pindahkan cakram terkecil searah putaran tetap (tergantung n), dan pada langkah genap lakukan satu-satunya langkah legal yang tidak melibatkan cakram terkecil.</div></details>
+<details class="faq"><summary>Mengapa Hanoi dipakai untuk mengajar rekursi?</summary><div>Karena solusi rekursifnya ringkas dan elegan, sedangkan mencari urutannya tanpa rekursi sulit. Ia memaksa kita memercayai pemanggilan rekursif.</div></details>
+<details class="faq"><summary>Berapa batas rekursi yang aman?</summary><div>Bergantung memori; bawaan 1000 aman. <code>sys.setrecursionlimit</code> dapat menaikkannya, tetapi nilai terlalu besar berisiko menghentikan interpreter secara paksa.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li><a href="https://docs.python.org/3/library/sys.html#sys.getrecursionlimit" rel="noopener" target="_blank">Dokumentasi Python: sys.getrecursionlimit</a></li><li><a href="https://docs.python.org/3/library/itertools.html#itertools.permutations" rel="noopener" target="_blank">Dokumentasi Python: itertools.permutations</a></li><li><a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/" rel="noopener" target="_blank">MIT OpenCourseWare 6.0001, Lecture 6: Recursion, Dictionaries</a></li><li>Anany Levitin, Introduction to the Design and Analysis of Algorithms, bab Decrease-and-Conquer</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/merge-sort-divide-and-conquer-python-implementasi-dan-analisis/"><img src="/artikel/merge-sort-divide-and-conquer-python-implementasi-dan-analisis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Merge Sort: Divide and Conquer, Implementasi, dan Analisis</span></a><a href="/artikel/quick-sort-partisi-pivot-dan-analisis-kasus-terburuk/"><img src="/artikel/quick-sort-partisi-pivot-dan-analisis-kasus-terburuk/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Quick Sort: Partisi, Pivot, dan Analisis Kasus Terburuk</span></a><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
