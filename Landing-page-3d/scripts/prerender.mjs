@@ -25,8 +25,10 @@ set(/<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" 
 set(/<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${esc(description)}" />`);
 set(/<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${esc(title)}" />`);
 set(/<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${esc(description)}" />`);
+// the home page carries Person, WebSite and Blog data; this page replaces all of them with its own
+html = html.replace(/\s*<script type="application\/ld\+json">[^]*?<\/script>/g, '');
 set(
-    /<script type="application\/ld\+json">[^]*?<\/script>/,
+    '</head>',
     `<script type="application/ld+json">${JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
@@ -35,9 +37,11 @@ set(
         inLanguage: 'id',
         author: { '@type': 'Person', name: 'Muhammad Muchson Attoyibi', url: `${SITE}/` },
         hasPart: items.map(a => ({ '@type': 'Article', headline: a.title, url: `${SITE}/artikel/${a.slug}/` })),
-    })}</script>`,
+    })}</script></head>`,
 );
-set('<div id="root"></div>', `<div id="root"><main><h1>Artikel</h1><ul>${items.map(a => `<li><a href="/artikel/${a.slug}/">${esc(a.title)}</a> - ${esc(a.description)}</li>`).join('')}</ul></main></div>`);
+const slugOf = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const cats = [...new Set(items.map(a => a.category))];
+set('<div id="root"></div>', `<div id="root"><main><h1>Artikel</h1><p>Topik: ${cats.map(c => `<a href="/artikel/kategori/${slugOf(c)}/">${esc(c)}</a>`).join(' · ')}</p><ul>${items.map(a => `<li><a href="/artikel/${a.slug}/">${esc(a.title)}</a> - ${esc(a.description)}</li>`).join('')}</ul></main></div>`);
 
 await mkdir(join(dist, 'artikel'), { recursive: true });
 await writeFile(join(dist, 'artikel', 'index.html'), html);

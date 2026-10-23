@@ -15,3 +15,16 @@ Curriculum Design, ADDIE Framework, EdTech Training
 - AI Project Manager – Komdigi (Sep 2025–sekarang)
 - IT Trainer – Digital Talent Indonesia (Jan–Aug 2025)
 - Academic Project Coordinator – Alterra Academy (Jul 2022–Dec 2024)
+
+## Artikel
+
+Situs ini memuat 100+ artikel edukatif berbahasa Indonesia dengan simulasi interaktif dan diagram, ditulis oleh Muhammad Muchson Attoyibi.
+
+- Semua artikel: https://muchson.web.id/artikel/
+- Mata dan Kacamata: https://muchson.web.id/artikel/kategori/mata-kacamata/
+- AI untuk Semua (ChatGPT, Claude, Claude Code, n8n, RAG, MCP): https://muchson.web.id/artikel/kategori/ai-untuk-semua/
+- Coding dan Algoritma: https://muchson.web.id/artikel/kategori/coding-algoritma/
+- Teknologi Sehari-hari (keamanan digital): https://muchson.web.id/artikel/kategori/teknologi-sehari-hari/
+- Belajar dan Produktivitas (termasuk desain pembelajaran): https://muchson.web.id/artikel/kategori/belajar-produktivitas/
+- Karier dan Freelance: https://muchson.web.id/artikel/kategori/karier-freelance/
+- Sitemap: https://muchson.web.id/sitemap.xml

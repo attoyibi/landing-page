@@ -234,8 +234,8 @@ ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 <div class="wrap">
 <aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol>${ctx.toc.map(([id, t]) => `<li><a href="#${id}">${esc(t)}</a></li>`).join('')}${faq.length ? '<li><a href="#tanya-jawab">Tanya jawab</a></li>' : ''}</ol></aside>
 <article id="isi">
-<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › ${esc(a.category)}</p>
-<span class="cat">${esc(a.category)}</span>
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/${slugify(a.category)}/">${esc(a.category)}</a></p>
+<a class="cat" href="/artikel/kategori/${slugify(a.category)}/">${esc(a.category)}</a>
 <h1>${esc(a.title)}</h1>
 <p class="lead">${a.lead}</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="${a.date}">${dateId(a.date)}</time><span>·</span><span>${minutes} menit baca</span></div>
