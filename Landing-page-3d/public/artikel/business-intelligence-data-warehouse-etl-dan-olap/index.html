@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Intelligence: Data Warehouse, ETL, dan OLAP</title>
+<meta name="description" content="Pahami business intelligence: perbedaan OLTP dan OLAP, data warehouse, star schema, proses ETL, kubus OLAP, dan dasbor, dengan contoh star schema yang dijalankan dengan SQL.">
+<meta name="keywords" content="business intelligence, data warehouse, ETL, OLAP, star schema">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/">
+<meta property="og:title" content="Business Intelligence: Data Warehouse, ETL, dan OLAP">
+<meta property="og:description" content="Pahami business intelligence: perbedaan OLTP dan OLAP, data warehouse, star schema, proses ETL, kubus OLAP, dan dasbor, dengan contoh star schema yang dijalankan dengan SQL.">
+<meta property="og:image" content="https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business Intelligence: Data Warehouse, ETL, dan OLAP">
+<meta name="twitter:description" content="Pahami business intelligence: perbedaan OLTP dan OLAP, data warehouse, star schema, proses ETL, kubus OLAP, dan dasbor, dengan contoh star schema yang dijalankan dengan SQL.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Business Intelligence: Data Warehouse, ETL, dan OLAP","description":"Pahami business intelligence: perbedaan OLTP dan OLAP, data warehouse, star schema, proses ETL, kubus OLAP, dan dasbor, dengan contoh star schema yang dijalankan dengan SQL.","image":["https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"business intelligence, data warehouse, ETL, OLAP, star schema","articleSection":"Sistem Informasi","wordCount":350,"mainEntityOfPage":"https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Business Intelligence: Data Warehouse, ETL, dan OLAP","item":"https://muchson.web.id/artikel/business-intelligence-data-warehouse-etl-dan-olap/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa alat BI yang populer?","acceptedAnswer":{"@type":"Answer","text":"Power BI, Tableau, Looker Studio, Metabase (sumber terbuka), dan Apache Superset."}},{"@type":"Question","name":"Apa itu data mart?","acceptedAnswer":{"@type":"Answer","text":"Subset gudang data untuk satu unit atau subjek, misalnya pemasaran."}},{"@type":"Question","name":"Apa hubungan BI dengan machine learning?","acceptedAnswer":{"@type":"Answer","text":"BI menjelaskan apa yang terjadi (deskriptif); ML dapat memprediksi apa yang akan terjadi, sering memakai data dari gudang yang sama."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#oltp-vs-olap">OLTP vs OLAP</a></li><li><a href="#arsitektur-data-warehouse">Arsitektur data warehouse</a></li><li><a href="#star-schema">Star schema</a></li><li><a href="#dasbor-dan-kpi-yang-baik">Dasbor dan KPI yang baik</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Business Intelligence: Data Warehouse, ETL, dan OLAP</h1>
+<p class="lead">Basis data operasional dirancang untuk mencatat transaksi dengan cepat, bukan untuk menjawab pertanyaan seperti "bagaimana tren penjualan per wilayah selama tiga tahun?". Business intelligence (BI) memakai gudang data dan model khusus agar pertanyaan analitik dijawab cepat dan konsisten.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> SQL dasar, jenis-jenis SI</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Business Intelligence: Data Warehouse, ETL, dan OLAP" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan OLTP dan OLAP</li><li>menjelaskan gudang data dan bagaimana data mengalir lewat ETL</li><li>membuat star schema dengan tabel fakta dan dimensi</li><li>melakukan operasi OLAP: slice, dice, roll-up, drill-down</li><li>menjelaskan dasbor dan KPI yang baik</li></ul></div>
+<h2 id="oltp-vs-olap">OLTP vs OLAP</h2>
+<table><thead><tr><th>Aspek</th><th>OLTP (operasional)</th><th>OLAP (analitik)</th></tr></thead><tbody><tr><td>Tujuan</td><td>Mencatat transaksi harian</td><td>Menganalisis tren dan pola</td></tr><tr><td>Operasi</td><td>Banyak INSERT/UPDATE kecil</td><td>Kueri besar yang membaca banyak baris</td></tr><tr><td>Desain</td><td>Ternormalisasi (3NF)</td><td>Berdimensi (star schema), sengaja denormalisasi</td></tr><tr><td>Data</td><td>Terkini</td><td>Historis, terintegrasi dari banyak sumber</td></tr><tr><td>Pengguna</td><td>Staf operasional</td><td>Manajer, analis</td></tr></tbody></table>
+<h2 id="arsitektur-data-warehouse">Arsitektur data warehouse</h2>
+<figure class="diagram"><svg viewBox="0 0 728 104" role="img" aria-label="Alur BI" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Sumber</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">ERP, kasir, CRM,</tspan><tspan x="85" dy="14">berkas, API</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">ETL</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">Extract, Transform,</tspan><tspan x="271" dy="14">Load</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Data warehouse</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">data terpadu</tspan><tspan x="457" dy="14">berdimensi</tspan></text><line x1="536" y1="52" x2="564" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Analitik</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">OLAP, laporan, dasbor,</tspan><tspan x="643" dy="14">model prediksi</tspan></text></svg><figcaption>ELT (muat dulu, ubah di gudang) makin umum pada gudang data cloud.</figcaption></figure>
+<table><thead><tr><th>Tahap ETL</th><th>Pekerjaan</th><th>Contoh</th></tr></thead><tbody><tr><td>Extract</td><td>Mengambil data dari sumber</td><td>Menarik transaksi kemarin dari basis data kasir</td></tr><tr><td>Transform</td><td>Membersihkan, menyeragamkan, menghitung</td><td>Menyeragamkan "Jkt"/"Jakarta"; membuang duplikat; menghitung margin</td></tr><tr><td>Load</td><td>Memuat ke gudang data</td><td>Menambah baris fakta dan memperbarui dimensi</td></tr></tbody></table>
+<div class="callout warn"><b>Realita</b><p>Sekitar sebagian besar usaha proyek BI dihabiskan untuk <b>kualitas dan integrasi data</b>, bukan untuk grafik. Dasbor secantik apa pun menyesatkan bila data dasarnya tidak konsisten.</p></div>
+<h2 id="star-schema">Star schema</h2>
+<figure class="diagram"><svg viewBox="0 0 680 300" role="img" aria-label="Star schema penjualan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="rs0vf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="rs0vf-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="rs0vf-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="rs0vf-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="rs0vf-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="170,86.3 250,116.3" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="510,86.3 430,116.3" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="340,240 340,205" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="250" y="95" width="180" height="110" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="114" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">fakta_penjualan</text><line x1="250" y1="123" x2="430" y2="123" stroke="#1e5ab2" stroke-width="1.5"/><text x="258" y="138" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">id_waktu (FK)</text><text x="258" y="155" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">id_produk (FK)</text><text x="258" y="172" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">id_toko (FK)</text><text x="258" y="189" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">jumlah</text><text x="258" y="206" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">pendapatan</text><line x1="250" y1="215" x2="430" y2="215" stroke="#1e5ab2" stroke-width="1.5"/><rect x="30" y="20" width="140" height="80" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="39" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">dim_waktu</text><line x1="30" y1="48" x2="170" y2="48" stroke="#1e5ab2" stroke-width="1.5"/><text x="38" y="63" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">id_waktu</text><text x="38" y="80" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">tanggal</text><text x="38" y="97" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">bulan</text><text x="38" y="114" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">tahun</text><line x1="30" y1="123" x2="170" y2="123" stroke="#1e5ab2" stroke-width="1.5"/><rect x="510" y="20" width="140" height="80" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="580" y="39" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">dim_produk</text><line x1="510" y1="48" x2="650" y2="48" stroke="#1e5ab2" stroke-width="1.5"/><text x="518" y="63" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">id_produk</text><text x="518" y="80" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">nama</text><text x="518" y="97" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">kategori</text><line x1="510" y1="106" x2="650" y2="106" stroke="#1e5ab2" stroke-width="1.5"/><rect x="265" y="240" width="150" height="50" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="259" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">dim_toko</text><line x1="265" y1="268" x2="415" y2="268" stroke="#1e5ab2" stroke-width="1.5"/><text x="273" y="283" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">id_toko</text><text x="273" y="300" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">kota</text><line x1="265" y1="309" x2="415" y2="309" stroke="#1e5ab2" stroke-width="1.5"/></svg><figcaption>Tabel fakta berisi ukuran numerik (jumlah, pendapatan); tabel dimensi memberi konteks (kapan, apa, di mana).</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE dim_waktu  (id_waktu INTEGER PRIMARY KEY, tanggal TEXT, bulan TEXT, tahun INTEGER);
+CREATE TABLE dim_produk (id_produk INTEGER PRIMARY KEY, nama TEXT, kategori TEXT);
+CREATE TABLE dim_toko   (id_toko INTEGER PRIMARY KEY, kota TEXT);
+CREATE TABLE fakta_penjualan (id_waktu INT, id_produk INT, id_toko INT, jumlah INT, pendapatan INT);
+
+INSERT INTO dim_waktu VALUES (1,'2025-01-15','Jan',2025),(2,'2025-02-10','Feb',2025),(3,'2026-01-20','Jan',2026),(4,'2026-02-18','Feb',2026);
+INSERT INTO dim_produk VALUES (1,'Kopi','Minuman'),(2,'Teh','Minuman'),(3,'Roti','Makanan');
+INSERT INTO dim_toko VALUES (1,'Madiun'),(2,'Surabaya');
+INSERT INTO fakta_penjualan VALUES
+ (1,1,1,100,2000000),(1,3,1,50,600000),(2,2,2,80,1200000),(2,1,2,120,2400000),
+ (3,1,1,140,2800000),(3,3,2,70,840000),(4,2,1,90,1350000),(4,1,2,160,3200000);
+&quot;&quot;&quot;)
+def q(sql):
+    print(&quot;&gt;&quot;, &quot; &quot;.join(sql.split()))
+    for r in db.execute(sql): print(&quot;  &quot;, r)
+
+# roll-up: pendapatan per tahun
+q(&quot;SELECT w.tahun, SUM(f.pendapatan) FROM fakta_penjualan f JOIN dim_waktu w USING(id_waktu) GROUP BY w.tahun&quot;)
+# drill-down: per tahun dan kategori
+q(&quot;&quot;&quot;SELECT w.tahun, p.kategori, SUM(f.pendapatan) FROM fakta_penjualan f
+     JOIN dim_waktu w USING(id_waktu) JOIN dim_produk p USING(id_produk) GROUP BY w.tahun, p.kategori&quot;&quot;&quot;)
+# slice: hanya Surabaya
+q(&quot;&quot;&quot;SELECT p.nama, SUM(f.jumlah) FROM fakta_penjualan f JOIN dim_produk p USING(id_produk)
+     JOIN dim_toko t USING(id_toko) WHERE t.kota = 'Surabaya' GROUP BY p.nama ORDER BY 2 DESC&quot;&quot;&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>&gt; SELECT w.tahun, SUM(f.pendapatan) FROM fakta_penjualan f JOIN dim_waktu w USING(id_waktu) GROUP BY w.tahun
+   (2025, 6200000)
+   (2026, 8190000)
+&gt; SELECT w.tahun, p.kategori, SUM(f.pendapatan) FROM fakta_penjualan f JOIN dim_waktu w USING(id_waktu) JOIN dim_produk p USING(id_produk) GROUP BY w.tahun, p.kategori
+   (2025, 'Makanan', 600000)
+   (2025, 'Minuman', 5600000)
+   (2026, 'Makanan', 840000)
+   (2026, 'Minuman', 7350000)
+&gt; SELECT p.nama, SUM(f.jumlah) FROM fakta_penjualan f JOIN dim_produk p USING(id_produk) JOIN dim_toko t USING(id_toko) WHERE t.kota = 'Surabaya' GROUP BY p.nama ORDER BY 2 DESC
+   ('Kopi', 280)
+   ('Teh', 80)
+   ('Roti', 70)</code></pre><figcaption>Pertanyaan analitik menjadi pola yang sama: JOIN fakta ke dimensi, kelompokkan menurut atribut dimensi, jumlahkan ukuran.</figcaption></figure>
+<div data-w="cards"><script type="application/json">{"title":"Operasi OLAP (ketuk kartu)","items":[{"tag":"Roll-up","front":"Naik tingkat ringkasan","backTag":"Contoh","back":"Dari penjualan per bulan menjadi per tahun."},{"tag":"Drill-down","front":"Turun ke rincian","backTag":"Contoh","back":"Dari penjualan per tahun menjadi per kategori, lalu per produk."},{"tag":"Slice","front":"Mengiris satu nilai dimensi","backTag":"Contoh","back":"Hanya data toko Surabaya."},{"tag":"Dice","front":"Memilih sub-kubus dari beberapa dimensi","backTag":"Contoh","back":"Tahun 2026, kategori Minuman, toko Madiun atau Surabaya."},{"tag":"Pivot","front":"Memutar sumbu tampilan","backTag":"Contoh","back":"Menukar baris (produk) dan kolom (bulan)."}]}</script></div>
+<h2 id="dasbor-dan-kpi-yang-baik">Dasbor dan KPI yang baik</h2>
+<ul><li>Mulailah dari <b>pertanyaan keputusan</b>, bukan dari data yang tersedia.</li><li>Pilih sedikit KPI yang dapat ditindaklanjuti; hindari "metrik kesombongan" yang naik terus tetapi tidak mengubah keputusan.</li><li>Tampilkan konteks: bandingkan dengan target, periode sebelumnya, atau tolok ukur.</li><li>Gunakan grafik yang tepat (garis untuk tren, batang untuk perbandingan) dan hindari hiasan.</li><li>Definisikan setiap metrik di satu tempat ("laba" berarti apa?) agar semua orang membaca angka yang sama.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tabel fakta berisi...","options":["Ukuran numerik dan kunci asing ke dimensi","Hanya teks deskriptif","Data pengguna"],"answer":0,"why":"Dimensi memberi konteks."},{"q":"Roll-up berarti...","options":["Meringkas ke tingkat lebih tinggi","Memfilter satu nilai","Menghapus data"],"answer":0,"why":"Misalnya bulan menjadi tahun."},{"q":"Tahap ETL yang membersihkan dan menyeragamkan data?","options":["Transform","Extract","Load"],"answer":0,"why":"Transform mengubah data ke bentuk yang konsisten."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Rancang star schema untuk analisis absensi karyawan.</summary><div>Fakta: absensi (jumlah_hari_hadir, jam_lembur); dimensi: karyawan, waktu, unit kerja.</div></details><details><summary>2. Mengapa gudang data didenormalisasi sedangkan OLTP dinormalisasi?</summary><div>OLTP mengutamakan konsistensi tulis; gudang mengutamakan kecepatan baca analitik dan kesederhanaan JOIN.</div></details><details><summary>3. Beri contoh masalah kualitas data yang harus ditangani pada Transform.</summary><div>Format tanggal berbeda, duplikat pelanggan, nilai kosong, satuan berbeda.</div></details><details><summary>4. Apa itu data lake dibanding data warehouse?</summary><div>Data lake menyimpan data mentah dalam berbagai format dengan skema dibaca saat dipakai; warehouse menyimpan data terstruktur yang sudah dimodelkan.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>OLTP untuk transaksi, OLAP untuk analisis.</li><li>ETL memindahkan data dari sumber ke gudang data dan membersihkannya.</li><li>Star schema: tabel fakta dikelilingi tabel dimensi.</li><li>OLAP: roll-up, drill-down, slice, dice, pivot.</li><li>Dasbor yang baik menjawab pertanyaan keputusan dengan KPI yang jelas.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa alat BI yang populer?</summary><div>Power BI, Tableau, Looker Studio, Metabase (sumber terbuka), dan Apache Superset.</div></details>
+<details class="faq"><summary>Apa itu data mart?</summary><div>Subset gudang data untuk satu unit atau subjek, misalnya pemasaran.</div></details>
+<details class="faq"><summary>Apa hubungan BI dengan machine learning?</summary><div>BI menjelaskan apa yang terjadi (deskriptif); ML dapat memprediksi apa yang akan terjadi, sering memakai data dari gudang yang sama.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Ralph Kimball dan Margy Ross, The Data Warehouse Toolkit (Wiley, edisi ke-3)</li><li>Inmon, Building the Data Warehouse (Wiley)</li><li><a href="https://www.metabase.com/learn/" rel="noopener" target="_blank">Metabase: Learn (BI sumber terbuka)</a></li><li>Kenneth C. Laudon dan Jane P. Laudon, Management Information Systems: Managing the Digital Firm (Pearson)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a><a href="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/"><img src="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SDLC: Waterfall, Agile, dan Model Pengembangan Lain</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

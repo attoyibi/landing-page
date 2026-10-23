@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE</title>
+<meta name="description" content="Belajar SQL dari nol dengan data nyata yang dijalankan: SELECT, WHERE, ORDER BY, LIMIT, LIKE, NULL, INSERT, UPDATE, DELETE, dan jebakan umum, plus playground interaktif.">
+<meta name="keywords" content="SQL, SELECT, WHERE, INSERT, UPDATE">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/">
+<meta property="og:title" content="SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE">
+<meta property="og:description" content="Belajar SQL dari nol dengan data nyata yang dijalankan: SELECT, WHERE, ORDER BY, LIMIT, LIKE, NULL, INSERT, UPDATE, DELETE, dan jebakan umum, plus playground interaktif.">
+<meta property="og:image" content="https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE">
+<meta name="twitter:description" content="Belajar SQL dari nol dengan data nyata yang dijalankan: SELECT, WHERE, ORDER BY, LIMIT, LIKE, NULL, INSERT, UPDATE, DELETE, dan jebakan umum, plus playground interaktif.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE","description":"Belajar SQL dari nol dengan data nyata yang dijalankan: SELECT, WHERE, ORDER BY, LIMIT, LIKE, NULL, INSERT, UPDATE, DELETE, dan jebakan umum, plus playground interaktif.","image":["https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"SQL, SELECT, WHERE, INSERT, UPDATE","articleSection":"Sistem Informasi","wordCount":362,"mainEntityOfPage":"https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE","item":"https://muchson.web.id/artikel/sql-dasar-select-where-order-by-insert-update-delete/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya SQL dan MySQL?","acceptedAnswer":{"@type":"Answer","text":"SQL adalah bahasa; MySQL, PostgreSQL, SQLite, SQL Server adalah sistem basis data yang mengimplementasikannya dengan sedikit perbedaan dialek."}},{"@type":"Question","name":"Apakah SQL peka huruf besar-kecil?","acceptedAnswer":{"@type":"Answer","text":"Kata kunci tidak; data pada pembandingan teks tergantung pengaturan sistem (collation) dan dialek."}},{"@type":"Question","name":"Bagaimana mencegah SQL injection?","acceptedAnswer":{"@type":"Answer","text":"Jangan menyambung input pengguna ke dalam string SQL. Gunakan parameter terikat (prepared statement)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#data-latihan">Data latihan</a></li><li><a href="#select-dan-where">SELECT dan WHERE</a></li><li><a href="#null-bukan-nol-dan-bukan-kosong">NULL: bukan nol dan bukan kosong</a></li><li><a href="#mengubah-data-insert-update-delete">Mengubah data: INSERT, UPDATE, DELETE</a></li><li><a href="#urutan-penulisan-dan-urutan-eksekusi">Urutan penulisan dan urutan eksekusi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE</h1>
+<p class="lead">SQL (Structured Query Language) adalah bahasa untuk bertanya dan mengubah data pada basis data relasional. Bahasanya deklaratif: Anda menyatakan data apa yang diinginkan, bukan bagaimana mengambilnya. Contoh di sini dijalankan sungguhan pada SQLite dengan satu tabel mahasiswa.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> konsep tabel dan baris</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membaca dan menulis SELECT dengan WHERE, ORDER BY, LIMIT</li><li>memakai operator perbandingan, AND/OR, IN, BETWEEN, LIKE</li><li>memahami NULL dan cara memeriksanya dengan IS NULL</li><li>menambah, mengubah, dan menghapus data dengan INSERT, UPDATE, DELETE</li><li>menghindari kesalahan fatal: UPDATE atau DELETE tanpa WHERE</li></ul></div>
+<h2 id="data-latihan">Data latihan</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE mahasiswa (
+    nim TEXT PRIMARY KEY, nama TEXT NOT NULL, jurusan TEXT, angkatan INTEGER, ipk REAL
+);
+INSERT INTO mahasiswa VALUES
+ ('A01','Ani','SI',2023,3.80), ('A02','Budi','TI',2022,3.10), ('A03','Citra','SI',2023,3.55),
+ ('A04','Dewi','TI',2024,NULL), ('A05','Eko','SI',2022,2.90), ('A06','Fajar','MI',2024,3.40);
+&quot;&quot;&quot;)
+for baris in db.execute(&quot;SELECT * FROM mahasiswa&quot;):
+    print(baris)</code></pre><pre class="runout" data-lang="keluaran"><code>('A01', 'Ani', 'SI', 2023, 3.8)
+('A02', 'Budi', 'TI', 2022, 3.1)
+('A03', 'Citra', 'SI', 2023, 3.55)
+('A04', 'Dewi', 'TI', 2024, None)
+('A05', 'Eko', 'SI', 2022, 2.9)
+('A06', 'Fajar', 'MI', 2024, 3.4)</code></pre></figure>
+<h2 id="select-dan-where">SELECT dan WHERE</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE mahasiswa (nim TEXT PRIMARY KEY, nama TEXT NOT NULL, jurusan TEXT, angkatan INTEGER, ipk REAL);
+INSERT INTO mahasiswa VALUES ('A01','Ani','SI',2023,3.80),('A02','Budi','TI',2022,3.10),('A03','Citra','SI',2023,3.55),
+ ('A04','Dewi','TI',2024,NULL),('A05','Eko','SI',2022,2.90),('A06','Fajar','MI',2024,3.40);
+&quot;&quot;&quot;)
+def q(sql):
+    print(&quot;&gt;&quot;, &quot; &quot;.join(sql.split()))
+    for r in db.execute(sql): print(&quot;  &quot;, r)
+
+q(&quot;SELECT nama, ipk FROM mahasiswa WHERE jurusan = 'SI'&quot;)
+q(&quot;SELECT nama FROM mahasiswa WHERE ipk &gt;= 3.4 AND angkatan &gt;= 2023&quot;)
+q(&quot;SELECT nama FROM mahasiswa WHERE jurusan IN ('TI','MI')&quot;)
+q(&quot;SELECT nama, angkatan FROM mahasiswa WHERE angkatan BETWEEN 2022 AND 2023&quot;)
+q(&quot;SELECT nama FROM mahasiswa WHERE nama LIKE '%i'&quot;)          # berakhiran i
+q(&quot;SELECT nama, ipk FROM mahasiswa ORDER BY ipk DESC LIMIT 3&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>&gt; SELECT nama, ipk FROM mahasiswa WHERE jurusan = 'SI'
+   ('Ani', 3.8)
+   ('Citra', 3.55)
+   ('Eko', 2.9)
+&gt; SELECT nama FROM mahasiswa WHERE ipk &gt;= 3.4 AND angkatan &gt;= 2023
+   ('Ani',)
+   ('Citra',)
+   ('Fajar',)
+&gt; SELECT nama FROM mahasiswa WHERE jurusan IN ('TI','MI')
+   ('Budi',)
+   ('Dewi',)
+   ('Fajar',)
+&gt; SELECT nama, angkatan FROM mahasiswa WHERE angkatan BETWEEN 2022 AND 2023
+   ('Ani', 2023)
+   ('Budi', 2022)
+   ('Citra', 2023)
+   ('Eko', 2022)
+&gt; SELECT nama FROM mahasiswa WHERE nama LIKE '%i'
+   ('Ani',)
+   ('Budi',)
+   ('Dewi',)
+&gt; SELECT nama, ipk FROM mahasiswa ORDER BY ipk DESC LIMIT 3
+   ('Ani', 3.8)
+   ('Citra', 3.55)
+   ('Fajar', 3.4)</code></pre><figcaption>Perhatikan: pada urutan menurun, NULL (Dewi) diperlakukan sebagai nilai terkecil oleh SQLite dan tidak muncul di tiga teratas.</figcaption></figure>
+<div data-w="sqlplay"><script type="application/json">{"title":"Bermain dengan query","desc":"Pilih kolom filter, operator, dan nilai. Lihat SQL yang dihasilkan dan baris yang cocok.","table":"mahasiswa","cols":["nim","nama","jurusan","angkatan","ipk"],"rows":[["A01","Ani","SI",2023,3.8],["A02","Budi","TI",2022,3.1],["A03","Citra","SI",2023,3.55],["A04","Dewi","TI",2024,3],["A05","Eko","SI",2022,2.9],["A06","Fajar","MI",2024,3.4]]}</script></div>
+<h2 id="null-bukan-nol-dan-bukan-kosong">NULL: bukan nol dan bukan kosong</h2>
+<p>NULL berarti "tidak diketahui atau tidak ada". Perbandingan apa pun dengan NULL menghasilkan <i>tidak diketahui</i>, bukan benar atau salah.</p>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE m (nama TEXT, ipk REAL);
+INSERT INTO m VALUES ('Ani',3.8),('Dewi',NULL),('Eko',2.9);
+&quot;&quot;&quot;)
+print(&quot;ipk = NULL      :&quot;, db.execute(&quot;SELECT nama FROM m WHERE ipk = NULL&quot;).fetchall())       # selalu kosong!
+print(&quot;ipk IS NULL     :&quot;, db.execute(&quot;SELECT nama FROM m WHERE ipk IS NULL&quot;).fetchall())
+print(&quot;ipk != 3.8      :&quot;, db.execute(&quot;SELECT nama FROM m WHERE ipk != 3.8&quot;).fetchall())       # Dewi tidak ikut
+print(&quot;COALESCE        :&quot;, db.execute(&quot;SELECT nama, COALESCE(ipk, 0) FROM m&quot;).fetchall())
+print(&quot;rata-rata (NULL diabaikan):&quot;, db.execute(&quot;SELECT AVG(ipk) FROM m&quot;).fetchone())</code></pre><pre class="runout" data-lang="keluaran"><code>ipk = NULL      : []
+ipk IS NULL     : [('Dewi',)]
+ipk != 3.8      : [('Eko',)]
+COALESCE        : [('Ani', 3.8), ('Dewi', 0), ('Eko', 2.9)]
+rata-rata (NULL diabaikan): (3.3499999999999996,)</code></pre><figcaption>Gunakan IS NULL / IS NOT NULL. Fungsi agregat seperti AVG mengabaikan NULL, yang sering menjadi sumber salah tafsir.</figcaption></figure>
+<h2 id="mengubah-data-insert-update-delete">Mengubah data: INSERT, UPDATE, DELETE</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE m (nim TEXT PRIMARY KEY, nama TEXT, ipk REAL);
+INSERT INTO m VALUES ('A01','Ani',3.8),('A02','Budi',3.1),('A03','Citra',3.55);
+&quot;&quot;&quot;)
+db.execute(&quot;INSERT INTO m (nim, nama, ipk) VALUES ('A04','Dewi',3.0)&quot;)
+db.execute(&quot;UPDATE m SET ipk = 3.2 WHERE nim = 'A02'&quot;)
+db.execute(&quot;DELETE FROM m WHERE nim = 'A03'&quot;)
+print(db.execute(&quot;SELECT * FROM m&quot;).fetchall())
+
+cursor = db.execute(&quot;UPDATE m SET ipk = 4.0&quot;)      # LUPA WHERE: mengubah SEMUA baris
+print(&quot;baris terubah tanpa WHERE:&quot;, cursor.rowcount)
+print(db.execute(&quot;SELECT * FROM m&quot;).fetchall())</code></pre><pre class="runout" data-lang="keluaran"><code>[('A01', 'Ani', 3.8), ('A02', 'Budi', 3.2), ('A04', 'Dewi', 3.0)]
+baris terubah tanpa WHERE: 3
+[('A01', 'Ani', 4.0), ('A02', 'Budi', 4.0), ('A04', 'Dewi', 4.0)]</code></pre><figcaption>Kesalahan paling mahal pemula: UPDATE atau DELETE tanpa WHERE mengubah seluruh tabel.</figcaption></figure>
+<div class="callout warn"><b>Pengaman</b><p>Kebiasaan aman: tulis dulu <code>SELECT ... WHERE ...</code> untuk melihat baris yang akan terkena, baru ubah menjadi UPDATE atau DELETE. Di basis data produksi, jalankan di dalam <b>transaksi</b> (<code>BEGIN</code> ... <code>ROLLBACK</code>/<code>COMMIT</code>) dan pastikan ada cadangan.</p></div>
+<h2 id="urutan-penulisan-dan-urutan-eksekusi">Urutan penulisan dan urutan eksekusi</h2>
+<table><thead><tr><th>Ditulis</th><th>Dijalankan</th><th>Fungsi</th></tr></thead><tbody><tr><td>SELECT</td><td>ke-5</td><td>Memilih kolom</td></tr><tr><td>FROM</td><td>ke-1</td><td>Sumber tabel</td></tr><tr><td>WHERE</td><td>ke-2</td><td>Menyaring baris</td></tr><tr><td>ORDER BY</td><td>ke-6</td><td>Mengurutkan</td></tr><tr><td>LIMIT</td><td>ke-7</td><td>Membatasi jumlah</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Cara benar mencari baris dengan nilai kosong?","options":["WHERE ipk IS NULL","WHERE ipk = NULL","WHERE ipk = 0"],"answer":0,"why":"Perbandingan = dengan NULL tidak pernah benar."},{"q":"Apa yang terjadi pada UPDATE tanpa WHERE?","options":["Semua baris terubah","Tidak ada yang terubah","Error"],"answer":0,"why":"Tanpa penyaring, seluruh baris menjadi sasaran."},{"q":"LIKE '%i' mencocokkan...","options":["Teks yang berakhiran i","Teks yang berawalan i","Teks yang persis i"],"answer":0,"why":"% mewakili nol atau lebih karakter."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis query untuk menampilkan nama mahasiswa SI dengan IPK di atas 3,5 diurutkan dari tertinggi.</summary><div>SELECT nama, ipk FROM mahasiswa WHERE jurusan = 'SI' AND ipk > 3.5 ORDER BY ipk DESC;</div></details><details><summary>2. Mengapa WHERE ipk != 3.8 tidak menampilkan mahasiswa dengan ipk NULL?</summary><div>Perbandingan dengan NULL hasilnya tidak diketahui sehingga baris itu tidak lolos filter.</div></details><details><summary>3. Tulis query untuk menaikkan IPK semua mahasiswa angkatan 2024 sebesar 0,1.</summary><div>UPDATE mahasiswa SET ipk = ipk + 0.1 WHERE angkatan = 2024;</div></details><details><summary>4. Apa beda DELETE FROM m dan DROP TABLE m?</summary><div>DELETE menghapus baris tetapi tabel tetap ada; DROP TABLE menghapus tabel beserta strukturnya.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>SELECT kolom FROM tabel WHERE kondisi ORDER BY ... LIMIT ...</li><li>IN, BETWEEN, LIKE, AND/OR untuk kondisi; IS NULL untuk nilai kosong.</li><li>INSERT, UPDATE, DELETE mengubah data: selalu periksa WHERE dan gunakan transaksi.</li><li>Fungsi agregat mengabaikan NULL.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya SQL dan MySQL?</summary><div>SQL adalah bahasa; MySQL, PostgreSQL, SQLite, SQL Server adalah sistem basis data yang mengimplementasikannya dengan sedikit perbedaan dialek.</div></details>
+<details class="faq"><summary>Apakah SQL peka huruf besar-kecil?</summary><div>Kata kunci tidak; data pada pembandingan teks tergantung pengaturan sistem (collation) dan dialek.</div></details>
+<details class="faq"><summary>Bagaimana mencegah SQL injection?</summary><div>Jangan menyambung input pengguna ke dalam string SQL. Gunakan parameter terikat (prepared statement).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.sqlite.org/lang.html" rel="noopener" target="_blank">SQLite Documentation: SQL As Understood By SQLite</a></li><li><a href="https://www.postgresql.org/docs/current/sql.html" rel="noopener" target="_blank">PostgreSQL Documentation: SQL Language</a></li><li><a href="https://sqlbolt.com/" rel="noopener" target="_blank">W3Schools / SQLBolt: latihan SQL interaktif</a></li><li>Ramez Elmasri dan Shamkant Navathe, Fundamentals of Database Systems (Pearson)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sql-dasar-untuk-pemula-select-where-order-by/"><img src="/artikel/sql-dasar-untuk-pemula-select-where-order-by/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SQL Dasar untuk Pemula: SELECT, WHERE, ORDER BY</span></a><a href="/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/"><img src="/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SQL JOIN, GROUP BY, dan Subquery</span></a><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

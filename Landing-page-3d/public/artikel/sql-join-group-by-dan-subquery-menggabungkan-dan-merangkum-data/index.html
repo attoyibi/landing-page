@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL JOIN, GROUP BY, dan Subquery · Muhammad Muchson</title>
+<meta name="description" content="Kuasai SQL lanjutan dengan data yang dijalankan: INNER, LEFT JOIN, GROUP BY dan HAVING, fungsi agregat, subquery, dan CTE, termasuk jebakan JOIN yang menggandakan baris.">
+<meta name="keywords" content="SQL, JOIN, GROUP BY, subquery, CTE">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/">
+<meta property="og:title" content="SQL JOIN, GROUP BY, dan Subquery">
+<meta property="og:description" content="Kuasai SQL lanjutan dengan data yang dijalankan: INNER, LEFT JOIN, GROUP BY dan HAVING, fungsi agregat, subquery, dan CTE, termasuk jebakan JOIN yang menggandakan baris.">
+<meta property="og:image" content="https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL JOIN, GROUP BY, dan Subquery">
+<meta name="twitter:description" content="Kuasai SQL lanjutan dengan data yang dijalankan: INNER, LEFT JOIN, GROUP BY dan HAVING, fungsi agregat, subquery, dan CTE, termasuk jebakan JOIN yang menggandakan baris.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SQL JOIN, GROUP BY, dan Subquery","description":"Kuasai SQL lanjutan dengan data yang dijalankan: INNER, LEFT JOIN, GROUP BY dan HAVING, fungsi agregat, subquery, dan CTE, termasuk jebakan JOIN yang menggandakan baris.","image":["https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"SQL, JOIN, GROUP BY, subquery, CTE","articleSection":"Sistem Informasi","wordCount":302,"mainEntityOfPage":"https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"SQL JOIN, GROUP BY, dan Subquery","item":"https://muchson.web.id/artikel/sql-join-group-by-dan-subquery-menggabungkan-dan-merangkum-data/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu index dan kapan perlu?","acceptedAnswer":{"@type":"Answer","text":"Struktur tambahan (biasanya B-tree) yang mempercepat pencarian dan JOIN pada kolom tertentu, dengan biaya ruang dan kecepatan tulis. Buat pada kolom yang sering difilter atau digabung."}},{"@type":"Question","name":"Apa itu FULL OUTER JOIN?","acceptedAnswer":{"@type":"Answer","text":"Mempertahankan baris dari kedua tabel; tidak semua dialek mendukungnya (SQLite versi lama tidak)."}},{"@type":"Question","name":"Bagaimana membaca rencana eksekusi?","acceptedAnswer":{"@type":"Answer","text":"Gunakan EXPLAIN (atau EXPLAIN ANALYZE di PostgreSQL) untuk melihat urutan JOIN dan apakah indeks dipakai."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#data-latihan">Data latihan</a></li><li><a href="#inner-join-vs-left-join">INNER JOIN vs LEFT JOIN</a></li><li><a href="#group-by-dan-agregasi">GROUP BY dan agregasi</a></li><li><a href="#subquery-dan-cte">Subquery dan CTE</a></li><li><a href="#jebakan-join-yang-menggandakan-baris">Jebakan: JOIN yang menggandakan baris</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>SQL JOIN, GROUP BY, dan Subquery</h1>
+<p class="lead">Kekuatan basis data relasional ada pada menggabungkan tabel dan merangkum data. Materi ini memakai tiga tabel (mahasiswa, mata kuliah, KRS) dan memperlihatkan JOIN, agregasi, dan subquery lewat hasil nyata, termasuk jebakan yang membuat angka laporan salah tanpa terasa.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> SQL dasar, ERD</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="SQL JOIN, GROUP BY, dan Subquery" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan INNER JOIN dan LEFT JOIN serta menjelaskan hasilnya</li><li>memakai GROUP BY dengan COUNT, SUM, AVG dan menyaring kelompok dengan HAVING</li><li>menulis subquery dan CTE</li><li>membedakan WHERE dan HAVING</li><li>mengenali JOIN yang menggandakan baris dan menghasilkan agregat salah</li></ul></div>
+<h2 id="data-latihan">Data latihan</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+def basis_data():
+    db = sqlite3.connect(&quot;:memory:&quot;)
+    db.executescript(&quot;&quot;&quot;
+    CREATE TABLE mahasiswa (nim TEXT PRIMARY KEY, nama TEXT, jurusan TEXT);
+    CREATE TABLE mata_kuliah (kode TEXT PRIMARY KEY, nama TEXT, sks INTEGER);
+    CREATE TABLE krs (nim TEXT, kode TEXT, nilai INTEGER, PRIMARY KEY (nim, kode));
+    INSERT INTO mahasiswa VALUES ('A01','Ani','SI'),('A02','Budi','TI'),('A03','Citra','SI'),('A04','Dewi','TI');
+    INSERT INTO mata_kuliah VALUES ('K1','Basis Data',3),('K2','Pemrograman',4),('K3','Jaringan',3),('K4','Statistika',2);
+    INSERT INTO krs VALUES ('A01','K1',90),('A01','K2',85),('A02','K1',70),('A02','K3',80),('A03','K2',95);
+    &quot;&quot;&quot;)
+    return db
+
+db = basis_data()
+for t in [&quot;mahasiswa&quot;, &quot;mata_kuliah&quot;, &quot;krs&quot;]:
+    print(t, db.execute(f&quot;SELECT * FROM {t}&quot;).fetchall())</code></pre><pre class="runout" data-lang="keluaran"><code>mahasiswa [('A01', 'Ani', 'SI'), ('A02', 'Budi', 'TI'), ('A03', 'Citra', 'SI'), ('A04', 'Dewi', 'TI')]
+mata_kuliah [('K1', 'Basis Data', 3), ('K2', 'Pemrograman', 4), ('K3', 'Jaringan', 3), ('K4', 'Statistika', 2)]
+krs [('A01', 'K1', 90), ('A01', 'K2', 85), ('A02', 'K1', 70), ('A02', 'K3', 80), ('A03', 'K2', 95)]</code></pre><figcaption>Perhatikan: Dewi (A04) belum mengambil mata kuliah apa pun, dan Statistika (K4) belum diambil siapa pun.</figcaption></figure>
+<h2 id="inner-join-vs-left-join">INNER JOIN vs LEFT JOIN</h2>
+<figure class="diagram"><svg viewBox="0 0 600 150" role="img" aria-label="JOIN" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="1vvup-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="1vvup-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="1vvup-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="1vvup-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="1vvup-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><ellipse cx="130" cy="70" rx="95" ry="45" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">Mahasiswa</tspan></text><ellipse cx="330" cy="70" rx="95" ry="45" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="330" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="330" dy="0">KRS</tspan></text><text x="500" y="50.333333333333336" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="500" dy="0">INNER: hanya irisan.</tspan><tspan x="500" dy="16">LEFT: seluruh tabel</tspan><tspan x="500" dy="16">kiri, NULL bila tak</tspan><tspan x="500" dy="16">ada pasangan.</tspan></text></svg></figure>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE mahasiswa (nim TEXT PRIMARY KEY, nama TEXT, jurusan TEXT);
+CREATE TABLE mata_kuliah (kode TEXT PRIMARY KEY, nama TEXT, sks INTEGER);
+CREATE TABLE krs (nim TEXT, kode TEXT, nilai INTEGER, PRIMARY KEY (nim, kode));
+INSERT INTO mahasiswa VALUES ('A01','Ani','SI'),('A02','Budi','TI'),('A03','Citra','SI'),('A04','Dewi','TI');
+INSERT INTO mata_kuliah VALUES ('K1','Basis Data',3),('K2','Pemrograman',4),('K3','Jaringan',3),('K4','Statistika',2);
+INSERT INTO krs VALUES ('A01','K1',90),('A01','K2',85),('A02','K1',70),('A02','K3',80),('A03','K2',95);
+&quot;&quot;&quot;)
+def q(sql):
+    print(&quot;&gt;&quot;, &quot; &quot;.join(sql.split()))
+    for r in db.execute(sql): print(&quot;  &quot;, r)
+
+q(&quot;&quot;&quot;SELECT m.nama, mk.nama, k.nilai
+     FROM krs k JOIN mahasiswa m ON m.nim = k.nim JOIN mata_kuliah mk ON mk.kode = k.kode
+     ORDER BY m.nama, mk.nama&quot;&quot;&quot;)
+q(&quot;&quot;&quot;SELECT m.nama, k.kode
+     FROM mahasiswa m LEFT JOIN krs k ON k.nim = m.nim
+     WHERE k.kode IS NULL&quot;&quot;&quot;)                                  # siapa yang belum mengambil apa pun?</code></pre><pre class="runout" data-lang="keluaran"><code>&gt; SELECT m.nama, mk.nama, k.nilai FROM krs k JOIN mahasiswa m ON m.nim = k.nim JOIN mata_kuliah mk ON mk.kode = k.kode ORDER BY m.nama, mk.nama
+   ('Ani', 'Basis Data', 90)
+   ('Ani', 'Pemrograman', 85)
+   ('Budi', 'Basis Data', 70)
+   ('Budi', 'Jaringan', 80)
+   ('Citra', 'Pemrograman', 95)
+&gt; SELECT m.nama, k.kode FROM mahasiswa m LEFT JOIN krs k ON k.nim = m.nim WHERE k.kode IS NULL
+   ('Dewi', None)</code></pre><figcaption>Pola "LEFT JOIN ... WHERE kanan IS NULL" menemukan data yang tidak memiliki pasangan: mahasiswa tanpa KRS.</figcaption></figure>
+<h2 id="group-by-dan-agregasi">GROUP BY dan agregasi</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE mahasiswa (nim TEXT PRIMARY KEY, nama TEXT, jurusan TEXT);
+CREATE TABLE mata_kuliah (kode TEXT PRIMARY KEY, nama TEXT, sks INTEGER);
+CREATE TABLE krs (nim TEXT, kode TEXT, nilai INTEGER, PRIMARY KEY (nim, kode));
+INSERT INTO mahasiswa VALUES ('A01','Ani','SI'),('A02','Budi','TI'),('A03','Citra','SI'),('A04','Dewi','TI');
+INSERT INTO mata_kuliah VALUES ('K1','Basis Data',3),('K2','Pemrograman',4),('K3','Jaringan',3),('K4','Statistika',2);
+INSERT INTO krs VALUES ('A01','K1',90),('A01','K2',85),('A02','K1',70),('A02','K3',80),('A03','K2',95);
+&quot;&quot;&quot;)
+def q(sql):
+    print(&quot;&gt;&quot;, &quot; &quot;.join(sql.split()))
+    for r in db.execute(sql): print(&quot;  &quot;, r)
+
+q(&quot;&quot;&quot;SELECT m.nama, COUNT(k.kode) AS jml_mk, ROUND(AVG(k.nilai),1) AS rata
+     FROM mahasiswa m LEFT JOIN krs k ON k.nim = m.nim
+     GROUP BY m.nim, m.nama ORDER BY rata DESC&quot;&quot;&quot;)
+q(&quot;&quot;&quot;SELECT mk.nama, COUNT(*) AS peserta, MAX(k.nilai) AS tertinggi
+     FROM krs k JOIN mata_kuliah mk ON mk.kode = k.kode
+     GROUP BY mk.kode, mk.nama
+     HAVING COUNT(*) &gt;= 2&quot;&quot;&quot;)                                  # HAVING menyaring KELOMPOK</code></pre><pre class="runout" data-lang="keluaran"><code>&gt; SELECT m.nama, COUNT(k.kode) AS jml_mk, ROUND(AVG(k.nilai),1) AS rata FROM mahasiswa m LEFT JOIN krs k ON k.nim = m.nim GROUP BY m.nim, m.nama ORDER BY rata DESC
+   ('Citra', 1, 95.0)
+   ('Ani', 2, 87.5)
+   ('Budi', 2, 75.0)
+   ('Dewi', 0, None)
+&gt; SELECT mk.nama, COUNT(*) AS peserta, MAX(k.nilai) AS tertinggi FROM krs k JOIN mata_kuliah mk ON mk.kode = k.kode GROUP BY mk.kode, mk.nama HAVING COUNT(*) &gt;= 2
+   ('Basis Data', 2, 90)
+   ('Pemrograman', 2, 95)</code></pre><figcaption>COUNT(k.kode) menghitung hanya baris yang tidak NULL sehingga Dewi mendapat 0, sedangkan COUNT(*) akan menghitung satu baris untuk Dewi.</figcaption></figure>
+<table><thead><tr><th></th><th>WHERE</th><th>HAVING</th></tr></thead><tbody><tr><td>Menyaring</td><td>Baris, sebelum pengelompokan</td><td>Kelompok, sesudah agregasi</td></tr><tr><td>Boleh memakai agregat?</td><td>Tidak</td><td>Ya</td></tr><tr><td>Contoh</td><td>WHERE jurusan = 'SI'</td><td>HAVING COUNT(*) >= 2</td></tr></tbody></table>
+<h2 id="subquery-dan-cte">Subquery dan CTE</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE mahasiswa (nim TEXT PRIMARY KEY, nama TEXT, jurusan TEXT);
+CREATE TABLE krs (nim TEXT, kode TEXT, nilai INTEGER, PRIMARY KEY (nim, kode));
+INSERT INTO mahasiswa VALUES ('A01','Ani','SI'),('A02','Budi','TI'),('A03','Citra','SI'),('A04','Dewi','TI');
+INSERT INTO krs VALUES ('A01','K1',90),('A01','K2',85),('A02','K1',70),('A02','K3',80),('A03','K2',95);
+&quot;&quot;&quot;)
+def q(sql):
+    print(&quot;&gt;&quot;, &quot; &quot;.join(sql.split()))
+    for r in db.execute(sql): print(&quot;  &quot;, r)
+
+# subquery: nilai di atas rata-rata seluruh nilai
+q(&quot;SELECT nim, kode, nilai FROM krs WHERE nilai &gt; (SELECT AVG(nilai) FROM krs)&quot;)
+# subquery dengan IN: mahasiswa yang punya nilai &gt;= 90
+q(&quot;SELECT nama FROM mahasiswa WHERE nim IN (SELECT nim FROM krs WHERE nilai &gt;= 90)&quot;)
+# CTE: langkah bernama agar query mudah dibaca
+q(&quot;&quot;&quot;WITH rata AS (SELECT nim, AVG(nilai) AS r FROM krs GROUP BY nim)
+     SELECT m.nama, ROUND(rata.r,1) FROM rata JOIN mahasiswa m USING (nim) WHERE rata.r &gt;= 85&quot;&quot;&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>&gt; SELECT nim, kode, nilai FROM krs WHERE nilai &gt; (SELECT AVG(nilai) FROM krs)
+   ('A01', 'K1', 90)
+   ('A01', 'K2', 85)
+   ('A03', 'K2', 95)
+&gt; SELECT nama FROM mahasiswa WHERE nim IN (SELECT nim FROM krs WHERE nilai &gt;= 90)
+   ('Ani',)
+   ('Citra',)
+&gt; WITH rata AS (SELECT nim, AVG(nilai) AS r FROM krs GROUP BY nim) SELECT m.nama, ROUND(rata.r,1) FROM rata JOIN mahasiswa m USING (nim) WHERE rata.r &gt;= 85
+   ('Ani', 87.5)
+   ('Citra', 95.0)</code></pre></figure>
+<h2 id="jebakan-join-yang-menggandakan-baris">Jebakan: JOIN yang menggandakan baris</h2>
+<p>Bila sebuah tabel digabung dengan tabel lain yang memiliki banyak baris per kunci, nilai pada sisi "satu" ikut berulang. Menjumlahkannya setelah JOIN menghasilkan angka yang terlalu besar tanpa pesan kesalahan.</p>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE pesanan (id INTEGER PRIMARY KEY, total INTEGER);
+CREATE TABLE item   (pesanan_id INTEGER, produk TEXT);
+INSERT INTO pesanan VALUES (1, 100000), (2, 50000);
+INSERT INTO item VALUES (1,'A'),(1,'B'),(1,'C'),(2,'A');
+&quot;&quot;&quot;)
+print(&quot;total benar        :&quot;, db.execute(&quot;SELECT SUM(total) FROM pesanan&quot;).fetchone()[0])
+print(&quot;SUM setelah JOIN   :&quot;, db.execute(&quot;SELECT SUM(p.total) FROM pesanan p JOIN item i ON i.pesanan_id = p.id&quot;).fetchone()[0], &quot; &lt;- salah (pesanan 1 terhitung 3 kali)&quot;)
+print(&quot;perbaikan          :&quot;, db.execute(&quot;&quot;&quot;SELECT SUM(total) FROM pesanan WHERE id IN (SELECT pesanan_id FROM item)&quot;&quot;&quot;).fetchone()[0])</code></pre><pre class="runout" data-lang="keluaran"><code>total benar        : 150000
+SUM setelah JOIN   : 350000  &lt;- salah (pesanan 1 terhitung 3 kali)
+perbaikan          : 150000</code></pre><figcaption>Selalu periksa jumlah baris sebelum dan sesudah JOIN. Agregasi pada sisi "satu" sebaiknya dilakukan sebelum digabung, atau gunakan subquery/CTE.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mencari mahasiswa yang belum mengambil mata kuliah apa pun paling tepat memakai...","options":["LEFT JOIN dengan WHERE kanan IS NULL","INNER JOIN","GROUP BY saja"],"answer":0,"why":"LEFT JOIN mempertahankan baris kiri tanpa pasangan."},{"q":"HAVING dipakai untuk...","options":["Menyaring hasil agregasi","Menyaring baris sebelum GROUP BY","Mengurutkan"],"answer":0,"why":"WHERE terjadi sebelum pengelompokan; HAVING sesudahnya."},{"q":"SUM setelah JOIN satu-ke-banyak dapat menghasilkan angka...","options":["Terlalu besar karena baris berulang","Selalu benar","Selalu nol"],"answer":0,"why":"Nilai sisi \"satu\" dihitung berkali-kali."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tampilkan jumlah SKS yang diambil setiap mahasiswa (termasuk yang 0).</summary><div>LEFT JOIN krs dan mata_kuliah lalu SUM(COALESCE(sks,0)) dengan GROUP BY mahasiswa.</div></details><details><summary>2. Tulis query untuk mata kuliah yang belum diambil siapa pun.</summary><div>mata_kuliah LEFT JOIN krs ON kode WHERE krs.nim IS NULL.</div></details><details><summary>3. Mengapa COUNT(*) dan COUNT(kolom) bisa berbeda?</summary><div>COUNT(*) menghitung semua baris; COUNT(kolom) mengabaikan NULL.</div></details><details><summary>4. Kapan memilih CTE dibanding subquery?</summary><div>Saat query bertingkat atau hasil antara dipakai lebih dari sekali; CTE membuat langkah bernama dan lebih terbaca.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>INNER JOIN hanya irisan; LEFT JOIN mempertahankan seluruh tabel kiri.</li><li>GROUP BY dengan COUNT, SUM, AVG; HAVING menyaring kelompok.</li><li>Subquery dan CTE menyusun kueri bertahap.</li><li>Waspadai JOIN yang menggandakan baris sebelum menjumlahkan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu index dan kapan perlu?</summary><div>Struktur tambahan (biasanya B-tree) yang mempercepat pencarian dan JOIN pada kolom tertentu, dengan biaya ruang dan kecepatan tulis. Buat pada kolom yang sering difilter atau digabung.</div></details>
+<details class="faq"><summary>Apa itu FULL OUTER JOIN?</summary><div>Mempertahankan baris dari kedua tabel; tidak semua dialek mendukungnya (SQLite versi lama tidak).</div></details>
+<details class="faq"><summary>Bagaimana membaca rencana eksekusi?</summary><div>Gunakan EXPLAIN (atau EXPLAIN ANALYZE di PostgreSQL) untuk melihat urutan JOIN dan apakah indeks dipakai.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.sqlite.org/lang.html" rel="noopener" target="_blank">SQLite Documentation: SQL As Understood By SQLite</a></li><li><a href="https://www.postgresql.org/docs/current/sql.html" rel="noopener" target="_blank">PostgreSQL Documentation: SQL Language</a></li><li>Ramez Elmasri dan Shamkant Navathe, Fundamentals of Database Systems (Pearson)</li><li><a href="https://use-the-index-luke.com/" rel="noopener" target="_blank">Use The Index, Luke: panduan indeks SQL</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sql-dasar-select-where-order-by-insert-update-delete/"><img src="/artikel/sql-dasar-select-where-order-by-insert-update-delete/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE</span></a><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

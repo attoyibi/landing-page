@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERD: Entitas, Atribut, Relasi, dan Kardinalitas</title>
+<meta name="description" content="Pelajari pemodelan data dengan Entity Relationship Diagram: entitas, atribut, kunci, relasi satu-ke-banyak dan banyak-ke-banyak, kardinalitas, dan cara mengubah ERD menjadi tabel relasional.">
+<meta name="keywords" content="ERD, basis data, pemodelan data, kardinalitas, primary key">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/">
+<meta property="og:title" content="ERD: Entitas, Atribut, Relasi, dan Kardinalitas">
+<meta property="og:description" content="Pelajari pemodelan data dengan Entity Relationship Diagram: entitas, atribut, kunci, relasi satu-ke-banyak dan banyak-ke-banyak, kardinalitas, dan cara mengubah ERD menjadi tabel relasional.">
+<meta property="og:image" content="https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ERD: Entitas, Atribut, Relasi, dan Kardinalitas">
+<meta name="twitter:description" content="Pelajari pemodelan data dengan Entity Relationship Diagram: entitas, atribut, kunci, relasi satu-ke-banyak dan banyak-ke-banyak, kardinalitas, dan cara mengubah ERD menjadi tabel relasional.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ERD: Entitas, Atribut, Relasi, dan Kardinalitas","description":"Pelajari pemodelan data dengan Entity Relationship Diagram: entitas, atribut, kunci, relasi satu-ke-banyak dan banyak-ke-banyak, kardinalitas, dan cara mengubah ERD menjadi tabel relasional.","image":["https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"ERD, basis data, pemodelan data, kardinalitas, primary key","articleSection":"Sistem Informasi","wordCount":338,"mainEntityOfPage":"https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"ERD: Entitas, Atribut, Relasi, dan Kardinalitas","item":"https://muchson.web.id/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa beda notasi Chen dan Crow's Foot?","acceptedAnswer":{"@type":"Answer","text":"Chen memakai belah ketupat untuk relasi dan elips untuk atribut; Crow's Foot memakai garis dengan simbol kaki gagak untuk \"banyak\" dan lebih ringkas, sehingga lebih umum dalam alat modern."}},{"@type":"Question","name":"Mengapa tidak memakai nama sebagai kunci primer?","acceptedAnswer":{"@type":"Answer","text":"Nama dapat sama dan dapat berubah. Gunakan pengenal stabil (NIM, id otomatis)."}},{"@type":"Question","name":"Apakah ERD sama dengan diagram kelas?","acceptedAnswer":{"@type":"Answer","text":"Mirip, tetapi ERD memodelkan data persisten, sedangkan diagram kelas memodelkan struktur dan perilaku program."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#unsur-erd">Unsur ERD</a></li><li><a href="#membaca-kardinalitas">Membaca kardinalitas</a></li><li><a href="#relasi-banyak-ke-banyak-harus-dipecah">Relasi banyak-ke-banyak harus dipecah</a></li><li><a href="#dari-erd-ke-tabel">Dari ERD ke tabel</a></li><li><a href="#kesalahan-pemodelan-yang-sering-terjadi">Kesalahan pemodelan yang sering terjadi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>ERD: Entitas, Atribut, Relasi, dan Kardinalitas</h1>
+<p class="lead">Sebelum membuat tabel, kita perlu memahami data apa yang ada dan bagaimana hubungannya. ERD adalah alat standar untuk itu. Diagram yang baik membuat aturan bisnis terlihat: satu dosen mengajar banyak kelas, satu mahasiswa mengambil banyak mata kuliah, dan sebaliknya.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> analisis kebutuhan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="ERD: Entitas, Atribut, Relasi, dan Kardinalitas" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengidentifikasi entitas, atribut, dan kunci dari deskripsi kebutuhan</li><li>menggambar relasi dengan kardinalitas yang benar</li><li>menyelesaikan relasi banyak-ke-banyak dengan entitas asosiatif</li><li>mengubah ERD menjadi skema tabel relasional</li><li>mengenali kesalahan pemodelan umum</li></ul></div>
+<h2 id="unsur-erd">Unsur ERD</h2>
+<table><thead><tr><th>Unsur</th><th>Arti</th><th>Contoh</th></tr></thead><tbody><tr><td>Entitas</td><td>Sesuatu yang datanya perlu disimpan</td><td>Mahasiswa, Dosen, MataKuliah</td></tr><tr><td>Atribut</td><td>Sifat sebuah entitas</td><td>nim, nama, tanggal_lahir</td></tr><tr><td>Kunci primer (PK)</td><td>Atribut yang mengidentifikasi satu baris secara unik</td><td>nim</td></tr><tr><td>Kunci asing (FK)</td><td>Atribut yang merujuk kunci primer entitas lain</td><td>kode_dosen pada MataKuliah</td></tr><tr><td>Relasi</td><td>Hubungan antar entitas</td><td>Dosen mengajar MataKuliah</td></tr><tr><td>Kardinalitas</td><td>Jumlah instans yang dapat berhubungan</td><td>1:1, 1:N, M:N</td></tr></tbody></table>
+<h2 id="membaca-kardinalitas">Membaca kardinalitas</h2>
+<figure class="diagram"><svg viewBox="0 0 640 220" role="img" aria-label="Tiga jenis kardinalitas" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="t05fw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="t05fw-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="t05fw-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="t05fw-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="t05fw-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="120,40 170,40" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="113.6" y="31" width="62.8" height="17" rx="4" fill="#fff" opacity=".92"/><text x="145" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">mengajar</text><text x="128" y="34" font-size="11.5" fill="#0f1a33">1</text><text x="178" y="34" font-size="11.5" fill="#0f1a33">N</text><polyline points="460,40 520,40" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="448.7" y="31" width="82.6" height="17" rx="4" fill="#fff" opacity=".92"/><text x="490" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">beribu kota</text><text x="468" y="34" font-size="11.5" fill="#0f1a33">1</text><text x="528" y="34" font-size="11.5" fill="#0f1a33">1</text><polyline points="130,150 220,150" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="140.3" y="141" width="69.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="175" y="154" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">mengambil</text><text x="138" y="144" font-size="11.5" fill="#0f1a33">M</text><text x="228" y="144" font-size="11.5" fill="#0f1a33">N</text><rect x="20" y="22" width="100" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="70" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="70" dy="0">Dosen</tspan></text><rect x="170" y="22" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="230" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="230" dy="0">MataKuliah</tspan></text><rect x="360" y="22" width="100" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="410" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="410" dy="0">Negara</tspan></text><rect x="520" y="22" width="100" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">IbuKota</tspan></text><rect x="10" y="132" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="70" y="154.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="70" dy="0">Mahasiswa</tspan></text><rect x="220" y="132" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="154.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="280" dy="0">MataKuliah</tspan></text></svg><figcaption>Satu dosen mengajar banyak mata kuliah (1:N). Satu negara memiliki satu ibu kota (1:1). Mahasiswa mengambil banyak mata kuliah dan satu mata kuliah diambil banyak mahasiswa (M:N).</figcaption></figure>
+<div class="callout good"><b>Teknik membaca</b><p>Cara membaca: baca <b>dua arah</b>. "Satu dosen dapat mengajar berapa mata kuliah?" (banyak). "Satu mata kuliah diajar oleh berapa dosen?" (satu, pada kasus ini). Jawabannya menentukan kardinalitas.</p></div>
+<h2 id="relasi-banyak-ke-banyak-harus-dipecah">Relasi banyak-ke-banyak harus dipecah</h2>
+<p>Basis data relasional tidak dapat menyimpan M:N langsung dengan satu kolom kunci asing. Solusinya: <b>entitas asosiatif</b> (tabel perantara) yang menyimpan pasangan dan atribut milik hubungan itu sendiri, misalnya nilai.</p>
+<figure class="diagram"><svg viewBox="0 0 680 230" role="img" aria-label="M:N dipecah menjadi dua 1:N" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="oo1qm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="oo1qm-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="oo1qm-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="oo1qm-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="oo1qm-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="175,110 255,110" fill="none" stroke="#0f1a33" stroke-width="1.8"/><text x="183" y="104" font-size="11.5" fill="#0f1a33">1</text><text x="263" y="104" font-size="11.5" fill="#0f1a33">N</text><polyline points="505,110 425,110" fill="none" stroke="#0f1a33" stroke-width="1.8"/><text x="513" y="104" font-size="11.5" fill="#0f1a33">1</text><text x="433" y="104" font-size="11.5" fill="#0f1a33">N</text><rect x="25" y="65" width="150" height="90" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="84" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Mahasiswa</text><line x1="25" y1="93" x2="175" y2="93" stroke="#1e5ab2" stroke-width="1.5"/><text x="33" y="108" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">PK nim</text><text x="33" y="125" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">nama</text><line x1="25" y1="134" x2="175" y2="134" stroke="#1e5ab2" stroke-width="1.5"/><rect x="255" y="60" width="170" height="100" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="79" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">KRS (asosiatif)</text><line x1="255" y1="88" x2="425" y2="88" stroke="#1e5ab2" stroke-width="1.5"/><text x="263" y="103" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">PK,FK nim</text><text x="263" y="120" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">PK,FK kode_mk</text><text x="263" y="137" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">nilai</text><line x1="255" y1="146" x2="425" y2="146" stroke="#1e5ab2" stroke-width="1.5"/><rect x="505" y="65" width="150" height="90" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="580" y="84" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">MataKuliah</text><line x1="505" y1="93" x2="655" y2="93" stroke="#1e5ab2" stroke-width="1.5"/><text x="513" y="108" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">PK kode_mk</text><text x="513" y="125" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">nama</text><text x="513" y="142" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">sks</text><line x1="505" y1="151" x2="655" y2="151" stroke="#1e5ab2" stroke-width="1.5"/></svg><figcaption>Tabel KRS memiliki kunci primer gabungan (nim, kode_mk) dan menyimpan nilai, atribut yang milik pasangan, bukan milik mahasiswa atau mata kuliah saja.</figcaption></figure>
+<h2 id="dari-erd-ke-tabel">Dari ERD ke tabel</h2>
+<table><thead><tr><th>Relasi</th><th>Aturan konversi</th></tr></thead><tbody><tr><td>1:N</td><td>Letakkan kunci primer sisi "1" sebagai kunci asing di tabel sisi "N"</td></tr><tr><td>1:1</td><td>Letakkan kunci asing di salah satu tabel dan beri batas UNIQUE (atau gabungkan tabel)</td></tr><tr><td>M:N</td><td>Buat tabel asosiatif dengan dua kunci asing; gabungannya menjadi kunci primer</td></tr><tr><td>Atribut multinilai (mis. nomor telepon)</td><td>Pindahkan ke tabel tersendiri dengan kunci asing</td></tr><tr><td>Atribut turunan (mis. umur dari tanggal lahir)</td><td>Tidak disimpan; dihitung saat dibutuhkan</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;PRAGMA foreign_keys = ON&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE mahasiswa (
+    nim   TEXT PRIMARY KEY,
+    nama  TEXT NOT NULL
+);
+CREATE TABLE mata_kuliah (
+    kode_mk TEXT PRIMARY KEY,
+    nama    TEXT NOT NULL,
+    sks     INTEGER NOT NULL CHECK (sks BETWEEN 1 AND 6)
+);
+CREATE TABLE krs (
+    nim     TEXT NOT NULL REFERENCES mahasiswa(nim),
+    kode_mk TEXT NOT NULL REFERENCES mata_kuliah(kode_mk),
+    nilai   TEXT,
+    PRIMARY KEY (nim, kode_mk)
+);
+&quot;&quot;&quot;)
+db.execute(&quot;INSERT INTO mahasiswa VALUES ('A01','Ani')&quot;)
+db.execute(&quot;INSERT INTO mata_kuliah VALUES ('SI101','Sistem Informasi',3)&quot;)
+db.execute(&quot;INSERT INTO krs VALUES ('A01','SI101','A')&quot;)
+
+for sql in [&quot;INSERT INTO krs VALUES ('A01','SI101','B')&quot;,          # pasangan sama dua kali
+            &quot;INSERT INTO krs VALUES ('Z99','SI101',NULL)&quot;,          # mahasiswa tidak ada
+            &quot;INSERT INTO mata_kuliah VALUES ('X1','Salah',9)&quot;]:      # melanggar CHECK
+    try:
+        db.execute(sql)
+    except sqlite3.IntegrityError as e:
+        print(&quot;ditolak:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>ditolak: UNIQUE constraint failed: krs.nim, krs.kode_mk
+ditolak: FOREIGN KEY constraint failed
+ditolak: CHECK constraint failed: sks BETWEEN 1 AND 6</code></pre><figcaption>Kunci primer, kunci asing, dan CHECK membuat basis data sendiri yang menegakkan aturan; aplikasi tidak bisa memasukkan data yang melanggar hubungan.</figcaption></figure>
+<h2 id="kesalahan-pemodelan-yang-sering-terjadi">Kesalahan pemodelan yang sering terjadi</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Periksa ERD Anda","items":["Setiap entitas memiliki kunci primer yang tidak berubah.","Tidak ada relasi M:N yang dibiarkan tanpa entitas asosiatif.","Tidak ada atribut turunan atau data yang dapat dihitung ulang.","Tidak ada atribut berulang (telepon1, telepon2, telepon3).","Nama entitas tunggal dan jelas; nama relasi berupa kata kerja.","Setiap kardinalitas telah dikonfirmasi dengan pengguna dalam dua arah.","Kunci asing jelas merujuk kunci primer tabel lain."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Relasi mahasiswa mengambil mata kuliah adalah...","options":["M:N","1:1","1:N"],"answer":0,"why":"Dipecah dengan tabel asosiatif (KRS)."},{"q":"Kunci asing berfungsi untuk...","options":["Menghubungkan ke kunci primer tabel lain","Mengurutkan data","Menyimpan sandi"],"answer":0,"why":"Menjaga integritas referensial."},{"q":"Atribut umur yang dapat dihitung dari tanggal lahir adalah...","options":["Atribut turunan, tidak perlu disimpan","Kunci primer","Entitas"],"answer":0,"why":"Menyimpannya menimbulkan data tidak konsisten."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Rancang ERD untuk toko online dengan Pelanggan, Pesanan, Produk.</summary><div>Pelanggan 1:N Pesanan; Pesanan M:N Produk dipecah dengan ItemPesanan (jumlah, harga_saat_beli).</div></details><details><summary>2. Mengapa harga_saat_beli disimpan di ItemPesanan, bukan hanya di Produk?</summary><div>Harga produk bisa berubah; pesanan lama harus tetap mencatat harga saat itu.</div></details><details><summary>3. Apa jenis relasi antara Kendaraan dan Pemilik jika satu kendaraan hanya dimiliki satu orang pada satu waktu tetapi seseorang bisa memiliki banyak kendaraan?</summary><div>1:N dari Pemilik ke Kendaraan.</div></details><details><summary>4. Konversikan relasi 1:N Dosen–MataKuliah ke tabel.</summary><div>Tabel mata_kuliah memiliki kolom kode_dosen sebagai FK ke dosen.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Entitas, atribut, kunci primer, kunci asing, relasi, kardinalitas.</li><li>Baca kardinalitas dalam dua arah dan konfirmasi dengan pengguna.</li><li>M:N dipecah dengan entitas asosiatif yang dapat menyimpan atribut hubungan.</li><li>Basis data menegakkan aturan lewat PK, FK, UNIQUE, dan CHECK.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa beda notasi Chen dan Crow's Foot?</summary><div>Chen memakai belah ketupat untuk relasi dan elips untuk atribut; Crow's Foot memakai garis dengan simbol kaki gagak untuk "banyak" dan lebih ringkas, sehingga lebih umum dalam alat modern.</div></details>
+<details class="faq"><summary>Mengapa tidak memakai nama sebagai kunci primer?</summary><div>Nama dapat sama dan dapat berubah. Gunakan pengenal stabil (NIM, id otomatis).</div></details>
+<details class="faq"><summary>Apakah ERD sama dengan diagram kelas?</summary><div>Mirip, tetapi ERD memodelkan data persisten, sedangkan diagram kelas memodelkan struktur dan perilaku program.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Ramez Elmasri dan Shamkant Navathe, Fundamentals of Database Systems (Pearson)</li><li>Abraham Silberschatz, Henry Korth, S. Sudarshan, Database System Concepts (McGraw-Hill)</li><li>Kenneth E. Kendall dan Julie E. Kendall, Systems Analysis and Design (Pearson)</li><li><a href="https://www.sqlite.org/lang.html" rel="noopener" target="_blank">SQLite Documentation: SQL As Understood By SQLite</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/"><img src="/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF</span></a><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
