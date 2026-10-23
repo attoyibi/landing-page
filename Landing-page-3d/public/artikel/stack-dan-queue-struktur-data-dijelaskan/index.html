@@ -44,6 +44,7 @@
 <h1>Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman</h1>
 <p class="lead">Dua struktur data paling dasar ini tampak sederhana, tetapi bekerja di balik banyak hal: tombol undo, riwayat halaman browser, antrean cetak, dan cara komputer menjalankan fungsi. Kuncinya satu aturan: siapa yang keluar lebih dulu.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman" fetchpriority="high"></figure>
 <h2 id="dua-aturan-yang-berbeda">Dua aturan yang berbeda</h2>
 <figure class="diagram"><svg viewBox="0 0 640 266" role="img" aria-label="Stack dan queue" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="254" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Stack (tumpukan) - LIFO</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Masuk terakhir, keluar pertama</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Seperti tumpukan piring</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Operasi: push dan pop</text><circle cx="32" cy="184" r="4" fill="#1e5ab2"/><text x="46" y="189" font-size="13.5" fill="#0f1a33">Contoh: undo, riwayat halaman</text><circle cx="32" cy="222" r="4" fill="#1e5ab2"/><text x="46" y="227" font-size="13.5" fill="#0f1a33">Dipakai pada rekursi</text><rect x="330" y="6" width="300" height="254" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Queue (antrean) - FIFO</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Masuk pertama, keluar pertama</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Seperti antrean kasir</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Operasi: enqueue dan dequeue</text><circle cx="352" cy="184" r="4" fill="#1f7a46"/><text x="366" y="189" font-size="13.5" fill="#0f1a33">Contoh: antrean cetak, pesan</text><circle cx="352" cy="222" r="4" fill="#1f7a46"/><text x="366" y="227" font-size="13.5" fill="#0f1a33">Dipakai pada pencarian BFS</text></svg></figure>
@@ -51,7 +52,7 @@
 <h2 id="contoh-pemakaian-nyata">Contoh pemakaian nyata</h2>
 <div data-w="cards"><script type="application/json">{"title":"Ketuk kartu: stack atau queue?","items":[{"tag":"Kasus","front":"Tombol undo di editor teks.","backTag":"Jawaban","back":"Stack. Perubahan terakhir dibatalkan lebih dulu."},{"tag":"Kasus","front":"Antrean pekerjaan cetak di kantor.","backTag":"Jawaban","back":"Queue. Yang masuk pertama dicetak pertama."},{"tag":"Kasus","front":"Memeriksa tanda kurung seimbang dalam ekspresi.","backTag":"Jawaban","back":"Stack. Tutup kurung dicocokkan dengan buka kurung terakhir."},{"tag":"Kasus","front":"Tombol kembali (back) di browser.","backTag":"Jawaban","back":"Stack. Halaman terakhir dikunjungi kembali dulu."},{"tag":"Kasus","front":"Antrean pesan di sistem notifikasi.","backTag":"Jawaban","back":"Queue. Pesan diproses sesuai urutan masuk."}]}</script></div>
 <h2 id="kode-python">Kode Python</h2>
-<pre><code># Stack: pakai list
+<figure class="codebox"><pre><code># Stack: pakai list
 stack = []
 stack.append(&quot;A&quot;)   # push
 stack.append(&quot;B&quot;)
@@ -62,7 +63,7 @@ from collections import deque
 q = deque()
 q.append(&quot;A&quot;)       # enqueue
 q.append(&quot;B&quot;)
-print(q.popleft())  # A (pertama masuk)</code></pre>
+print(q.popleft())  # A (pertama masuk)</code></pre></figure>
 <div class="callout good"><b>Tips Python</b><p>Pada Python, list sudah cocok untuk stack. Untuk queue, gunakan collections.deque karena menghapus elemen pertama dari list biasa lambat pada data besar.</p></div>
 <div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Ada tiga item masuk berurutan A, B, C. Pada stack, mana yang pertama keluar?","options":["A","B","C"],"answer":2,"why":"Last in, first out: C masuk terakhir."},{"q":"Pada queue dengan urutan masuk yang sama, mana yang pertama keluar?","options":["A","B","C"],"answer":0,"why":"First in, first out: A masuk pertama."}]}</script></div>
 <h2 id="tanya-jawab">Tanya jawab</h2>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</title>
+<meta name="description" content="Pelajari simbol flowchart, aturan menulis pseudocode, dan cara menerjemahkannya ke Python. Dengan contoh kelulusan, faktorial, dan latihan menelusuri algoritma.">
+<meta name="keywords" content="flowchart, pseudocode, algoritma, Python, perancangan program">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/">
+<meta property="og:title" content="Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding">
+<meta property="og:description" content="Pelajari simbol flowchart, aturan menulis pseudocode, dan cara menerjemahkannya ke Python. Dengan contoh kelulusan, faktorial, dan latihan menelusuri algoritma.">
+<meta property="og:image" content="https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding">
+<meta name="twitter:description" content="Pelajari simbol flowchart, aturan menulis pseudocode, dan cara menerjemahkannya ke Python. Dengan contoh kelulusan, faktorial, dan latihan menelusuri algoritma.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding","description":"Pelajari simbol flowchart, aturan menulis pseudocode, dan cara menerjemahkannya ke Python. Dengan contoh kelulusan, faktorial, dan latihan menelusuri algoritma.","image":["https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"flowchart, pseudocode, algoritma, Python, perancangan program","articleSection":"Algoritma & Pemrograman Python","wordCount":477,"mainEntityOfPage":"https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding","item":"https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah pseudocode punya standar baku?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Setiap buku atau kampus punya gaya berbeda. Yang penting konsisten dan dapat dipahami pembaca lain."}},{"@type":"Question","name":"Apakah flowchart masih dipakai di industri?","acceptedAnswer":{"@type":"Answer","text":"Ya, terutama untuk menjelaskan alur proses bisnis dan logika yang rumit. Untuk kode sehari-hari, banyak developer langsung menulis kode atau sketsa sederhana."}},{"@type":"Question","name":"Alat apa untuk menggambar flowchart?","acceptedAnswer":{"@type":"Answer","text":"Tersedia banyak, misalnya draw.io (diagrams.net) yang gratis, atau cukup kertas dan pensil saat belajar."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#simbol-flowchart-yang-wajib-dikenal">Simbol flowchart yang wajib dikenal</a></li><li><a href="#aturan-menggambar-flowchart">Aturan menggambar flowchart</a></li><li><a href="#contoh-1-menentukan-kelulusan">Contoh 1: menentukan kelulusan</a></li><li><a href="#contoh-2-faktorial-dengan-perulangan">Contoh 2: faktorial dengan perulangan</a></li><li><a href="#kamus-penerjemah-pseudocode-ke-python">Kamus penerjemah pseudocode ke Python</a></li><li><a href="#cara-memeriksa-algoritma-tabel-penelusuran">Cara memeriksa algoritma: tabel penelusuran</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</h1>
+<p class="lead">Flowchart dan pseudocode adalah dua cara menuliskan algoritma sebelum menjadi kode. Keduanya membuat kesalahan logika terlihat sejak awal, saat memperbaikinya masih murah. Materi ini menunjukkan cara membuat keduanya dengan benar dan menerjemahkannya ke Python.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> arti algoritma dan lima sifatnya</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membaca dan menggambar flowchart dengan simbol standar</li><li>menulis pseudocode yang jelas dan konsisten</li><li>menerjemahkan pseudocode ke kode Python dan sebaliknya</li><li>memeriksa kebenaran algoritma lewat penelusuran manual</li></ul></div>
+<h2 id="simbol-flowchart-yang-wajib-dikenal">Simbol flowchart yang wajib dikenal</h2>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Simbol-simbol dasar flowchart" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="4mb2o-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="4mb2o-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="4mb2o-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4mb2o-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4mb2o-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><rect x="25" y="28" width="130" height="44" rx="22" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="54.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">Terminator</tspan></text><polygon points="199,24 315,24 301,76 185,76" fill="#ebe2fd" stroke="#1e5ab2" stroke-width="2"/><text x="250" y="54.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="250" dy="0">Input / Output</tspan></text><rect x="345" y="24" width="130" height="52" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="410" y="54.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="410" dy="0">Proses</tspan></text><polygon points="570,15 630,50 570,85 510,50" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="54" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">Keputusan</tspan></text><text x="90" y="124.33333333333333" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="90" dy="0">Awal dan akhir</tspan></text><text x="250" y="116.33333333333333" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="250" dy="0">Membaca atau menulis</tspan><tspan x="250" dy="16">data</tspan></text><text x="410" y="116.33333333333333" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="410" dy="0">Perhitungan atau</tspan><tspan x="410" dy="16">penugasan</tspan></text><text x="570" y="116.33333333333333" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="570" dy="0">Percabangan ya atau</tspan><tspan x="570" dy="16">tidak</tspan></text></svg><figcaption>Simbol lain yang sering dipakai: panah alir (arah proses), konektor (lingkaran kecil) untuk menyambung bagian diagram, dan predefined process untuk memanggil subprogram.</figcaption></figure>
+<h2 id="aturan-menggambar-flowchart">Aturan menggambar flowchart</h2>
+<ul><li>Hanya ada <b>satu</b> terminator mulai. Boleh lebih dari satu terminator selesai bila perlu, tetapi satu lebih rapi.</li><li>Alur dibaca dari atas ke bawah dan kiri ke kanan.</li><li>Setiap keputusan punya tepat dua keluaran yang diberi label (ya/tidak atau benar/salah).</li><li>Setiap panah punya arah, dan tidak ada simbol yang "menggantung" tanpa sambungan.</li><li>Isi simbol ringkas: satu tindakan per proses.</li></ul>
+<h2 id="contoh-1-menentukan-kelulusan">Contoh 1: menentukan kelulusan</h2>
+<p>Aturan: nilai akhir 60 atau lebih dinyatakan lulus, selain itu tidak lulus.</p>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Flowchart menentukan kelulusan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="4m3p7-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="4m3p7-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="4m3p7-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4m3p7-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4m3p7-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="260,50 260,70" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4m3p7-arrow)"/><polyline points="260,122 260,144" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4m3p7-arrow)"/><polyline points="221.3,207.7 156.4,244" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4m3p7-arrow)"/><rect x="177.2594470046083" y="216.83870967741936" width="23.2" height="17" rx="4" fill="#fff" opacity=".92"/><text x="188.85944700460828" y="229.83870967741936" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">ya</text><polyline points="298.7,207.7 363.6,244" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4m3p7-arrow)"/><rect x="309.64055299539166" y="216.83870967741936" width="43" height="17" rx="4" fill="#fff" opacity=".92"/><text x="331.14055299539166" y="229.83870967741936" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">tidak</text><polyline points="185,290 205,295.3" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4m3p7-arrow)"/><polyline points="325,292.7 315,295.3" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4m3p7-arrow)"/><rect x="195" y="6" width="130" height="44" rx="22" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="32.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">Mulai</tspan></text><polygon points="194,70 340,70 326,122 180,122" fill="#ebe2fd" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="100.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">Baca nilai</tspan></text><polygon points="260,144 340,186 260,228 180,186" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="190" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">nilai ≥ 60 ?</tspan></text><polygon points="49,244 185,244 171,296 35,296" fill="#ebe2fd" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="274.3333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="110" dy="0">Tulis &quot;Lulus&quot;</tspan></text><polygon points="339,244 495,244 481,296 325,296" fill="#ebe2fd" stroke="#1e5ab2" stroke-width="2"/><text x="410" y="274.3333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="410" dy="0">Tulis &quot;Tidak lulus&quot;</tspan></text><rect x="205" y="292" width="110" height="36" rx="18" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="314.3333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">Selesai</tspan></text></svg></figure>
+<p>Pseudocode-nya, lalu Python-nya:</p>
+<figure class="codebox"><pre data-lang="pseudocode"><code>ALGORITMA Kelulusan
+  BACA nilai
+  JIKA nilai &gt;= 60 MAKA
+    TULIS &quot;Lulus&quot;
+  SELAIN ITU
+    TULIS &quot;Tidak lulus&quot;
+  AKHIR JIKA</code></pre><figcaption>Pseudocode tidak punya sintaks baku. Yang penting konsisten dan terbaca oleh manusia.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>nilai = 72
+if nilai &gt;= 60:
+    print(&quot;Lulus&quot;)
+else:
+    print(&quot;Tidak lulus&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>Lulus</code></pre></figure>
+<h2 id="contoh-2-faktorial-dengan-perulangan">Contoh 2: faktorial dengan perulangan</h2>
+<p>n! = 1 × 2 × ... × n, dengan 0! = 1.</p>
+<figure class="codebox"><pre data-lang="pseudocode"><code>ALGORITMA Faktorial
+  BACA n
+  hasil ← 1
+  UNTUK i ← 1 SAMPAI n LAKUKAN
+    hasil ← hasil × i
+  AKHIR UNTUK
+  TULIS hasil</code></pre></figure>
+<figure class="codebox"><pre data-lang="python"><code>n = 5
+hasil = 1
+for i in range(1, n + 1):
+    hasil = hasil * i
+print(n, &quot;! =&quot;, hasil)</code></pre><pre class="runout" data-lang="keluaran"><code>5 ! = 120</code></pre></figure>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri perhitungan 4!","desc":"Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.","code":"n = 4\nhasil = 1\nfor i in range(1, n + 1):\n    hasil = hasil * i\nprint(\"4! =\", hasil)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"n":"4"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"1"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"1","i":"1"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"1","i":"1"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"1","i":"2"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"2","i":"2"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"2","i":"3"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"6","i":"3"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"6","i":"4"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"24","i":"4"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"24","i":"4"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"n":"4","hasil":"24","i":"4"}}],"out":"4! = 24\n"}]}</script></div>
+<h2 id="kamus-penerjemah-pseudocode-ke-python">Kamus penerjemah pseudocode ke Python</h2>
+<table><thead><tr><th>Pseudocode</th><th>Python</th></tr></thead><tbody><tr><td>x ← 5</td><td>x = 5</td></tr><tr><td>BACA x</td><td>x = int(input())</td></tr><tr><td>TULIS x</td><td>print(x)</td></tr><tr><td>JIKA ... MAKA ... SELAIN ITU</td><td>if ... : ... else: ...</td></tr><tr><td>SELAMA kondisi LAKUKAN</td><td>while kondisi:</td></tr><tr><td>UNTUK i ← 1 SAMPAI n</td><td>for i in range(1, n + 1):</td></tr><tr><td>a MOD b</td><td>a % b</td></tr><tr><td>a DIV b</td><td>a // b</td></tr></tbody></table>
+<div class="callout info"><b>Catatan sintaks</b><p>Di Python, blok kode ditandai oleh <b>indentasi</b> (spasi di awal baris), bukan oleh kata penutup seperti AKHIR JIKA. Biasakan 4 spasi untuk satu tingkat.</p></div>
+<h2 id="cara-memeriksa-algoritma-tabel-penelusuran">Cara memeriksa algoritma: tabel penelusuran</h2>
+<p>Sebelum menjalankan kode, kerjakan algoritma di atas kertas dengan satu contoh. Buat tabel berisi nilai variabel pada tiap langkah. Cara ini menangkap sebagian besar kesalahan logika. Contoh untuk faktorial n = 4:</p>
+<table><thead><tr><th>Langkah</th><th>i</th><th>hasil sebelum</th><th>hasil sesudah</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>2</td><td>1</td><td>2</td></tr><tr><td>3</td><td>3</td><td>2</td><td>6</td></tr><tr><td>4</td><td>4</td><td>6</td><td>24</td></tr></tbody></table>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Gambarlah flowchart untuk menentukan bilangan terbesar di antara tiga bilangan a, b, dan c. Berapa keputusan minimal yang diperlukan?</summary><div>Minimal dua keputusan: bandingkan a dengan b untuk mendapat pemenang sementara, lalu bandingkan pemenang itu dengan c. Dalam Python: <code>max(a, b, c)</code>, atau <code>t = a if a > b else b; t = t if t > c else c</code>.</div></details><details><summary>2. Tulis pseudocode untuk menghitung jumlah bilangan 1 sampai n, lalu terjemahkan ke Python.</summary><div>Pseudocode: jumlah ← 0; UNTUK i ← 1 SAMPAI n: jumlah ← jumlah + i. Python: <code>jumlah = 0
+for i in range(1, n + 1): jumlah += i</code>. (Rumus langsung: n(n+1)/2.)</div></details><details><summary>3. Apa yang salah dengan: SELAMA x > 0 LAKUKAN, TULIS x (tanpa mengubah x)?</summary><div>Perulangan tak berhingga bila x > 0 di awal, karena x tidak pernah berubah. Harus ada langkah yang mengubah x, misalnya x ← x − 1.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Simbol belah ketupat pada flowchart menyatakan...","options":["Proses","Keputusan","Awal"],"answer":1,"why":"Belah ketupat adalah simbol keputusan."},{"q":"Padanan \"a MOD b\" di Python adalah...","options":["a // b","a % b","a ** b"],"answer":1,"why":"Operator % menghasilkan sisa bagi."}]}</script></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Flowchart memperlihatkan alur secara visual, pseudocode menuliskannya dalam teks mirip kode.</li><li>Keputusan selalu punya dua keluaran berlabel.</li><li>Terjemahkan pseudocode ke Python dengan memperhatikan indentasi.</li><li>Tabel penelusuran manual adalah alat uji logika yang murah dan ampuh.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah pseudocode punya standar baku?</summary><div>Tidak. Setiap buku atau kampus punya gaya berbeda. Yang penting konsisten dan dapat dipahami pembaca lain.</div></details>
+<details class="faq"><summary>Apakah flowchart masih dipakai di industri?</summary><div>Ya, terutama untuk menjelaskan alur proses bisnis dan logika yang rumit. Untuk kode sehari-hari, banyak developer langsung menulis kode atau sketsa sederhana.</div></details>
+<details class="faq"><summary>Alat apa untuk menggambar flowchart?</summary><div>Tersedia banyak, misalnya draw.io (diagrams.net) yang gratis, atau cukup kertas dan pensil saat belajar.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li><li>Anany Levitin, Introduction to the Design and Analysis of Algorithms (buku teks)</li><li><a href="https://docs.python.org/3/tutorial/controlflow.html" rel="noopener" target="_blank">Dokumentasi Python: Control Flow Tools</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"><img src="/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Rekursi Dijelaskan: Fungsi yang Memanggil Dirinya Sendiri</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

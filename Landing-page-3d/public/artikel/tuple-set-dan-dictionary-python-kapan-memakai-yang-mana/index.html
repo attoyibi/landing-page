@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana</title>
+<meta name="description" content="Bandingkan tuple, set, dan dictionary Python: sifat, operasi himpunan, pencarian cepat berbasis hash, dan pola umum seperti menghitung frekuensi kata. Dengan diagram Venn dan latihan.">
+<meta name="keywords" content="tuple Python, set Python, dictionary Python, hash table, struktur data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/">
+<meta property="og:title" content="Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana">
+<meta property="og:description" content="Bandingkan tuple, set, dan dictionary Python: sifat, operasi himpunan, pencarian cepat berbasis hash, dan pola umum seperti menghitung frekuensi kata. Dengan diagram Venn dan latihan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana">
+<meta name="twitter:description" content="Bandingkan tuple, set, dan dictionary Python: sifat, operasi himpunan, pencarian cepat berbasis hash, dan pola umum seperti menghitung frekuensi kata. Dengan diagram Venn dan latihan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana","description":"Bandingkan tuple, set, dan dictionary Python: sifat, operasi himpunan, pencarian cepat berbasis hash, dan pola umum seperti menghitung frekuensi kata. Dengan diagram Venn dan latihan.","image":["https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"tuple Python, set Python, dictionary Python, hash table, struktur data","articleSection":"Algoritma & Pemrograman Python","wordCount":326,"mainEntityOfPage":"https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana","item":"https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah dictionary Python berurutan?","acceptedAnswer":{"@type":"Answer","text":"Sejak Python 3.7, urutan penyisipan dijamin oleh bahasa. Itu tidak berarti dict adalah urutan yang diindeks seperti list."}},{"@type":"Question","name":"Apa bedanya set dan frozenset?","acceptedAnswer":{"@type":"Answer","text":"frozenset immutable sehingga bisa menjadi elemen set lain atau kunci dict."}},{"@type":"Question","name":"Kapan memakai defaultdict?","acceptedAnswer":{"@type":"Answer","text":"Bila Anda sering menulis \"jika kunci belum ada, buat nilai awal\". defaultdict(list) membuat list kosong otomatis."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tuple-urutan-yang-tidak-berubah">Tuple: urutan yang tidak berubah</a></li><li><a href="#set-kumpulan-unik-tanpa-urutan">Set: kumpulan unik tanpa urutan</a></li><li><a href="#dictionary-kunci-ke-nilai">Dictionary: kunci ke nilai</a></li><li><a href="#mengapa-pencarian-set-dan-dict-begitu-cepat">Mengapa pencarian set dan dict begitu cepat?</a></li><li><a href="#memilih-struktur-data">Memilih struktur data</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana</h1>
+<p class="lead">Setelah list, ada tiga struktur data bawaan lain yang menyelesaikan masalah berbeda: tuple untuk data tetap, set untuk keunikan dan operasi himpunan, dan dictionary untuk pencarian berdasarkan kunci. Memilih yang tepat sering mengubah kode lambat menjadi cepat dan kode rumit menjadi sederhana.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> list Python, mutable vs immutable</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat dan memakai tuple, termasuk unpacking</li><li>memakai set untuk menghilangkan duplikat dan operasi himpunan</li><li>memakai dictionary untuk memetakan kunci ke nilai dan menghitung frekuensi</li><li>menjelaskan mengapa pencarian set dan dict rata-rata O(1)</li><li>memilih struktur data yang tepat untuk suatu masalah</li></ul></div>
+<h2 id="tuple-urutan-yang-tidak-berubah">Tuple: urutan yang tidak berubah</h2>
+<figure class="codebox"><pre data-lang="python"><code>titik = (3, 4)
+x, y = titik                 # unpacking
+print(x, y, titik[0], len(titik))
+satu = (5,)                  # tuple satu elemen butuh koma
+print(type(satu), type((5)))
+a, b = 1, 2
+a, b = b, a                  # menukar nilai tanpa variabel bantu
+print(a, b)
+try:
+    titik[0] = 9
+except TypeError as e:
+    print(&quot;Error:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>3 4 3 2
+&lt;class 'tuple'&gt; &lt;class 'int'&gt;
+2 1
+Error: 'tuple' object does not support item assignment</code></pre></figure>
+<h2 id="set-kumpulan-unik-tanpa-urutan">Set: kumpulan unik tanpa urutan</h2>
+<figure class="codebox"><pre data-lang="python"><code>angka = [3, 1, 3, 2, 1, 5]
+unik = set(angka)
+print(unik, len(unik))
+unik.add(10); unik.discard(1)
+print(3 in unik)             # pencarian cepat
+
+A = {1, 2, 3, 4}
+B = {3, 4, 5}
+print(A | B)    # gabungan
+print(A &amp; B)    # irisan
+print(A - B)    # selisih
+print(A ^ B)    # beda simetris</code></pre><pre class="runout" data-lang="keluaran"><code>{1, 2, 3, 5} 4
+True
+{1, 2, 3, 4, 5}
+{3, 4}
+{1, 2}
+{1, 2, 5}</code></pre></figure>
+<figure class="diagram"><svg viewBox="0 0 520 200" role="img" aria-label="Diagram Venn operasi himpunan" font-family="'Plus Jakarta Sans',Arial,sans-serif"><circle cx="205" cy="100" r="78" fill="#1e5ab2" fill-opacity=".25" stroke="#1e5ab2" stroke-width="2"/><circle cx="315" cy="100" r="78" fill="#1f7a46" fill-opacity=".25" stroke="#1f7a46" stroke-width="2"/><text x="160" y="104" font-size="16" font-weight="700" fill="#0f1a33" text-anchor="middle">1  2</text><text x="260" y="104" font-size="16" font-weight="700" fill="#0f1a33" text-anchor="middle">3  4</text><text x="360" y="104" font-size="16" font-weight="700" fill="#0f1a33" text-anchor="middle">5</text><text x="165" y="28" font-size="14" font-weight="700" fill="#1e5ab2" text-anchor="middle">A</text><text x="355" y="28" font-size="14" font-weight="700" fill="#1f7a46" text-anchor="middle">B</text><text x="260" y="190" font-size="12.5" fill="#4a5568" text-anchor="middle">A &amp; B (irisan) = {3, 4}  |  A | B = {1,2,3,4,5}  |  A - B = {1, 2}</text></svg><figcaption>Operasi himpunan pada A = {1,2,3,4} dan B = {3,4,5}.</figcaption></figure>
+<h2 id="dictionary-kunci-ke-nilai">Dictionary: kunci ke nilai</h2>
+<figure class="codebox"><pre data-lang="python"><code>siswa = {&quot;nama&quot;: &quot;Ani&quot;, &quot;umur&quot;: 19}
+siswa[&quot;jurusan&quot;] = &quot;SI&quot;            # tambah atau ubah
+print(siswa[&quot;nama&quot;], siswa.get(&quot;alamat&quot;, &quot;tidak ada&quot;))
+for k, v in siswa.items():
+    print(k, &quot;=&quot;, v)
+print(&quot;umur&quot; in siswa, list(siswa.keys()))
+del siswa[&quot;umur&quot;]
+print(siswa)</code></pre><pre class="runout" data-lang="keluaran"><code>Ani tidak ada
+nama = Ani
+umur = 19
+jurusan = SI
+True ['nama', 'umur', 'jurusan']
+{'nama': 'Ani', 'jurusan': 'SI'}</code></pre></figure>
+<h3>Pola penting: menghitung frekuensi</h3>
+<figure class="codebox"><pre data-lang="python"><code>teks = &quot;kucing makan ikan lalu kucing tidur lalu kucing bangun&quot;
+hitung = {}
+for kata in teks.split():
+    hitung[kata] = hitung.get(kata, 0) + 1
+print(hitung)
+
+from collections import Counter
+print(Counter(teks.split()).most_common(2))
+
+kuadrat = {x: x * x for x in range(1, 6)}   # dict comprehension
+print(kuadrat)</code></pre><pre class="runout" data-lang="keluaran"><code>{'kucing': 3, 'makan': 1, 'ikan': 1, 'lalu': 2, 'tidur': 1, 'bangun': 1}
+[('kucing', 3), ('lalu', 2)]
+{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}</code></pre></figure>
+<h2 id="mengapa-pencarian-set-dan-dict-begitu-cepat">Mengapa pencarian set dan dict begitu cepat?</h2>
+<p>Keduanya memakai <b>tabel hash</b>: kunci diubah menjadi angka (hash) yang menentukan lokasi penyimpanan, sehingga pencarian rata-rata langsung ke lokasi yang tepat tanpa memeriksa elemen satu per satu. Karena itu kunci dict dan elemen set harus <i>hashable</i> (immutable): list tidak boleh, tuple boleh.</p>
+<div data-w="hash"><script type="application/json">{"title":"Lihat cara kerja tabel hash"}</script></div>
+<figure class="codebox"><pre data-lang="python"><code>import time
+data = list(range(200000))
+ss = set(data)
+t = time.perf_counter(); 199999 in data; t1 = time.perf_counter() - t
+t = time.perf_counter(); 199999 in ss;   t2 = time.perf_counter() - t
+print(&quot;list lebih lambat sekitar&quot;, int(t1 / t2) &gt; 100)   # biasanya ratusan kali</code></pre><pre class="runout" data-lang="keluaran"><code>list lebih lambat sekitar True</code></pre><figcaption>Pencarian di list O(n), di set O(1) rata-rata. Selisihnya membesar seiring jumlah data.</figcaption></figure>
+<h2 id="memilih-struktur-data">Memilih struktur data</h2>
+<table><thead><tr><th>Kebutuhan</th><th>Pilih</th><th>Alasan</th></tr></thead><tbody><tr><td>Urutan yang berubah, boleh duplikat</td><td>list</td><td>Fleksibel, akses indeks</td></tr><tr><td>Data tetap (koordinat, record)</td><td>tuple</td><td>Immutable, bisa jadi kunci</td></tr><tr><td>Elemen unik dan pemeriksaan keanggotaan cepat</td><td>set</td><td>Hash, operasi himpunan</td></tr><tr><td>Cari nilai berdasarkan kunci</td><td>dict</td><td>Pencarian O(1) rata-rata</td></tr><tr><td>Antrean masuk-keluar dari ujung</td><td>collections.deque</td><td>O(1) di kedua ujung</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apa hasil \u003ccode>set([1, 2, 2, 3, 3, 3])\u003c/code>?","options":["{1, 2, 3}","{1, 2, 2, 3, 3, 3}","Error"],"answer":0,"why":"Set hanya menyimpan elemen unik."},{"q":"Mana yang boleh menjadi kunci dictionary?","options":["[1, 2]","(1, 2)","{1, 2}"],"answer":1,"why":"Tuple immutable sehingga hashable; list dan set tidak."},{"q":"\u003ccode>d.get(\"x\", 0)\u003c/code> bila \"x\" tidak ada?","options":["KeyError","0","None"],"answer":1,"why":"get mengembalikan nilai bawaan yang diberikan."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Diberi list nama dengan duplikat, tampilkan jumlah nama unik.</summary><div><code>len(set(nama))</code></div></details><details><summary>2. Tulis program yang mengelompokkan kata berdasarkan panjangnya ke dalam dict: {3: ["aku", "dia"], 4: [...]}.</summary><div><code>g = {}
+for k in kata:
+    g.setdefault(len(k), []).append(k)</code></div></details><details><summary>3. Periksa apakah dua list memiliki elemen yang sama (tanpa peduli urutan atau duplikat).</summary><div><code>set(a) == set(b)</code></div></details><details><summary>4. Mengapa <code>{[1, 2]: "a"}</code> menimbulkan TypeError?</summary><div>List mutable sehingga tidak hashable: hash-nya bisa berubah bila isinya berubah, merusak tabel hash.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Tuple immutable; cocok untuk data tetap dan kunci dict.</li><li>Set menyimpan elemen unik dengan pemeriksaan keanggotaan cepat dan operasi himpunan (| & - ^).</li><li>Dict memetakan kunci ke nilai; get(), items(), setdefault(), Counter memudahkan pola umum.</li><li>Set dan dict berbasis hash: pencarian rata-rata O(1), kunci harus hashable.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah dictionary Python berurutan?</summary><div>Sejak Python 3.7, urutan penyisipan dijamin oleh bahasa. Itu tidak berarti dict adalah urutan yang diindeks seperti list.</div></details>
+<details class="faq"><summary>Apa bedanya set dan frozenset?</summary><div>frozenset immutable sehingga bisa menjadi elemen set lain atau kunci dict.</div></details>
+<details class="faq"><summary>Kapan memakai defaultdict?</summary><div>Bila Anda sering menulis "jika kunci belum ada, buat nilai awal". <code>defaultdict(list)</code> membuat list kosong otomatis.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/datastructures.html" rel="noopener" target="_blank">Dokumentasi Python: Data Structures (tuple, set, dictionary)</a></li><li><a href="https://docs.python.org/3/library/collections.html" rel="noopener" target="_blank">Dokumentasi Python: collections (Counter, defaultdict, deque)</a></li><li><a href="https://wiki.python.org/moin/TimeComplexity" rel="noopener" target="_blank">Python Wiki: TimeComplexity</a></li><li><a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/" rel="noopener" target="_blank">MIT OpenCourseWare 6.0001: Introduction to Computer Science and Programming in Python</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/list-python-operasi-slicing-dan-list-comprehension/"><img src="/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>List Python: Operasi, Slicing, dan List Comprehension</span></a><a href="/artikel/hash-table-cara-kerja-dictionary/"><img src="/artikel/hash-table-cara-kerja-dictionary/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Hash Table: Cara Kerja Dictionary yang Sangat Cepat</span></a><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

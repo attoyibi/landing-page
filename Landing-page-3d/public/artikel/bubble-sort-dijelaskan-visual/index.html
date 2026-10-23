@@ -44,6 +44,7 @@
 <h1>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</h1>
 <p class="lead">Bubble sort bukan algoritma tercepat. Tetapi karena sangat sederhana, ia sering menjadi pintu masuk memahami cara komputer mengurutkan data. Di sini Anda bisa menjalankannya langkah demi langkah, mundur, dan mengulang sampai benar-benar paham.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python" fetchpriority="high"></figure>
 <h2 id="ide-dasarnya-dalam-satu-kalimat">Ide dasarnya dalam satu kalimat</h2>
 <p>Bandingkan dua angka bersebelahan, tukar bila urutannya salah, lalu ulangi dari awal sampai tidak ada yang perlu ditukar. Angka terbesar "menggelembung" ke ujung kanan di setiap putaran, seperti gelembung udara yang naik ke permukaan, itulah asal namanya.</p>
@@ -52,7 +53,7 @@
 <div data-w="sort"><script type="application/json">{"algo":"bubble","size":9,"title":"Bubble sort langkah demi langkah","desc":"Kuning = sedang dibandingkan. Hijau = sudah berada di posisi akhir. Tekan \"Maju\" satu per satu, atau putar otomatis."}</script></div>
 <p>Amati dua hal: batang tertinggi selalu "berjalan" ke kanan, dan setelah putaran pertama, satu batang di ujung kanan sudah final. Karena itu putaran berikutnya tidak perlu lagi memeriksa ujung tersebut.</p>
 <h2 id="kode-python">Kode Python</h2>
-<pre><code>def bubble_sort(a):
+<figure class="codebox"><pre><code>def bubble_sort(a):
     n = len(a)
     for i in range(n - 1):
         ada_tukar = False
@@ -64,7 +65,7 @@
             break
     return a
 
-print(bubble_sort([5, 2, 9, 1, 7]))   # [1, 2, 5, 7, 9]</code></pre>
+print(bubble_sort([5, 2, 9, 1, 7]))   # [1, 2, 5, 7, 9]</code></pre></figure>
 <div class="callout good"><b>Satu trik yang membuatnya lebih pintar</b><p>Variabel <code>ada_tukar</code> adalah optimasi kecil: kalau satu putaran penuh tidak menukar apa pun, data pasti sudah urut dan kita boleh berhenti. Pada data yang hampir urut, ini membuat bubble sort sangat cepat.</p></div>
 <h2 id="seberapa-lambat-kompleksitas-waktu">Seberapa lambat? Kompleksitas waktu</h2>
 <p>Ada dua perulangan bersarang, jadi untuk n data kira-kira dibutuhkan n × n perbandingan. Dalam notasi Big O ditulis <b>O(n²)</b>. Artinya jika jumlah data digandakan, pekerjaan menjadi sekitar empat kali lipat. Geser slider di bawah dan lihat sendiri bagaimana O(n²) membengkak dibandingkan algoritma lain.</p>

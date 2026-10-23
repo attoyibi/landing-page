@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perulangan Python: for, while, break, continue, dan else</title>
+<meta name="description" content="Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.">
+<meta name="keywords" content="for loop, while loop, range, break continue, perulangan Python">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/">
+<meta property="og:title" content="Perulangan Python: for, while, break, continue, dan else">
+<meta property="og:description" content="Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.">
+<meta property="og:image" content="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Perulangan Python: for, while, break, continue, dan else">
+<meta name="twitter:description" content="Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Perulangan Python: for, while, break, continue, dan else","description":"Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.","image":["https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"for loop, while loop, range, break continue, perulangan Python","articleSection":"Algoritma & Pemrograman Python","wordCount":445,"mainEntityOfPage":"https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Perulangan Python: for, while, break, continue, dan else","item":"https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Python punya do-while?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Biasanya ditiru dengan while True: yang berisi break di akhir blok."}},{"@type":"Question","name":"Bolehkah mengubah list saat sedang di-for?","acceptedAnswer":{"@type":"Answer","text":"Tidak disarankan karena indeks bergeser dan elemen bisa terlewat. Bangun list baru atau iterasi pada salinan."}},{"@type":"Question","name":"Mana yang lebih cepat, for atau while?","acceptedAnswer":{"@type":"Answer","text":"Untuk jumlah putaran yang diketahui, for dengan range biasanya sedikit lebih cepat dan jauh lebih mudah dibaca."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#for-mengulang-untuk-setiap-elemen">for: mengulang untuk setiap elemen</a></li><li><a href="#while-mengulang-selama-syarat-benar">while: mengulang selama syarat benar</a></li><li><a href="#pola-pola-perulangan-yang-wajib-dikuasai">Pola-pola perulangan yang wajib dikuasai</a></li><li><a href="#enumerate-dan-zip">enumerate dan zip</a></li><li><a href="#break-continue-dan-else">break, continue, dan else</a></li><li><a href="#contoh-klasik-dugaan-collatz">Contoh klasik: dugaan Collatz</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Perulangan Python: for, while, break, continue, dan else</h1>
+<p class="lead">Perulangan adalah alasan komputer berguna: mengerjakan ribuan langkah tanpa lelah. Kuncinya memilih jenis perulangan yang tepat, memastikan perulangan pasti berhenti, dan memahami apa yang berubah pada setiap putaran. Materi ini membangun kemampuan itu lewat contoh yang bisa Anda telusuri sendiri.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> percabangan, operator</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Perulangan Python: for, while, break, continue, dan else" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memilih antara for dan while sesuai situasi</li><li>memakai range dengan awal, akhir, dan langkah</li><li>menulis pola akumulator, penghitung, dan pencari maksimum</li><li>memakai break, continue, dan else pada perulangan</li><li>memastikan sebuah while pasti berhenti</li></ul></div>
+<h2 id="for-mengulang-untuk-setiap-elemen">for: mengulang untuk setiap elemen</h2>
+<p>Pakai <code>for</code> bila jumlah putaran diketahui atau Anda ingin memproses setiap elemen sebuah urutan.</p>
+<figure class="codebox"><pre data-lang="python"><code>for huruf in &quot;ABC&quot;:
+    print(huruf)
+for buah in [&quot;apel&quot;, &quot;jeruk&quot;]:
+    print(buah.upper())
+for i in range(3):          # 0, 1, 2
+    print(&quot;putaran&quot;, i)</code></pre><pre class="runout" data-lang="keluaran"><code>A
+B
+C
+APEL
+JERUK
+putaran 0
+putaran 1
+putaran 2</code></pre></figure>
+<h3>range(awal, akhir, langkah)</h3>
+<figure class="codebox"><pre data-lang="python"><code>print(list(range(5)))          # 0..4  (akhir tidak termasuk)
+print(list(range(2, 8)))        # 2..7
+print(list(range(0, 20, 5)))    # 0, 5, 10, 15
+print(list(range(5, 0, -1)))    # menurun: 5..1
+print(sum(range(1, 101)))       # 5050</code></pre><pre class="runout" data-lang="keluaran"><code>[0, 1, 2, 3, 4]
+[2, 3, 4, 5, 6, 7]
+[0, 5, 10, 15]
+[5, 4, 3, 2, 1]
+5050</code></pre><figcaption>range menghasilkan angka secara malas (lazy), tidak menyimpan semuanya di memori.</figcaption></figure>
+<h2 id="while-mengulang-selama-syarat-benar">while: mengulang selama syarat benar</h2>
+<p>Pakai <code>while</code> bila jumlah putaran <b>tidak diketahui</b> di awal. Syarat diperiksa <i>sebelum</i> setiap putaran.</p>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri while: hitung mundur dan penjumlahan","desc":"Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.","code":"n = 4\ntotal = 0\nwhile n > 0:\n    total += n\n    n -= 1\nprint(\"Jumlah:\", total)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"n":"4"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"4","total":"0"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"4","total":"0"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"n":"4","total":"4"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"3","total":"4"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"3","total":"4"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"n":"3","total":"7"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"2","total":"7"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"2","total":"7"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"n":"2","total":"9"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"1","total":"9"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"n":"1","total":"9"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"n":"1","total":"10"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"n":"0","total":"10"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{"n":"0","total":"10"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"n":"0","total":"10"}}],"out":"Jumlah: 10\n"}]}</script></div>
+<div class="callout warn"><b>Pastikan perulangan berhenti</b><p>Setiap <code>while</code> harus memiliki sesuatu di badannya yang <b>mengubah syarat</b> menuju salah. Lupa baris <code>n -= 1</code> pada contoh di atas menghasilkan perulangan tak berhingga. Hentikan program yang menggantung dengan <b>Ctrl+C</b>.</p></div>
+<div data-w="compare"><script type="application/json">{"title":"for atau while?","tabs":[{"label":"for","html":"\u003cb>Gunakan bila:\u003c/b> memproses setiap elemen list, string, atau rentang angka.\u003cbr>\u003cb>Kelebihan:\u003c/b> lebih singkat, tidak perlu mengatur penghitung sendiri, tidak bisa lupa menaikkan penghitung."},{"label":"while","html":"\u003cb>Gunakan bila:\u003c/b> berulang sampai suatu kejadian (masukan valid, nilai konvergen, permainan selesai).\u003cbr>\u003cb>Waspada:\u003c/b> perlu mengatur kondisi berhenti sendiri."}]}</script></div>
+<h2 id="pola-pola-perulangan-yang-wajib-dikuasai">Pola-pola perulangan yang wajib dikuasai</h2>
+<figure class="codebox"><pre data-lang="python"><code>data = [12, 7, 25, 3, 18]
+
+total = 0                      # akumulator (penjumlahan)
+for x in data:
+    total += x
+
+genap = 0                      # penghitung
+for x in data:
+    if x % 2 == 0:
+        genap += 1
+
+terbesar = data[0]             # pencari maksimum
+for x in data[1:]:
+    if x &gt; terbesar:
+        terbesar = x
+
+print(total, genap, terbesar, total / len(data))</code></pre><pre class="runout" data-lang="keluaran"><code>65 2 25 13.0</code></pre></figure>
+<h2 id="enumerate-dan-zip">enumerate dan zip</h2>
+<figure class="codebox"><pre data-lang="python"><code>nama = [&quot;Ani&quot;, &quot;Budi&quot;, &quot;Citra&quot;]
+nilai = [88, 72, 95]
+for i, n in enumerate(nama, start=1):   # nomor urut sekaligus elemen
+    print(i, n)
+for n, v in zip(nama, nilai):           # dua urutan paralel
+    print(f&quot;{n}: {v}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>1 Ani
+2 Budi
+3 Citra
+Ani: 88
+Budi: 72
+Citra: 95</code></pre></figure>
+<h2 id="break-continue-dan-else">break, continue, dan else</h2>
+<table><thead><tr><th>Pernyataan</th><th>Efek</th></tr></thead><tbody><tr><td>break</td><td>Menghentikan perulangan seketika</td></tr><tr><td>continue</td><td>Melompat ke putaran berikutnya</td></tr><tr><td>else (pada perulangan)</td><td>Dijalankan bila perulangan selesai <b>tanpa</b> break</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>def prima(n):
+    if n &lt; 2:
+        return False
+    for d in range(2, int(n ** 0.5) + 1):
+        if n % d == 0:
+            return False       # ketemu pembagi: bukan prima, berhenti
+    return True
+
+hasil = []
+for n in range(2, 30):
+    if prima(n):
+        hasil.append(n)
+print(hasil)
+
+for n in [4, 6, 9, 7]:
+    for d in range(2, n):
+        if n % d == 0:
+            print(n, &quot;bukan prima, habis dibagi&quot;, d)
+            break
+    else:                       # tidak ada break: tidak ada pembagi
+        print(n, &quot;prima&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+4 bukan prima, habis dibagi 2
+6 bukan prima, habis dibagi 2
+9 bukan prima, habis dibagi 3
+7 prima</code></pre></figure>
+<h2 id="contoh-klasik-dugaan-collatz">Contoh klasik: dugaan Collatz</h2>
+<p>Mulai dari bilangan n. Bila genap, bagi 2. Bila ganjil, kalikan 3 lalu tambah 1. Ulangi sampai n = 1. Tidak ada yang pernah menemukan angka yang gagal berhenti, tetapi belum ada pula yang berhasil membuktikannya: contoh sempurna di mana kita tidak bisa memastikan sebuah while berhenti.</p>
+<figure class="codebox"><pre data-lang="python"><code>n, langkah = 6, 0
+while n != 1:
+    print(n, end=&quot; -&gt; &quot;)
+    n = n // 2 if n % 2 == 0 else 3 * n + 1
+    langkah += 1
+print(1)
+print(&quot;langkah:&quot;, langkah)</code></pre><pre class="runout" data-lang="keluaran"><code>6 -&gt; 3 -&gt; 10 -&gt; 5 -&gt; 16 -&gt; 8 -&gt; 4 -&gt; 2 -&gt; 1
+langkah: 8</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Berapa kali badan \u003ccode>for i in range(2, 10, 3)\u003c/code> dijalankan?","options":["2","3","8"],"answer":1,"why":"Nilai i: 2, 5, 8, tiga kali."},{"q":"Kapan blok else pada perulangan dijalankan?","options":["Bila ada break","Bila perulangan selesai tanpa break","Selalu"],"answer":1,"why":"else pada perulangan berarti \"tidak dihentikan paksa\"."},{"q":"Apa yang dilakukan continue?","options":["Menghentikan program","Melewati sisa badan dan lanjut ke putaran berikutnya","Mengulang putaran yang sama"],"answer":1,"why":"continue melompat ke iterasi berikutnya."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis program yang mencetak semua bilangan kelipatan 7 dari 1 sampai 100.</summary><div><code>for i in range(7, 101, 7): print(i)</code> atau <code>for i in range(1, 101): if i % 7 == 0: print(i)</code>.</div></details><details><summary>2. Hitung berapa kali sebuah bilangan n dapat dibagi 2 sampai hasilnya ganjil (misalnya 40 → 3 kali).</summary><div><code>c = 0
+while n % 2 == 0:
+    n //= 2
+    c += 1</code>. Untuk n = 40: 40 → 20 → 10 → 5, jadi 3 kali.</div></details><details><summary>3. Mengapa <code>while True:</code> sering dipakai bersama break?</summary><div>Untuk perulangan yang kondisi berhentinya baru diketahui di tengah badan, misalnya membaca masukan sampai pengguna mengetik "selesai".</div></details><details><summary>4. Apa yang tercetak: <code>for i in range(3): print(i)</code> lalu <code>print(i)</code> di luar perulangan?</summary><div>0, 1, 2, lalu 2. Variabel perulangan tetap ada setelah perulangan selesai dengan nilai terakhirnya.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>for untuk elemen atau jumlah putaran yang diketahui, while untuk berulang sampai suatu kejadian.</li><li>range(awal, akhir, langkah) tidak menyertakan nilai akhir.</li><li>Pola dasar: akumulator, penghitung, dan pencari maksimum.</li><li>break menghentikan, continue melewati, else dijalankan bila tidak ada break.</li><li>Pastikan setiap while mengubah kondisinya menuju salah.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Python punya do-while?</summary><div>Tidak. Biasanya ditiru dengan <code>while True:</code> yang berisi break di akhir blok.</div></details>
+<details class="faq"><summary>Bolehkah mengubah list saat sedang di-for?</summary><div>Tidak disarankan karena indeks bergeser dan elemen bisa terlewat. Bangun list baru atau iterasi pada salinan.</div></details>
+<details class="faq"><summary>Mana yang lebih cepat, for atau while?</summary><div>Untuk jumlah putaran yang diketahui, for dengan range biasanya sedikit lebih cepat dan jauh lebih mudah dibaca.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements" rel="noopener" target="_blank">Dokumentasi Python: for Statements dan range()</a></li><li><a href="https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops" rel="noopener" target="_blank">Dokumentasi Python: break, continue, dan else pada loop</a></li><li><a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/" rel="noopener" target="_blank">MIT OpenCourseWare 6.0001: Introduction to Computer Science and Programming in Python</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

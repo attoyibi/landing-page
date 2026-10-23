@@ -44,11 +44,12 @@
 <h1>React untuk Pemula: Komponen, Props, dan State dengan Contoh</h1>
 <p class="lead">React membangun antarmuka dari potongan kecil yang bisa dipakai ulang. Bila Anda menguasai tiga ide, komponen, props, dan state, sebagian besar kode React akan terbaca masuk akal. Sisanya adalah variasi.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="React untuk Pemula: Komponen, Props, dan State dengan Contoh" fetchpriority="high"></figure>
 <h2 id="tiga-konsep-inti">Tiga konsep inti</h2>
 <figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Tiga konsep inti React" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Komponen</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Potongan UI yang bisa dipakai ulang (tombol, kartu, formulir)</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Props</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Data yang dikirim dari induk ke komponen anak (hanya baca)</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">State</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Data milik komponen yang bisa berubah dan memicu tampilan ulang</text></svg><figcaption>Komponen adalah fungsi: menerima props, menyimpan state, dan mengembalikan tampilan.</figcaption></figure>
 <h2 id="contoh-paling-kecil">Contoh paling kecil</h2>
-<pre><code>function Salam({ nama }) {            // props: nama
+<figure class="codebox"><pre><code>function Salam({ nama }) {            // props: nama
   return &lt;h2&gt;Halo, {nama}!&lt;/h2&gt;;
 }
 
@@ -61,7 +62,7 @@ function Penghitung() {
       &lt;Salam nama=&quot;Dewi&quot; /&gt;
     &lt;/div&gt;
   );
-}</code></pre>
+}</code></pre></figure>
 <p>Setiap kali <code>setJumlah</code> dipanggil, React menggambar ulang komponen dengan nilai baru. Anda tidak mengubah halaman secara manual; Anda mengubah <b>data</b>, dan tampilan mengikuti.</p>
 <div data-w="compare"><script type="application/json">{"title":"Props dan state: apa bedanya?","tabs":[{"label":"Props","html":"\u003cb>Dari mana:\u003c/b> dikirim oleh komponen induk.\u003cbr>\u003cb>Bisa diubah?\u003c/b> Tidak oleh komponen penerima (hanya baca).\u003cbr>\u003cb>Gunanya:\u003c/b> menyesuaikan komponen yang sama dengan data berbeda."},{"label":"State","html":"\u003cb>Dari mana:\u003c/b> dimiliki dan dikelola komponen itu sendiri.\u003cbr>\u003cb>Bisa diubah?\u003c/b> Ya, lewat fungsi setter, dan memicu tampilan ulang.\u003cbr>\u003cb>Gunanya:\u003c/b> menyimpan hal yang berubah, seperti isi input atau status buka-tutup."}]}</script></div>
 <h2 id="kesalahan-umum-pemula">Kesalahan umum pemula</h2>

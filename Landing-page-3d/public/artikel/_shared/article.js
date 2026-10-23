@@ -741,6 +741,117 @@
         draw();
     };
 
+    /* ---------- tracer: step through a program that was really executed at build time ---------- */
+    W.tracer = (body, cfg) => {
+        const lines = cfg.code.split('\n');
+        let k = 0, timer = null;
+        const code = el('div', { class: 'tr-code', role: 'group', 'aria-label': 'Kode program' });
+        const state = el('div', { class: 'tr-state' });
+        const info = el('p', { class: 'wd', style: 'margin:10px 0 0' });
+        const draw = () => {
+            const st = cfg.steps[k];
+            code.innerHTML = lines.map((l, i) => `<div class="${i + 1 === st.line ? 'cur' : ''}"><i>${i + 1}</i>${esc(l) || ' '}</div>`).join('');
+            const cur = $('.cur', code); if (cur && code.scrollHeight > code.clientHeight) cur.scrollIntoView({ block: 'nearest' });
+            const frames = st.stack.map((f, i) => {
+                const rows = Object.entries(f.vars);
+                return `<div class="tr-frame"><h4>${i === st.stack.length - 1 ? '▶ ' : ''}${esc(f.name === '(modul)' ? 'Variabel global' : f.name + '()')}</h4>${rows.length ? `<table>${rows.map(([n, v]) => `<tr><td>${esc(n)}</td><td>${esc(v)}</td></tr>`).join('')}</table>` : '<div style="padding:6px 10px;color:var(--muted)">(belum ada variabel)</div>'}</div>`;
+            }).join('');
+            state.innerHTML = `<b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)">Memori</b><div style="margin-top:6px">${frames}</div><div class="tr-out"><small>Keluaran (print)</small>${esc(st.out) || '<span style="opacity:.5">(belum ada)</span>'}</div>`;
+            info.textContent = st.line === 0 ? `Program selesai. Langkah ${k + 1} dari ${cfg.steps.length}.` : `Langkah ${k + 1} dari ${cfg.steps.length}: akan menjalankan baris ${st.line}.`;
+            prev.disabled = k === 0; next.disabled = k >= cfg.steps.length - 1;
+        };
+        const prev = el('button', { class: 'btn ghost', type: 'button' }, '◀ Mundur');
+        const next = el('button', { class: 'btn', type: 'button' }, 'Maju ▶');
+        const play = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis');
+        const reset = el('button', { class: 'btn ghost', type: 'button' }, 'Ulang');
+        const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Putar otomatis'; };
+        prev.onclick = () => { stop(); k = Math.max(0, k - 1); draw(); };
+        next.onclick = () => { stop(); k = Math.min(cfg.steps.length - 1, k + 1); draw(); };
+        reset.onclick = () => { stop(); k = 0; draw(); };
+        play.onclick = () => {
+            if (timer) return stop();
+            play.textContent = 'Jeda';
+            timer = setInterval(() => { if (k >= cfg.steps.length - 1) return stop(); k++; draw(); }, 700);
+        };
+        const grid = el('div', { class: 'tr-grid' }); grid.append(code, state);
+        const row = el('div', { class: 'row', style: 'margin-top:10px' }); row.append(prev, next, play, reset);
+        body.append(grid, info, row);
+        draw();
+    };
+
+    /* ---------- truth table of a boolean expression (Python syntax: and, or, not) ---------- */
+    W.truth = (body, cfg) => {
+        const inp = el('input', { type: 'text', value: cfg.expr || 'p and not q', class: 'mono', 'aria-label': 'Ekspresi logika' });
+        const out = el('div', { style: 'overflow-x:auto;margin-top:10px' });
+        const draw = () => {
+            const src = inp.value.trim();
+            const okTokens = (src.match(/[A-Za-z_]+/g) || []).every(t => ['and', 'or', 'not', 'xor', 'True', 'False'].includes(t) || /^[a-z]$/i.test(t));
+            if (!src || !okTokens || /[^A-Za-z\s()=!]/.test(src)) { out.innerHTML = '<span style="color:var(--bad)">Gunakan variabel satu huruf (p, q, r), dan, or, not, tanda kurung.</span>'; return; }
+            const vars = [...new Set((src.replace(/\b(and|or|not|True|False|xor)\b/g, ' ').match(/\b[a-z]\b/gi) || []).map(v => v.toLowerCase()))].sort();
+            if (vars.length > 4) { out.innerHTML = '<span style="color:var(--bad)">Maksimal 4 variabel.</span>'; return; }
+            const js = src.replace(/\bxor\b/g, '!=').replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!').replace(/\bTrue\b/g, 'true').replace(/\bFalse\b/g, 'false').replace(/\b([a-z])\b/gi, m => 'v_' + m.toLowerCase());
+            let fn; try { fn = new Function(...vars.map(v => 'v_' + v), 'return !!(' + js + ')'); fn(...vars.map(() => true)); } catch (e) { out.innerHTML = '<span style="color:var(--bad)">Ekspresi belum valid.</span>'; return; }
+            const rows = []; for (let i = 0; i < 1 << vars.length; i++) { const vals = vars.map((_, k) => !!((i >> (vars.length - 1 - k)) & 1)); rows.push([...vals, fn(...vals)]); }
+            const T = v => `<td style="text-align:center;padding:6px 12px;border-bottom:1px solid var(--line);font-weight:${v ? 700 : 400};color:${v ? 'var(--good)' : 'var(--bad)'}">${v ? 'True' : 'False'}</td>`;
+            out.innerHTML = `<table style="display:table;margin:0"><thead><tr>${vars.map(v => `<th style="text-align:center">${v}</th>`).join('')}<th style="text-align:center;background:var(--brand-soft)">${esc(src)}</th></tr></thead><tbody>${rows.map(r => '<tr>' + r.map(T).join('') + '</tr>').join('')}</tbody></table>`;
+        };
+        inp.oninput = draw;
+        const chips = el('div', { class: 'chips' });
+        (cfg.examples || ['p and q', 'p or q', 'not (p and q)', 'not p or not q', 'p and (q or r)', 'p xor q']).forEach(e => { const c = el('button', { class: 'chip', type: 'button' }, esc(e)); c.onclick = () => { inp.value = e; draw(); }; chips.append(c); });
+        body.append(el('label', {}, 'Ekspresi (variabel p, q, r, s)'), inp, chips, out);
+        draw();
+    };
+
+    /* ---------- loopgrid: order in which a nested loop visits (i, j) ---------- */
+    W.loopgrid = (body, cfg) => {
+        const R = cfg.rows || 4, C = cfg.cols || 5;
+        let k = 0, timer = null;
+        const grid = el('div', { style: `display:grid;grid-template-columns:repeat(${C},1fr);gap:4px;max-width:${C * 58}px` });
+        const info = el('div', { class: 'out' });
+        const draw = () => {
+            grid.innerHTML = '';
+            for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) {
+                const n = i * C + j, on = n === k - 1, done = n < k - 1;
+                const c = el('div', { style: `border:1px solid var(--line);border-radius:8px;padding:8px 0;text-align:center;font-size:13px;background:${on ? '#ffd166' : done ? 'var(--brand-soft)' : '#fff'}` }, `<b>${i},${j}</b><br><small style="color:var(--muted)">${n < k ? n + 1 : '·'}</small>`);
+                grid.append(c);
+            }
+            info.innerHTML = k === 0 ? `Baris luar <code>i</code> berjalan ${R} kali, baris dalam <code>j</code> berjalan ${C} kali tiap putaran luar. Total <b>${R * C}</b> eksekusi badan perulangan.` : `Eksekusi ke-<b>${k}</b> dari ${R * C}: <code>i = ${Math.floor((k - 1) / C)}</code>, <code>j = ${(k - 1) % C}</code>. Perulangan dalam selesai penuh dulu sebelum <code>i</code> bertambah.`;
+        };
+        const next = el('button', { class: 'btn', type: 'button' }, 'Langkah ▶'), play = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis'), reset = el('button', { class: 'btn ghost', type: 'button' }, 'Ulang');
+        const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Putar otomatis'; };
+        next.onclick = () => { stop(); k = Math.min(R * C, k + 1); draw(); };
+        reset.onclick = () => { stop(); k = 0; draw(); };
+        play.onclick = () => { if (timer) return stop(); play.textContent = 'Jeda'; timer = setInterval(() => { if (k >= R * C) return stop(); k++; draw(); }, 250); };
+        const row = el('div', { class: 'row', style: 'margin-top:10px' }); row.append(next, play, reset);
+        body.append(el('div', { class: 'mono', style: 'margin-bottom:8px' }, `for i in range(${R}): for j in range(${C}): ...`), grid, info, row);
+        draw();
+    };
+
+    /* ---------- slice: how s[start:stop:step] picks characters ---------- */
+    W.slice = (body, cfg) => {
+        const s = el('input', { type: 'text', value: cfg.text || 'PYTHON', maxlength: 16, class: 'mono', 'aria-label': 'String' });
+        const a = el('input', { type: 'text', value: cfg.start ?? '', placeholder: 'awal', 'aria-label': 'Awal', class: 'mono' });
+        const b = el('input', { type: 'text', value: cfg.stop ?? '', placeholder: 'akhir', 'aria-label': 'Akhir', class: 'mono' });
+        const c = el('input', { type: 'text', value: cfg.step ?? '', placeholder: 'langkah', 'aria-label': 'Langkah', class: 'mono' });
+        const out = el('div', { class: 'out' });
+        const toI = v => (v.trim() === '' ? null : Number.isInteger(Number(v)) ? Number(v) : NaN);
+        const draw = () => {
+            const t = s.value, n = t.length, A = toI(a.value), B = toI(b.value), Cc = toI(c.value);
+            if ([A, B, Cc].some(Number.isNaN) || Cc === 0) { out.innerHTML = '<span style="color:var(--bad)">Awal, akhir, dan langkah harus bilangan bulat; langkah tidak boleh 0.</span>'; return; }
+            const step = Cc ?? 1; let idx = [];
+            const norm = (v, d) => (v === null ? d : v < 0 ? Math.max(step < 0 ? -1 : 0, v + n) : Math.min(v, step < 0 ? n - 1 : n));
+            let i = norm(A, step > 0 ? 0 : n - 1); const stop = norm(B, step > 0 ? n : -1);
+            for (; step > 0 ? i < stop : i > stop; i += step) if (i >= 0 && i < n) idx.push(i);
+            const cell = (ch, k) => `<div style="text-align:center"><div style="font-size:11px;color:var(--muted)">${k - n}</div><div style="border:2px solid ${idx.includes(k) ? '#e09b00' : 'var(--line)'};background:${idx.includes(k) ? '#fff1d6' : '#fff'};border-radius:8px;padding:6px 0;min-width:30px;font-weight:700" class="mono">${esc(ch)}</div><div style="font-size:11px;color:var(--brand)">${k}</div></div>`;
+            out.innerHTML = `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">${[...t].map((ch, k) => cell(ch, k)).join('')}</div><div class="mono">s[${a.value}:${b.value}${c.value !== '' ? ':' + c.value : ''}] = <b>'${esc(idx.map(k => t[k]).join(''))}'</b></div><small style="color:var(--muted)">Angka biru di bawah = indeks positif, abu-abu di atas = indeks negatif.</small>`;
+        };
+        [s, a, b, c].forEach(x => (x.oninput = draw));
+        const g = el('div', { style: 'display:grid;grid-template-columns:repeat(4,1fr);gap:8px' });
+        [['String', s], ['Awal', a], ['Akhir (tidak termasuk)', b], ['Langkah', c]].forEach(([l, n]) => { const d = el('div'); d.append(el('label', {}, l), n); g.append(d); });
+        body.append(g, out);
+        draw();
+    };
+
     /* ---------- page chrome ---------- */
     function chrome() {
         const bar = $('.bar i');

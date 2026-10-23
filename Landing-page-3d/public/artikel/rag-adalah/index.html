@@ -44,6 +44,7 @@
 <h1>RAG Adalah: Cara AI Menjawab dari Dokumen Anda (Dengan Demo)</h1>
 <p class="lead">ChatGPT dan asisten AI lain terdengar meyakinkan, tetapi mereka tidak tahu isi dokumen internal Anda, dan kadang mengarang jawaban dengan percaya diri. RAG adalah cara paling umum untuk memperbaikinya. Di artikel ini Anda tidak hanya membaca penjelasannya, tetapi juga mencoba sendiri setiap tahapnya.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>4 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="RAG Adalah: Cara AI Menjawab dari Dokumen Anda (Dengan Demo)" fetchpriority="high"></figure>
 <h2 id="masalah-yang-diselesaikan-rag">Masalah yang diselesaikan RAG</h2>
 <p>Model bahasa (LLM) dilatih dari data yang dikumpulkan sampai waktu tertentu. Ia tidak tahu kebijakan sekolah Anda, daftar harga terbaru toko Anda, atau isi PDF yang baru Anda terima kemarin. Kalau ditanya, ia punya dua kemungkinan: mengaku tidak tahu, atau <b>mengarang jawaban yang terdengar benar</b>. Yang kedua ini disebut halusinasi, dan itu risiko nyata ketika AI dipakai untuk urusan serius.</p>
@@ -68,7 +69,7 @@
 <p>Isi dokumen ikut masuk ke prompt. Kalau ada dokumen yang menyisipkan kalimat seperti "abaikan instruksi sebelumnya", model bisa terkecoh. Ini disebut <i>prompt injection</i>. Perlakukan isi dokumen sebagai <b>data</b>, batasi apa yang boleh dilakukan model (misalnya hanya membaca, tidak mengirim email), dan jangan mencampur dokumen rahasia dari pengguna berbeda dalam satu indeks tanpa pengaturan akses.</p>
 <h2 id="kerangka-kode-paling-sederhana">Kerangka kode paling sederhana</h2>
 <p>Di bawah ini kerangka dalam Python. Fungsi <code>embed</code> dan <code>ask_llm</code> diisi dengan penyedia model pilihan Anda.</p>
-<pre><code>def answer(question, chunks, k=3):
+<figure class="codebox"><pre><code>def answer(question, chunks, k=3):
     q_vec = embed(question)
     # skor kemiripan setiap potongan dengan pertanyaan
     scored = sorted(chunks, key=lambda c: cosine(q_vec, c.vec), reverse=True)[:k]
@@ -78,7 +79,7 @@
         &quot;Jika tidak ada jawabannya, katakan tidak tahu.\n\n&quot;
         f&quot;{context}\n\nPertanyaan: {question}&quot;
     )
-    return ask_llm(prompt), [c.title for c in scored]</code></pre>
+    return ask_llm(prompt), [c.title for c in scored]</code></pre></figure>
 <h2 id="uji-pemahaman-anda">Uji pemahaman Anda</h2>
 <div data-w="quiz"><script type="application/json">{"title":"Kuis singkat RAG","questions":[{"q":"Apa tugas utama tahap \"retrieval\" dalam RAG?","options":["Melatih ulang model dengan dokumen baru","Mencari potongan dokumen yang relevan dengan pertanyaan","Menerjemahkan dokumen ke bahasa lain"],"answer":1,"why":"Retrieval mencari potongan yang relevan; model tidak dilatih ulang."},{"q":"Dokumen sama sekali tidak menyebut jawabannya. Perilaku sistem yang paling tepat?","options":["Menebak jawaban yang paling masuk akal","Mengatakan informasinya tidak ditemukan","Mengambil jawaban dari internet tanpa memberi tahu"],"answer":1,"why":"RAG yang baik lebih memilih mengaku tidak tahu daripada mengarang."},{"q":"Potongan teks terlalu kecil (5 kata). Dampaknya?","options":["Kalimat terpotong dan konteks hilang","Pencarian jadi lebih cepat tanpa efek lain","Model otomatis memperbaikinya"],"answer":0,"why":"Potongan yang terlalu kecil memutus kalimat sehingga maknanya hilang."},{"q":"Mana manfaat RAG dibanding melatih ulang model?","options":["Isi pengetahuan bisa diperbarui hanya dengan mengganti dokumen","Tidak pernah menghasilkan jawaban salah","Tidak butuh dokumen sama sekali"],"answer":0,"why":"RAG tidak menghilangkan semua kesalahan, tetapi memudahkan pembaruan dan penelusuran sumber."}]}</script></div>
 <h2 id="tanya-jawab">Tanya jawab</h2>
@@ -86,7 +87,7 @@
 <details class="faq"><summary>Apakah RAG menghilangkan halusinasi?</summary><div>Tidak sepenuhnya. RAG menurunkan risikonya karena jawaban berpijak pada dokumen, tetapi model masih bisa salah membaca atau salah merangkum. Karena itu sumber perlu ditampilkan dan sistem perlu diuji.</div></details>
 <details class="faq"><summary>Apakah saya perlu database vektor?</summary><div>Untuk puluhan dokumen, pencarian sederhana sering sudah cukup. Database vektor baru terasa manfaatnya ketika dokumen sudah ribuan potongan atau pencarian harus sangat cepat.</div></details>
 <details class="faq"><summary>Dokumen apa yang cocok untuk RAG?</summary><div>Panduan internal, FAQ, kebijakan, materi pelatihan, dokumentasi produk. Dokumen yang tertata rapi dan terbarui menghasilkan jawaban yang jauh lebih baik.</div></details>
-<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://arxiv.org/abs/2005.11401" rel="noopener" target="_blank">Lewis dkk., Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (2020), makalah asli yang memperkenalkan istilah RAG</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://arxiv.org/abs/2005.11401" rel="noopener" target="_blank">Lewis dkk., Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (2020), makalah asli yang memperkenalkan istilah RAG</a></li></ul>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>

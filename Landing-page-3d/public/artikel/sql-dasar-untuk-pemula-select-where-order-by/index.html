@@ -44,16 +44,17 @@
 <h1>SQL Dasar untuk Pemula: SELECT, WHERE, ORDER BY</h1>
 <p class="lead">SQL adalah bahasa untuk bertanya kepada database. Dasar-dasarnya mengejutkan sederhana dan terbaca hampir seperti kalimat. Di bawah ada tabel mini: ubah pilihannya dan lihat query SQL beserta hasilnya muncul.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="SQL Dasar untuk Pemula: SELECT, WHERE, ORDER BY" fetchpriority="high"></figure>
 <h2 id="tabel-adalah-baris-dan-kolom">Tabel adalah baris dan kolom</h2>
 <p>Database relasional menyimpan data dalam tabel. Setiap baris mewakili satu catatan (misalnya satu siswa), dan setiap kolom mewakili satu atribut (nama, kelas, nilai). SQL memungkinkan Anda memilih kolom, menyaring baris, dan mengurutkannya.</p>
 <div data-w="sqlplay"><script type="application/json">{"title":"Bermain dengan query","desc":"Pilih kolom filter, operator, dan nilai. Lihat SQL yang dihasilkan dan baris yang cocok.","table":"siswa","cols":["nama","kelas","nilai"],"rows":[["Ani","X-A",88],["Budi","X-B",72],["Citra","X-A",95],["Dodi","X-B",64],["Eka","X-C",81],["Fajar","X-C",77]]}</script></div>
 <h2 id="empat-kata-kunci-utama">Empat kata kunci utama</h2>
 <table><thead><tr><th>Kata kunci</th><th>Fungsi</th><th>Contoh</th></tr></thead><tbody><tr><td>SELECT</td><td>Memilih kolom yang ditampilkan</td><td>SELECT nama, nilai</td></tr><tr><td>FROM</td><td>Menentukan tabel sumber</td><td>FROM siswa</td></tr><tr><td>WHERE</td><td>Menyaring baris</td><td>WHERE kelas = 'X-A'</td></tr><tr><td>ORDER BY</td><td>Mengurutkan hasil</td><td>ORDER BY nilai DESC</td></tr></tbody></table>
-<pre><code>SELECT nama, nilai
+<figure class="codebox"><pre><code>SELECT nama, nilai
 FROM siswa
 WHERE nilai &gt;= 80
-ORDER BY nilai DESC;</code></pre>
+ORDER BY nilai DESC;</code></pre></figure>
 <h2 id="langkah-berikutnya">Langkah berikutnya</h2>
 <ul><li><b>COUNT, SUM, AVG</b>: menghitung jumlah, total, dan rata-rata.</li><li><b>GROUP BY</b>: mengelompokkan, misalnya rata-rata nilai per kelas.</li><li><b>JOIN</b>: menggabungkan dua tabel yang berhubungan.</li><li><b>INSERT, UPDATE, DELETE</b>: menambah, mengubah, menghapus data.</li></ul>
 <div class="callout bad"><b>Hati-hati</b><p>Perintah UPDATE dan DELETE tanpa WHERE mengubah atau menghapus seluruh baris. Selalu uji dengan SELECT lebih dulu pada kondisi yang sama.</p></div>

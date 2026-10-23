@@ -2,6 +2,9 @@
 // the cover image and the SVG diagrams. Used by artikel-src/build.mjs only; the site itself serves the
 // generated files in public/artikel/<slug>/.
 
+import { diagram } from './diagram.mjs';
+import { runPython, runJava, tracePython } from './runner.mjs';
+
 export const SITE = 'https://muchson.web.id';
 export const STORE = 'https://cms-online-store-glasses.muhammadmuchson.workers.dev/';
 
@@ -123,8 +126,14 @@ export const diagrams = {
     },
 };
 
+diagrams.diagram = diagram;
+
 /* ------------------------------------------------------------------ cover image */
 const PALETTE = {
+    'Algoritma & Pemrograman Python': ['#0b3a5c', '#2b7bb9', 'python'],
+    'PBO dengan Java': ['#5a1f0f', '#c2501f', 'objects'],
+    'Sistem Informasi': ['#14315c', '#2f6fd0', 'network'],
+    'Dasar Informatika': ['#1f2a44', '#4b5fa8', 'chip'],
     'Mata & Kacamata': ['#0f3d8a', '#1e5ab2', 'eye'],
     'AI untuk Semua': ['#4b2a8a', '#7a3fb4', 'ai'],
     'Coding & Algoritma': ['#0f3d3a', '#0b7285', 'code'],
@@ -133,6 +142,10 @@ const PALETTE = {
     'Karier & Freelance': ['#1c5a34', '#1f7a46', 'coin'],
 };
 const MOTIF = {
+    python: '<g fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path d="M-20 -80H30a35 35 0 0 1 35 35V-10H-20a30 30 0 0 0-30 30v20"/><path d="M20 80H-30a35 35 0 0 1-35-35V10H20a30 30 0 0 0 30-30v-20"/></g><circle cx="-8" cy="-58" r="7" fill="#fff"/><circle cx="8" cy="58" r="7" fill="#fff"/>',
+    objects: '<g fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round"><path d="M0 -90L80 -45V45L0 90L-80 45V-45Z"/><path d="M0 -90V0M0 0L80 -45M0 0L-80 -45" /></g>',
+    network: '<g stroke="#fff" stroke-width="9" fill="none"><circle cx="0" cy="-60" r="24"/><circle cx="-85" cy="50" r="24"/><circle cx="85" cy="50" r="24"/><path d="M-12 -38L-72 30M12 -38L72 30M-60 50H60"/></g>',
+    chip: '<g fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"><rect x="-55" y="-55" width="110" height="110" rx="12"/><rect x="-24" y="-24" width="48" height="48" rx="6"/><path d="M-30 -80V-55M0 -80V-55M30 -80V-55M-30 55V80M0 55V80M30 55V80M-80 -30H-55M-80 0H-55M-80 30H-55M55 -30H80M55 0H80M55 30H80"/></g>',
     eye: '<ellipse cx="0" cy="0" rx="150" ry="85" fill="none" stroke="#fff" stroke-width="12"/><circle cx="0" cy="0" r="50" fill="#fff"/><circle cx="0" cy="0" r="22" fill="#0f3d8a"/>',
     ai: '<g stroke="#fff" stroke-width="8" fill="none"><circle cx="-90" cy="-40" r="22"/><circle cx="-90" cy="50" r="22"/><circle cx="0" cy="0" r="30"/><circle cx="95" cy="-45" r="22"/><circle cx="95" cy="45" r="22"/><path d="M-70 -35L-30 -10M-70 45L-30 10M30 -8L75 -38M30 8L75 38"/></g>',
     code: '<g stroke="#fff" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-60 -60L-130 0L-60 60"/><path d="M60 -60L130 0L60 60"/><path d="M18 -75L-18 75"/></g>',
@@ -153,14 +166,35 @@ const widgetJson = cfg => JSON.stringify(cfg).replace(/</g, '\\u003c');
 
 function renderBlock(b, ctx) {
     if (typeof b === 'string') return `<p>${b}</p>`;
-    if (b.w) { const { w, ...cfg } = b; return `<div data-w="${w}"><script type="application/json">${widgetJson(cfg)}</script></div>`; }
+    if (typeof b.w === 'string') { const { w, ...cfg } = b; return `<div data-w="${w}"><script type="application/json">${widgetJson(cfg)}</script></div>`; }
     if (b.h2) { const id = slugify(b.h2); ctx.toc.push([id, strip(b.h2)]); return `<h2 id="${id}">${b.h2}</h2>`; }
     if (b.h3) return `<h3>${b.h3}</h3>`;
     if (b.ul) return `<ul>${b.ul.map(i => `<li>${i}</li>`).join('')}</ul>`;
     if (b.ol) return `<ol>${b.ol.map(i => `<li>${i}</li>`).join('')}</ol>`;
     if (b.callout) return `<div class="callout ${b.kind || ''}">${b.title ? `<b>${b.title}</b>` : ''}<p>${b.callout}</p></div>`;
     if (b.table) return `<table><thead><tr>${b.table.head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-    if (b.code) return `<pre><code>${esc(b.code)}</code></pre>`;
+    if (b.trace) {
+        if (b.lang && b.lang !== 'python') throw new Error('trace hanya untuk Python');
+        const steps = tracePython(b.code, { input: b.input || '' });
+        return renderBlock({ w: 'tracer', title: b.title || 'Telusuri eksekusi langkah demi langkah', desc: b.desc || 'Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.', code: b.code, steps }, ctx);
+    }
+    if (b.code) {
+        const lang = b.lang || '';
+        let out = '';
+        if (b.run) {
+            if (!['python', 'java'].includes(lang)) throw new Error('run membutuhkan lang python atau java');
+            const r = (lang === 'python' ? runPython : runJava)(b.code, { input: b.input || '', expectError: !!b.expectError });
+            out = r.out;
+        }
+        const label = b.file ? `<span class="codefile">${esc(b.file)}</span>` : '';
+        return `<figure class="codebox">${label}<pre${lang ? ` data-lang="${lang}"` : ''}><code>${esc(b.code)}</code></pre>${b.run ? `<pre class="runout" data-lang="keluaran"><code>${esc(out.replace(/\n$/, ''))}</code></pre>` : ''}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
+    }
+    if (b.objectives) return `<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul>${b.objectives.map(o => `<li>${o}</li>`).join('')}</ul></div>`;
+    if (b.exercise) {
+        return `<div class="exercise"><b>Latihan mandiri</b>${b.exercise.map(([q, a], i) => `<details><summary>${i + 1}. ${q}</summary><div>${a}</div></details>`).join('')}<small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>`;
+    }
+    if (b.summary) return `<div class="callout good"><b>Ringkasan</b><ul>${b.summary.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
+    if (b.math) return `<p class="formula">${b.math}</p>`;
     if (b.html) return b.html;
     if (b.svg) {
         const fn = diagrams[b.svg];
@@ -171,7 +205,7 @@ function renderBlock(b, ctx) {
     throw new Error('blok tidak dikenal: ' + JSON.stringify(b).slice(0, 80));
 }
 
-const textOf = a => strip([a.lead, ...a.body.map(b => (typeof b === 'string' ? b : b.h2 || b.h3 || (b.ul || b.ol || []).join(' ') || b.callout || b.desc || '')), ...(a.faq || []).flat()].join(' '));
+const textOf = a => strip([a.lead, ...a.body.map(b => (typeof b === 'string' ? b : b.h2 || b.h3 || (b.ul || b.ol || b.objectives || b.summary || []).join(' ') || (b.exercise || []).flat().join(' ') || b.callout || b.math || b.desc || '')), ...(a.faq || []).flat()].join(' '));
 
 export function cta(a) {
     if (a.cta === 'lensara') {
@@ -238,11 +272,12 @@ ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 <a class="cat" href="/artikel/kategori/${slugify(a.category)}/">${esc(a.category)}</a>
 <h1>${esc(a.title)}</h1>
 <p class="lead">${a.lead}</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="${a.date}">${dateId(a.date)}</time><span>·</span><span>${minutes} menit baca</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="${a.date}">${dateId(a.date)}</time><span>·</span><span>${minutes} menit baca</span>${a.level ? `<span>·</span><span class="level">Tingkat: ${esc(a.level)}</span>` : ''}</div>
+${a.prereq && a.prereq.length ? `<p class="prereq"><b>Sebaiknya sudah paham:</b> ${a.prereq.join(', ')}</p>` : ''}
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="${esc(a.title)}" fetchpriority="high"></figure>
 ${body}
 ${faq.length ? `<h2 id="tanya-jawab">Tanya jawab</h2>\n${faq.map(([q, an]) => `<details class="faq"><summary>${esc(q)}</summary><div>${an}</div></details>`).join('\n')}` : ''}
-${a.sources && a.sources.length ? `<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources">${a.sources.map(([l, u]) => `<li><a href="${u}" rel="noopener" target="_blank">${esc(l)}</a></li>`).join('')}</ul>` : ''}
+${a.sources && a.sources.length ? `<h2 id="sumber">Referensi</h2><ul class="sources">${a.sources.map(([l, u]) => `<li>${u ? `<a href="${u}" rel="noopener" target="_blank">${esc(l)}</a>` : esc(l)}</li>`).join('')}</ul>` : ''}
 ${cta(a)}
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>

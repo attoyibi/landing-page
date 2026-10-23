@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nested Loop dan Pola Bintang di Python · Muhammad Muchson</title>
+<meta name="description" content="Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.">
+<meta name="keywords" content="nested loop, pola bintang, perulangan bersarang, tabel perkalian, O(n^2)">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/">
+<meta property="og:title" content="Nested Loop dan Pola Bintang di Python">
+<meta property="og:description" content="Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.">
+<meta property="og:image" content="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nested Loop dan Pola Bintang di Python">
+<meta name="twitter:description" content="Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Nested Loop dan Pola Bintang di Python","description":"Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.","image":["https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"nested loop, pola bintang, perulangan bersarang, tabel perkalian, O(n^2)","articleSection":"Algoritma & Pemrograman Python","wordCount":491,"mainEntityOfPage":"https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Nested Loop dan Pola Bintang di Python","item":"https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bolehkah memakai perkalian string alih-alih perulangan dalam?","acceptedAnswer":{"@type":"Answer","text":"Dalam praktik ya, dan itu lebih ringkas. Dalam ujian, ikuti instruksi: sering diminta memakai perulangan bersarang eksplisit."}},{"@type":"Question","name":"Bagaimana cara berlatih pola?","acceptedAnswer":{"@type":"Answer","text":"Gambar polanya, isi tabel (baris, spasi, simbol), cari rumusnya, baru tulis kode. Jangan menebak langsung dari kode."}},{"@type":"Question","name":"Apa itu nested loop tiga tingkat?","acceptedAnswer":{"@type":"Answer","text":"Perulangan di dalam perulangan di dalam perulangan, dengan n³ langkah, misalnya pada perkalian matriks naif."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#cara-kerja-perulangan-dalam-selesai-penuh-dulu">Cara kerja: perulangan dalam selesai penuh dulu</a></li><li><a href="#pola-1-segitiga-siku-siku">Pola 1: segitiga siku-siku</a></li><li><a href="#pola-2-segitiga-terbalik-dan-rata-kanan">Pola 2: segitiga terbalik dan rata kanan</a></li><li><a href="#pola-3-piramida">Pola 3: piramida</a></li><li><a href="#pola-4-belah-ketupat">Pola 4: belah ketupat</a></li><li><a href="#pola-angka-dan-tabel-perkalian">Pola angka dan tabel perkalian</a></li><li><a href="#berapa-langkah-hubungannya-dengan-o-n">Berapa langkah? Hubungannya dengan O(n²)</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Nested Loop dan Pola Bintang di Python</h1>
+<p class="lead">Soal pola bintang hampir pasti muncul di ujian praktikum algoritma. Bukan karena polanya penting, tetapi karena ia melatih satu keterampilan inti: memahami bagaimana perulangan di dalam perulangan bekerja dan bagaimana setiap baris, kolom, dan spasi dihitung. Kuasai pola berpikirnya, dan semua variasi akan mengikuti.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> perulangan for dan while</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Nested Loop dan Pola Bintang di Python" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan urutan eksekusi perulangan bersarang</li><li>membangun pola dengan menghitung jumlah spasi dan simbol per baris</li><li>membuat tabel perkalian dan pola angka</li><li>menghitung jumlah eksekusi badan perulangan dan mengaitkannya dengan O(n²)</li></ul></div>
+<h2 id="cara-kerja-perulangan-dalam-selesai-penuh-dulu">Cara kerja: perulangan dalam selesai penuh dulu</h2>
+<p>Pada <code>for i ...: for j ...:</code>, untuk <b>setiap nilai i</b> perulangan dalam <code>j</code> berjalan dari awal sampai habis. Coba animasi berikut sampai urutan kunjungan sel (i, j) terasa natural.</p>
+<div data-w="loopgrid"><script type="application/json">{"title":"Urutan kunjungan (i, j)","desc":"Sel kuning adalah eksekusi saat ini, biru muda sudah dikunjungi. Angka kecil adalah urutan ke berapa.","rows":4,"cols":5}</script></div>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri perulangan bersarang kecil","desc":"Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.","code":"for i in range(2):\n    for j in range(3):\n        print(i, j)\nprint(\"selesai\")","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"0"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"i":"0","j":"0"}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"0","j":"0"}}],"out":"0 0\n"},{"line":3,"stack":[{"name":"(modul)","vars":{"i":"0","j":"1"}}],"out":"0 0\n"},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"0","j":"1"}}],"out":"0 0\n0 1\n"},{"line":3,"stack":[{"name":"(modul)","vars":{"i":"0","j":"2"}}],"out":"0 0\n0 1\n"},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"0","j":"2"}}],"out":"0 0\n0 1\n0 2\n"},{"line":1,"stack":[{"name":"(modul)","vars":{"i":"0","j":"2"}}],"out":"0 0\n0 1\n0 2\n"},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"1","j":"2"}}],"out":"0 0\n0 1\n0 2\n"},{"line":3,"stack":[{"name":"(modul)","vars":{"i":"1","j":"0"}}],"out":"0 0\n0 1\n0 2\n"},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"1","j":"0"}}],"out":"0 0\n0 1\n0 2\n1 0\n"},{"line":3,"stack":[{"name":"(modul)","vars":{"i":"1","j":"1"}}],"out":"0 0\n0 1\n0 2\n1 0\n"},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"1","j":"1"}}],"out":"0 0\n0 1\n0 2\n1 0\n1 1\n"},{"line":3,"stack":[{"name":"(modul)","vars":{"i":"1","j":"2"}}],"out":"0 0\n0 1\n0 2\n1 0\n1 1\n"},{"line":2,"stack":[{"name":"(modul)","vars":{"i":"1","j":"2"}}],"out":"0 0\n0 1\n0 2\n1 0\n1 1\n1 2\n"},{"line":1,"stack":[{"name":"(modul)","vars":{"i":"1","j":"2"}}],"out":"0 0\n0 1\n0 2\n1 0\n1 1\n1 2\n"},{"line":4,"stack":[{"name":"(modul)","vars":{"i":"1","j":"2"}}],"out":"0 0\n0 1\n0 2\n1 0\n1 1\n1 2\n"},{"line":0,"stack":[{"name":"(modul)","vars":{"i":"1","j":"2"}}],"out":"0 0\n0 1\n0 2\n1 0\n1 1\n1 2\nselesai\n"}]}</script></div>
+<h2 id="pola-1-segitiga-siku-siku">Pola 1: segitiga siku-siku</h2>
+<figure class="codebox"><pre data-lang="python"><code>n = 5
+for i in range(1, n + 1):
+    print(&quot;*&quot; * i)</code></pre><pre class="runout" data-lang="keluaran"><code>*
+**
+***
+****
+*****</code></pre><figcaption>Baris ke-i berisi i bintang. Perkalian string menggantikan perulangan dalam.</figcaption></figure>
+<p>Versi dengan perulangan bersarang eksplisit (yang biasanya diminta dosen):</p>
+<figure class="codebox"><pre data-lang="python"><code>n = 5
+for i in range(1, n + 1):          # baris
+    for j in range(i):              # kolom: i kali
+        print(&quot;*&quot;, end=&quot;&quot;)
+    print()                         # pindah baris</code></pre><pre class="runout" data-lang="keluaran"><code>*
+**
+***
+****
+*****</code></pre></figure>
+<h2 id="pola-2-segitiga-terbalik-dan-rata-kanan">Pola 2: segitiga terbalik dan rata kanan</h2>
+<figure class="codebox"><pre data-lang="python"><code>n = 5
+for i in range(n, 0, -1):
+    print(&quot;*&quot; * i)
+print()
+for i in range(1, n + 1):
+    print(&quot; &quot; * (n - i) + &quot;*&quot; * i)</code></pre><pre class="runout" data-lang="keluaran"><code>*****
+****
+***
+**
+*
+
+    *
+   **
+  ***
+ ****
+*****</code></pre></figure>
+<h2 id="pola-3-piramida">Pola 3: piramida</h2>
+<p>Rumus per baris i (mulai 1) dari n baris: spasi = <code>n - i</code>, bintang = <code>2i - 1</code>.</p>
+<table><thead><tr><th>Baris i</th><th>Spasi (n - i)</th><th>Bintang (2i - 1)</th></tr></thead><tbody><tr><td>1</td><td>4</td><td>1</td></tr><tr><td>2</td><td>3</td><td>3</td></tr><tr><td>3</td><td>2</td><td>5</td></tr><tr><td>4</td><td>1</td><td>7</td></tr><tr><td>5</td><td>0</td><td>9</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>n = 5
+for i in range(1, n + 1):
+    print(&quot; &quot; * (n - i) + &quot;*&quot; * (2 * i - 1))</code></pre><pre class="runout" data-lang="keluaran"><code>    *
+   ***
+  *****
+ *******
+*********</code></pre></figure>
+<h2 id="pola-4-belah-ketupat">Pola 4: belah ketupat</h2>
+<figure class="codebox"><pre data-lang="python"><code>n = 4
+for i in range(1, n + 1):                       # bagian atas
+    print(&quot; &quot; * (n - i) + &quot;*&quot; * (2 * i - 1))
+for i in range(n - 1, 0, -1):                   # bagian bawah
+    print(&quot; &quot; * (n - i) + &quot;*&quot; * (2 * i - 1))</code></pre><pre class="runout" data-lang="keluaran"><code>   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *</code></pre></figure>
+<h2 id="pola-angka-dan-tabel-perkalian">Pola angka dan tabel perkalian</h2>
+<figure class="codebox"><pre data-lang="python"><code>for i in range(1, 6):
+    for j in range(1, i + 1):
+        print(j, end=&quot; &quot;)
+    print()
+print()
+for i in range(1, 6):
+    for j in range(1, 6):
+        print(f&quot;{i * j:3d}&quot;, end=&quot;&quot;)
+    print()</code></pre><pre class="runout" data-lang="keluaran"><code>1 
+1 2 
+1 2 3 
+1 2 3 4 
+1 2 3 4 5 
+
+  1  2  3  4  5
+  2  4  6  8 10
+  3  6  9 12 15
+  4  8 12 16 20
+  5 10 15 20 25</code></pre></figure>
+<h2 id="berapa-langkah-hubungannya-dengan-o-n">Berapa langkah? Hubungannya dengan O(n²)</h2>
+<p>Pada dua perulangan bersarang yang masing-masing n kali, badan terdalam dijalankan n × n kali. Pada pola segitiga, jumlahnya 1 + 2 + ... + n = n(n+1)/2, yang tetap tumbuh seperti n². Itu sebabnya algoritma dengan dua perulangan bersarang disebut berkompleksitas kuadrat.</p>
+<figure class="codebox"><pre data-lang="python"><code>def hitung(n):
+    c = 0
+    for i in range(1, n + 1):
+        for j in range(i):
+            c += 1
+    return c
+
+for n in [5, 10, 100]:
+    print(n, hitung(n), n * (n + 1) // 2)</code></pre><pre class="runout" data-lang="keluaran"><code>5 15 15
+10 55 55
+100 5050 5050</code></pre></figure>
+<div class="callout info"><b>Dampak praktis</b><p>Bila n digandakan, jumlah langkah menjadi sekitar <b>empat kali</b> lipat. Itu alasan nested loop pada data besar harus dipertimbangkan matang-matang.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pada \u003ccode>for i in range(3): for j in range(4): ...\u003c/code>, berapa kali badan terdalam dijalankan?","options":["7","12","3"],"answer":1,"why":"3 × 4 = 12."},{"q":"Pada piramida n baris, berapa bintang di baris ke-i?","options":["i","2i - 1","n - i"],"answer":1,"why":"Baris 1: 1, baris 2: 3, baris 3: 5, dan seterusnya."},{"q":"Mengapa print() tanpa argumen ditaruh setelah perulangan dalam?","options":["Agar pindah baris","Agar program berhenti","Agar j bertambah"],"answer":0,"why":"end=\"\" mencegah baris baru, sehingga perlu satu print() untuk pindah baris setelah satu baris selesai."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat pola berikut untuk n = 4: baris ke-i berisi bilangan i yang diulang i kali (1 / 22 / 333 / 4444).</summary><div><code>for i in range(1, 5):
+    print(str(i) * i)</code></div></details><details><summary>2. Buat pola papan catur 4×4 dengan "#" dan ".", bergantian.</summary><div><code>for i in range(4):
+    print("".join("#" if (i + j) % 2 == 0 else "." for j in range(4)))</code></div></details><details><summary>3. Buat segitiga Pascal 5 baris. Petunjuk: tiap angka adalah jumlah dua angka di atasnya.</summary><div>Gunakan list: <code>baris = [1]
+for _ in range(5):
+    print(baris)
+    baris = [1] + [baris[k] + baris[k+1] for k in range(len(baris) - 1)] + [1]</code>.</div></details><details><summary>4. Berapa kali "*" dicetak oleh belah ketupat n = 4 di atas?</summary><div>Baris atas: 1 + 3 + 5 + 7 = 16; bagian bawah: 5 + 3 + 1 = 9 (i = 3, 2, 1). Total 25.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Perulangan dalam selesai penuh untuk setiap nilai perulangan luar.</li><li>Pola: tentukan jumlah spasi dan simbol per baris sebagai rumus dari i dan n.</li><li>print() kosong memindahkan baris setelah satu baris pola selesai.</li><li>Dua perulangan bersarang menghasilkan n² langkah, tumbuh seperti kuadrat.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bolehkah memakai perkalian string alih-alih perulangan dalam?</summary><div>Dalam praktik ya, dan itu lebih ringkas. Dalam ujian, ikuti instruksi: sering diminta memakai perulangan bersarang eksplisit.</div></details>
+<details class="faq"><summary>Bagaimana cara berlatih pola?</summary><div>Gambar polanya, isi tabel (baris, spasi, simbol), cari rumusnya, baru tulis kode. Jangan menebak langsung dari kode.</div></details>
+<details class="faq"><summary>Apa itu nested loop tiga tingkat?</summary><div>Perulangan di dalam perulangan di dalam perulangan, dengan n³ langkah, misalnya pada perkalian matriks naif.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li><li><a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/" rel="noopener" target="_blank">MIT OpenCourseWare 6.0001: Introduction to Computer Science and Programming in Python</a></li><li><a href="https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range" rel="noopener" target="_blank">Dokumentasi Python: Built-in Types, Sequence Types (perkalian string)</a></li><li>Anany Levitin, Introduction to the Design and Analysis of Algorithms, bab analisis perulangan bersarang</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

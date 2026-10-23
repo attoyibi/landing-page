@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fungsi Python: Parameter, Return, Scope, dan Call Stack</title>
+<meta name="description" content="Pelajari fungsi Python: definisi, parameter dan argumen, return, nilai default dan jebakannya, scope LEGB, docstring, serta penelusuran call stack langkah demi langkah.">
+<meta name="keywords" content="fungsi Python, parameter, return, scope LEGB, call stack">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/">
+<meta property="og:title" content="Fungsi Python: Parameter, Return, Scope, dan Call Stack">
+<meta property="og:description" content="Pelajari fungsi Python: definisi, parameter dan argumen, return, nilai default dan jebakannya, scope LEGB, docstring, serta penelusuran call stack langkah demi langkah.">
+<meta property="og:image" content="https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fungsi Python: Parameter, Return, Scope, dan Call Stack">
+<meta name="twitter:description" content="Pelajari fungsi Python: definisi, parameter dan argumen, return, nilai default dan jebakannya, scope LEGB, docstring, serta penelusuran call stack langkah demi langkah.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fungsi Python: Parameter, Return, Scope, dan Call Stack","description":"Pelajari fungsi Python: definisi, parameter dan argumen, return, nilai default dan jebakannya, scope LEGB, docstring, serta penelusuran call stack langkah demi langkah.","image":["https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"fungsi Python, parameter, return, scope LEGB, call stack","articleSection":"Algoritma & Pemrograman Python","wordCount":459,"mainEntityOfPage":"https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Fungsi Python: Parameter, Return, Scope, dan Call Stack","item":"https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya parameter dan argumen?","acceptedAnswer":{"@type":"Answer","text":"Parameter adalah variabel pada definisi fungsi, argumen adalah nilai konkret yang diberikan saat memanggil."}},{"@type":"Question","name":"Apakah Python pass by value atau pass by reference?","acceptedAnswer":{"@type":"Answer","text":"Keduanya tidak tepat. Python mengirim referensi ke objek (pass by object reference). Mengubah objek mutable di dalam fungsi terlihat dari luar; menugaskan ulang nama parameter tidak."}},{"@type":"Question","name":"Berapa panjang fungsi yang baik?","acceptedAnswer":{"@type":"Answer","text":"Tidak ada angka pasti. Fungsi yang baik melakukan satu hal dan bisa dijelaskan dalam satu kalimat; bila terlalu panjang, pecah."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#anatomi-fungsi">Anatomi fungsi</a></li><li><a href="#return-bukan-print">return bukan print</a></li><li><a href="#call-stack-apa-yang-terjadi-saat-fungsi-dipanggil">Call stack: apa yang terjadi saat fungsi dipanggil</a></li><li><a href="#scope-di-mana-sebuah-nama-dapat-dilihat">Scope: di mana sebuah nama dapat dilihat</a></li><li><a href="#jebakan-nilai-default-yang-mutable">Jebakan: nilai default yang mutable</a></li><li><a href="#fungsi-dengan-banyak-nilai-kembali-dan-type-hints">Fungsi dengan banyak nilai kembali dan type hints</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Fungsi Python: Parameter, Return, Scope, dan Call Stack</h1>
+<p class="lead">Fungsi memecah program besar menjadi bagian kecil yang bisa dipakai ulang, diuji, dan dipahami sendiri-sendiri. Itu keterampilan yang membedakan skrip sekali pakai dari perangkat lunak. Materi ini membahas bukan hanya cara menulis fungsi, tetapi juga apa yang terjadi di memori saat fungsi dipanggil.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> percabangan dan perulangan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Fungsi Python: Parameter, Return, Scope, dan Call Stack" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mendefinisikan dan memanggil fungsi dengan parameter dan nilai kembali</li><li>membedakan parameter dan argumen, serta return dan print</li><li>memakai nilai default dan menghindari jebakan default mutable</li><li>menjelaskan scope LEGB dan variabel lokal vs global</li><li>membaca call stack saat fungsi memanggil fungsi lain</li></ul></div>
+<h2 id="anatomi-fungsi">Anatomi fungsi</h2>
+<figure class="diagram"><svg viewBox="0 0 620 150" role="img" aria-label="Anatomi definisi dan pemanggilan fungsi" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="yadur-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="yadur-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="yadur-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="yadur-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="yadur-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="400,66.9 355,63.3" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#yadur-arrow)"/><rect x="342.8" y="56.12096774193549" width="69.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="377.5" y="69.12096774193549" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">memanggil</text><rect x="25" y="28" width="330" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="190" y="46.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="190" dy="0">def luas(panjang, lebar): ← nama dan</tspan><tspan x="190" dy="16">parameter</tspan></text><rect x="25" y="78" width="330" height="44" rx="8" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="190" y="104.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="190" dy="0">return panjang * lebar ← nilai kembali</tspan></text><rect x="400" y="47" width="200" height="56" rx="8" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="71.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="500" dy="0">hasil = luas(5, 3) ←</tspan><tspan x="500" dy="16">argumen: 5 dan 3</tspan></text></svg><figcaption>Parameter adalah nama di definisi, argumen adalah nilai yang dikirim saat memanggil.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>def luas(panjang, lebar):
+    &quot;&quot;&quot;Menghitung luas persegi panjang.&quot;&quot;&quot;   # docstring
+    return panjang * lebar
+
+def sapa(nama, sapaan=&quot;Halo&quot;):               # nilai default
+    print(f&quot;{sapaan}, {nama}!&quot;)
+
+hasil = luas(5, 3)
+print(hasil)
+sapa(&quot;Dewi&quot;)
+sapa(&quot;Budi&quot;, sapaan=&quot;Selamat pagi&quot;)           # argumen kata kunci
+print(luas.__doc__)</code></pre><pre class="runout" data-lang="keluaran"><code>15
+Halo, Dewi!
+Selamat pagi, Budi!
+Menghitung luas persegi panjang.</code></pre></figure>
+<h2 id="return-bukan-print">return bukan print</h2>
+<p><code>return</code> mengirim nilai kembali ke pemanggil dan mengakhiri fungsi. <code>print</code> hanya menampilkan sesuatu di layar. Fungsi tanpa return mengembalikan <code>None</code>.</p>
+<figure class="codebox"><pre data-lang="python"><code>def kuadrat_print(x):
+    print(x * x)
+
+def kuadrat_return(x):
+    return x * x
+
+a = kuadrat_print(4)       # mencetak 16, tetapi a bernilai None
+b = kuadrat_return(4)      # b bernilai 16
+print(a, b)
+print(kuadrat_return(kuadrat_return(2)))   # bisa dipakai lagi karena mengembalikan nilai</code></pre><pre class="runout" data-lang="keluaran"><code>16
+None 16
+16</code></pre></figure>
+<h2 id="call-stack-apa-yang-terjadi-saat-fungsi-dipanggil">Call stack: apa yang terjadi saat fungsi dipanggil</h2>
+<p>Setiap pemanggilan membuat <b>frame</b> baru berisi variabel lokalnya. Frame ditumpuk, dan hilang saat fungsi selesai. Pada penelusuran ini, perhatikan frame <code>kuadrat()</code> muncul di panel memori setiap kali fungsi dipanggil.</p>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri pemanggilan fungsi bersarang","desc":"Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.","code":"def kuadrat(x):\n    hasil = x * x\n    return hasil\n\ndef jumlah_kuadrat(a, b):\n    return kuadrat(a) + kuadrat(b)\n\ntotal = jumlah_kuadrat(2, 3)\nprint(total)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":8,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{}},{"name":"jumlah_kuadrat","vars":{"a":"2","b":"3"}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{}},{"name":"jumlah_kuadrat","vars":{"a":"2","b":"3"}},{"name":"kuadrat","vars":{"x":"2"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{}},{"name":"jumlah_kuadrat","vars":{"a":"2","b":"3"}},{"name":"kuadrat","vars":{"x":"2","hasil":"4"}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{}},{"name":"jumlah_kuadrat","vars":{"a":"2","b":"3"}},{"name":"kuadrat","vars":{"x":"3"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{}},{"name":"jumlah_kuadrat","vars":{"a":"2","b":"3"}},{"name":"kuadrat","vars":{"x":"3","hasil":"9"}}],"out":""},{"line":9,"stack":[{"name":"(modul)","vars":{"total":"13"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"total":"13"}}],"out":"13\n"}]}</script></div>
+<h2 id="scope-di-mana-sebuah-nama-dapat-dilihat">Scope: di mana sebuah nama dapat dilihat</h2>
+<p>Python mencari nama dengan urutan <b>LEGB</b>: <b>L</b>ocal (di dalam fungsi), <b>E</b>nclosing (fungsi pembungkus), <b>G</b>lobal (tingkat modul), <b>B</b>uilt-in (bawaan seperti len).</p>
+<figure class="codebox"><pre data-lang="python"><code>x = &quot;global&quot;
+
+def a():
+    x = &quot;lokal di a&quot;        # variabel baru, bukan mengubah yang global
+    return x
+
+def b():
+    return x                # tidak ada x lokal: pakai yang global
+
+print(a(), b(), x)
+
+def c():
+    global x
+    x = &quot;diubah oleh c&quot;     # sengaja mengubah yang global (hindari bila bisa)
+c()
+print(x)
+
+def d():
+    print(x2)               # error: x2 dianggap lokal karena ditugaskan di bawah
+    x2 = 1
+try:
+    d()
+except UnboundLocalError as e:
+    print(&quot;UnboundLocalError:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>lokal di a global global
+diubah oleh c
+UnboundLocalError: cannot access local variable 'x2' where it is not associated with a value</code></pre></figure>
+<div class="callout good"><b>Prinsip desain</b><p>Hindari mengubah variabel global dari dalam fungsi. Kirim data lewat <b>parameter</b> dan kembalikan hasil lewat <b>return</b>. Fungsi yang bergantung hanya pada masukannya jauh lebih mudah diuji dan di-debug.</p></div>
+<h2 id="jebakan-nilai-default-yang-mutable">Jebakan: nilai default yang mutable</h2>
+<figure class="codebox"><pre data-lang="python"><code>def tambah_salah(x, daftar=[]):     # list dibuat SATU kali saat def dijalankan
+    daftar.append(x)
+    return daftar
+
+print(tambah_salah(1))
+print(tambah_salah(2))              # ikut membawa 1: default dipakai ulang!
+
+def tambah_benar(x, daftar=None):
+    if daftar is None:
+        daftar = []
+    daftar.append(x)
+    return daftar
+
+print(tambah_benar(1), tambah_benar(2))</code></pre><pre class="runout" data-lang="keluaran"><code>[1]
+[1, 2]
+[1] [2]</code></pre></figure>
+<h2 id="fungsi-dengan-banyak-nilai-kembali-dan-type-hints">Fungsi dengan banyak nilai kembali dan type hints</h2>
+<figure class="codebox"><pre data-lang="python"><code>def statistik(data: list[float]) -&gt; tuple[float, float, float]:
+    &quot;&quot;&quot;Mengembalikan (minimum, maksimum, rata-rata).&quot;&quot;&quot;
+    return min(data), max(data), sum(data) / len(data)
+
+kecil, besar, rata = statistik([4, 8, 15, 16, 23, 42])
+print(kecil, besar, round(rata, 2))</code></pre><pre class="runout" data-lang="keluaran"><code>4 42 18.0</code></pre><figcaption>Type hints tidak dipaksakan saat dijalankan, tetapi membantu pembaca dan alat analisis kode.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Fungsi tanpa pernyataan return mengembalikan...","options":["0","None","String kosong"],"answer":1,"why":"Python mengembalikan None secara implisit."},{"q":"Dalam urutan LEGB, nama dicari pertama kali di...","options":["Global","Built-in","Local"],"answer":2,"why":"Dimulai dari scope lokal fungsi."},{"q":"Mengapa \u003ccode>def f(x, d=[])\u003c/code> berbahaya?","options":["List kosong tidak valid","List default dibuat sekali dan dipakai bersama semua pemanggilan","Python melarang default"],"answer":1,"why":"Objek mutable default hanya dibuat saat def dijalankan."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis fungsi <code>apakah_genap(n)</code> yang mengembalikan True/False. Mengapa lebih baik <code>return n % 2 == 0</code> daripada if-else yang mengembalikan True/False?</summary><div><code>def apakah_genap(n): return n % 2 == 0</code>. Ekspresinya sudah bernilai bool, jadi if-else hanya mengulang hal yang sama dengan lebih panjang.</div></details><details><summary>2. Tulis fungsi <code>hitung_vokal(teks)</code> dan panggil dengan tiga contoh, termasuk string kosong.</summary><div><code>def hitung_vokal(teks): return sum(1 for c in teks.lower() if c in "aiueo")</code>. hitung_vokal("") menghasilkan 0.</div></details><details><summary>3. Apa keluaran: <code>def f(): x = 5
+x = 1
+f()
+print(x)</code>?</summary><div>1. x di dalam f adalah variabel lokal baru, tidak mengubah x global.</div></details><details><summary>4. Tulis fungsi yang menerima list dan mengembalikan list baru berisi elemen kuadratnya tanpa mengubah list asli.</summary><div><code>def kuadratkan(data): return [x * x for x in data]</code></div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>def mendefinisikan fungsi; parameter di definisi, argumen saat pemanggilan.</li><li>return mengirim nilai kembali; print hanya menampilkan.</li><li>Setiap pemanggilan membuat frame di call stack dengan variabel lokalnya sendiri.</li><li>Scope LEGB: Local, Enclosing, Global, Built-in.</li><li>Jangan memakai objek mutable sebagai nilai default; pakai None lalu buat di dalam fungsi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya parameter dan argumen?</summary><div>Parameter adalah variabel pada definisi fungsi, argumen adalah nilai konkret yang diberikan saat memanggil.</div></details>
+<details class="faq"><summary>Apakah Python pass by value atau pass by reference?</summary><div>Keduanya tidak tepat. Python mengirim referensi ke objek (pass by object reference). Mengubah objek mutable di dalam fungsi terlihat dari luar; menugaskan ulang nama parameter tidak.</div></details>
+<details class="faq"><summary>Berapa panjang fungsi yang baik?</summary><div>Tidak ada angka pasti. Fungsi yang baik melakukan satu hal dan bisa dijelaskan dalam satu kalimat; bila terlalu panjang, pecah.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions" rel="noopener" target="_blank">Dokumentasi Python: Defining Functions (tutorial)</a></li><li><a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces" rel="noopener" target="_blank">Dokumentasi Python: Python Scopes and Namespaces</a></li><li><a href="https://docs.python.org/3/reference/executionmodel.html" rel="noopener" target="_blank">Dokumentasi Python: Execution model (naming and binding)</a></li><li><a href="https://peps.python.org/pep-0257/" rel="noopener" target="_blank">PEP 257, Docstring Conventions</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

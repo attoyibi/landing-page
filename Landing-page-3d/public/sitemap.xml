@@ -41,6 +41,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://muchson.web.id/artikel/kategori/algoritma-pemrograman-python/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://muchson.web.id/artikel/rag-adalah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
@@ -537,6 +542,76 @@
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/freelance-pertama-cara-mendapat-klien-dan-menentukan-harga/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/flowchart-dan-pseudocode-menulis-algoritma/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/variabel-dan-tipe-data-python-lengkap/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/string-python-indexing-slicing-dan-metode/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/fungsi-python-parameter-return-scope-dan-call-stack/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
   </url>

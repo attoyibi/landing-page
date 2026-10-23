@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python</title>
+<meta name="description" content="Pelajari argumen variabel *args dan **kwargs, unpacking, fungsi lambda, map, filter, sorted dengan key, closure, dan dekorator sederhana, semua dengan contoh yang dijalankan.">
+<meta name="keywords" content="args kwargs, lambda, map filter, closure, decorator">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/">
+<meta property="og:title" content="*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python">
+<meta property="og:description" content="Pelajari argumen variabel *args dan **kwargs, unpacking, fungsi lambda, map, filter, sorted dengan key, closure, dan dekorator sederhana, semua dengan contoh yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python">
+<meta name="twitter:description" content="Pelajari argumen variabel *args dan **kwargs, unpacking, fungsi lambda, map, filter, sorted dengan key, closure, dan dekorator sederhana, semua dengan contoh yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python","description":"Pelajari argumen variabel *args dan **kwargs, unpacking, fungsi lambda, map, filter, sorted dengan key, closure, dan dekorator sederhana, semua dengan contoh yang dijalankan.","image":["https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"args kwargs, lambda, map filter, closure, decorator","articleSection":"Algoritma & Pemrograman Python","wordCount":338,"mainEntityOfPage":"https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python","item":"https://muchson.web.id/artikel/args-kwargs-lambda-dan-fungsi-tingkat-tinggi-python/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah map lebih cepat dari list comprehension?","acceptedAnswer":{"@type":"Answer","text":"Untuk fungsi bawaan, kadang sedikit lebih cepat; untuk lambda biasanya tidak. Pilih yang paling terbaca, lalu ukur bila performa penting."}},{"@type":"Question","name":"Mengapa menamai lambda dengan variabel dianggap kurang baik?","acceptedAnswer":{"@type":"Answer","text":"PEP 8 menyarankan def untuk fungsi bernama, karena traceback dan debugging lebih jelas. Lambda tetap cocok sebagai argumen sementara."}},{"@type":"Question","name":"Apa itu keyword-only argument?","acceptedAnswer":{"@type":"Answer","text":"Parameter setelah * pada definisi, misalnya def f(a, *, b), hanya bisa diberikan dengan nama: f(1, b=2)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#args-dan-kwargs">*args dan **kwargs</a></li><li><a href="#lambda-fungsi-anonim-satu-ekspresi">Lambda: fungsi anonim satu ekspresi</a></li><li><a href="#fungsi-tingkat-tinggi-map-filter-sorted-reduce">Fungsi tingkat tinggi: map, filter, sorted, reduce</a></li><li><a href="#closure-fungsi-yang-mengingat-lingkungannya">Closure: fungsi yang mengingat lingkungannya</a></li><li><a href="#dekorator-membungkus-fungsi">Dekorator: membungkus fungsi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python</h1>
+<p class="lead">Fungsi di Python adalah objek biasa: bisa disimpan di variabel, dikirim sebagai argumen, dan dikembalikan dari fungsi lain. Gagasan itu membuka gaya pemrograman yang ringkas dan kuat. Materi ini membahas mulai dari argumen yang jumlahnya fleksibel sampai dekorator, dengan semua contoh dijalankan sungguhan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi Python, list dan dictionary</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="*args, **kwargs, Lambda, dan Fungsi Tingkat Tinggi Python" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai *args dan **kwargs untuk argumen berjumlah variabel</li><li>memakai unpacking * dan ** saat memanggil fungsi</li><li>menulis fungsi lambda dan tahu batasnya</li><li>memakai map, filter, sorted(key=), dan reduce</li><li>menjelaskan closure dan menulis dekorator sederhana</li></ul></div>
+<h2 id="args-dan-kwargs">*args dan **kwargs</h2>
+<figure class="codebox"><pre data-lang="python"><code>def jumlah(*args):                 # args adalah tuple
+    print(args)
+    return sum(args)
+
+print(jumlah(1, 2, 3, 4))
+
+def profil(**kwargs):               # kwargs adalah dict
+    for k, v in kwargs.items():
+        print(f&quot;{k}: {v}&quot;)
+
+profil(nama=&quot;Ani&quot;, umur=19, kota=&quot;Malang&quot;)
+
+def campur(a, b=2, *args, **kwargs):
+    print(a, b, args, kwargs)
+campur(1, 3, 5, 7, x=9)</code></pre><pre class="runout" data-lang="keluaran"><code>(1, 2, 3, 4)
+10
+nama: Ani
+umur: 19
+kota: Malang
+1 3 (5, 7) {'x': 9}</code></pre></figure>
+<h3>Unpacking saat memanggil</h3>
+<figure class="codebox"><pre data-lang="python"><code>def kali(a, b, c):
+    return a * b * c
+
+angka = [2, 3, 4]
+print(kali(*angka))                 # list dibuka menjadi 3 argumen
+opsi = {&quot;a&quot;: 2, &quot;b&quot;: 5, &quot;c&quot;: 10}
+print(kali(**opsi))                 # dict dibuka menjadi argumen kata kunci
+print([*range(3), *&quot;ab&quot;])           # unpacking juga bisa membangun list</code></pre><pre class="runout" data-lang="keluaran"><code>24
+100
+[0, 1, 2, 'a', 'b']</code></pre></figure>
+<h2 id="lambda-fungsi-anonim-satu-ekspresi">Lambda: fungsi anonim satu ekspresi</h2>
+<figure class="codebox"><pre data-lang="python"><code>kuadrat = lambda x: x * x
+print(kuadrat(7))
+tambah = lambda a, b=10: a + b
+print(tambah(5), tambah(5, 1))</code></pre><pre class="runout" data-lang="keluaran"><code>49
+15 6</code></pre></figure>
+<div class="callout info"><b>Batas lambda</b><p>Lambda hanya boleh berisi <b>satu ekspresi</b> tanpa pernyataan. Pakai terutama sebagai argumen singkat (misalnya untuk <code>key=</code>). Bila logikanya butuh nama atau lebih dari satu baris, tulis <code>def</code>.</p></div>
+<h2 id="fungsi-tingkat-tinggi-map-filter-sorted-reduce">Fungsi tingkat tinggi: map, filter, sorted, reduce</h2>
+<figure class="diagram"><svg viewBox="0 0 542 104" role="img" aria-label="Tiga operasi pada urutan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">map(f, data)</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">terapkan f ke setiap</tspan><tspan x="85" dy="14">elemen</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">filter(f, data)</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">pertahankan yang f-nya</tspan><tspan x="271" dy="14">benar</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">reduce(f, data)</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">lipat menjadi satu</tspan><tspan x="457" dy="14">nilai</tspan></text></svg><figcaption>Banyak orang Python lebih suka list comprehension daripada map dan filter karena lebih mudah dibaca, tetapi konsepnya sama pentingnya.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>from functools import reduce
+data = [1, 2, 3, 4, 5, 6]
+
+print(list(map(lambda x: x * 10, data)))
+print(list(filter(lambda x: x % 2 == 0, data)))
+print(reduce(lambda total, x: total + x, data))        # 21
+print(reduce(lambda a, b: a * b, data))                 # 720
+
+# versi comprehension (sering lebih jelas)
+print([x * 10 for x in data], [x for x in data if x % 2 == 0])
+
+siswa = [{&quot;nama&quot;: &quot;Ani&quot;, &quot;nilai&quot;: 88}, {&quot;nama&quot;: &quot;Budi&quot;, &quot;nilai&quot;: 72}, {&quot;nama&quot;: &quot;Citra&quot;, &quot;nilai&quot;: 95}]
+terbaik = max(siswa, key=lambda s: s[&quot;nilai&quot;])
+print(terbaik[&quot;nama&quot;], [s[&quot;nama&quot;] for s in sorted(siswa, key=lambda s: -s[&quot;nilai&quot;])])</code></pre><pre class="runout" data-lang="keluaran"><code>[10, 20, 30, 40, 50, 60]
+[2, 4, 6]
+21
+720
+[10, 20, 30, 40, 50, 60] [2, 4, 6]
+Citra ['Citra', 'Ani', 'Budi']</code></pre></figure>
+<h2 id="closure-fungsi-yang-mengingat-lingkungannya">Closure: fungsi yang mengingat lingkungannya</h2>
+<figure class="codebox"><pre data-lang="python"><code>def buat_penghitung():
+    hitung = 0
+    def tambah():
+        nonlocal hitung       # mengubah variabel di fungsi pembungkus
+        hitung += 1
+        return hitung
+    return tambah
+
+a = buat_penghitung()
+b = buat_penghitung()
+print(a(), a(), a(), b())    # a dan b punya &quot;hitung&quot; masing-masing</code></pre><pre class="runout" data-lang="keluaran"><code>1 2 3 1</code></pre></figure>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri closure","desc":"Perhatikan bahwa setiap pemanggilan a() mengubah hitung milik buat_penghitung yang sama.","code":"def buat_penghitung():\n    hitung = 0\n    def tambah():\n        nonlocal hitung\n        hitung += 1\n        return hitung\n    return tambah\n\na = buat_penghitung()\nprint(a())\nprint(a())","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":9,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{}},{"name":"buat_penghitung","vars":{}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{}},{"name":"buat_penghitung","vars":{"hitung":"0"}}],"out":""},{"line":7,"stack":[{"name":"(modul)","vars":{}},{"name":"buat_penghitung","vars":{"hitung":"0"}}],"out":""},{"line":10,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{}},{"name":"tambah","vars":{"hitung":"0"}}],"out":""},{"line":6,"stack":[{"name":"(modul)","vars":{}},{"name":"tambah","vars":{"hitung":"1"}}],"out":""},{"line":11,"stack":[{"name":"(modul)","vars":{}}],"out":"1\n"},{"line":5,"stack":[{"name":"(modul)","vars":{}},{"name":"tambah","vars":{"hitung":"1"}}],"out":"1\n"},{"line":6,"stack":[{"name":"(modul)","vars":{}},{"name":"tambah","vars":{"hitung":"2"}}],"out":"1\n"},{"line":0,"stack":[{"name":"(modul)","vars":{}}],"out":"1\n2\n"}]}</script></div>
+<h2 id="dekorator-membungkus-fungsi">Dekorator: membungkus fungsi</h2>
+<figure class="codebox"><pre data-lang="python"><code>import time
+from functools import wraps
+
+def catat_waktu(fungsi):
+    @wraps(fungsi)
+    def pembungkus(*args, **kwargs):
+        mulai = time.perf_counter()
+        hasil = fungsi(*args, **kwargs)
+        durasi = time.perf_counter() - mulai
+        print(f&quot;{fungsi.__name__} selesai, durasi positif: {durasi &gt;= 0}&quot;)
+        return hasil
+    return pembungkus
+
+@catat_waktu              # sama dengan: hitung = catat_waktu(hitung)
+def hitung(n):
+    return sum(range(n))
+
+print(hitung(100000))</code></pre><pre class="runout" data-lang="keluaran"><code>hitung selesai, durasi positif: True
+4999950000</code></pre><figcaption>Dekorator dipakai untuk pencatatan log, pengukuran waktu, cache (functools.lru_cache), dan pemeriksaan izin.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Di dalam \u003ccode>def f(*args)\u003c/code>, args bertipe...","options":["list","tuple","dict"],"answer":1,"why":"Argumen posisi ekstra dikumpulkan dalam tuple."},{"q":"\u003ccode>list(filter(lambda x: x > 2, [1, 2, 3, 4]))\u003c/code> menghasilkan...","options":["[3, 4]","[1, 2]","[False, False, True, True]"],"answer":0,"why":"filter mempertahankan elemen yang kondisinya benar."},{"q":"Apa fungsi \u003ccode>nonlocal\u003c/code>?","options":["Membuat variabel global","Mengubah variabel di fungsi pembungkus","Menghapus variabel"],"answer":1,"why":"nonlocal merujuk variabel di scope pembungkus terdekat."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis fungsi <code>rata_rata(*angka)</code> yang menerima sejumlah bilangan dan mengembalikan rata-ratanya.</summary><div><code>def rata_rata(*angka): return sum(angka) / len(angka)</code>. Tangani kasus tanpa argumen (ZeroDivisionError) bila diminta.</div></details><details><summary>2. Urutkan list kata berdasarkan huruf terakhirnya.</summary><div><code>sorted(kata, key=lambda k: k[-1])</code></div></details><details><summary>3. Ubah <code>reduce(lambda a, b: a + b, data)</code> menjadi pemanggilan fungsi bawaan.</summary><div><code>sum(data)</code></div></details><details><summary>4. Buat fungsi <code>pangkat(n)</code> yang mengembalikan fungsi yang memangkatkan argumennya dengan n.</summary><div><code>def pangkat(n):
+    return lambda x: x ** n</code>. Contoh: <code>kubik = pangkat(3); kubik(2)</code> menghasilkan 8.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>*args mengumpulkan argumen posisi (tuple), **kwargs argumen kata kunci (dict).</li><li>* dan ** pada pemanggilan membuka list atau dict menjadi argumen.</li><li>Lambda: fungsi anonim satu ekspresi, cocok untuk key= dan argumen singkat.</li><li>map, filter, reduce, dan sorted(key=) menerima fungsi sebagai argumen.</li><li>Closure mengingat lingkungannya; dekorator membungkus fungsi tanpa mengubah kodenya.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah map lebih cepat dari list comprehension?</summary><div>Untuk fungsi bawaan, kadang sedikit lebih cepat; untuk lambda biasanya tidak. Pilih yang paling terbaca, lalu ukur bila performa penting.</div></details>
+<details class="faq"><summary>Mengapa menamai lambda dengan variabel dianggap kurang baik?</summary><div>PEP 8 menyarankan def untuk fungsi bernama, karena traceback dan debugging lebih jelas. Lambda tetap cocok sebagai argumen sementara.</div></details>
+<details class="faq"><summary>Apa itu keyword-only argument?</summary><div>Parameter setelah * pada definisi, misalnya <code>def f(a, *, b)</code>, hanya bisa diberikan dengan nama: <code>f(1, b=2)</code>.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions" rel="noopener" target="_blank">Dokumentasi Python: More on Defining Functions (*args, **kwargs, lambda)</a></li><li><a href="https://docs.python.org/3/library/functools.html" rel="noopener" target="_blank">Dokumentasi Python: functools (reduce, wraps, lru_cache)</a></li><li><a href="https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces" rel="noopener" target="_blank">Dokumentasi Python: Python Scopes and Namespaces (nonlocal)</a></li><li><a href="https://peps.python.org/pep-0318/" rel="noopener" target="_blank">PEP 318, Decorators for Functions and Methods</a></li><li><a href="https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/" rel="noopener" target="_blank">MIT OpenCourseWare 6.0001: Introduction to Computer Science and Programming in Python</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

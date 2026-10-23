@@ -44,11 +44,12 @@
 <h1>HTML, CSS, dan JavaScript: Peran Masing-Masing</h1>
 <p class="lead">Tiga bahasa ini membentuk hampir semua halaman web yang Anda buka. Cara termudah mengingat perannya: HTML adalah kerangka rumah, CSS adalah cat dan dekorasinya, JavaScript adalah listrik dan perabot yang bergerak.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="HTML, CSS, dan JavaScript: Peran Masing-Masing" fetchpriority="high"></figure>
 <h2 id="tiga-lapisan-tiga-peran">Tiga lapisan, tiga peran</h2>
 <figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Lapisan sebuah halaman web" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">JavaScript: perilaku</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Klik, animasi, memuat data, validasi formulir</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">CSS: tampilan</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Warna, tata letak, ukuran, responsif</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">HTML: struktur dan isi</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Judul, paragraf, gambar, tautan, formulir</text></svg><figcaption>Mulailah dari bawah: HTML dulu, lalu CSS, kemudian JavaScript.</figcaption></figure>
 <h2 id="contoh-sederhana">Contoh sederhana</h2>
-<pre><code>&lt;!-- HTML: struktur --&gt;
+<figure class="codebox"><pre><code>&lt;!-- HTML: struktur --&gt;
 &lt;button id=&quot;salam&quot;&gt;Klik saya&lt;/button&gt;
 &lt;p id=&quot;pesan&quot;&gt;&lt;/p&gt;
 
@@ -58,7 +59,7 @@ button { background: #1e5ab2; color: white; padding: 10px 16px; border-radius: 8
 // JavaScript: perilaku
 document.getElementById(&quot;salam&quot;).onclick = () =&gt; {
   document.getElementById(&quot;pesan&quot;).textContent = &quot;Halo, dunia!&quot;;
-};</code></pre>
+};</code></pre></figure>
 <div data-w="compare"><script type="application/json">{"title":"Apa yang terjadi bila salah satunya hilang?","tabs":[{"label":"Tanpa CSS","html":"Isi tetap ada dan bisa dibaca, tetapi tampil polos tanpa warna dan tata letak."},{"label":"Tanpa JavaScript","html":"Halaman tetap tampil, tetapi tombol, animasi, dan fitur dinamis tidak berfungsi."},{"label":"Tanpa HTML","html":"Tidak ada halaman. HTML adalah fondasi yang dibaca browser lebih dulu."}]}</script></div>
 <h2 id="urutan-belajar-yang-disarankan">Urutan belajar yang disarankan</h2>
 <ol><li>HTML: judul, paragraf, daftar, tautan, gambar, formulir.</li><li>CSS: warna, jarak, tipografi, flexbox dan grid, desain responsif.</li><li>JavaScript dasar: variabel, fungsi, kondisi, DOM, event.</li><li>Git dan deploy: membagikan hasil.</li><li>Framework (misalnya React) setelah dasar kuat.</li></ol>

@@ -44,26 +44,27 @@
 <h1>Rekursi Dijelaskan: Fungsi yang Memanggil Dirinya Sendiri</h1>
 <p class="lead">Rekursi sering terasa ajaib sampai Anda melihat strukturnya: fungsi memecah masalah menjadi versi yang lebih kecil dari dirinya, sampai masalahnya cukup kecil untuk dijawab langsung. Setelah itu, jawaban disusun kembali ke atas.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Rekursi Dijelaskan: Fungsi yang Memanggil Dirinya Sendiri" fetchpriority="high"></figure>
 <h2 id="dua-bagian-wajib">Dua bagian wajib</h2>
 <figure class="diagram"><svg viewBox="0 0 542 104" role="img" aria-label="Bagian-bagian fungsi rekursif" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Kasus dasar</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">jawaban langsung,</tspan><tspan x="85" dy="14">tanpa memanggil diri</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Kasus rekursif</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">panggil diri dengan</tspan><tspan x="271" dy="14">masalah lebih kecil</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Gabungkan</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">susun jawaban dari</tspan><tspan x="457" dy="14">hasil panggilan</tspan></text></svg><figcaption>Tanpa kasus dasar, fungsi memanggil diri tanpa henti dan program berhenti dengan error.</figcaption></figure>
 <h2 id="contoh-paling-klasik-faktorial">Contoh paling klasik: faktorial</h2>
-<pre><code>def faktorial(n):
+<figure class="codebox"><pre><code>def faktorial(n):
     if n &lt;= 1:           # kasus dasar
         return 1
     return n * faktorial(n - 1)   # kasus rekursif
 
-print(faktorial(5))   # 120</code></pre>
+print(faktorial(5))   # 120</code></pre></figure>
 <p>Untuk <code>faktorial(3)</code>: 3 × faktorial(2) = 3 × (2 × faktorial(1)) = 3 × (2 × 1) = 6. Komputer menumpuk setiap pemanggilan di <i>call stack</i>, lalu menyelesaikannya dari yang paling dalam.</p>
 <h2 id="fibonacci-rekursi-yang-boros">Fibonacci: rekursi yang boros</h2>
 <p>Bilangan Fibonacci: setiap bilangan adalah jumlah dua bilangan sebelumnya. Versi rekursif langsungnya sangat elegan, tetapi menghitung hal yang sama berulang kali.</p>
-<pre><code>def fib(n):
+<figure class="codebox"><pre><code>def fib(n):
     if n &lt;= 1:
         return n
-    return fib(n - 1) + fib(n - 2)</code></pre>
+    return fib(n - 1) + fib(n - 2)</code></pre></figure>
 <div data-w="recursion"><script type="application/json">{"title":"Lihat ledakan jumlah pemanggilan","desc":"Geser n dan bandingkan jumlah pemanggilan rekursi biasa dengan memoization."}</script></div>
 <h2 id="perbaikan-simpan-hasil-memoization">Perbaikan: simpan hasil (memoization)</h2>
-<pre><code>from functools import lru_cache
+<figure class="codebox"><pre><code>from functools import lru_cache
 
 @lru_cache(maxsize=None)
 def fib(n):
@@ -71,7 +72,7 @@ def fib(n):
         return n
     return fib(n - 1) + fib(n - 2)
 
-print(fib(50))   # cepat, bukan miliaran pemanggilan</code></pre>
+print(fib(50))   # cepat, bukan miliaran pemanggilan</code></pre></figure>
 <div class="callout info"><b>Kapan memakainya</b><p>Rekursi cocok untuk masalah yang berstruktur pohon atau bersarang: folder dalam folder, menjelajah graf, membagi dan menaklukkan. Untuk perulangan sederhana, for atau while biasanya lebih jelas dan hemat memori.</p></div>
 <div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apa yang terjadi bila fungsi rekursif tidak punya kasus dasar?","options":["Berjalan lebih cepat","Memanggil diri tanpa henti hingga error","Otomatis berhenti"],"answer":1,"why":"Tumpukan pemanggilan penuh dan terjadi stack overflow."},{"q":"Apa tujuan memoization?","options":["Menyimpan hasil agar tidak dihitung ulang","Memperpanjang kode","Mengubah rekursi menjadi iterasi otomatis"],"answer":0,"why":"Mengurangi pekerjaan berulang."}]}</script></div>
 <h2 id="tanya-jawab">Tanya jawab</h2>
