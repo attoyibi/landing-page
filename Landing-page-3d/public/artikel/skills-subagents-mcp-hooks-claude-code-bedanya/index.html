@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya</title>
+<meta name="description" content="Empat fitur perluasan agen coding sering tertukar. Pahami fungsi masing-masing, contoh pemakaian, dan panduan memilih yang tepat dengan tes singkat.">
+<meta name="keywords" content="Claude Code, skills, subagents, MCP, hooks">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/">
+<meta property="og:title" content="Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya">
+<meta property="og:description" content="Empat fitur perluasan agen coding sering tertukar. Pahami fungsi masing-masing, contoh pemakaian, dan panduan memilih yang tepat dengan tes singkat.">
+<meta property="og:image" content="https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="AI untuk Semua">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya">
+<meta name="twitter:description" content="Empat fitur perluasan agen coding sering tertukar. Pahami fungsi masing-masing, contoh pemakaian, dan panduan memilih yang tepat dengan tes singkat.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya","description":"Empat fitur perluasan agen coding sering tertukar. Pahami fungsi masing-masing, contoh pemakaian, dan panduan memilih yang tepat dengan tes singkat.","image":["https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Claude Code, skills, subagents, MCP, hooks","articleSection":"AI untuk Semua","wordCount":161,"mainEntityOfPage":"https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya","item":"https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah saya perlu keempatnya?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Mulailah sederhana. Tambahkan fitur hanya ketika ada masalah nyata yang diselesaikannya."}},{"@type":"Question","name":"Apakah skill sama dengan prompt tersimpan?","acceptedAnswer":{"@type":"Answer","text":"Mirip, tetapi skill dapat memuat instruksi, skrip, dan sumber daya yang dimuat bila relevan, sehingga lebih terstruktur."}},{"@type":"Question","name":"Apakah aman memasang server MCP dari pihak lain?","acceptedAnswer":{"@type":"Answer","text":"Berisiko bila tidak dikenal. Periksa sumber dan izinnya, dan batasi akses seminimal mungkin."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#satu-kalimat-untuk-masing-masing">Satu kalimat untuk masing-masing</a></li><li><a href="#kapan-memakai-yang-mana">Kapan memakai yang mana?</a></li><li><a href="#urutan-yang-masuk-akal-untuk-pemula">Urutan yang masuk akal untuk pemula</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › AI untuk Semua</p>
+<span class="cat">AI untuk Semua</span>
+<h1>Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya</h1>
+<p class="lead">Dalam ekosistem agen coding, ada empat cara memperluas kemampuan: skills, subagents, MCP, dan hooks. Banyak orang memilih yang salah karena istilahnya mirip. Padahal masing-masing menjawab kebutuhan yang berbeda.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Skills, Subagents, MCP, Hooks: Bedanya dan Pemakaiannya" fetchpriority="high"></figure>
+<h2 id="satu-kalimat-untuk-masing-masing">Satu kalimat untuk masing-masing</h2>
+<table><thead><tr><th>Fitur</th><th>Fungsi</th><th>Analogi</th></tr></thead><tbody><tr><td>Skills</td><td>Paket instruksi dan sumber daya yang dimuat saat dibutuhkan untuk tugas tertentu</td><td>Buku resep prosedur</td></tr><tr><td>Subagents</td><td>Agen terpisah dengan konteksnya sendiri untuk tugas tertentu</td><td>Asisten yang mengerjakan riset lalu melapor ringkas</td></tr><tr><td>MCP</td><td>Standar penghubung agen ke alat dan data luar</td><td>Colokan universal</td></tr><tr><td>Hooks</td><td>Perintah yang dijalankan otomatis pada peristiwa tertentu</td><td>Alarm atau pemicu otomatis</td></tr></tbody></table>
+<figure class="diagram"><svg viewBox="0 0 560 380" role="img" aria-label="Peta empat fitur" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="60" y="20" width="230" height="170" rx="12" fill="#e4f6cc"/><text x="175" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">Hooks</text><text x="175" y="78" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="175" dy="0">Pasti berjalan pada peristiwa</tspan><tspan x="175" dy="16">tertentu</tspan></text><rect x="300" y="20" width="230" height="170" rx="12" fill="#e8f1ff"/><text x="415" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">Skills</text><text x="415" y="78" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="415" dy="0">Prosedur dipakai saat relevan</tspan></text><rect x="60" y="200" width="230" height="170" rx="12" fill="#fff1d6"/><text x="175" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">Subagents</text><text x="175" y="258" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="175" dy="0">Memisahkan konteks yang</tspan><tspan x="175" dy="16">berisik</tspan></text><rect x="300" y="200" width="230" height="170" rx="12" fill="#fde4e1"/><text x="415" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">MCP</text><text x="415" y="258" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="415" dy="0">Menghubungkan ke alat dan data</tspan><tspan x="415" dy="16">luar</tspan></text><text x="290" y="376" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5568">Memperluas kemampuan →</text><text transform="translate(18 195) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5568">Menjamin hal selalu terjadi →</text></svg><figcaption>Penyederhanaan untuk membantu mengingat. Rincian bergantung pada versi alat.</figcaption></figure>
+<h2 id="kapan-memakai-yang-mana">Kapan memakai yang mana?</h2>
+<div data-w="choose"><script type="application/json">{"title":"Tes singkat","questions":[{"q":"Apa kebutuhan Anda?","options":[{"t":"Agen harus mengikuti prosedur tertentu yang sering saya jelaskan berulang","add":{"skill":3}},{"t":"Agen harus bisa mengakses alat atau data di luar proyek (tracker tugas, database)","add":{"mcp":3}},{"t":"Sesuatu harus SELALU terjadi setiap kali agen melakukan tindakan tertentu (misalnya format kode otomatis)","add":{"hook":3}},{"t":"Riset atau tinjauan panjang yang membuat percakapan utama penuh","add":{"sub":3}}]},{"q":"Apakah ada pilihan bila model keliru melewatkan langkah?","options":[{"t":"Tidak boleh terlewat sama sekali","add":{"hook":2}},{"t":"Boleh, model bisa memutuskan","add":{"skill":1,"sub":1}}]}],"results":{"skill":{"title":"Skills","text":"Ubah instruksi berulang menjadi prosedur yang dimuat saat relevan. Hemat konteks dan konsisten."},"mcp":{"title":"MCP","text":"Gunakan server MCP untuk menghubungkan alat dan data. Batasi izin dan pasang hanya yang dipakai."},"hook":{"title":"Hooks","text":"Bila sesuatu wajib terjadi secara deterministik, hook lebih tepat daripada berharap model mengingatnya."},"sub":{"title":"Subagents","text":"Delegasikan pekerjaan yang berisik ke konteks terpisah agar percakapan utama tetap bersih."}}}</script></div>
+<h2 id="urutan-yang-masuk-akal-untuk-pemula">Urutan yang masuk akal untuk pemula</h2>
+<ol><li>Mulai dengan <b>CLAUDE.md</b> yang singkat.</li><li>Ubah instruksi yang Anda ketik berulang menjadi <b>skill</b>.</li><li>Tambahkan <b>MCP</b> hanya untuk alat yang benar-benar dipakai.</li><li>Gunakan <b>hooks</b> untuk hal yang harus selalu terjadi.</li><li>Gunakan <b>subagents</b> bila konteks percakapan sering penuh.</li></ol>
+<div class="callout info"><b>Catatan</b><p>Fitur-fitur ini berkembang cepat dan detailnya berubah. Gunakan artikel ini untuk memahami perannya, lalu rujuk dokumentasi resmi untuk cara pemasangan dan sintaks terbaru.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Yang menjamin sebuah tindakan SELALU berjalan pada peristiwa tertentu?","options":["Skill","Hook","Prompt yang panjang"],"answer":1,"why":"Hook dijalankan secara otomatis pada peristiwa, tidak bergantung pada keputusan model."},{"q":"Yang paling tepat untuk menghubungkan agen ke database eksternal?","options":["MCP","Hook","CLAUDE.md"],"answer":0,"why":"MCP adalah standar penghubung ke alat dan data luar."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah saya perlu keempatnya?</summary><div>Tidak. Mulailah sederhana. Tambahkan fitur hanya ketika ada masalah nyata yang diselesaikannya.</div></details>
+<details class="faq"><summary>Apakah skill sama dengan prompt tersimpan?</summary><div>Mirip, tetapi skill dapat memuat instruksi, skrip, dan sumber daya yang dimuat bila relevan, sehingga lebih terstruktur.</div></details>
+<details class="faq"><summary>Apakah aman memasang server MCP dari pihak lain?</summary><div>Berisiko bila tidak dikenal. Periksa sumber dan izinnya, dan batasi akses seminimal mungkin.</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/apa-itu-mcp-model-context-protocol-pemula/"><img src="/artikel/apa-itu-mcp-model-context-protocol-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Apa Itu MCP (Model Context Protocol)? Penjelasan Sederhana</span></a><a href="/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/"><img src="/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Claude Code untuk Pemula: Apa Itu dan Cara Mulai</span></a><a href="/artikel/claude-md-memori-proyek-agar-ai-tidak-lupa/"><img src="/artikel/claude-md-memori-proyek-agar-ai-tidak-lupa/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>CLAUDE.md: Memori Proyek agar AI Paham Aturan Anda</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

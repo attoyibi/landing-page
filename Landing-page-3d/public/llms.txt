@@ -5,7 +5,7 @@ dengan 5+ tahun pengalaman di EdTech, React, Flutter, Node.js, dan AI Integratio
 
 - Email: muhammadmuchson@gmail.com
 - LinkedIn: https://www.linkedin.com/in/muhammad-muchson-attoyibi/
-- Website: https://muchson-landing-pages.vercel.app/
+- Website: https://muchson.web.id/
 
 ## Keahlian
 React, Vue, Angular, Flutter, Node.js, Laravel, AI Integration, 

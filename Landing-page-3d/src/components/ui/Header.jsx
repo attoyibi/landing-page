@@ -2,16 +2,17 @@ import React from 'react';
 import { PERSONAL_INFO } from '../../constants';
 
 const NAV = [
-    { href: '#about', label: 'About' },
-    { href: '#teaching', label: 'Teaching' },
-    { href: '#projects', label: 'Work' },
+    { href: '/#about', label: 'About' },
+    { href: '/#teaching', label: 'Teaching' },
+    { href: '/#projects', label: 'Work' },
+    { href: '/artikel/', label: 'Artikel' },
 ];
 
 const Header = () => {
     return (
         <header className="sticky top-0 z-40 bg-surface-000/95 backdrop-blur border-b border-line">
             <div className="container-page flex items-center justify-between h-16">
-                <a href="#top" className="h3 !font-bold text-ink no-underline">
+                <a href="/#top" className="h3 !font-bold text-ink no-underline">
                     {PERSONAL_INFO.name.split(' ').slice(0, 2).join(' ')}
                 </a>
                 <nav aria-label="Main" className="flex items-center gap-6">
@@ -24,7 +25,7 @@ const Header = () => {
                             </li>
                         ))}
                     </ul>
-                    <a href="#contact" className="btn btn-primary">Contact</a>
+                    <a href="/#contact" className="btn btn-primary">Contact</a>
                 </nav>
             </div>
         </header>

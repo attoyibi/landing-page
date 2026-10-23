@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)</title>
+<meta name="description" content="Breadth-first search menjelajah graf lapis demi lapis dan menemukan jalur terpendek. Gambar dinding sendiri di peta dan saksikan BFS bekerja langkah demi langkah.">
+<meta name="keywords" content="BFS, graf, jalur terpendek, algoritma, queue">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/">
+<meta property="og:title" content="BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)">
+<meta property="og:description" content="Breadth-first search menjelajah graf lapis demi lapis dan menemukan jalur terpendek. Gambar dinding sendiri di peta dan saksikan BFS bekerja langkah demi langkah.">
+<meta property="og:image" content="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)">
+<meta name="twitter:description" content="Breadth-first search menjelajah graf lapis demi lapis dan menemukan jalur terpendek. Gambar dinding sendiri di peta dan saksikan BFS bekerja langkah demi langkah.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)","description":"Breadth-first search menjelajah graf lapis demi lapis dan menemukan jalur terpendek. Gambar dinding sendiri di peta dan saksikan BFS bekerja langkah demi langkah.","image":["https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"BFS, graf, jalur terpendek, algoritma, queue","articleSection":"Coding & Algoritma","wordCount":169,"mainEntityOfPage":"https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)","item":"https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya BFS dan DFS?","acceptedAnswer":{"@type":"Answer","text":"BFS menjelajah per lapisan memakai queue, DFS menyelam sedalam mungkin memakai stack atau rekursi."}},{"@type":"Question","name":"Apakah BFS bisa dipakai untuk peta jalan sungguhan?","acceptedAnswer":{"@type":"Answer","text":"Untuk jarak yang bobotnya berbeda, dipakai Dijkstra atau A*. BFS cocok bila setiap langkah berbiaya sama."}},{"@type":"Question","name":"Apa yang dimaksud graf?","acceptedAnswer":{"@type":"Answer","text":"Kumpulan titik (node) yang dihubungkan garis (edge). Peta, jaringan pertemanan, dan jaringan komputer adalah contohnya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#lihat-bfs-bekerja">Lihat BFS bekerja</a></li><li><a href="#cara-kerjanya">Cara kerjanya</a></li><li><a href="#kode-python">Kode Python</a></li><li><a href="#bfs-dan-algoritma-lain">BFS dan algoritma lain</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)</h1>
+<p class="lead">Bagaimana aplikasi peta, game, atau robot menemukan jalan keluar dari labirin? Salah satu cara paling dasar adalah BFS. Ia menjelajah seperti riak air: semua kotak sejauh 1 langkah dulu, lalu 2 langkah, dan seterusnya.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)" fetchpriority="high"></figure>
+<h2 id="lihat-bfs-bekerja">Lihat BFS bekerja</h2>
+<div data-w="bfs"><script type="application/json">{"title":"Labirin dan BFS","desc":"Tekan \"Langkah\" untuk melihat penjelajahan menyebar. Ketuk kotak untuk menambah atau menghapus dinding, lalu coba lagi."}</script></div>
+<p>Perhatikan bahwa BFS menyebar merata ke segala arah, seperti riak. Karena itu, saat ia pertama kali mencapai tujuan, jalur yang ditemukan pasti yang <b>terpendek</b> (pada peta tanpa bobot).</p>
+<h2 id="cara-kerjanya">Cara kerjanya</h2>
+<figure class="diagram"><svg viewBox="0 0 728 104" role="img" aria-label="Langkah BFS" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Mulai</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">masukkan titik awal ke</tspan><tspan x="85" dy="14">antrean</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Ambil dari</tspan><tspan x="271" dy="16">antrean</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">kunjungi kotak</tspan><tspan x="271" dy="14">terdepan</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Tambahkan</tspan><tspan x="457" dy="16">tetangga</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">yang belum dikunjungi</tspan></text><line x1="536" y1="52" x2="564" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Ulangi</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">sampai tujuan</tspan><tspan x="643" dy="14">ditemukan</tspan></text></svg><figcaption>Kunci BFS adalah queue (antrean). Yang masuk lebih dulu dijelajahi lebih dulu.</figcaption></figure>
+<h2 id="kode-python">Kode Python</h2>
+<pre><code>from collections import deque
+
+def bfs(grid, mulai, tujuan):
+    q = deque([mulai])
+    asal = {mulai: None}
+    while q:
+        r, c = q.popleft()
+        if (r, c) == tujuan:
+            break
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            nr, nc = r + dr, c + dc
+            if (0 &lt;= nr &lt; len(grid) and 0 &lt;= nc &lt; len(grid[0])
+                    and grid[nr][nc] == 0 and (nr, nc) not in asal):
+                asal[(nr, nc)] = (r, c)
+                q.append((nr, nc))
+    # susun jalur dari tujuan kembali ke awal
+    jalur, cur = [], tujuan if tujuan in asal else None
+    while cur:
+        jalur.append(cur)
+        cur = asal[cur]
+    return jalur[::-1]</code></pre>
+<h2 id="bfs-dan-algoritma-lain">BFS dan algoritma lain</h2>
+<div data-w="compare"><script type="application/json">{"title":"Kapan memakai apa?","tabs":[{"label":"BFS","html":"Jalur terpendek pada graf tanpa bobot, penjelajahan level demi level. Memakai queue."},{"label":"DFS","html":"Menyelam sedalam mungkin lebih dulu. Cocok untuk memeriksa konektivitas dan mencari semua kemungkinan. Memakai stack atau rekursi."},{"label":"Dijkstra / A*","html":"Untuk graf dengan bobot (jarak, biaya). A* memakai perkiraan arah tujuan agar lebih cepat, dipakai pada game dan navigasi."}]}</script></div>
+<div class="callout info"><b>Dalam praktik</b><p>Aplikasi peta modern memakai algoritma yang jauh lebih canggih dari BFS, tetapi prinsip menjelajah graf tetap menjadi dasarnya.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Struktur data yang dipakai BFS?","options":["Stack","Queue","Hash table saja"],"answer":1,"why":"Queue menjaga urutan penjelajahan lapis demi lapis."},{"q":"Mengapa BFS menemukan jalur terpendek pada peta tanpa bobot?","options":["Karena menjelajah dari jarak terdekat dulu","Karena acak","Karena memakai rekursi"],"answer":0,"why":"Kotak ditemukan berurutan menurut jumlah langkah."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya BFS dan DFS?</summary><div>BFS menjelajah per lapisan memakai queue, DFS menyelam sedalam mungkin memakai stack atau rekursi.</div></details>
+<details class="faq"><summary>Apakah BFS bisa dipakai untuk peta jalan sungguhan?</summary><div>Untuk jarak yang bobotnya berbeda, dipakai Dijkstra atau A*. BFS cocok bila setiap langkah berbiaya sama.</div></details>
+<details class="faq"><summary>Apa yang dimaksud graf?</summary><div>Kumpulan titik (node) yang dihubungkan garis (edge). Peta, jaringan pertemanan, dan jaringan komputer adalah contohnya.</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/big-o-notation-untuk-pemula/"><img src="/artikel/big-o-notation-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</span></a><a href="/artikel/stack-dan-queue-struktur-data-dijelaskan/"><img src="/artikel/stack-dan-queue-struktur-data-dijelaskan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
