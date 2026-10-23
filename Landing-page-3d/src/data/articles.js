@@ -153,4 +153,9 @@ export const ARTICLES = [
     'file-io-java-nio-path-files-dan-pembacaan-data',
     'prinsip-solid-java-lima-aturan-desain-class-yang-baik',
     'design-pattern-java-singleton-factory-strategy-observer',
+    'uml-class-diagram-dari-kode-java-relasi-dan-multiplisitas',
+    'multithreading-java-thread-executor-synchronized-dan-race-condition',
+    'unit-testing-java-junit-assertion-dan-test-driven-development',
+    'package-modul-maven-dan-gradle-mengelola-proyek-java',
+    'proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode',
 ];

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyek Mini Java: Sistem Kasir dari Desain sampai Kode</title>
+<meta name="description" content="Latihan terpadu PBO Java: merancang dan membangun sistem kasir sederhana dengan class, interface, polimorfisme, koleksi, exception, dan stream, lengkap dengan desain dan pengujian.">
+<meta name="keywords" content="Java, proyek, PBO, sistem kasir, studi kasus">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/">
+<meta property="og:title" content="Proyek Mini Java: Sistem Kasir dari Desain sampai Kode">
+<meta property="og:description" content="Latihan terpadu PBO Java: merancang dan membangun sistem kasir sederhana dengan class, interface, polimorfisme, koleksi, exception, dan stream, lengkap dengan desain dan pengujian.">
+<meta property="og:image" content="https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Proyek Mini Java: Sistem Kasir dari Desain sampai Kode">
+<meta name="twitter:description" content="Latihan terpadu PBO Java: merancang dan membangun sistem kasir sederhana dengan class, interface, polimorfisme, koleksi, exception, dan stream, lengkap dengan desain dan pengujian.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Proyek Mini Java: Sistem Kasir dari Desain sampai Kode","description":"Latihan terpadu PBO Java: merancang dan membangun sistem kasir sederhana dengan class, interface, polimorfisme, koleksi, exception, dan stream, lengkap dengan desain dan pengujian.","image":["https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, proyek, PBO, sistem kasir, studi kasus","articleSection":"PBO dengan Java","wordCount":393,"mainEntityOfPage":"https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Proyek Mini Java: Sistem Kasir dari Desain sampai Kode","item":"https://muchson.web.id/artikel/proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah proyek ini cukup untuk tugas besar kuliah?","acceptedAnswer":{"@type":"Answer","text":"Sebagai kerangka ya. Tambahkan penyimpanan data, antarmuka (konsol atau GUI), dan tes agar sepadan dengan tugas akhir."}},{"@type":"Question","name":"Mengapa tidak memakai kerangka kerja seperti Spring?","acceptedAnswer":{"@type":"Answer","text":"Untuk belajar, memahami PBO murni lebih dulu membuat kerangka kerja lebih mudah dipahami kemudian."}},{"@type":"Question","name":"Bagaimana membagi pekerjaan dalam tim?","acceptedAnswer":{"@type":"Answer","text":"Per class atau per fitur; sepakati interface lebih dulu supaya anggota bisa bekerja paralel."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#langkah-1-kebutuhan">Langkah 1: kebutuhan</a></li><li><a href="#langkah-2-mencari-class-kata-benda-dan-kata-kerja">Langkah 2: mencari class (kata benda dan kata kerja)</a></li><li><a href="#langkah-3-kode">Langkah 3: kode</a></li><li><a href="#langkah-4-uji-dengan-skenario">Langkah 4: uji dengan skenario</a></li><li><a href="#tantangan-pengembangan">Tantangan pengembangan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Proyek Mini Java: Sistem Kasir dari Desain sampai Kode</h1>
+<p class="lead">Teori PBO baru melekat setelah dipakai. Di sini kita membangun sistem kasir kecil dari nol: menganalisis kebutuhan, menentukan class, menggambar hubungan, menulis kode, lalu mengujinya. Ikuti alurnya, lalu kembangkan sendiri sebagai latihan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> seluruh materi PBO Java sebelumnya</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Proyek Mini Java: Sistem Kasir dari Desain sampai Kode" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengubah deskripsi kebutuhan menjadi daftar class dan tanggung jawabnya</li><li>menerapkan enkapsulasi, interface, polimorfisme, dan koleksi dalam satu proyek</li><li>memakai exception untuk aturan bisnis</li><li>menguji alur utama dengan skenario</li><li>mengidentifikasi titik pengembangan lanjut</li></ul></div>
+<h2 id="langkah-1-kebutuhan">Langkah 1: kebutuhan</h2>
+<ul><li>Kasir mencatat <b>pesanan</b> berisi beberapa <b>item</b> (produk dan jumlah).</li><li>Produk punya kode, nama, harga, dan <b>stok</b>; stok berkurang saat dibeli dan tidak boleh negatif.</li><li>Ada beberapa jenis <b>diskon</b> (tanpa diskon, persentase, potongan tetap bila belanja minimal).</li><li>Struk menampilkan rincian, diskon, PPN 11 persen, dan total.</li><li>Pembayaran tunai menghitung kembalian dan menolak uang kurang.</li></ul>
+<h2 id="langkah-2-mencari-class-kata-benda-dan-kata-kerja">Langkah 2: mencari class (kata benda dan kata kerja)</h2>
+<table><thead><tr><th>Kata dalam kebutuhan</th><th>Menjadi</th><th>Tanggung jawab</th></tr></thead><tbody><tr><td>produk</td><td>class Produk</td><td>Menyimpan data produk dan menjaga stok</td></tr><tr><td>pesanan, item</td><td>class Pesanan (memuat ItemPesanan)</td><td>Menghimpun item dan menghitung subtotal</td></tr><tr><td>diskon (banyak jenis)</td><td>interface Diskon</td><td>Menghitung potongan; setiap jenis satu implementasi</td></tr><tr><td>stok tidak cukup, uang kurang</td><td>Exception khusus</td><td>Menyatakan pelanggaran aturan bisnis</td></tr><tr><td>struk</td><td>class Struk</td><td>Menyusun teks tampilan</td></tr></tbody></table>
+<figure class="diagram"><svg viewBox="0 0 660 270" role="img" aria-label="Desain kelas kasir" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="c60s7-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="c60s7-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="c60s7-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="c60s7-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="c60s7-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="205,70 255,70" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#c60s7-diaf)"/><text x="213" y="64" font-size="11.5" fill="#0f1a33">1</text><text x="263" y="64" font-size="11.5" fill="#0f1a33">*</text><polyline points="425,70 475,70" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#c60s7-vee)"/><text x="433" y="64" font-size="11.5" fill="#0f1a33">*</text><text x="483" y="64" font-size="11.5" fill="#0f1a33">1</text><polyline points="285,213.5 205,211.9" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#c60s7-open)"/><polyline points="475,214.1 205,211.1" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#c60s7-open)"/><polyline points="110,120 110,185" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#c60s7-vee)"/><rect x="15" y="20" width="190" height="100" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="39" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Pesanan</text><line x1="15" y1="48" x2="205" y2="48" stroke="#1e5ab2" stroke-width="1.5"/><text x="23" y="63" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">-items: List&lt;Item&gt;</text><line x1="15" y1="72" x2="205" y2="72" stroke="#1e5ab2" stroke-width="1.5"/><text x="23" y="87" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">+tambah(produk, jumlah)</text><text x="23" y="104" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">+subtotal()</text><text x="23" y="121" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">+total(diskon)</text><rect x="255" y="35" width="170" height="70" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="54" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">ItemPesanan</text><line x1="255" y1="63" x2="425" y2="63" stroke="#1e5ab2" stroke-width="1.5"/><text x="263" y="78" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">-jumlah: int</text><line x1="255" y1="87" x2="425" y2="87" stroke="#1e5ab2" stroke-width="1.5"/><text x="263" y="102" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">+subtotal()</text><rect x="475" y="25" width="170" height="90" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="560" y="44" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Produk</text><line x1="475" y1="53" x2="645" y2="53" stroke="#1e5ab2" stroke-width="1.5"/><text x="483" y="68" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">-kode</text><text x="483" y="85" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">-harga</text><text x="483" y="102" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">-stok</text><line x1="475" y1="111" x2="645" y2="111" stroke="#1e5ab2" stroke-width="1.5"/><text x="483" y="126" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">+kurangiStok(n)</text><rect x="15" y="185" width="190" height="50" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="199" text-anchor="middle" font-size="11" fill="#0f1a33">«interface»</text><text x="110" y="218" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">Diskon</text><line x1="15" y1="227" x2="205" y2="227" stroke="#1e5ab2" stroke-width="1.5"/><line x1="15" y1="251" x2="205" y2="251" stroke="#1e5ab2" stroke-width="1.5"/><text x="23" y="266" font-size="11.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#0f1a33">+potongan(subtotal)</text><rect x="285" y="197" width="150" height="36" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="360" y="216" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">DiskonPersen</text><line x1="285" y1="225" x2="435" y2="225" stroke="#1e5ab2" stroke-width="1.5"/><line x1="285" y1="249" x2="435" y2="249" stroke="#1e5ab2" stroke-width="1.5"/><rect x="475" y="197" width="170" height="36" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="560" y="216" text-anchor="middle" font-size="14" font-weight="700"  fill="#0f1a33">DiskonMinimal</text><line x1="475" y1="225" x2="645" y2="225" stroke="#1e5ab2" stroke-width="1.5"/><line x1="475" y1="249" x2="645" y2="249" stroke="#1e5ab2" stroke-width="1.5"/></svg><figcaption>Pesanan memiliki ItemPesanan (komposisi); tiap item merujuk satu Produk. Pesanan memakai Diskon (interface) sehingga jenis diskon baru tidak mengubah Pesanan.</figcaption></figure>
+<h2 id="langkah-3-kode">Langkah 3: kode</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+class StokTidakCukupException extends RuntimeException {
+    StokTidakCukupException(String nama, int diminta, int tersedia) {
+        super(&quot;Stok &quot; + nama + &quot; tidak cukup (diminta &quot; + diminta + &quot;, tersedia &quot; + tersedia + &quot;)&quot;);
+    }
+}
+class UangKurangException extends Exception {
+    UangKurangException(long kurang) { super(&quot;Uang kurang Rp&quot; + kurang); }
+}
+
+class Produk {
+    private final String kode, nama;
+    private final long harga;
+    private int stok;
+    Produk(String kode, String nama, long harga, int stok) {
+        if (harga &lt;= 0) throw new IllegalArgumentException(&quot;harga harus positif&quot;);
+        this.kode = kode; this.nama = nama; this.harga = harga; this.stok = stok;
+    }
+    String nama() { return nama; }
+    long harga() { return harga; }
+    int stok() { return stok; }
+    void kurangiStok(int n) {
+        if (n &gt; stok) throw new StokTidakCukupException(nama, n, stok);
+        stok -= n;
+    }
+}
+
+record ItemPesanan(Produk produk, int jumlah) {
+    long subtotal() { return produk.harga() * jumlah; }
+}
+
+interface Diskon { long potongan(long subtotal); }
+class TanpaDiskon implements Diskon { public long potongan(long s) { return 0; } }
+class DiskonPersen implements Diskon {
+    private final int persen;
+    DiskonPersen(int persen) { this.persen = persen; }
+    public long potongan(long s) { return s * persen / 100; }
+}
+class DiskonMinimal implements Diskon {
+    private final long minimal, potong;
+    DiskonMinimal(long minimal, long potong) { this.minimal = minimal; this.potong = potong; }
+    public long potongan(long s) { return s &gt;= minimal ? potong : 0; }
+}
+
+class Pesanan {
+    private static final int PPN = 11;
+    private final List&lt;ItemPesanan&gt; items = new ArrayList&lt;&gt;();
+
+    void tambah(Produk p, int jumlah) {
+        if (jumlah &lt;= 0) throw new IllegalArgumentException(&quot;jumlah harus positif&quot;);
+        p.kurangiStok(jumlah);                               // aturan bisnis ditegakkan di sini
+        items.add(new ItemPesanan(p, jumlah));
+    }
+    long subtotal() { return items.stream().mapToLong(ItemPesanan::subtotal).sum(); }
+    long total(Diskon d) {
+        long setelahDiskon = subtotal() - d.potongan(subtotal());
+        return setelahDiskon + setelahDiskon * PPN / 100;
+    }
+    String struk(Diskon d) {
+        StringBuilder sb = new StringBuilder();
+        for (ItemPesanan i : items)
+            sb.append(String.format(&quot;%-10s %2d x %7d = %8d%n&quot;, i.produk().nama(), i.jumlah(), i.produk().harga(), i.subtotal()));
+        sb.append(String.format(&quot;%-27s %8d%n&quot;, &quot;Subtotal&quot;, subtotal()));
+        sb.append(String.format(&quot;%-27s %8d%n&quot;, &quot;Diskon&quot;, -d.potongan(subtotal())));
+        sb.append(String.format(&quot;%-27s %8d%n&quot;, &quot;Total + PPN 11%&quot;, total(d)));
+        return sb.toString();
+    }
+    long bayar(long uang, Diskon d) throws UangKurangException {
+        long total = total(d);
+        if (uang &lt; total) throw new UangKurangException(total - uang);
+        return uang - total;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Produk kopi = new Produk(&quot;K1&quot;, &quot;Kopi&quot;, 20_000, 10);
+        Produk roti = new Produk(&quot;R1&quot;, &quot;Roti&quot;, 12_000, 3);
+
+        Pesanan p = new Pesanan();
+        p.tambah(kopi, 3);
+        p.tambah(roti, 2);
+        Diskon diskon = new DiskonMinimal(100_000, 10_000);
+        System.out.print(p.struk(diskon));
+
+        try { p.bayar(80_000, diskon); }
+        catch (UangKurangException e) { System.out.println(e.getMessage()); }
+        System.out.println(&quot;kembalian: &quot; + p.bayar(100_000, diskon));
+
+        try { new Pesanan().tambah(roti, 5); }
+        catch (StokTidakCukupException e) { System.out.println(e.getMessage()); }
+        System.out.println(&quot;sisa stok roti: &quot; + roti.stok());
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Kopi        3 x   20000 =    60000
+Roti        2 x   12000 =    24000
+Subtotal                       84000
+Diskon                             0
+Total + PPN 11%                93240
+Uang kurang Rp13240
+kembalian: 6760
+Stok Roti tidak cukup (diminta 5, tersedia 1)
+sisa stok roti: 1</code></pre><figcaption>Perhitungan: subtotal 84.000; diskon 0 (di bawah 100.000); setelah PPN 11% menjadi 93.240; kembalian dari 100.000 adalah 6.760.</figcaption></figure>
+<div class="callout good"><b>Apa yang kita peroleh</b><p>Perhatikan hasil <i>desain</i>: Pesanan tidak mengetahui jenis diskon, produk menjaga stoknya sendiri, dan aturan uang kurang berada di satu tempat. Menambah diskon baru atau metode pembayaran QRIS tidak mengubah class yang sudah ada.</p></div>
+<h2 id="langkah-4-uji-dengan-skenario">Langkah 4: uji dengan skenario</h2>
+<table><thead><tr><th>Skenario</th><th>Diharapkan</th></tr></thead><tbody><tr><td>Membeli 3 kopi dan 2 roti tanpa memenuhi minimal diskon</td><td>Total 93.240 (84.000 + PPN)</td></tr><tr><td>Membeli roti melebihi stok</td><td>StokTidakCukupException, stok tidak berubah</td></tr><tr><td>Membayar kurang dari total</td><td>UangKurangException dengan selisih</td></tr><tr><td>Jumlah nol atau negatif</td><td>IllegalArgumentException</td></tr></tbody></table>
+<h2 id="tantangan-pengembangan">Tantangan pengembangan</h2>
+<ul><li>Simpan produk dan penjualan ke berkas CSV atau basis data (lihat materi File I/O).</li><li>Tambahkan metode pembayaran (interface MetodeBayar: Tunai, QRIS, Kartu).</li><li>Buat laporan penjualan harian dengan stream dan groupingBy.</li><li>Tulis tes JUnit untuk setiap aturan di tabel skenario.</li><li>Gunakan BigDecimal atau long dengan satuan terkecil dan pertimbangkan pembulatan PPN.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa Pesanan menerima Diskon (interface) dan bukan jenis tertentu?","options":["Agar jenis diskon baru tidak mengubah Pesanan","Agar lebih cepat","Wajib oleh Java"],"answer":0,"why":"Open/Closed dan Dependency Inversion."},{"q":"Siapa yang menjaga stok tidak negatif?","options":["Produk","Main","Struk"],"answer":0,"why":"Enkapsulasi: objek menjaga invariannya sendiri."},{"q":"Mengapa harga disimpan sebagai long?","options":["Menghindari kesalahan presisi desimal pada uang","Karena lebih kecil","Tidak ada alasan"],"answer":0,"why":"Satuan terkecil integer menghindari pembulatan desimal."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan DiskonKombinasi yang menjumlahkan beberapa Diskon.</summary><div>Class yang menyimpan List<Diskon> dan menjumlahkan potongan() masing-masing (pola Composite).</div></details><details><summary>2. Mengapa kurangiStok dipanggil di Pesanan.tambah, bukan di Main?</summary><div>Aturan bisnis harus berada dalam model sehingga tidak bisa dilewati oleh pemanggil.</div></details><details><summary>3. Bagaimana menangani pesanan dibatalkan setelah stok dikurangi?</summary><div>Sediakan method untuk mengembalikan stok atau tunda pengurangan sampai pembayaran sukses (transaksi).</div></details><details><summary>4. Rancang interface MetodeBayar dan dua implementasinya.</summary><div>interface MetodeBayar { boolean proses(long jumlah); } lalu Tunai dan Qris.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Cari class dari kata benda; tanggung jawab dari kata kerja.</li><li>Enkapsulasi menjaga invarian (stok), interface memberi fleksibilitas (diskon).</li><li>Exception khusus menyatakan pelanggaran aturan bisnis.</li><li>Desain yang baik membuat fitur baru berupa penambahan, bukan pengubahan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah proyek ini cukup untuk tugas besar kuliah?</summary><div>Sebagai kerangka ya. Tambahkan penyimpanan data, antarmuka (konsol atau GUI), dan tes agar sepadan dengan tugas akhir.</div></details>
+<details class="faq"><summary>Mengapa tidak memakai kerangka kerja seperti Spring?</summary><div>Untuk belajar, memahami PBO murni lebih dulu membuat kerangka kerja lebih mudah dipahami kemudian.</div></details>
+<details class="faq"><summary>Bagaimana membagi pekerjaan dalam tim?</summary><div>Per class atau per fitur; sepakati interface lebih dulu supaya anggota bisa bekerja paralel.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/concepts/index.html" rel="noopener" target="_blank">Oracle: Object-Oriented Programming Concepts (Java Tutorials)</a></li><li>Craig Larman, Applying UML and Patterns (Prentice Hall)</li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://dev.java/learn/" rel="noopener" target="_blank">dev.java: Learn Java</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/class-dan-objek-java-membuat-tipe-data-sendiri/"><img src="/artikel/class-dan-objek-java-membuat-tipe-data-sendiri/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Class dan Objek di Java: Membuat Tipe Sendiri</span></a><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
