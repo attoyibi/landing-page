@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON</title>
+<meta name="description" content="Pelajari membaca dan menulis berkas teks, CSV, dan JSON di Python dengan with, mode berkas, encoding UTF-8, pathlib, serta praktik aman agar berkas tidak rusak atau bocor.">
+<meta name="keywords" content="file Python, baca tulis file, CSV, JSON, pathlib">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/">
+<meta property="og:title" content="File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON">
+<meta property="og:description" content="Pelajari membaca dan menulis berkas teks, CSV, dan JSON di Python dengan with, mode berkas, encoding UTF-8, pathlib, serta praktik aman agar berkas tidak rusak atau bocor.">
+<meta property="og:image" content="https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON">
+<meta name="twitter:description" content="Pelajari membaca dan menulis berkas teks, CSV, dan JSON di Python dengan with, mode berkas, encoding UTF-8, pathlib, serta praktik aman agar berkas tidak rusak atau bocor.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON","description":"Pelajari membaca dan menulis berkas teks, CSV, dan JSON di Python dengan with, mode berkas, encoding UTF-8, pathlib, serta praktik aman agar berkas tidak rusak atau bocor.","image":["https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"file Python, baca tulis file, CSV, JSON, pathlib","articleSection":"Algoritma & Pemrograman Python","wordCount":303,"mainEntityOfPage":"https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON","item":"https://muchson.web.id/artikel/file-io-python-membaca-menulis-txt-csv-json/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa baris yang dibaca ada karakter \\n di akhir?","acceptedAnswer":{"@type":"Answer","text":"Pembacaan per baris mempertahankan pemisah baris. Gunakan .rstrip() atau .strip() untuk membuangnya."}},{"@type":"Question","name":"Bagaimana membaca berkas besar?","acceptedAnswer":{"@type":"Answer","text":"Iterasi langsung pada objek berkas (for baris in f) membaca satu baris sekali, sehingga hemat memori."}},{"@type":"Question","name":"Apa bedanya json.dump dan json.dumps?","acceptedAnswer":{"@type":"Answer","text":"dump menulis ke objek berkas, dumps menghasilkan string. Begitu pula load dan loads."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#membuka-berkas-with-menjamin-berkas-tertutup">Membuka berkas: with menjamin berkas tertutup</a></li><li><a href="#csv-data-tabel">CSV: data tabel</a></li><li><a href="#json-data-bersarang">JSON: data bersarang</a></li><li><a href="#pathlib-jalur-berkas-yang-aman-lintas-sistem">pathlib: jalur berkas yang aman lintas sistem</a></li><li><a href="#contoh-utuh-menghitung-frekuensi-kata-dari-berkas">Contoh utuh: menghitung frekuensi kata dari berkas</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON</h1>
+<p class="lead">Variabel hilang begitu program selesai. Agar data bertahan, program perlu menyimpannya ke berkas, dan membacanya kembali di lain waktu. Materi ini membahas tiga format yang paling sering ditemui: teks biasa, CSV (tabel), dan JSON (data bersarang), beserta cara membuka berkas dengan aman.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> string, list dan dictionary, perulangan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="File I/O Python: Membaca dan Menulis TXT, CSV, dan JSON" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuka berkas dengan with dan memilih mode yang tepat</li><li>membaca berkas per baris dan seluruhnya</li><li>menulis dan menambah isi berkas dengan encoding UTF-8</li><li>membaca dan menulis CSV dengan modul csv</li><li>menyimpan dan memuat struktur data dengan JSON</li><li>memakai pathlib untuk jalur berkas</li></ul></div>
+<h2 id="membuka-berkas-with-menjamin-berkas-tertutup">Membuka berkas: with menjamin berkas tertutup</h2>
+<table><thead><tr><th>Mode</th><th>Arti</th><th>Efek bila berkas sudah ada</th></tr></thead><tbody><tr><td>"r"</td><td>Baca (bawaan)</td><td>Error bila berkas tidak ada</td></tr><tr><td>"w"</td><td>Tulis</td><td><b>Menimpa</b> seluruh isi lama</td></tr><tr><td>"a"</td><td>Tambah di akhir (append)</td><td>Isi lama dipertahankan</td></tr><tr><td>"x"</td><td>Buat baru</td><td>Error bila sudah ada</td></tr><tr><td>"r+"</td><td>Baca dan tulis</td><td>Isi dipertahankan</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>with open(&quot;catatan.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;Baris pertama\n&quot;)
+    f.write(&quot;Baris kedua: é ü 日本\n&quot;)
+    f.writelines([&quot;Baris ketiga\n&quot;, &quot;Baris keempat\n&quot;])
+
+with open(&quot;catatan.txt&quot;, &quot;a&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;Ditambahkan di akhir\n&quot;)
+
+with open(&quot;catatan.txt&quot;, encoding=&quot;utf-8&quot;) as f:
+    for nomor, baris in enumerate(f, start=1):   # membaca per baris, hemat memori
+        print(nomor, baris.rstrip())
+
+with open(&quot;catatan.txt&quot;, encoding=&quot;utf-8&quot;) as f:
+    isi = f.read()
+print(len(isi), &quot;karakter;&quot;, isi.count(&quot;\n&quot;), &quot;baris&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>1 Baris pertama
+2 Baris kedua: é ü 日本
+3 Baris ketiga
+4 Baris keempat
+5 Ditambahkan di akhir
+82 karakter; 5 baris</code></pre></figure>
+<div class="callout warn"><b>Encoding</b><p>Selalu sebutkan <code>encoding="utf-8"</code>. Tanpa itu, Python memakai encoding bawaan sistem yang bisa berbeda antar komputer (di Windows sering bukan UTF-8), sehingga huruf non-ASCII rusak.</p></div>
+<h2 id="csv-data-tabel">CSV: data tabel</h2>
+<figure class="codebox"><pre data-lang="python"><code>import csv
+
+siswa = [(&quot;Ani&quot;, 88), (&quot;Budi&quot;, 72), (&quot;Citra&quot;, 95)]
+with open(&quot;nilai.csv&quot;, &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as f:
+    w = csv.writer(f)
+    w.writerow([&quot;nama&quot;, &quot;nilai&quot;])
+    w.writerows(siswa)
+
+with open(&quot;nilai.csv&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as f:
+    for baris in csv.DictReader(f):          # tiap baris menjadi dict
+        print(baris[&quot;nama&quot;], int(baris[&quot;nilai&quot;]) + 5)
+
+total = 0
+with open(&quot;nilai.csv&quot;, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as f:
+    r = csv.reader(f); next(r)               # lewati header
+    total = sum(int(n) for _, n in r)
+print(&quot;Total:&quot;, total)</code></pre><pre class="runout" data-lang="keluaran"><code>Ani 93
+Budi 77
+Citra 100
+Total: 255</code></pre><figcaption>Nilai di CSV selalu berupa teks. Konversi ke int atau float sendiri.</figcaption></figure>
+<h2 id="json-data-bersarang">JSON: data bersarang</h2>
+<figure class="codebox"><pre data-lang="python"><code>import json
+
+data = {&quot;nama&quot;: &quot;Ani&quot;, &quot;nilai&quot;: [88, 90], &quot;aktif&quot;: True, &quot;alamat&quot;: None}
+with open(&quot;data.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+
+with open(&quot;data.json&quot;, encoding=&quot;utf-8&quot;) as f:
+    baru = json.load(f)
+print(baru[&quot;nilai&quot;][1], type(baru[&quot;aktif&quot;]), baru[&quot;alamat&quot;])
+
+teks = json.dumps(data, ensure_ascii=False)       # ke string, bukan berkas
+print(teks)
+print(json.loads(teks) == data)</code></pre><pre class="runout" data-lang="keluaran"><code>90 &lt;class 'bool'&gt; None
+{&quot;nama&quot;: &quot;Ani&quot;, &quot;nilai&quot;: [88, 90], &quot;aktif&quot;: true, &quot;alamat&quot;: null}
+True</code></pre></figure>
+<table><thead><tr><th>Python</th><th>JSON</th></tr></thead><tbody><tr><td>dict</td><td>object</td></tr><tr><td>list, tuple</td><td>array</td></tr><tr><td>str</td><td>string</td></tr><tr><td>int, float</td><td>number</td></tr><tr><td>True, False</td><td>true, false</td></tr><tr><td>None</td><td>null</td></tr></tbody></table>
+<h2 id="pathlib-jalur-berkas-yang-aman-lintas-sistem">pathlib: jalur berkas yang aman lintas sistem</h2>
+<figure class="codebox"><pre data-lang="python"><code>from pathlib import Path
+
+p = Path(&quot;laporan&quot;) / &quot;2026&quot; / &quot;okt.txt&quot;      # operator / menyambung jalur
+p.parent.mkdir(parents=True, exist_ok=True)
+p.write_text(&quot;isi laporan&quot;, encoding=&quot;utf-8&quot;)
+print(p.name, p.suffix, p.exists(), p.read_text(encoding=&quot;utf-8&quot;))
+print([x.name for x in Path(&quot;laporan/2026&quot;).iterdir()])</code></pre><pre class="runout" data-lang="keluaran"><code>okt.txt .txt True isi laporan
+['okt.txt']</code></pre></figure>
+<h2 id="contoh-utuh-menghitung-frekuensi-kata-dari-berkas">Contoh utuh: menghitung frekuensi kata dari berkas</h2>
+<figure class="codebox"><pre data-lang="python"><code>from collections import Counter
+from pathlib import Path
+
+Path(&quot;puisi.txt&quot;).write_text(&quot;Padi menguning padi merunduk\nPadi berisi padi merunduk&quot;, encoding=&quot;utf-8&quot;)
+kata = Path(&quot;puisi.txt&quot;).read_text(encoding=&quot;utf-8&quot;).lower().split()
+for k, n in Counter(kata).most_common(3):
+    print(f&quot;{k:&lt;10}{n}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>padi      4
+merunduk  2
+menguning 1</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mode berkas yang menimpa isi lama adalah...","options":["\"r\"","\"a\"","\"w\""],"answer":2,"why":"Mode \"w\" mengosongkan berkas saat dibuka."},{"q":"Mengapa memakai \u003ccode>with open(...)\u003c/code>?","options":["Lebih cepat","Berkas otomatis ditutup meski terjadi error","Agar bisa menulis"],"answer":1,"why":"Context manager menjamin berkas ditutup."},{"q":"Dalam CSV, angka dibaca sebagai tipe...","options":["int","float","str"],"answer":2,"why":"Semua nilai dibaca sebagai teks."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis program yang membaca "nilai.csv" dan mencetak nama siswa dengan nilai tertinggi.</summary><div><code>import csv
+with open("nilai.csv", newline="", encoding="utf-8") as f:
+    baris = list(csv.DictReader(f))
+print(max(baris, key=lambda b: int(b["nilai"]))["nama"])</code></div></details><details><summary>2. Mengapa <code>open("a.txt", "w")</code> pada berkas penting berbahaya?</summary><div>Berkas langsung dikosongkan. Gunakan "a" untuk menambah, atau tulis ke berkas sementara lalu ganti nama bila aman.</div></details><details><summary>3. Simpan list of dict berisi tiga produk ke JSON, lalu baca kembali dan tampilkan total harga.</summary><div><code>json.dump(produk, f)</code>, lalu <code>sum(p["harga"] for p in json.load(f))</code>.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Pakai with open(...) dan tentukan encoding="utf-8".</li><li>Mode: r baca, w tulis (menimpa), a tambah, x buat baru.</li><li>CSV untuk tabel (modul csv), JSON untuk data bersarang (modul json).</li><li>pathlib.Path menyederhanakan penanganan jalur lintas sistem operasi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa baris yang dibaca ada karakter \n di akhir?</summary><div>Pembacaan per baris mempertahankan pemisah baris. Gunakan <code>.rstrip()</code> atau <code>.strip()</code> untuk membuangnya.</div></details>
+<details class="faq"><summary>Bagaimana membaca berkas besar?</summary><div>Iterasi langsung pada objek berkas (for baris in f) membaca satu baris sekali, sehingga hemat memori.</div></details>
+<details class="faq"><summary>Apa bedanya json.dump dan json.dumps?</summary><div>dump menulis ke objek berkas, dumps menghasilkan string. Begitu pula load dan loads.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files" rel="noopener" target="_blank">Dokumentasi Python: Reading and Writing Files (tutorial)</a></li><li><a href="https://docs.python.org/3/library/csv.html" rel="noopener" target="_blank">Dokumentasi Python: csv, CSV File Reading and Writing</a></li><li><a href="https://docs.python.org/3/library/json.html" rel="noopener" target="_blank">Dokumentasi Python: json, JSON encoder and decoder</a></li><li><a href="https://docs.python.org/3/library/pathlib.html" rel="noopener" target="_blank">Dokumentasi Python: pathlib, Object-oriented filesystem paths</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

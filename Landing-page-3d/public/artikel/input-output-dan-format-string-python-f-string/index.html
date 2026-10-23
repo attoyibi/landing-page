@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Input, Output, dan Format String Python (f-string)</title>
+<meta name="description" content="Pelajari print, input, konversi masukan, parameter sep dan end, serta f-string dengan spesifikasi format untuk lebar, presisi, pemisah ribuan, dan persentase.">
+<meta name="keywords" content="input Python, print, f-string, format string, format angka">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/">
+<meta property="og:title" content="Input, Output, dan Format String Python (f-string)">
+<meta property="og:description" content="Pelajari print, input, konversi masukan, parameter sep dan end, serta f-string dengan spesifikasi format untuk lebar, presisi, pemisah ribuan, dan persentase.">
+<meta property="og:image" content="https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Input, Output, dan Format String Python (f-string)">
+<meta name="twitter:description" content="Pelajari print, input, konversi masukan, parameter sep dan end, serta f-string dengan spesifikasi format untuk lebar, presisi, pemisah ribuan, dan persentase.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Input, Output, dan Format String Python (f-string)","description":"Pelajari print, input, konversi masukan, parameter sep dan end, serta f-string dengan spesifikasi format untuk lebar, presisi, pemisah ribuan, dan persentase.","image":["https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"input Python, print, f-string, format string, format angka","articleSection":"Algoritma & Pemrograman Python","wordCount":380,"mainEntityOfPage":"https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Input, Output, dan Format String Python (f-string)","item":"https://muchson.web.id/artikel/input-output-dan-format-string-python-f-string/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya f-string dengan format() dan %?","acceptedAnswer":{"@type":"Answer","text":"f-string (sejak Python 3.6) paling ringkas dan cepat. str.format() dan operator % masih berfungsi, tetapi f-string direkomendasikan untuk kode baru."}},{"@type":"Question","name":"Bagaimana menampilkan kurung kurawal literal di f-string?","acceptedAnswer":{"@type":"Answer","text":"Gandakan: f\"{{ dan }}\" mencetak { dan }."}},{"@type":"Question","name":"Bagaimana membaca banyak baris masukan sampai selesai?","acceptedAnswer":{"@type":"Answer","text":"Gunakan perulangan for baris in sys.stdin: setelah import sys, yang sering dipakai pada soal kompetisi."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#print-parameter-yang-jarang-dipakai-tetapi-berguna">print: parameter yang jarang dipakai tetapi berguna</a></li><li><a href="#input-selalu-menghasilkan-teks">input: selalu menghasilkan teks</a></li><li><a href="#f-string-format-yang-mudah-dibaca">f-string: format yang mudah dibaca</a></li><li><a href="#contoh-struk-belanja-yang-rapi">Contoh: struk belanja yang rapi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Input, Output, dan Format String Python (f-string)</h1>
+<p class="lead">Program yang berguna berinteraksi dengan penggunanya: menerima data dan menampilkan hasil yang rapi. Materi ini membahas fungsi input() dan print(), cara memproses masukan yang selalu berupa teks, dan f-string untuk mengatur tampilan angka seperti uang, persen, dan tabel.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> variabel dan tipe data, operator dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Input, Output, dan Format String Python (f-string)" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menampilkan keluaran dengan print dan mengatur sep dan end</li><li>membaca masukan dengan input dan mengonversinya ke tipe yang tepat</li><li>membaca beberapa nilai sekaligus dari satu baris</li><li>memformat keluaran dengan f-string: lebar, perataan, presisi, ribuan, dan persen</li></ul></div>
+<h2 id="print-parameter-yang-jarang-dipakai-tetapi-berguna">print: parameter yang jarang dipakai tetapi berguna</h2>
+<figure class="codebox"><pre data-lang="python"><code>print(&quot;Halo&quot;, &quot;dunia&quot;)                 # dipisah spasi
+print(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, sep=&quot;-&quot;)         # a-b-c
+print(&quot;tanpa baris baru&quot;, end=&quot; &quot;)
+print(&quot;lanjut di baris sama&quot;)
+print(&quot;x =&quot;, 5, &quot;y =&quot;, 7.5)
+print()                               # baris kosong</code></pre><pre class="runout" data-lang="keluaran"><code>Halo dunia
+a-b-c
+tanpa baris baru lanjut di baris sama
+x = 5 y = 7.5
+</code></pre></figure>
+<h2 id="input-selalu-menghasilkan-teks">input: selalu menghasilkan teks</h2>
+<p>Fungsi <code>input()</code> menampilkan teks petunjuk (opsional), menunggu pengguna menekan Enter, lalu mengembalikan apa yang diketik sebagai <b>str</b>. Karena itu angka harus dikonversi. Penelusuran berikut memakai masukan "Dewi" dan "17"; perhatikan tipe tiap variabel pada panel memori.</p>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri eksekusi langkah demi langkah","desc":"Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.","code":"nama = input(\"Nama: \")\numur_teks = input(\"Umur: \")\numur = int(umur_teks)\nprint(f\"Halo {nama}, tahun depan umur Anda {umur + 1}.\")","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"nama":"'Dewi'"}}],"out":"Nama: "},{"line":3,"stack":[{"name":"(modul)","vars":{"nama":"'Dewi'","umur_teks":"'17'"}}],"out":"Nama: Umur: "},{"line":4,"stack":[{"name":"(modul)","vars":{"nama":"'Dewi'","umur_teks":"'17'","umur":"17"}}],"out":"Nama: Umur: "},{"line":0,"stack":[{"name":"(modul)","vars":{"nama":"'Dewi'","umur_teks":"'17'","umur":"17"}}],"out":"Nama: Umur: Halo Dewi, tahun depan umur Anda 18.\n"}]}</script></div>
+<div class="callout warn"><b>Masukan tidak selalu sesuai harapan</b><p>Jika pengguna mengetik "tujuh belas", <code>int()</code> akan menimbulkan <code>ValueError</code> dan program berhenti. Menangani masukan yang salah dibahas pada materi exception handling. Untuk sementara, anggap masukan selalu benar.</p></div>
+<h3>Membaca beberapa nilai dalam satu baris</h3>
+<figure class="codebox"><pre data-lang="python"><code>a, b = map(int, input().split())
+print(&quot;Jumlah:&quot;, a + b)
+print(&quot;Rata-rata:&quot;, (a + b) / 2)</code></pre><pre class="runout" data-lang="keluaran"><code>Jumlah: 7
+Rata-rata: 3.5</code></pre><figcaption>Masukan "3 4": split() memecah teks menjadi ["3", "4"], map(int, ...) mengonversi tiap elemen, lalu hasilnya di-unpack ke a dan b.</figcaption></figure>
+<h2 id="f-string-format-yang-mudah-dibaca">f-string: format yang mudah dibaca</h2>
+<p>Awali string dengan <code>f</code> dan taruh ekspresi di dalam kurung kurawal. Setelah titik dua, Anda dapat menambahkan <i>spesifikasi format</i>.</p>
+<figure class="codebox"><pre data-lang="python"><code>nama, harga, diskon = &quot;Buku&quot;, 1234567.891, 0.256
+print(f&quot;Barang: {nama}&quot;)
+print(f&quot;Harga : {harga:,.2f}&quot;)        # pemisah ribuan, 2 desimal
+print(f&quot;Diskon: {diskon:.1%}&quot;)         # persen, 1 desimal
+print(f&quot;Kode  : {42:05d}&quot;)             # lebar 5, diisi nol
+print(f&quot;|{'kiri':&lt;8}|{'tengah':^8}|{'kanan':&gt;8}|&quot;)
+print(f&quot;{255:b} {255:o} {255:x} {255:X}&quot;)   # biner, oktal, heksa
+print(f&quot;{3.14159:8.3f}|&quot;)               # lebar 8, 3 desimal
+print(f&quot;{nama=}&quot;)                       # menampilkan nama dan nilainya</code></pre><pre class="runout" data-lang="keluaran"><code>Barang: Buku
+Harga : 1,234,567.89
+Diskon: 25.6%
+Kode  : 00042
+|kiri    | tengah |   kanan|
+11111111 377 ff FF
+   3.142|
+nama='Buku'</code></pre></figure>
+<table><thead><tr><th>Spesifikasi</th><th>Arti</th><th>Contoh dan hasil</th></tr></thead><tbody><tr><td>:.2f</td><td>Pecahan dengan 2 desimal</td><td>{3.14159:.2f} → 3.14</td></tr><tr><td>:,</td><td>Pemisah ribuan</td><td>{1234567:,} → 1,234,567</td></tr><tr><td>:>10</td><td>Rata kanan, lebar 10</td><td>{"a":>10} → "         a"</td></tr><tr><td>:<10</td><td>Rata kiri</td><td></td></tr><tr><td>:^10</td><td>Rata tengah</td><td></td></tr><tr><td>:05d</td><td>Bilangan bulat, lebar 5, awalan nol</td><td>{42:05d} → 00042</td></tr><tr><td>:.1%</td><td>Persen</td><td>{0.256:.1%} → 25.6%</td></tr><tr><td>:b  :x  :o</td><td>Biner, heksa, oktal</td><td>{255:x} → ff</td></tr><tr><td>:e</td><td>Notasi ilmiah</td><td>{12345.678:.2e} → 1.23e+04</td></tr></tbody></table>
+<h2 id="contoh-struk-belanja-yang-rapi">Contoh: struk belanja yang rapi</h2>
+<figure class="codebox"><pre data-lang="python"><code>barang = [(&quot;Beras 5kg&quot;, 1, 68000), (&quot;Minyak 1L&quot;, 2, 18500), (&quot;Telur 1kg&quot;, 1, 31000)]
+total = 0
+print(f&quot;{'Barang':&lt;12}{'Qty':&gt;4}{'Harga':&gt;10}{'Subtotal':&gt;12}&quot;)
+print(&quot;-&quot; * 38)
+for nama, qty, harga in barang:
+    sub = qty * harga
+    total += sub
+    print(f&quot;{nama:&lt;12}{qty:&gt;4}{harga:&gt;10,}{sub:&gt;12,}&quot;)
+print(&quot;-&quot; * 38)
+print(f&quot;{'TOTAL':&lt;26}{total:&gt;12,}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>Barang       Qty     Harga    Subtotal
+--------------------------------------
+Beras 5kg      1    68,000      68,000
+Minyak 1L      2    18,500      37,000
+Telur 1kg      1    31,000      31,000
+--------------------------------------
+TOTAL                          136,000</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tipe data hasil \u003ccode>input()\u003c/code> adalah...","options":["int","str","Tergantung yang diketik"],"answer":1,"why":"input() selalu mengembalikan str."},{"q":"\u003ccode>print(\"a\", \"b\", sep=\"\")\u003c/code> mencetak...","options":["a b","ab","a,b"],"answer":1,"why":"sep mengganti pemisah bawaan (spasi) dengan string kosong."},{"q":"\u003ccode>f\"{0.5:.0%}\"\u003c/code> menghasilkan...","options":["0.5","50%","5%"],"answer":1,"why":":.0% mengalikan 100 dan menampilkan tanpa desimal."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis program yang membaca dua bilangan bulat (satu per baris), lalu mencetak hasil bagi bulat dan sisanya dengan format "17 dibagi 5 = 3 sisa 2".</summary><div><code>a = int(input()); b = int(input())
+print(f"{a} dibagi {b} = {a // b} sisa {a % b}")</code></div></details><details><summary>2. Cetak nilai 1234.5 sebagai "Rp 1.234,50" (gaya Indonesia). Petunjuk: format dulu dengan koma ribuan lalu tukar tanda.</summary><div><code>s = f"{1234.5:,.2f}"  # 1,234.50
+print("Rp " + s.replace(",", "X").replace(".", ",").replace("X", "."))</code> menghasilkan Rp 1.234,50.</div></details><details><summary>3. Mengapa <code>input() + 1</code> menimbulkan error?</summary><div>input() mengembalikan str, dan str tidak bisa dijumlahkan dengan int. Ubah dulu: <code>int(input()) + 1</code>.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>print punya parameter sep dan end untuk mengatur pemisah dan akhir baris.</li><li>input() selalu menghasilkan str, konversi sendiri ke int atau float.</li><li>f-string dengan spesifikasi format menyederhanakan tampilan angka dan tabel.</li><li>Pemisahan masukan satu baris: map(int, input().split()).</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya f-string dengan format() dan %?</summary><div>f-string (sejak Python 3.6) paling ringkas dan cepat. <code>str.format()</code> dan operator <code>%</code> masih berfungsi, tetapi f-string direkomendasikan untuk kode baru.</div></details>
+<details class="faq"><summary>Bagaimana menampilkan kurung kurawal literal di f-string?</summary><div>Gandakan: <code>f"{{ dan }}"</code> mencetak <code>{ dan }</code>.</div></details>
+<details class="faq"><summary>Bagaimana membaca banyak baris masukan sampai selesai?</summary><div>Gunakan perulangan <code>for baris in sys.stdin:</code> setelah <code>import sys</code>, yang sering dipakai pada soal kompetisi.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/inputoutput.html" rel="noopener" target="_blank">Dokumentasi Python: Input and Output (tutorial)</a></li><li><a href="https://docs.python.org/3/library/string.html#formatspec" rel="noopener" target="_blank">Dokumentasi Python: Format Specification Mini-Language</a></li><li><a href="https://peps.python.org/pep-0498/" rel="noopener" target="_blank">PEP 498, Literal String Interpolation</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

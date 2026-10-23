@@ -44,6 +44,7 @@
 <h1>Docker untuk Pemula: Apa Itu Container dan Kenapa Dipakai</h1>
 <p class="lead">"Di komputer saya jalan kok." Kalimat yang paling sering diucapkan developer, dan penyebab banyak sakit kepala. Docker menyelesaikannya dengan membungkus aplikasi bersama semua yang dibutuhkannya ke dalam satu paket yang berjalan sama di mana pun.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Docker untuk Pemula: Apa Itu Container dan Kenapa Dipakai" fetchpriority="high"></figure>
 <h2 id="analogi-kontainer-pengiriman">Analogi kontainer pengiriman</h2>
 <p>Pelabuhan modern memakai kontainer standar: apa pun isinya, kontainer bisa diangkut kapal, truk, atau kereta tanpa dibongkar. Docker melakukan hal serupa untuk perangkat lunak. Aplikasi, pustaka, dan konfigurasinya dikemas, lalu bisa dijalankan di laptop, server, atau cloud dengan perilaku yang sama.</p>
@@ -51,15 +52,15 @@
 <h2 id="tiga-istilah-utama">Tiga istilah utama</h2>
 <div data-w="cards"><script type="application/json">{"title":"Ketuk kartu untuk artinya","items":[{"tag":"Istilah","front":"Image","backTag":"Arti","back":"Cetak biru yang berisi aplikasi dan lingkungannya. Tidak berubah."},{"tag":"Istilah","front":"Container","backTag":"Arti","back":"Instans yang berjalan dari sebuah image."},{"tag":"Istilah","front":"Dockerfile","backTag":"Arti","back":"Berkas resep untuk membuat image."},{"tag":"Istilah","front":"Registry (Docker Hub)","backTag":"Arti","back":"Tempat menyimpan dan membagikan image."}]}</script></div>
 <h2 id="contoh-dockerfile-sederhana">Contoh Dockerfile sederhana</h2>
-<pre><code>FROM python:3.12-slim
+<figure class="codebox"><pre><code>FROM python:3.12-slim
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
-CMD [&quot;python&quot;, &quot;app.py&quot;]</code></pre>
-<pre><code># bangun image dan jalankan
+CMD [&quot;python&quot;, &quot;app.py&quot;]</code></pre></figure>
+<figure class="codebox"><pre><code># bangun image dan jalankan
 docker build -t aplikasi-saya .
-docker run -p 8000:8000 aplikasi-saya</code></pre>
+docker run -p 8000:8000 aplikasi-saya</code></pre></figure>
 <h2 id="kapan-docker-berguna">Kapan Docker berguna?</h2>
 <ul><li>Lingkungan pengembangan yang sama untuk seluruh tim.</li><li>Menjalankan database atau layanan pendukung tanpa memasang manual.</li><li>Deploy ke server atau cloud dengan perilaku yang dapat diprediksi.</li><li>Mengisolasi beberapa aplikasi di satu mesin.</li></ul>
 <div class="callout warn"><b>Keamanan</b><p>Jangan menaruh kunci rahasia di dalam image atau Dockerfile. Berikan lewat variabel lingkungan atau pengelola rahasia saat container dijalankan.</p></div>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File I/O Java: Path, Files, dan Pembacaan Data</title>
+<meta name="description" content="Baca dan tulis berkas di Java dengan java.nio.file: Path, Files, try-with-resources, BufferedReader, penanganan encoding, dan pengolahan CSV sederhana secara aman.">
+<meta name="keywords" content="Java, file I/O, NIO, Path, CSV">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/">
+<meta property="og:title" content="File I/O Java: Path, Files, dan Pembacaan Data">
+<meta property="og:description" content="Baca dan tulis berkas di Java dengan java.nio.file: Path, Files, try-with-resources, BufferedReader, penanganan encoding, dan pengolahan CSV sederhana secara aman.">
+<meta property="og:image" content="https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="File I/O Java: Path, Files, dan Pembacaan Data">
+<meta name="twitter:description" content="Baca dan tulis berkas di Java dengan java.nio.file: Path, Files, try-with-resources, BufferedReader, penanganan encoding, dan pengolahan CSV sederhana secara aman.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"File I/O Java: Path, Files, dan Pembacaan Data","description":"Baca dan tulis berkas di Java dengan java.nio.file: Path, Files, try-with-resources, BufferedReader, penanganan encoding, dan pengolahan CSV sederhana secara aman.","image":["https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, file I/O, NIO, Path, CSV","articleSection":"PBO dengan Java","wordCount":282,"mainEntityOfPage":"https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"File I/O Java: Path, Files, dan Pembacaan Data","item":"https://muchson.web.id/artikel/file-io-java-nio-path-files-dan-pembacaan-data/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana menulis objek ke berkas?","acceptedAnswer":{"@type":"Answer","text":"Gunakan format teks terstruktur seperti JSON (pustaka Jackson atau Gson). Serialisasi bawaan Java (ObjectOutputStream) kurang disarankan karena masalah keamanan dan kompatibilitas."}},{"@type":"Question","name":"Bagaimana cara melihat folder kerja?","acceptedAnswer":{"@type":"Answer","text":"Path.of(\"\").toAbsolutePath() atau System.getProperty(\"user.dir\")."}},{"@type":"Question","name":"Apa bedanya stream byte dan karakter?","acceptedAnswer":{"@type":"Answer","text":"InputStream/OutputStream bekerja dengan byte; Reader/Writer dengan karakter dan encoding."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#path-dan-files">Path dan Files</a></li><li><a href="#berkas-besar-baca-per-baris">Berkas besar: baca per baris</a></li><li><a href="#contoh-mengolah-csv">Contoh: mengolah CSV</a></li><li><a href="#kelas-lama-yang-sering-ditemui">Kelas lama yang sering ditemui</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>File I/O Java: Path, Files, dan Pembacaan Data</h1>
+<p class="lead">Program yang tidak bisa menyimpan dan membaca data hanya berguna selama berjalan. API modern java.nio.file (Path dan Files) menggantikan banyak kode lama dengan metode singkat dan aman, asalkan kita memahami encoding dan penutupan resource.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> exception handling, String, collections</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="File I/O Java: Path, Files, dan Pembacaan Data" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan Path dan Files serta operasi dasarnya</li><li>membaca dan menulis berkas teks dengan encoding UTF-8</li><li>memproses berkas besar baris demi baris tanpa memuat seluruhnya</li><li>menangani IOException dengan try-with-resources</li><li>membaca dan menulis CSV sederhana</li></ul></div>
+<h2 id="path-dan-files">Path dan Files</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Path dir = Files.createTempDirectory(&quot;latihan&quot;);          // folder sementara
+        Path berkas = dir.resolve(&quot;catatan.txt&quot;);                  // menggabungkan path
+
+        Files.writeString(berkas, &quot;baris satu\nbaris dua\n&quot;, StandardCharsets.UTF_8);
+        Files.writeString(berkas, &quot;baris tiga\n&quot;, StandardOpenOption.APPEND);   // menambah di akhir
+
+        System.out.println(Files.exists(berkas) + &quot; &quot; + Files.size(berkas) + &quot; byte&quot;);
+        List&lt;String&gt; baris = Files.readAllLines(berkas, StandardCharsets.UTF_8);
+        System.out.println(baris);
+        System.out.println(berkas.getFileName() + &quot; di dalam folder bernama latihan? &quot; + berkas.getParent().getFileName().toString().startsWith(&quot;latihan&quot;));
+
+        Files.delete(berkas);
+        Files.delete(dir);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>true 32 byte
+[baris satu, baris dua, baris tiga]
+catatan.txt di dalam folder bernama latihan? true</code></pre><figcaption>Path hanyalah representasi alamat; Files melakukan operasinya (baca, tulis, hapus, salin).</figcaption></figure>
+<h2 id="berkas-besar-baca-per-baris">Berkas besar: baca per baris</h2>
+<p><code>readAllLines</code> memuat semuanya ke memori. Untuk berkas besar, baca bertahap dengan <code>BufferedReader</code> atau <code>Files.lines</code> (stream malas) dan <b>tutup</b> sumbernya.</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.stream.Stream;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Path berkas = Files.createTempFile(&quot;log&quot;, &quot;.txt&quot;);
+        try (BufferedWriter w = Files.newBufferedWriter(berkas, StandardCharsets.UTF_8)) {
+            for (int i = 1; i &lt;= 5; i++) {
+                w.write((i % 2 == 0 ? &quot;ERROR&quot; : &quot;INFO&quot;) + &quot; kejadian &quot; + i);
+                w.newLine();
+            }
+        }                                                          // otomatis ditutup
+
+        int error = 0;
+        try (BufferedReader r = Files.newBufferedReader(berkas, StandardCharsets.UTF_8)) {
+            String baris;
+            while ((baris = r.readLine()) != null) if (baris.startsWith(&quot;ERROR&quot;)) error++;
+        }
+        System.out.println(&quot;jumlah ERROR: &quot; + error);
+
+        try (Stream&lt;String&gt; s = Files.lines(berkas)) {            // stream wajib ditutup
+            System.out.println(s.filter(l -&gt; l.contains(&quot;INFO&quot;)).count() + &quot; baris INFO&quot;);
+        }
+        Files.delete(berkas);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>jumlah ERROR: 2
+3 baris INFO</code></pre></figure>
+<div class="callout warn"><b>Encoding</b><p>Selalu sebutkan <b>encoding</b> (UTF-8) saat membaca atau menulis teks. Bergantung pada pengaturan bawaan sistem membuat program berperilaku berbeda di Windows dan Linux, dan karakter seperti é atau huruf non-Latin bisa rusak.</p></div>
+<h2 id="contoh-mengolah-csv">Contoh: mengolah CSV</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.io.IOException;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.*;
+
+record Nilai(String nama, int uts, int uas) {
+    double akhir() { return 0.4 * uts + 0.6 * uas; }
+}
+
+public class Main {
+    static Nilai urai(String baris) {
+        String[] kolom = baris.split(&quot;,&quot;);
+        return new Nilai(kolom[0].trim(), Integer.parseInt(kolom[1].trim()), Integer.parseInt(kolom[2].trim()));
+    }
+
+    public static void main(String[] args) throws IOException {
+        Path csv = Files.createTempFile(&quot;nilai&quot;, &quot;.csv&quot;);
+        Files.write(csv, List.of(&quot;nama,uts,uas&quot;, &quot;Ani,80,90&quot;, &quot;Budi,70,65&quot;, &quot;Citra,95,88&quot;, &quot;tidak,valid&quot;));
+
+        List&lt;Nilai&gt; daftar = new ArrayList&lt;&gt;();
+        List&lt;String&gt; gagal = new ArrayList&lt;&gt;();
+        for (String baris : Files.readAllLines(csv).stream().skip(1).toList()) {     // lewati header
+            try { daftar.add(urai(baris)); }
+            catch (RuntimeException e) { gagal.add(baris); }                        // data kotor dicatat, bukan menghentikan program
+        }
+        daftar.stream().sorted(Comparator.comparingDouble(Nilai::akhir).reversed())
+              .forEach(n -&gt; System.out.printf(&quot;%-6s %.1f%n&quot;, n.nama(), n.akhir()));
+        System.out.println(&quot;baris bermasalah: &quot; + gagal);
+        Files.delete(csv);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Citra  90.8
+Ani    86.0
+Budi   67.0
+baris bermasalah: [tidak,valid]</code></pre><figcaption>Untuk CSV sungguhan dengan koma dalam tanda kutip, gunakan pustaka seperti Apache Commons CSV, bukan split(",").</figcaption></figure>
+<h2 id="kelas-lama-yang-sering-ditemui">Kelas lama yang sering ditemui</h2>
+<table><thead><tr><th>Kebutuhan</th><th>Cara modern</th><th>Sering ditemui di kode lama</th></tr></thead><tbody><tr><td>Representasi lokasi berkas</td><td>Path, Paths.get / Path.of</td><td>java.io.File</td></tr><tr><td>Baca seluruh isi kecil</td><td>Files.readString / readAllLines</td><td>FileReader + BufferedReader</td></tr><tr><td>Tulis teks</td><td>Files.writeString / newBufferedWriter</td><td>FileWriter / PrintWriter</td></tr><tr><td>Telusuri folder</td><td>Files.walk / Files.list</td><td>File.listFiles</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa memakai try-with-resources pada pembacaan berkas?","options":["Menutup berkas otomatis walau ada error","Agar lebih cepat","Wajib oleh JVM"],"answer":0,"why":"Menghindari kebocoran file handle."},{"q":"Untuk berkas berukuran gigabyte, pilih...","options":["readAllLines","Membaca per baris dengan BufferedReader atau Files.lines","readString"],"answer":1,"why":"Tidak memuat semuanya ke memori."},{"q":"Mengapa perlu menyebut UTF-8?","options":["Agar konsisten lintas platform","Agar berkas kecil","Tidak perlu"],"answer":0,"why":"Encoding bawaan berbeda antar sistem."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis program yang menghitung jumlah baris pada sebuah berkas teks.</summary><div>Files.lines(path).count() dalam try-with-resources.</div></details><details><summary>2. Salin berkas A ke B tanpa menimpa jika B sudah ada.</summary><div><code>Files.copy(a, b)</code> melempar FileAlreadyExistsException bila B ada, kecuali ditambah REPLACE_EXISTING.</div></details><details><summary>3. Apa bedanya Path.of("a/b").resolve("c") dan Path.of("a/b").resolveSibling("c")?</summary><div>resolve menambah di dalam: a/b/c; resolveSibling menggantikan elemen terakhir: a/c.</div></details><details><summary>4. Mengapa membaca baris tidak boleh mengasumsikan semuanya valid?</summary><div>Data luar dapat rusak; tangani baris buruk (catat atau lewati) agar satu baris tidak menghentikan seluruh proses.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Path menyatakan alamat; Files melakukan operasinya.</li><li>Gunakan try-with-resources dan sebutkan encoding UTF-8.</li><li>Berkas besar: baca bertahap, bukan sekaligus.</li><li>Waspadai data kotor dan batasan split untuk CSV.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana menulis objek ke berkas?</summary><div>Gunakan format teks terstruktur seperti JSON (pustaka Jackson atau Gson). Serialisasi bawaan Java (ObjectOutputStream) kurang disarankan karena masalah keamanan dan kompatibilitas.</div></details>
+<details class="faq"><summary>Bagaimana cara melihat folder kerja?</summary><div>Path.of("").toAbsolutePath() atau System.getProperty("user.dir").</div></details>
+<details class="faq"><summary>Apa bedanya stream byte dan karakter?</summary><div>InputStream/OutputStream bekerja dengan byte; Reader/Writer dengan karakter dan encoding.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/essential/io/index.html" rel="noopener" target="_blank">Oracle: Basic I/O (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html" rel="noopener" target="_blank">Java SE API: java.nio.file.Files</a></li><li><a href="https://dev.java/learn/java-io/" rel="noopener" target="_blank">dev.java: Reading and Writing Files</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengujian Sistem Informasi: Black Box, White Box, dan UAT</title>
+<meta name="description" content="Pelajari pengujian sistem informasi: black box dan white box, partisi ekuivalensi, nilai batas, test case, regresi, dan UAT, dengan kode yang dijalankan.">
+<meta name="keywords" content="pengujian perangkat lunak, black box, white box, UAT, test case">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/">
+<meta property="og:title" content="Pengujian Sistem Informasi: Black Box, White Box, dan UAT">
+<meta property="og:description" content="Pelajari pengujian sistem informasi: black box dan white box, partisi ekuivalensi, nilai batas, test case, regresi, dan UAT, dengan kode yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pengujian Sistem Informasi: Black Box, White Box, dan UAT">
+<meta name="twitter:description" content="Pelajari pengujian sistem informasi: black box dan white box, partisi ekuivalensi, nilai batas, test case, regresi, dan UAT, dengan kode yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pengujian Sistem Informasi: Black Box, White Box, dan UAT","description":"Pelajari pengujian sistem informasi: black box dan white box, partisi ekuivalensi, nilai batas, test case, regresi, dan UAT, dengan kode yang dijalankan.","image":["https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"pengujian perangkat lunak, black box, white box, UAT, test case","articleSection":"Sistem Informasi","wordCount":419,"mainEntityOfPage":"https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Pengujian Sistem Informasi: Black Box, White Box, dan UAT","item":"https://muchson.web.id/artikel/pengujian-sistem-informasi-black-box-white-box-dan-uat/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu TDD?","acceptedAnswer":{"@type":"Answer","text":"Test-Driven Development: menulis tes sebelum kode (red, green, refactor)."}},{"@type":"Question","name":"Apa itu pengujian kinerja dan keamanan?","acceptedAnswer":{"@type":"Answer","text":"Pengujian non-fungsional: beban dan stres untuk kinerja; uji penetrasi dan pemindaian kerentanan untuk keamanan."}},{"@type":"Question","name":"Siapa yang sebaiknya melakukan UAT?","acceptedAnswer":{"@type":"Answer","text":"Pengguna bisnis yang benar-benar memakai sistem, bukan hanya tim TI, dengan skenario dari proses kerja nyata."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tingkat-pengujian">Tingkat pengujian</a></li><li><a href="#black-box-dan-white-box">Black box dan white box</a></li><li><a href="#teknik-black-box-partisi-ekuivalensi-dan-nilai-batas">Teknik black box: partisi ekuivalensi dan nilai batas</a></li><li><a href="#white-box-cakupan">White box: cakupan</a></li><li><a href="#test-case-yang-baik">Test case yang baik</a></li><li><a href="#pengujian-regresi-dan-uat">Pengujian regresi dan UAT</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Pengujian Sistem Informasi: Black Box, White Box, dan UAT</h1>
+<p class="lead">Pengujian tidak membuktikan program benar; ia menemukan kesalahan sebelum pengguna menemukannya. Karena pengujian lengkap mustahil, seni utamanya adalah memilih sedikit kasus uji yang paling mungkin menemukan banyak kesalahan. Teknik partisi dan nilai batas melakukan itu.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> SDLC, analisis kebutuhan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Pengujian Sistem Informasi: Black Box, White Box, dan UAT" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyebutkan tingkat pengujian: unit, integrasi, sistem, penerimaan</li><li>membedakan pengujian black box dan white box</li><li>menurunkan test case dengan partisi ekuivalensi dan analisis nilai batas</li><li>menulis test case terstruktur dan menjalankannya otomatis</li><li>menjelaskan UAT, pengujian regresi, dan kriteria selesai</li></ul></div>
+<h2 id="tingkat-pengujian">Tingkat pengujian</h2>
+<figure class="diagram"><svg viewBox="0 0 560 240" role="img" aria-label="Piramida pengujian" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Pengujian penerimaan (UAT)</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">pengguna memastikan sistem memenuhi kebutuhan bisnis</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Pengujian sistem</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">seluruh sistem terhadap kebutuhan, termasuk non-fungsional</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Pengujian integrasi</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">modul bekerja bersama; antarmuka dan data</text><rect x="62" y="176" width="436" height="48" rx="10" fill="#ebe2fd" stroke="#7a3fb4" stroke-width="2"/><text x="280" y="197" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Pengujian unit</text><text x="280" y="215" text-anchor="middle" font-size="12" fill="#4a5568">fungsi atau kelas kecil, banyak dan cepat</text></svg><figcaption>Semakin ke bawah semakin banyak, cepat, murah, dan otomatis; semakin ke atas semakin sedikit, lambat, dan mahal.</figcaption></figure>
+<h2 id="black-box-dan-white-box">Black box dan white box</h2>
+<div data-w="compare"><script type="application/json">{"title":"Dua sudut pandang","tabs":[{"label":"Black box","html":"Menguji dari luar berdasarkan \u003cb>spesifikasi\u003c/b>, tanpa melihat kode. Penguji dapat bukan pemrogram. Teknik: partisi ekuivalensi, nilai batas, tabel keputusan, transisi status."},{"label":"White box","html":"Menguji dengan \u003cb>mengetahui struktur kode\u003c/b>. Tujuan: menjalankan setiap pernyataan, cabang, dan kondisi. Ukuran: cakupan pernyataan (statement), cabang (branch), dan jalur."}]}</script></div>
+<h2 id="teknik-black-box-partisi-ekuivalensi-dan-nilai-batas">Teknik black box: partisi ekuivalensi dan nilai batas</h2>
+<p>Misalkan aturan: <i>"Nilai ujian 0–100. Grade A bila ≥ 85, B bila 70–84, C bila 55–69, D bila 0–54. Nilai di luar 0–100 ditolak."</i> Tidak mungkin menguji 101 nilai; cukup satu wakil tiap kelompok (partisi) dan nilai di sekitar batas, tempat bug sering bersembunyi.</p>
+<table><thead><tr><th>Partisi</th><th>Wakil</th><th>Nilai batas yang diuji</th></tr></thead><tbody><tr><td>Tidak valid (< 0)</td><td>−10</td><td>−1</td></tr><tr><td>D (0–54)</td><td>30</td><td>0, 54</td></tr><tr><td>C (55–69)</td><td>60</td><td>55, 69</td></tr><tr><td>B (70–84)</td><td>77</td><td>70, 84</td></tr><tr><td>A (85–100)</td><td>92</td><td>85, 100</td></tr><tr><td>Tidak valid (> 100)</td><td>150</td><td>101</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>def grade(nilai):
+    if nilai &lt; 0 or nilai &gt; 100:
+        raise ValueError(&quot;nilai harus 0..100&quot;)
+    if nilai &gt;= 85: return &quot;A&quot;
+    if nilai &gt;= 70: return &quot;B&quot;
+    if nilai &gt;= 55: return &quot;C&quot;
+    return &quot;D&quot;
+
+# test case: (masukan, hasil yang diharapkan). None berarti diharapkan ValueError
+kasus = [(-10, None), (-1, None), (0, &quot;D&quot;), (30, &quot;D&quot;), (54, &quot;D&quot;), (55, &quot;C&quot;), (60, &quot;C&quot;), (69, &quot;C&quot;),
+         (70, &quot;B&quot;), (77, &quot;B&quot;), (84, &quot;B&quot;), (85, &quot;A&quot;), (92, &quot;A&quot;), (100, &quot;A&quot;), (101, None), (150, None)]
+
+lulus = gagal = 0
+for masukan, harapan in kasus:
+    try:
+        hasil = grade(masukan)
+    except ValueError:
+        hasil = None
+    ok = hasil == harapan
+    lulus += ok; gagal += not ok
+    print(f&quot;{'LULUS' if ok else 'GAGAL'}  grade({masukan:&gt;4}) -&gt; {hasil!s:&lt;4} (diharapkan {harapan})&quot;)
+print(f&quot;{lulus} lulus, {gagal} gagal dari {len(kasus)} kasus&quot;)
+
+# Bug yang SENGAJA disisipkan: &gt;= berubah menjadi &gt; pada batas A
+def grade_bug(nilai):
+    if nilai &lt; 0 or nilai &gt; 100: raise ValueError
+    if nilai &gt; 85: return &quot;A&quot;        # seharusnya &gt;=
+    if nilai &gt;= 70: return &quot;B&quot;
+    if nilai &gt;= 55: return &quot;C&quot;
+    return &quot;D&quot;
+print(&quot;versi berbug pada nilai batas 85:&quot;, grade_bug(85), &quot;(seharusnya A)&quot;)
+print(&quot;versi berbug pada nilai tengah 92:&quot;, grade_bug(92), &quot;(lolos; hanya nilai batas yang menangkapnya)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>LULUS  grade( -10) -&gt; None (diharapkan None)
+LULUS  grade(  -1) -&gt; None (diharapkan None)
+LULUS  grade(   0) -&gt; D    (diharapkan D)
+LULUS  grade(  30) -&gt; D    (diharapkan D)
+LULUS  grade(  54) -&gt; D    (diharapkan D)
+LULUS  grade(  55) -&gt; C    (diharapkan C)
+LULUS  grade(  60) -&gt; C    (diharapkan C)
+LULUS  grade(  69) -&gt; C    (diharapkan C)
+LULUS  grade(  70) -&gt; B    (diharapkan B)
+LULUS  grade(  77) -&gt; B    (diharapkan B)
+LULUS  grade(  84) -&gt; B    (diharapkan B)
+LULUS  grade(  85) -&gt; A    (diharapkan A)
+LULUS  grade(  92) -&gt; A    (diharapkan A)
+LULUS  grade( 100) -&gt; A    (diharapkan A)
+LULUS  grade( 101) -&gt; None (diharapkan None)
+LULUS  grade( 150) -&gt; None (diharapkan None)
+16 lulus, 0 gagal dari 16 kasus
+versi berbug pada nilai batas 85: B (seharusnya A)
+versi berbug pada nilai tengah 92: A (lolos; hanya nilai batas yang menangkapnya)</code></pre><figcaption>Bug off-by-one pada batas tidak tertangkap oleh nilai "tengah" seperti 92; hanya nilai batas 85 yang membongkarnya.</figcaption></figure>
+<h2 id="white-box-cakupan">White box: cakupan</h2>
+<figure class="codebox"><pre data-lang="python"><code>def diskon(total, member):
+    d = 0
+    if total &gt;= 100_000:        # cabang 1
+        d = 0.05
+    if member:                  # cabang 2
+        d += 0.05
+    return total * (1 - d)
+
+# Cakupan pernyataan: butuh minimal satu tes yang menjalankan setiap baris.
+# Cakupan cabang: setiap kondisi harus diuji bernilai benar DAN salah.
+tes = [(50_000, False), (150_000, False), (50_000, True), (150_000, True)]
+for t, m in tes:
+    print(f&quot;total={t:&gt;7}, member={m!s:&lt;5} -&gt; {diskon(t, m):&gt;10,.0f}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>total=  50000, member=False -&gt;     50,000
+total= 150000, member=False -&gt;    142,500
+total=  50000, member=True  -&gt;     47,500
+total= 150000, member=True  -&gt;    135,000</code></pre><figcaption>Dua tes cukup untuk menjalankan semua baris, tetapi empat tes diperlukan untuk menguji semua kombinasi cabang.</figcaption></figure>
+<h2 id="test-case-yang-baik">Test case yang baik</h2>
+<figure class="codebox"><pre data-lang="text"><code>ID        : TC-KRS-014
+Tujuan    : Mahasiswa tidak dapat memilih kelas yang sudah penuh
+Prakondisi: Kelas SI101-A berkuota 40, terisi 40; mahasiswa login
+Langkah   : 1. Buka halaman KRS  2. Pilih kelas SI101-A  3. Tekan &quot;Ambil&quot;
+Data uji  : mahasiswa A01
+Hasil diharapkan: Pesan &quot;Kelas penuh&quot;; kelas tidak masuk daftar KRS
+Hasil aktual    : (diisi saat pengujian)
+Status    : Lulus / Gagal</code></pre><figcaption>Test case menyatakan masukan, kondisi, dan hasil yang diharapkan sehingga siapa pun dapat mengulangnya.</figcaption></figure>
+<h2 id="pengujian-regresi-dan-uat">Pengujian regresi dan UAT</h2>
+<ul><li><b>Pengujian regresi</b>: menjalankan ulang tes setelah perubahan untuk memastikan fitur lama tidak rusak. Inilah alasan utama otomasi pengujian.</li><li><b>UAT (User Acceptance Testing)</b>: pengguna sungguhan menjalankan skenario bisnis nyata pada lingkungan menyerupai produksi. Hasilnya menentukan apakah sistem diterima.</li><li><b>Alpha dan beta</b>: uji oleh pengguna internal (alpha) lalu sebagian pengguna eksternal (beta).</li><li><b>Kriteria penerimaan</b> disepakati sejak awal: persentase tes lulus, jumlah cacat kritis yang boleh tersisa, target kinerja.</li></ul>
+<div class="callout info"><b>Batas pengujian</b><p>Dijkstra: <b>"Pengujian dapat menunjukkan adanya bug, tetapi tidak pernah menunjukkan ketiadaannya."</b> Karena itu keputusan merilis selalu soal risiko yang dapat diterima, bukan kepastian.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Nilai batas yang perlu diuji untuk aturan \"usia 17 ke atas boleh mendaftar\"?","options":["16 dan 17","Hanya 30","Hanya 100"],"answer":0,"why":"Bug sering ada di batas."},{"q":"Pengujian yang dilakukan pengguna untuk menerima sistem?","options":["UAT","Unit test","White box"],"answer":0,"why":"User Acceptance Testing."},{"q":"Tujuan pengujian regresi?","options":["Memastikan perubahan tidak merusak fitur lama","Menguji fitur baru saja","Menguji kinerja saja"],"answer":0,"why":"Mencegah kemunduran."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Turunkan partisi dan nilai batas untuk kolom "umur" yang menerima 17 sampai 65.</summary><div>Partisi: <17, 17–65, >65. Nilai batas: 16, 17, 65, 66.</div></details><details><summary>2. Mengapa tes unit lebih banyak daripada UAT?</summary><div>Tes unit murah, cepat, dan menunjuk lokasi masalah; UAT mahal dan lambat sehingga dibatasi pada skenario bisnis penting.</div></details><details><summary>3. Tulis tiga test case untuk fitur "login".</summary><div>Kredensial benar → berhasil; sandi salah → ditolak dengan pesan jelas; akun terkunci setelah tiga kali salah.</div></details><details><summary>4. Apa beda verifikasi dan validasi?</summary><div>Verifikasi: membangun produk dengan benar (sesuai spesifikasi). Validasi: membangun produk yang benar (sesuai kebutuhan pengguna).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Piramida: banyak tes unit, lebih sedikit integrasi, sistem, dan UAT.</li><li>Black box dari spesifikasi; white box dari struktur kode.</li><li>Partisi ekuivalensi dan nilai batas menghasilkan sedikit tes yang efektif.</li><li>Test case terstruktur dan otomasi regresi menjaga mutu antar rilis.</li><li>UAT menentukan penerimaan oleh pengguna.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu TDD?</summary><div>Test-Driven Development: menulis tes sebelum kode (red, green, refactor).</div></details>
+<details class="faq"><summary>Apa itu pengujian kinerja dan keamanan?</summary><div>Pengujian non-fungsional: beban dan stres untuk kinerja; uji penetrasi dan pemindaian kerentanan untuk keamanan.</div></details>
+<details class="faq"><summary>Siapa yang sebaiknya melakukan UAT?</summary><div>Pengguna bisnis yang benar-benar memakai sistem, bukan hanya tim TI, dengan skenario dari proses kerja nyata.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Glenford Myers, The Art of Software Testing (Wiley, edisi ke-3)</li><li>Ian Sommerville, Software Engineering (Pearson)</li><li><a href="https://www.istqb.org/certifications/certified-tester-foundation-level" rel="noopener" target="_blank">ISTQB: Certified Tester Foundation Level Syllabus</a></li><li><a href="https://www.iso.org/standard/81291.html" rel="noopener" target="_blank">IEEE 829 / ISO/IEC/IEEE 29119: standar pengujian perangkat lunak</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a><a href="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/"><img src="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SDLC: Waterfall, Agile, dan Model Pengembangan Lain</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan</title>
+<meta name="description" content="Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.">
+<meta name="keywords" content="kriptografi, hash, RSA, Diffie-Hellman, tanda tangan digital">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/">
+<meta property="og:title" content="Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan">
+<meta property="og:description" content="Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.">
+<meta property="og:image" content="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan">
+<meta name="twitter:description" content="Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan","description":"Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.","image":["https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kriptografi, hash, RSA, Diffie-Hellman, tanda tangan digital","articleSection":"Dasar Informatika","wordCount":594,"mainEntityOfPage":"https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan","item":"https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu kriptografi kurva eliptik (ECC)?","acceptedAnswer":{"@type":"Answer","text":"Alternatif RSA dengan kunci jauh lebih pendek untuk tingkat keamanan sama (256 bit ECC setara sekitar RSA 3072 bit); dipakai luas di TLS modern."}},{"@type":"Question","name":"Apakah enkripsi ujung-ke-ujung aman sepenuhnya?","acceptedAnswer":{"@type":"Answer","text":"Melindungi isi dari penyedia layanan dan penyadap jaringan, tetapi tidak dari perangkat yang telah disusupi, tidak dari metadata, dan tidak dari penerima yang membocorkannya."}},{"@type":"Question","name":"Apa itu kriptografi pasca-kuantum?","acceptedAnswer":{"@type":"Answer","text":"Algoritma yang diyakini tahan terhadap komputer kuantum; NIST telah memilih standar seperti ML-KEM (Kyber) dan ML-DSA (Dilithium)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tujuan-kriptografi">Tujuan kriptografi</a></li><li><a href="#cipher-klasik-dan-mengapa-patah">Cipher klasik dan mengapa patah</a></li><li><a href="#fungsi-hash">Fungsi hash</a></li><li><a href="#enkripsi-simetris-satu-kunci">Enkripsi simetris: satu kunci</a></li><li><a href="#enkripsi-asimetris-sepasang-kunci">Enkripsi asimetris: sepasang kunci</a></li><li><a href="#pertukaran-kunci-diffie-hellman">Pertukaran kunci Diffie–Hellman</a></li><li><a href="#menyatukan-apa-yang-terjadi-di-https">Menyatukan: apa yang terjadi di HTTPS</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan</h1>
+<p class="lead">Setiap kali Anda melihat gembok di browser, masuk ke perbankan, atau mengirim pesan terenkripsi, kriptografi bekerja. Materi ini membangun intuisi dengan contoh kecil yang dapat dihitung: dari cipher klasik yang mudah patah sampai ide jenius kunci publik. Perhatian: contoh di sini untuk belajar dan tidak aman untuk dipakai nyata.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> sistem bilangan, aritmetika modular (dasar)</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan tujuan kriptografi: kerahasiaan, integritas, autentikasi, nirsangkal</li><li>menjelaskan mengapa cipher klasik (Caesar, substitusi) mudah dipecahkan</li><li>memakai fungsi hash dan menjelaskan sifat-sifatnya</li><li>membedakan enkripsi simetris dan asimetris dan peran masing-masing</li><li>menjelaskan RSA, Diffie–Hellman, dan tanda tangan digital pada skala kecil</li></ul></div>
+<div class="callout warn"><b>Hanya untuk belajar</b><p>Peringatan penting: <b>jangan membuat kriptografi sendiri</b> untuk produksi. Kode di artikel ini sengaja disederhanakan untuk pemahaman dan memakai angka kecil. Gunakan pustaka yang teruji (misalnya libsodium, cryptography.io, atau pustaka TLS dari platform), dengan algoritma dan parameter yang direkomendasikan.</p></div>
+<h2 id="tujuan-kriptografi">Tujuan kriptografi</h2>
+<table><thead><tr><th>Tujuan</th><th>Arti</th><th>Alat utama</th></tr></thead><tbody><tr><td>Kerahasiaan</td><td>Hanya penerima sah yang dapat membaca</td><td>Enkripsi</td></tr><tr><td>Integritas</td><td>Data tidak berubah tanpa terdeteksi</td><td>Hash, MAC</td></tr><tr><td>Autentikasi</td><td>Memastikan identitas pengirim</td><td>MAC, tanda tangan digital, sertifikat</td></tr><tr><td>Nirsangkal</td><td>Pengirim tidak dapat menyangkal telah mengirim</td><td>Tanda tangan digital</td></tr></tbody></table>
+<h2 id="cipher-klasik-dan-mengapa-patah">Cipher klasik dan mengapa patah</h2>
+<figure class="codebox"><pre data-lang="python"><code>import collections, string
+
+def caesar(teks, geser):
+    hasil = []
+    for ch in teks:
+        if ch.isalpha():
+            dasar = ord(&quot;A&quot;) if ch.isupper() else ord(&quot;a&quot;)
+            hasil.append(chr((ord(ch) - dasar + geser) % 26 + dasar))
+        else:
+            hasil.append(ch)
+    return &quot;&quot;.join(hasil)
+
+pesan = &quot;Serangan dimulai saat fajar di gerbang barat&quot;
+sandi = caesar(pesan, 7)
+print(&quot;sandi    :&quot;, sandi)
+print(&quot;dekripsi :&quot;, caesar(sandi, -7))
+
+# memecahkan dengan brute force: hanya 25 kemungkinan kunci
+print(&quot;\npercobaan semua kunci:&quot;)
+for k in range(1, 26):
+    kandidat = caesar(sandi, -k)
+    if &quot;dimulai&quot; in kandidat:
+        print(f&quot;  kunci {k}: {kandidat}   &lt;- terbaca, kunci ditemukan&quot;)
+
+# analisis frekuensi untuk substitusi umum: huruf paling sering di teks Indonesia biasanya A, N, I, E
+teks = &quot;aku pergi ke pasar untuk membeli beras minyak dan garam karena persediaan di rumah sudah habis&quot;
+frek = collections.Counter(c for c in teks if c.isalpha())
+print(&quot;\nhuruf paling sering:&quot;, frek.most_common(4))</code></pre><pre class="runout" data-lang="keluaran"><code>sandi    : Zlyhunhu kptbshp zhha mhqhy kp nlyihun ihyha
+dekripsi : Serangan dimulai saat fajar di gerbang barat
+
+percobaan semua kunci:
+  kunci 7: Serangan dimulai saat fajar di gerbang barat   &lt;- terbaca, kunci ditemukan
+
+huruf paling sering: [('a', 15), ('e', 8), ('r', 7), ('i', 6)]</code></pre><figcaption>Ruang kunci 25 terlalu kecil. Cipher substitusi dengan 26! kunci tampak aman tetapi runtuh oleh analisis frekuensi: pola bahasa bocor ke teks sandi. Pelajaran: ruang kunci besar tidak cukup; hasil sandi tidak boleh membocorkan pola.</figcaption></figure>
+<h2 id="fungsi-hash">Fungsi hash</h2>
+<p>Fungsi hash memetakan masukan berukuran apa pun menjadi keluaran berukuran tetap ("sidik jari"). Sifat yang diinginkan: <b>deterministik</b>, <b>cepat dihitung</b>, <b>satu arah</b> (sulit mencari masukan dari keluaran), <b>tahan tabrakan</b> (sulit menemukan dua masukan berbeda dengan hash sama), dan <b>efek avalanche</b> (perubahan kecil pada masukan mengubah keluaran secara drastis).</p>
+<figure class="codebox"><pre data-lang="python"><code>import hashlib
+
+def sha256(teks): return hashlib.sha256(teks.encode()).hexdigest()
+
+a = &quot;Transfer Rp1.000.000 ke Budi&quot;
+b = &quot;Transfer Rp1.000.001 ke Budi&quot;            # beda satu angka
+print(sha256(a)); print(sha256(b))
+
+# efek avalanche: berapa bit hash yang berubah?
+x, y = int(sha256(a), 16), int(sha256(b), 16)
+beda = bin(x ^ y).count(&quot;1&quot;)
+print(f&quot;\nbit yang berbeda: {beda} dari 256 ({beda/256*100:.0f}%) - sekitar separuh, hasil acak&quot;)
+
+# verifikasi integritas berkas: bandingkan hash sebelum dan sesudah
+dokumen = b&quot;Isi dokumen penting versi 1&quot;
+hash_asli = hashlib.sha256(dokumen).hexdigest()
+diterima = b&quot;Isi dokumen penting versi 2&quot;
+print(&quot;integritas terjaga?&quot;, hashlib.sha256(diterima).hexdigest() == hash_asli)
+
+# panjang keluaran tetap
+for teks in (&quot;a&quot;, &quot;a&quot; * 100000):
+    print(len(sha256(teks)), &quot;karakter heksa (256 bit)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>491e10f6a29d9275109cf0812c7a95f71ebcf28e927e1b71309bb76759743ced
+4f28ef05642c881acaaf16fcf2536b654f6aca031e1702259bb6c371b5574dcd
+
+bit yang berbeda: 133 dari 256 (52%) - sekitar separuh, hasil acak
+integritas terjaga? False
+64 karakter heksa (256 bit)
+64 karakter heksa (256 bit)</code></pre><figcaption>Hash dipakai untuk memverifikasi unduhan, mendeteksi perubahan, struktur blockchain, dan (dengan garam dan fungsi lambat) menyimpan kata sandi.</figcaption></figure>
+<div class="callout warn"><b>Pilih algoritma yang benar</b><p>MD5 dan SHA-1 <b>sudah tidak aman</b> untuk keperluan keamanan karena tabrakan dapat dibuat. Gunakan keluarga SHA-2 (SHA-256) atau SHA-3. Untuk kata sandi, pakai fungsi lambat khusus (Argon2, scrypt, bcrypt), bukan SHA-256 polos.</p></div>
+<h2 id="enkripsi-simetris-satu-kunci">Enkripsi simetris: satu kunci</h2>
+<p>Pengirim dan penerima berbagi kunci rahasia yang sama. Cepat dan efisien untuk data besar. Standar modern: <b>AES</b> (kunci 128/256 bit) dengan mode operasi seperti GCM yang juga menjamin integritas. Masalah utama: bagaimana kedua pihak berbagi kunci dengan aman sejak awal?</p>
+<figure class="codebox"><pre data-lang="python"><code># One-Time Pad: XOR dengan kunci acak sepanjang pesan dan dipakai SEKALI.
+# Satu-satunya cipher yang terbukti aman secara teori (Shannon), tetapi tidak praktis: kunci sepanjang pesan.
+import secrets
+
+pesan = &quot;Rapat jam 9&quot;.encode()
+kunci = secrets.token_bytes(len(pesan))
+sandi = bytes(p ^ k for p, k in zip(pesan, kunci))
+print(&quot;sandi (heksa):&quot;, sandi.hex())
+print(&quot;dekripsi      :&quot;, bytes(s ^ k for s, k in zip(sandi, kunci)).decode())
+
+# bahaya memakai ulang kunci: XOR dua sandi membocorkan XOR dua pesan
+pesan2 = &quot;Rapat jam 7&quot;.encode()
+sandi2 = bytes(p ^ k for p, k in zip(pesan2, kunci))
+bocor = bytes(a ^ b for a, b in zip(sandi, sandi2))
+print(&quot;XOR dua sandi = XOR dua pesan:&quot;, bocor == bytes(a ^ b for a, b in zip(pesan, pesan2)))</code></pre><pre class="runout" data-lang="keluaran"><code>sandi (heksa): ab80867b8ae9fe371d198a
+dekripsi      : Rapat jam 9
+XOR dua sandi = XOR dua pesan: True</code></pre><figcaption>Kunci pakai-sekali menjadi alasan mengapa nonce dan IV pada AES-GCM tidak boleh berulang: pemakaian ulang membocorkan hubungan antar pesan.</figcaption></figure>
+<h2 id="enkripsi-asimetris-sepasang-kunci">Enkripsi asimetris: sepasang kunci</h2>
+<p>Setiap orang memiliki <b>kunci publik</b> (boleh disebarkan) dan <b>kunci privat</b> (dirahasiakan). Yang dikunci dengan kunci publik hanya dapat dibuka dengan kunci privat pasangannya. Ini menyelesaikan masalah distribusi kunci, dengan harga komputasi yang lebih lambat sehingga biasanya dipakai untuk menyepakati kunci simetris atau menandatangani.</p>
+<h3>RSA skala kecil</h3>
+<p>RSA bersandar pada kesulitan memfaktorkan hasil kali dua bilangan prima besar. Berikut contoh dengan angka kecil agar dapat dihitung tangan (kunci nyata berukuran 2048 bit atau lebih).</p>
+<figure class="codebox"><pre data-lang="python"><code>from math import gcd
+
+p, q = 61, 53
+n = p * q                          # 3233 : bagian dari kedua kunci
+phi = (p - 1) * (q - 1)            # 3120
+e = 17                              # eksponen publik (koprima dengan phi)
+assert gcd(e, phi) == 1
+d = pow(e, -1, phi)                 # eksponen privat: invers e modulo phi
+print(f&quot;kunci publik (n={n}, e={e}); kunci privat d={d}&quot;)
+
+pesan = 65                          # pesan berupa angka &lt; n
+sandi = pow(pesan, e, n)            # enkripsi: pesan^e mod n
+print(&quot;pesan&quot;, pesan, &quot;-&gt; sandi&quot;, sandi)
+print(&quot;dekripsi:&quot;, pow(sandi, d, n))
+
+# tanda tangan digital: &quot;enkripsi&quot; hash dengan kunci PRIVAT, siapa pun memverifikasi dengan kunci PUBLIK
+hash_pesan = 123                    # anggap ini hash pesan (diperkecil agar &lt; n)
+tanda_tangan = pow(hash_pesan, d, n)
+print(&quot;tanda tangan:&quot;, tanda_tangan, &quot;| verifikasi (dengan kunci publik):&quot;, pow(tanda_tangan, e, n) == hash_pesan)
+print(&quot;pesan dipalsukan, hash 124 :&quot;, pow(tanda_tangan, e, n) == 124)
+
+# mengapa aman: penyerang hanya tahu n=3233, bukan p dan q. Faktorisasi n kecil itu mudah:
+for k in range(2, 100):
+    if n % k == 0: print(&quot;n difaktorkan:&quot;, k, &quot;x&quot;, n // k, &quot;-&gt; kunci privat dapat dihitung; itu sebabnya n harus raksasa&quot;); break</code></pre><pre class="runout" data-lang="keluaran"><code>kunci publik (n=3233, e=17); kunci privat d=2753
+pesan 65 -&gt; sandi 2790
+dekripsi: 65
+tanda tangan: 2746 | verifikasi (dengan kunci publik): True
+pesan dipalsukan, hash 124 : False
+n difaktorkan: 53 x 61 -&gt; kunci privat dapat dihitung; itu sebabnya n harus raksasa</code></pre><figcaption>Memfaktorkan 3233 trivial. Pada n sepanjang 2048 bit (≈ 617 digit), tidak ada algoritma klasik yang layak; komputer kuantum besar dengan algoritma Shor akan mengubah hal ini, sehingga kriptografi pasca-kuantum sedang distandarisasi (NIST).</figcaption></figure>
+<h2 id="pertukaran-kunci-diffie-hellman">Pertukaran kunci Diffie–Hellman</h2>
+<p>Dua pihak menyepakati kunci rahasia bersama lewat saluran terbuka. Penyadap yang melihat semua pesan tetap tak dapat menghitung kuncinya, karena bergantung pada kesulitan logaritma diskret.</p>
+<figure class="codebox"><pre data-lang="python"><code># parameter publik (kecil, untuk belajar)
+p, g = 23, 5
+
+a = 6                                   # rahasia Ani (tidak dikirim)
+b = 15                                  # rahasia Budi (tidak dikirim)
+A = pow(g, a, p)                        # Ani mengirim A = g^a mod p
+B = pow(g, b, p)                        # Budi mengirim B = g^b mod p
+print(&quot;terlihat penyadap: p =&quot;, p, &quot;g =&quot;, g, &quot;A =&quot;, A, &quot;B =&quot;, B)
+
+kunci_ani = pow(B, a, p)                # (g^b)^a mod p
+kunci_budi = pow(A, b, p)               # (g^a)^b mod p
+print(&quot;kunci Ani:&quot;, kunci_ani, &quot;| kunci Budi:&quot;, kunci_budi, &quot;| sama:&quot;, kunci_ani == kunci_budi)
+
+# penyadap harus mencari a dari A: untuk p kecil mudah, untuk p 2048 bit tidak mungkin
+print(&quot;penyadap mencoba semua a:&quot;, [x for x in range(1, p) if pow(g, x, p) == A])</code></pre><pre class="runout" data-lang="keluaran"><code>terlihat penyadap: p = 23 g = 5 A = 8 B = 19
+kunci Ani: 2 | kunci Budi: 2 | sama: True
+penyadap mencoba semua a: [6]</code></pre><figcaption>Pada TLS modern, kunci sesi disepakati dengan varian Diffie–Hellman (ECDHE) yang memberi forward secrecy: kebocoran kunci privat di masa depan tidak membuka rekaman lalu lintas lama.</figcaption></figure>
+<h2 id="menyatukan-apa-yang-terjadi-di-https">Menyatukan: apa yang terjadi di HTTPS</h2>
+<figure class="diagram"><svg viewBox="0 0 728 134" role="img" aria-label="Peran tiap alat di TLS" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Sertifikat dan</tspan><tspan x="85" dy="16">tanda tangan</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">membuktikan server</tspan><tspan x="85" dy="14">benar (asimetris)</tspan></text><line x1="164" y1="67" x2="192" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Pertukaran kunci</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">menyepakati kunci sesi</tspan><tspan x="271" dy="14">(ECDHE)</tspan></text><line x1="350" y1="67" x2="378" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Enkripsi simetris</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">AES-GCM atau ChaCha20</tspan><tspan x="457" dy="14">untuk data</tspan></text><line x1="536" y1="67" x2="564" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Integritas</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">tag autentikasi</tspan><tspan x="643" dy="14">memastikan tak ada</tspan><tspan x="643" dy="14">perubahan</tspan></text></svg><figcaption>Asimetris untuk identitas dan kesepakatan kunci, simetris untuk kecepatan, hash/MAC untuk integritas.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa cipher substitusi sederhana mudah dipecahkan?","options":["Analisis frekuensi huruf","Kuncinya pendek sekali","Perlu komputer kuantum"],"answer":0,"why":"Pola bahasa bocor ke teks sandi."},{"q":"Dalam tanda tangan digital, penandatangan memakai...","options":["Kunci privat","Kunci publik","Kunci simetris bersama"],"answer":0,"why":"Siapa pun memverifikasi dengan kunci publik."},{"q":"Efek avalanche pada hash berarti...","options":["Perubahan kecil pada masukan mengubah keluaran secara drastis","Keluaran makin panjang","Hash dapat dibalik"],"answer":0,"why":"Sekitar separuh bit berubah."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa pesan besar tidak dienkripsi langsung dengan RSA?</summary><div>RSA lambat dan terbatas ukuran pesan; praktiknya RSA/ECDH dipakai untuk menyepakati kunci simetris, lalu data dienkripsi dengan AES.</div></details><details><summary>2. Apa bedanya hash dan enkripsi?</summary><div>Hash satu arah dan tak punya kunci (untuk verifikasi); enkripsi dua arah dengan kunci (untuk kerahasiaan).</div></details><details><summary>3. Mengapa kata sandi disimpan sebagai hash bergaram?</summary><div>Agar bocornya basis data tidak mengungkap sandi dan hash identik tidak menunjukkan sandi yang sama.</div></details><details><summary>4. Apa itu serangan man-in-the-middle terhadap Diffie–Hellman polos?</summary><div>Penyerang menyisip di tengah dan menyepakati kunci terpisah dengan masing-masing pihak; ditangkal dengan autentikasi (sertifikat atau tanda tangan).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Kriptografi menjamin kerahasiaan, integritas, autentikasi, dan nirsangkal.</li><li>Cipher klasik patah oleh brute force dan analisis frekuensi.</li><li>Hash: sidik jari satu arah dengan efek avalanche; pakai SHA-2/3, bukan MD5/SHA-1.</li><li>Simetris cepat tetapi berbagi kunci sulit; asimetris menyelesaikan distribusi kunci.</li><li>RSA, Diffie–Hellman, dan tanda tangan digital membentuk dasar HTTPS. Jangan membuat kriptografi sendiri.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu kriptografi kurva eliptik (ECC)?</summary><div>Alternatif RSA dengan kunci jauh lebih pendek untuk tingkat keamanan sama (256 bit ECC setara sekitar RSA 3072 bit); dipakai luas di TLS modern.</div></details>
+<details class="faq"><summary>Apakah enkripsi ujung-ke-ujung aman sepenuhnya?</summary><div>Melindungi isi dari penyedia layanan dan penyadap jaringan, tetapi tidak dari perangkat yang telah disusupi, tidak dari metadata, dan tidak dari penerima yang membocorkannya.</div></details>
+<details class="faq"><summary>Apa itu kriptografi pasca-kuantum?</summary><div>Algoritma yang diyakini tahan terhadap komputer kuantum; NIST telah memilih standar seperti ML-KEM (Kyber) dan ML-DSA (Dilithium).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Jonathan Katz dan Yehuda Lindell, Introduction to Modern Cryptography (CRC Press)</li><li><a href="https://docs.python.org/3/library/hashlib.html" rel="noopener" target="_blank">Dokumentasi Python: hashlib</a></li><li><a href="https://csrc.nist.gov/projects/post-quantum-cryptography" rel="noopener" target="_blank">NIST: Post-Quantum Cryptography</a></li><li><a href="https://dl.acm.org/doi/10.1145/359340.359342" rel="noopener" target="_blank">Rivest, Shamir, Adleman, A Method for Obtaining Digital Signatures and Public-Key Cryptosystems, CACM 21(2), 1978</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

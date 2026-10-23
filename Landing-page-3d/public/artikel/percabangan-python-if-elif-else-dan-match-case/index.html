@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percabangan Python: if, elif, else, dan match-case</title>
+<meta name="description" content="Pelajari percabangan Python: if, elif, else, ekspresi ternary, truthiness, dan match-case, dengan contoh yang dijalankan serta jebakan umum.">
+<meta name="keywords" content="if else Python, percabangan, elif, match case, kondisi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/">
+<meta property="og:title" content="Percabangan Python: if, elif, else, dan match-case">
+<meta property="og:description" content="Pelajari percabangan Python: if, elif, else, ekspresi ternary, truthiness, dan match-case, dengan contoh yang dijalankan serta jebakan umum.">
+<meta property="og:image" content="https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Percabangan Python: if, elif, else, dan match-case">
+<meta name="twitter:description" content="Pelajari percabangan Python: if, elif, else, ekspresi ternary, truthiness, dan match-case, dengan contoh yang dijalankan serta jebakan umum.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Percabangan Python: if, elif, else, dan match-case","description":"Pelajari percabangan Python: if, elif, else, ekspresi ternary, truthiness, dan match-case, dengan contoh yang dijalankan serta jebakan umum.","image":["https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"if else Python, percabangan, elif, match case, kondisi","articleSection":"Algoritma & Pemrograman Python","wordCount":387,"mainEntityOfPage":"https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Percabangan Python: if, elif, else, dan match-case","item":"https://muchson.web.id/artikel/percabangan-python-if-elif-else-dan-match-case/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Python punya switch seperti Java?","acceptedAnswer":{"@type":"Answer","text":"Python 3.10 menambahkan match-case yang lebih kuat dari switch klasik karena mendukung pencocokan pola. Sebelumnya orang memakai rantai elif atau kamus."}},{"@type":"Question","name":"Apa bedanya if dan elif?","acceptedAnswer":{"@type":"Answer","text":"elif hanya diperiksa bila semua syarat sebelumnya salah, sedangkan serangkaian if terpisah masing-masing diperiksa independen."}},{"@type":"Question","name":"Bolehkah if di dalam if?","acceptedAnswer":{"@type":"Answer","text":"Boleh (nested if), tetapi bila terlalu dalam, pertimbangkan menggabungkan syarat dengan and atau memecahnya menjadi fungsi."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#bentuk-dasar">Bentuk dasar</a></li><li><a href="#telusuri-pengelompokan-nilai">Telusuri: pengelompokan nilai</a></li><li><a href="#mengapa-urutan-elif-penting">Mengapa urutan elif penting</a></li><li><a href="#truthiness-apa-yang-dianggap-benar">Truthiness: apa yang dianggap benar?</a></li><li><a href="#ekspresi-kondisional-dan-match-case">Ekspresi kondisional dan match-case</a></li><li><a href="#contoh-tahun-kabisat">Contoh: tahun kabisat</a></li><li><a href="#uji-di-nilai-batas">Uji di nilai batas</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>Percabangan Python: if, elif, else, dan match-case</h1>
+<p class="lead">Percabangan memungkinkan program mengambil keputusan: melakukan sesuatu hanya bila suatu syarat terpenuhi. Di balik kesederhanaannya, ada banyak bug klasik: urutan syarat yang salah, batas yang meleset satu angka, atau kondisi yang tidak mencakup semua kemungkinan. Materi ini membekali Anda cara merancangnya dengan teliti.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> operator perbandingan dan logika</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Percabangan Python: if, elif, else, dan match-case" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis if, if-else, dan if-elif-else dengan indentasi yang benar</li><li>menyusun urutan elif yang tepat dan mencakup semua kasus</li><li>memakai ekspresi kondisional dan match-case</li><li>menjelaskan nilai yang dianggap salah (falsy) di Python</li><li>menguji kondisi pada nilai batas</li></ul></div>
+<h2 id="bentuk-dasar">Bentuk dasar</h2>
+<figure class="diagram"><svg viewBox="0 0 668 210" role="img" aria-label="Tiga bentuk percabangan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="yzhng-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="yzhng-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="yzhng-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="yzhng-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="yzhng-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="100,100 100,140" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#yzhng-arrow)"/><rect x="88.4" y="110.9999999925" width="23.2" height="17" rx="4" fill="#fff" opacity=".92"/><text x="100" y="123.9999999925" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">ya</text><polyline points="305,92.5 273.3,140" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#yzhng-arrow)"/><rect x="277.5666666666666" y="107.25" width="23.2" height="17" rx="4" fill="#fff" opacity=".92"/><text x="289.16666666666663" y="120.25" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">ya</text><polyline points="335,92.5 366.7,140" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#yzhng-arrow)"/><rect x="329.33333333333337" y="107.25" width="43" height="17" rx="4" fill="#fff" opacity=".92"/><text x="350.83333333333337" y="120.25" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">tidak</text><polyline points="524.8,89.5 484,142" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#yzhng-arrow)"/><rect x="492.8148606811145" y="106.75232198142415" width="23.2" height="17" rx="4" fill="#fff" opacity=".92"/><text x="504.41486068111453" y="119.75232198142415" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">ya</text><polyline points="556.4,88.8 593.6,131.2" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#yzhng-arrow)"/><rect x="553.5" y="101" width="43" height="17" rx="4" fill="#fff" opacity=".92"/><text x="575" y="114" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">tidak</text><text x="100" y="16.333333333333332" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="100" dy="0">if</tspan></text><polygon points="100,40 160,70 100,100 40,70" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">syarat?</tspan></text><rect x="50" y="140" width="100" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">blok if</tspan></text><text x="320" y="16.333333333333332" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="320" dy="0">if-else</tspan></text><polygon points="320,40 380,70 320,100 260,70" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="320" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="320" dy="0">syarat?</tspan></text><rect x="220" y="140" width="80" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">if</tspan></text><rect x="340" y="140" width="80" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="380" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="380" dy="0">else</tspan></text><text x="540" y="16.333333333333332" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="540" dy="0">if-elif-else</tspan></text><polygon points="540,42 590,70 540,98 490,70" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="540" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="540" dy="0">syarat 1?</tspan></text><rect x="435" y="142" width="70" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="470" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="470" dy="0">blok 1</tspan></text><polygon points="610,122 660,150 610,178 560,150" fill="#fff1d6" stroke="#1e5ab2" stroke-width="2"/><text x="610" y="154" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="610" dy="0">syarat 2?</tspan></text></svg><figcaption>Hanya satu cabang yang dijalankan pada if-elif-else: cabang pertama yang syaratnya benar.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>suhu = 31
+if suhu &gt;= 35:
+    print(&quot;Panas sekali&quot;)
+elif suhu &gt;= 28:
+    print(&quot;Hangat&quot;)
+elif suhu &gt;= 20:
+    print(&quot;Sejuk&quot;)
+else:
+    print(&quot;Dingin&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>Hangat</code></pre></figure>
+<div class="callout warn"><b>Indentasi bukan hiasan</b><p>Blok dalam Python ditentukan oleh <b>indentasi</b> dan diawali tanda titik dua. Menggeser satu baris saja bisa mengubah arti program. Biasakan 4 spasi per tingkat.</p></div>
+<h2 id="telusuri-pengelompokan-nilai">Telusuri: pengelompokan nilai</h2>
+<p>Perhatikan bahwa begitu satu syarat benar, sisanya dilewati.</p>
+<div data-w="tracer"><script type="application/json">{"title":"Telusuri eksekusi langkah demi langkah","desc":"Baris yang disorot adalah baris yang AKAN dijalankan berikutnya. Variabel menunjukkan keadaan sebelum baris itu dijalankan.","code":"nilai = 77\nif nilai >= 85:\n    grade = \"A\"\nelif nilai >= 75:\n    grade = \"B\"\nelif nilai >= 65:\n    grade = \"C\"\nelse:\n    grade = \"D\"\nprint(\"Grade:\", grade)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"nilai":"77"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"nilai":"77"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"nilai":"77"}}],"out":""},{"line":10,"stack":[{"name":"(modul)","vars":{"nilai":"77","grade":"'B'"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"nilai":"77","grade":"'B'"}}],"out":"Grade: B\n"}]}</script></div>
+<h2 id="mengapa-urutan-elif-penting">Mengapa urutan elif penting</h2>
+<p>Kesalahan klasik: menyusun syarat dari yang paling longgar. Dibandingkan di bawah, nilai 90 seharusnya "A".</p>
+<figure class="codebox"><pre data-lang="python"><code>def grade_salah(n):
+    if n &gt;= 65:
+        return &quot;C&quot;      # nilai 90 berhenti di sini
+    elif n &gt;= 75:
+        return &quot;B&quot;
+    elif n &gt;= 85:
+        return &quot;A&quot;
+    return &quot;D&quot;
+
+def grade_benar(n):
+    if n &gt;= 85: return &quot;A&quot;
+    elif n &gt;= 75: return &quot;B&quot;
+    elif n &gt;= 65: return &quot;C&quot;
+    return &quot;D&quot;
+
+print(grade_salah(90), grade_benar(90))</code></pre><pre class="runout" data-lang="keluaran"><code>C A</code></pre><figcaption>Urutkan dari syarat yang paling ketat ke yang paling longgar, atau buat syarat saling lepas.</figcaption></figure>
+<h2 id="truthiness-apa-yang-dianggap-benar">Truthiness: apa yang dianggap benar?</h2>
+<p>Kondisi tidak harus bool. Python menganggap nilai berikut <b>salah</b> (falsy): <code>False</code>, <code>None</code>, <code>0</code>, <code>0.0</code>, <code>""</code>, <code>[]</code>, <code>()</code>, <code>{}</code>, <code>set()</code>. Selebihnya benar.</p>
+<figure class="codebox"><pre data-lang="python"><code>for nilai in [0, 1, &quot;&quot;, &quot;a&quot;, [], [0], None]:
+    print(repr(nilai), &quot;-&gt;&quot;, &quot;benar&quot; if nilai else &quot;salah&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>0 -&gt; salah
+1 -&gt; benar
+'' -&gt; salah
+'a' -&gt; benar
+[] -&gt; salah
+[0] -&gt; benar
+None -&gt; salah</code></pre></figure>
+<h2 id="ekspresi-kondisional-dan-match-case">Ekspresi kondisional dan match-case</h2>
+<figure class="codebox"><pre data-lang="python"><code>umur = 17
+status = &quot;dewasa&quot; if umur &gt;= 18 else &quot;belum dewasa&quot;
+print(status)
+
+def nama_hari(n):
+    match n:
+        case 1 | 7:
+            return &quot;akhir pekan&quot;
+        case 2 | 3 | 4 | 5 | 6:
+            return &quot;hari kerja&quot;
+        case _:
+            return &quot;tidak valid&quot;
+
+print(nama_hari(7), nama_hari(3), nama_hari(9))</code></pre><pre class="runout" data-lang="keluaran"><code>belum dewasa
+akhir pekan hari kerja tidak valid</code></pre><figcaption>match-case tersedia sejak Python 3.10. Pola dapat berupa nilai, daftar, kamus, atau objek.</figcaption></figure>
+<h2 id="contoh-tahun-kabisat">Contoh: tahun kabisat</h2>
+<figure class="codebox"><pre data-lang="python"><code>def kabisat(y):
+    return (y % 4 == 0 and y % 100 != 0) or y % 400 == 0
+
+for y in [1900, 2000, 2023, 2024, 2100]:
+    print(y, &quot;kabisat&quot; if kabisat(y) else &quot;bukan&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>1900 bukan
+2000 kabisat
+2023 bukan
+2024 kabisat
+2100 bukan</code></pre></figure>
+<h2 id="uji-di-nilai-batas">Uji di nilai batas</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Daftar uji kondisi","items":["Nilai tepat di batas (misalnya 85 untuk syarat >= 85).","Satu di bawah dan satu di atas batas (84 dan 86).","Nilai ekstrem (0, negatif, sangat besar).","Masukan yang tidak mencakup cabang mana pun apakah ada else yang aman.","Syarat berurutan: pastikan tidak ada yang tak pernah tercapai.","Perbandingan float: hindari == langsung."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apa keluaran \u003ccode>if []: print(\"A\") else: print(\"B\")\u003c/code>?","options":["A","B","Error"],"answer":1,"why":"List kosong dianggap falsy."},{"q":"Pada rangkaian if-elif-else, berapa cabang yang dijalankan?","options":["Semua yang syaratnya benar","Paling banyak satu","Selalu dua"],"answer":1,"why":"Hanya cabang pertama yang syaratnya benar."},{"q":"Mana penulisan yang benar untuk memeriksa x antara 1 dan 10 (termasuk)?","options":["1 \u003c= x \u003c= 10","x >= 1 and \u003c= 10","1 \u003c= x and 10"],"answer":0,"why":"Perbandingan berantai valid di Python."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis fungsi <code>tipe_segitiga(a, b, c)</code> yang mengembalikan "sama sisi", "sama kaki", atau "sembarang".</summary><div><code>if a == b == c: return "sama sisi"
+elif a == b or b == c or a == c: return "sama kaki"
+return "sembarang"</code>. (Syarat ada-tidaknya segitiga: jumlah dua sisi harus lebih besar dari sisi ketiga, perlu pengecekan terpisah.)</div></details><details><summary>2. Apa yang salah dengan <code>if x = 5:</code>?</summary><div>Itu penugasan, bukan perbandingan. Python menolaknya (SyntaxError). Yang benar: <code>if x == 5:</code>.</div></details><details><summary>3. Tulis kondisi untuk "diskon berlaku bila total belanja minimal 100.000 atau anggota VIP, tetapi bukan pada hari libur".</summary><div><code>(total >= 100000 or vip) and not libur</code>. Kurung penting karena and lebih kuat dari or.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>if-elif-else menjalankan paling banyak satu cabang: yang pertama benar.</li><li>Urutkan syarat dengan cermat dan uji di nilai batas.</li><li>Falsy: False, None, 0, "", [], (), {}, set().</li><li>Ekspresi kondisional untuk nilai sederhana, match-case untuk pencocokan pola (Python 3.10+).</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Python punya switch seperti Java?</summary><div>Python 3.10 menambahkan match-case yang lebih kuat dari switch klasik karena mendukung pencocokan pola. Sebelumnya orang memakai rantai elif atau kamus.</div></details>
+<details class="faq"><summary>Apa bedanya if dan elif?</summary><div>elif hanya diperiksa bila semua syarat sebelumnya salah, sedangkan serangkaian if terpisah masing-masing diperiksa independen.</div></details>
+<details class="faq"><summary>Bolehkah if di dalam if?</summary><div>Boleh (nested if), tetapi bila terlalu dalam, pertimbangkan menggabungkan syarat dengan and atau memecahnya menjadi fungsi.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements" rel="noopener" target="_blank">Dokumentasi Python: if Statements</a></li><li><a href="https://docs.python.org/3/tutorial/controlflow.html#match-statements" rel="noopener" target="_blank">Dokumentasi Python: match Statements</a></li><li><a href="https://peps.python.org/pep-0634/" rel="noopener" target="_blank">PEP 634, Structural Pattern Matching: Specification</a></li><li><a href="https://docs.python.org/3/library/stdtypes.html#truth-value-testing" rel="noopener" target="_blank">Dokumentasi Python: Truth Value Testing</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/"><img src="/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Algoritma dan Pemrograman: dari Masalah ke Program</span></a><a href="/artikel/flowchart-dan-pseudocode-menulis-algoritma/"><img src="/artikel/flowchart-dan-pseudocode-menulis-algoritma/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flowchart dan Pseudocode: Menulis Algoritma Sebelum Koding</span></a><a href="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/"><img src="/artikel/python-mulai-instalasi-repl-script-dan-virtual-environment/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Python: Instalasi, REPL, Script, dan Virtual Environment</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

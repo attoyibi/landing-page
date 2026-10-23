@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>String dan StringBuilder Java: Immutability dan Performa</title>
+<meta name="description" content="Pahami String di Java: immutable, string pool, == vs equals, metode penting, StringBuilder untuk perulangan, format, text block, dan regular expression dasar.">
+<meta name="keywords" content="Java, String, StringBuilder, string pool, regex">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/">
+<meta property="og:title" content="String dan StringBuilder Java: Immutability dan Performa">
+<meta property="og:description" content="Pahami String di Java: immutable, string pool, == vs equals, metode penting, StringBuilder untuk perulangan, format, text block, dan regular expression dasar.">
+<meta property="og:image" content="https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="String dan StringBuilder Java: Immutability dan Performa">
+<meta name="twitter:description" content="Pahami String di Java: immutable, string pool, == vs equals, metode penting, StringBuilder untuk perulangan, format, text block, dan regular expression dasar.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"String dan StringBuilder Java: Immutability dan Performa","description":"Pahami String di Java: immutable, string pool, == vs equals, metode penting, StringBuilder untuk perulangan, format, text block, dan regular expression dasar.","image":["https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, String, StringBuilder, string pool, regex","articleSection":"PBO dengan Java","wordCount":276,"mainEntityOfPage":"https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"String dan StringBuilder Java: Immutability dan Performa","item":"https://muchson.web.id/artikel/string-stringbuilder-dan-text-java-immutability-dan-performa/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu string pool?","acceptedAnswer":{"@type":"Answer","text":"Area memori tempat JVM menyimpan literal String unik agar dapat dibagi, menghemat memori."}},{"@type":"Question","name":"Mengapa String aman sebagai kunci HashMap?","acceptedAnswer":{"@type":"Answer","text":"Karena immutable, hashCode-nya tidak berubah."}},{"@type":"Question","name":"Apakah char dan String bisa dibandingkan dengan ==?","acceptedAnswer":{"@type":"Answer","text":"char (primitif) bisa dengan ==; String harus dengan equals."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#string-itu-immutable">String itu immutable</a></li><li><a href="#metode-yang-sering-dipakai">Metode yang sering dipakai</a></li><li><a href="#menyambung-di-perulangan-stringbuilder">Menyambung di perulangan: StringBuilder</a></li><li><a href="#format-dan-text-block">Format dan text block</a></li><li><a href="#regular-expression-dasar">Regular expression dasar</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>String dan StringBuilder Java: Immutability dan Performa</h1>
+<p class="lead">String adalah tipe yang paling sering dipakai dan paling sering disalahpahami. Mengerti bahwa String immutable menjelaskan tiga hal sekaligus: mengapa == berbahaya, mengapa menyambung di perulangan lambat, dan mengapa String aman sebagai kunci HashMap.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> tipe data, method</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="String dan StringBuilder Java: Immutability dan Performa" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan immutability dan string pool</li><li>membedakan == dan equals pada String</li><li>memakai metode String yang paling sering dipakai</li><li>memilih StringBuilder untuk penyambungan berulang</li><li>memakai format, text block, dan regex dasar</li></ul></div>
+<h2 id="string-itu-immutable">String itu immutable</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        String s = &quot;java&quot;;
+        String t = s.toUpperCase();         // menghasilkan objek BARU
+        s.concat(&quot; modern&quot;);                // hasilnya dibuang; s tidak berubah
+        System.out.println(s + &quot; &quot; + t);
+
+        String a = &quot;halo&quot;;
+        String b = &quot;halo&quot;;                   // literal sama dibagi lewat string pool
+        String c = new String(&quot;halo&quot;);       // objek terpisah di heap
+        System.out.println((a == b) + &quot; &quot; + (a == c) + &quot; &quot; + a.equals(c) + &quot; &quot; + (a == c.intern()));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>java JAVA
+true false true true</code></pre><figcaption>Selalu gunakan equals untuk membandingkan isi String. == hanya kebetulan benar untuk literal yang berbagi pool.</figcaption></figure>
+<h2 id="metode-yang-sering-dipakai">Metode yang sering dipakai</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        String s = &quot;  Belajar Java Itu Menyenangkan  &quot;;
+        System.out.println(&quot;[&quot; + s.trim() + &quot;] panjang=&quot; + s.length());
+        String p = s.trim();
+        System.out.println(p.toLowerCase() + &quot; | &quot; + p.charAt(0) + &quot; | &quot; + p.indexOf(&quot;Java&quot;));
+        System.out.println(p.substring(8, 12) + &quot; | &quot; + p.replace(&quot;Itu&quot;, &quot;Sangat&quot;));
+        System.out.println(p.contains(&quot;Java&quot;) + &quot; &quot; + p.startsWith(&quot;Bel&quot;) + &quot; &quot; + p.isBlank() + &quot; &quot; + &quot;&quot;.isEmpty());
+        System.out.println(String.join(&quot;-&quot;, &quot;2026&quot;, &quot;10&quot;, &quot;23&quot;));
+        for (String kata : p.split(&quot;\\s+&quot;)) System.out.print(&quot;&lt;&quot; + kata + &quot;&gt;&quot;);
+        System.out.println();
+        System.out.println(&quot;abc&quot;.compareTo(&quot;abd&quot;) + &quot; &quot; + &quot;Apel&quot;.equalsIgnoreCase(&quot;apel&quot;));
+        System.out.println(&quot;ha&quot;.repeat(3) + &quot; &quot; + &quot;madam&quot;.contentEquals(new StringBuilder(&quot;madam&quot;).reverse()));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>[Belajar Java Itu Menyenangkan] panjang=33
+belajar java itu menyenangkan | B | 8
+Java | Belajar Java Sangat Menyenangkan
+true true false true
+2026-10-23
+&lt;Belajar&gt;&lt;Java&gt;&lt;Itu&gt;&lt;Menyenangkan&gt;
+-1 true
+hahaha true</code></pre></figure>
+<h2 id="menyambung-di-perulangan-stringbuilder">Menyambung di perulangan: StringBuilder</h2>
+<p>Setiap <code>+=</code> pada String membuat objek baru dan menyalin seluruh isi lama, sehingga n penyambungan berbiaya O(n²). StringBuilder menyimpan buffer yang bisa diubah, jadi O(n).</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    static long ukur(Runnable r) {
+        long mulai = System.nanoTime();
+        r.run();
+        return (System.nanoTime() - mulai) / 1_000_000;
+    }
+
+    public static void main(String[] args) {
+        int n = 30_000;
+        long ms1 = ukur(() -&gt; { String s = &quot;&quot;; for (int i = 0; i &lt; n; i++) s += &quot;x&quot;; });
+        long ms2 = ukur(() -&gt; { StringBuilder sb = new StringBuilder(); for (int i = 0; i &lt; n; i++) sb.append(&quot;x&quot;); sb.toString(); });
+        System.out.println(&quot;String += lebih lambat dari StringBuilder: &quot; + (ms1 &gt; ms2));
+
+        StringBuilder sb = new StringBuilder(&quot;Java&quot;);
+        sb.append(&quot; 21&quot;).insert(0, &quot;&gt;&gt; &quot;).reverse().reverse().setCharAt(3, 'j');
+        System.out.println(sb + &quot; panjang &quot; + sb.length());
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>String += lebih lambat dari StringBuilder: true
+&gt;&gt; java 21 panjang 10</code></pre><figcaption>Pengukuran waktu berbeda di setiap mesin, tetapi arahnya konsisten: penyambungan String berulang jauh lebih lambat.</figcaption></figure>
+<div class="callout info"><b>Catatan</b><p>Kompiler memang mengoptimalkan <code>a + b + c</code> dalam satu ekspresi, tetapi tidak dapat mengoptimalkan penyambungan yang tersebar di tiap iterasi perulangan. Di sanalah StringBuilder dibutuhkan.</p></div>
+<h2 id="format-dan-text-block">Format dan text block</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        String nama = &quot;Ani&quot;; int umur = 20; double ipk = 3.756;
+        System.out.println(String.format(&quot;%s berumur %d tahun, IPK %.2f&quot;, nama, umur, ipk));
+        System.out.printf(&quot;|%-8s|%8s|%05d|%n&quot;, &quot;kiri&quot;, &quot;kanan&quot;, 42);
+        System.out.println(&quot;%s lulus dengan %.1f%%&quot;.formatted(nama, 95.5));
+
+        String json = &quot;&quot;&quot;
+            {
+              &quot;nama&quot;: &quot;%s&quot;,
+              &quot;umur&quot;: %d
+            }
+            &quot;&quot;&quot;.formatted(nama, umur);
+        System.out.print(json);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Ani berumur 20 tahun, IPK 3.76
+|kiri    |   kanan|00042|
+Ani lulus dengan 95.5%
+{
+  &quot;nama&quot;: &quot;Ani&quot;,
+  &quot;umur&quot;: 20
+}</code></pre><figcaption>Text block (""") memudahkan teks multibaris tanpa karakter escape. Jangan gunakan format %n sembarangan; %n adalah pemisah baris sesuai platform.</figcaption></figure>
+<h2 id="regular-expression-dasar">Regular expression dasar</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.regex.*;
+
+public class Main {
+    public static void main(String[] args) {
+        String teks = &quot;Hubungi kami: info@contoh.id atau admin@sekolah.sch.id, telp 0812-3456-7890.&quot;;
+        Pattern email = Pattern.compile(&quot;[\\w.]+@[\\w.]+\\.[a-z]{2,}&quot;);
+        Matcher m = email.matcher(teks);
+        while (m.find()) System.out.println(&quot;email: &quot; + m.group());
+
+        System.out.println(&quot;0812-3456-7890&quot;.matches(&quot;\\d{4}-\\d{4}-\\d{4}&quot;));
+        System.out.println(&quot;a1b22c333&quot;.replaceAll(&quot;\\d+&quot;, &quot;#&quot;));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>email: info@contoh.id
+email: admin@sekolah.sch.id
+true
+a#b#c#</code></pre></figure>
+<div data-w="regex"><script type="application/json">{"title":"Coba regular expression","desc":"Ubah pola dan teks untuk melihat bagian yang cocok.","pattern":"[w.]+@[w.]+.[a-z]{2,}","text":"Hubungi info@contoh.id atau admin@sekolah.sch.id untuk informasi."}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa String disebut immutable?","options":["Isinya tidak bisa diubah setelah dibuat","Tidak bisa dibandingkan","Selalu kosong"],"answer":0,"why":"Operasi seperti toUpperCase menghasilkan objek baru."},{"q":"Cara aman membandingkan isi dua String?","options":["==","equals()","compare()"],"answer":1,"why":"== membandingkan referensi."},{"q":"Untuk menyambung ribuan potongan teks dalam perulangan, pakai...","options":["String +=","StringBuilder","char[]"],"answer":1,"why":"Menghindari salinan berulang."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis method yang memeriksa apakah sebuah String adalah palindrom (abaikan huruf besar-kecil).</summary><div>Bandingkan dengan kebalikannya: <code>new StringBuilder(s).reverse().toString().equalsIgnoreCase(s)</code></div></details><details><summary>2. Hitung jumlah huruf vokal pada String.</summary><div>Telusuri dengan charAt dan periksa dengan "aeiou".indexOf(c) >= 0 setelah lowercase.</div></details><details><summary>3. Mengapa StringBuffer ada selain StringBuilder?</summary><div>StringBuffer tersinkronisasi (aman thread) tetapi lebih lambat; StringBuilder adalah pilihan umum untuk satu thread.</div></details><details><summary>4. Format angka 1234567.891 dengan dua desimal.</summary><div><code>String.format("%,.2f", 1234567.891)</code> (pemisah ribuan tergantung locale).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>String immutable; operasi menghasilkan objek baru.</li><li>Bandingkan isi dengan equals, bukan ==.</li><li>StringBuilder untuk penyambungan berulang.</li><li>format, text block, dan regex melengkapi pemrosesan teks.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu string pool?</summary><div>Area memori tempat JVM menyimpan literal String unik agar dapat dibagi, menghemat memori.</div></details>
+<details class="faq"><summary>Mengapa String aman sebagai kunci HashMap?</summary><div>Karena immutable, hashCode-nya tidak berubah.</div></details>
+<details class="faq"><summary>Apakah char dan String bisa dibandingkan dengan ==?</summary><div>char (primitif) bisa dengan ==; String harus dengan equals.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/data/strings.html" rel="noopener" target="_blank">Oracle: Strings (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" rel="noopener" target="_blank">Java SE API: String</a></li><li><a href="https://docs.oracle.com/javase/tutorial/essential/regex/" rel="noopener" target="_blank">Oracle: Regular Expressions</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

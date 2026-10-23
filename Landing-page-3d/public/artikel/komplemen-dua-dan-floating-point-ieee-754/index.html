@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komplemen Dua dan Floating Point IEEE 754 · Muhammad Muchson</title>
+<meta name="description" content="Pahami komplemen dua dan IEEE 754: bilangan negatif, overflow, struktur float, mengapa 0,1 + 0,2 tidak sama dengan 0,3, dan cara membandingkan float.">
+<meta name="keywords" content="komplemen dua, IEEE 754, floating point, overflow, presisi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/">
+<meta property="og:title" content="Komplemen Dua dan Floating Point IEEE 754">
+<meta property="og:description" content="Pahami komplemen dua dan IEEE 754: bilangan negatif, overflow, struktur float, mengapa 0,1 + 0,2 tidak sama dengan 0,3, dan cara membandingkan float.">
+<meta property="og:image" content="https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Komplemen Dua dan Floating Point IEEE 754">
+<meta name="twitter:description" content="Pahami komplemen dua dan IEEE 754: bilangan negatif, overflow, struktur float, mengapa 0,1 + 0,2 tidak sama dengan 0,3, dan cara membandingkan float.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Komplemen Dua dan Floating Point IEEE 754","description":"Pahami komplemen dua dan IEEE 754: bilangan negatif, overflow, struktur float, mengapa 0,1 + 0,2 tidak sama dengan 0,3, dan cara membandingkan float.","image":["https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"komplemen dua, IEEE 754, floating point, overflow, presisi","articleSection":"Dasar Informatika","wordCount":446,"mainEntityOfPage":"https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Komplemen Dua dan Floating Point IEEE 754","item":"https://muchson.web.id/artikel/komplemen-dua-dan-floating-point-ieee-754/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu bfloat16 dan float16?","acceptedAnswer":{"@type":"Answer","text":"Format 16 bit untuk pembelajaran mesin dan grafika; bfloat16 mempertahankan rentang eksponen float32 dengan mantissa lebih pendek."}},{"@type":"Question","name":"Apakah double selalu lebih baik dari float?","acceptedAnswer":{"@type":"Answer","text":"Lebih presisi tetapi memakai memori dua kali lebih besar; GPU dan model besar sering memakai float yang lebih kecil demi kecepatan."}},{"@type":"Question","name":"Dari mana standar IEEE 754 berasal?","acceptedAnswer":{"@type":"Answer","text":"Dipublikasikan IEEE pada 1985 dan direvisi 2008 dan 2019; ia dirancang antara lain oleh William Kahan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#komplemen-dua-8-bit">Komplemen dua (8 bit)</a></li><li><a href="#floating-point-ieee-754">Floating point IEEE 754</a></li><li><a href="#nilai-khusus">Nilai khusus</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Komplemen Dua dan Floating Point IEEE 754</h1>
+<p class="lead">Bilangan bulat negatif dan bilangan pecahan tidak punya cara alami disimpan dalam bit. Dua kesepakatan, komplemen dua dan IEEE 754, menjawabnya. Keduanya menjelaskan banyak perilaku "aneh" yang ditemui programmer: overflow, nilai −128 tanpa pasangan, dan 0,1 + 0,2 ≠ 0,3.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> sistem bilangan biner</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Komplemen Dua dan Floating Point IEEE 754" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan representasi bilangan bulat bertanda dengan komplemen dua</li><li>menghitung negasi dan memahami overflow</li><li>membedakan komponen float: tanda, eksponen, mantissa</li><li>menjelaskan mengapa sebagian pecahan tidak dapat dinyatakan tepat</li><li>memilih cara membandingkan dan menyimpan angka yang aman</li></ul></div>
+<h2 id="komplemen-dua-8-bit">Komplemen dua (8 bit)</h2>
+<p>Pada komplemen dua, bit paling kiri bernilai <b>−128</b> (bukan +128) dan bit lainnya bernilai positif biasa. Hasilnya: bilangan nol hanya satu, dan penjumlahan bekerja dengan sirkuit yang sama untuk bilangan positif maupun negatif.</p>
+<div data-w="twos"><script type="application/json">{"title":"Komplemen dua 8 bit","desc":"Nyalakan bit paling kiri untuk melihat nilai menjadi negatif. Coba tombol Negasikan."}</script></div>
+<figure class="codebox"><pre data-lang="python"><code>def komplemen_dua(n, bit=8):
+    return format(n &amp; ((1 &lt;&lt; bit) - 1), f&quot;0{bit}b&quot;)          # mask menyisakan bit rendah
+
+for n in (5, -5, 127, -128, -1):
+    print(f&quot;{n:&gt;5} -&gt; {komplemen_dua(n)}&quot;)
+
+# cara menegasikan: balik semua bit lalu tambah 1
+x = 0b00000101
+neg = (~x + 1) &amp; 0xFF
+print(f&quot;{x:08b} -&gt; balik {(~x) &amp; 0xFF:08b} -&gt; +1 -&gt; {neg:08b} = {neg - 256}&quot;)
+
+# rentang n bit: -2^(n-1) .. 2^(n-1) - 1
+for n in (8, 16, 32, 64):
+    print(f&quot;{n:&gt;2} bit: {-2**(n-1):&gt;22,} .. {2**(n-1)-1:&gt;22,}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>    5 -&gt; 00000101
+   -5 -&gt; 11111011
+  127 -&gt; 01111111
+ -128 -&gt; 10000000
+   -1 -&gt; 11111111
+00000101 -&gt; balik 11111010 -&gt; +1 -&gt; 11111011 = -5
+ 8 bit:                   -128 ..                    127
+16 bit:                -32,768 ..                 32,767
+32 bit:         -2,147,483,648 ..          2,147,483,647
+64 bit: -9,223,372,036,854,775,808 .. 9,223,372,036,854,775,807</code></pre></figure>
+<h3>Overflow</h3>
+<figure class="codebox"><pre data-lang="python"><code>def jumlah_8bit(a, b):
+    hasil = (a + b) &amp; 0xFF                      # perangkat keras hanya menyimpan 8 bit
+    return hasil - 256 if hasil &gt;= 128 else hasil
+
+print(jumlah_8bit(100, 27))     # 127: masih muat
+print(jumlah_8bit(100, 28))     # 128 tidak muat: berputar menjadi -128
+print(jumlah_8bit(-100, -29))   # underflow: berputar menjadi 127</code></pre><pre class="runout" data-lang="keluaran"><code>127
+-128
+127</code></pre><figcaption>Python memakai bilangan bulat berukuran tak terbatas sehingga tidak overflow; bahasa seperti C, Java, dan Go memakai lebar tetap dan berputar seperti ini.</figcaption></figure>
+<h2 id="floating-point-ieee-754">Floating point IEEE 754</h2>
+<p>Bilangan pecahan disimpan seperti notasi ilmiah: <code>(−1)^tanda × 1,mantissa × 2^eksponen</code>. Float 32 bit memakai 1 bit tanda, 8 bit eksponen (dengan bias 127), dan 23 bit mantissa. Double 64 bit: 1, 11 (bias 1023), dan 52 bit.</p>
+<figure class="diagram"><svg viewBox="0 0 640 130" role="img" aria-label="Tata letak float 32 bit" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="5263w-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="5263w-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="5263w-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="5263w-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="5263w-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><rect x="20" y="35" width="60" height="50" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="50" y="56.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="50" dy="0">tanda 1</tspan><tspan x="50" dy="16">bit</tspan></text><rect x="105" y="35" width="250" height="50" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="230" y="64.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="230" dy="0">eksponen 8 bit (bias 127)</tspan></text><rect x="375" y="35" width="250" height="50" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="64.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="500" dy="0">mantissa 23 bit (pecahan)</tspan></text></svg></figure>
+<figure class="codebox"><pre data-lang="python"><code>import struct
+
+def bedah(x):
+    bits = format(struct.unpack(&quot;&gt;I&quot;, struct.pack(&quot;&gt;f&quot;, x))[0], &quot;032b&quot;)
+    tanda, eks, mant = bits[0], bits[1:9], bits[9:]
+    e = int(eks, 2) - 127
+    print(f&quot;{x:&gt;8}: {tanda} {eks} {mant}   eksponen={e:&gt;3}  nilai = (-1)^{tanda} x 1.{mant[:8]}.. x 2^{e}&quot;)
+
+for v in (1.0, 0.5, 6.5, -2.75, 0.1):
+    bedah(v)</code></pre><pre class="runout" data-lang="keluaran"><code>     1.0: 0 01111111 00000000000000000000000   eksponen=  0  nilai = (-1)^0 x 1.00000000.. x 2^0
+     0.5: 0 01111110 00000000000000000000000   eksponen= -1  nilai = (-1)^0 x 1.00000000.. x 2^-1
+     6.5: 0 10000001 10100000000000000000000   eksponen=  2  nilai = (-1)^0 x 1.10100000.. x 2^2
+   -2.75: 1 10000000 01100000000000000000000   eksponen=  1  nilai = (-1)^1 x 1.01100000.. x 2^1
+     0.1: 0 01111011 10011001100110011001101   eksponen= -4  nilai = (-1)^0 x 1.10011001.. x 2^-4</code></pre><figcaption>Contoh 6,5 = 110,1₂ = 1,101₂ × 2². Eksponen tersimpan 2 + 127 = 129 = 10000001₂.</figcaption></figure>
+<h3>Mengapa 0,1 + 0,2 ≠ 0,3</h3>
+<p>Pecahan hanya dapat dinyatakan tepat bila penyebutnya pangkat dua (½, ¼, ⅜). Desimal 0,1 = 1/10 dalam biner adalah pecahan berulang 0,0001100110011..., sehingga dibulatkan. Kesalahan kecil itu muncul saat dijumlahkan.</p>
+<figure class="codebox"><pre data-lang="python"><code>from decimal import Decimal
+from fractions import Fraction
+import math
+
+print(0.1 + 0.2, 0.1 + 0.2 == 0.3)
+print(Decimal(0.1))                                  # nilai sebenarnya yang tersimpan
+print(math.isclose(0.1 + 0.2, 0.3))                  # bandingkan dengan toleransi
+print(Decimal(&quot;0.1&quot;) + Decimal(&quot;0.2&quot;) == Decimal(&quot;0.3&quot;))   # desimal tepat, cocok untuk uang
+print(Fraction(1, 10) + Fraction(2, 10) == Fraction(3, 10))
+
+# akibat lain: presisi hilang pada bilangan besar
+print(2.0**53 == 2.0**53 + 1)                        # 2^53 + 1 tidak bisa dinyatakan
+total = 0.0
+for _ in range(10): total += 0.1         # penjumlahan satu per satu
+print(total == 1.0, total)             # sepuluh kali 0.1 tidak persis 1.0</code></pre><pre class="runout" data-lang="keluaran"><code>0.30000000000000004 False
+0.1000000000000000055511151231257827021181583404541015625
+True
+True
+True
+True
+False 0.9999999999999999</code></pre></figure>
+<div class="callout warn"><b>Pedoman</b><p><b>Aturan praktis</b>: jangan membandingkan float dengan ==; gunakan toleransi (<code>math.isclose</code>). Jangan memakai float untuk uang: pakai bilangan bulat dalam satuan terkecil atau tipe desimal. Dan ingat float 32 bit hanya memiliki sekitar 7 digit signifikan, double sekitar 15–16.</p></div>
+<h2 id="nilai-khusus">Nilai khusus</h2>
+<table><thead><tr><th>Nilai</th><th>Kapan muncul</th></tr></thead><tbody><tr><td>+∞ dan −∞</td><td>Pembagian bukan nol dengan nol, atau overflow ke luar rentang</td></tr><tr><td>NaN (Not a Number)</td><td>Operasi tak terdefinisi seperti 0/0 atau ∞ − ∞; NaN tidak sama dengan apa pun, termasuk dirinya sendiri</td></tr><tr><td>+0 dan −0</td><td>Dua representasi nol yang dianggap sama pada perbandingan</td></tr><tr><td>Denormal</td><td>Bilangan sangat kecil mendekati nol dengan presisi berkurang</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>inf = float(&quot;inf&quot;); nan = float(&quot;nan&quot;)
+print(inf + 1, -inf, inf - inf)
+print(nan == nan, nan != nan)
+print(1e308 * 10)                    # overflow menjadi inf
+print(5e-324, 5e-325)                # bilangan terkecil, lalu hilang menjadi 0
+print(-0.0 == 0.0)</code></pre><pre class="runout" data-lang="keluaran"><code>inf -inf nan
+False True
+inf
+5e-324 0.0
+True</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Rentang bilangan bertanda 8 bit komplemen dua?","options":["−128 .. 127","−127 .. 127","0 .. 255"],"answer":0,"why":"Bit kiri bernilai −128."},{"q":"Mengapa 0,1 tidak tersimpan tepat dalam float?","options":["Pecahan biner berulang sehingga dibulatkan","Float tak bisa menyimpan desimal","Karena ada bug"],"answer":0,"why":"Penyebut 10 bukan pangkat dua."},{"q":"Cara aman membandingkan dua float?","options":["Dengan toleransi (isclose)","Dengan ==","Dengan !="],"answer":0,"why":"Galat pembulatan kecil dapat terjadi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tuliskan −20 dalam komplemen dua 8 bit.</summary><div>20 = 00010100; balik = 11101011; +1 = 11101100.</div></details><details><summary>2. Berapa hasil 01111111 + 00000001 pada komplemen dua 8 bit dan mengapa?</summary><div>10000000 = −128: overflow, hasil positif terbesar bertambah satu berputar ke negatif terkecil.</div></details><details><summary>3. Mengapa uang tidak boleh disimpan sebagai float?</summary><div>Pecahan desimal seperti 0,10 tidak tepat sehingga jumlah dapat melenceng sedikit dan menumpuk menjadi selisih.</div></details><details><summary>4. Berapa digit signifikan kira-kira pada float 32 bit?</summary><div>Sekitar 7 digit desimal (23 bit mantissa + 1 bit implisit ≈ 24 bit ≈ 7,2 digit).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Komplemen dua: bit kiri bernilai −n; negasi = balik bit + 1; overflow berputar.</li><li>IEEE 754: tanda, eksponen (bias), mantissa; ±∞, NaN, nol bertanda.</li><li>Sebagian pecahan desimal tak dapat dinyatakan tepat dalam biner.</li><li>Bandingkan dengan toleransi; gunakan desimal atau bilangan bulat untuk uang.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu bfloat16 dan float16?</summary><div>Format 16 bit untuk pembelajaran mesin dan grafika; bfloat16 mempertahankan rentang eksponen float32 dengan mantissa lebih pendek.</div></details>
+<details class="faq"><summary>Apakah double selalu lebih baik dari float?</summary><div>Lebih presisi tetapi memakai memori dua kali lebih besar; GPU dan model besar sering memakai float yang lebih kecil demi kecepatan.</div></details>
+<details class="faq"><summary>Dari mana standar IEEE 754 berasal?</summary><div>Dipublikasikan IEEE pada 1985 dan direvisi 2008 dan 2019; ia dirancang antara lain oleh William Kahan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dl.acm.org/doi/10.1145/103162.103163" rel="noopener" target="_blank">David Goldberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic, ACM Computing Surveys 23(1), 1991</a></li><li><a href="https://docs.python.org/3/tutorial/floatingpoint.html" rel="noopener" target="_blank">Dokumentasi Python: Floating Point Arithmetic: Issues and Limitations</a></li><li>David Patterson dan John Hennessy, Computer Organization and Design (Morgan Kaufmann)</li><li><a href="https://standards.ieee.org/ieee/754/6210/" rel="noopener" target="_blank">IEEE 754-2019: Standard for Floating-Point Arithmetic</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a><a href="/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/"><img src="/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

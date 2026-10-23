@@ -89,6 +89,8 @@ Kelebihannya: mengubah tampilan (template) cukup mengedit satu file lalu menjala
   description: 'Ringkasan 120-160 karakter',
   date: '2026-10-23',
   category: 'AI untuk Semua',
+  level: 'Pemula',                      // opsional: Pemula | Menengah | Lanjut (tampil di bawah judul)
+  prereq: ['materi prasyarat'],         // opsional: tampil sebagai "Sebaiknya sudah paham"
   tags: ['kata kunci 1', 'kata kunci 2'],
   cta: 'none',                          // 'lensara' = kotak promo toko, 'jasa' = ajakan menghubungi Muchson, 'none' = tanpa
   lead: 'Paragraf pembuka.',
@@ -97,6 +99,20 @@ Kelebihannya: mengubah tampilan (template) cukup mengedit satu file lalu menjala
   sources: [['Nama sumber', 'https://...']],
 }
 ```
+
+### Kode yang benar-benar dijalankan (materi kuliah)
+
+Kategori materi kuliah (Algoritma & Pemrograman Python, PBO dengan Java, Sistem Informasi, Dasar Informatika) memakai blok kode berjenis `run: true`. Saat `npm run artikel`, kode itu dijalankan sungguhan dan keluarannya ditempel ke halaman, sehingga **angka dan hasil di artikel adalah hasil nyata, bukan karangan**. Generator berhenti dengan galat bila kode gagal (kecuali `expectError: true`).
+
+Syarat di komputer yang membangun artikel:
+
+- **Python 3** tersedia sebagai perintah `python` (contoh dipakai dengan 3.13).
+- **JDK** (`javac` dan `java`, dipakai dengan JDK 25) untuk blok `lang: 'java'`. Kelas harus bernama `Main` dan satu-satunya yang `public`.
+- Hasil dijalankan disimpan di `artikel-src/.cache/` (diabaikan Git) berdasarkan isi kode, jadi build ulang cepat. Hapus folder itu bila ingin menjalankan ulang semuanya. Beberapa keluaran (waktu, angka acak tanpa seed, hasil pengukuran) berbeda tiap mesin; keluaran tersimpan dari proses build terakhir.
+
+`cont: true` pada blok Python menjalankan blok itu setelah semua blok Python sebelumnya di artikel yang sama (keluaran bagian sebelumnya disembunyikan), supaya potongan kode yang bergantung pada definisi sebelumnya tetap dapat dijalankan dan diuji.
+
+Diagram umum (flowchart, UML kelas, use case, DFD, ERD, jaringan, pohon) dibuat dengan `{ svg: 'diagram', w, h, nodes: [{ id, x, y, shape, t }], edges: [{ from, to, label, head, dashed, via }] }`. Bentuk simpul: `rect`, `round`, `diamond`, `io`, `ellipse`, `circle`, `class` (dengan `attrs` dan `methods`), `store`, `actor`, `frame`, `text`. Ujung panah: `arrow`, `vee`, `open` (pewarisan/realisasi), `dia`, `diaf`, `none`. Lihat [artikel-src/diagram.mjs](artikel-src/diagram.mjs).
 
 ### Jenis blok di `body`
 
@@ -107,8 +123,15 @@ Kelebihannya: mengubah tampilan (template) cukup mengedit satu file lalu menjala
 | Daftar | `{ ul: ['a', 'b'] }`, `{ ol: ['a', 'b'] }` |
 | Kotak catatan | `{ callout: 'teks', kind: 'info' \| 'good' \| 'warn' \| 'bad', title: 'Judul' }` |
 | Tabel | `{ table: { head: ['A', 'B'], rows: [['1', '2']] } }` |
-| Kode | `{ code: 'print(1)' }` |
-| Diagram SVG | `{ svg: 'flow' \| 'bars' \| 'cycle' \| 'matrix' \| 'timeline' \| 'versus' \| 'layers' \| 'scale', ...data }` |
+| Kode | `{ code: 'print(1)', lang: 'python', file: 'Main.java', caption: '...' }` |
+| Kode yang dijalankan | `{ code, lang: 'python' \| 'java', run: true, input: '...', expectError: true, cont: true }`: keluaran asli ditempel di bawah kode saat generate |
+| Telusuri langkah demi langkah | `{ trace: true, code, title, desc }` (Python): eksekusi dijalankan dengan tracer, pembaca bisa maju/mundur per baris dan melihat variabel |
+| Tujuan belajar | `{ objectives: ['...'] }` |
+| Latihan mandiri | `{ exercise: [['Soal', 'Jawaban']] }` (jawaban disembunyikan di dalam `details`) |
+| Ringkasan | `{ summary: ['...'] }` |
+| Rumus | `{ math: 'T(n) = 2T(n-1) + 1' }` |
+| SVG mentah | `{ svgraw: '<svg>...</svg>' }` |
+| Diagram SVG | `{ svg: 'flow' \| 'bars' \| 'cycle' \| 'matrix' \| 'timeline' \| 'versus' \| 'layers' \| 'scale' \| 'diagram', ...data }` |
 | Widget interaktif | `{ w: 'nama-widget', ...konfigurasi }` |
 
 Diagram SVG dirender saat generate (statis, terbaca mesin pencari). Contoh data tiap diagram ada di artikel-artikel yang sudah ada, misalnya `flow` memakai `steps: [{ t: 'Judul', d: 'keterangan' }]`.
@@ -143,6 +166,16 @@ Semua berjalan di browser, tanpa server, dan didefinisikan di [public/artikel/_s
 | `minirag` | Pencarian dokumen mini dan prompt RAG | `docs: [{ title, text }]`, `examples` |
 | `nexttoken` | Cara model bahasa menebak kata berikutnya | `start`, `model: { kata: { berikutnya: bobot } }` |
 | `eyefocus`, `astig`, `rx`, `frame` | Simulasi mata minus, silinder, resep, dan ukuran frame | (tanpa konfigurasi) |
+| `tracer` | Eksekusi program langkah demi langkah (dipakai oleh blok `trace`) | `code`, `steps` (dibuat otomatis) |
+| `truth` | Tabel kebenaran untuk ekspresi logika | `expr` |
+| `loopgrid` | Urutan kunjungan perulangan bersarang | `rows`, `cols` |
+| `slice` | Slicing string/list dengan warna | `text`, `start`, `stop`, `step` |
+| `linked` | Linked list: sisip, hapus, balik | (tanpa konfigurasi) |
+| `bst` | Binary search tree: sisip, cari, traversal | (tanpa konfigurasi) |
+| `graphsearch` | BFS/DFS langkah demi langkah pada graf | `nodes: [{ id, x, y }]`, `edges: [[a, b]]`, `start` |
+| `hanoi` | Menara Hanoi yang bisa dimainkan | `n` |
+| `twos` | Bit 8 komplemen dua: tanpa tanda, bertanda, heksa | (tanpa konfigurasi) |
+| `subnet` | Kalkulator subnet IPv4 | `ip`, `prefix` |
 
 Menambah widget baru: tambahkan fungsi `W.namaWidget = (body, cfg) => { ... }` di `article.js`, lalu pakai `{ w: 'namaWidget', ... }` di artikel.
 

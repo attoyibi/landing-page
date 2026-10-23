@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi</title>
+<meta name="description" content="Pelajari permutasi, kombinasi, peluang, teorema Bayes, dan paradoks ulang tahun, dengan simulasi Monte Carlo untuk memeriksa jawaban.">
+<meta name="keywords" content="kombinatorika, peluang, permutasi, kombinasi, teorema Bayes">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/">
+<meta property="og:title" content="Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi">
+<meta property="og:description" content="Pelajari permutasi, kombinasi, peluang, teorema Bayes, dan paradoks ulang tahun, dengan simulasi Monte Carlo untuk memeriksa jawaban.">
+<meta property="og:image" content="https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi">
+<meta name="twitter:description" content="Pelajari permutasi, kombinasi, peluang, teorema Bayes, dan paradoks ulang tahun, dengan simulasi Monte Carlo untuk memeriksa jawaban.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi","description":"Pelajari permutasi, kombinasi, peluang, teorema Bayes, dan paradoks ulang tahun, dengan simulasi Monte Carlo untuk memeriksa jawaban.","image":["https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kombinatorika, peluang, permutasi, kombinasi, teorema Bayes","articleSection":"Dasar Informatika","wordCount":383,"mainEntityOfPage":"https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi","item":"https://muchson.web.id/artikel/kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu distribusi binomial?","acceptedAnswer":{"@type":"Answer","text":"Peluang mendapat k keberhasilan dalam n percobaan bebas dengan peluang p: C(n,k)·pᵏ·(1−p)ⁿ⁻ᵏ."}},{"@type":"Question","name":"Mengapa simulasi tidak persis sama dengan jawaban analitis?","acceptedAnswer":{"@type":"Answer","text":"Hasil simulasi acak mendekati nilai sebenarnya dengan galat sekitar 1/√N; makin banyak percobaan makin dekat."}},{"@type":"Question","name":"Di mana peluang dipakai dalam informatika?","acceptedAnswer":{"@type":"Answer","text":"Analisis algoritma acak (quick sort acak, hash), keamanan, kompresi, jaringan (antrean), dan pembelajaran mesin."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#prinsip-menghitung">Prinsip menghitung</a></li><li><a href="#permutasi-dan-kombinasi">Permutasi dan kombinasi</a></li><li><a href="#peluang-dasar">Peluang dasar</a></li><li><a href="#paradoks-ulang-tahun">Paradoks ulang tahun</a></li><li><a href="#peluang-bersyarat-dan-bayes">Peluang bersyarat dan Bayes</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi</h1>
+<p class="lead">Berapa banyak kata sandi 8 karakter yang mungkin? Berapa peluang dua orang di satu kelas berulang tahun sama? Seberapa percaya hasil tes medis yang positif? Kombinatorika dan peluang menjawab pertanyaan seperti ini, dan mendasari analisis algoritma, keamanan, basis data, dan pembelajaran mesin.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> himpunan, rekursi dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Kombinatorika dan Peluang: Permutasi, Kombinasi, Simulasi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai prinsip penjumlahan dan perkalian</li><li>membedakan permutasi dan kombinasi serta menghitungnya</li><li>memakai peluang klasik, aturan penjumlahan, dan perkalian</li><li>menghitung peluang bersyarat dan memakai teorema Bayes</li><li>memverifikasi jawaban analitis dengan simulasi Monte Carlo</li></ul></div>
+<h2 id="prinsip-menghitung">Prinsip menghitung</h2>
+<div data-w="compare"><script type="application/json">{"title":"Dua prinsip dasar","tabs":[{"label":"Perkalian","html":"Bila satu pekerjaan terdiri dari beberapa langkah \u003cb>berurutan\u003c/b> dengan m, n, ... pilihan, jumlah cara = m × n × ... Contoh: kata sandi 4 digit PIN: 10 × 10 × 10 × 10 = 10.000."},{"label":"Penjumlahan","html":"Bila ada beberapa pilihan \u003cb>yang saling lepas\u003c/b>, jumlah cara = m + n + ... Contoh: memilih satu kegiatan dari 3 olahraga atau 4 kesenian: 3 + 4 = 7."}]}</script></div>
+<figure class="codebox"><pre data-lang="python"><code>def baca(detik):
+    for batas, satuan in ((60, &quot;detik&quot;), (3600, &quot;menit&quot;), (86400, &quot;jam&quot;), (86400 * 365, &quot;hari&quot;)):
+        if detik &lt; batas:
+            pembagi = {&quot;detik&quot;: 1, &quot;menit&quot;: 60, &quot;jam&quot;: 3600, &quot;hari&quot;: 86400}[satuan]
+            return f&quot;{detik / pembagi:,.1f} {satuan}&quot;
+    return f&quot;{detik / (86400 * 365):,.3g} tahun&quot;
+
+# kata sandi acak: ruang kemungkinan tumbuh eksponensial terhadap panjang
+for panjang, alfabet, nama in [(6, 10, &quot;angka saja (10)&quot;), (8, 26, &quot;huruf kecil (26)&quot;), (8, 62, &quot;huruf+angka (62)&quot;), (12, 94, &quot;semua karakter cetak (94)&quot;)]:
+    total = alfabet ** panjang
+    print(f&quot;{panjang:&gt;2} karakter, {nama:&lt;26} {total:&gt;28,} kemungkinan -&gt; rata-rata {baca(total / 2 / 1e10)} pada 10 miliar tebakan/detik&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code> 6 karakter, angka saja (10)                               1,000,000 kemungkinan -&gt; rata-rata 0.0 detik pada 10 miliar tebakan/detik
+ 8 karakter, huruf kecil (26)                        208,827,064,576 kemungkinan -&gt; rata-rata 10.4 detik pada 10 miliar tebakan/detik
+ 8 karakter, huruf+angka (62)                    218,340,105,584,896 kemungkinan -&gt; rata-rata 3.0 jam pada 10 miliar tebakan/detik
+12 karakter, semua karakter cetak (94)  475,920,314,814,253,376,475,136 kemungkinan -&gt; rata-rata 7.55e+05 tahun pada 10 miliar tebakan/detik</code></pre><figcaption>Menambah panjang jauh lebih berpengaruh daripada menambah ragam karakter: 12 karakter acak dari 94 simbol berada di luar jangkauan serangan tebak buta.</figcaption></figure>
+<h2 id="permutasi-dan-kombinasi">Permutasi dan kombinasi</h2>
+<table><thead><tr><th></th><th>Urutan penting?</th><th>Rumus</th><th>Contoh: pilih 3 dari 5 orang</th></tr></thead><tbody><tr><td>Permutasi P(n, r)</td><td>Ya</td><td>n! / (n − r)!</td><td>5×4×3 = 60 (ketua, wakil, sekretaris)</td></tr><tr><td>Kombinasi C(n, r)</td><td>Tidak</td><td>n! / (r! (n − r)!)</td><td>60 / 3! = 10 (panitia 3 orang)</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>from math import factorial, perm, comb
+from itertools import permutations, combinations
+
+print(&quot;5! =&quot;, factorial(5), &quot;| P(5,3) =&quot;, perm(5, 3), &quot;| C(5,3) =&quot;, comb(5, 3))
+orang = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;]
+print(&quot;jumlah permutasi 3 dari 5:&quot;, len(list(permutations(orang, 3))), &quot;contoh:&quot;, list(permutations(orang, 3))[:3])
+print(&quot;jumlah kombinasi 3 dari 5:&quot;, len(list(combinations(orang, 3))), &quot;contoh:&quot;, list(combinations(orang, 3))[:3])
+
+# identitas: C(n,r) = C(n,n-r); jumlah semua C(n,r) = 2^n
+n = 10
+print(comb(10, 3) == comb(10, 7), sum(comb(n, r) for r in range(n + 1)) == 2 ** n)
+
+# segitiga Pascal: C(n,r) = C(n-1,r-1) + C(n-1,r)
+for baris in range(6):
+    print(&quot; &quot;.join(f&quot;{comb(baris, r):&gt;2}&quot; for r in range(baris + 1)).center(24))
+
+# contoh: berapa poker &quot;full house&quot;? 3 kartu sejenis + 2 kartu sejenis dari kartu 52
+full_house = 13 * comb(4, 3) * 12 * comb(4, 2)
+print(&quot;\nfull house:&quot;, full_house, &quot;dari&quot;, comb(52, 5), &quot;tangan -&gt;&quot;, f&quot;{full_house / comb(52, 5) * 100:.3f}%&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>5! = 120 | P(5,3) = 60 | C(5,3) = 10
+jumlah permutasi 3 dari 5: 60 contoh: [('A', 'B', 'C'), ('A', 'B', 'D'), ('A', 'B', 'E')]
+jumlah kombinasi 3 dari 5: 10 contoh: [('A', 'B', 'C'), ('A', 'B', 'D'), ('A', 'B', 'E')]
+True True
+            1           
+          1  1          
+         1  2  1        
+       1  3  3  1       
+      1  4  6  4  1     
+    1  5 10 10  5  1    
+
+full house: 3744 dari 2598960 tangan -&gt; 0.144%</code></pre></figure>
+<h2 id="peluang-dasar">Peluang dasar</h2>
+<p>Bila semua hasil sama mungkin, <b>P(A) = (hasil yang diinginkan) / (semua hasil)</b>, bernilai antara 0 dan 1. Aturan: P(Aᶜ) = 1 − P(A); P(A ∪ B) = P(A) + P(B) − P(A ∩ B); untuk kejadian <i>bebas</i>, P(A ∩ B) = P(A) · P(B).</p>
+<figure class="codebox"><pre data-lang="python"><code>import random
+from itertools import product
+
+# dua dadu: peluang jumlah = 7
+hasil = list(product(range(1, 7), repeat=2))
+print(&quot;P(jumlah=7) analitis :&quot;, sum(1 for a, b in hasil if a + b == 7), &quot;/&quot;, len(hasil), &quot;=&quot;, round(6 / 36, 4))
+
+# simulasi Monte Carlo untuk memeriksa
+rng = random.Random(42)
+N = 200_000
+sim = sum(1 for _ in range(N) if rng.randint(1, 6) + rng.randint(1, 6) == 7) / N
+print(&quot;P(jumlah=7) simulasi  :&quot;, round(sim, 4), f&quot;(dari {N:,} lemparan)&quot;)
+
+# &quot;gambler's fallacy&quot;: setelah 5 kali angka, peluang angka berikutnya tetap 0.5
+berurutan = tahan = 0
+for _ in range(400_000):
+    lemparan = [rng.random() &lt; 0.5 for _ in range(6)]
+    if all(lemparan[:5]):
+        berurutan += 1; tahan += lemparan[5]
+print(&quot;setelah 5 angka berturut-turut, P(angka lagi) =&quot;, round(tahan / berurutan, 3))</code></pre><pre class="runout" data-lang="keluaran"><code>P(jumlah=7) analitis : 6 / 36 = 0.1667
+P(jumlah=7) simulasi  : 0.165 (dari 200,000 lemparan)
+setelah 5 angka berturut-turut, P(angka lagi) = 0.505</code></pre><figcaption>Kejadian bebas tidak memiliki ingatan: lemparan sebelumnya tidak memengaruhi berikutnya.</figcaption></figure>
+<h2 id="paradoks-ulang-tahun">Paradoks ulang tahun</h2>
+<p>Berapa orang dalam satu ruangan agar peluang ada dua yang berulang tahun sama melebihi 50%? Jawabannya mengejutkan: hanya <b>23 orang</b>. Intuisi kita membandingkan dengan diri sendiri, padahal jumlah pasangan tumbuh kuadratik: 23 orang menghasilkan 253 pasangan.</p>
+<figure class="codebox"><pre data-lang="python"><code>from math import prod
+import random
+
+def peluang_sama(n, hari=365):
+    tak_ada = prod((hari - k) / hari for k in range(n))      # semua berbeda
+    return 1 - tak_ada
+
+for n in (10, 23, 30, 50, 70):
+    print(f&quot;{n:&gt;3} orang: peluang ada yang berulang tahun sama = {peluang_sama(n) * 100:5.1f}%&quot;)
+
+rng = random.Random(7)
+N = 20000
+sim = sum(1 for _ in range(N) if len({rng.randrange(365) for _ in range(23)}) &lt; 23) / N
+print(f&quot;\nsimulasi untuk 23 orang: {sim * 100:.1f}%&quot;)
+
+# kaitannya dengan keamanan: tabrakan hash. Untuk hash b bit, tabrakan muncul setelah ~2^(b/2) masukan
+print(&quot;hash 32 bit: tabrakan setelah ~&quot;, int(2 ** 16), &quot;masukan | hash 128 bit: ~&quot;, f&quot;{2 ** 64:.1e}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code> 10 orang: peluang ada yang berulang tahun sama =  11.7%
+ 23 orang: peluang ada yang berulang tahun sama =  50.7%
+ 30 orang: peluang ada yang berulang tahun sama =  70.6%
+ 50 orang: peluang ada yang berulang tahun sama =  97.0%
+ 70 orang: peluang ada yang berulang tahun sama =  99.9%
+
+simulasi untuk 23 orang: 51.1%
+hash 32 bit: tabrakan setelah ~ 65536 masukan | hash 128 bit: ~ 1.8e+19</code></pre><figcaption>Prinsip yang sama menjelaskan serangan ulang tahun terhadap fungsi hash: tabrakan jauh lebih mudah ditemukan daripada preimage, sehingga hash aman memerlukan keluaran panjang (SHA-256 untuk keamanan 128 bit terhadap tabrakan).</figcaption></figure>
+<h2 id="peluang-bersyarat-dan-bayes">Peluang bersyarat dan Bayes</h2>
+<p class="formula">P(A | B) = P(A ∩ B) / P(B)        Bayes: P(A | B) = P(B | A) · P(A) / P(B)</p>
+<p>Contoh klasik: sebuah penyakit menyerang 1% populasi. Tes memiliki sensitivitas 95% (benar positif bila sakit) dan spesifisitas 90% (benar negatif bila sehat). Bila hasil tes seseorang positif, seberapa besar peluang ia benar-benar sakit?</p>
+<figure class="codebox"><pre data-lang="python"><code>prevalensi = 0.01
+sensitivitas = 0.95            # P(positif | sakit)
+spesifisitas = 0.90            # P(negatif | sehat)
+
+p_positif = sensitivitas * prevalensi + (1 - spesifisitas) * (1 - prevalensi)
+p_sakit_jika_positif = sensitivitas * prevalensi / p_positif
+print(f&quot;P(positif)               = {p_positif:.4f}&quot;)
+print(f&quot;P(sakit | tes positif)   = {p_sakit_jika_positif:.4f}  (hanya ~{p_sakit_jika_positif * 100:.1f}%)&quot;)
+
+# cara intuitif: bayangkan 10.000 orang
+sakit, sehat = 10_000 * prevalensi, 10_000 * (1 - prevalensi)
+benar_positif = sakit * sensitivitas
+salah_positif = sehat * (1 - spesifisitas)
+print(f&quot;dari 10.000 orang: {benar_positif:.0f} sakit-positif vs {salah_positif:.0f} sehat-positif -&gt; {benar_positif / (benar_positif + salah_positif) * 100:.1f}%&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>P(positif)               = 0.1085
+P(sakit | tes positif)   = 0.0876  (hanya ~8.8%)
+dari 10.000 orang: 95 sakit-positif vs 990 sehat-positif -&gt; 8.8%</code></pre><figcaption>Meski tes "akurat 90–95%", sebagian besar hasil positif adalah positif palsu karena penyakitnya langka. Inilah "kekeliruan tingkat dasar" (base rate fallacy), dan dasar filter spam Bayesian serta evaluasi model klasifikasi.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Memilih ketua, wakil, dan bendahara dari 6 orang adalah...","options":["Permutasi P(6,3) = 120","Kombinasi C(6,3) = 20","6³ = 216"],"answer":0,"why":"Urutan (jabatan) penting."},{"q":"Peluang ada dua orang berulang tahun sama pada kelompok 23 orang?","options":["Sekitar 50%","Sekitar 6%","Sekitar 99%"],"answer":0,"why":"Karena ada 253 pasangan."},{"q":"Pada tes dengan prevalensi sangat rendah, positif palsu...","options":["Bisa mendominasi hasil positif","Tidak pernah terjadi","Selalu lebih sedikit dari positif benar"],"answer":0,"why":"Teorema Bayes."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Berapa cara menyusun huruf dari kata "KOMPUTER" (semua berbeda)?</summary><div>8! = 40.320.</div></details><details><summary>2. Berapa banyak kata berbeda dari "BAKSO"? Dari "KAKAK"?</summary><div>BAKSO: 5! = 120 (semua beda). KAKAK: 5!/(3!·2!) = 10 (K tiga kali, A dua kali).</div></details><details><summary>3. Dari 10 mahasiswa dipilih 4 untuk tim. Berapa cara?</summary><div>C(10,4) = 210.</div></details><details><summary>4. Lempar dua koin. Peluang minimal satu gambar?</summary><div>1 − P(dua angka) = 1 − ¼ = ¾.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Perkalian untuk langkah berurutan; penjumlahan untuk pilihan yang saling lepas.</li><li>Permutasi mementingkan urutan; kombinasi tidak.</li><li>Peluang klasik, kejadian bebas, dan inklusi-eksklusi.</li><li>Bayes memperbarui keyakinan dengan bukti baru; waspadai tingkat dasar.</li><li>Simulasi Monte Carlo memeriksa jawaban analitis.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu distribusi binomial?</summary><div>Peluang mendapat k keberhasilan dalam n percobaan bebas dengan peluang p: C(n,k)·pᵏ·(1−p)ⁿ⁻ᵏ.</div></details>
+<details class="faq"><summary>Mengapa simulasi tidak persis sama dengan jawaban analitis?</summary><div>Hasil simulasi acak mendekati nilai sebenarnya dengan galat sekitar 1/√N; makin banyak percobaan makin dekat.</div></details>
+<details class="faq"><summary>Di mana peluang dipakai dalam informatika?</summary><div>Analisis algoritma acak (quick sort acak, hash), keamanan, kompresi, jaringan (antrean), dan pembelajaran mesin.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Kenneth Rosen, Discrete Mathematics and Its Applications (McGraw-Hill)</li><li><a href="https://projects.iq.harvard.edu/stat110/home" rel="noopener" target="_blank">Blitzstein dan Hwang, Introduction to Probability (CRC Press; Harvard Stat 110)</a></li><li><a href="https://docs.python.org/3/library/math.html#math.comb" rel="noopener" target="_blank">Dokumentasi Python: math.comb dan math.perm</a></li><li><a href="https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/" rel="noopener" target="_blank">MIT OpenCourseWare 6.042J: Mathematics for Computer Science</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

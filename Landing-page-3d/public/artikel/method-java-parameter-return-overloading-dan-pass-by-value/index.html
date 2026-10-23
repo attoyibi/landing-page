@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method Java: Parameter, Return, dan Overloading</title>
+<meta name="description" content="Pelajari method di Java: parameter, return, overloading, varargs, rekursi, static vs instance, dan mengapa Java selalu pass-by-value, termasuk saat parameternya objek.">
+<meta name="keywords" content="Java, method, overloading, pass by value, varargs">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/">
+<meta property="og:title" content="Method Java: Parameter, Return, dan Overloading">
+<meta property="og:description" content="Pelajari method di Java: parameter, return, overloading, varargs, rekursi, static vs instance, dan mengapa Java selalu pass-by-value, termasuk saat parameternya objek.">
+<meta property="og:image" content="https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Method Java: Parameter, Return, dan Overloading">
+<meta name="twitter:description" content="Pelajari method di Java: parameter, return, overloading, varargs, rekursi, static vs instance, dan mengapa Java selalu pass-by-value, termasuk saat parameternya objek.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Method Java: Parameter, Return, dan Overloading","description":"Pelajari method di Java: parameter, return, overloading, varargs, rekursi, static vs instance, dan mengapa Java selalu pass-by-value, termasuk saat parameternya objek.","image":["https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, method, overloading, pass by value, varargs","articleSection":"PBO dengan Java","wordCount":289,"mainEntityOfPage":"https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Method Java: Parameter, Return, dan Overloading","item":"https://muchson.web.id/artikel/method-java-parameter-return-overloading-dan-pass-by-value/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Java memiliki pass-by-reference?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Kebingungan muncul karena salinan referensi tetap menunjuk objek yang sama sehingga isinya bisa diubah."}},{"@type":"Question","name":"Mengapa overloading tidak bisa berbeda hanya pada tipe kembalian?","acceptedAnswer":{"@type":"Answer","text":"Kompiler memilih method dari argumen pemanggilan; nilai kembalian tidak ikut menentukan."}},{"@type":"Question","name":"Berapa banyak parameter yang disarankan?","acceptedAnswer":{"@type":"Answer","text":"Semakin sedikit semakin baik; lebih dari tiga atau empat menandakan perlu pengelompokan ke objek."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#anatomi-method">Anatomi method</a></li><li><a href="#overloading-dan-varargs">Overloading dan varargs</a></li><li><a href="#java-selalu-pass-by-value">Java selalu pass-by-value</a></li><li><a href="#static-vs-instance">static vs instance</a></li><li><a href="#rekursi">Rekursi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Method Java: Parameter, Return, dan Overloading</h1>
+<p class="lead">Method adalah blok kode bernama yang dapat dipanggil berulang. Ia memecah program menjadi bagian kecil yang bisa dipahami dan diuji sendiri. Satu hal yang sering membingungkan pemula: Java selalu mengirim argumen dengan <b>pass-by-value</b>, bahkan untuk objek.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> kontrol alur Java, array</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Method Java: Parameter, Return, dan Overloading" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mendefinisikan dan memanggil method dengan parameter dan nilai balik</li><li>memakai overloading dan varargs</li><li>menjelaskan pass-by-value pada primitif dan referensi</li><li>membedakan method static dan instance</li><li>menulis method rekursif sederhana</li></ul></div>
+<h2 id="anatomi-method">Anatomi method</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    // [modifier] [static] tipeKembali namaMethod(parameter)
+    static int luasPersegiPanjang(int panjang, int lebar) {
+        return panjang * lebar;
+    }
+
+    static void sapa(String nama) {            // void: tidak mengembalikan nilai
+        System.out.println(&quot;Halo, &quot; + nama);
+    }
+
+    static boolean genap(int n) {
+        return n % 2 == 0;
+    }
+
+    public static void main(String[] args) {
+        sapa(&quot;Ani&quot;);
+        System.out.println(luasPersegiPanjang(4, 5));
+        System.out.println(genap(7) + &quot; &quot; + genap(10));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Halo, Ani
+20
+false true</code></pre></figure>
+<h2 id="overloading-dan-varargs">Overloading dan varargs</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    static int jumlah(int a, int b)           { return a + b; }
+    static double jumlah(double a, double b)  { return a + b; }
+    static int jumlah(int a, int b, int c)    { return a + b + c; }
+
+    static int total(int... angka) {           // varargs: jumlah argumen bebas
+        int t = 0;
+        for (int x : angka) t += x;
+        return t;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(jumlah(1, 2));          // memilih versi int, int
+        System.out.println(jumlah(1.5, 2.5));      // double, double
+        System.out.println(jumlah(1, 2, 3));
+        System.out.println(total() + &quot; &quot; + total(5) + &quot; &quot; + total(1, 2, 3, 4));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>3
+4.0
+6
+0 5 10</code></pre><figcaption>Overloading: nama sama, daftar parameter berbeda. Tipe kembalian saja tidak cukup untuk membedakan.</figcaption></figure>
+<h2 id="java-selalu-pass-by-value">Java selalu pass-by-value</h2>
+<p>Saat memanggil method, Java menyalin <b>nilai</b> argumen ke parameter. Untuk primitif, yang disalin adalah angkanya. Untuk objek, yang disalin adalah <i>nilai referensinya</i> (alamat), sehingga method dapat mengubah isi objek tetapi tidak dapat membuat variabel pemanggil menunjuk objek lain.</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.Arrays;
+
+public class Main {
+    static void ubahInt(int x) { x = 100; }                       // hanya mengubah salinan
+
+    static void ubahIsi(int[] a) { a[0] = 100; }                  // mengubah objek yang ditunjuk
+
+    static void gantiRujukan(int[] a) { a = new int[]{7, 7, 7}; } // hanya mengubah salinan referensi
+
+    public static void main(String[] args) {
+        int n = 5;
+        ubahInt(n);
+        System.out.println(&quot;n = &quot; + n);
+
+        int[] data = {1, 2, 3};
+        ubahIsi(data);
+        System.out.println(Arrays.toString(data));
+
+        gantiRujukan(data);
+        System.out.println(Arrays.toString(data));    // tidak berubah menjadi [7, 7, 7]
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>n = 5
+[100, 2, 3]
+[100, 2, 3]</code></pre></figure>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Primitif vs referensi saat dikirim" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="178" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Primitif</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Angka disalin</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Perubahan pada parameter tidak terlihat dari luar</text><rect x="330" y="6" width="300" height="178" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Objek</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Alamat objek disalin</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Isi objek dapat berubah lewat alamat itu</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Alamat variabel pemanggil tidak berubah</text></svg></figure>
+<h2 id="static-vs-instance">static vs instance</h2>
+<table><thead><tr><th>Jenis</th><th>Dimiliki oleh</th><th>Dipanggil dengan</th><th>Dapat memakai atribut instance?</th></tr></thead><tbody><tr><td>static</td><td>Class</td><td>NamaClass.method()</td><td>Tidak (tanpa objek)</td></tr><tr><td>instance</td><td>Objek</td><td>objek.method()</td><td>Ya</td></tr></tbody></table>
+<h2 id="rekursi">Rekursi</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    static long faktorial(int n) {
+        if (n &lt;= 1) return 1;                   // kasus dasar
+        return n * faktorial(n - 1);            // langkah rekursif
+    }
+
+    static int fib(int n) { return n &lt; 2 ? n : fib(n - 1) + fib(n - 2); }
+
+    public static void main(String[] args) {
+        System.out.println(faktorial(5) + &quot; &quot; + faktorial(20));
+        System.out.println(fib(10));
+        try { faktorial(-1); faktorial(100000); }
+        catch (StackOverflowError e) { System.out.println(&quot;StackOverflowError&quot;); }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>120 2432902008176640000
+55
+StackOverflowError</code></pre><figcaption>Rekursi tanpa kasus dasar atau terlalu dalam menghabiskan stack: StackOverflowError.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Overloading berarti...","options":["Nama sama dengan parameter berbeda","Nama berbeda dengan parameter sama","Mengganti method induk"],"answer":0,"why":"Mengganti method induk disebut overriding."},{"q":"Setelah gantiRujukan(data), isi data...","options":["Menjadi array baru","Tidak berubah","null"],"answer":1,"why":"Hanya salinan referensi di dalam method yang diganti."},{"q":"main harus static karena...","options":["Dipanggil JVM tanpa objek","Aturan IDE","Supaya cepat"],"answer":0,"why":"Belum ada objek saat program dimulai."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis method yang menukar dua nilai int pada array [a, b] di indeks i dan j.</summary><div>Pakai variabel sementara: t = a[i]; a[i] = a[j]; a[j] = t.</div></details><details><summary>2. Tulis method rata-rata dengan varargs.</summary><div><code>static double rata(double... x)</code> yang menjumlahkan lalu membagi x.length (waspadai x.length = 0).</div></details><details><summary>3. Mengapa tidak bisa membuat method swap(int a, int b) yang berhasil menukar variabel pemanggil?</summary><div>Karena yang dikirim adalah salinan nilai; perubahan pada parameter tidak memengaruhi variabel asal.</div></details><details><summary>4. Tulis method rekursif untuk menghitung jumlah digit bilangan.</summary><div><code>n < 10 ? n : n % 10 + jumlahDigit(n / 10)</code></div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Method memecah program menjadi bagian bernama yang dapat dipakai ulang.</li><li>Overloading: nama sama, parameter berbeda; varargs menerima banyak argumen.</li><li>Java selalu pass-by-value; untuk objek, yang disalin adalah referensinya.</li><li>Rekursi memerlukan kasus dasar dan memakai stack.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Java memiliki pass-by-reference?</summary><div>Tidak. Kebingungan muncul karena salinan referensi tetap menunjuk objek yang sama sehingga isinya bisa diubah.</div></details>
+<details class="faq"><summary>Mengapa overloading tidak bisa berbeda hanya pada tipe kembalian?</summary><div>Kompiler memilih method dari argumen pemanggilan; nilai kembalian tidak ikut menentukan.</div></details>
+<details class="faq"><summary>Berapa banyak parameter yang disarankan?</summary><div>Semakin sedikit semakin baik; lebih dari tiga atau empat menandakan perlu pengelompokan ke objek.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html" rel="noopener" target="_blank">Oracle: Defining Methods</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html" rel="noopener" target="_blank">Oracle: Passing Information to a Method</a></li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li><li><a href="https://introcs.cs.princeton.edu/java/home/" rel="noopener" target="_blank">Sedgewick dan Wayne, Introduction to Programming in Java</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

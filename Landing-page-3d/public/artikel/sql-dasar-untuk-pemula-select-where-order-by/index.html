@@ -44,16 +44,17 @@
 <h1>SQL Dasar untuk Pemula: SELECT, WHERE, ORDER BY</h1>
 <p class="lead">SQL adalah bahasa untuk bertanya kepada database. Dasar-dasarnya mengejutkan sederhana dan terbaca hampir seperti kalimat. Di bawah ada tabel mini: ubah pilihannya dan lihat query SQL beserta hasilnya muncul.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="SQL Dasar untuk Pemula: SELECT, WHERE, ORDER BY" fetchpriority="high"></figure>
 <h2 id="tabel-adalah-baris-dan-kolom">Tabel adalah baris dan kolom</h2>
 <p>Database relasional menyimpan data dalam tabel. Setiap baris mewakili satu catatan (misalnya satu siswa), dan setiap kolom mewakili satu atribut (nama, kelas, nilai). SQL memungkinkan Anda memilih kolom, menyaring baris, dan mengurutkannya.</p>
 <div data-w="sqlplay"><script type="application/json">{"title":"Bermain dengan query","desc":"Pilih kolom filter, operator, dan nilai. Lihat SQL yang dihasilkan dan baris yang cocok.","table":"siswa","cols":["nama","kelas","nilai"],"rows":[["Ani","X-A",88],["Budi","X-B",72],["Citra","X-A",95],["Dodi","X-B",64],["Eka","X-C",81],["Fajar","X-C",77]]}</script></div>
 <h2 id="empat-kata-kunci-utama">Empat kata kunci utama</h2>
 <table><thead><tr><th>Kata kunci</th><th>Fungsi</th><th>Contoh</th></tr></thead><tbody><tr><td>SELECT</td><td>Memilih kolom yang ditampilkan</td><td>SELECT nama, nilai</td></tr><tr><td>FROM</td><td>Menentukan tabel sumber</td><td>FROM siswa</td></tr><tr><td>WHERE</td><td>Menyaring baris</td><td>WHERE kelas = 'X-A'</td></tr><tr><td>ORDER BY</td><td>Mengurutkan hasil</td><td>ORDER BY nilai DESC</td></tr></tbody></table>
-<pre><code>SELECT nama, nilai
+<figure class="codebox"><pre><code>SELECT nama, nilai
 FROM siswa
 WHERE nilai &gt;= 80
-ORDER BY nilai DESC;</code></pre>
+ORDER BY nilai DESC;</code></pre></figure>
 <h2 id="langkah-berikutnya">Langkah berikutnya</h2>
 <ul><li><b>COUNT, SUM, AVG</b>: menghitung jumlah, total, dan rata-rata.</li><li><b>GROUP BY</b>: mengelompokkan, misalnya rata-rata nilai per kelas.</li><li><b>JOIN</b>: menggabungkan dua tabel yang berhubungan.</li><li><b>INSERT, UPDATE, DELETE</b>: menambah, mengubah, menghapus data.</li></ul>
 <div class="callout bad"><b>Hati-hati</b><p>Perintah UPDATE dan DELETE tanpa WHERE mengubah atau menghapus seluruh baris. Selalu uji dengan SELECT lebih dulu pada kondisi yang sama.</p></div>
@@ -66,7 +67,7 @@ ORDER BY nilai DESC;</code></pre>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/big-o-notation-untuk-pemula/"><img src="/artikel/big-o-notation-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</span></a></div></section>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sql-dasar-select-where-order-by-insert-update-delete/"><img src="/artikel/sql-dasar-select-where-order-by-insert-update-delete/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SQL Dasar: SELECT, WHERE, INSERT, UPDATE, DELETE</span></a><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a></div></section>
 </article>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>

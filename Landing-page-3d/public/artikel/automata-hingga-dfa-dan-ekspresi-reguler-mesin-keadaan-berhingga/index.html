@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automata Hingga: DFA dan Ekspresi Reguler · Muhammad Muchson</title>
+<meta name="description" content="Pelajari DFA dan ekspresi reguler: keadaan, transisi, simulasi di Python, hubungan dengan regex, dan batasnya (mengapa kurung seimbang butuh lebih).">
+<meta name="keywords" content="automata, DFA, ekspresi reguler, mesin keadaan, teori komputasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/">
+<meta property="og:title" content="Automata Hingga: DFA dan Ekspresi Reguler">
+<meta property="og:description" content="Pelajari DFA dan ekspresi reguler: keadaan, transisi, simulasi di Python, hubungan dengan regex, dan batasnya (mengapa kurung seimbang butuh lebih).">
+<meta property="og:image" content="https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Automata Hingga: DFA dan Ekspresi Reguler">
+<meta name="twitter:description" content="Pelajari DFA dan ekspresi reguler: keadaan, transisi, simulasi di Python, hubungan dengan regex, dan batasnya (mengapa kurung seimbang butuh lebih).">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Automata Hingga: DFA dan Ekspresi Reguler","description":"Pelajari DFA dan ekspresi reguler: keadaan, transisi, simulasi di Python, hubungan dengan regex, dan batasnya (mengapa kurung seimbang butuh lebih).","image":["https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"automata, DFA, ekspresi reguler, mesin keadaan, teori komputasi","articleSection":"Dasar Informatika","wordCount":494,"mainEntityOfPage":"https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Automata Hingga: DFA dan Ekspresi Reguler","item":"https://muchson.web.id/artikel/automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Di mana mesin keadaan dipakai selain teks?","acceptedAnswer":{"@type":"Answer","text":"Protokol jaringan (TCP), kontrol gim dan UI, perangkat tersemat, alur kerja pesanan (status pesanan), dan pemodelan perilaku."}},{"@type":"Question","name":"Apa itu mesin Turing?","acceptedAnswer":{"@type":"Answer","text":"Model komputasi dengan pita tak terbatas; mampu menghitung apa pun yang dapat dihitung secara algoritmik."}},{"@type":"Question","name":"Bagaimana membangun lexer dengan DFA?","acceptedAnswer":{"@type":"Answer","text":"Setiap jenis token (identifier, angka) dinyatakan sebagai pola regex yang digabung menjadi satu DFA; alat seperti Lex/Flex melakukannya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#contoh-pertama-lampu-lalu-lintas">Contoh pertama: lampu lalu lintas</a></li><li><a href="#definisi-dfa">Definisi DFA</a></li><li><a href="#ekspresi-reguler-tiga-operasi-dasar">Ekspresi reguler: tiga operasi dasar</a></li><li><a href="#batas-dfa-yang-tidak-dapat-dilakukan">Batas DFA: yang tidak dapat dilakukan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Automata Hingga: DFA dan Ekspresi Reguler</h1>
+<p class="lead">Mesin keadaan berhingga adalah model komputasi paling sederhana: sejumlah keadaan dan aturan perpindahan. Namun ia muncul di mana-mana: pencocokan teks, protokol jaringan, lampu lalu lintas, kontrol gim, dan tentu saja ekspresi reguler. Memahaminya menunjukkan apa yang dapat dan tidak dapat dilakukan regex.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> himpunan, ekspresi reguler dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Automata Hingga: DFA dan Ekspresi Reguler" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mendefinisikan DFA: keadaan, alfabet, transisi, keadaan awal dan akhir</li><li>menggambar dan mensimulasikan DFA untuk suatu bahasa</li><li>menghubungkan DFA dengan ekspresi reguler</li><li>merancang DFA untuk pola praktis (angka, surel sederhana, protokol)</li><li>menjelaskan batas DFA: bahasa non-reguler seperti kurung seimbang</li></ul></div>
+<h2 id="contoh-pertama-lampu-lalu-lintas">Contoh pertama: lampu lalu lintas</h2>
+<figure class="diagram"><svg viewBox="0 0 600 160" role="img" aria-label="Mesin keadaan lampu lalu lintas" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="bmnpm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="bmnpm-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="bmnpm-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="bmnpm-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="bmnpm-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="135,80 265,80" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#bmnpm-arrow)"/><rect x="178.5" y="71" width="43" height="17" rx="4" fill="#fff" opacity=".92"/><text x="200" y="84" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">timer</text><polyline points="335,80 465,80" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#bmnpm-arrow)"/><rect x="378.5" y="71" width="43" height="17" rx="4" fill="#fff" opacity=".92"/><text x="400" y="84" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">timer</text><polyline points="466.5,90.1 300,140 133.5,90.1" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#bmnpm-arrow)"/><rect x="195.26195999137013" y="106.02858799741105" width="43" height="17" rx="4" fill="#fff" opacity=".92"/><text x="216.76195999137013" y="119.02858799741105" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">timer</text><ellipse cx="100" cy="80" rx="35" ry="35" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">Hijau</tspan></text><ellipse cx="300" cy="80" rx="35" ry="35" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="300" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="300" dy="0">Kuning</tspan></text><ellipse cx="500" cy="80" rx="35" ry="35" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="500" dy="0">Merah</tspan></text></svg><figcaption>Keadaan (lingkaran), transisi (panah berlabel masukan). Mesin selalu berada di tepat satu keadaan.</figcaption></figure>
+<h2 id="definisi-dfa">Definisi DFA</h2>
+<p>DFA (Deterministic Finite Automaton) terdiri dari: himpunan keadaan <i>Q</i>, alfabet <i>Σ</i>, fungsi transisi <i>δ: Q × Σ → Q</i> (tepat satu keadaan berikutnya untuk setiap simbol), keadaan awal <i>q₀</i>, dan himpunan keadaan akhir (penerima) <i>F</i>. Sebuah string <b>diterima</b> bila setelah membaca seluruh string, mesin berada di keadaan akhir.</p>
+<h3>DFA untuk: string biner dengan jumlah 1 yang genap</h3>
+<figure class="diagram"><svg viewBox="0 0 520 140" role="img" aria-label="DFA jumlah satu genap" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="4c7e8-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="4c7e8-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="4c7e8-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4c7e8-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="4c7e8-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="167.8,56.9 260,25 352.2,56.9" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4c7e8-arrow)"/><rect x="297.8002785311948" y="31.957788722336673" width="16.6" height="17" rx="4" fill="#fff" opacity=".92"/><text x="306.1002785311948" y="44.95778872233667" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">1</text><polyline points="352.2,83.1 260,115 167.8,83.1" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#4c7e8-arrow)"/><rect x="205.59972146880517" y="90.04221127766333" width="16.6" height="17" rx="4" fill="#fff" opacity=".92"/><text x="213.89972146880518" y="103.04221127766333" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">1</text><ellipse cx="130" cy="70" rx="40" ry="40" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="59" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">genap</tspan><tspan x="130" dy="15">(awal,</tspan><tspan x="130" dy="15">akhir)</tspan></text><ellipse cx="390" cy="70" rx="40" ry="40" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="390" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="390" dy="0">ganjil</tspan></text></svg><figcaption>Membaca 0 tidak mengubah keadaan (panah ke diri sendiri, tidak digambar); membaca 1 membalik keadaan.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>class DFA:
+    def __init__(self, transisi, awal, akhir):
+        self.t, self.awal, self.akhir = transisi, awal, set(akhir)
+
+    def terima(self, teks):
+        keadaan = self.awal
+        jejak = [keadaan]
+        for simbol in teks:
+            if (keadaan, simbol) not in self.t:        # tidak ada transisi: ditolak
+                return False, jejak
+            keadaan = self.t[(keadaan, simbol)]
+            jejak.append(keadaan)
+        return keadaan in self.akhir, jejak
+
+# jumlah '1' genap
+genap1 = DFA({(&quot;genap&quot;, &quot;0&quot;): &quot;genap&quot;, (&quot;genap&quot;, &quot;1&quot;): &quot;ganjil&quot;,
+              (&quot;ganjil&quot;, &quot;0&quot;): &quot;ganjil&quot;, (&quot;ganjil&quot;, &quot;1&quot;): &quot;genap&quot;}, &quot;genap&quot;, {&quot;genap&quot;})
+
+for s in [&quot;&quot;, &quot;0&quot;, &quot;1&quot;, &quot;11&quot;, &quot;1011&quot;, &quot;10101&quot;, &quot;0000&quot;]:
+    diterima, jejak = genap1.terima(s)
+    print(f&quot;{s!r:&gt;8} -&gt; {'DITERIMA' if diterima else 'ditolak ':&lt;8}  {' &gt; '.join(jejak)}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>      '' -&gt; DITERIMA  genap
+     '0' -&gt; DITERIMA  genap &gt; genap
+     '1' -&gt; ditolak   genap &gt; ganjil
+    '11' -&gt; DITERIMA  genap &gt; ganjil &gt; genap
+  '1011' -&gt; ditolak   genap &gt; ganjil &gt; ganjil &gt; genap &gt; ganjil
+ '10101' -&gt; ditolak   genap &gt; ganjil &gt; ganjil &gt; genap &gt; genap &gt; ganjil
+  '0000' -&gt; DITERIMA  genap &gt; genap &gt; genap &gt; genap &gt; genap</code></pre></figure>
+<h3>DFA untuk: bilangan bulat berformat "tanda opsional lalu satu atau lebih digit"</h3>
+<figure class="codebox"><pre data-lang="python"><code>class DFA:
+    def __init__(self, transisi, awal, akhir): self.t, self.awal, self.akhir = transisi, awal, set(akhir)
+    def terima(self, teks):
+        k = self.awal
+        for s in teks:
+            k = self.t.get((k, s))
+            if k is None: return False
+        return k in self.akhir
+
+# keadaan: S (awal), T (sudah tanda), D (sudah ada digit; akhir)
+t = {}
+for d in &quot;0123456789&quot;:
+    t[(&quot;S&quot;, d)] = &quot;D&quot;; t[(&quot;T&quot;, d)] = &quot;D&quot;; t[(&quot;D&quot;, d)] = &quot;D&quot;
+t[(&quot;S&quot;, &quot;+&quot;)] = &quot;T&quot;; t[(&quot;S&quot;, &quot;-&quot;)] = &quot;T&quot;
+bulat = DFA(t, &quot;S&quot;, {&quot;D&quot;})
+
+for s in [&quot;42&quot;, &quot;-7&quot;, &quot;+0&quot;, &quot;&quot;, &quot;-&quot;, &quot;4-2&quot;, &quot;12a&quot;, &quot;007&quot;]:
+    print(f&quot;{s!r:&gt;6} -&gt; {bulat.terima(s)}&quot;)
+
+# setara dengan ekspresi reguler  [+-]?[0-9]+
+import re
+polanya = re.compile(r&quot;[+-]?[0-9]+&quot;)
+print(&quot;DFA dan regex sepakat:&quot;, all(bulat.terima(s) == bool(polanya.fullmatch(s)) for s in [&quot;42&quot;, &quot;-7&quot;, &quot;+0&quot;, &quot;&quot;, &quot;-&quot;, &quot;4-2&quot;, &quot;12a&quot;, &quot;007&quot;]))</code></pre><pre class="runout" data-lang="keluaran"><code>  '42' -&gt; True
+  '-7' -&gt; True
+  '+0' -&gt; True
+    '' -&gt; False
+   '-' -&gt; False
+ '4-2' -&gt; False
+ '12a' -&gt; False
+ '007' -&gt; True
+DFA dan regex sepakat: True</code></pre><figcaption>DFA dan ekspresi reguler dapat menyatakan kelas bahasa yang sama: bahasa reguler (teorema Kleene).</figcaption></figure>
+<h2 id="ekspresi-reguler-tiga-operasi-dasar">Ekspresi reguler: tiga operasi dasar</h2>
+<table><thead><tr><th>Operasi</th><th>Notasi</th><th>Makna</th></tr></thead><tbody><tr><td>Penyambungan</td><td>ab</td><td>a diikuti b</td></tr><tr><td>Pilihan</td><td>a|b</td><td>a atau b</td></tr><tr><td>Bintang Kleene</td><td>a*</td><td>nol atau lebih a</td></tr></tbody></table>
+<p>Fitur lain (<code>+</code>, <code>?</code>, <code>[a-z]</code>, <code>\d</code>) hanyalah singkatan dari ketiga operasi itu. Mesin regex mengubah pola menjadi automata (NFA lalu DFA) untuk mencocokkan teks.</p>
+<div data-w="regex"><script type="application/json">{"title":"Coba ekspresi reguler","desc":"Pola ini mencocokkan bilangan bulat opsional bertanda. Ubah untuk bereksperimen.","pattern":"[+-]?[0-9]+","text":"Suhu 25, turun ke -3, lalu +12 dan 007."}</script></div>
+<h2 id="batas-dfa-yang-tidak-dapat-dilakukan">Batas DFA: yang tidak dapat dilakukan</h2>
+<p>DFA hanya memiliki memori terbatas (keadaan saat ini). Ia tidak dapat menghitung tanpa batas. Akibatnya, bahasa seperti <b>kurung seimbang</b> <code>(((...)))</code> atau <code>aⁿbⁿ</code> (n kali a lalu n kali b) <b>bukan reguler</b>: perlu mengingat berapa kurung terbuka, bilangan yang tak terbatas.</p>
+<figure class="codebox"><pre data-lang="python"><code>import re
+
+# regex tidak dapat mencocokkan kurung bersarang dengan kedalaman sembarang
+pola = re.compile(r&quot;^(\(\))*$&quot;)                    # hanya &quot;()()()&quot;, tidak memahami &quot;(())&quot;
+for s in [&quot;()&quot;, &quot;()()&quot;, &quot;(())&quot;, &quot;((()))&quot;]:
+    print(f&quot;{s:&lt;8} regex: {bool(pola.match(s))}   seimbang sebenarnya: {s.count('(') == s.count(')')}&quot;)
+
+# pemecahan: tambahkan memori berupa pencacah atau tumpukan (automata pushdown)
+def seimbang(s):
+    kedalaman = 0
+    for ch in s:
+        kedalaman += 1 if ch == &quot;(&quot; else -1
+        if kedalaman &lt; 0: return False
+    return kedalaman == 0
+print([seimbang(s) for s in [&quot;(())&quot;, &quot;(()&quot;, &quot;())(&quot;]])</code></pre><pre class="runout" data-lang="keluaran"><code>()       regex: True   seimbang sebenarnya: True
+()()     regex: True   seimbang sebenarnya: True
+(())     regex: False   seimbang sebenarnya: True
+((()))   regex: False   seimbang sebenarnya: True
+[True, False, False]</code></pre><figcaption>Hierarki Chomsky: bahasa reguler (DFA/regex) ⊂ bebas konteks (automata pushdown, tata bahasa untuk bahasa pemrograman) ⊂ peka konteks ⊂ rekursif enumerabel (mesin Turing).</figcaption></figure>
+<div class="callout warn"><b>ReDoS</b><p>Peringatan praktis: banyak mesin regex modern (Python <code>re</code>, JavaScript, PCRE) memakai <i>backtracking</i> dan fitur di luar bahasa reguler (referensi balik). Pola buruk seperti <code>(a+)+$</code> dapat berjalan sangat lambat pada masukan tertentu (ReDoS), kerentanan nyata. Untuk masukan tak tepercaya, batasi panjang dan hindari pola bersarang yang ambigu.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"DFA diterima bila setelah membaca seluruh string mesin berada di...","options":["Keadaan akhir","Keadaan awal","Keadaan mana saja"],"answer":0,"why":"Himpunan F."},{"q":"Bahasa yang tidak dapat dikenali DFA?","options":["Kurung seimbang","Bilangan biner genap","String berakhiran \"ab\""],"answer":0,"why":"Perlu memori tak terbatas."},{"q":"Ekspresi reguler dan DFA...","options":["Menyatakan kelas bahasa yang sama","Berbeda total","Hanya sama untuk angka"],"answer":0,"why":"Teorema Kleene."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Rancang DFA untuk string biner yang berakhiran "01".</summary><div>Tiga keadaan: awal, sudah membaca 0, sudah membaca "01" (akhir); dari "01" membaca 1 kembali ke awal, membaca 0 ke keadaan "sudah 0".</div></details><details><summary>2. Tulis regex untuk kode pos 5 digit dan jelaskan DFA-nya.</summary><div>[0-9]{5}: lima keadaan berurutan, masing-masing menerima satu digit, keadaan kelima akhir.</div></details><details><summary>3. Mengapa DFA untuk "banyak a sama dengan banyak b" tidak mungkin?</summary><div>Perlu menghitung selisih tanpa batas; keadaan berhingga tidak cukup (lema pemompaan).</div></details><details><summary>4. Apa perbedaan DFA dan NFA?</summary><div>NFA boleh memiliki beberapa transisi untuk satu simbol (dan transisi kosong). Daya ekspresinya sama; NFA dapat diubah menjadi DFA.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>DFA: keadaan, alfabet, transisi, awal, akhir; menerima bila berakhir di keadaan akhir.</li><li>DFA dan ekspresi reguler setara: bahasa reguler.</li><li>Regex praktis = penyambungan, pilihan, bintang, dengan singkatan.</li><li>Memori terbatas membuat DFA tak mampu mengenali kurung seimbang; butuh tumpukan.</li><li>Waspadai ReDoS pada regex backtracking.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Di mana mesin keadaan dipakai selain teks?</summary><div>Protokol jaringan (TCP), kontrol gim dan UI, perangkat tersemat, alur kerja pesanan (status pesanan), dan pemodelan perilaku.</div></details>
+<details class="faq"><summary>Apa itu mesin Turing?</summary><div>Model komputasi dengan pita tak terbatas; mampu menghitung apa pun yang dapat dihitung secara algoritmik.</div></details>
+<details class="faq"><summary>Bagaimana membangun lexer dengan DFA?</summary><div>Setiap jenis token (identifier, angka) dinyatakan sebagai pola regex yang digabung menjadi satu DFA; alat seperti Lex/Flex melakukannya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Michael Sipser, Introduction to the Theory of Computation (Cengage)</li><li><a href="https://swtch.com/~rsc/regexp/regexp1.html" rel="noopener" target="_blank">Russ Cox, Regular Expression Matching Can Be Simple And Fast</a></li><li>Aho, Lam, Sethi, Ullman, Compilers: Principles, Techniques, and Tools (Pearson)</li><li><a href="https://docs.python.org/3/library/re.html" rel="noopener" target="_blank">Dokumentasi Python: re</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

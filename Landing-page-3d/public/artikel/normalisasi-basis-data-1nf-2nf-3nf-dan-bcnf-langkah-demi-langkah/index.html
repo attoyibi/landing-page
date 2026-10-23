@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF</title>
+<meta name="description" content="Pelajari normalisasi dari tabel berantakan sampai 3NF dan BCNF langkah demi langkah: anomali, ketergantungan fungsional, dengan contoh tabel dan kode SQL yang dijalankan.">
+<meta name="keywords" content="normalisasi, 1NF, 2NF, 3NF, BCNF, basis data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/">
+<meta property="og:title" content="Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF">
+<meta property="og:description" content="Pelajari normalisasi dari tabel berantakan sampai 3NF dan BCNF langkah demi langkah: anomali, ketergantungan fungsional, dengan contoh tabel dan kode SQL yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF">
+<meta name="twitter:description" content="Pelajari normalisasi dari tabel berantakan sampai 3NF dan BCNF langkah demi langkah: anomali, ketergantungan fungsional, dengan contoh tabel dan kode SQL yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF","description":"Pelajari normalisasi dari tabel berantakan sampai 3NF dan BCNF langkah demi langkah: anomali, ketergantungan fungsional, dengan contoh tabel dan kode SQL yang dijalankan.","image":["https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"normalisasi, 1NF, 2NF, 3NF, BCNF, basis data","articleSection":"Sistem Informasi","wordCount":609,"mainEntityOfPage":"https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF","item":"https://muchson.web.id/artikel/normalisasi-basis-data-1nf-2nf-3nf-dan-bcnf-langkah-demi-langkah/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah ada bentuk normal lebih tinggi dari BCNF?","acceptedAnswer":{"@type":"Answer","text":"Ya: 4NF (ketergantungan multinilai) dan 5NF, namun jarang diperlukan dalam praktik."}},{"@type":"Question","name":"Bagaimana mengetahui ketergantungan fungsional?","acceptedAnswer":{"@type":"Answer","text":"Dari aturan bisnis dan wawancara dengan pengguna (\"apakah satu NIM selalu berarti satu nama?\"), bukan dari data contoh saja."}},{"@type":"Question","name":"Apakah normalisasi berlaku untuk NoSQL?","acceptedAnswer":{"@type":"Answer","text":"Tidak langsung. Basis data dokumen sering mendorong penyematan data (denormalisasi) demi pola akses, dengan konsekuensi konsistensi yang perlu dikelola."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tabel-awal-yang-bermasalah">Tabel awal yang bermasalah</a></li><li><a href="#ketergantungan-fungsional">Ketergantungan fungsional</a></li><li><a href="#bentuk-normal-pertama-1nf">Bentuk normal pertama (1NF)</a></li><li><a href="#bentuk-normal-kedua-2nf">Bentuk normal kedua (2NF)</a></li><li><a href="#bentuk-normal-ketiga-3nf">Bentuk normal ketiga (3NF)</a></li><li><a href="#bcnf-penegasan-yang-lebih-ketat">BCNF: penegasan yang lebih ketat</a></li><li><a href="#kapan-denormalisasi">Kapan denormalisasi?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF</h1>
+<p class="lead">Normalisasi adalah proses menata tabel agar data tidak berulang dan tidak menimbulkan kesalahan saat diubah. Alih-alih menghafal aturan, kita mulai dari satu tabel berantakan, melihat apa yang rusak, lalu memperbaikinya selangkah demi selangkah.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> ERD dan model relasional</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Normalisasi Basis Data: 1NF, 2NF, 3NF, dan BCNF" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan anomali sisip, ubah, dan hapus akibat redundansi</li><li>memahami ketergantungan fungsional (A → B)</li><li>menormalkan tabel dari bentuk tidak normal ke 1NF, 2NF, 3NF</li><li>menjelaskan BCNF dan kapan denormalisasi dipertimbangkan</li><li>memverifikasi hasil dekomposisi dengan SQL</li></ul></div>
+<h2 id="tabel-awal-yang-bermasalah">Tabel awal yang bermasalah</h2>
+<p>Misalkan sebuah kampus mencatat KRS dalam satu tabel besar:</p>
+<table><thead><tr><th>nim</th><th>nama_mhs</th><th>kode_mk</th><th>nama_mk</th><th>sks</th><th>dosen</th><th>nilai</th></tr></thead><tbody><tr><td>A01</td><td>Ani</td><td>SI101</td><td>Sistem Informasi</td><td>3</td><td>Dr. Rina</td><td>A</td></tr><tr><td>A01</td><td>Ani</td><td>SI102</td><td>Basis Data</td><td>3</td><td>Pak Dodi</td><td>B</td></tr><tr><td>A02</td><td>Budi</td><td>SI101</td><td>Sistem Informasi</td><td>3</td><td>Dr. Rina</td><td>B</td></tr><tr><td>A02</td><td>Budi</td><td>SI103</td><td>Pemrograman</td><td>4</td><td>Bu Eka</td><td>A</td></tr></tbody></table>
+<h3>Tiga anomali</h3>
+<ul><li><b>Anomali ubah</b>: nama mata kuliah SI101 berubah. Kita harus mengubah di semua baris; bila ada yang terlewat, data tidak konsisten.</li><li><b>Anomali sisip</b>: mata kuliah baru yang belum diambil siapa pun tidak dapat dicatat, karena nim bagian dari kunci.</li><li><b>Anomali hapus</b>: bila Budi satu-satunya yang mengambil SI103 lalu KRS-nya dihapus, seluruh informasi mata kuliah itu ikut hilang.</li></ul>
+<h2 id="ketergantungan-fungsional">Ketergantungan fungsional</h2>
+<p>A → B dibaca "A menentukan B": untuk setiap nilai A hanya ada satu nilai B. Di sini kunci tabel adalah (nim, kode_mk). Ketergantungan yang berlaku:</p>
+<table><thead><tr><th>Ketergantungan</th><th>Arti</th><th>Jenis</th></tr></thead><tbody><tr><td>(nim, kode_mk) → nilai</td><td>Nilai ditentukan pasangan mahasiswa dan mata kuliah</td><td>Ketergantungan penuh pada kunci</td></tr><tr><td>nim → nama_mhs</td><td>Nama hanya bergantung pada nim</td><td>Ketergantungan parsial</td></tr><tr><td>kode_mk → nama_mk, sks, dosen</td><td>Data mata kuliah hanya bergantung pada kode_mk</td><td>Ketergantungan parsial</td></tr></tbody></table>
+<h2 id="bentuk-normal-pertama-1nf">Bentuk normal pertama (1NF)</h2>
+<p>Syarat: setiap sel berisi <b>satu nilai atomik</b> dan tidak ada kelompok berulang. Tabel kita sudah 1NF. Contoh yang melanggar: kolom <code>matkul</code> berisi "SI101, SI102" dalam satu sel; solusinya satu baris per pasangan.</p>
+<h2 id="bentuk-normal-kedua-2nf">Bentuk normal kedua (2NF)</h2>
+<p>Syarat: 1NF dan tidak ada ketergantungan parsial, yaitu atribut non-kunci harus bergantung pada <b>seluruh</b> kunci, bukan sebagian. Atribut <code>nama_mhs</code> hanya bergantung pada nim, dan data mata kuliah hanya pada kode_mk. Pecah menjadi tiga tabel:</p>
+<table><thead><tr><th>Tabel</th><th>Kolom (PK bergaris bawah secara konsep)</th><th>Isi</th></tr></thead><tbody><tr><td>mahasiswa</td><td>nim (PK), nama_mhs</td><td>A01 Ani; A02 Budi</td></tr><tr><td>mata_kuliah</td><td>kode_mk (PK), nama_mk, sks, dosen</td><td>SI101..SI103</td></tr><tr><td>krs</td><td>(nim, kode_mk) (PK), nilai</td><td>Empat baris nilai</td></tr></tbody></table>
+<h2 id="bentuk-normal-ketiga-3nf">Bentuk normal ketiga (3NF)</h2>
+<p>Syarat: 2NF dan tidak ada ketergantungan transitif, yaitu atribut non-kunci tidak boleh bergantung pada atribut non-kunci lain. Misalkan pada <code>mata_kuliah</code> kita juga menyimpan <code>kantor_dosen</code> yang sebenarnya ditentukan oleh <code>dosen</code>: kode_mk → dosen → kantor_dosen. Kantor dosen berulang pada setiap mata kuliahnya.</p>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+-- sebelum 3NF: kantor_dosen bergantung pada dosen (transitif)
+CREATE TABLE mk_buruk (kode_mk TEXT PRIMARY KEY, nama_mk TEXT, dosen TEXT, kantor_dosen TEXT);
+INSERT INTO mk_buruk VALUES
+ ('SI101','Sistem Informasi','Dr. Rina','Gedung A-101'),
+ ('SI104','Analisis Sistem','Dr. Rina','Gedung A-101'),
+ ('SI102','Basis Data','Pak Dodi','Gedung B-203');
+
+-- sesudah 3NF
+CREATE TABLE dosen (id_dosen INTEGER PRIMARY KEY, nama TEXT, kantor TEXT);
+CREATE TABLE mata_kuliah (kode_mk TEXT PRIMARY KEY, nama_mk TEXT, id_dosen INTEGER REFERENCES dosen(id_dosen));
+INSERT INTO dosen VALUES (1,'Dr. Rina','Gedung A-101'),(2,'Pak Dodi','Gedung B-203');
+INSERT INTO mata_kuliah VALUES ('SI101','Sistem Informasi',1),('SI104','Analisis Sistem',1),('SI102','Basis Data',2);
+&quot;&quot;&quot;)
+
+# Anomali ubah: Dr. Rina pindah kantor
+db.execute(&quot;UPDATE mk_buruk SET kantor_dosen='Gedung C-305' WHERE kode_mk='SI101'&quot;)   # SI104 terlewat!
+print(&quot;sebelum (tidak konsisten):&quot;, db.execute(&quot;SELECT DISTINCT dosen, kantor_dosen FROM mk_buruk WHERE dosen='Dr. Rina'&quot;).fetchall())
+
+db.execute(&quot;UPDATE dosen SET kantor='Gedung C-305' WHERE nama='Dr. Rina'&quot;)            # satu perubahan cukup
+print(&quot;sesudah:&quot;, db.execute(&quot;&quot;&quot;SELECT m.kode_mk, d.nama, d.kantor FROM mata_kuliah m JOIN dosen d USING(id_dosen)
+                                 WHERE d.nama='Dr. Rina'&quot;&quot;&quot;).fetchall())</code></pre><pre class="runout" data-lang="keluaran"><code>sebelum (tidak konsisten): [('Dr. Rina', 'Gedung C-305'), ('Dr. Rina', 'Gedung A-101')]
+sesudah: [('SI101', 'Dr. Rina', 'Gedung C-305'), ('SI104', 'Dr. Rina', 'Gedung C-305')]</code></pre><figcaption>Sebelum normalisasi, dua baris untuk dosen yang sama kini menyimpan kantor berbeda. Sesudahnya, kebenaran tersimpan di satu tempat.</figcaption></figure>
+<h2 id="bcnf-penegasan-yang-lebih-ketat">BCNF: penegasan yang lebih ketat</h2>
+<p>Pada 3NF, tabel boleh masih memiliki penentu (determinan) yang bukan kunci kandidat dalam situasi tertentu. BCNF (Boyce–Codd) mensyaratkan: <b>setiap determinan harus merupakan kunci kandidat</b>. Contoh klasik: tabel (mahasiswa, mata_kuliah, dosen) dengan aturan "setiap dosen hanya mengajar satu mata kuliah". Maka dosen → mata_kuliah, padahal dosen bukan kunci kandidat. Dekomposisi: (dosen, mata_kuliah) dan (mahasiswa, dosen).</p>
+<div data-w="compare"><script type="application/json">{"title":"Ringkasan bentuk normal","tabs":[{"label":"1NF","html":"Nilai atomik, tanpa kelompok berulang, ada kunci primer."},{"label":"2NF","html":"1NF + tiap atribut non-kunci bergantung pada \u003cb>seluruh\u003c/b> kunci (hilangkan ketergantungan parsial). Relevan hanya untuk kunci gabungan."},{"label":"3NF","html":"2NF + tidak ada ketergantungan \u003cb>transitif\u003c/b> antar atribut non-kunci."},{"label":"BCNF","html":"Setiap determinan adalah kunci kandidat. Sedikit lebih ketat dari 3NF."}]}</script></div>
+<div class="callout info"><b>Cara mengingat</b><p>Ucapan mnemonik terkenal: setiap atribut non-kunci harus bergantung pada <b>"kunci, seluruh kunci, dan tidak lain selain kunci"</b> (the key, the whole key, and nothing but the key).</p></div>
+<h2 id="kapan-denormalisasi">Kapan denormalisasi?</h2>
+<p>Normalisasi menjaga konsistensi tetapi menambah JOIN. Pada sistem pelaporan dan analitik dengan data besar yang jarang berubah, orang sengaja <b>denormalisasi</b>: menggabungkan tabel atau menyimpan salinan agar kueri cepat. Lakukan dengan sadar, setelah mengukur, dan jaga konsistensi lewat proses yang jelas. Untuk sistem transaksi (OLTP), mulailah dari 3NF.</p>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Ketergantungan parsial dihilangkan pada bentuk normal...","options":["Kedua (2NF)","Pertama (1NF)","Ketiga (3NF)"],"answer":0,"why":"Atribut harus bergantung pada seluruh kunci."},{"q":"Kantor dosen yang ditentukan oleh dosen yang ditentukan kode_mk adalah ketergantungan...","options":["Transitif","Parsial","Atomik"],"answer":0,"why":"kode_mk → dosen → kantor."},{"q":"Tujuan utama normalisasi?","options":["Mengurangi redundansi dan anomali","Mempercepat semua kueri","Memperbanyak tabel"],"answer":0,"why":"Data konsisten dan mudah dirawat."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Normalkan tabel pesanan(no_pesanan, tgl, id_pelanggan, nama_pelanggan, kode_produk, nama_produk, harga, jumlah).</summary><div>pelanggan(id_pelanggan, nama); produk(kode_produk, nama, harga); pesanan(no_pesanan, tgl, id_pelanggan); item_pesanan(no_pesanan, kode_produk, jumlah, harga_saat_beli).</div></details><details><summary>2. Mengapa tabel dengan kunci tunggal otomatis memenuhi 2NF jika sudah 1NF?</summary><div>Ketergantungan parsial hanya mungkin bila kunci terdiri dari lebih dari satu atribut.</div></details><details><summary>3. Sebutkan satu alasan denormalisasi.</summary><div>Kueri laporan yang sangat sering dengan banyak JOIN pada data besar yang hampir tidak berubah.</div></details><details><summary>4. Apa anomali hapus?</summary><div>Menghapus satu fakta menghilangkan fakta lain yang tak berkaitan karena tersimpan di baris yang sama.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Anomali ubah, sisip, dan hapus muncul dari redundansi.</li><li>1NF: atomik; 2NF: tanpa ketergantungan parsial; 3NF: tanpa ketergantungan transitif; BCNF: determinan = kunci kandidat.</li><li>Dekomposisi harus tidak kehilangan data (lossless) dan sebaiknya mempertahankan ketergantungan.</li><li>Denormalisasi adalah keputusan sadar untuk performa baca.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah ada bentuk normal lebih tinggi dari BCNF?</summary><div>Ya: 4NF (ketergantungan multinilai) dan 5NF, namun jarang diperlukan dalam praktik.</div></details>
+<details class="faq"><summary>Bagaimana mengetahui ketergantungan fungsional?</summary><div>Dari aturan bisnis dan wawancara dengan pengguna ("apakah satu NIM selalu berarti satu nama?"), bukan dari data contoh saja.</div></details>
+<details class="faq"><summary>Apakah normalisasi berlaku untuk NoSQL?</summary><div>Tidak langsung. Basis data dokumen sering mendorong penyematan data (denormalisasi) demi pola akses, dengan konsekuensi konsistensi yang perlu dikelola.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Ramez Elmasri dan Shamkant Navathe, Fundamentals of Database Systems (Pearson)</li><li>Abraham Silberschatz, Henry Korth, S. Sudarshan, Database System Concepts (McGraw-Hill)</li><li><a href="https://dl.acm.org/doi/10.1145/362384.362685" rel="noopener" target="_blank">E. F. Codd, A Relational Model of Data for Large Shared Data Banks, Communications of the ACM 13(6), 1970</a></li><li>William Kent, A Simple Guide to Five Normal Forms in Relational Database Theory, CACM 26(2), 1983</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/"><img src="/artikel/erd-pemodelan-data-entitas-atribut-relasi-dan-kardinalitas/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>ERD: Entitas, Atribut, Relasi, dan Kardinalitas</span></a><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

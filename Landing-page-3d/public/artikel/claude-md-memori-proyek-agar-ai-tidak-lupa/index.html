@@ -44,13 +44,14 @@
 <h1>CLAUDE.md: Memori Proyek agar AI Paham Aturan Anda</h1>
 <p class="lead">Bayangkan setiap hari Anda harus menjelaskan ulang proyek kepada rekan baru. Itu yang terjadi bila agen coding tidak punya catatan tetap. File sederhana bernama CLAUDE.md di folder proyek menyelesaikannya, dan membuat hasil jauh lebih konsisten.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="CLAUDE.md: Memori Proyek agar AI Paham Aturan Anda" fetchpriority="high"></figure>
 <h2 id="apa-itu-claude-md">Apa itu CLAUDE.md?</h2>
 <p>CLAUDE.md adalah berkas teks (biasanya Markdown) di proyek Anda yang dibaca agen saat memulai sesi. Isinya adalah panduan: bagaimana menjalankan proyek, struktur folder, gaya penulisan kode, dan aturan khusus. Karena dibaca setiap sesi, Anda tidak perlu mengulang instruksi yang sama.</p>
 <figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Lapisan konteks bagi agen" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Instruksi pribadi Anda (berlaku di semua proyek)</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Preferensi umum dan gaya kerja</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">CLAUDE.md di proyek</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Aturan dan fakta khusus proyek ini</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Permintaan dalam sesi</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Tugas spesifik yang Anda minta sekarang</text></svg><figcaption>Semakin spesifik lapisannya, semakin diutamakan untuk tugas yang sedang berjalan.</figcaption></figure>
 <h2 id="isi-yang-efektif">Isi yang efektif</h2>
 <table><thead><tr><th>Bagian</th><th>Contoh isi</th></tr></thead><tbody><tr><td>Cara menjalankan</td><td>Perintah untuk instalasi, menjalankan, tes, dan build</td></tr><tr><td>Struktur folder</td><td>Fungsi tiap folder utama dalam satu baris</td></tr><tr><td>Gaya kode</td><td>Penamaan, format, pola yang diikuti, hal yang dihindari</td></tr><tr><td>Aturan keras</td><td>Jangan mengubah file tertentu, jangan menambah dependensi tanpa izin</td></tr><tr><td>Catatan penting</td><td>Keputusan arsitektur dan alasan, jebakan yang pernah terjadi</td></tr></tbody></table>
-<pre><code># Catatan proyek
+<figure class="codebox"><pre><code># Catatan proyek
 
 ## Menjalankan
 - Pasang: npm ci
@@ -64,7 +65,7 @@
 ## Aturan
 - Jangan menambah dependensi baru tanpa bertanya.
 - Ikuti gaya penamaan yang ada di folder yang sama.
-- Ubah sesedikit mungkin; jangan merapikan kode di luar tugas.</code></pre>
+- Ubah sesedikit mungkin; jangan merapikan kode di luar tugas.</code></pre></figure>
 <h2 id="kesalahan-umum">Kesalahan umum</h2>
 <div data-w="cards"><script type="application/json">{"title":"Ketuk kartu untuk melihat perbaikannya","items":[{"tag":"Kesalahan","front":"File terlalu panjang dan berisi segalanya.","backTag":"Perbaikan","back":"Singkat dan padat. Pindahkan panduan panjang ke dokumen terpisah dan rujuk saja."},{"tag":"Kesalahan","front":"Isinya kebijakan umum, bukan fakta proyek.","backTag":"Perbaikan","back":"Tulis hal yang agen tidak bisa tebak: perintah spesifik, aturan unik."},{"tag":"Kesalahan","front":"Tidak pernah diperbarui.","backTag":"Perbaikan","back":"Tambahkan setiap kali agen salah berulang. Itu tanda ada aturan yang belum tertulis."},{"tag":"Kesalahan","front":"Menaruh kunci rahasia di dalamnya.","backTag":"Perbaikan","back":"Jangan. Berkas ini ikut tersimpan di repositori."}]}</script></div>
 <div data-w="checklist"><script type="application/json">{"title":"Periksa CLAUDE.md Anda","items":["Ada perintah menjalankan dan menguji proyek.","Struktur folder utama dijelaskan singkat.","Aturan yang sering dilanggar sudah tertulis.","Tidak ada rahasia atau data pribadi.","Panjangnya masuk akal: mudah dibaca dalam semenit."]}</script></div>

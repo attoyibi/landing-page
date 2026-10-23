@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Himpunan dan Logika Proposisi: Matematika Diskrit</title>
+<meta name="description" content="Pelajari matematika diskrit: himpunan, logika proposisi, implikasi, kuantor, dan teknik bukti termasuk induksi, dengan kode Python untuk memeriksa.">
+<meta name="keywords" content="matematika diskrit, himpunan, logika proposisi, induksi matematika, bukti">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/">
+<meta property="og:title" content="Himpunan dan Logika Proposisi: Matematika Diskrit">
+<meta property="og:description" content="Pelajari matematika diskrit: himpunan, logika proposisi, implikasi, kuantor, dan teknik bukti termasuk induksi, dengan kode Python untuk memeriksa.">
+<meta property="og:image" content="https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Himpunan dan Logika Proposisi: Matematika Diskrit">
+<meta name="twitter:description" content="Pelajari matematika diskrit: himpunan, logika proposisi, implikasi, kuantor, dan teknik bukti termasuk induksi, dengan kode Python untuk memeriksa.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Himpunan dan Logika Proposisi: Matematika Diskrit","description":"Pelajari matematika diskrit: himpunan, logika proposisi, implikasi, kuantor, dan teknik bukti termasuk induksi, dengan kode Python untuk memeriksa.","image":["https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"matematika diskrit, himpunan, logika proposisi, induksi matematika, bukti","articleSection":"Dasar Informatika","wordCount":480,"mainEntityOfPage":"https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Himpunan dan Logika Proposisi: Matematika Diskrit","item":"https://muchson.web.id/artikel/himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa matematika diskrit penting bagi informatika?","acceptedAnswer":{"@type":"Answer","text":"Ia adalah bahasa formal untuk algoritma, struktur data, basis data relasional, kriptografi, jaringan, dan verifikasi program."}},{"@type":"Question","name":"Apa bedanya himpunan dan list?","acceptedAnswer":{"@type":"Answer","text":"Himpunan tidak berurutan dan tanpa duplikat; list berurutan dan boleh duplikat."}},{"@type":"Question","name":"Apa itu relasi dan fungsi?","acceptedAnswer":{"@type":"Answer","text":"Relasi adalah himpunan pasangan terurut; fungsi adalah relasi yang memetakan setiap masukan ke tepat satu keluaran. Relasi adalah dasar tabel basis data."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#himpunan">Himpunan</a></li><li><a href="#logika-proposisi">Logika proposisi</a></li><li><a href="#kuantor">Kuantor</a></li><li><a href="#teknik-bukti">Teknik bukti</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Himpunan dan Logika Proposisi: Matematika Diskrit</h1>
+<p class="lead">Matematika diskrit adalah bahasa untuk berpikir presisi tentang hal-hal yang terpisah-pisah: himpunan, pernyataan, hubungan, graf, dan hitungan. Ia mendasari basis data, algoritma, kriptografi, dan verifikasi program. Mulailah dari dua pilar: himpunan dan logika.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> logika boolean dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Himpunan dan Logika Proposisi: Matematika Diskrit" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyatakan himpunan dan operasi gabungan, irisan, selisih, komplemen, himpunan kuasa</li><li>menggunakan hukum himpunan dan diagram Venn</li><li>menyusun dan mengevaluasi pernyataan dengan konektif logika dan implikasi</li><li>memakai kuantor universal dan eksistensial dan menegasinya</li><li>mengenali dan menyusun bukti: langsung, kontraposisi, kontradiksi, induksi</li></ul></div>
+<h2 id="himpunan">Himpunan</h2>
+<p>Himpunan adalah kumpulan objek berbeda tanpa urutan. Notasi: <code>A = {1, 2, 3}</code>; <code>x ∈ A</code> berarti x anggota A; <code>|A|</code> adalah kardinalitas; <code>∅</code> himpunan kosong.</p>
+<table><thead><tr><th>Operasi</th><th>Simbol</th><th>Arti</th><th>Python</th><th>Padanan SQL</th></tr></thead><tbody><tr><td>Gabungan</td><td>A ∪ B</td><td>anggota A atau B</td><td>A | B</td><td>UNION</td></tr><tr><td>Irisan</td><td>A ∩ B</td><td>anggota A dan B</td><td>A & B</td><td>INTERSECT / INNER JOIN</td></tr><tr><td>Selisih</td><td>A − B</td><td>anggota A yang bukan B</td><td>A - B</td><td>EXCEPT</td></tr><tr><td>Selisih simetris</td><td>A ⊕ B</td><td>anggota salah satu saja</td><td>A ^ B</td><td></td></tr><tr><td>Himpunan bagian</td><td>A ⊆ B</td><td>semua A ada di B</td><td>A <= B</td><td></td></tr><tr><td>Komplemen</td><td>Aᶜ</td><td>bukan anggota A dalam semesta U</td><td>U - A</td><td>NOT IN</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>A = {1, 2, 3, 4, 5, 6}
+B = {2, 4, 6, 8}
+U = set(range(1, 11))
+
+print(&quot;A ∪ B =&quot;, sorted(A | B))
+print(&quot;A ∩ B =&quot;, sorted(A &amp; B))
+print(&quot;A − B =&quot;, sorted(A - B))
+print(&quot;A ⊕ B =&quot;, sorted(A ^ B))
+print(&quot;Aᶜ    =&quot;, sorted(U - A))
+print(&quot;{2,4} ⊆ A ?&quot;, {2, 4} &lt;= A, &quot;| |A ∪ B| =&quot;, len(A | B))
+
+# prinsip inklusi-eksklusi: |A ∪ B| = |A| + |B| - |A ∩ B|
+print(len(A | B) == len(A) + len(B) - len(A &amp; B))
+
+# hukum De Morgan untuk himpunan: (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ
+print(&quot;De Morgan:&quot;, (U - (A | B)) == ((U - A) &amp; (U - B)))
+
+# himpunan kuasa (semua himpunan bagian): ada 2^n anggota
+from itertools import combinations
+def himpunan_kuasa(s):
+    s = list(s)
+    return [set(c) for r in range(len(s) + 1) for c in combinations(s, r)]
+P = himpunan_kuasa({&quot;a&quot;, &quot;b&quot;, &quot;c&quot;})
+print(len(P), &quot;himpunan bagian dari {a,b,c}:&quot;, [sorted(x) for x in P])</code></pre><pre class="runout" data-lang="keluaran"><code>A ∪ B = [1, 2, 3, 4, 5, 6, 8]
+A ∩ B = [2, 4, 6]
+A − B = [1, 3, 5]
+A ⊕ B = [1, 3, 5, 8]
+Aᶜ    = [7, 8, 9, 10]
+{2,4} ⊆ A ? True | |A ∪ B| = 7
+True
+De Morgan: True
+8 himpunan bagian dari {a,b,c}: [[], ['b'], ['c'], ['a'], ['b', 'c'], ['a', 'b'], ['a', 'c'], ['a', 'b', 'c']]</code></pre></figure>
+<h2 id="logika-proposisi">Logika proposisi</h2>
+<p>Proposisi adalah kalimat yang tepat benar atau salah. Konektif: ¬ (bukan), ∧ (dan), ∨ (atau), → (jika ... maka), ↔ (jika dan hanya jika).</p>
+<div data-w="truth"><script type="application/json">{"title":"Tabel kebenaran implikasi","desc":"Ketik \"not p or q\" (setara dengan p → q) dan bandingkan dengan tabel implikasi. Coba juga \"p != q\" (XOR).","expr":"not p or q"}</script></div>
+<div class="callout warn"><b>Jebakan implikasi</b><p>Implikasi <b>p → q hanya salah bila p benar dan q salah</b>. Jika p salah, implikasi benar (vakum): "Jika saya burung, maka saya bisa terbang" benar bagi saya yang bukan burung. Banyak kesalahan penalaran berasal dari salah memahami ini.</p></div>
+<figure class="codebox"><pre data-lang="python"><code>from itertools import product
+
+imp = lambda p, q: (not p) or q            # p -&gt; q setara dengan (not p) or q
+print(&quot; p     q     p-&gt;q   q-&gt;p   ¬q-&gt;¬p&quot;)
+for p, q in product([True, False], repeat=2):
+    print(f&quot; {p!s:&lt;5} {q!s:&lt;5} {imp(p, q)!s:&lt;6} {imp(q, p)!s:&lt;6} {imp(not q, not p)}&quot;)
+
+# konvers (q-&gt;p) BUKAN sama dengan implikasi; kontraposisi (¬q-&gt;¬p) SAMA
+setara = lambda f, g: all(f(p, q) == g(p, q) for p, q in product([True, False], repeat=2))
+print(&quot;\nimplikasi == konvers      :&quot;, setara(imp, lambda p, q: imp(q, p)))
+print(&quot;implikasi == kontraposisi :&quot;, setara(imp, lambda p, q: imp(not q, not p)))
+print(&quot;De Morgan 1               :&quot;, setara(lambda p, q: not (p and q), lambda p, q: (not p) or (not q)))
+print(&quot;p &lt;-&gt; q setara dengan (p-&gt;q) and (q-&gt;p):&quot;, setara(lambda p, q: p == q, lambda p, q: imp(p, q) and imp(q, p)))</code></pre><pre class="runout" data-lang="keluaran"><code> p     q     p-&gt;q   q-&gt;p   ¬q-&gt;¬p
+ True  True  True   True   True
+ True  False False  True   False
+ False True  True   False  True
+ False False True   True   True
+
+implikasi == konvers      : False
+implikasi == kontraposisi : True
+De Morgan 1               : True
+p &lt;-&gt; q setara dengan (p-&gt;q) and (q-&gt;p): True</code></pre><figcaption>Contoh sehari-hari: "Jika hujan, jalan basah" tidak sama dengan "Jika jalan basah, hujan" (konvers), tetapi sama dengan "Jika jalan tidak basah, tidak hujan" (kontraposisi).</figcaption></figure>
+<h2 id="kuantor">Kuantor</h2>
+<table><thead><tr><th>Kuantor</th><th>Arti</th><th>Contoh</th><th>Negasi</th></tr></thead><tbody><tr><td>∀x P(x)</td><td>untuk semua x, P(x)</td><td>Semua mahasiswa memiliki NIM</td><td>∃x ¬P(x): ada mahasiswa tanpa NIM</td></tr><tr><td>∃x P(x)</td><td>ada x sehingga P(x)</td><td>Ada bilangan prima genap</td><td>∀x ¬P(x): tidak ada yang genap</td></tr><tr><td>∀x ∃y P(x, y)</td><td>untuk setiap x ada y</td><td>Setiap orang punya ibu</td><td>Urutan kuantor penting!</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>data = [4, 8, 15, 16, 23, 42]
+print(&quot;semua genap?        &quot;, all(x % 2 == 0 for x in data))            # ∀
+print(&quot;ada yang &gt; 40?      &quot;, any(x &gt; 40 for x in data))                # ∃
+# negasi: ¬∀x P(x) == ∃x ¬P(x)
+print(&quot;¬(semua genap) == ada yang ganjil:&quot;, (not all(x % 2 == 0 for x in data)) == any(x % 2 != 0 for x in data))
+
+# urutan kuantor: ∀x ∃y (y &gt; x) benar di bilangan bulat; ∃y ∀x (y &gt; x) salah
+U = range(-5, 6)
+print(&quot;∀x ∃y y&gt;x :&quot;, all(any(y &gt; x for y in U) for x in U), &quot;(di semesta terbatas, x = 5 gagal; di Z tak berhingga benar)&quot;)
+print(&quot;∃y ∀x y&gt;x :&quot;, any(all(y &gt; x for x in U) for y in U))</code></pre><pre class="runout" data-lang="keluaran"><code>semua genap?         False
+ada yang &gt; 40?       True
+¬(semua genap) == ada yang ganjil: True
+∀x ∃y y&gt;x : False (di semesta terbatas, x = 5 gagal; di Z tak berhingga benar)
+∃y ∀x y&gt;x : False</code></pre><figcaption>Pada semesta terbatas, ∀x ∃y (y > x) gagal untuk x terbesar; pada bilangan bulat tak berhingga, ia benar. Semesta wacana menentukan kebenaran pernyataan berkuantor.</figcaption></figure>
+<h2 id="teknik-bukti">Teknik bukti</h2>
+<table><thead><tr><th>Teknik</th><th>Cara</th><th>Contoh</th></tr></thead><tbody><tr><td>Langsung</td><td>Dari asumsi p, turunkan q</td><td>Jumlah dua bilangan genap adalah genap: 2a + 2b = 2(a+b)</td></tr><tr><td>Kontraposisi</td><td>Buktikan ¬q → ¬p</td><td>Jika n² genap maka n genap: bila n ganjil, n² ganjil</td></tr><tr><td>Kontradiksi</td><td>Asumsikan negasi lalu capai kemustahilan</td><td>√2 tak rasional</td></tr><tr><td>Induksi</td><td>Basis + langkah induktif</td><td>Jumlah 1 sampai n adalah n(n+1)/2</td></tr></tbody></table>
+<h3>Induksi matematika</h3>
+<p>Untuk membuktikan P(n) berlaku untuk semua n ≥ 1: (1) <b>basis</b>: P(1) benar; (2) <b>langkah induktif</b>: jika P(k) benar maka P(k+1) benar. Seperti domino: yang pertama jatuh, dan setiap yang jatuh menjatuhkan berikutnya.</p>
+<p class="formula">P(n): 1 + 2 + … + n = n(n + 1) / 2</p>
+<ul><li><b>Basis</b>: n = 1 → ruas kiri 1, ruas kanan 1·2/2 = 1. ✓</li><li><b>Langkah</b>: asumsikan P(k): 1 + … + k = k(k+1)/2. Maka 1 + … + k + (k+1) = k(k+1)/2 + (k+1) = (k+1)(k+2)/2, yaitu P(k+1). ✓</li></ul>
+<figure class="codebox"><pre data-lang="python"><code># Pengujian numerik BUKAN bukti, tetapi pemeriksaan yang berguna
+print(all(sum(range(1, n + 1)) == n * (n + 1) // 2 for n in range(1, 10000)))
+
+# contoh pernyataan yang tampak benar tetapi salah: n^2 + n + 41 selalu prima
+def prima(x): return x &gt; 1 and all(x % d for d in range(2, int(x ** 0.5) + 1))
+tandingan = next(n for n in range(100) if not prima(n * n + n + 41))
+print(&quot;n^2+n+41 prima untuk n=0..&quot;, tandingan - 1, &quot;tetapi gagal pada n =&quot;, tandingan, &quot;-&gt;&quot;, tandingan ** 2 + tandingan + 41)</code></pre><pre class="runout" data-lang="keluaran"><code>True
+n^2+n+41 prima untuk n=0.. 39 tetapi gagal pada n = 40 -&gt; 1681</code></pre><figcaption>Pemeriksaan untuk banyak kasus tidak membuktikan apa pun. Polinomial Euler menghasilkan bilangan prima untuk n = 0 sampai 39, lalu gagal pada n = 40. Satu contoh tandingan cukup membantah pernyataan umum; bukti diperlukan untuk menegakkannya.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Kapan p → q bernilai salah?","options":["p benar dan q salah","p salah dan q benar","p dan q salah"],"answer":0,"why":"Satu-satunya kasus salah."},{"q":"Negasi dari \"semua mahasiswa lulus\" adalah...","options":["Ada mahasiswa yang tidak lulus","Semua mahasiswa tidak lulus","Tidak ada yang lulus"],"answer":0,"why":"¬∀x P(x) ≡ ∃x ¬P(x)."},{"q":"Berapa banyak himpunan bagian dari himpunan berukuran 4?","options":["16","8","4"],"answer":0,"why":"2⁴ = 16."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Jika A = {1,2,3} dan B = {3,4}, tentukan A ∪ B, A ∩ B, A − B.</summary><div>{1,2,3,4}; {3}; {1,2}.</div></details><details><summary>2. Tulis kontraposisi dari "Jika program lulus uji maka tidak ada bug yang ditemukan uji."</summary><div>Jika ada bug yang ditemukan uji, maka program tidak lulus uji.</div></details><details><summary>3. Buktikan dengan induksi bahwa jumlah n bilangan ganjil pertama adalah n².</summary><div>Basis n=1: 1 = 1². Langkah: k² + (2k+1) = (k+1)².</div></details><details><summary>4. Apa beda "∀x ∃y" dan "∃y ∀x"? Beri contoh bahwa urutannya penting.</summary><div>"Setiap orang mencintai seseorang" tidak sama dengan "ada seseorang yang dicintai semua orang".</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Himpunan: ∪, ∩, −, komplemen, himpunan kuasa (2ⁿ), inklusi-eksklusi.</li><li>Logika: ¬ ∧ ∨ → ↔; p → q setara dengan ¬p ∨ q dan dengan kontraposisinya.</li><li>Kuantor ∀ dan ∃, serta negasinya; urutan kuantor penting.</li><li>Bukti: langsung, kontraposisi, kontradiksi, induksi. Pengujian bukan bukti.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa matematika diskrit penting bagi informatika?</summary><div>Ia adalah bahasa formal untuk algoritma, struktur data, basis data relasional, kriptografi, jaringan, dan verifikasi program.</div></details>
+<details class="faq"><summary>Apa bedanya himpunan dan list?</summary><div>Himpunan tidak berurutan dan tanpa duplikat; list berurutan dan boleh duplikat.</div></details>
+<details class="faq"><summary>Apa itu relasi dan fungsi?</summary><div>Relasi adalah himpunan pasangan terurut; fungsi adalah relasi yang memetakan setiap masukan ke tepat satu keluaran. Relasi adalah dasar tabel basis data.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Kenneth Rosen, Discrete Mathematics and Its Applications (McGraw-Hill)</li><li><a href="https://courses.csail.mit.edu/6.042/spring18/mcs.pdf" rel="noopener" target="_blank">Lehman, Leighton, Meyer, Mathematics for Computer Science (MIT, gratis)</a></li><li><a href="https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/" rel="noopener" target="_blank">MIT OpenCourseWare 6.042J: Mathematics for Computer Science</a></li><li><a href="https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset" rel="noopener" target="_blank">Dokumentasi Python: set types</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

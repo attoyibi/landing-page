@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Package, Maven, dan Gradle: Mengelola Proyek Java</title>
+<meta name="description" content="Susun proyek Java yang rapi: package dan import, struktur direktori standar, modul, dependensi, Maven dan Gradle, build, serta praktik versi dan jar.">
+<meta name="keywords" content="Java, Maven, Gradle, package, dependensi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/">
+<meta property="og:title" content="Package, Maven, dan Gradle: Mengelola Proyek Java">
+<meta property="og:description" content="Susun proyek Java yang rapi: package dan import, struktur direktori standar, modul, dependensi, Maven dan Gradle, build, serta praktik versi dan jar.">
+<meta property="og:image" content="https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Package, Maven, dan Gradle: Mengelola Proyek Java">
+<meta name="twitter:description" content="Susun proyek Java yang rapi: package dan import, struktur direktori standar, modul, dependensi, Maven dan Gradle, build, serta praktik versi dan jar.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Package, Maven, dan Gradle: Mengelola Proyek Java","description":"Susun proyek Java yang rapi: package dan import, struktur direktori standar, modul, dependensi, Maven dan Gradle, build, serta praktik versi dan jar.","image":["https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, Maven, Gradle, package, dependensi","articleSection":"PBO dengan Java","wordCount":370,"mainEntityOfPage":"https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Package, Maven, dan Gradle: Mengelola Proyek Java","item":"https://muchson.web.id/artikel/package-modul-maven-dan-gradle-mengelola-proyek-java/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Pilih Maven atau Gradle?","acceptedAnswer":{"@type":"Answer","text":"Keduanya baik. Ikuti yang dipakai tim atau kerangka kerja Anda; untuk Android, Gradle adalah standar."}},{"@type":"Question","name":"Apa itu classpath?","acceptedAnswer":{"@type":"Answer","text":"Daftar lokasi tempat JVM mencari class dan jar saat berjalan atau kompilasi; alat build mengisinya otomatis."}},{"@type":"Question","name":"Bagaimana menjalankan jar?","acceptedAnswer":{"@type":"Answer","text":"java -jar nama.jar bila manifest menentukan class utama."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#package">Package</a></li><li><a href="#struktur-proyek-standar">Struktur proyek standar</a></li><li><a href="#maven-pom-xml">Maven: pom.xml</a></li><li><a href="#gradle-build-gradle">Gradle: build.gradle</a></li><li><a href="#dependensi-dan-versi">Dependensi dan versi</a></li><li><a href="#modul-java-jpms">Modul Java (JPMS)</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Package, Maven, dan Gradle: Mengelola Proyek Java</h1>
+<p class="lead">Program sungguhan bukan satu berkas. Ia terdiri dari ratusan class yang dikelompokkan dalam package, bergantung pada pustaka luar, dan dibangun dengan alat otomatis. Memahami struktur ini mengubah Anda dari penulis skrip menjadi pengembang proyek.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Java, class dan interface</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Package, Maven, dan Gradle: Mengelola Proyek Java" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengelompokkan class dengan package dan memakai import</li><li>mengikuti struktur direktori standar Maven/Gradle</li><li>membaca pom.xml dan build.gradle dasar</li><li>menjelaskan dependensi, repositori, dan versi</li><li>membangun dan menjalankan proyek dari baris perintah</li></ul></div>
+<h2 id="package">Package</h2>
+<p>Package adalah ruang nama yang mengelompokkan class terkait dan menghindari bentrok nama. Konvensi: nama domain terbalik, huruf kecil, misalnya <code>id.web.muchson.perpustakaan.model</code>.</p>
+<figure class="codebox"><pre data-lang="java"><code>// berkas: src/main/java/id/contoh/perpustakaan/model/Buku.java
+package id.contoh.perpustakaan.model;
+
+public record Buku(String isbn, String judul) { }
+
+// berkas: src/main/java/id/contoh/perpustakaan/App.java
+package id.contoh.perpustakaan;
+
+import id.contoh.perpustakaan.model.Buku;     // memakai class dari package lain
+import java.util.List;                          // dari pustaka standar
+
+public class App {
+    public static void main(String[] args) {
+        List&lt;Buku&gt; daftar = List.of(new Buku(&quot;111&quot;, &quot;Algoritma&quot;));
+        System.out.println(daftar);
+    }
+}</code></pre></figure>
+<table><thead><tr><th>Kata kunci</th><th>Fungsi</th></tr></thead><tbody><tr><td>package x.y;</td><td>Menyatakan lokasi class (harus cocok dengan struktur folder)</td></tr><tr><td>import x.y.Kelas;</td><td>Memakai nama pendek untuk class dari package lain</td></tr><tr><td>import x.y.*;</td><td>Mengimpor seluruh package (kurang disarankan: kurang jelas)</td></tr><tr><td>import static ...</td><td>Mengimpor anggota static, misalnya Math.max</td></tr></tbody></table>
+<h2 id="struktur-proyek-standar">Struktur proyek standar</h2>
+<figure class="codebox"><pre data-lang="text"><code>proyek-perpustakaan/
+├── pom.xml                      (Maven)  atau  build.gradle  (Gradle)
+├── src/
+│   ├── main/
+│   │   ├── java/id/contoh/perpustakaan/...     kode produksi
+│   │   └── resources/                           berkas konfigurasi, templat
+│   └── test/
+│       └── java/id/contoh/perpustakaan/...     kode tes (JUnit)
+└── target/  atau  build/                        hasil build (jangan di-commit)</code></pre><figcaption>Maven dan Gradle sepakat dengan tata letak ini, jadi alat dan IDE langsung mengerti proyek Anda.</figcaption></figure>
+<h2 id="maven-pom-xml">Maven: pom.xml</h2>
+<figure class="codebox"><pre data-lang="xml"><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;groupId&gt;id.contoh&lt;/groupId&gt;          &lt;!-- organisasi --&gt;
+  &lt;artifactId&gt;perpustakaan&lt;/artifactId&gt; &lt;!-- nama proyek --&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+
+  &lt;properties&gt;
+    &lt;maven.compiler.release&gt;21&lt;/maven.compiler.release&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+  &lt;/properties&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;                        &lt;!-- pustaka luar, diunduh otomatis dari Maven Central --&gt;
+      &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+      &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;
+      &lt;version&gt;5.10.2&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;               &lt;!-- hanya untuk tes --&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre></figure>
+<figure class="codebox"><pre data-lang="bash"><code>mvn compile        # mengompilasi
+mvn test           # menjalankan tes
+mvn package        # menghasilkan target/perpustakaan-1.0.0.jar
+mvn clean          # menghapus hasil build</code></pre></figure>
+<h2 id="gradle-build-gradle">Gradle: build.gradle</h2>
+<figure class="codebox"><pre data-lang="text"><code>plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'id.contoh'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+application { mainClass = 'id.contoh.perpustakaan.App' }
+tasks.test { useJUnitPlatform() }</code></pre></figure>
+<figure class="codebox"><pre data-lang="bash"><code>./gradlew build       # kompilasi + tes + jar
+./gradlew test
+./gradlew run</code></pre></figure>
+<table><thead><tr><th>Aspek</th><th>Maven</th><th>Gradle</th></tr></thead><tbody><tr><td>Konfigurasi</td><td>XML deklaratif (pom.xml)</td><td>Skrip Groovy/Kotlin (lebih ringkas, lebih fleksibel)</td></tr><tr><td>Konvensi</td><td>Sangat kuat, seragam</td><td>Konvensi sama, mudah dikustomisasi</td></tr><tr><td>Kecepatan</td><td>Cukup</td><td>Umumnya lebih cepat berkat build inkremental dan cache</td></tr><tr><td>Dipakai di</td><td>Banyak proyek perusahaan dan Spring</td><td>Android dan banyak proyek modern</td></tr></tbody></table>
+<h2 id="dependensi-dan-versi">Dependensi dan versi</h2>
+<ul><li><b>Koordinat</b>: groupId : artifactId : version mengidentifikasi sebuah pustaka secara unik di repositori seperti Maven Central.</li><li><b>Dependensi transitif</b>: pustaka yang Anda pakai membawa pustakanya sendiri; alat build menyelesaikannya otomatis.</li><li><b>Versi semantik</b> (MAJOR.MINOR.PATCH): naik MAJOR berarti perubahan yang bisa merusak.</li><li><b>Kunci versi</b>: hindari rentang longgar seperti "latest" agar build dapat diulang.</li><li><b>Keamanan</b>: perbarui dependensi secara berkala; kerentanan sering berada di pustaka pihak ketiga.</li></ul>
+<div class="callout info"><b>Catatan praktis</b><p>Jangan meng-commit hasil build (target/, build/, *.class) ke Git. Tambahkan ke <code>.gitignore</code>. Yang disimpan di Git adalah kode sumber dan berkas konfigurasi build.</p></div>
+<h2 id="modul-java-jpms">Modul Java (JPMS)</h2>
+<p>Sejak Java 9 tersedia sistem modul: berkas <code>module-info.java</code> menyatakan modul mana yang dibutuhkan dan package mana yang diekspor, sehingga detail internal benar-benar tersembunyi. Aplikasi biasa jarang memakainya, tetapi pustaka dan JDK sendiri disusun sebagai modul.</p>
+<figure class="codebox"><span class="codefile">module-info.java</span><pre data-lang="java"><code>module id.contoh.perpustakaan {
+    requires java.logging;                   // modul yang dibutuhkan
+    exports id.contoh.perpustakaan.model;    // hanya package ini terlihat dari luar
+}</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Konvensi nama package?","options":["Domain terbalik, huruf kecil","Huruf besar semua","Bebas"],"answer":0,"why":"Menghindari bentrok nama antar organisasi."},{"q":"Folder untuk kode tes pada struktur standar?","options":["src/test/java","src/main/tes","test/"],"answer":0,"why":"Dikenali Maven dan Gradle."},{"q":"Dependensi transitif adalah...","options":["Dependensi dari dependensi Anda","Dependensi lokal","Dependensi yang dihapus"],"answer":0,"why":"Alat build menyelesaikannya otomatis."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat struktur folder untuk proyek bernama toko dengan package id.contoh.toko.</summary><div>src/main/java/id/contoh/toko/ dan src/test/java/id/contoh/toko/.</div></details><details><summary>2. Mengapa import dengan tanda bintang kurang disarankan?</summary><div>Tidak jelas dari mana sebuah class berasal dan dapat memicu bentrok nama.</div></details><details><summary>3. Apa bedanya jar biasa dan "fat jar"?</summary><div>Jar biasa hanya berisi kode Anda; fat jar menyertakan dependensi sehingga dapat dijalankan langsung dengan java -jar.</div></details><details><summary>4. Mengapa dependensi test diberi scope test?</summary><div>Agar tidak ikut terbawa ke hasil produksi.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Package mengelompokkan class; import memakai class dari package lain.</li><li>Struktur src/main/java dan src/test/java adalah standar.</li><li>Maven (XML) dan Gradle (skrip) mengelola kompilasi, tes, dan dependensi.</li><li>Pahami koordinat, versi, dan dependensi transitif; jangan commit hasil build.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Pilih Maven atau Gradle?</summary><div>Keduanya baik. Ikuti yang dipakai tim atau kerangka kerja Anda; untuk Android, Gradle adalah standar.</div></details>
+<details class="faq"><summary>Apa itu classpath?</summary><div>Daftar lokasi tempat JVM mencari class dan jar saat berjalan atau kompilasi; alat build mengisinya otomatis.</div></details>
+<details class="faq"><summary>Bagaimana menjalankan jar?</summary><div>java -jar nama.jar bila manifest menentukan class utama.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://maven.apache.org/guides/getting-started/" rel="noopener" target="_blank">Apache Maven: Getting Started Guide</a></li><li><a href="https://docs.gradle.org/current/userguide/building_java_projects.html" rel="noopener" target="_blank">Gradle: Building Java Applications</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/package/index.html" rel="noopener" target="_blank">Oracle: Packages (Java Tutorials)</a></li><li><a href="https://central.sonatype.com/" rel="noopener" target="_blank">Maven Central Repository</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

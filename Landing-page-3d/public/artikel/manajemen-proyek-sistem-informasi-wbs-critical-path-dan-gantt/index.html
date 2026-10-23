@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manajemen Proyek SI: WBS, Critical Path, dan Gantt</title>
+<meta name="description" content="Belajar manajemen proyek SI: WBS, estimasi PERT, critical path method dengan perhitungan yang dijalankan, bagan Gantt, dan pengelolaan risiko.">
+<meta name="keywords" content="manajemen proyek, WBS, critical path, Gantt, estimasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/">
+<meta property="og:title" content="Manajemen Proyek SI: WBS, Critical Path, dan Gantt">
+<meta property="og:description" content="Belajar manajemen proyek SI: WBS, estimasi PERT, critical path method dengan perhitungan yang dijalankan, bagan Gantt, dan pengelolaan risiko.">
+<meta property="og:image" content="https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Manajemen Proyek SI: WBS, Critical Path, dan Gantt">
+<meta name="twitter:description" content="Belajar manajemen proyek SI: WBS, estimasi PERT, critical path method dengan perhitungan yang dijalankan, bagan Gantt, dan pengelolaan risiko.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Manajemen Proyek SI: WBS, Critical Path, dan Gantt","description":"Belajar manajemen proyek SI: WBS, estimasi PERT, critical path method dengan perhitungan yang dijalankan, bagan Gantt, dan pengelolaan risiko.","image":["https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"manajemen proyek, WBS, critical path, Gantt, estimasi","articleSection":"Sistem Informasi","wordCount":461,"mainEntityOfPage":"https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Manajemen Proyek SI: WBS, Critical Path, dan Gantt","item":"https://muchson.web.id/artikel/manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa beda CPM dan PERT?","acceptedAnswer":{"@type":"Answer","text":"CPM memakai durasi tunggal dan menekankan jalur kritis; PERT memakai estimasi tiga titik untuk durasi probabilistik. Praktiknya sering digabung."}},{"@type":"Question","name":"Apa alat yang dipakai?","acceptedAnswer":{"@type":"Answer","text":"Microsoft Project, Jira, Trello, GanttProject (sumber terbuka), atau lembar kerja sederhana."}},{"@type":"Question","name":"Bagaimana dengan proyek Agile?","acceptedAnswer":{"@type":"Answer","text":"Perencanaan dilakukan per sprint dengan kecepatan tim (velocity); CPM kurang dipakai tetapi tetap berguna untuk ketergantungan lintas tim."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#proyek-dan-batasannya">Proyek dan batasannya</a></li><li><a href="#wbs-memecah-pekerjaan">WBS: memecah pekerjaan</a></li><li><a href="#critical-path-method-cpm">Critical Path Method (CPM)</a></li><li><a href="#bagan-gantt">Bagan Gantt</a></li><li><a href="#mengelola-risiko">Mengelola risiko</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Manajemen Proyek SI: WBS, Critical Path, dan Gantt</h1>
+<p class="lead">Proyek perangkat lunak terkenal terlambat dan melebihi anggaran. Manajemen proyek tidak menjamin sukses, tetapi memberi alat untuk melihat masalah lebih awal: apa yang harus dikerjakan, urutannya, siapa yang mengerjakan, dan jalur mana yang tidak boleh terlambat sedikit pun.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> SDLC</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Manajemen Proyek SI: WBS, Critical Path, dan Gantt" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mendefinisikan proyek, ruang lingkup, dan segitiga batasan</li><li>menyusun WBS (work breakdown structure)</li><li>menghitung critical path method: ES, EF, LS, LF, dan float</li><li>membaca bagan Gantt</li><li>mengidentifikasi dan menilai risiko proyek</li></ul></div>
+<h2 id="proyek-dan-batasannya">Proyek dan batasannya</h2>
+<p>Proyek adalah upaya sementara untuk menghasilkan produk atau layanan unik, dengan awal dan akhir yang jelas. Tiga batasan utama saling bertukar: <b>ruang lingkup, waktu, dan biaya</b>, dengan <b>mutu</b> di pusatnya. Mengubah salah satu hampir selalu memengaruhi yang lain.</p>
+<figure class="diagram"><svg viewBox="0 0 520 230" role="img" aria-label="Segitiga batasan proyek" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="lpl3k-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="lpl3k-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="lpl3k-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="lpl3k-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="lpl3k-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="238.9,53 111.1,162" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="140,180 380,180" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="408.9,162 281.1,53" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="190" y="17" width="140" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="39.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">Ruang lingkup</tspan></text><rect x="40" y="162" width="100" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="184.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">Waktu</tspan></text><rect x="380" y="162" width="100" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="430" y="184.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="430" dy="0">Biaya</tspan></text><ellipse cx="260" cy="125" rx="40" ry="40" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="260" y="129" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="260" dy="0">Mutu</tspan></text></svg><figcaption>Menambah fitur (lingkup) tanpa menambah waktu atau biaya akan menurunkan mutu.</figcaption></figure>
+<h2 id="wbs-memecah-pekerjaan">WBS: memecah pekerjaan</h2>
+<p>WBS memecah hasil akhir proyek menjadi paket kerja yang cukup kecil untuk diperkirakan dan ditugaskan. Aturan 100%: WBS harus mencakup seluruh pekerjaan, tidak lebih dan tidak kurang.</p>
+<figure class="codebox"><pre data-lang="text"><code>1. Sistem Akademik Kampus
+   1.1 Analisis
+       1.1.1 Wawancara pemangku kepentingan
+       1.1.2 Dokumen kebutuhan
+   1.2 Perancangan
+       1.2.1 Rancangan basis data
+       1.2.2 Rancangan antarmuka
+   1.3 Pembangunan
+       1.3.1 Modul KRS
+       1.3.2 Modul nilai
+   1.4 Pengujian dan penerapan
+       1.4.1 Uji sistem dan UAT
+       1.4.2 Pelatihan dan migrasi data</code></pre></figure>
+<h2 id="critical-path-method-cpm">Critical Path Method (CPM)</h2>
+<p>CPM mencari rangkaian kegiatan terpanjang yang menentukan durasi minimum proyek. Kegiatan di jalur ini disebut <b>kritis</b>: bila terlambat sehari, proyek terlambat sehari. Kegiatan lain memiliki <b>float</b> (kelonggaran).</p>
+<table><thead><tr><th>Istilah</th><th>Rumus</th><th>Arti</th></tr></thead><tbody><tr><td>ES (earliest start)</td><td>max(EF semua pendahulu)</td><td>Paling awal kegiatan dapat mulai</td></tr><tr><td>EF (earliest finish)</td><td>ES + durasi</td><td>Paling awal selesai</td></tr><tr><td>LF (latest finish)</td><td>min(LS semua penerus)</td><td>Paling lambat selesai tanpa menunda proyek</td></tr><tr><td>LS (latest start)</td><td>LF − durasi</td><td>Paling lambat mulai</td></tr><tr><td>Float (slack)</td><td>LS − ES</td><td>Kelonggaran; 0 berarti kritis</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code># Kegiatan: nama -&gt; (durasi hari, [pendahulu])
+kegiatan = {
+    &quot;A Analisis&quot;:        (5, []),
+    &quot;B Desain DB&quot;:       (4, [&quot;A Analisis&quot;]),
+    &quot;C Desain UI&quot;:       (3, [&quot;A Analisis&quot;]),
+    &quot;D Modul data&quot;:      (8, [&quot;B Desain DB&quot;]),
+    &quot;E Modul tampilan&quot;:  (6, [&quot;C Desain UI&quot;]),
+    &quot;F Integrasi&quot;:       (4, [&quot;D Modul data&quot;, &quot;E Modul tampilan&quot;]),
+    &quot;G Pengujian&quot;:       (5, [&quot;F Integrasi&quot;]),
+}
+
+# forward pass
+ES, EF = {}, {}
+for k in kegiatan:                      # urutan dibuat sudah topologis
+    dur, pend = kegiatan[k]
+    ES[k] = max((EF[p] for p in pend), default=0)
+    EF[k] = ES[k] + dur
+durasi_proyek = max(EF.values())
+
+# backward pass
+LF, LS = {}, {}
+penerus = {k: [j for j, (_, p) in kegiatan.items() if k in p] for k in kegiatan}
+for k in reversed(list(kegiatan)):
+    dur = kegiatan[k][0]
+    LF[k] = min((LS[s] for s in penerus[k]), default=durasi_proyek)
+    LS[k] = LF[k] - dur
+
+print(f&quot;{'kegiatan':&lt;18}{'dur':&gt;4}{'ES':&gt;4}{'EF':&gt;4}{'LS':&gt;4}{'LF':&gt;4}{'float':&gt;6}&quot;)
+for k, (dur, _) in kegiatan.items():
+    fl = LS[k] - ES[k]
+    print(f&quot;{k:&lt;18}{dur:&gt;4}{ES[k]:&gt;4}{EF[k]:&gt;4}{LS[k]:&gt;4}{LF[k]:&gt;4}{fl:&gt;6}{'   &lt;- kritis' if fl == 0 else ''}&quot;)
+print(&quot;durasi proyek:&quot;, durasi_proyek, &quot;hari&quot;)
+print(&quot;jalur kritis:&quot;, &quot; -&gt; &quot;.join(k.split()[0] for k in kegiatan if LS[k] == ES[k]))</code></pre><pre class="runout" data-lang="keluaran"><code>kegiatan           dur  ES  EF  LS  LF float
+A Analisis           5   0   5   0   5     0   &lt;- kritis
+B Desain DB          4   5   9   5   9     0   &lt;- kritis
+C Desain UI          3   5   8   8  11     3
+D Modul data         8   9  17   9  17     0   &lt;- kritis
+E Modul tampilan     6   8  14  11  17     3
+F Integrasi          4  17  21  17  21     0   &lt;- kritis
+G Pengujian          5  21  26  21  26     0   &lt;- kritis
+durasi proyek: 26 hari
+jalur kritis: A -&gt; B -&gt; D -&gt; F -&gt; G</code></pre><figcaption>Jalur A–B–D–F–G (5+4+8+4+5 = 26 hari) adalah yang terpanjang. Jalur desain UI dan modul tampilan memiliki float 3 hari.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 683 230" role="img" aria-label="Jaringan kegiatan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="zzm52-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="zzm52-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="zzm52-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="zzm52-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="zzm52-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="105,95.7 155,74.3" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><polyline points="105,134.3 155,155.7" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><polyline points="245,55 305,55" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><polyline points="245,175 305,175" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><polyline points="395,73 455,97" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><polyline points="395,157 455,133" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><polyline points="545,115 585,115" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#zzm52-arrow)"/><rect x="15" y="95" width="90" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="60" y="119.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="60" dy="0">A (5)</tspan></text><rect x="155" y="35" width="90" height="40" rx="8" fill="#fde8e8" stroke="#1e5ab2" stroke-width="2"/><text x="200" y="59.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="200" dy="0">B (4)</tspan></text><rect x="155" y="155" width="90" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="200" y="179.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="200" dy="0">C (3)</tspan></text><rect x="305" y="35" width="90" height="40" rx="8" fill="#fde8e8" stroke="#1e5ab2" stroke-width="2"/><text x="350" y="59.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="350" dy="0">D (8)</tspan></text><rect x="305" y="155" width="90" height="40" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="350" y="179.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="350" dy="0">E (6)</tspan></text><rect x="455" y="95" width="90" height="40" rx="8" fill="#fde8e8" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="119.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="500" dy="0">F (4)</tspan></text><rect x="585" y="95" width="90" height="40" rx="8" fill="#fde8e8" stroke="#1e5ab2" stroke-width="2"/><text x="630" y="119.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="630" dy="0">G (5)</tspan></text></svg><figcaption>Kotak merah muda adalah jalur kritis. Kegiatan C dan E boleh bergeser tanpa menunda proyek, sampai batas float-nya.</figcaption></figure>
+<h2 id="bagan-gantt">Bagan Gantt</h2>
+<p>Gantt menampilkan kegiatan sebagai batang pada sumbu waktu. Ia mudah dibaca oleh pemangku kepentingan, tetapi tidak sebaik jaringan kegiatan dalam memperlihatkan ketergantungan.</p>
+<figure class="codebox"><pre data-lang="python"><code>ES = {&quot;A&quot;:0,&quot;B&quot;:5,&quot;C&quot;:5,&quot;D&quot;:9,&quot;E&quot;:8,&quot;F&quot;:17,&quot;G&quot;:21}
+EF = {&quot;A&quot;:5,&quot;B&quot;:9,&quot;C&quot;:8,&quot;D&quot;:17,&quot;E&quot;:14,&quot;F&quot;:21,&quot;G&quot;:26}
+nama = {&quot;A&quot;:&quot;Analisis&quot;,&quot;B&quot;:&quot;Desain DB&quot;,&quot;C&quot;:&quot;Desain UI&quot;,&quot;D&quot;:&quot;Modul data&quot;,&quot;E&quot;:&quot;Modul tampilan&quot;,&quot;F&quot;:&quot;Integrasi&quot;,&quot;G&quot;:&quot;Pengujian&quot;}
+print(&quot; &quot; * 16 + &quot;&quot;.join(str(i % 10) for i in range(27)))
+for k in ES:
+    print(f&quot;{nama[k]:&lt;16}&quot; + &quot; &quot; * ES[k] + &quot;#&quot; * (EF[k] - ES[k]))</code></pre><pre class="runout" data-lang="keluaran"><code>                012345678901234567890123456
+Analisis        #####
+Desain DB            ####
+Desain UI            ###
+Modul data               ########
+Modul tampilan          ######
+Integrasi                        ####
+Pengujian                            #####</code></pre><figcaption>Satu karakter = satu hari. Batang yang saling bersambung pada baris A, B, D, F, G membentuk jalur kritis.</figcaption></figure>
+<h2 id="mengelola-risiko">Mengelola risiko</h2>
+<table><thead><tr><th>Risiko</th><th>Peluang</th><th>Dampak</th><th>Respons</th></tr></thead><tbody><tr><td>Kebutuhan berubah di tengah jalan</td><td>Tinggi</td><td>Tinggi</td><td>Rilis bertahap, kontrol perubahan, backlog berprioritas</td></tr><tr><td>Anggota kunci keluar</td><td>Sedang</td><td>Tinggi</td><td>Dokumentasi, pasangan kerja, penyebaran pengetahuan</td></tr><tr><td>Estimasi terlalu optimis</td><td>Tinggi</td><td>Sedang</td><td>Estimasi tiga titik, cadangan waktu (buffer)</td></tr><tr><td>Integrasi dengan sistem lama sulit</td><td>Sedang</td><td>Tinggi</td><td>Uji integrasi lebih awal (spike)</td></tr></tbody></table>
+<div class="callout info"><b>Estimasi PERT</b><p>Estimasi tiga titik: <code>E = (O + 4M + P) / 6</code> dengan O optimis, M paling mungkin, P pesimis (PERT). Contoh O=4, M=6, P=14 menghasilkan E = (4 + 24 + 14)/6 = 7 hari: lebih besar dari angka "paling mungkin" karena pesimis lebih jauh dari optimis.</p></div>
+<div data-w="calc"><script type="application/json">{"title":"Hitung estimasi PERT","desc":"Masukkan tiga estimasi untuk satu kegiatan.","inputs":[{"id":"o","label":"Optimis","value":4,"min":1,"max":60,"step":1,"unit":"hari"},{"id":"m","label":"Paling mungkin","value":6,"min":1,"max":60,"step":1,"unit":"hari"},{"id":"p","label":"Pesimis","value":14,"min":1,"max":90,"step":1,"unit":"hari"}],"outputs":[{"label":"Estimasi PERT","expr":"(o + 4*m + p) / 6","fmt":"num","unit":"hari","big":true},{"label":"Simpangan baku","expr":"(p - o) / 6","fmt":"num","unit":"hari"}]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Float kegiatan kritis adalah...","options":["0","Selalu positif","Tak terhingga"],"answer":0,"why":"Tidak ada kelonggaran."},{"q":"Jalur kritis adalah...","options":["Jalur terpanjang yang menentukan durasi proyek","Jalur terpendek","Jalur termahal"],"answer":0,"why":"Menentukan waktu minimum penyelesaian."},{"q":"Aturan 100% pada WBS berarti...","options":["Seluruh lingkup pekerjaan tercakup","Semua kegiatan harus selesai hari yang sama","Biaya 100 persen"],"answer":0,"why":"Tidak ada pekerjaan di luar WBS."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Jika kegiatan C (desain UI) bertambah 2 hari menjadi 5 hari, apakah durasi proyek berubah?</summary><div>Tidak: float C dan E adalah 3 hari, sehingga tambahan 2 hari masih tertampung. Durasi tetap 26 hari dan float tersisa 1 hari; bila bertambah 3 hari, jalur ini menjadi kritis juga.</div></details><details><summary>2. Jika modul data (D) bertambah 3 hari?</summary><div>D kritis sehingga proyek bertambah 3 hari menjadi 29 hari.</div></details><details><summary>3. Mengapa menambah orang pada proyek terlambat tidak selalu mempercepat?</summary><div>Tambahan komunikasi dan waktu pelatihan; pekerjaan yang saling bergantung tidak dapat diparalelkan (hukum Brooks).</div></details><details><summary>4. Susun WBS tingkat dua untuk proyek aplikasi kasir.</summary><div>Analisis, desain, pembangunan (produk, transaksi, laporan), pengujian, penerapan dan pelatihan, manajemen proyek.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Proyek dibatasi lingkup, waktu, dan biaya; ketiganya saling bertukar dengan mutu.</li><li>WBS memecah pekerjaan hingga paket yang dapat diestimasi.</li><li>CPM: forward dan backward pass; float nol berarti kegiatan kritis.</li><li>Gantt memudahkan komunikasi; risiko dikelola dengan peluang, dampak, dan respons.</li><li>Estimasi PERT memperhitungkan ketidakpastian.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa beda CPM dan PERT?</summary><div>CPM memakai durasi tunggal dan menekankan jalur kritis; PERT memakai estimasi tiga titik untuk durasi probabilistik. Praktiknya sering digabung.</div></details>
+<details class="faq"><summary>Apa alat yang dipakai?</summary><div>Microsoft Project, Jira, Trello, GanttProject (sumber terbuka), atau lembar kerja sederhana.</div></details>
+<details class="faq"><summary>Bagaimana dengan proyek Agile?</summary><div>Perencanaan dilakukan per sprint dengan kecepatan tim (velocity); CPM kurang dipakai tetapi tetap berguna untuk ketergantungan lintas tim.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.pmi.org/pmbok-guide-standards" rel="noopener" target="_blank">Project Management Institute, A Guide to the Project Management Body of Knowledge (PMBOK Guide)</a></li><li>Frederick Brooks, The Mythical Man-Month (Addison-Wesley, 1975)</li><li>Kathy Schwalbe, Information Technology Project Management (Cengage)</li><li>Ralph M. Stair dan George W. Reynolds, Principles of Information Systems (Cengage)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a><a href="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/"><img src="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SDLC: Waterfall, Agile, dan Model Pengembangan Lain</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

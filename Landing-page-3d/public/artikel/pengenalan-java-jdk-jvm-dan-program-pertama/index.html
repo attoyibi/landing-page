@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengenalan Java: JDK, JVM, dan Program Pertama</title>
+<meta name="description" content="Kenali Java dari nol: perbedaan JDK, JRE, dan JVM, alur compile-run, struktur program Hello World, cara membaca pesan error, dan mengapa Java dipakai di industri.">
+<meta name="keywords" content="Java, JDK, JVM, Hello World, bytecode">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/">
+<meta property="og:title" content="Pengenalan Java: JDK, JVM, dan Program Pertama">
+<meta property="og:description" content="Kenali Java dari nol: perbedaan JDK, JRE, dan JVM, alur compile-run, struktur program Hello World, cara membaca pesan error, dan mengapa Java dipakai di industri.">
+<meta property="og:image" content="https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pengenalan Java: JDK, JVM, dan Program Pertama">
+<meta name="twitter:description" content="Kenali Java dari nol: perbedaan JDK, JRE, dan JVM, alur compile-run, struktur program Hello World, cara membaca pesan error, dan mengapa Java dipakai di industri.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pengenalan Java: JDK, JVM, dan Program Pertama","description":"Kenali Java dari nol: perbedaan JDK, JRE, dan JVM, alur compile-run, struktur program Hello World, cara membaca pesan error, dan mengapa Java dipakai di industri.","image":["https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, JDK, JVM, Hello World, bytecode","articleSection":"PBO dengan Java","wordCount":428,"mainEntityOfPage":"https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Pengenalan Java: JDK, JVM, dan Program Pertama","item":"https://muchson.web.id/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Versi Java mana yang sebaiknya dipasang?","acceptedAnswer":{"@type":"Answer","text":"Pilih rilis LTS terbaru (misalnya Java 21 atau 25) dari penyedia OpenJDK seperti Temurin atau dari Oracle. LTS mendapat pembaruan dalam waktu lama."}},{"@type":"Question","name":"Apakah Java sama dengan JavaScript?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Namanya mirip karena alasan pemasaran masa lalu; bahasanya, cara kerjanya, dan tempat dijalankannya berbeda."}},{"@type":"Question","name":"Apakah harus memakai IDE?","acceptedAnswer":{"@type":"Answer","text":"Tidak wajib. Untuk belajar dasar, editor teks dan terminal sudah cukup; IDE membantu proyek yang lebih besar."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dari-kode-sumber-sampai-berjalan">Dari kode sumber sampai berjalan</a></li><li><a href="#program-pertama">Program pertama</a></li><li><a href="#menjalankan-dari-terminal">Menjalankan dari terminal</a></li><li><a href="#membaca-pesan-error">Membaca pesan error</a></li><li><a href="#mengapa-java-masih-dipakai">Mengapa Java masih dipakai</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Pengenalan Java: JDK, JVM, dan Program Pertama</h1>
+<p class="lead">Java adalah bahasa berorientasi objek yang dikompilasi menjadi bytecode dan dijalankan oleh Java Virtual Machine. Slogan lamanya, "tulis sekali, jalankan di mana saja", berasal dari rancangan itu. Materi ini mengurai bagian-bagiannya agar Anda paham apa yang terjadi saat menekan Run.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar menggunakan komputer</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Pengenalan Java: JDK, JVM, dan Program Pertama" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan JDK, JRE, dan JVM</li><li>menjelaskan alur dari kode sumber .java ke bytecode .class sampai berjalan</li><li>menulis, mengompilasi, dan menjalankan program Java sederhana</li><li>membaca pesan error kompilasi dan runtime</li><li>menjelaskan unsur dasar struktur program: class, method main, statement</li></ul></div>
+<h2 id="dari-kode-sumber-sampai-berjalan">Dari kode sumber sampai berjalan</h2>
+<figure class="diagram"><svg viewBox="0 0 728 132" role="img" aria-label="Alur kompilasi Java" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="112" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Main.java</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">kode sumber yang Anda</tspan><tspan x="85" dy="14">tulis</tspan></text><line x1="164" y1="66" x2="192" y2="66" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="112" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">javac</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">kompiler memeriksa dan</tspan><tspan x="271" dy="14">menghasilkan bytecode</tspan></text><line x1="350" y1="66" x2="378" y2="66" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="112" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Main.class</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">bytecode, netral</tspan><tspan x="457" dy="14">terhadap mesin</tspan></text><line x1="536" y1="66" x2="564" y2="66" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="112" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">JVM (java)</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">menafsirkan dan</tspan><tspan x="643" dy="14">mengompilasi ke kode</tspan><tspan x="643" dy="14">mesin saat berjalan</tspan></text></svg><figcaption>Bytecode yang sama dapat berjalan pada Windows, macOS, atau Linux selama ada JVM.</figcaption></figure>
+<table><thead><tr><th>Istilah</th><th>Isi</th><th>Untuk siapa</th></tr></thead><tbody><tr><td>JVM</td><td>Mesin virtual yang menjalankan bytecode</td><td>Dipakai saat program berjalan</td></tr><tr><td>JRE</td><td>JVM + pustaka kelas standar</td><td>Pengguna yang hanya menjalankan</td></tr><tr><td>JDK</td><td>JRE + alat pengembang (javac, jar, jshell, dan lainnya)</td><td>Pengembang</td></tr></tbody></table>
+<div class="callout info"><b>Catatan praktis</b><p>Sejak Java 11 Oracle tidak lagi menyediakan paket JRE terpisah untuk umum. Yang Anda pasang untuk belajar adalah <b>JDK</b> (misalnya OpenJDK atau Temurin).</p></div>
+<h2 id="program-pertama">Program pertama</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println(&quot;Halo, dunia!&quot;);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Halo, dunia!</code></pre><figcaption>Simpan sebagai Main.java. Nama file harus sama dengan nama class public.</figcaption></figure>
+<div data-w="cards"><script type="application/json">{"title":"Bedah setiap bagian (ketuk kartu)","items":[{"tag":"public class Main","front":"Semua kode Java berada di dalam class","backTag":"Arti","back":"Class adalah wadah kode. \"public\" berarti dapat diakses dari mana saja; nama class harus cocok dengan nama berkas."},{"tag":"public static void main","front":"Titik masuk program","backTag":"Arti","back":"JVM mencari method ini untuk memulai. static: dipanggil tanpa membuat objek; void: tidak mengembalikan nilai."},{"tag":"String[] args","front":"Parameter dari baris perintah","backTag":"Arti","back":"Larik teks yang diberikan saat menjalankan program, misalnya java Main satu dua."},{"tag":"System.out.println","front":"Mencetak ke layar","backTag":"Arti","back":"System.out adalah keluaran standar; println mencetak lalu pindah baris."}]}</script></div>
+<h2 id="menjalankan-dari-terminal">Menjalankan dari terminal</h2>
+<figure class="codebox"><pre data-lang="bash"><code>javac Main.java      # menghasilkan Main.class
+java Main            # menjalankan JVM dengan class Main
+
+# sejak Java 11, berkas tunggal bisa langsung dijalankan:
+java Main.java</code></pre></figure>
+<h2 id="membaca-pesan-error">Membaca pesan error</h2>
+<p>Ada dua jenis kesalahan utama. <b>Kesalahan kompilasi</b> terdeteksi sebelum program berjalan (salah sintaks, tipe tidak cocok). <b>Kesalahan runtime</b> baru muncul saat program berjalan (misalnya pembagian dengan nol).</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 0;
+        System.out.println(&quot;Sebelum pembagian&quot;);
+        System.out.println(a / b);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Sebelum pembagian
+Exception in thread &quot;main&quot; java.lang.ArithmeticException: / by zero
+	at Main.main(Main.java:6)</code></pre><figcaption>Keluaran menunjukkan ArithmeticException beserta nomor baris: baris pertama stack trace adalah petunjuk utama.</figcaption></figure>
+<div class="callout good"><b>Mengapa ini baik</b><p>Kesalahan kompilasi seperti titik koma hilang atau variabel belum dideklarasikan ditolak oleh javac dan tidak pernah sampai berjalan. Itu keunggulan bahasa bertipe statis: banyak kesalahan tertangkap lebih awal.</p></div>
+<h2 id="mengapa-java-masih-dipakai">Mengapa Java masih dipakai</h2>
+<ul><li><b>Ekosistem matang</b>: pustaka dan kerangka kerja (Spring, Jakarta EE) untuk sistem perusahaan, perbankan, dan telekomunikasi.</li><li><b>Android</b>: Java dan Kotlin berjalan di JVM; banyak kode lama masih Java.</li><li><b>Performa</b>: JIT compiler mengoptimalkan kode panas saat berjalan.</li><li><b>Tooling</b>: IDE kuat (IntelliJ IDEA, Eclipse, NetBeans, VS Code) dan alat build (Maven, Gradle).</li><li><b>Cocok untuk belajar PBO</b>: sintaks eksplisit memaksa kita memikirkan tipe dan desain kelas.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apa hasil kompilasi javac?","options":["Kode mesin","Bytecode (.class)","Teks biasa"],"answer":1,"why":"Bytecode dijalankan oleh JVM."},{"q":"Yang dibutuhkan pengembang untuk menulis dan mengompilasi Java?","options":["JVM saja","JRE saja","JDK"],"answer":2,"why":"JDK memuat kompiler dan alat lainnya."},{"q":"Mengapa method main bersifat static?","options":["Agar JVM dapat memanggilnya tanpa membuat objek","Agar lebih cepat","Karena aturan IDE"],"answer":0,"why":"Belum ada objek saat program dimulai."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ubah program agar mencetak nama Anda dan jurusan pada dua baris.</summary><div>Dua pemanggilan System.out.println dengan teks berbeda.</div></details><details><summary>2. Apa bedanya print dan println?</summary><div>println menambahkan pindah baris di akhir; print tidak.</div></details><details><summary>3. Apa yang terjadi bila nama class berbeda dengan nama berkas pada class public?</summary><div>javac menolak dengan pesan bahwa class public harus dideklarasikan dalam berkas dengan nama yang sama.</div></details><details><summary>4. Mengapa kita bisa menjalankan bytecode yang sama pada sistem operasi berbeda?</summary><div>Karena JVM tersedia untuk tiap platform dan menerjemahkan bytecode ke instruksi mesin setempat.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>JDK = alat pengembang + JRE; JRE = JVM + pustaka; JVM menjalankan bytecode.</li><li>Alur: .java → javac → .class → JVM.</li><li>Program Java berada dalam class; main adalah titik masuk.</li><li>Kesalahan kompilasi dicegat lebih awal, kesalahan runtime muncul sebagai exception.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Versi Java mana yang sebaiknya dipasang?</summary><div>Pilih rilis LTS terbaru (misalnya Java 21 atau 25) dari penyedia OpenJDK seperti Temurin atau dari Oracle. LTS mendapat pembaruan dalam waktu lama.</div></details>
+<details class="faq"><summary>Apakah Java sama dengan JavaScript?</summary><div>Tidak. Namanya mirip karena alasan pemasaran masa lalu; bahasanya, cara kerjanya, dan tempat dijalankannya berbeda.</div></details>
+<details class="faq"><summary>Apakah harus memakai IDE?</summary><div>Tidak wajib. Untuk belajar dasar, editor teks dan terminal sudah cukup; IDE membantu proyek yang lebih besar.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/" rel="noopener" target="_blank">Oracle: The Java Tutorials</a></li><li><a href="https://dev.java/learn/" rel="noopener" target="_blank">dev.java: Learn Java (Oracle)</a></li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li><li><a href="https://introcs.cs.princeton.edu/java/home/" rel="noopener" target="_blank">Sedgewick dan Wayne, Introduction to Programming in Java</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a><a href="/artikel/array-dan-arraylist-java-ukuran-tetap-vs-dinamis/"><img src="/artikel/array-dan-arraylist-java-ukuran-tetap-vs-dinamis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Array dan ArrayList di Java: Tetap vs Dinamis</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
