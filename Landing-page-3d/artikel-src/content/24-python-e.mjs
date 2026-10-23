@@ -19,7 +19,7 @@ export default [
     {
         slug: 'analisis-kompleksitas-algoritma-big-o-omega-theta',
         title: 'Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta',
-        description: 'Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.',
+        description: 'Pelajari analisis kompleksitas algoritma: Big-O, Omega, Theta, menghitung operasi, pola umum O(1) sampai O(2^n), dan pengukuran nyata dengan kode.',
         date: D, category: C, level: 'Menengah', tags: ['kompleksitas algoritma', 'Big-O', 'Omega', 'Theta', 'analisis algoritma'], cta: 'none',
         prereq: ['perulangan bersarang', 'rekursi dasar', 'fungsi'],
         lead: 'Dua algoritma bisa sama-sama benar tetapi satu selesai dalam sedetik dan yang lain dalam sejam. Analisis kompleksitas adalah alat untuk memprediksi perilaku itu sebelum menjalankan apa pun, dan untuk membandingkan rancangan secara adil tanpa terpengaruh kecepatan komputer. Materi ini membangun definisinya dari hitungan langkah, bukan hafalan tabel.',

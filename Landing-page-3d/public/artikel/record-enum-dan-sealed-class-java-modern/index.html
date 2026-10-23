@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Record, Enum, dan Sealed Class: Java Modern · Muhammad Muchson</title>
-<meta name="description" content="Pelajari fitur Java modern untuk memodelkan data: record, enum dengan perilaku, sealed class, dan pattern matching switch, yang mengurangi kode berulang dan membuat desain lebih aman.">
+<meta name="description" content="Pelajari record, enum, dan sealed class Java modern serta switch dengan pattern matching untuk memodelkan data dengan lebih ringkas dan aman.">
 <meta name="keywords" content="Java, record, enum, sealed, pattern matching">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/">
 <meta property="og:title" content="Record, Enum, dan Sealed Class: Java Modern">
-<meta property="og:description" content="Pelajari fitur Java modern untuk memodelkan data: record, enum dengan perilaku, sealed class, dan pattern matching switch, yang mengurangi kode berulang dan membuat desain lebih aman.">
+<meta property="og:description" content="Pelajari record, enum, dan sealed class Java modern serta switch dengan pattern matching untuk memodelkan data dengan lebih ringkas dan aman.">
 <meta property="og:image" content="https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="PBO dengan Java">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Record, Enum, dan Sealed Class: Java Modern">
-<meta name="twitter:description" content="Pelajari fitur Java modern untuk memodelkan data: record, enum dengan perilaku, sealed class, dan pattern matching switch, yang mengurangi kode berulang dan membuat desain lebih aman.">
+<meta name="twitter:description" content="Pelajari record, enum, dan sealed class Java modern serta switch dengan pattern matching untuk memodelkan data dengan lebih ringkas dan aman.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Record, Enum, dan Sealed Class: Java Modern","description":"Pelajari fitur Java modern untuk memodelkan data: record, enum dengan perilaku, sealed class, dan pattern matching switch, yang mengurangi kode berulang dan membuat desain lebih aman.","image":["https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, record, enum, sealed, pattern matching","articleSection":"PBO dengan Java","wordCount":254,"mainEntityOfPage":"https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Record, Enum, dan Sealed Class: Java Modern","description":"Pelajari record, enum, dan sealed class Java modern serta switch dengan pattern matching untuk memodelkan data dengan lebih ringkas dan aman.","image":["https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, record, enum, sealed, pattern matching","articleSection":"PBO dengan Java","wordCount":254,"mainEntityOfPage":"https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Record, Enum, dan Sealed Class: Java Modern","item":"https://muchson.web.id/artikel/record-enum-dan-sealed-class-java-modern/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Sejak versi Java berapa fitur ini tersedia?","acceptedAnswer":{"@type":"Answer","text":"Record resmi di Java 16, sealed di 17, dan switch pattern matching di 21."}},{"@type":"Question","name":"Bisakah record mewarisi class?","acceptedAnswer":{"@type":"Answer","text":"Tidak (sudah mewarisi java.lang.Record), tetapi boleh mengimplementasikan interface."}},{"@type":"Question","name":"Apakah record boleh berisi method tambahan?","acceptedAnswer":{"@type":"Answer","text":"Boleh, termasuk method static dan konstruktor tambahan."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">
@@ -166,7 +166,7 @@ kuadran I, kuadran II, bukan titik</code></pre></figure>
 <details class="faq"><summary>Sejak versi Java berapa fitur ini tersedia?</summary><div>Record resmi di Java 16, sealed di 17, dan switch pattern matching di 21.</div></details>
 <details class="faq"><summary>Bisakah record mewarisi class?</summary><div>Tidak (sudah mewarisi java.lang.Record), tetapi boleh mengimplementasikan interface.</div></details>
 <details class="faq"><summary>Apakah record boleh berisi method tambahan?</summary><div>Boleh, termasuk method static dan konstruktor tambahan.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dev.java/learn/records/" rel="noopener" target="_blank">dev.java: Records</a></li><li><a href="https://dev.java/learn/pattern-matching/" rel="noopener" target="_blank">dev.java: Pattern Matching</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html" rel="noopener" target="_blank">Oracle: Enum Types (Java Tutorials)</a></li><li><a href="https://openjdk.org/jeps/409" rel="noopener" target="_blank">JEP 409: Sealed Classes</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dev.java/learn/records/" rel="noopener" target="_blank">dev.java: Records</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/language/pattern-matching.html" rel="noopener" target="_blank">Oracle: Pattern Matching (Java Language Updates)</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html" rel="noopener" target="_blank">Oracle: Enum Types (Java Tutorials)</a></li><li><a href="https://openjdk.org/jeps/409" rel="noopener" target="_blank">JEP 409: Sealed Classes</a></li></ul>
 
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>

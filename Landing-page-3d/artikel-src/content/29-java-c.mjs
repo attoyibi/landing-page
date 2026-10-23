@@ -403,7 +403,7 @@ public class Main {
     {
         slug: 'record-enum-dan-sealed-class-java-modern',
         title: 'Record, Enum, dan Sealed Class: Java Modern',
-        description: 'Pelajari fitur Java modern untuk memodelkan data: record, enum dengan perilaku, sealed class, dan pattern matching switch, yang mengurangi kode berulang dan membuat desain lebih aman.',
+        description: 'Pelajari record, enum, dan sealed class Java modern serta switch dengan pattern matching untuk memodelkan data dengan lebih ringkas dan aman.',
         date: D, category: C, level: 'Menengah', tags: ['Java', 'record', 'enum', 'sealed', 'pattern matching'], cta: 'none',
         prereq: ['class dan interface', 'polimorfisme'],
         lead: 'Java telah banyak berubah. Record menghilangkan kode berulang untuk class pembawa data, enum menyatakan himpunan nilai tetap, dan sealed class dengan pattern matching memungkinkan kompiler memastikan Anda sudah menangani semua kasus.',
@@ -514,6 +514,6 @@ public class Main {
             { summary: ['Record: data immutable tanpa kode berulang.', 'Enum: himpunan konstanta aman tipe dengan atribut dan perilaku.', 'Sealed: hierarki tertutup; switch pola memeriksa kelengkapan.', 'Pilih bentuk yang sesuai dengan sifat data.'] },
         ],
         faq: [['Sejak versi Java berapa fitur ini tersedia?', 'Record resmi di Java 16, sealed di 17, dan switch pattern matching di 21.'], ['Bisakah record mewarisi class?', 'Tidak (sudah mewarisi java.lang.Record), tetapi boleh mengimplementasikan interface.'], ['Apakah record boleh berisi method tambahan?', 'Boleh, termasuk method static dan konstruktor tambahan.']],
-        sources: [['dev.java: Records', 'https://dev.java/learn/records/'], ['dev.java: Pattern Matching', 'https://dev.java/learn/pattern-matching/'], ['Oracle: Enum Types (Java Tutorials)', 'https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html'], ['JEP 409: Sealed Classes', 'https://openjdk.org/jeps/409']],
+        sources: [['dev.java: Records', 'https://dev.java/learn/records/'], ['Oracle: Pattern Matching (Java Language Updates)', 'https://docs.oracle.com/en/java/javase/21/language/pattern-matching.html'], ['Oracle: Enum Types (Java Tutorials)', 'https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html'], ['JEP 409: Sealed Classes', 'https://openjdk.org/jeps/409']],
     },
 ];

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan</title>
-<meta name="description" content="Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.">
+<meta name="description" content="Pahami model OSI dan TCP/IP: lapisan, enkapsulasi, TCP vs UDP, dan perangkat jaringan, dengan simulasi enkapsulasi dan soket yang dijalankan.">
 <meta name="keywords" content="OSI, TCP/IP, jaringan komputer, enkapsulasi, TCP UDP">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/">
 <meta property="og:title" content="Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan">
-<meta property="og:description" content="Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.">
+<meta property="og:description" content="Pahami model OSI dan TCP/IP: lapisan, enkapsulasi, TCP vs UDP, dan perangkat jaringan, dengan simulasi enkapsulasi dan soket yang dijalankan.">
 <meta property="og:image" content="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Dasar Informatika">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan">
-<meta name="twitter:description" content="Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.">
+<meta name="twitter:description" content="Pahami model OSI dan TCP/IP: lapisan, enkapsulasi, TCP vs UDP, dan perangkat jaringan, dengan simulasi enkapsulasi dan soket yang dijalankan.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan","description":"Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.","image":["https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"OSI, TCP/IP, jaringan komputer, enkapsulasi, TCP UDP","articleSection":"Dasar Informatika","wordCount":368,"mainEntityOfPage":"https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan","description":"Pahami model OSI dan TCP/IP: lapisan, enkapsulasi, TCP vs UDP, dan perangkat jaringan, dengan simulasi enkapsulasi dan soket yang dijalankan.","image":["https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"OSI, TCP/IP, jaringan komputer, enkapsulasi, TCP UDP","articleSection":"Dasar Informatika","wordCount":368,"mainEntityOfPage":"https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan","item":"https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu alamat MAC?","acceptedAnswer":{"@type":"Answer","text":"Pengenal 48 bit pada antarmuka jaringan (misalnya AA:BB:CC:00:00:01), dipakai pada jaringan lokal."}},{"@type":"Question","name":"Apa bedanya HTTP dan HTTPS?","acceptedAnswer":{"@type":"Answer","text":"HTTPS adalah HTTP di dalam sambungan terenkripsi TLS sehingga isi tidak dapat dibaca atau diubah di tengah jalan."}},{"@type":"Question","name":"Apa itu NAT?","acceptedAnswer":{"@type":"Answer","text":"Penerjemahan alamat: banyak perangkat berbagi satu alamat IP publik; router mengganti alamat privat dengan alamat publik dan mengingat pemetaannya."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

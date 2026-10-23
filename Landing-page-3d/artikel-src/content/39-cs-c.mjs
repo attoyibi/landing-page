@@ -14,7 +14,7 @@ export default [
     {
         slug: 'model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan',
         title: 'Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan',
-        description: 'Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.',
+        description: 'Pahami model OSI dan TCP/IP: lapisan, enkapsulasi, TCP vs UDP, dan perangkat jaringan, dengan simulasi enkapsulasi dan soket yang dijalankan.',
         date: D, category: C, level: 'Pemula', tags: ['OSI', 'TCP/IP', 'jaringan komputer', 'enkapsulasi', 'TCP UDP'], cta: 'none',
         prereq: ['sistem bilangan'],
         lead: 'Mengirim sebuah pesan melintasi planet melibatkan kabel, gelombang radio, ratusan perangkat perantara, dan miliaran perangkat berbeda. Semuanya bisa bekerja karena jaringan dirancang berlapis: tiap lapis memikirkan satu masalah dan menyerahkan sisanya kepada lapis lain lewat antarmuka sederhana.',
@@ -86,7 +86,7 @@ print("UDP diterima:", data.decode())`, lang: 'python', run: true },
     {
         slug: 'alamat-ip-dan-subnetting-menghitung-jaringan-dan-host',
         title: 'Alamat IP dan Subnetting: Menghitung Jaringan dan Host',
-        description: 'Kuasai pengalamatan IPv4: kelas dan CIDR, subnet mask, alamat jaringan dan broadcast, jumlah host, membagi jaringan menjadi subnet, alamat privat, serta pengenalan IPv6, dengan kalkulator interaktif.',
+        description: 'Kuasai alamat IPv4 dan subnetting: CIDR, mask, alamat jaringan dan broadcast, VLSM, alamat privat, dan IPv6, dengan kalkulator interaktif.',
         date: D, category: C, level: 'Menengah', tags: ['IPv4', 'subnetting', 'CIDR', 'subnet mask', 'IPv6'], cta: 'none',
         prereq: ['sistem bilangan biner', 'model OSI dan TCP/IP'],
         lead: 'Alamat IP seperti nomor rumah dengan nama jalan: sebagian untuk jaringan, sebagian untuk perangkat di dalamnya. Subnetting adalah seni membagi "jalan" itu menjadi blok yang pas. Setelah memahami biner, subnetting hanyalah menggeser garis pemisah antara bit jaringan dan bit host.',
@@ -154,7 +154,7 @@ for a in ("192.168.1.5", "8.8.8.8", "127.0.0.1", "172.20.4.9", "169.254.10.1", "
     {
         slug: 'apa-yang-terjadi-saat-mengetik-url-dns-tcp-tls-dan-http',
         title: 'Apa yang Terjadi Saat Mengetik URL: DNS, TCP, TLS, HTTP',
-        description: 'Telusuri perjalanan satu permintaan web: parsing URL, DNS, koneksi TCP, jabat tangan TLS, permintaan dan respons HTTP, kode status, header, cache, hingga browser menampilkan halaman, dengan demonstrasi HTTP nyata.',
+        description: 'Telusuri satu permintaan web: URL, DNS, TCP, TLS, HTTP, caching, sampai render halaman, dengan demonstrasi percakapan HTTP yang dijalankan.',
         date: D, category: C, level: 'Menengah', tags: ['HTTP', 'DNS', 'TLS', 'browser', 'web'], cta: 'none',
         prereq: ['model OSI dan TCP/IP', 'alamat IP'],
         lead: 'Pertanyaan wawancara klasik: "Apa yang terjadi ketika Anda mengetik google.com dan menekan Enter?" Jawabannya merangkum hampir seluruh ilmu jaringan dan web dalam satu cerita: dari teks di bilah alamat sampai piksel di layar, melalui DNS, TCP, TLS, HTTP, dan mesin render. Kita telusuri langkah demi langkah, termasuk melihat percakapan HTTP yang sebenarnya.',
@@ -245,7 +245,7 @@ server.shutdown()`, lang: 'python', run: true, caption: 'Baris pertama respons b
     {
         slug: 'kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital',
         title: 'Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan',
-        description: 'Pelajari dasar kriptografi: cipher klasik dan mengapa mudah dipecahkan, fungsi hash SHA-256 dan efek avalanche, enkripsi simetris vs asimetris, RSA skala kecil, pertukaran kunci Diffie-Hellman, dan tanda tangan digital.',
+        description: 'Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.',
         date: D, category: C, level: 'Menengah', tags: ['kriptografi', 'hash', 'RSA', 'Diffie-Hellman', 'tanda tangan digital'], cta: 'none',
         prereq: ['sistem bilangan', 'aritmetika modular (dasar)'],
         lead: 'Setiap kali Anda melihat gembok di browser, masuk ke perbankan, atau mengirim pesan terenkripsi, kriptografi bekerja. Materi ini membangun intuisi dengan contoh kecil yang dapat dihitung: dari cipher klasik yang mudah patah sampai ide jenius kunci publik. Perhatian: contoh di sini untuk belajar dan tidak aman untuk dipakai nyata.',

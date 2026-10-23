@@ -193,7 +193,7 @@ print("DP kapasitas 50:", knapsack(barang2, 50), "(greedy rasio: A+B = 160)")`, 
     {
         slug: 'backtracking-python-n-queens-subset-sum-dan-permutasi',
         title: 'Backtracking: N-Queens, Subset Sum, dan Pemangkasan',
-        description: 'Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.',
+        description: 'Pelajari backtracking: mencoba, memeriksa, dan mundur. Kode N-Queens dan subset sum, pemangkasan, dan perbandingannya dengan brute force.',
         date: D, category: C, level: 'Lanjut', tags: ['backtracking', 'N-Queens', 'subset sum', 'pemangkasan', 'rekursi'], cta: 'none',
         prereq: ['rekursi', 'list', 'Menara Hanoi dan permutasi'],
         lead: 'Backtracking menyusun solusi sedikit demi sedikit dan langsung mundur begitu sebuah pilihan pasti tidak mengarah ke jawaban. Ia seperti brute force yang cerdas: tetap menjelajahi pohon kemungkinan, tetapi memangkas cabang yang sia-sia.',

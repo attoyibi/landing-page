@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan</title>
-<meta name="description" content="Pelajari dasar kriptografi: cipher klasik dan mengapa mudah dipecahkan, fungsi hash SHA-256 dan efek avalanche, enkripsi simetris vs asimetris, RSA skala kecil, pertukaran kunci Diffie-Hellman, dan tanda tangan digital.">
+<meta name="description" content="Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.">
 <meta name="keywords" content="kriptografi, hash, RSA, Diffie-Hellman, tanda tangan digital">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/">
 <meta property="og:title" content="Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan">
-<meta property="og:description" content="Pelajari dasar kriptografi: cipher klasik dan mengapa mudah dipecahkan, fungsi hash SHA-256 dan efek avalanche, enkripsi simetris vs asimetris, RSA skala kecil, pertukaran kunci Diffie-Hellman, dan tanda tangan digital.">
+<meta property="og:description" content="Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.">
 <meta property="og:image" content="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Dasar Informatika">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan">
-<meta name="twitter:description" content="Pelajari dasar kriptografi: cipher klasik dan mengapa mudah dipecahkan, fungsi hash SHA-256 dan efek avalanche, enkripsi simetris vs asimetris, RSA skala kecil, pertukaran kunci Diffie-Hellman, dan tanda tangan digital.">
+<meta name="twitter:description" content="Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan","description":"Pelajari dasar kriptografi: cipher klasik dan mengapa mudah dipecahkan, fungsi hash SHA-256 dan efek avalanche, enkripsi simetris vs asimetris, RSA skala kecil, pertukaran kunci Diffie-Hellman, dan tanda tangan digital.","image":["https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kriptografi, hash, RSA, Diffie-Hellman, tanda tangan digital","articleSection":"Dasar Informatika","wordCount":594,"mainEntityOfPage":"https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan","description":"Pelajari dasar kriptografi: cipher klasik, hash SHA-256, enkripsi simetris dan asimetris, RSA, Diffie-Hellman, dan tanda tangan digital.","image":["https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kriptografi, hash, RSA, Diffie-Hellman, tanda tangan digital","articleSection":"Dasar Informatika","wordCount":594,"mainEntityOfPage":"https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Kriptografi Dasar: Hash, Simetris, RSA, dan Tanda Tangan","item":"https://muchson.web.id/artikel/kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu kriptografi kurva eliptik (ECC)?","acceptedAnswer":{"@type":"Answer","text":"Alternatif RSA dengan kunci jauh lebih pendek untuk tingkat keamanan sama (256 bit ECC setara sekitar RSA 3072 bit); dipakai luas di TLS modern."}},{"@type":"Question","name":"Apakah enkripsi ujung-ke-ujung aman sepenuhnya?","acceptedAnswer":{"@type":"Answer","text":"Melindungi isi dari penyedia layanan dan penyadap jaringan, tetapi tidak dari perangkat yang telah disusupi, tidak dari metadata, dan tidak dari penerima yang membocorkannya."}},{"@type":"Question","name":"Apa itu kriptografi pasca-kuantum?","acceptedAnswer":{"@type":"Answer","text":"Algoritma yang diyakini tahan terhadap komputer kuantum; NIST telah memilih standar seperti ML-KEM (Kyber) dan ML-DSA (Dilithium)."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

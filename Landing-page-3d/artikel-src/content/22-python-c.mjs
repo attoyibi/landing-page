@@ -82,7 +82,7 @@ print(kata)                                              # sorted tidak mengubah
     {
         slug: 'tuple-set-dan-dictionary-python-kapan-memakai-yang-mana',
         title: 'Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana',
-        description: 'Bandingkan tuple, set, dan dictionary Python: sifat, operasi himpunan, pencarian cepat berbasis hash, dan pola umum seperti menghitung frekuensi kata. Dengan diagram Venn dan latihan.',
+        description: 'Bandingkan tuple, set, dan dictionary Python: sifat, kompleksitas, dan kapan memakai masing-masing, dengan contoh kode yang dijalankan dan latihan.',
         date: D, category: C, level: 'Dasar', tags: ['tuple Python', 'set Python', 'dictionary Python', 'hash table', 'struktur data'], cta: 'none',
         prereq: ['list Python', 'mutable vs immutable'],
         lead: 'Setelah list, ada tiga struktur data bawaan lain yang menyelesaikan masalah berbeda: tuple untuk data tetap, set untuk keunikan dan operasi himpunan, dan dictionary untuk pencarian berdasarkan kunci. Memilih yang tepat sering mengubah kode lambat menjadi cepat dan kode rumit menjadi sederhana.',

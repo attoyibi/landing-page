@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas</title>
-<meta name="description" content="Belajar command line Linux dari nol: navigasi direktori, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan alur kerja yang aman, dengan contoh dan latihan.">
+<meta name="description" content="Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.">
 <meta name="keywords" content="Linux, command line, bash, pipe, chmod">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/">
 <meta property="og:title" content="Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas">
-<meta property="og:description" content="Belajar command line Linux dari nol: navigasi direktori, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan alur kerja yang aman, dengan contoh dan latihan.">
+<meta property="og:description" content="Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.">
 <meta property="og:image" content="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Dasar Informatika">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas">
-<meta name="twitter:description" content="Belajar command line Linux dari nol: navigasi direktori, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan alur kerja yang aman, dengan contoh dan latihan.">
+<meta name="twitter:description" content="Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas","description":"Belajar command line Linux dari nol: navigasi direktori, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan alur kerja yang aman, dengan contoh dan latihan.","image":["https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Linux, command line, bash, pipe, chmod","articleSection":"Dasar Informatika","wordCount":420,"mainEntityOfPage":"https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas","description":"Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.","image":["https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Linux, command line, bash, pipe, chmod","articleSection":"Dasar Informatika","wordCount":420,"mainEntityOfPage":"https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas","item":"https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana mencoba Linux di Windows?","acceptedAnswer":{"@type":"Answer","text":"Pasang WSL (Windows Subsystem for Linux) dengan wsl --install; atau pakai mesin virtual dan Git Bash untuk sebagian perintah."}},{"@type":"Question","name":"Apa bedanya bash dan zsh?","acceptedAnswer":{"@type":"Answer","text":"Keduanya shell. bash adalah standar luas di Linux; zsh bawaan macOS modern dan menawarkan penyelesaian otomatis yang lebih kaya. Perintah dasar identik."}},{"@type":"Question","name":"Bagaimana mengotomasi dengan skrip?","acceptedAnswer":{"@type":"Answer","text":"Tulis perintah dalam berkas .sh dengan baris pertama #!/usr/bin/env bash, beri izin eksekusi, lalu jalankan."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

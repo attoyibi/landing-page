@@ -197,7 +197,7 @@ deactivate                        # keluar dari lingkungan`, lang: 'bash' },
     {
         slug: 'variabel-dan-tipe-data-python-lengkap',
         title: 'Variabel dan Tipe Data Python: Dari Dasar sampai Mutabilitas',
-        description: 'Pahami variabel sebagai nama yang menunjuk objek, tipe data int, float, str, bool, None, konversi, presisi float, dan perbedaan mutable dan immutable dengan penelusuran visual.',
+        description: 'Pahami variabel dan tipe data Python: int, float, str, bool, None, konversi tipe, mutable vs immutable, dan jebakan presisi, dengan kode yang dijalankan.',
         date: D, category: C, level: 'Dasar', tags: ['variabel Python', 'tipe data', 'mutable immutable', 'float', 'type conversion'], cta: 'none',
         prereq: ['menjalankan script Python'],
         lead: 'Di Python, variabel bukan "kotak yang berisi nilai", melainkan <b>nama yang menunjuk ke sebuah objek</b>. Perbedaan kecil ini menjelaskan banyak kejadian membingungkan, misalnya mengapa mengubah satu list bisa ikut mengubah list lain. Materi ini membangun pemahaman yang benar dari awal.',

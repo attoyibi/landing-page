@@ -389,7 +389,7 @@ public class Main {
     {
         slug: 'polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof',
         title: 'Polimorfisme Java: Overriding dan Dynamic Dispatch',
-        description: 'Pahami polimorfisme di Java: tipe deklarasi vs tipe sebenarnya, dynamic dispatch, upcasting dan downcasting, instanceof dengan pola, dan mengapa ia membuat kode mudah diperluas.',
+        description: 'Pahami polimorfisme Java: dynamic dispatch, upcasting dan downcasting, instanceof dengan pola, dan cara menambah jenis baru tanpa mengubah kode lama.',
         date: D, category: C, level: 'Menengah', tags: ['Java', 'polimorfisme', 'dynamic dispatch', 'upcasting', 'instanceof'], cta: 'none',
         prereq: ['inheritance'],
         lead: 'Polimorfisme berarti "banyak bentuk": satu pemanggilan, perilaku berbeda tergantung jenis objek sebenarnya. Inilah yang membuat kita dapat menambah jenis baru tanpa mengubah kode yang sudah ada.',
@@ -485,6 +485,6 @@ public class Main {
             { summary: ['Polimorfisme: satu pemanggilan, perilaku mengikuti objek sebenarnya.', 'Method instance dipilih saat runtime; atribut dan static mengikuti tipe variabel.', 'Upcasting otomatis; downcasting eksplisit dan dapat gagal (gunakan instanceof).', 'Polimorfisme menghilangkan rantai if/else dan memudahkan perluasan.'] },
         ],
         faq: [['Apa bedanya polimorfisme kompilasi dan runtime?', 'Overloading adalah polimorfisme saat kompilasi (statis); overriding adalah polimorfisme saat berjalan (dinamis).'], ['Apakah polimorfisme memperlambat program?', 'Dispatch dinamis berbiaya kecil dan JIT sering menghilangkannya lewat inlining; jarang menjadi masalah.'], ['Apakah interface juga polimorfik?', 'Ya. Variabel bertipe interface dapat menunjuk objek class mana pun yang mengimplementasikannya.']],
-        sources: [['Oracle: Polymorphism (Java Tutorials)', 'https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html'], ['dev.java: Pattern Matching for instanceof', 'https://dev.java/learn/pattern-matching/'], REF_EJ, REF_JLS],
+        sources: [['Oracle: Polymorphism (Java Tutorials)', 'https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html'], ['Oracle: Pattern Matching (Java Language Updates)', 'https://docs.oracle.com/en/java/javase/21/language/pattern-matching.html'], REF_EJ, REF_JLS],
     },
 ];

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Menara Hanoi dan Rekursi Lanjutan di Python · Muhammad Muchson</title>
-<meta name="description" content="Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.">
+<meta name="description" content="Pahami berpikir rekursif lewat Menara Hanoi dan permutasi: animasi interaktif, bukti 2^n − 1 langkah, batas rekursi, dan kapan beralih ke iterasi.">
 <meta name="keywords" content="Menara Hanoi, rekursi, permutasi, divide and conquer, recursion limit">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/">
 <meta property="og:title" content="Menara Hanoi dan Rekursi Lanjutan di Python">
-<meta property="og:description" content="Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.">
+<meta property="og:description" content="Pahami berpikir rekursif lewat Menara Hanoi dan permutasi: animasi interaktif, bukti 2^n − 1 langkah, batas rekursi, dan kapan beralih ke iterasi.">
 <meta property="og:image" content="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Menara Hanoi dan Rekursi Lanjutan di Python">
-<meta name="twitter:description" content="Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.">
+<meta name="twitter:description" content="Pahami berpikir rekursif lewat Menara Hanoi dan permutasi: animasi interaktif, bukti 2^n − 1 langkah, batas rekursi, dan kapan beralih ke iterasi.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Menara Hanoi dan Rekursi Lanjutan di Python","description":"Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.","image":["https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Menara Hanoi, rekursi, permutasi, divide and conquer, recursion limit","articleSection":"Algoritma & Pemrograman Python","wordCount":578,"mainEntityOfPage":"https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Menara Hanoi dan Rekursi Lanjutan di Python","description":"Pahami berpikir rekursif lewat Menara Hanoi dan permutasi: animasi interaktif, bukti 2^n − 1 langkah, batas rekursi, dan kapan beralih ke iterasi.","image":["https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Menara Hanoi, rekursi, permutasi, divide and conquer, recursion limit","articleSection":"Algoritma & Pemrograman Python","wordCount":578,"mainEntityOfPage":"https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Menara Hanoi dan Rekursi Lanjutan di Python","item":"https://muchson.web.id/artikel/menara-hanoi-dan-rekursi-lanjutan-python/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah ada solusi Hanoi tanpa rekursi?","acceptedAnswer":{"@type":"Answer","text":"Ada. Untuk setiap langkah ganjil pindahkan cakram terkecil searah putaran tetap (tergantung n), dan pada langkah genap lakukan satu-satunya langkah legal yang tidak melibatkan cakram terkecil."}},{"@type":"Question","name":"Mengapa Hanoi dipakai untuk mengajar rekursi?","acceptedAnswer":{"@type":"Answer","text":"Karena solusi rekursifnya ringkas dan elegan, sedangkan mencari urutannya tanpa rekursi sulit. Ia memaksa kita memercayai pemanggilan rekursif."}},{"@type":"Question","name":"Berapa batas rekursi yang aman?","acceptedAnswer":{"@type":"Answer","text":"Bergantung memori; bawaan 1000 aman. sys.setrecursionlimit dapat menaikkannya, tetapi nilai terlalu besar berisiko menghentikan interpreter secara paksa."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

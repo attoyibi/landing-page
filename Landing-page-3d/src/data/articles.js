@@ -197,4 +197,10 @@ export const ARTICLES = [
     'alamat-ip-dan-subnetting-menghitung-jaringan-dan-host',
     'apa-yang-terjadi-saat-mengetik-url-dns-tcp-tls-dan-http',
     'kriptografi-dasar-hash-enkripsi-simetris-rsa-dan-tanda-tangan-digital',
+    'cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi',
+    'himpunan-dan-logika-proposisi-matematika-diskrit-untuk-informatika',
+    'kombinatorika-dan-peluang-permutasi-kombinasi-dan-simulasi',
+    'automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga',
+    'machine-learning-dasar-regresi-linear-knn-dan-evaluasi-dari-nol',
+    'hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing',
 ];

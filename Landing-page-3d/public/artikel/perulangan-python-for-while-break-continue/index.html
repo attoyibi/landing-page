@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Perulangan Python: for, while, break, continue, dan else</title>
-<meta name="description" content="Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.">
+<meta name="description" content="Kuasai perulangan Python: for, while, range, enumerate, zip, break, continue, else pada loop, dan pola umum, dengan kode yang dijalankan dan latihan.">
 <meta name="keywords" content="for loop, while loop, range, break continue, perulangan Python">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/">
 <meta property="og:title" content="Perulangan Python: for, while, break, continue, dan else">
-<meta property="og:description" content="Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.">
+<meta property="og:description" content="Kuasai perulangan Python: for, while, range, enumerate, zip, break, continue, else pada loop, dan pola umum, dengan kode yang dijalankan dan latihan.">
 <meta property="og:image" content="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Perulangan Python: for, while, break, continue, dan else">
-<meta name="twitter:description" content="Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.">
+<meta name="twitter:description" content="Kuasai perulangan Python: for, while, range, enumerate, zip, break, continue, else pada loop, dan pola umum, dengan kode yang dijalankan dan latihan.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Perulangan Python: for, while, break, continue, dan else","description":"Kuasai for dan while, range, enumerate dan zip, pola akumulator, break dan continue, serta else pada perulangan. Dilengkapi penelusuran langkah demi langkah dan jebakan perulangan tak berhingga.","image":["https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"for loop, while loop, range, break continue, perulangan Python","articleSection":"Algoritma & Pemrograman Python","wordCount":445,"mainEntityOfPage":"https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Perulangan Python: for, while, break, continue, dan else","description":"Kuasai perulangan Python: for, while, range, enumerate, zip, break, continue, else pada loop, dan pola umum, dengan kode yang dijalankan dan latihan.","image":["https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"for loop, while loop, range, break continue, perulangan Python","articleSection":"Algoritma & Pemrograman Python","wordCount":445,"mainEntityOfPage":"https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Perulangan Python: for, while, break, continue, dan else","item":"https://muchson.web.id/artikel/perulangan-python-for-while-break-continue/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Python punya do-while?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Biasanya ditiru dengan while True: yang berisi break di akhir blok."}},{"@type":"Question","name":"Bolehkah mengubah list saat sedang di-for?","acceptedAnswer":{"@type":"Answer","text":"Tidak disarankan karena indeks bergeser dan elemen bisa terlewat. Bangun list baru atau iterasi pada salinan."}},{"@type":"Question","name":"Mana yang lebih cepat, for atau while?","acceptedAnswer":{"@type":"Answer","text":"Untuk jumlah putaran yang diketahui, for dengan range biasanya sedikit lebih cepat dan jauh lebih mudah dibaca."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

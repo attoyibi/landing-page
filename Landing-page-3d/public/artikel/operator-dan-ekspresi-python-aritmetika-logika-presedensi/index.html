@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Operator dan Ekspresi Python: Aritmetika, Logika, Presedensi</title>
-<meta name="description" content="Kuasai operator aritmetika, perbandingan, logika, identitas, dan keanggotaan di Python, termasuk urutan pengerjaan (presedensi), hubungan pendek, dan jebakan pembagian bilangan negatif.">
+<meta name="description" content="Kuasai operator Python: aritmetika, pembandingan, logika, bitwise, penugasan, dan presedensi, termasuk jebakan pembagian, short-circuit, dan float.">
 <meta name="keywords" content="operator Python, presedensi, ekspresi, operator logika, floor division">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/">
 <meta property="og:title" content="Operator dan Ekspresi Python: Aritmetika, Logika, Presedensi">
-<meta property="og:description" content="Kuasai operator aritmetika, perbandingan, logika, identitas, dan keanggotaan di Python, termasuk urutan pengerjaan (presedensi), hubungan pendek, dan jebakan pembagian bilangan negatif.">
+<meta property="og:description" content="Kuasai operator Python: aritmetika, pembandingan, logika, bitwise, penugasan, dan presedensi, termasuk jebakan pembagian, short-circuit, dan float.">
 <meta property="og:image" content="https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Operator dan Ekspresi Python: Aritmetika, Logika, Presedensi">
-<meta name="twitter:description" content="Kuasai operator aritmetika, perbandingan, logika, identitas, dan keanggotaan di Python, termasuk urutan pengerjaan (presedensi), hubungan pendek, dan jebakan pembagian bilangan negatif.">
+<meta name="twitter:description" content="Kuasai operator Python: aritmetika, pembandingan, logika, bitwise, penugasan, dan presedensi, termasuk jebakan pembagian, short-circuit, dan float.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Operator dan Ekspresi Python: Aritmetika, Logika, Presedensi","description":"Kuasai operator aritmetika, perbandingan, logika, identitas, dan keanggotaan di Python, termasuk urutan pengerjaan (presedensi), hubungan pendek, dan jebakan pembagian bilangan negatif.","image":["https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"operator Python, presedensi, ekspresi, operator logika, floor division","articleSection":"Algoritma & Pemrograman Python","wordCount":543,"mainEntityOfPage":"https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Operator dan Ekspresi Python: Aritmetika, Logika, Presedensi","description":"Kuasai operator Python: aritmetika, pembandingan, logika, bitwise, penugasan, dan presedensi, termasuk jebakan pembagian, short-circuit, dan float.","image":["https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"operator Python, presedensi, ekspresi, operator logika, floor division","articleSection":"Algoritma & Pemrograman Python","wordCount":543,"mainEntityOfPage":"https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Operator dan Ekspresi Python: Aritmetika, Logika, Presedensi","item":"https://muchson.web.id/artikel/operator-dan-ekspresi-python-aritmetika-logika-presedensi/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa 7 / 2 menghasilkan 3.5 dan bukan 3?","acceptedAnswer":{"@type":"Answer","text":"Sejak Python 3, operator / selalu melakukan pembagian sejati dan menghasilkan float. Gunakan // untuk pembagian bulat."}},{"@type":"Question","name":"Apa bedanya & dan and?","acceptedAnswer":{"@type":"Answer","text":"& adalah operator bitwise yang bekerja pada bit bilangan bulat. and adalah operator logika yang bekerja pada nilai kebenaran dengan short-circuit."}},{"@type":"Question","name":"Kapan memakai walrus operator (:=)?","acceptedAnswer":{"@type":"Answer","text":"Operator ini menugaskan sekaligus mengembalikan nilai di dalam ekspresi, berguna dalam kondisi while atau komprehensi. Pemula sebaiknya menguasai dasar dulu."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

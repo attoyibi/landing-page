@@ -11,7 +11,7 @@ export default [
     {
         slug: 'uml-class-diagram-dari-kode-java-relasi-dan-multiplisitas',
         title: 'UML Class Diagram: Relasi dan Multiplisitas dari Kode Java',
-        description: 'Pelajari membaca dan menggambar diagram kelas UML: atribut, operasi, visibilitas, asosiasi, agregasi, komposisi, pewarisan, realisasi, dan multiplisitas, selalu dipetakan ke kode Java.',
+        description: 'Pelajari diagram kelas UML: relasi, multiplisitas, dan pemetaannya ke kode Java, termasuk pewarisan, komposisi, agregasi, dan dependensi.',
         date: D, category: C, level: 'Menengah', tags: ['UML', 'class diagram', 'komposisi', 'agregasi', 'pemodelan'], cta: 'none',
         prereq: ['class dan objek', 'inheritance', 'interface'],
         lead: 'Diagram kelas adalah bahasa gambar bersama untuk membicarakan desain. Anda tidak perlu menghafal seluruh UML; cukup tujuh simbol relasi dan cara membaca multiplisitas. Materi ini memetakan setiap simbol ke kode Java yang sesuai, sehingga gambar dan kode saling menjelaskan.',
@@ -22,7 +22,7 @@ export default [
             { h2: 'Tujuh simbol hubungan' },
             { table: { head: ['Hubungan', 'Simbol', 'Makna', 'Bentuk dalam Java'], rows: [['Pewarisan (generalisasi)', 'garis solid, segitiga kosong', 'adalah sebuah (is-a)', 'class B extends A'], ['Realisasi', 'garis putus-putus, segitiga kosong', 'memenuhi kontrak', 'class B implements I'], ['Asosiasi', 'garis dengan panah terbuka', 'mengetahui atau memakai', 'atribut bertipe class lain'], ['Agregasi', 'belah ketupat kosong', 'memiliki; bagian dapat hidup sendiri', 'atribut referensi yang diterima dari luar'], ['Komposisi', 'belah ketupat terisi', 'memiliki; bagian mati bersama keseluruhan', 'atribut yang dibuat dan dimiliki penuh'], ['Dependensi', 'panah putus-putus', 'memakai sementara', 'parameter atau variabel lokal']] } },
             { h2: 'Dari diagram ke kode: perpustakaan' },
-            { svg: 'diagram', w: 640, h: 330, label: 'Diagram kelas perpustakaan', nodes: [{ id: 'P', x: 110, y: 60, shape: 'class', w: 180, h: 80, t: 'Perpustakaan', attrs: ['-nama: String'], methods: ['+tambahBuku(b)', '+pinjam(a, b)'] }, { id: 'B', x: 420, y: 60, shape: 'class', w: 180, h: 80, t: 'Buku', attrs: ['-isbn: String', '-judul: String'], methods: ['+tersedia(): boolean'] }, { id: 'A', x: 110, y: 220, shape: 'class', w: 180, h: 80, t: 'Anggota', attrs: ['-id: String', '-nama: String'], methods: ['+batas(): int'] }, { id: 'M', x: 420, y: 220, shape: 'class', w: 180, h: 80, t: 'Peminjaman', attrs: ['-tanggal: LocalDate'], methods: ['+kembalikan()'] }, { id: 'D', x: 590, y: 300, shape: 'class', w: 90, h: 36, t: 'Dosen', attrs: [], methods: [] }], edges: [{ from: 'P', to: 'B', head: 'diaf', from_label: '1', to_label: '*' }, { from: 'A', to: 'M', head: 'vee', from_label: '1', to_label: '*' }, { from: 'M', to: 'B', head: 'vee', from_label: '*', to_label: '1' }, { from: 'D', to: 'A', head: 'open' }], caption: 'Perpustakaan memiliki banyak Buku (komposisi). Satu Anggota dapat memiliki banyak Peminjaman; setiap Peminjaman merujuk satu Buku. Dosen adalah Anggota (pewarisan).' },
+            { svg: 'diagram', w: 640, h: 360, label: 'Diagram kelas perpustakaan', nodes: [{ id: 'P', x: 110, y: 60, shape: 'class', w: 180, h: 80, t: 'Perpustakaan', attrs: ['-nama: String'], methods: ['+tambahBuku(b)', '+pinjam(a, b)'] }, { id: 'B', x: 420, y: 60, shape: 'class', w: 180, h: 80, t: 'Buku', attrs: ['-isbn: String', '-judul: String'], methods: ['+tersedia(): boolean'] }, { id: 'A', x: 110, y: 220, shape: 'class', w: 180, h: 80, t: 'Anggota', attrs: ['-id: String', '-nama: String'], methods: ['+batas(): int'] }, { id: 'M', x: 420, y: 220, shape: 'class', w: 180, h: 80, t: 'Peminjaman', attrs: ['-tanggal: LocalDate'], methods: ['+kembalikan()'] }, { id: 'D', x: 570, y: 310, shape: 'class', w: 90, h: 36, t: 'Dosen', attrs: [], methods: [] }], edges: [{ from: 'P', to: 'B', head: 'diaf', from_label: '1', to_label: '*' }, { from: 'A', to: 'M', head: 'vee', from_label: '1', to_label: '*' }, { from: 'M', to: 'B', head: 'vee', from_label: '*', to_label: '1' }, { from: 'D', to: 'A', head: 'open' }], caption: 'Perpustakaan memiliki banyak Buku (komposisi). Satu Anggota dapat memiliki banyak Peminjaman; setiap Peminjaman merujuk satu Buku. Dosen adalah Anggota (pewarisan).' },
             { code: jv`import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,7 @@ public class Main {
     {
         slug: 'multithreading-java-thread-executor-synchronized-dan-race-condition',
         title: 'Multithreading Java: Thread, Executor, dan Race Condition',
-        description: 'Pahami concurrency di Java: membuat thread, race condition yang diperagakan, synchronized, AtomicInteger, ExecutorService, dan CompletableFuture, dengan eksperimen yang dapat diulang.',
+        description: 'Pahami concurrency Java: thread, race condition yang diperagakan, synchronized, AtomicInteger, ExecutorService, dan deadlock, dengan eksperimen nyata.',
         date: D, category: C, level: 'Lanjut', tags: ['Java', 'thread', 'concurrency', 'synchronized', 'ExecutorService'], cta: 'none',
         prereq: ['PBO Java dasar', 'lambda'],
         lead: 'Menjalankan banyak pekerjaan sekaligus meningkatkan responsivitas dan memakai banyak inti CPU, tetapi memperkenalkan jenis bug yang sulit: hasil yang berubah-ubah dari satu proses ke proses berikutnya. Materi ini memperagakan bug itu, lalu memperbaikinya dengan alat standar.',
@@ -419,7 +419,7 @@ tasks.test { useJUnitPlatform() }`, lang: 'text' },
     {
         slug: 'proyek-mini-java-sistem-kasir-dengan-pbo-dari-desain-sampai-kode',
         title: 'Proyek Mini Java: Sistem Kasir dari Desain sampai Kode',
-        description: 'Latihan terpadu PBO Java: merancang dan membangun sistem kasir sederhana dengan class, interface, polimorfisme, koleksi, exception, dan stream, lengkap dengan desain dan pengujian.',
+        description: 'Latihan terpadu PBO Java: membangun sistem kasir dari kebutuhan, desain kelas, sampai kode, dengan interface, polimorfisme, koleksi, dan exception.',
         date: D, category: C, level: 'Menengah', tags: ['Java', 'proyek', 'PBO', 'sistem kasir', 'studi kasus'], cta: 'none',
         prereq: ['seluruh materi PBO Java sebelumnya'],
         lead: 'Teori PBO baru melekat setelah dipakai. Di sini kita membangun sistem kasir kecil dari nol: menganalisis kebutuhan, menentukan class, menggambar hubungan, menulis kode, lalu mengujinya. Ikuti alurnya, lalu kembangkan sendiri sebagai latihan.',

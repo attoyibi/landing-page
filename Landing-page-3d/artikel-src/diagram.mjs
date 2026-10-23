@@ -32,7 +32,8 @@ function prepare(n) {
     n.w = n.w || dw;
     if (shape === 'class') {
         const attrs = n.attrs || [], methods = n.methods || [];
-        n.h = n.h || 30 + (n.stereotype ? 14 : 0) + Math.max(1, attrs.length) * 17 + Math.max(1, methods.length) * 17 + 14;
+        const needed = 28 + (n.stereotype ? 14 : 0) + Math.max(1, attrs.length) * 17 + 7 + Math.max(1, methods.length) * 17 + 8;
+        n.h = Math.max(n.h || 0, needed);                 // kotak selalu cukup besar untuk atribut dan metodenya
     } else n.h = n.h || dh;
     return n;
 }
@@ -91,7 +92,9 @@ function nodeSvg(n, id) {
 
 export function diagram({ w = 640, h = 360, nodes = [], edges = [], label = 'Diagram', uid = Math.random().toString(36).slice(2, 7) }) {
     nodes.forEach(prepare);
-    const by = Object.fromEntries(nodes.map(n => [n.id, n]));
+    h = Math.max(h, ...nodes.map(n => Math.ceil(n.y + n.h / 2 + 8)));        // jangan biarkan simpul terpotong di tepi
+    w = Math.max(w, ...nodes.map(n => Math.ceil(n.x + n.w / 2 + 8)));
+    const by =Object.fromEntries(nodes.map(n => [n.id, n]));
     const m = k => `url(#${uid}-${k})`;
     let s = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}" font-family="${FONT}"><defs>
 <marker id="${uid}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="${INK}"/></marker>

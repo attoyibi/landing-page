@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pengujian Python: assert, unittest, dan Test-Driven Development</title>
-<meta name="description" content="Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.">
+<title>Pengujian Python: Assert, unittest, dan TDD · Muhammad Muchson</title>
+<meta name="description" content="Belajar menguji kode Python: assert, unittest, pytest, nilai batas, dan siklus red-green-refactor pada TDD, dengan contoh yang dijalankan.">
 <meta name="keywords" content="unittest, assert, TDD, pengujian perangkat lunak, testing Python">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -15,20 +15,20 @@
 <meta property="og:site_name" content="Muhammad Muchson">
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/">
-<meta property="og:title" content="Pengujian Python: assert, unittest, dan Test-Driven Development">
-<meta property="og:description" content="Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.">
+<meta property="og:title" content="Pengujian Python: Assert, unittest, dan TDD">
+<meta property="og:description" content="Belajar menguji kode Python: assert, unittest, pytest, nilai batas, dan siklus red-green-refactor pada TDD, dengan contoh yang dijalankan.">
 <meta property="og:image" content="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="article:published_time" content="2026-10-23">
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Pengujian Python: assert, unittest, dan Test-Driven Development">
-<meta name="twitter:description" content="Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.">
+<meta name="twitter:title" content="Pengujian Python: Assert, unittest, dan TDD">
+<meta name="twitter:description" content="Belajar menguji kode Python: assert, unittest, pytest, nilai batas, dan siklus red-green-refactor pada TDD, dengan contoh yang dijalankan.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pengujian Python: assert, unittest, dan Test-Driven Development","description":"Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.","image":["https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"unittest, assert, TDD, pengujian perangkat lunak, testing Python","articleSection":"Algoritma & Pemrograman Python","wordCount":351,"mainEntityOfPage":"https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Pengujian Python: assert, unittest, dan Test-Driven Development","item":"https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pengujian Python: Assert, unittest, dan TDD","description":"Belajar menguji kode Python: assert, unittest, pytest, nilai batas, dan siklus red-green-refactor pada TDD, dengan contoh yang dijalankan.","image":["https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"unittest, assert, TDD, pengujian perangkat lunak, testing Python","articleSection":"Algoritma & Pemrograman Python","wordCount":351,"mainEntityOfPage":"https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Pengujian Python: Assert, unittest, dan TDD","item":"https://muchson.web.id/artikel/pengujian-python-assert-unittest-dan-test-driven-development/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya unittest dan pytest?","acceptedAnswer":{"@type":"Answer","text":"unittest ada di pustaka standar dan bergaya kelas. pytest pihak ketiga, lebih ringkas (cukup fungsi dan assert biasa), dan sangat populer. Konsepnya sama."}},{"@type":"Question","name":"Berapa banyak tes yang cukup?","acceptedAnswer":{"@type":"Answer","text":"Tidak ada angka pasti. Fokus pada logika penting dan kasus tepi; cakupan (coverage) membantu melihat bagian yang belum diuji."}},{"@type":"Question","name":"Apakah menulis tes memperlambat pengembangan?","acceptedAnswer":{"@type":"Answer","text":"Di awal terasa lebih lambat, tetapi pada proyek yang bertahan lama justru menghemat waktu karena bug ditemukan lebih cepat."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">
 </head>
@@ -41,11 +41,11 @@
 <article id="isi">
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
 <a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
-<h1>Pengujian Python: assert, unittest, dan Test-Driven Development</h1>
+<h1>Pengujian Python: Assert, unittest, dan TDD</h1>
 <p class="lead">"Berjalan" bukan berarti "benar". Pengujian otomatis adalah cara memastikan kode melakukan yang seharusnya, dan tetap melakukannya setelah Anda mengubahnya enam bulan lagi. Materi ini memperkenalkan pengujian dari yang paling sederhana (assert) sampai kerangka unittest dan alur TDD.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
 <p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi, exception</p>
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Pengujian Python: assert, unittest, dan Test-Driven Development" fetchpriority="high"></figure>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Pengujian Python: Assert, unittest, dan TDD" fetchpriority="high"></figure>
 <div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis pernyataan assert sederhana</li><li>merancang kasus uji: normal, batas, dan error</li><li>menulis test case dengan unittest dan membaca hasilnya</li><li>menjelaskan siklus TDD: merah, hijau, refactor</li><li>menulis kode yang mudah diuji</li></ul></div>
 <h2 id="mengapa-menguji">Mengapa menguji?</h2>
 <ul><li>Menemukan bug lebih awal, saat memperbaikinya masih murah.</li><li>Memberi keberanian mengubah kode (refactoring) tanpa takut merusak hal lain.</li><li>Berfungsi sebagai dokumentasi hidup tentang perilaku yang diharapkan.</li><li>Memaksa Anda memikirkan kasus tepi di awal.</li></ul>

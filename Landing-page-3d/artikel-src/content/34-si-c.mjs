@@ -13,7 +13,7 @@ export default [
     {
         slug: 'arsitektur-sistem-informasi-client-server-3-tier-cloud-dan-microservices',
         title: 'Arsitektur Sistem Informasi: Client-Server, 3-Tier, Cloud',
-        description: 'Pahami arsitektur sistem informasi: mainframe, client-server, 3-tier, web, cloud (IaaS, PaaS, SaaS), monolit vs microservices, serta trade-off skalabilitas, ketersediaan, dan biaya.',
+        description: 'Pahami arsitektur SI: client-server, tiga lapis, cloud (IaaS, PaaS, SaaS), monolit vs microservices, serta skalabilitas dan ketersediaan.',
         date: D, category: C, level: 'Menengah', tags: ['arsitektur sistem', 'client-server', 'three-tier', 'cloud computing', 'microservices'], cta: 'none',
         prereq: ['konsep sistem informasi', 'jaringan dasar'],
         lead: 'Arsitektur menjawab pertanyaan: bagaimana bagian-bagian sistem disusun dan saling berkomunikasi? Pilihan arsitektur memengaruhi biaya, kecepatan, keamanan, dan kemudahan perubahan selama bertahun-tahun, jauh lebih besar daripada pilihan bahasa pemrograman.',
@@ -61,7 +61,7 @@ print(f"satu server 99% -> dua server paralel: {paralel*100:.2f}%")`, lang: 'pyt
     {
         slug: 'keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol',
         title: 'Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol',
-        description: 'Pelajari dasar keamanan informasi: CIA triad, ancaman dan kerentanan, serangan umum (phishing, SQL injection, XSS), autentikasi, enkripsi, prinsip least privilege, dan pertahanan berlapis.',
+        description: 'Pelajari keamanan informasi: CIA triad, ancaman dan kontrol, demo SQL injection dan penyimpanan kata sandi, least privilege, dan pertahanan berlapis.',
         date: D, category: C, level: 'Menengah', tags: ['keamanan informasi', 'CIA triad', 'SQL injection', 'autentikasi', 'OWASP'], cta: 'none',
         prereq: ['konsep SI', 'arsitektur SI'],
         lead: 'Keamanan bukan produk yang dipasang di akhir, melainkan sifat yang dirancang sejak awal. Materi ini memberi kerangka berpikir (CIA triad, ancaman, kerentanan, kontrol) lalu memperagakan dua kelemahan paling klasik, SQL injection dan penyimpanan kata sandi, dengan kode yang dijalankan.',
@@ -134,7 +134,7 @@ print("verifikasi benar:", cocok("password1", a), " salah:", cocok("salah", a))`
     {
         slug: 'manajemen-proyek-sistem-informasi-wbs-critical-path-dan-gantt',
         title: 'Manajemen Proyek SI: WBS, Critical Path, dan Gantt',
-        description: 'Belajar mengelola proyek sistem informasi: ruang lingkup, WBS, estimasi, jaringan kerja, critical path method (CPM), float, Gantt, risiko, dengan perhitungan CPM yang dijalankan.',
+        description: 'Belajar manajemen proyek SI: WBS, estimasi PERT, critical path method dengan perhitungan yang dijalankan, bagan Gantt, dan pengelolaan risiko.',
         date: D, category: C, level: 'Menengah', tags: ['manajemen proyek', 'WBS', 'critical path', 'Gantt', 'estimasi'], cta: 'none',
         prereq: ['SDLC'],
         lead: 'Proyek perangkat lunak terkenal terlambat dan melebihi anggaran. Manajemen proyek tidak menjamin sukses, tetapi memberi alat untuk melihat masalah lebih awal: apa yang harus dikerjakan, urutannya, siapa yang mengerjakan, dan jalur mana yang tidak boleh terlambat sedikit pun.',

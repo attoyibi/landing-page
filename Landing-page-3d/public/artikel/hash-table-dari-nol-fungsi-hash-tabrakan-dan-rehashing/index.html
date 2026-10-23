@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing</title>
+<meta name="description" content="Bangun hash table dari nol: fungsi hash, tabrakan, chaining, open addressing, rehashing, dan kompleksitasnya, serta cara kerja dict Python.">
+<meta name="keywords" content="hash table, fungsi hash, tabrakan, chaining, dictionary">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/">
+<meta property="og:title" content="Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing">
+<meta property="og:description" content="Bangun hash table dari nol: fungsi hash, tabrakan, chaining, open addressing, rehashing, dan kompleksitasnya, serta cara kerja dict Python.">
+<meta property="og:image" content="https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing">
+<meta name="twitter:description" content="Bangun hash table dari nol: fungsi hash, tabrakan, chaining, open addressing, rehashing, dan kompleksitasnya, serta cara kerja dict Python.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing","description":"Bangun hash table dari nol: fungsi hash, tabrakan, chaining, open addressing, rehashing, dan kompleksitasnya, serta cara kerja dict Python.","image":["https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"hash table, fungsi hash, tabrakan, chaining, dictionary","articleSection":"Dasar Informatika","wordCount":534,"mainEntityOfPage":"https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing","item":"https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya hash table dan pohon seimbang?","acceptedAnswer":{"@type":"Answer","text":"Hash table cepat rata-rata tetapi tak berurutan; pohon seimbang menjaga urutan kunci dan kasus terburuk O(log n)."}},{"@type":"Question","name":"Apa itu consistent hashing?","acceptedAnswer":{"@type":"Answer","text":"Teknik memetakan kunci ke server dengan hash sehingga menambah atau menghapus server hanya memindahkan sedikit kunci; dipakai pada cache terdistribusi."}},{"@type":"Question","name":"Apakah hash sama dengan enkripsi?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Hash tabel adalah untuk pencarian cepat dan tidak perlu aman secara kriptografi; hash kriptografi punya syarat tambahan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#ide-dasar">Ide dasar</a></li><li><a href="#fungsi-hash-dan-tabrakan">Fungsi hash dan tabrakan</a></li><li><a href="#chaining-setiap-ember-berisi-daftar">Chaining: setiap ember berisi daftar</a></li><li><a href="#open-addressing-satu-elemen-per-sel">Open addressing: satu elemen per sel</a></li><li><a href="#perbandingan-dan-kompleksitas">Perbandingan dan kompleksitas</a></li><li><a href="#dict-python-dan-hashmap-java">Dict Python dan HashMap Java</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing</h1>
+<p class="lead">Dictionary Python, HashMap Java, objek JavaScript, dan indeks hash basis data semuanya adalah hash table: struktur data yang menjanjikan pencarian, penyisipan, dan penghapusan dalam waktu rata-rata konstan. Mari bangun satu dari nol untuk melihat mengapa ia cepat, kapan melambat, dan apa yang terjadi saat dua kunci "bertabrakan".</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> list, dictionary Python, kompleksitas algoritma</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Hash Table dari Nol: Fungsi Hash, Tabrakan, Rehashing" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan ide pemetaan kunci ke indeks dengan fungsi hash</li><li>mengimplementasikan hash table dengan chaining</li><li>menjelaskan open addressing (linear probing) dan clustering</li><li>menjelaskan faktor muat dan rehashing</li><li>menganalisis kompleksitas rata-rata vs terburuk dan menghubungkannya dengan dict Python</li></ul></div>
+<h2 id="ide-dasar">Ide dasar</h2>
+<p>Array memberi akses O(1) lewat indeks. Hash table meminjam trik itu untuk kunci apa saja: sebuah <b>fungsi hash</b> mengubah kunci menjadi bilangan bulat, lalu <code>bilangan mod ukuran_tabel</code> memberi indeks di array internal (ember/bucket).</p>
+<div data-w="hash"><script type="application/json">{"title":"Cara kerja hash table","desc":"Masukkan kata dan lihat ember tempat ia jatuh. Perhatikan bila dua kata berbagi ember (tabrakan)."}</script></div>
+<h2 id="fungsi-hash-dan-tabrakan">Fungsi hash dan tabrakan</h2>
+<p>Karena kunci yang mungkin jauh lebih banyak dari ember, <b>tabrakan tidak terhindarkan</b> (prinsip lubang merpati). Fungsi hash yang baik menyebar kunci merata dan murah dihitung.</p>
+<figure class="codebox"><pre data-lang="python"><code>def hash_buruk(kunci, ukuran):
+    return len(kunci) % ukuran                      # hanya panjang kunci: banyak tabrakan
+
+def hash_polinomial(kunci, ukuran):
+    h = 0
+    for ch in kunci:
+        h = (h * 31 + ord(ch)) % (2 ** 32)           # setiap karakter dan posisinya berpengaruh
+    return h % ukuran
+
+kunci = [&quot;apel&quot;, &quot;jeruk&quot;, &quot;mangga&quot;, &quot;pisang&quot;, &quot;durian&quot;, &quot;melon&quot;, &quot;kiwi&quot;, &quot;nanas&quot;, &quot;pepaya&quot;, &quot;salak&quot;]
+for fungsi in (hash_buruk, hash_polinomial):
+    ember = [0] * 7
+    for k in kunci: ember[fungsi(k, 7)] += 1
+    print(f&quot;{fungsi.__name__:&lt;16} sebaran per ember: {ember}   ember terpadat: {max(ember)}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>hash_buruk       sebaran per ember: [0, 0, 0, 0, 2, 4, 4]   ember terpadat: 4
+hash_polinomial  sebaran per ember: [2, 3, 1, 1, 1, 1, 1]   ember terpadat: 3</code></pre><figcaption>Hash buruk menumpuk kunci berpanjang sama pada ember yang sama; hash polinomial menyebar lebih merata.</figcaption></figure>
+<h2 id="chaining-setiap-ember-berisi-daftar">Chaining: setiap ember berisi daftar</h2>
+<figure class="codebox"><pre data-lang="python"><code>class HashChaining:
+    def __init__(self, kapasitas=8):
+        self.kapasitas = kapasitas
+        self.ember = [[] for _ in range(kapasitas)]
+        self.n = 0
+
+    def _indeks(self, kunci): return hash(kunci) % self.kapasitas
+
+    def set(self, kunci, nilai):
+        daftar = self.ember[self._indeks(kunci)]
+        for i, (k, _) in enumerate(daftar):
+            if k == kunci:
+                daftar[i] = (kunci, nilai); return          # perbarui kunci yang sudah ada
+        daftar.append((kunci, nilai)); self.n += 1
+        if self.n / self.kapasitas &gt; 0.75: self._rehash()   # faktor muat terlalu tinggi
+
+    def get(self, kunci, bawaan=None):
+        for k, v in self.ember[self._indeks(kunci)]:
+            if k == kunci: return v
+        return bawaan
+
+    def hapus(self, kunci):
+        daftar = self.ember[self._indeks(kunci)]
+        for i, (k, _) in enumerate(daftar):
+            if k == kunci: del daftar[i]; self.n -= 1; return True
+        return False
+
+    def _rehash(self):
+        lama = [item for daftar in self.ember for item in daftar]
+        self.kapasitas *= 2                                  # gandakan ukuran
+        self.ember = [[] for _ in range(self.kapasitas)]
+        self.n = 0
+        for k, v in lama: self.set(k, v)                     # setiap kunci dihitung ulang posisinya
+        print(f&quot;   (rehash: kapasitas menjadi {self.kapasitas})&quot;)
+
+tabel = HashChaining()
+for i, kata in enumerate([&quot;apel&quot;, &quot;jeruk&quot;, &quot;mangga&quot;, &quot;pisang&quot;, &quot;durian&quot;, &quot;melon&quot;, &quot;kiwi&quot;, &quot;nanas&quot;]):
+    tabel.set(kata, i)
+print(&quot;get('mangga') =&quot;, tabel.get(&quot;mangga&quot;), &quot;| get('rambutan') =&quot;, tabel.get(&quot;rambutan&quot;, &quot;tidak ada&quot;))
+tabel.set(&quot;mangga&quot;, 99); tabel.hapus(&quot;apel&quot;)
+print(&quot;n =&quot;, tabel.n, &quot;| faktor muat =&quot;, round(tabel.n / tabel.kapasitas, 2))</code></pre><pre class="runout" data-lang="keluaran"><code>   (rehash: kapasitas menjadi 16)
+get('mangga') = 2 | get('rambutan') = tidak ada
+n = 7 | faktor muat = 0.44</code></pre><figcaption>Rehashing memastikan rata-rata panjang daftar tetap kecil. Karena kapasitas digandakan, biaya rehash teramortisasi menjadi O(1) per penyisipan.</figcaption></figure>
+<h2 id="open-addressing-satu-elemen-per-sel">Open addressing: satu elemen per sel</h2>
+<p>Alih-alih daftar, jika sel sudah terisi, cari sel kosong berikutnya (<b>linear probing</b>: coba indeks+1, +2, ...). Penghapusan memerlukan penanda khusus ("batu nisan") agar rantai pencarian tidak terputus.</p>
+<figure class="codebox"><pre data-lang="python"><code>KOSONG, HAPUS = object(), object()
+
+class HashProbing:
+    def __init__(self, kapasitas=8):
+        self.kap, self.sel, self.n = kapasitas, [KOSONG] * kapasitas, 0
+
+    def _cari(self, kunci):
+        i = hash(kunci) % self.kap
+        pertama_hapus = None
+        for langkah in range(self.kap):
+            j = (i + langkah) % self.kap                       # linear probing
+            if self.sel[j] is KOSONG:
+                return (pertama_hapus if pertama_hapus is not None else j), langkah, False
+            if self.sel[j] is HAPUS:
+                if pertama_hapus is None: pertama_hapus = j
+            elif self.sel[j][0] == kunci:
+                return j, langkah, True
+        return pertama_hapus, self.kap, False
+
+    def set(self, kunci, nilai):
+        j, _, ada = self._cari(kunci)
+        if not ada:
+            if (self.n + 1) / self.kap &gt; 0.7: self._rehash(); j, _, _ = self._cari(kunci)
+            self.n += 1
+        self.sel[j] = (kunci, nilai)
+
+    def get(self, kunci):
+        j, langkah, ada = self._cari(kunci)
+        return (self.sel[j][1], langkah) if ada else (None, langkah)
+
+    def hapus(self, kunci):
+        j, _, ada = self._cari(kunci)
+        if ada: self.sel[j] = HAPUS; self.n -= 1
+
+    def _rehash(self):
+        lama = [s for s in self.sel if s is not KOSONG and s is not HAPUS]
+        self.kap *= 2; self.sel = [KOSONG] * self.kap; self.n = 0
+        for k, v in lama: self.set(k, v)
+
+t = HashProbing()
+for i, kata in enumerate([&quot;apel&quot;, &quot;jeruk&quot;, &quot;mangga&quot;, &quot;pisang&quot;, &quot;durian&quot;]): t.set(kata, i)
+print(&quot;get('durian') -&gt;&quot;, t.get(&quot;durian&quot;), &quot;(nilai, jumlah langkah probing)&quot;)
+t.hapus(&quot;jeruk&quot;)
+print(&quot;setelah hapus 'jeruk': get('jeruk') -&gt;&quot;, t.get(&quot;jeruk&quot;), &quot;| get('durian') masih -&gt;&quot;, t.get(&quot;durian&quot;))
+print(&quot;kapasitas:&quot;, t.kap, &quot;| n:&quot;, t.n)</code></pre><pre class="runout" data-lang="keluaran"><code>get('durian') -&gt; (4, 0) (nilai, jumlah langkah probing)
+setelah hapus 'jeruk': get('jeruk') -&gt; (None, 1) | get('durian') masih -&gt; (4, 0)
+kapasitas: 8 | n: 4</code></pre></figure>
+<h2 id="perbandingan-dan-kompleksitas">Perbandingan dan kompleksitas</h2>
+<table><thead><tr><th>Aspek</th><th>Chaining</th><th>Open addressing</th></tr></thead><tbody><tr><td>Memori</td><td>Ekstra penunjuk untuk daftar</td><td>Hanya array; lokalitas cache baik</td></tr><tr><td>Faktor muat</td><td>Boleh > 1</td><td>Harus < 1; performa turun cepat mendekati 1</td></tr><tr><td>Hapus</td><td>Sederhana</td><td>Perlu penanda hapus</td></tr><tr><td>Kelemahan</td><td>Penunjuk tersebar</td><td>Clustering primer: kelompok sel terisi memanjang</td></tr></tbody></table>
+<table><thead><tr><th>Operasi</th><th>Rata-rata</th><th>Terburuk</th></tr></thead><tbody><tr><td>Cari / sisip / hapus</td><td>O(1)</td><td>O(n) bila semua kunci bertabrakan</td></tr><tr><td>Rehash</td><td>O(n), teramortisasi O(1) per sisip</td><td></td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code># bukti terburuk: kunci dengan hash sama membuat dict melambat menjadi O(n)
+import time
+
+class Buruk:
+    def __init__(self, v): self.v = v
+    def __hash__(self): return 1                  # semua kunci bertabrakan
+    def __eq__(self, o): return self.v == o.v
+
+class Baik:
+    def __init__(self, v): self.v = v
+    def __hash__(self): return hash(self.v)
+    def __eq__(self, o): return self.v == o.v
+
+for kelas in (Baik, Buruk):
+    n = 2000
+    mulai = time.perf_counter()
+    d = {kelas(i): i for i in range(n)}
+    durasi = time.perf_counter() - mulai
+    print(f&quot;{kelas.__name__:&lt;6} {n} sisipan: {durasi * 1000:8.1f} ms&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>Baik   2000 sisipan:      0.5 ms
+Buruk  2000 sisipan:     99.5 ms</code></pre><figcaption>Satu fungsi hash yang buruk mengubah struktur O(1) menjadi O(n²) untuk n sisipan. Itu juga dasar serangan penolakan layanan dengan kunci yang dirancang bertabrakan; karena itu Python mengacak hash string per proses (PYTHONHASHSEED).</figcaption></figure>
+<div class="callout info"><b>Aturan emas kunci</b><p>Karena kunci dicari lewat hash dan kesamaan, kunci harus <b>immutable</b> (atau setidaknya tidak berubah hash-nya): itulah sebabnya list tidak boleh menjadi kunci dict di Python, tetapi tuple boleh. Dua objek yang sama menurut <code>==</code> harus memiliki hash yang sama.</p></div>
+<h2 id="dict-python-dan-hashmap-java">Dict Python dan HashMap Java</h2>
+<ul><li><b>dict CPython</b>: open addressing dengan probing yang diacak, ukuran tabel pangkat dua, rehash saat sekitar dua pertiga terisi; sejak Python 3.7 menjaga urutan penyisipan lewat larik indeks kompak terpisah.</li><li><b>HashMap Java</b>: chaining; ember dengan daftar panjang diubah menjadi pohon seimbang (sejak Java 8) agar kasus terburuk menjadi O(log n); kapasitas pangkat dua, faktor muat bawaan 0,75.</li><li><b>Set</b> hampir sama dengan dict tanpa nilai.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa tabrakan tidak terhindarkan?","options":["Kunci mungkin jauh lebih banyak dari ember","Fungsi hash selalu buruk","Memori terbatas"],"answer":0,"why":"Prinsip lubang merpati."},{"q":"Tujuan rehashing?","options":["Menjaga faktor muat rendah agar tetap cepat","Menghapus data","Mengurutkan kunci"],"answer":0,"why":"Memperbesar tabel dan menyebar ulang."},{"q":"Mengapa list tidak dapat menjadi kunci dict?","options":["Dapat berubah sehingga hash-nya bisa berubah","Terlalu besar","Tidak ada urutan"],"answer":0,"why":"Hash harus stabil selama kunci di tabel."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa pencarian di hash table "rata-rata O(1)", bukan "selalu O(1)"?</summary><div>Bila banyak kunci bertabrakan, pencarian harus menelusuri rantai atau probing panjang hingga O(n) pada kasus terburuk.</div></details><details><summary>2. Tabel berkapasitas 16 dan 12 elemen: faktor muatnya? Apa yang terjadi pada implementasi dengan ambang 0,75?</summary><div>12/16 = 0,75; menambah satu elemen lagi memicu rehash menjadi kapasitas 32.</div></details><details><summary>3. Mengapa penghapusan pada linear probing tidak boleh langsung mengosongkan sel?</summary><div>Pencarian kunci lain yang pernah melewati sel itu akan berhenti terlalu awal dan gagal menemukan kunci yang ada.</div></details><details><summary>4. Implementasikan sistem hitung kemunculan kata memakai dict dan jelaskan kompleksitasnya.</summary><div>Satu putaran: hitung[kata] = hitung.get(kata, 0) + 1; O(n) total untuk n kata (rata-rata).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Hash table memetakan kunci ke indeks dengan fungsi hash mod ukuran tabel.</li><li>Tabrakan ditangani dengan chaining atau open addressing.</li><li>Faktor muat dijaga lewat rehashing; sisip teramortisasi O(1).</li><li>Rata-rata O(1), terburuk O(n); hash buruk atau serangan membuatnya lambat.</li><li>Kunci harus tak berubah dan konsisten antara == dan hash.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya hash table dan pohon seimbang?</summary><div>Hash table cepat rata-rata tetapi tak berurutan; pohon seimbang menjaga urutan kunci dan kasus terburuk O(log n).</div></details>
+<details class="faq"><summary>Apa itu consistent hashing?</summary><div>Teknik memetakan kunci ke server dengan hash sehingga menambah atau menghapus server hanya memindahkan sedikit kunci; dipakai pada cache terdistribusi.</div></details>
+<details class="faq"><summary>Apakah hash sama dengan enkripsi?</summary><div>Tidak. Hash tabel adalah untuk pencarian cepat dan tidak perlu aman secara kriptografi; hash kriptografi punya syarat tambahan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>Cormen, Leiserson, Rivest, Stein, Introduction to Algorithms (edisi ke-4, MIT Press, 2022)</li><li><a href="https://wiki.python.org/moin/TimeComplexity" rel="noopener" target="_blank">Python Wiki: TimeComplexity</a></li><li><a href="https://www.youtube.com/watch?v=npw4s1QTmPg" rel="noopener" target="_blank">Raymond Hettinger: Modern Python Dictionaries (PyCon 2017)</a></li><li><a href="https://algs4.cs.princeton.edu/34hash/" rel="noopener" target="_blank">Sedgewick dan Wayne, Algorithms (edisi ke-4), bab Hash Tables</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/hash-table-cara-kerja-dictionary/"><img src="/artikel/hash-table-cara-kerja-dictionary/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Hash Table: Cara Kerja Dictionary yang Sangat Cepat</span></a><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

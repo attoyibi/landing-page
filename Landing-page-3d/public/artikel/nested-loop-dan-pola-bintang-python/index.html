@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nested Loop dan Pola Bintang di Python · Muhammad Muchson</title>
-<meta name="description" content="Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.">
+<meta name="description" content="Pelajari perulangan bersarang di Python lewat pola bintang, tabel perkalian, dan matriks, dengan penelusuran urutan eksekusi i dan j serta kompleksitasnya.">
 <meta name="keywords" content="nested loop, pola bintang, perulangan bersarang, tabel perkalian, O(n^2)">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/">
 <meta property="og:title" content="Nested Loop dan Pola Bintang di Python">
-<meta property="og:description" content="Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.">
+<meta property="og:description" content="Pelajari perulangan bersarang di Python lewat pola bintang, tabel perkalian, dan matriks, dengan penelusuran urutan eksekusi i dan j serta kompleksitasnya.">
 <meta property="og:image" content="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nested Loop dan Pola Bintang di Python">
-<meta name="twitter:description" content="Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.">
+<meta name="twitter:description" content="Pelajari perulangan bersarang di Python lewat pola bintang, tabel perkalian, dan matriks, dengan penelusuran urutan eksekusi i dan j serta kompleksitasnya.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Nested Loop dan Pola Bintang di Python","description":"Pahami perulangan bersarang lewat visualisasi grid, pola segitiga, piramida, tabel perkalian, dan analisis jumlah langkah O(n²). Lengkap dengan latihan pola yang sering keluar di ujian.","image":["https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"nested loop, pola bintang, perulangan bersarang, tabel perkalian, O(n^2)","articleSection":"Algoritma & Pemrograman Python","wordCount":491,"mainEntityOfPage":"https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Nested Loop dan Pola Bintang di Python","description":"Pelajari perulangan bersarang di Python lewat pola bintang, tabel perkalian, dan matriks, dengan penelusuran urutan eksekusi i dan j serta kompleksitasnya.","image":["https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"nested loop, pola bintang, perulangan bersarang, tabel perkalian, O(n^2)","articleSection":"Algoritma & Pemrograman Python","wordCount":491,"mainEntityOfPage":"https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Nested Loop dan Pola Bintang di Python","item":"https://muchson.web.id/artikel/nested-loop-dan-pola-bintang-python/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bolehkah memakai perkalian string alih-alih perulangan dalam?","acceptedAnswer":{"@type":"Answer","text":"Dalam praktik ya, dan itu lebih ringkas. Dalam ujian, ikuti instruksi: sering diminta memakai perulangan bersarang eksplisit."}},{"@type":"Question","name":"Bagaimana cara berlatih pola?","acceptedAnswer":{"@type":"Answer","text":"Gambar polanya, isi tabel (baris, spasi, simbol), cari rumusnya, baru tulis kode. Jangan menebak langsung dari kode."}},{"@type":"Question","name":"Apa itu nested loop tiga tingkat?","acceptedAnswer":{"@type":"Answer","text":"Perulangan di dalam perulangan di dalam perulangan, dengan n³ langkah, misalnya pada perkalian matriks naif."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

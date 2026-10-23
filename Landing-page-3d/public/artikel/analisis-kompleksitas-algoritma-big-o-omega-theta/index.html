@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta</title>
-<meta name="description" content="Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.">
+<meta name="description" content="Pelajari analisis kompleksitas algoritma: Big-O, Omega, Theta, menghitung operasi, pola umum O(1) sampai O(2^n), dan pengukuran nyata dengan kode.">
 <meta name="keywords" content="kompleksitas algoritma, Big-O, Omega, Theta, analisis algoritma">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/">
 <meta property="og:title" content="Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta">
-<meta property="og:description" content="Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.">
+<meta property="og:description" content="Pelajari analisis kompleksitas algoritma: Big-O, Omega, Theta, menghitung operasi, pola umum O(1) sampai O(2^n), dan pengukuran nyata dengan kode.">
 <meta property="og:image" content="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta">
-<meta name="twitter:description" content="Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.">
+<meta name="twitter:description" content="Pelajari analisis kompleksitas algoritma: Big-O, Omega, Theta, menghitung operasi, pola umum O(1) sampai O(2^n), dan pengukuran nyata dengan kode.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta","description":"Pelajari analisis kompleksitas secara formal: menghitung langkah, notasi O, Ω, Θ, kasus terbaik dan terburuk, relasi rekurensi, dan kompleksitas ruang dengan contoh Python yang dijalankan.","image":["https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kompleksitas algoritma, Big-O, Omega, Theta, analisis algoritma","articleSection":"Algoritma & Pemrograman Python","wordCount":696,"mainEntityOfPage":"https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta","description":"Pelajari analisis kompleksitas algoritma: Big-O, Omega, Theta, menghitung operasi, pola umum O(1) sampai O(2^n), dan pengukuran nyata dengan kode.","image":["https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kompleksitas algoritma, Big-O, Omega, Theta, analisis algoritma","articleSection":"Algoritma & Pemrograman Python","wordCount":696,"mainEntityOfPage":"https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Analisis Kompleksitas Algoritma: Big-O, Omega, dan Theta","item":"https://muchson.web.id/artikel/analisis-kompleksitas-algoritma-big-o-omega-theta/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa konstanta diabaikan padahal berpengaruh pada waktu nyata?","acceptedAnswer":{"@type":"Answer","text":"Notasi asimtotik menjawab pertanyaan \"bagaimana pertumbuhannya\" bukan \"berapa detiknya\". Dalam praktik, konstanta penting untuk n kecil, dan profil waktu nyata melengkapi analisis teori."}},{"@type":"Question","name":"Apakah O(n) selalu lebih cepat dari O(n²)?","acceptedAnswer":{"@type":"Answer","text":"Hanya untuk n yang cukup besar. Untuk n kecil, algoritma O(n²) dengan konstanta kecil bisa lebih cepat, itu sebabnya insertion sort dipakai untuk potongan kecil pada Timsort."}},{"@type":"Question","name":"Apa itu analisis amortisasi?","acceptedAnswer":{"@type":"Answer","text":"Menghitung biaya rata-rata per operasi atas serangkaian operasi. Contohnya append pada list dinamis: sesekali mahal (realokasi), tetapi rata-ratanya O(1)."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

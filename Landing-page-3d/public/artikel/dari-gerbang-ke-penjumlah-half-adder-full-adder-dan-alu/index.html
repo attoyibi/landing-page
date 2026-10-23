@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU</title>
-<meta name="description" content="Bangun penjumlah biner dari gerbang logika: half adder, full adder, ripple-carry adder 8 bit, pengurangan dengan komplemen dua, dan ALU mini, semuanya disimulasikan dengan kode Python.">
+<meta name="description" content="Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.">
 <meta name="keywords" content="half adder, full adder, ALU, rangkaian kombinasional, arsitektur komputer">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/">
 <meta property="og:title" content="Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU">
-<meta property="og:description" content="Bangun penjumlah biner dari gerbang logika: half adder, full adder, ripple-carry adder 8 bit, pengurangan dengan komplemen dua, dan ALU mini, semuanya disimulasikan dengan kode Python.">
+<meta property="og:description" content="Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.">
 <meta property="og:image" content="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Dasar Informatika">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU">
-<meta name="twitter:description" content="Bangun penjumlah biner dari gerbang logika: half adder, full adder, ripple-carry adder 8 bit, pengurangan dengan komplemen dua, dan ALU mini, semuanya disimulasikan dengan kode Python.">
+<meta name="twitter:description" content="Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU","description":"Bangun penjumlah biner dari gerbang logika: half adder, full adder, ripple-carry adder 8 bit, pengurangan dengan komplemen dua, dan ALU mini, semuanya disimulasikan dengan kode Python.","image":["https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"half adder, full adder, ALU, rangkaian kombinasional, arsitektur komputer","articleSection":"Dasar Informatika","wordCount":432,"mainEntityOfPage":"https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU","description":"Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.","image":["https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"half adder, full adder, ALU, rangkaian kombinasional, arsitektur komputer","articleSection":"Dasar Informatika","wordCount":432,"mainEntityOfPage":"https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU","item":"https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana perkalian dilakukan?","acceptedAnswer":{"@type":"Answer","text":"Dengan geser dan tambah (seperti perkalian manual) atau rangkaian khusus seperti array multiplier dan algoritma Booth."}},{"@type":"Question","name":"Apa bedanya rangkaian kombinasional dan sekuensial?","acceptedAnswer":{"@type":"Answer","text":"Kombinasional: keluaran hanya bergantung masukan saat ini (penjumlah). Sekuensial: ada memori/keadaan (flip-flop, register)."}},{"@type":"Question","name":"Di mana belajar membangun komputer dari gerbang?","acceptedAnswer":{"@type":"Answer","text":"Proyek nand2tetris membimbing dari NAND sampai komputer penuh dengan simulator perangkat keras gratis."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

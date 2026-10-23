@@ -242,8 +242,8 @@ for j in [30, 500, -5]:
 
     {
         slug: 'pengujian-python-assert-unittest-dan-test-driven-development',
-        title: 'Pengujian Python: assert, unittest, dan Test-Driven Development',
-        description: 'Pelajari menguji kode Python dengan assert dan unittest: merancang kasus uji, kasus tepi, struktur test case, dan siklus TDD merah-hijau-refactor dengan contoh yang dijalankan.',
+        title: 'Pengujian Python: Assert, unittest, dan TDD',
+        description: 'Belajar menguji kode Python: assert, unittest, pytest, nilai batas, dan siklus red-green-refactor pada TDD, dengan contoh yang dijalankan.',
         date: D, category: C, level: 'Menengah', tags: ['unittest', 'assert', 'TDD', 'pengujian perangkat lunak', 'testing Python'], cta: 'none',
         prereq: ['fungsi', 'exception'],
         lead: '"Berjalan" bukan berarti "benar". Pengujian otomatis adalah cara memastikan kode melakukan yang seharusnya, dan tetap melakukannya setelah Anda mengubahnya enam bulan lagi. Materi ini memperkenalkan pengujian dari yang paling sederhana (assert) sampai kerangka unittest dan alur TDD.',

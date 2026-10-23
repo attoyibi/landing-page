@@ -13,7 +13,7 @@ export default [
     {
         slug: 'stack-dan-queue-python-implementasi-dan-aplikasi',
         title: 'Stack dan Queue di Python: Implementasi dan Aplikasi',
-        description: 'Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.',
+        description: 'Implementasikan stack dan queue di Python untuk kurung seimbang, postfix, dan antrean, plus priority queue dengan heapq, dengan kode yang dijalankan.',
         date: D, category: C, level: 'Menengah', tags: ['stack', 'queue', 'deque', 'postfix', 'struktur data'], cta: 'none',
         prereq: ['list Python', 'kelas dasar', 'konsep stack dan queue'],
         lead: 'Stack dan queue sederhana secara konsep, tetapi aplikasinya luas: kompiler memeriksa kurung dengan stack, sistem operasi menjadwalkan proses dengan queue, dan algoritma graf bergantung pada keduanya. Materi ini menjembatani konsep dengan implementasi dan menunjukkan masalah nyata yang diselesaikannya.',
@@ -125,7 +125,7 @@ while igd:
     {
         slug: 'binary-search-tree-python-insert-search-delete-dan-traversal',
         title: 'Binary Search Tree: Insert, Search, Delete, dan Traversal',
-        description: 'Pelajari binary search tree: sifatnya, operasi sisip, cari, hapus (tiga kasus), tiga traversal DFS dan BFS, kompleksitas seimbang vs miring, dengan visualisasi interaktif dan kode Python.',
+        description: 'Pelajari binary search tree: sisip, cari, hapus, traversal, dan kompleksitas seimbang vs miring, dengan visualisasi interaktif dan kode Python.',
         date: D, category: C, level: 'Menengah', tags: ['binary search tree', 'BST', 'pohon biner', 'traversal', 'struktur data'], cta: 'none',
         prereq: ['rekursi', 'kelas dan objek', 'binary search'],
         lead: 'Binary search tree (BST) menggabungkan kecepatan pencarian biner dengan kemudahan menyisip dan menghapus pada linked list. Syaratnya satu aturan sederhana: semua nilai di kiri lebih kecil dan semua nilai di kanan lebih besar. Dari aturan itu lahir pencarian yang sangat cepat, selama pohonnya tidak melengkung.',
@@ -231,7 +231,7 @@ print("data terurut: tinggi", tinggi_pohon(list(range(n))), "(= n, pohon melengk
     {
         slug: 'graf-python-representasi-bfs-dan-dfs-langkah-demi-langkah',
         title: 'Graf di Python: Representasi, BFS, dan DFS',
-        description: 'Pelajari graf: representasi matriks dan daftar ketetanggaan, penjelajahan BFS dan DFS dengan animasi langkah demi langkah, jalur terpendek tak berbobot, dan komponen terhubung.',
+        description: 'Pelajari graf: matriks dan daftar ketetanggaan, BFS dan DFS dengan animasi langkah demi langkah, jalur terpendek, dan komponen terhubung.',
         date: D, category: C, level: 'Menengah', tags: ['graf', 'BFS', 'DFS', 'daftar ketetanggaan', 'jalur terpendek'], cta: 'none',
         prereq: ['stack dan queue', 'dictionary dan set', 'rekursi'],
         lead: 'Peta jalan, jaringan pertemanan, hubungan antar halaman web, dan jadwal kuliah dengan prasyarat semuanya adalah graf. Dua algoritma penjelajahan, BFS dan DFS, menjadi dasar hampir semua algoritma graf lanjutan. Materi ini menunjukkan keduanya bekerja langkah demi langkah, lalu memakainya menyelesaikan masalah nyata.',
@@ -347,7 +347,7 @@ print(len(komponen(graf)))     # graf utama: satu kelompok`, lang: 'python', run
     {
         slug: 'menara-hanoi-dan-rekursi-lanjutan-python',
         title: 'Menara Hanoi dan Rekursi Lanjutan di Python',
-        description: 'Pahami cara berpikir rekursif lewat Menara Hanoi, permutasi, dan pencarian bersarang. Ada animasi interaktif, bukti 2^n − 1 langkah, batas kedalaman rekursi, dan kapan beralih ke iterasi.',
+        description: 'Pahami berpikir rekursif lewat Menara Hanoi dan permutasi: animasi interaktif, bukti 2^n − 1 langkah, batas rekursi, dan kapan beralih ke iterasi.',
         date: D, category: C, level: 'Menengah', tags: ['Menara Hanoi', 'rekursi', 'permutasi', 'divide and conquer', 'recursion limit'], cta: 'none',
         prereq: ['fungsi', 'rekursi dasar (faktorial, Fibonacci)'],
         lead: 'Rekursi terasa mudah pada faktorial, tetapi baru sungguh teruji pada masalah yang tidak bisa dibayangkan langkah demi langkah di kepala. Menara Hanoi adalah contoh klasiknya: aturannya sederhana, namun urutan solusinya hampir mustahil ditebak tanpa berpikir rekursif. Di sini Anda belajar mempercayai rekursi: asumsikan masalah yang lebih kecil sudah beres.',

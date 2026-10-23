@@ -46,7 +46,7 @@ export default [
     {
         slug: 'audit-sistem-informasi-tujuan-tahapan-dan-bukti',
         title: 'Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti',
-        description: 'Pelajari audit sistem informasi: tujuan, jenis kontrol (preventif, detektif, korektif), tahapan audit, pengumpulan bukti, sampling, temuan, dan analisis data sederhana dengan Python.',
+        description: 'Pelajari audit SI: tujuan, jenis kontrol, tahapan, bukti, sampling, dan penulisan temuan, dengan contoh analisis data transaksi memakai Python.',
         date: D, category: C, level: 'Menengah', tags: ['audit SI', 'kontrol', 'bukti audit', 'sampling', 'kepatuhan'], cta: 'none',
         prereq: ['tata kelola TI', 'keamanan informasi'],
         lead: 'Audit sistem informasi menilai apakah sistem melindungi aset, menjaga integritas data, mencapai tujuan organisasi, dan beroperasi secara efektif dan efisien. Auditor tidak mencari siapa yang salah, melainkan memberi keyakinan independen kepada manajemen bahwa kontrol bekerja, atau menunjukkan di mana ia tidak bekerja.',
@@ -104,13 +104,13 @@ print("4. Ringkasan per pembuat:", dict(collections.Counter(b["pembuat"] for b i
             { summary: ['Audit SI memberi keyakinan independen atas keamanan, integritas, efektivitas, efisiensi.', 'Kontrol: preventif, detektif, korektif; umum dan aplikasi.', 'Tahap: perencanaan, pemahaman, pengujian, evaluasi, pelaporan, tindak lanjut.', 'Bukti harus cukup dan andal; analisis data memperluas cakupan.', 'Temuan: kondisi, kriteria, sebab, akibat, rekomendasi.'] },
         ],
         faq: [['Apa beda audit internal dan eksternal?', 'Audit internal dilakukan unit di dalam organisasi untuk membantu manajemen; audit eksternal oleh pihak independen di luar organisasi, misalnya untuk laporan keuangan atau sertifikasi.'], ['Apa itu penetration test?', 'Pengujian keamanan dengan mensimulasikan serangan secara terotorisasi. Ia melengkapi audit tetapi bukan pengganti.'], ['Bagaimana memulai karier audit SI?', 'Pelajari kontrol TI, kerangka COBIT dan ISO 27001, analisis data, dan pertimbangkan sertifikasi CISA.']],
-        sources: [['ISACA: Information Technology Assurance Framework (ITAF)', 'https://www.isaca.org/resources/itaf'], REF_ISACA, ['Ron Weber, Information Systems Control and Audit (Prentice Hall)', ''], REF_LAUDON],
+        sources: [['ISACA: IT Audit (termasuk kerangka ITAF)', 'https://www.isaca.org/resources/it-audit'], REF_ISACA, ['Ron Weber, Information Systems Control and Audit (Prentice Hall)', ''], REF_LAUDON],
     },
 
     {
         slug: 'studi-kelayakan-sistem-informasi-biaya-manfaat-roi-dan-npv',
         title: 'Studi Kelayakan SI: Biaya-Manfaat, ROI, dan NPV',
-        description: 'Pelajari studi kelayakan sistem informasi: aspek teknis, operasional, ekonomi, dan jadwal, menghitung ROI, payback period, dan NPV dengan kode Python dan kalkulator interaktif.',
+        description: 'Pelajari studi kelayakan SI: aspek TELOS, biaya dan manfaat, ROI, payback, NPV, dan analisis sensitivitas, dengan kalkulator dan kode Python.',
         date: D, category: C, level: 'Menengah', tags: ['studi kelayakan', 'ROI', 'NPV', 'payback period', 'analisis biaya manfaat'], cta: 'none',
         prereq: ['SDLC'],
         lead: 'Sebelum menginvestasikan waktu dan uang pada sistem baru, organisasi bertanya: apakah ini layak? Studi kelayakan menjawab dari beberapa sudut: bisakah dibangun, akankah dipakai, apakah menguntungkan, dan sempatkah diselesaikan. Bagian ekonomi memakai hitungan sederhana yang sangat berguna.',
@@ -172,7 +172,7 @@ for nama, faktor_manfaat, faktor_investasi in [("dasar", 1.0, 1.0), ("manfaat -3
     {
         slug: 'pengujian-sistem-informasi-black-box-white-box-dan-uat',
         title: 'Pengujian Sistem Informasi: Black Box, White Box, dan UAT',
-        description: 'Pelajari strategi pengujian sistem informasi: tingkat pengujian, black box dan white box, partisi ekuivalensi, nilai batas, test case, regresi, dan UAT, dengan contoh pengujian yang dijalankan.',
+        description: 'Pelajari pengujian sistem informasi: black box dan white box, partisi ekuivalensi, nilai batas, test case, regresi, dan UAT, dengan kode yang dijalankan.',
         date: D, category: C, level: 'Menengah', tags: ['pengujian perangkat lunak', 'black box', 'white box', 'UAT', 'test case'], cta: 'none',
         prereq: ['SDLC', 'analisis kebutuhan'],
         lead: 'Pengujian tidak membuktikan program benar; ia menemukan kesalahan sebelum pengguna menemukannya. Karena pengujian lengkap mustahil, seni utamanya adalah memilih sedikit kasus uji yang paling mungkin menemukan banyak kesalahan. Teknik partisi dan nilai batas melakukan itu.',
@@ -247,7 +247,7 @@ for t, m in tes:
     {
         slug: 'interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan',
         title: 'Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability',
-        description: 'Pelajari desain antarmuka yang mudah digunakan: prinsip HCI, sepuluh heuristik Nielsen, evaluasi heuristik, pengujian kegunaan dengan 5 pengguna, System Usability Scale (SUS), dan hukum Fitts.',
+        description: 'Pelajari HCI: sepuluh heuristik Nielsen, evaluasi heuristik, pengujian kegunaan, skor SUS, dan hukum Fitts, dengan contoh perbaikan antarmuka.',
         date: D, category: C, level: 'Menengah', tags: ['HCI', 'usability', 'heuristik Nielsen', 'UX', 'SUS'], cta: 'none',
         prereq: ['analisis kebutuhan'],
         lead: 'Sistem yang benar tetapi sulit dipakai tetap gagal: pengguna membuat kesalahan, mencari jalan pintas, atau berhenti memakainya. HCI (Human–Computer Interaction) mempelajari bagaimana manusia berinteraksi dengan sistem dan bagaimana merancang antarmuka yang efektif, efisien, dan menyenangkan.',

@@ -14,7 +14,7 @@ export default [
     {
         slug: 'konsep-dasar-sistem-informasi-data-informasi-dan-komponen',
         title: 'Konsep Dasar Sistem Informasi: Data, Informasi, Komponen',
-        description: 'Pahami apa itu sistem informasi: beda data, informasi, dan pengetahuan, lima komponen SI, siklus input-proses-output, serta peran SI dalam organisasi, dengan contoh nyata dan latihan.',
+        description: 'Pahami sistem informasi: beda data, informasi, dan pengetahuan, lima komponen SI, siklus input-proses-output, kualitas informasi, dan perannya di organisasi.',
         date: D, category: C, level: 'Pemula', tags: ['sistem informasi', 'data', 'informasi', 'komponen SI', 'organisasi'], cta: 'none',
         prereq: ['tidak ada'],
         lead: 'Sistem informasi (SI) sering disamakan dengan "aplikasi" atau "komputer". Padahal sebuah SI mencakup manusia, proses, data, perangkat lunak, dan perangkat keras yang bekerja bersama untuk menghasilkan informasi yang membantu keputusan dan operasi organisasi. Pemahaman ini menjadi fondasi seluruh materi sistem informasi.',
@@ -106,7 +106,7 @@ export default [
     {
         slug: 'analisis-kebutuhan-sistem-elisitasi-user-story-dan-spesifikasi',
         title: 'Analisis Kebutuhan Sistem: Elisitasi dan User Story',
-        description: 'Pelajari cara menggali dan menuliskan kebutuhan sistem: wawancara, observasi, kuesioner, kebutuhan fungsional dan non-fungsional, user story, kriteria penerimaan, dan prioritas MoSCoW.',
+        description: 'Pelajari analisis kebutuhan sistem: teknik elisitasi, kebutuhan fungsional dan non-fungsional, user story, kriteria penerimaan, dan prioritas MoSCoW.',
         date: D, category: C, level: 'Menengah', tags: ['analisis kebutuhan', 'user story', 'MoSCoW', 'requirements', 'elisitasi'], cta: 'none',
         prereq: ['SDLC'],
         lead: 'Sebagian besar proyek yang gagal tidak gagal karena kodenya buruk, melainkan karena membangun hal yang salah. Analisis kebutuhan adalah disiplin menemukan apa yang sebenarnya dibutuhkan pengguna dan menuliskannya dengan jelas sehingga dapat dibangun dan diuji.',
@@ -135,7 +135,7 @@ export default [
     {
         slug: 'data-flow-diagram-dfd-level-0-1-dan-kamus-data',
         title: 'Data Flow Diagram: DFD Level 0, 1, dan Kamus Data',
-        description: 'Belajar menggambar DFD: simbol proses, aliran data, penyimpanan, dan entitas eksternal, diagram konteks, dekomposisi level 1, aturan penyeimbangan, serta kamus data, dengan studi kasus.',
+        description: 'Belajar menggambar DFD: simbol, diagram konteks, dekomposisi level 1, aturan penyeimbangan, dan kamus data, lengkap dengan studi kasus perpustakaan.',
         date: D, category: C, level: 'Menengah', tags: ['DFD', 'data flow diagram', 'pemodelan proses', 'kamus data', 'analisis sistem'], cta: 'none',
         prereq: ['analisis kebutuhan'],
         lead: 'Diagram aliran data (DFD) memperlihatkan bagaimana data bergerak melalui sistem: dari mana datang, diolah apa, disimpan di mana, dan ke mana pergi. Ia tidak menggambarkan urutan atau logika keputusan, hanya perpindahan data, dan itulah kekuatannya untuk berkomunikasi dengan pengguna non-teknis.',

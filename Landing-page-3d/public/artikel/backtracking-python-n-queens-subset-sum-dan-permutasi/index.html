@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Backtracking: N-Queens, Subset Sum, dan Pemangkasan</title>
-<meta name="description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.">
+<meta name="description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Kode N-Queens dan subset sum, pemangkasan, dan perbandingannya dengan brute force.">
 <meta name="keywords" content="backtracking, N-Queens, subset sum, pemangkasan, rekursi">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/">
 <meta property="og:title" content="Backtracking: N-Queens, Subset Sum, dan Pemangkasan">
-<meta property="og:description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.">
+<meta property="og:description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Kode N-Queens dan subset sum, pemangkasan, dan perbandingannya dengan brute force.">
 <meta property="og:image" content="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Backtracking: N-Queens, Subset Sum, dan Pemangkasan">
-<meta name="twitter:description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.">
+<meta name="twitter:description" content="Pelajari backtracking: mencoba, memeriksa, dan mundur. Kode N-Queens dan subset sum, pemangkasan, dan perbandingannya dengan brute force.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Backtracking: N-Queens, Subset Sum, dan Pemangkasan","description":"Pelajari backtracking: mencoba, memeriksa, dan mundur. Implementasi N-Queens, subset sum, dan sudoku sederhana di Python, dengan pemangkasan dan perbandingan terhadap brute force.","image":["https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"backtracking, N-Queens, subset sum, pemangkasan, rekursi","articleSection":"Algoritma & Pemrograman Python","wordCount":316,"mainEntityOfPage":"https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Backtracking: N-Queens, Subset Sum, dan Pemangkasan","description":"Pelajari backtracking: mencoba, memeriksa, dan mundur. Kode N-Queens dan subset sum, pemangkasan, dan perbandingannya dengan brute force.","image":["https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"backtracking, N-Queens, subset sum, pemangkasan, rekursi","articleSection":"Algoritma & Pemrograman Python","wordCount":316,"mainEntityOfPage":"https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Backtracking: N-Queens, Subset Sum, dan Pemangkasan","item":"https://muchson.web.id/artikel/backtracking-python-n-queens-subset-sum-dan-permutasi/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya backtracking dan DFS?","acceptedAnswer":{"@type":"Answer","text":"Backtracking adalah DFS pada pohon keputusan implisit yang membangun dan membatalkan kandidat sambil memangkas cabang."}},{"@type":"Question","name":"Apakah sudoku dapat diselesaikan dengan backtracking?","acceptedAnswer":{"@type":"Answer","text":"Ya. Isi sel kosong berurutan dengan angka 1–9 yang sah, mundur bila buntu. Solver praktis menambah heuristik memilih sel dengan pilihan paling sedikit."}},{"@type":"Question","name":"Mengapa jumlah solusi N-Queens dihitung 92 padahal ada simetri?","acceptedAnswer":{"@type":"Answer","text":"Dihitung semua penempatan berbeda; bila rotasi dan pencerminan dianggap sama ada 12 solusi unik."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

@@ -11,8 +11,8 @@ const REF_PROGIT = ['Scott Chacon dan Ben Straub, Pro Git (gratis)', 'https://gi
 export default [
     {
         slug: 'hierarki-memori-dan-cache-mengapa-urutan-akses-menentukan-kecepatan',
-        title: 'Hierarki Memori dan Cache: Mengapa Urutan Akses Menentukan Kecepatan',
-        description: 'Pahami hierarki memori komputer: register, cache L1-L3, RAM, SSD, lokalitas spasial dan temporal, serta simulasi cache yang menunjukkan mengapa menelusuri matriks per baris lebih cepat daripada per kolom.',
+        title: 'Hierarki Memori dan Cache: Mengapa Urutan Akses Penting',
+        description: 'Pahami hierarki memori, cache, dan lokalitas, dengan simulasi cache dan pengukuran nyata mengapa menelusuri matriks per baris lebih cepat.',
         date: D, category: C, level: 'Menengah', tags: ['cache', 'hierarki memori', 'lokalitas', 'RAM', 'performa'], cta: 'none',
         prereq: ['arsitektur CPU'],
         lead: 'Memori yang besar itu lambat dan memori yang cepat itu kecil. Komputer mengatasinya dengan berlapis-lapis memori, dari yang kecil dan secepat kilat sampai yang besar dan lamban, dan mengandalkan satu kenyataan tentang program: data yang baru dipakai cenderung dipakai lagi, dan data di sekitarnya cenderung dipakai berikutnya.',
@@ -89,7 +89,7 @@ for nama, urutan in (("per baris (searah memori)", per_baris), ("per kolom (melo
     {
         slug: 'proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi',
         title: 'Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin',
-        description: 'Pahami proses, thread, dan status proses pada sistem operasi, lalu bandingkan algoritma penjadwalan FCFS, SJF, dan Round Robin dengan simulasi dan perhitungan waiting time serta turnaround time.',
+        description: 'Pahami proses dan penjadwalan CPU: bandingkan FCFS, SJF, dan Round Robin dengan simulasi serta perhitungan waiting time dan turnaround time.',
         date: D, category: C, level: 'Menengah', tags: ['sistem operasi', 'penjadwalan CPU', 'round robin', 'proses', 'context switch'], cta: 'none',
         prereq: ['arsitektur CPU'],
         lead: 'Komputer Anda menjalankan puluhan proses, tetapi hanya memiliki beberapa inti CPU. Sistem operasi menciptakan ilusi bahwa semuanya berjalan bersamaan dengan bergantian memakai CPU. Cara memilih siapa yang berjalan berikutnya, penjadwalan, memengaruhi responsivitas dan keadilan seluruh sistem.',
@@ -275,7 +275,7 @@ for f in (3, 4):
     {
         slug: 'command-line-linux-dasar-navigasi-berkas-pipe-dan-izin',
         title: 'Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas',
-        description: 'Belajar command line Linux dari nol: navigasi direktori, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan alur kerja yang aman, dengan contoh dan latihan.',
+        description: 'Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.',
         date: D, category: C, level: 'Pemula', tags: ['Linux', 'command line', 'bash', 'pipe', 'chmod'], cta: 'none',
         prereq: ['konsep berkas dan folder'],
         lead: 'Antarmuka grafis nyaman untuk hal yang sering dilakukan, tetapi baris perintah unggul untuk otomasi, pekerjaan berulang, dan mengelola server yang tidak memiliki layar. Hampir semua server, kontainer, dan sistem cloud dijalankan dengan Linux, sehingga kemampuan dasar baris perintah adalah keterampilan yang akan terus terpakai.',
@@ -312,7 +312,7 @@ for f in (3, 4):
     {
         slug: 'git-dan-github-dasar-commit-branch-merge-dan-pull-request',
         title: 'Git dan GitHub Dasar: Commit, Branch, Merge, Pull Request',
-        description: 'Pelajari version control dengan Git: konsep repositori, commit, staging, branch, merge, konflik, remote, dan alur pull request di GitHub, lengkap dengan perintah, diagram, dan kebiasaan yang baik.',
+        description: 'Pelajari Git dan GitHub: commit, staging, branch, merge, konflik, remote, dan pull request, dengan perintah, diagram, dan kebiasaan yang baik.',
         date: D, category: C, level: 'Pemula', tags: ['Git', 'GitHub', 'version control', 'branch', 'pull request'], cta: 'none',
         prereq: ['command line dasar'],
         lead: 'Pernahkah memiliki berkas "laporan_final_v2_revisi_beneran_final.docx"? Git menyelesaikan masalah itu untuk kode: setiap perubahan tercatat, dapat dibandingkan dan dibatalkan, dan banyak orang dapat bekerja serentak tanpa saling menimpa. Hampir semua tim perangkat lunak memakainya, jadi ini keterampilan dasar bagi profesional informatika.',

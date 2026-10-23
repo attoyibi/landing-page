@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi</title>
+<meta name="description" content="Bangun interpreter mini di Python: lexer, parser rekursif turun, AST, dan evaluasi, lalu pahami cara kompilator nyata bekerja.">
+<meta name="keywords" content="kompilator, interpreter, lexer, parser, AST">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/">
+<meta property="og:title" content="Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi">
+<meta property="og:description" content="Bangun interpreter mini di Python: lexer, parser rekursif turun, AST, dan evaluasi, lalu pahami cara kompilator nyata bekerja.">
+<meta property="og:image" content="https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi">
+<meta name="twitter:description" content="Bangun interpreter mini di Python: lexer, parser rekursif turun, AST, dan evaluasi, lalu pahami cara kompilator nyata bekerja.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi","description":"Bangun interpreter mini di Python: lexer, parser rekursif turun, AST, dan evaluasi, lalu pahami cara kompilator nyata bekerja.","image":["https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"kompilator, interpreter, lexer, parser, AST","articleSection":"Dasar Informatika","wordCount":411,"mainEntityOfPage":"https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi","item":"https://muchson.web.id/artikel/cara-kerja-kompilator-dan-interpreter-lexer-parser-dan-eksekusi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu tata bahasa bebas konteks?","acceptedAnswer":{"@type":"Answer","text":"Cara formal menyatakan sintaks bahasa dengan aturan produksi (seperti di atas); dasar hampir semua bahasa pemrograman."}},{"@type":"Question","name":"Apa itu alat pembangkit parser?","acceptedAnswer":{"@type":"Answer","text":"Alat seperti ANTLR, Yacc/Bison, atau Lark membangkitkan lexer dan parser dari deskripsi tata bahasa."}},{"@type":"Question","name":"Mengapa kode yang dikompilasi biasanya lebih cepat?","acceptedAnswer":{"@type":"Answer","text":"Penerjemahan dan optimasi dilakukan sebelum jalan, serta menghasilkan instruksi mesin langsung; JIT modern mempersempit perbedaannya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dari-teks-ke-eksekusi">Dari teks ke eksekusi</a></li><li><a href="#tahap-1-lexer-analisis-leksikal">Tahap 1: lexer (analisis leksikal)</a></li><li><a href="#tahap-2-parser-dan-tata-bahasa">Tahap 2: parser dan tata bahasa</a></li><li><a href="#tahap-3-evaluasi-interpreter">Tahap 3: evaluasi (interpreter)</a></li><li><a href="#dari-pohon-ke-bytecode">Dari pohon ke bytecode</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi</h1>
+<p class="lead">Bagaimana komputer "mengerti" kode yang Anda tulis? Dari teks mentah menjadi tindakan, ada rantai tahap: memecah teks menjadi token, menyusunnya menjadi pohon sesuai tata bahasa, lalu menjalankan atau menerjemahkan pohon itu. Dengan membangun interpreter kalkulator mini, tahap-tahap yang tampak ajaib itu menjadi sederhana.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> rekursi, kelas dan struktur data dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Cara Kerja Kompilator dan Interpreter: Lexer, Parser, Eksekusi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan kompilator, interpreter, dan pendekatan hibrida (bytecode, JIT)</li><li>menjelaskan tahap: analisis leksikal, sintaksis, semantik, pembangkitan kode</li><li>menulis lexer dan parser rekursif turun untuk ekspresi aritmetika</li><li>menggambarkan pohon sintaks abstrak (AST) dan mengevaluasinya</li><li>menjelaskan presedensi operator lewat tata bahasa</li></ul></div>
+<h2 id="dari-teks-ke-eksekusi">Dari teks ke eksekusi</h2>
+<figure class="diagram"><svg viewBox="0 0 542 316" role="img" aria-label="Tahap kompilator" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="128" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Kode sumber</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">&quot;2 + 3 * 4&quot;</tspan></text><line x1="164" y1="74" x2="192" y2="74" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="128" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Lexer</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">memecah menjadi token</tspan></text><line x1="350" y1="74" x2="378" y2="74" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="128" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Parser</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">menyusun pohon sintaks</tspan><tspan x="457" dy="14">(AST)</tspan></text><path d="M457 142 V168 H85 V174" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="178" width="150" height="128" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="194" r="11" fill="#7a3fb4"/><text x="26" y="198" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Analisis semantik</tspan></text><text x="85" y="238" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">periksa tipe dan nama</tspan></text><line x1="164" y1="242" x2="192" y2="242" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="178" width="150" height="128" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="194" r="11" fill="#b3261e"/><text x="212" y="198" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="218" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Generasi kode /</tspan><tspan x="271" dy="16">eksekusi</tspan></text><text x="271" y="254" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">kode mesin, bytecode,</tspan><tspan x="271" dy="14">atau langsung</tspan><tspan x="271" dy="14">dievaluasi</tspan></text></svg><figcaption>Interpreter mengeksekusi pohon (atau bytecode) langsung; kompilator menerjemahkan seluruh program menjadi bahasa target lebih dulu.</figcaption></figure>
+<table><thead><tr><th>Pendekatan</th><th>Cara kerja</th><th>Contoh</th></tr></thead><tbody><tr><td>Kompilator</td><td>Menerjemahkan seluruh program ke kode mesin sebelum dijalankan</td><td>C, C++, Rust, Go</td></tr><tr><td>Interpreter</td><td>Membaca dan menjalankan program baris atau pohon secara langsung</td><td>Shell, versi awal Ruby</td></tr><tr><td>Hibrida: bytecode + VM</td><td>Dikompilasi ke bytecode lalu dijalankan mesin virtual</td><td>Python (CPython), Java (JVM)</td></tr><tr><td>JIT (just-in-time)</td><td>Bytecode yang sering dijalankan dikompilasi ke kode mesin saat berjalan</td><td>JVM HotSpot, V8 (JavaScript), PyPy</td></tr></tbody></table>
+<h2 id="tahap-1-lexer-analisis-leksikal">Tahap 1: lexer (analisis leksikal)</h2>
+<p>Lexer membaca karakter dan mengelompokkannya menjadi <b>token</b>: unit bermakna seperti angka, operator, dan kurung. Spasi biasanya dibuang.</p>
+<figure class="codebox"><pre data-lang="python"><code>import re
+
+POLA = [
+    (&quot;ANGKA&quot;, r&quot;\d+(?:\.\d+)?&quot;),
+    (&quot;TAMBAH&quot;, r&quot;\+&quot;), (&quot;KURANG&quot;, r&quot;-&quot;), (&quot;KALI&quot;, r&quot;\*&quot;), (&quot;BAGI&quot;, r&quot;/&quot;), (&quot;PANGKAT&quot;, r&quot;\^&quot;),
+    (&quot;KURBUKA&quot;, r&quot;\(&quot;), (&quot;KURTUTUP&quot;, r&quot;\)&quot;),
+    (&quot;SPASI&quot;, r&quot;\s+&quot;),
+]
+REGEX = re.compile(&quot;|&quot;.join(f&quot;(?P&lt;{n}&gt;{p})&quot; for n, p in POLA))
+
+def tokenisasi(teks):
+    token, i = [], 0
+    while i &lt; len(teks):
+        m = REGEX.match(teks, i)
+        if not m:
+            raise SyntaxError(f&quot;karakter tak dikenal {teks[i]!r} pada posisi {i}&quot;)
+        if m.lastgroup != &quot;SPASI&quot;:
+            token.append((m.lastgroup, m.group()))
+        i = m.end()
+    return token
+
+print(tokenisasi(&quot;2 + 3 * (4 - 1.5)&quot;))
+try:
+    tokenisasi(&quot;2 + $3&quot;)
+except SyntaxError as e:
+    print(&quot;galat leksikal:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>[('ANGKA', '2'), ('TAMBAH', '+'), ('ANGKA', '3'), ('KALI', '*'), ('KURBUKA', '('), ('ANGKA', '4'), ('KURANG', '-'), ('ANGKA', '1.5'), ('KURTUTUP', ')')]
+galat leksikal: karakter tak dikenal '$' pada posisi 4</code></pre></figure>
+<h2 id="tahap-2-parser-dan-tata-bahasa">Tahap 2: parser dan tata bahasa</h2>
+<p>Tata bahasa menyatakan bentuk kalimat yang sah. Untuk ekspresi aritmetika, presedensi operator terkodekan dalam <b>tingkatan</b> aturan: yang mengikat lebih kuat berada lebih dalam.</p>
+<figure class="codebox"><pre data-lang="text"><code>ekspresi  → suku  ( (&quot;+&quot; | &quot;-&quot;) suku )*          // paling lemah: + dan -
+suku      → faktor ( (&quot;*&quot; | &quot;/&quot;) faktor )*       // lebih kuat: * dan /
+faktor    → unit ( &quot;^&quot; faktor )?                   // pangkat, rapat ke kanan
+unit      → ANGKA | &quot;(&quot; ekspresi &quot;)&quot; | &quot;-&quot; unit   // angka, kurung, minus unary</code></pre><figcaption>Setiap aturan menjadi satu fungsi pada parser rekursif turun. Karena * dipanggil dari dalam +, perkalian dievaluasi lebih dulu: presedensi tanpa tabel khusus.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>import re
+
+POLA = [(&quot;ANGKA&quot;, r&quot;\d+(?:\.\d+)?&quot;), (&quot;OP&quot;, r&quot;[-+*/^()]&quot;), (&quot;SPASI&quot;, r&quot;\s+&quot;)]
+REGEX = re.compile(&quot;|&quot;.join(f&quot;(?P&lt;{n}&gt;{p})&quot; for n, p in POLA))
+
+def tokenisasi(teks):
+    hasil, i = [], 0
+    while i &lt; len(teks):
+        m = REGEX.match(teks, i)
+        if not m: raise SyntaxError(f&quot;karakter tak dikenal {teks[i]!r}&quot;)
+        if m.lastgroup != &quot;SPASI&quot;: hasil.append((m.lastgroup, m.group()))
+        i = m.end()
+    return hasil
+
+class Parser:
+    def __init__(self, token): self.t, self.i = token, 0
+    def lihat(self): return self.t[self.i][1] if self.i &lt; len(self.t) else None
+    def ambil(self): tok = self.t[self.i]; self.i += 1; return tok
+
+    def ekspresi(self):                                   # suku (('+'|'-') suku)*
+        kiri = self.suku()
+        while self.lihat() in (&quot;+&quot;, &quot;-&quot;):
+            op = self.ambil()[1]
+            kiri = (op, kiri, self.suku())
+        return kiri
+    def suku(self):                                       # faktor (('*'|'/') faktor)*
+        kiri = self.faktor()
+        while self.lihat() in (&quot;*&quot;, &quot;/&quot;):
+            op = self.ambil()[1]
+            kiri = (op, kiri, self.faktor())
+        return kiri
+    def faktor(self):                                     # unit ('^' faktor)?
+        dasar = self.unit()
+        if self.lihat() == &quot;^&quot;:
+            self.ambil()
+            return (&quot;^&quot;, dasar, self.faktor())            # rekursi ke kanan: 2^3^2 = 2^(3^2)
+        return dasar
+    def unit(self):
+        if self.lihat() == &quot;-&quot;: self.ambil(); return (&quot;neg&quot;, self.unit())
+        if self.lihat() == &quot;(&quot;:
+            self.ambil(); e = self.ekspresi()
+            if self.lihat() != &quot;)&quot;: raise SyntaxError(&quot;kurung tutup hilang&quot;)
+            self.ambil(); return e
+        jenis, nilai = self.ambil()
+        if jenis != &quot;ANGKA&quot;: raise SyntaxError(f&quot;token tak terduga {nilai!r}&quot;)
+        return float(nilai) if &quot;.&quot; in nilai else int(nilai)
+
+def parse(teks):
+    p = Parser(tokenisasi(teks)); pohon = p.ekspresi()
+    if p.i != len(p.t): raise SyntaxError(f&quot;sisa token: {p.t[p.i:]}&quot;)
+    return pohon
+
+for e in (&quot;2 + 3 * 4&quot;, &quot;(2 + 3) * 4&quot;, &quot;2 ^ 3 ^ 2&quot;, &quot;-(1 + 2) * 3&quot;):
+    print(f&quot;{e:&lt;14} -&gt; {parse(e)}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>2 + 3 * 4      -&gt; ('+', 2, ('*', 3, 4))
+(2 + 3) * 4    -&gt; ('*', ('+', 2, 3), 4)
+2 ^ 3 ^ 2      -&gt; ('^', 2, ('^', 3, 2))
+-(1 + 2) * 3   -&gt; ('*', ('neg', ('+', 1, 2)), 3)</code></pre><figcaption>Hasilnya adalah AST berupa tuple bersarang: ("+", 2, ("*", 3, 4)) menyatakan bahwa perkalian adalah anak dari penjumlahan, sehingga dievaluasi lebih dulu.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 560 220" role="img" aria-label="AST dari 2 + 3 * 4" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="86blj-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="86blj-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="86blj-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="86blj-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="86blj-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="263.4,41.1 176.6,98.9" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="296.6,41.1 383.4,98.9" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="388,126 352,174" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="412,126 448,174" fill="none" stroke="#0f1a33" stroke-width="1.8"/><ellipse cx="280" cy="30" rx="20" ry="20" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="34" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="280" dy="0">+</tspan></text><ellipse cx="160" cy="110" rx="20" ry="20" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="160" y="114" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="160" dy="0">2</tspan></text><ellipse cx="400" cy="110" rx="20" ry="20" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="400" y="114" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="400" dy="0">*</tspan></text><ellipse cx="340" cy="190" rx="20" ry="20" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="340" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="340" dy="0">3</tspan></text><ellipse cx="460" cy="190" rx="20" ry="20" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">4</tspan></text></svg><figcaption>Evaluasi dilakukan dari daun ke akar (post-order): 3 × 4 = 12, lalu 2 + 12 = 14.</figcaption></figure>
+<h2 id="tahap-3-evaluasi-interpreter">Tahap 3: evaluasi (interpreter)</h2>
+<figure class="codebox"><pre data-lang="python"><code>import re
+
+POLA = [(&quot;ANGKA&quot;, r&quot;\d+(?:\.\d+)?&quot;), (&quot;OP&quot;, r&quot;[-+*/^()]&quot;), (&quot;SPASI&quot;, r&quot;\s+&quot;)]
+REGEX = re.compile(&quot;|&quot;.join(f&quot;(?P&lt;{n}&gt;{p})&quot; for n, p in POLA))
+
+def tokenisasi(teks):
+    hasil, i = [], 0
+    while i &lt; len(teks):
+        m = REGEX.match(teks, i)
+        if not m: raise SyntaxError(f&quot;karakter tak dikenal {teks[i]!r}&quot;)
+        if m.lastgroup != &quot;SPASI&quot;: hasil.append((m.lastgroup, m.group()))
+        i = m.end()
+    return hasil
+
+class Parser:
+    def __init__(self, t): self.t, self.i = t, 0
+    def lihat(self): return self.t[self.i][1] if self.i &lt; len(self.t) else None
+    def ambil(self): x = self.t[self.i]; self.i += 1; return x
+    def ekspresi(self):
+        kiri = self.suku()
+        while self.lihat() in (&quot;+&quot;, &quot;-&quot;): op = self.ambil()[1]; kiri = (op, kiri, self.suku())
+        return kiri
+    def suku(self):
+        kiri = self.faktor()
+        while self.lihat() in (&quot;*&quot;, &quot;/&quot;): op = self.ambil()[1]; kiri = (op, kiri, self.faktor())
+        return kiri
+    def faktor(self):
+        d = self.unit()
+        if self.lihat() == &quot;^&quot;: self.ambil(); return (&quot;^&quot;, d, self.faktor())
+        return d
+    def unit(self):
+        if self.lihat() == &quot;-&quot;: self.ambil(); return (&quot;neg&quot;, self.unit())
+        if self.lihat() == &quot;(&quot;:
+            self.ambil(); e = self.ekspresi()
+            if self.lihat() != &quot;)&quot;: raise SyntaxError(&quot;kurung tutup hilang&quot;)
+            self.ambil(); return e
+        jenis, nilai = self.ambil()
+        if jenis != &quot;ANGKA&quot;: raise SyntaxError(f&quot;token tak terduga {nilai!r}&quot;)
+        return float(nilai) if &quot;.&quot; in nilai else int(nilai)
+
+def evaluasi(n):
+    if isinstance(n, (int, float)): return n
+    if n[0] == &quot;neg&quot;: return -evaluasi(n[1])
+    op, a, b = n[0], evaluasi(n[1]), evaluasi(n[2])
+    if op == &quot;+&quot;: return a + b
+    if op == &quot;-&quot;: return a - b
+    if op == &quot;*&quot;: return a * b
+    if op == &quot;/&quot;:
+        if b == 0: raise ZeroDivisionError(&quot;pembagian dengan nol&quot;)
+        return a / b
+    if op == &quot;^&quot;: return a ** b
+
+def hitung(teks):
+    p = Parser(tokenisasi(teks)); pohon = p.ekspresi()
+    if p.i != len(p.t): raise SyntaxError(&quot;token berlebih&quot;)
+    return evaluasi(pohon)
+
+for e in (&quot;2 + 3 * 4&quot;, &quot;(2 + 3) * 4&quot;, &quot;2 ^ 3 ^ 2&quot;, &quot;10 / 4 - 1&quot;, &quot;-(1 + 2) * 3&quot;, &quot;2 + * 3&quot;, &quot;(1 + 2&quot;, &quot;4 / (2 - 2)&quot;):
+    try: print(f&quot;{e:&lt;14} = {hitung(e)}&quot;)
+    except Exception as ex: print(f&quot;{e:&lt;14} ! {type(ex).__name__}: {ex}&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>2 + 3 * 4      = 14
+(2 + 3) * 4    = 20
+2 ^ 3 ^ 2      = 512
+10 / 4 - 1     = 1.5
+-(1 + 2) * 3   = -9
+2 + * 3        ! SyntaxError: token tak terduga '*'
+(1 + 2         ! SyntaxError: kurung tutup hilang
+4 / (2 - 2)    ! ZeroDivisionError: pembagian dengan nol</code></pre><figcaption>Kalkulator ini sekitar 60 baris. Interpreter bahasa pemrograman sungguhan menambah variabel, fungsi, kondisi, dan perulangan, tetapi kerangkanya sama.</figcaption></figure>
+<h2 id="dari-pohon-ke-bytecode">Dari pohon ke bytecode</h2>
+<p>Python tidak mengeksekusi pohon langsung. Ia mengompilasi ke <b>bytecode</b> yang dijalankan mesin virtual berbasis tumpukan. Anda dapat melihatnya dengan modul <code>dis</code>.</p>
+<figure class="codebox"><pre data-lang="python"><code>import dis
+def f(a, b):
+    return a + b * 2
+dis.dis(f)</code></pre><pre class="runout" data-lang="keluaran"><code>  2           RESUME                   0
+
+  3           LOAD_FAST_LOAD_FAST      1 (a, b)
+              LOAD_CONST               1 (2)
+              BINARY_OP                5 (*)
+              BINARY_OP                0 (+)
+              RETURN_VALUE</code></pre><figcaption>Instruksi seperti LOAD_FAST, BINARY_OP, dan RETURN_VALUE bekerja pada tumpukan nilai, mirip kalkulator postfix yang pernah kita bahas. (Nama instruksi dan angkanya berubah antar versi Python.)</figcaption></figure>
+<div class="callout good"><b>Mengapa mempelajarinya</b><p>Banyak alat sehari-hari adalah kompilator atau interpreter kecil: pemformat kode, linter, mesin templat, kueri SQL, ekspresi reguler, dan konfigurasi. Memahami lexer dan parser membuat Anda mampu membangun atau memahami semuanya, dan menjelaskan pesan "SyntaxError" yang Anda lihat setiap hari.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tahap yang memecah teks menjadi token?","options":["Lexer","Parser","Optimizer"],"answer":0,"why":"Analisis leksikal."},{"q":"Dalam parser rekursif turun, presedensi * lebih tinggi dari + karena...","options":["Aturan * dipanggil dari dalam aturan +","Ada tabel prioritas","Python menentukannya"],"answer":0,"why":"Aturan yang lebih dalam dievaluasi lebih dulu."},{"q":"Python CPython dijalankan dengan...","options":["Kompilasi ke bytecode lalu mesin virtual","Kode mesin langsung","Hanya interpretasi teks"],"answer":0,"why":"Hibrida bytecode + VM."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Gambarkan AST untuk (2 + 3) * 4.</summary><div>Akar *, anak kiri + (dengan 2 dan 3), anak kanan 4.</div></details><details><summary>2. Mengapa 2 ^ 3 ^ 2 dihitung sebagai 2 ^ (3 ^ 2) = 512?</summary><div>Pangkat bersifat asosiatif kanan; faktor() memanggil dirinya sendiri untuk sisi kanan.</div></details><details><summary>3. Tambahkan operator modulo % ke kalkulator. Apa yang perlu diubah?</summary><div>Tambah % pada pola lexer, masukkan pada tingkat suku bersama * dan /, dan cabang di evaluasi.</div></details><details><summary>4. Apa perbedaan galat sintaks dan galat semantik?</summary><div>Sintaks: bentuk tidak sah menurut tata bahasa (2 + * 3). Semantik: bentuk sah tetapi tak bermakna (menjumlahkan teks dengan fungsi, variabel belum didefinisikan).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Kompilator menerjemahkan; interpreter menjalankan; banyak sistem hibrida (bytecode, JIT).</li><li>Lexer: teks menjadi token. Parser: token menjadi AST sesuai tata bahasa.</li><li>Presedensi tertanam pada tingkatan aturan tata bahasa.</li><li>Evaluasi AST dari daun ke akar; tahap berikutnya dapat optimasi dan generasi kode.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu tata bahasa bebas konteks?</summary><div>Cara formal menyatakan sintaks bahasa dengan aturan produksi (seperti di atas); dasar hampir semua bahasa pemrograman.</div></details>
+<details class="faq"><summary>Apa itu alat pembangkit parser?</summary><div>Alat seperti ANTLR, Yacc/Bison, atau Lark membangkitkan lexer dan parser dari deskripsi tata bahasa.</div></details>
+<details class="faq"><summary>Mengapa kode yang dikompilasi biasanya lebih cepat?</summary><div>Penerjemahan dan optimasi dilakukan sebelum jalan, serta menghasilkan instruksi mesin langsung; JIT modern mempersempit perbedaannya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://craftinginterpreters.com/" rel="noopener" target="_blank">Robert Nystrom, Crafting Interpreters (gratis)</a></li><li>Aho, Lam, Sethi, Ullman, Compilers: Principles, Techniques, and Tools (Pearson)</li><li><a href="https://docs.python.org/3/library/dis.html" rel="noopener" target="_blank">Dokumentasi Python: modul dis</a></li><li><a href="https://docs.python.org/3/library/re.html" rel="noopener" target="_blank">Dokumentasi Python: re, Regular expression operations</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti</title>
-<meta name="description" content="Pelajari audit sistem informasi: tujuan, jenis kontrol (preventif, detektif, korektif), tahapan audit, pengumpulan bukti, sampling, temuan, dan analisis data sederhana dengan Python.">
+<meta name="description" content="Pelajari audit SI: tujuan, jenis kontrol, tahapan, bukti, sampling, dan penulisan temuan, dengan contoh analisis data transaksi memakai Python.">
 <meta name="keywords" content="audit SI, kontrol, bukti audit, sampling, kepatuhan">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/">
 <meta property="og:title" content="Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti">
-<meta property="og:description" content="Pelajari audit sistem informasi: tujuan, jenis kontrol (preventif, detektif, korektif), tahapan audit, pengumpulan bukti, sampling, temuan, dan analisis data sederhana dengan Python.">
+<meta property="og:description" content="Pelajari audit SI: tujuan, jenis kontrol, tahapan, bukti, sampling, dan penulisan temuan, dengan contoh analisis data transaksi memakai Python.">
 <meta property="og:image" content="https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Sistem Informasi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti">
-<meta name="twitter:description" content="Pelajari audit sistem informasi: tujuan, jenis kontrol (preventif, detektif, korektif), tahapan audit, pengumpulan bukti, sampling, temuan, dan analisis data sederhana dengan Python.">
+<meta name="twitter:description" content="Pelajari audit SI: tujuan, jenis kontrol, tahapan, bukti, sampling, dan penulisan temuan, dengan contoh analisis data transaksi memakai Python.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti","description":"Pelajari audit sistem informasi: tujuan, jenis kontrol (preventif, detektif, korektif), tahapan audit, pengumpulan bukti, sampling, temuan, dan analisis data sederhana dengan Python.","image":["https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"audit SI, kontrol, bukti audit, sampling, kepatuhan","articleSection":"Sistem Informasi","wordCount":331,"mainEntityOfPage":"https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti","description":"Pelajari audit SI: tujuan, jenis kontrol, tahapan, bukti, sampling, dan penulisan temuan, dengan contoh analisis data transaksi memakai Python.","image":["https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"audit SI, kontrol, bukti audit, sampling, kepatuhan","articleSection":"Sistem Informasi","wordCount":331,"mainEntityOfPage":"https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Audit Sistem Informasi: Tujuan, Tahapan, dan Bukti","item":"https://muchson.web.id/artikel/audit-sistem-informasi-tujuan-tahapan-dan-bukti/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa beda audit internal dan eksternal?","acceptedAnswer":{"@type":"Answer","text":"Audit internal dilakukan unit di dalam organisasi untuk membantu manajemen; audit eksternal oleh pihak independen di luar organisasi, misalnya untuk laporan keuangan atau sertifikasi."}},{"@type":"Question","name":"Apa itu penetration test?","acceptedAnswer":{"@type":"Answer","text":"Pengujian keamanan dengan mensimulasikan serangan secara terotorisasi. Ia melengkapi audit tetapi bukan pengganti."}},{"@type":"Question","name":"Bagaimana memulai karier audit SI?","acceptedAnswer":{"@type":"Answer","text":"Pelajari kontrol TI, kerangka COBIT dan ISO 27001, analisis data, dan pertimbangkan sertifikasi CISA."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">
@@ -115,7 +115,7 @@ Tanggapan manajemen: Disetujui; target selesai 31 Desember.</code></pre><figcapt
 <details class="faq"><summary>Apa beda audit internal dan eksternal?</summary><div>Audit internal dilakukan unit di dalam organisasi untuk membantu manajemen; audit eksternal oleh pihak independen di luar organisasi, misalnya untuk laporan keuangan atau sertifikasi.</div></details>
 <details class="faq"><summary>Apa itu penetration test?</summary><div>Pengujian keamanan dengan mensimulasikan serangan secara terotorisasi. Ia melengkapi audit tetapi bukan pengganti.</div></details>
 <details class="faq"><summary>Bagaimana memulai karier audit SI?</summary><div>Pelajari kontrol TI, kerangka COBIT dan ISO 27001, analisis data, dan pertimbangkan sertifikasi CISA.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.isaca.org/resources/itaf" rel="noopener" target="_blank">ISACA: Information Technology Assurance Framework (ITAF)</a></li><li><a href="https://www.isaca.org/resources/cobit" rel="noopener" target="_blank">ISACA: COBIT</a></li><li>Ron Weber, Information Systems Control and Audit (Prentice Hall)</li><li>Kenneth C. Laudon dan Jane P. Laudon, Management Information Systems: Managing the Digital Firm (Pearson)</li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.isaca.org/resources/it-audit" rel="noopener" target="_blank">ISACA: IT Audit (termasuk kerangka ITAF)</a></li><li><a href="https://www.isaca.org/resources/cobit" rel="noopener" target="_blank">ISACA: COBIT</a></li><li>Ron Weber, Information Systems Control and Audit (Prentice Hall)</li><li>Kenneth C. Laudon dan Jane P. Laudon, Management Information Systems: Managing the Digital Firm (Pearson)</li></ul>
 
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>

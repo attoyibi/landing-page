@@ -10,8 +10,8 @@ const REF_ACM = ['ACM Code of Ethics and Professional Conduct (2018)', 'https://
 export default [
     {
         slug: 'etika-dan-hukum-teknologi-informasi-uu-ite-pelindungan-data-pribadi',
-        title: 'Etika dan Hukum TI: UU ITE, Pelindungan Data Pribadi, Hak Cipta',
-        description: 'Pahami etika profesi dan kerangka hukum bagi pekerja TI di Indonesia: UU ITE, UU Pelindungan Data Pribadi, hak cipta dan lisensi perangkat lunak, serta cara menerapkannya dalam rancangan sistem.',
+        title: 'Etika dan Hukum TI: UU ITE, PDP, dan Hak Cipta',
+        description: 'Pahami etika dan hukum TI di Indonesia: UU ITE, UU Pelindungan Data Pribadi, hak cipta, lisensi, dan privacy by design dalam rancangan sistem.',
         date: D, category: C, level: 'Pemula', tags: ['etika TI', 'UU ITE', 'UU PDP', 'hak cipta', 'lisensi perangkat lunak'], cta: 'none',
         prereq: ['keamanan sistem informasi'],
         lead: 'Setiap sistem informasi menyimpan dan memproses data manusia, dan keputusan teknis sehari-hari (apa yang dicatat, berapa lama disimpan, siapa yang boleh melihat) memiliki konsekuensi etis dan hukum. Materi ini memberi peta kerangkanya di Indonesia dan cara menerjemahkannya menjadi keputusan rancangan. Ini bukan nasihat hukum; selalu periksa teks peraturan terbaru dan konsultasikan ahli hukum untuk kasus nyata.',
@@ -61,7 +61,7 @@ print("pengguna sama -> pseudonim sama:", pseudonim(nik) == pseudonim("357701010
     {
         slug: 'adopsi-teknologi-dan-manajemen-perubahan-tam-kotter-dan-adkar',
         title: 'Adopsi Teknologi dan Manajemen Perubahan: TAM, Kotter, ADKAR',
-        description: 'Mengapa sistem yang baik tidak dipakai? Pelajari Technology Acceptance Model, difusi inovasi Rogers, DeLone-McLean, dan manajemen perubahan dengan Kotter dan ADKAR untuk memastikan adopsi sistem informasi.',
+        description: 'Mengapa sistem yang baik tidak dipakai? Pelajari TAM, difusi inovasi, DeLone-McLean, serta manajemen perubahan Kotter dan ADKAR.',
         date: D, category: C, level: 'Menengah', tags: ['TAM', 'adopsi teknologi', 'manajemen perubahan', 'Kotter', 'ADKAR'], cta: 'none',
         prereq: ['konsep SI', 'SDLC'],
         lead: 'Banyak sistem informasi yang secara teknis berhasil, tetapi gagal secara organisasi: pengguna tetap memakai spreadsheet lama, menolak mengisi data, atau mencari jalan memutar. Ilmu sistem informasi punya teori matang tentang mengapa orang mau atau enggan memakai teknologi, dan apa yang dapat dilakukan manajemen.',
@@ -104,8 +104,8 @@ print("\nTitik kritis: setelah adopter awal, 'jurang' menuju mayoritas awal (~16
 
     {
         slug: 'e-commerce-dan-model-bisnis-digital-funnel-metrik-dan-pembayaran',
-        title: 'E-Commerce dan Model Bisnis Digital: Funnel, Metrik, Pembayaran',
-        description: 'Pelajari model bisnis e-commerce (B2C, B2B, C2C, marketplace), funnel konversi, metrik penting (CAC, LTV, AOV), metode pembayaran seperti QRIS, dan hitung unit economics dengan contoh.',
+        title: 'E-Commerce dan Model Bisnis Digital: Funnel dan Metrik',
+        description: 'Pelajari model e-commerce, funnel konversi, metrik (AOV, CAC, LTV), dan pembayaran digital seperti QRIS, dengan kalkulator unit economics.',
         date: D, category: C, level: 'Pemula', tags: ['e-commerce', 'model bisnis', 'funnel konversi', 'CAC LTV', 'QRIS'], cta: 'none',
         prereq: ['jenis-jenis SI'],
         lead: 'E-commerce bukan sekadar toko online; ia adalah sistem informasi yang menghubungkan katalog, pesanan, pembayaran, logistik, dan layanan pelanggan. Memahami model bisnisnya, dan metrik yang menunjukkan sehat tidaknya, membantu merancang sistem yang benar-benar mendukung bisnis.',
@@ -145,7 +145,7 @@ print("\nkebocoran relatif terbesar:", funnel[bocor-1][0], "->", funnel[bocor][0
     {
         slug: 'manajemen-data-kualitas-data-dan-tata-kelola-data',
         title: 'Manajemen Data: Kualitas Data dan Tata Kelola Data',
-        description: 'Pelajari manajemen data: dimensi kualitas data, profiling data dengan Python, master data, tata kelola data (pemilik, steward, kebijakan), katalog data, dan siklus hidup data dalam organisasi.',
+        description: 'Pelajari manajemen data: dimensi kualitas, profiling data dengan Python, master data, peran tata kelola data, dan siklus hidup data.',
         date: D, category: C, level: 'Menengah', tags: ['kualitas data', 'tata kelola data', 'master data', 'data profiling', 'DAMA'], cta: 'none',
         prereq: ['ERD dan normalisasi', 'SQL dasar'],
         lead: 'Organisasi sering mengatakan "kami kaya data" padahal data itu tersebar, tidak konsisten, dan tidak dipercaya. Sistem pintar dan dasbor sebagus apa pun tidak menolong bila data dasarnya salah. Manajemen data memperlakukan data sebagai aset yang dirawat sepanjang siklus hidupnya.',
@@ -213,7 +213,7 @@ print("Setelah dibakukan     :", dict(collections.Counter(b["kota"].strip().titl
     {
         slug: 'implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data',
         title: 'Implementasi dan Migrasi Sistem: Cutover dan Validasi Data',
-        description: 'Pelajari penerapan sistem baru: strategi cutover (big bang, paralel, pilot, bertahap), migrasi data dengan ETL, validasi rekonsiliasi dengan Python, rencana mundur (rollback), pelatihan, dan review pascaimplementasi.',
+        description: 'Pelajari penerapan sistem baru: strategi cutover, migrasi dan rekonsiliasi data dengan Python, daftar periksa go-live, rollback, dan review.',
         date: D, category: C, level: 'Menengah', tags: ['implementasi sistem', 'migrasi data', 'cutover', 'rollback', 'go-live'], cta: 'none',
         prereq: ['SDLC', 'pengujian sistem'],
         lead: 'Hari peluncuran adalah saat paling berisiko dalam proyek: data lama harus pindah dengan benar, pengguna harus siap, dan bisnis tidak boleh berhenti. Banyak proyek yang berhasil dibangun gagal justru pada tahap ini. Kuncinya: strategi peralihan yang tepat, migrasi data yang dapat diverifikasi, dan rencana mundur yang nyata.',

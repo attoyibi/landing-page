@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stack dan Queue di Python: Implementasi dan Aplikasi</title>
-<meta name="description" content="Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.">
+<meta name="description" content="Implementasikan stack dan queue di Python untuk kurung seimbang, postfix, dan antrean, plus priority queue dengan heapq, dengan kode yang dijalankan.">
 <meta name="keywords" content="stack, queue, deque, postfix, struktur data">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/">
 <meta property="og:title" content="Stack dan Queue di Python: Implementasi dan Aplikasi">
-<meta property="og:description" content="Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.">
+<meta property="og:description" content="Implementasikan stack dan queue di Python untuk kurung seimbang, postfix, dan antrean, plus priority queue dengan heapq, dengan kode yang dijalankan.">
 <meta property="og:image" content="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Algoritma &amp; Pemrograman Python">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Stack dan Queue di Python: Implementasi dan Aplikasi">
-<meta name="twitter:description" content="Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.">
+<meta name="twitter:description" content="Implementasikan stack dan queue di Python untuk kurung seimbang, postfix, dan antrean, plus priority queue dengan heapq, dengan kode yang dijalankan.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Stack dan Queue di Python: Implementasi dan Aplikasi","description":"Implementasikan stack dan queue di Python, lalu pakai untuk memeriksa kurung seimbang, mengevaluasi ekspresi postfix, dan mensimulasikan antrean, termasuk priority queue dengan heapq.","image":["https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"stack, queue, deque, postfix, struktur data","articleSection":"Algoritma & Pemrograman Python","wordCount":428,"mainEntityOfPage":"https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Stack dan Queue di Python: Implementasi dan Aplikasi","description":"Implementasikan stack dan queue di Python untuk kurung seimbang, postfix, dan antrean, plus priority queue dengan heapq, dengan kode yang dijalankan.","image":["https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"stack, queue, deque, postfix, struktur data","articleSection":"Algoritma & Pemrograman Python","wordCount":428,"mainEntityOfPage":"https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Stack dan Queue di Python: Implementasi dan Aplikasi","item":"https://muchson.web.id/artikel/stack-dan-queue-python-implementasi-dan-aplikasi/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana mengubah infix menjadi postfix?","acceptedAnswer":{"@type":"Answer","text":"Dengan algoritma shunting-yard dari Dijkstra: stack operator dan keluaran, dengan membandingkan presedensi operator."}},{"@type":"Question","name":"Apakah ada batas ukuran stack?","acceptedAnswer":{"@type":"Answer","text":"Stack sebagai struktur data bebas, dibatasi memori. Call stack Python punya batas kedalaman rekursi (bawaan sekitar 1000)."}},{"@type":"Question","name":"Apa bedanya queue.Queue dan collections.deque?","acceptedAnswer":{"@type":"Answer","text":"queue.Queue aman digunakan antar thread dan menawarkan penguncian. Untuk satu thread, deque lebih ringan dan cepat."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">

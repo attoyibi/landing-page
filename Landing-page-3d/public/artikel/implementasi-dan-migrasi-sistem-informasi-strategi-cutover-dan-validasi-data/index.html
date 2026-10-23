@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Implementasi dan Migrasi Sistem: Cutover dan Validasi Data</title>
-<meta name="description" content="Pelajari penerapan sistem baru: strategi cutover (big bang, paralel, pilot, bertahap), migrasi data dengan ETL, validasi rekonsiliasi dengan Python, rencana mundur (rollback), pelatihan, dan review pascaimplementasi.">
+<meta name="description" content="Pelajari penerapan sistem baru: strategi cutover, migrasi dan rekonsiliasi data dengan Python, daftar periksa go-live, rollback, dan review.">
 <meta name="keywords" content="implementasi sistem, migrasi data, cutover, rollback, go-live">
 <meta name="author" content="Muhammad Muchson Attoyibi">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:url" content="https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/">
 <meta property="og:title" content="Implementasi dan Migrasi Sistem: Cutover dan Validasi Data">
-<meta property="og:description" content="Pelajari penerapan sistem baru: strategi cutover (big bang, paralel, pilot, bertahap), migrasi data dengan ETL, validasi rekonsiliasi dengan Python, rencana mundur (rollback), pelatihan, dan review pascaimplementasi.">
+<meta property="og:description" content="Pelajari penerapan sistem baru: strategi cutover, migrasi dan rekonsiliasi data dengan Python, daftar periksa go-live, rollback, dan review.">
 <meta property="og:image" content="https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
 <meta property="article:section" content="Sistem Informasi">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Implementasi dan Migrasi Sistem: Cutover dan Validasi Data">
-<meta name="twitter:description" content="Pelajari penerapan sistem baru: strategi cutover (big bang, paralel, pilot, bertahap), migrasi data dengan ETL, validasi rekonsiliasi dengan Python, rencana mundur (rollback), pelatihan, dan review pascaimplementasi.">
+<meta name="twitter:description" content="Pelajari penerapan sistem baru: strategi cutover, migrasi dan rekonsiliasi data dengan Python, daftar periksa go-live, rollback, dan review.">
 <meta name="twitter:image" content="https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/cover.png">
 <meta name="cover" content="cover.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Implementasi dan Migrasi Sistem: Cutover dan Validasi Data","description":"Pelajari penerapan sistem baru: strategi cutover (big bang, paralel, pilot, bertahap), migrasi data dengan ETL, validasi rekonsiliasi dengan Python, rencana mundur (rollback), pelatihan, dan review pascaimplementasi.","image":["https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"implementasi sistem, migrasi data, cutover, rollback, go-live","articleSection":"Sistem Informasi","wordCount":385,"mainEntityOfPage":"https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Implementasi dan Migrasi Sistem: Cutover dan Validasi Data","description":"Pelajari penerapan sistem baru: strategi cutover, migrasi dan rekonsiliasi data dengan Python, daftar periksa go-live, rollback, dan review.","image":["https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"implementasi sistem, migrasi data, cutover, rollback, go-live","articleSection":"Sistem Informasi","wordCount":385,"mainEntityOfPage":"https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Implementasi dan Migrasi Sistem: Cutover dan Validasi Data","item":"https://muchson.web.id/artikel/implementasi-dan-migrasi-sistem-informasi-strategi-cutover-dan-validasi-data/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Berapa lama hypercare?","acceptedAnswer":{"@type":"Answer","text":"Umumnya 2–4 minggu, bergantung pada kompleksitas dan jumlah pengguna."}},{"@type":"Question","name":"Apa itu feature flag dan canary release?","acceptedAnswer":{"@type":"Answer","text":"Teknik rilis modern: fitur baru dinyalakan untuk sebagian kecil pengguna dulu (canary) dan dapat dimatikan cepat bila bermasalah, menjadi bentuk rollback yang halus."}},{"@type":"Question","name":"Siapa pemilik keputusan go/no-go?","acceptedAnswer":{"@type":"Answer","text":"Sponsor atau pemilik bisnis, berdasarkan rekomendasi manajer proyek, tim uji, dan operasi."}}]}</script>
 <link rel="stylesheet" href="/artikel/_shared/article.css">
