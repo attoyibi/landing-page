@@ -34,14 +34,15 @@ export const diagrams = {
     // steps in a row (wraps to a second row when there are more than 4)
     flow({ steps, label }) {
         const per = steps.length > 4 ? Math.ceil(steps.length / 2) : steps.length, rows = Math.ceil(steps.length / per);
-        const bw = 150, bh = 84, gx = 36, W = per * bw + (per - 1) * gx + 20, H = rows * bh + (rows - 1) * 40 + 20;
+        const need = st => { const t = typeof st === 'string' ? { t: st } : st; return 40 + wrap(t.t, 17).length * 16 + 4 + (t.d ? wrap(t.d, 22).length * 14 : 0) + 10; };
+        const bw = 150, bh = Math.max(84, ...steps.map(need)), gx = 36, W = per * bw + (per - 1) * gx + 20, H = rows * bh + (rows - 1) * 40 + 20;
         let s = svgOpen(W, H, label || 'Diagram alur') + arrowDef;
         steps.forEach((st, i) => {
             const r = Math.floor(i / per), c = i % per, x = 10 + c * (bw + gx), y = 10 + r * (bh + 40), col = COL[i % COL.length];
             const t = typeof st === 'string' ? { t: st } : st;
             s += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="12" fill="#fff" stroke="${col}" stroke-width="2.5"/><circle cx="${x + 16}" cy="${y + 16}" r="11" fill="${col}"/><text x="${x + 16}" y="${y + 20}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${i + 1}</text>`;
             s += `<text x="${x + bw / 2}" y="${y + 40}" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33">${tspans(wrap(t.t, 17), x + bw / 2, 16)}</text>`;
-            if (t.d) s += `<text x="${x + bw / 2}" y="${y + 40 + wrap(t.t, 17).length * 16 + 4}" text-anchor="middle" font-size="11.5" fill="#4a5568">${tspans(wrap(t.d, 22).slice(0, 2), x + bw / 2, 14)}</text>`;
+            if (t.d) s += `<text x="${x + bw / 2}" y="${y + 40 + wrap(t.t, 17).length * 16 + 4}" text-anchor="middle" font-size="11.5" fill="#4a5568">${tspans(wrap(t.d, 22), x + bw / 2, 14)}</text>`;
             if (c < per - 1 && i < steps.length - 1) s += `<line x1="${x + bw + 4}" y1="${y + bh / 2}" x2="${x + bw + gx - 4}" y2="${y + bh / 2}" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/>`;
             if (c === per - 1 && r < rows - 1) s += `<path d="M${x + bw / 2} ${y + bh + 4} V${y + bh + 30} H${10 + bw / 2} V${y + bh + 40 - 4}" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/>`;
         });

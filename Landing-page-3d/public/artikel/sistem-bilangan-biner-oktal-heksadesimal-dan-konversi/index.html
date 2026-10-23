@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</title>
+<meta name="description" content="Pahami sistem bilangan posisional: biner, oktal, dan heksadesimal, cara konversi antar basis, operasi bit, mengapa komputer memakai biner, dan penerapannya pada warna, alamat, dan izin berkas.">
+<meta name="keywords" content="biner, heksadesimal, konversi basis, operasi bit, sistem bilangan">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/">
+<meta property="og:title" content="Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi">
+<meta property="og:description" content="Pahami sistem bilangan posisional: biner, oktal, dan heksadesimal, cara konversi antar basis, operasi bit, mengapa komputer memakai biner, dan penerapannya pada warna, alamat, dan izin berkas.">
+<meta property="og:image" content="https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi">
+<meta name="twitter:description" content="Pahami sistem bilangan posisional: biner, oktal, dan heksadesimal, cara konversi antar basis, operasi bit, mengapa komputer memakai biner, dan penerapannya pada warna, alamat, dan izin berkas.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi","description":"Pahami sistem bilangan posisional: biner, oktal, dan heksadesimal, cara konversi antar basis, operasi bit, mengapa komputer memakai biner, dan penerapannya pada warna, alamat, dan izin berkas.","image":["https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"biner, heksadesimal, konversi basis, operasi bit, sistem bilangan","articleSection":"Dasar Informatika","wordCount":357,"mainEntityOfPage":"https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi","item":"https://muchson.web.id/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa komputer memakai biner?","acceptedAnswer":{"@type":"Answer","text":"Dua keadaan mudah dan andal diwujudkan dengan transistor, tahan derau, dan aritmetika serta logikanya sederhana."}},{"@type":"Question","name":"Bagaimana bilangan pecahan dalam biner?","acceptedAnswer":{"@type":"Answer","text":"Posisi setelah koma bernilai ½, ¼, ⅛, ...; banyak pecahan desimal seperti 0,1 tidak dapat dinyatakan tepat (lihat materi floating point)."}},{"@type":"Question","name":"Apa itu bit, byte, kilobyte?","acceptedAnswer":{"@type":"Answer","text":"1 byte = 8 bit. KB = 1.000 byte (SI) atau KiB = 1.024 byte (biner); awalan kibi, mebi, gibi dibuat untuk membedakannya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#nilai-posisional">Nilai posisional</a></li><li><a href="#konversi">Konversi</a></li><li><a href="#operasi-bit">Operasi bit</a></li><li><a href="#di-mana-biner-dan-heksa-muncul">Di mana biner dan heksa muncul</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</h1>
+<p class="lead">Komputer hanya mengenal dua keadaan: ada atau tidak ada tegangan, 1 atau 0. Semua yang Anda lihat di layar, dari teks sampai video, adalah susunan bit. Memahami bilangan biner dan heksadesimal membuka pintu untuk memahami memori, jaringan, warna, dan keamanan dengan lebih jelas.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> aritmetika dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan sistem bilangan posisional dan nilai tempat</li><li>mengonversi antara desimal, biner, oktal, dan heksadesimal</li><li>melakukan operasi bit (AND, OR, XOR, geser)</li><li>menjelaskan mengapa heksadesimal dipakai sebagai singkatan biner</li><li>menerapkannya pada kode warna, izin berkas, dan masker jaringan</li></ul></div>
+<h2 id="nilai-posisional">Nilai posisional</h2>
+<p>Bilangan desimal 4.092 berarti 4×10³ + 0×10² + 9×10¹ + 2×10⁰. Setiap posisi bernilai pangkat basis. Biner memakai basis 2 dengan digit 0 dan 1; setiap posisi bernilai pangkat dua.</p>
+<div data-w="binary"><script type="application/json">{"title":"Ubah bit, lihat nilainya","desc":"Ketuk kotak untuk membalik bit. Perhatikan jumlah nilai bit yang menyala."}</script></div>
+<table><thead><tr><th>Basis</th><th>Nama</th><th>Digit</th><th>Awalan di kode</th><th>Contoh nilai 45</th></tr></thead><tbody><tr><td>2</td><td>Biner</td><td>0–1</td><td>0b</td><td>0b101101</td></tr><tr><td>8</td><td>Oktal</td><td>0–7</td><td>0o</td><td>0o55</td></tr><tr><td>10</td><td>Desimal</td><td>0–9</td><td>(tanpa)</td><td>45</td></tr><tr><td>16</td><td>Heksadesimal</td><td>0–9, A–F</td><td>0x</td><td>0x2D</td></tr></tbody></table>
+<h2 id="konversi">Konversi</h2>
+<h3>Desimal ke biner: bagi dua berulang</h3>
+<figure class="codebox"><pre data-lang="python"><code>def ke_biner(n):
+    if n == 0: return &quot;0&quot;
+    sisa = []
+    while n &gt; 0:
+        sisa.append(str(n % 2))      # sisa bagi dua = bit dari kanan
+        n //= 2
+    return &quot;&quot;.join(reversed(sisa))
+
+print(ke_biner(45))
+print(bin(45), oct(45), hex(45))                 # fungsi bawaan Python
+print(int(&quot;101101&quot;, 2), int(&quot;55&quot;, 8), int(&quot;2D&quot;, 16))   # kembali ke desimal</code></pre><pre class="runout" data-lang="keluaran"><code>101101
+0b101101 0o55 0x2d
+45 45 45</code></pre><figcaption>45 ÷ 2 = 22 sisa 1; 22 ÷ 2 = 11 sisa 0; 11 ÷ 2 = 5 sisa 1; 5 ÷ 2 = 2 sisa 1; 2 ÷ 2 = 1 sisa 0; 1 ÷ 2 = 0 sisa 1. Baca dari bawah: 101101.</figcaption></figure>
+<h3>Biner ke oktal dan heksadesimal: kelompokkan bit</h3>
+<p>Satu digit heksa mewakili tepat empat bit, dan satu digit oktal tiga bit. Itu sebabnya heksa dipakai sebagai singkatan biner yang manusiawi.</p>
+<figure class="codebox"><pre data-lang="python"><code>biner = &quot;1101011110100011&quot;
+kelompok = [biner[i:i+4] for i in range(0, len(biner), 4)]
+print(kelompok)
+print(&quot;heksa:&quot;, &quot;&quot;.join(format(int(k, 2), &quot;X&quot;) for k in kelompok))
+print(f&quot;cek  : {int(biner, 2):#X}&quot;)
+
+for h in &quot;0123456789ABCDEF&quot;:
+    print(h, format(int(h, 16), &quot;04b&quot;), end=&quot;   &quot;)
+print()</code></pre><pre class="runout" data-lang="keluaran"><code>['1101', '0111', '1010', '0011']
+heksa: D7A3
+cek  : 0XD7A3
+0 0000   1 0001   2 0010   3 0011   4 0100   5 0101   6 0110   7 0111   8 1000   9 1001   A 1010   B 1011   C 1100   D 1101   E 1110   F 1111   </code></pre></figure>
+<h2 id="operasi-bit">Operasi bit</h2>
+<table><thead><tr><th>Operasi</th><th>Simbol</th><th>Aturan</th><th>Contoh (4 bit)</th></tr></thead><tbody><tr><td>AND</td><td>&</td><td>1 jika keduanya 1</td><td>1100 & 1010 = 1000</td></tr><tr><td>OR</td><td>|</td><td>1 jika salah satu 1</td><td>1100 | 1010 = 1110</td></tr><tr><td>XOR</td><td>^</td><td>1 jika berbeda</td><td>1100 ^ 1010 = 0110</td></tr><tr><td>NOT</td><td>~</td><td>membalik bit</td><td>~1100 = 0011 (4 bit)</td></tr><tr><td>Geser kiri</td><td><<</td><td>kalikan 2 per posisi</td><td>0011 << 1 = 0110</td></tr><tr><td>Geser kanan</td><td>>></td><td>bagi 2 (dibulatkan ke bawah)</td><td>1100 >> 2 = 0011</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>a, b = 0b1100, 0b1010
+print(f&quot;{a:04b} &amp; {b:04b} = {a &amp; b:04b}&quot;)
+print(f&quot;{a:04b} | {b:04b} = {a | b:04b}&quot;)
+print(f&quot;{a:04b} ^ {b:04b} = {a ^ b:04b}&quot;)
+print(f&quot;3 &lt;&lt; 2 = {3 &lt;&lt; 2}   (3 x 2^2)&quot;)
+print(f&quot;100 &gt;&gt; 3 = {100 &gt;&gt; 3}  (100 // 2^3)&quot;)
+
+# penerapan: memeriksa dan mengubah satu bit sebagai &quot;bendera&quot;
+IZIN_BACA, IZIN_TULIS, IZIN_JALAN = 0b100, 0b010, 0b001
+izin = IZIN_BACA | IZIN_TULIS
+print(&quot;bisa tulis?&quot;, bool(izin &amp; IZIN_TULIS), &quot; bisa jalan?&quot;, bool(izin &amp; IZIN_JALAN))
+izin |= IZIN_JALAN          # nyalakan
+izin &amp;= ~IZIN_TULIS         # matikan
+print(&quot;izin akhir:&quot;, format(izin, &quot;03b&quot;), &quot;= oktal&quot;, oct(izin)[2:])</code></pre><pre class="runout" data-lang="keluaran"><code>1100 &amp; 1010 = 1000
+1100 | 1010 = 1110
+1100 ^ 1010 = 0110
+3 &lt;&lt; 2 = 12   (3 x 2^2)
+100 &gt;&gt; 3 = 12  (100 // 2^3)
+bisa tulis? True  bisa jalan? False
+izin akhir: 101 = oktal 5</code></pre><figcaption>Izin berkas Unix 755 atau 644 adalah tiga digit oktal; setiap digit adalah tiga bit baca-tulis-eksekusi untuk pemilik, grup, dan lainnya.</figcaption></figure>
+<h2 id="di-mana-biner-dan-heksa-muncul">Di mana biner dan heksa muncul</h2>
+<figure class="codebox"><pre data-lang="python"><code># 1. Warna: #RRGGBB, tiap pasangan heksa = 0..255
+warna = &quot;#1E5AB2&quot;
+r, g, b = (int(warna[i:i+2], 16) for i in (1, 3, 5))
+print(&quot;RGB:&quot;, r, g, b)
+
+# 2. Alamat IPv4 = 32 bit; masker /24 = 24 bit pertama bernilai 1
+masker = (0xFFFFFFFF &lt;&lt; (32 - 24)) &amp; 0xFFFFFFFF
+print(&quot;masker /24:&quot;, &quot;.&quot;.join(str((masker &gt;&gt; s) &amp; 255) for s in (24, 16, 8, 0)))
+
+# 3. ASCII: karakter adalah angka
+print([ord(c) for c in &quot;Hai&quot;], [format(ord(c), &quot;08b&quot;) for c in &quot;Hai&quot;])
+print(&quot;kapasitas: 8 bit =&quot;, 2**8, &quot;nilai; 32 bit =&quot;, f&quot;{2**32:,}&quot;, &quot;nilai&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>RGB: 30 90 178
+masker /24: 255.255.255.0
+[72, 97, 105] ['01001000', '01100001', '01101001']
+kapasitas: 8 bit = 256 nilai; 32 bit = 4,294,967,296 nilai</code></pre></figure>
+<div class="callout info"><b>Selingan</b><p>"Ada 10 jenis orang di dunia: yang mengerti biner dan yang tidak." Dalam biner, 10 adalah dua. Lelucon klasik ini mengingatkan bahwa angka hanyalah lambang; nilainya ditentukan oleh basis.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Nilai desimal 0b1010?","options":["10","12","5"],"answer":0,"why":"8 + 2 = 10."},{"q":"Satu digit heksadesimal mewakili berapa bit?","options":["4","3","8"],"answer":0,"why":"16 = 2⁴."},{"q":"Geser kiri satu posisi sama dengan...","options":["Mengalikan 2","Membagi 2","Menambah 1"],"answer":0,"why":"Setiap posisi bernilai dua kali posisi kanannya."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ubah 200 ke biner dan heksa.</summary><div>11001000 dan C8.</div></details><details><summary>2. Berapa nilai desimal 0xFF dan 0b11111111?</summary><div>Keduanya 255.</div></details><details><summary>3. Izin berkas 640 berarti apa?</summary><div>Pemilik: baca+tulis (6 = 110), grup: baca (4 = 100), lainnya: tidak ada akses (0).</div></details><details><summary>4. Berapa nilai berbeda yang dapat disimpan 10 bit?</summary><div>2¹⁰ = 1.024.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Sistem posisional: setiap posisi bernilai pangkat basis.</li><li>Konversi: bagi berulang (ke biner), jumlah nilai posisi (dari biner), kelompok 4 bit untuk heksa.</li><li>Operasi bit: AND, OR, XOR, NOT, geser.</li><li>Heksa adalah singkatan biner yang ringkas: warna, alamat memori, izin, masker.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa komputer memakai biner?</summary><div>Dua keadaan mudah dan andal diwujudkan dengan transistor, tahan derau, dan aritmetika serta logikanya sederhana.</div></details>
+<details class="faq"><summary>Bagaimana bilangan pecahan dalam biner?</summary><div>Posisi setelah koma bernilai ½, ¼, ⅛, ...; banyak pecahan desimal seperti 0,1 tidak dapat dinyatakan tepat (lihat materi floating point).</div></details>
+<details class="faq"><summary>Apa itu bit, byte, kilobyte?</summary><div>1 byte = 8 bit. KB = 1.000 byte (SI) atau KiB = 1.024 byte (biner); awalan kibi, mebi, gibi dibuat untuk membedakannya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>David Patterson dan John Hennessy, Computer Organization and Design (Morgan Kaufmann)</li><li><a href="https://cs50.harvard.edu/x/" rel="noopener" target="_blank">Harvard CS50: Introduction to Computer Science</a></li><li><a href="https://www.nand2tetris.org/" rel="noopener" target="_blank">Nisan dan Schocken, The Elements of Computing Systems (nand2tetris), MIT Press</a></li><li>Charles Petzold, Code: The Hidden Language of Computer Hardware and Software (Microsoft Press)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a><a href="/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/"><img src="/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

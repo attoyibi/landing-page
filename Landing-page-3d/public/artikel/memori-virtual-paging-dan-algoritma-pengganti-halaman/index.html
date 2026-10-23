@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memori Virtual, Paging, dan Algoritma Pengganti Halaman</title>
+<meta name="description" content="Pahami memori virtual: ruang alamat, paging, tabel halaman, page fault, TLB, dan algoritma pengganti halaman FIFO, LRU, Optimal dengan simulasi serta anomali Belady.">
+<meta name="keywords" content="memori virtual, paging, page fault, LRU, anomali Belady">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/">
+<meta property="og:title" content="Memori Virtual, Paging, dan Algoritma Pengganti Halaman">
+<meta property="og:description" content="Pahami memori virtual: ruang alamat, paging, tabel halaman, page fault, TLB, dan algoritma pengganti halaman FIFO, LRU, Optimal dengan simulasi serta anomali Belady.">
+<meta property="og:image" content="https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Memori Virtual, Paging, dan Algoritma Pengganti Halaman">
+<meta name="twitter:description" content="Pahami memori virtual: ruang alamat, paging, tabel halaman, page fault, TLB, dan algoritma pengganti halaman FIFO, LRU, Optimal dengan simulasi serta anomali Belady.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Memori Virtual, Paging, dan Algoritma Pengganti Halaman","description":"Pahami memori virtual: ruang alamat, paging, tabel halaman, page fault, TLB, dan algoritma pengganti halaman FIFO, LRU, Optimal dengan simulasi serta anomali Belady.","image":["https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"memori virtual, paging, page fault, LRU, anomali Belady","articleSection":"Dasar Informatika","wordCount":479,"mainEntityOfPage":"https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Memori Virtual, Paging, dan Algoritma Pengganti Halaman","item":"https://muchson.web.id/artikel/memori-virtual-paging-dan-algoritma-pengganti-halaman/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu swap?","acceptedAnswer":{"@type":"Answer","text":"Area disk untuk menyimpan halaman yang dikeluarkan dari RAM."}},{"@type":"Question","name":"Apa itu copy-on-write?","acceptedAnswer":{"@type":"Answer","text":"Dua proses (misalnya hasil fork) berbagi halaman yang sama sampai salah satu menulis, baru halaman disalin."}},{"@type":"Question","name":"Apakah SSD menghapus kebutuhan memori virtual?","acceptedAnswer":{"@type":"Answer","text":"Tidak. SSD mempercepat swap tetapi tetap jauh lebih lambat dari RAM; memori virtual tetap berguna untuk isolasi dan penyederhanaan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-memori-virtual">Mengapa memori virtual</a></li><li><a href="#paging">Paging</a></li><li><a href="#page-fault-dan-tlb">Page fault dan TLB</a></li><li><a href="#algoritma-pengganti-halaman">Algoritma pengganti halaman</a></li><li><a href="#thrashing">Thrashing</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Memori Virtual, Paging, dan Algoritma Pengganti Halaman</h1>
+<p class="lead">Setiap program mengira dirinya memiliki seluruh memori, dimulai dari alamat nol, walau RAM fisik dibagi puluhan proses dan jauh lebih kecil dari yang dijanjikan. Itulah memori virtual: ilusi yang dijaga bersama oleh perangkat keras dan sistem operasi lewat paging.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> hierarki memori, proses</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Memori Virtual, Paging, dan Algoritma Pengganti Halaman" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan alamat virtual vs fisik dan manfaat memori virtual</li><li>menjelaskan paging: halaman, frame, dan tabel halaman</li><li>menerjemahkan alamat virtual menjadi alamat fisik</li><li>menjelaskan page fault dan peran TLB</li><li>mensimulasikan FIFO, LRU, dan Optimal serta menjelaskan anomali Belady</li></ul></div>
+<h2 id="mengapa-memori-virtual">Mengapa memori virtual</h2>
+<ul><li><b>Isolasi</b>: setiap proses punya ruang alamat sendiri sehingga tidak dapat membaca atau merusak memori proses lain.</li><li><b>Kemudahan</b>: program tidak perlu tahu di mana ia berada di RAM fisik.</li><li><b>Ukuran melebihi RAM</b>: hanya bagian yang dipakai berada di RAM, sisanya di disk (swap).</li><li><b>Berbagi</b>: pustaka yang sama dapat dipetakan sekali ke banyak proses.</li></ul>
+<h2 id="paging">Paging</h2>
+<p>Ruang alamat virtual dibagi menjadi <b>halaman</b> berukuran tetap (umumnya 4 KB); RAM fisik dibagi menjadi <b>frame</b> berukuran sama. <b>Tabel halaman</b> memetakan nomor halaman ke nomor frame.</p>
+<figure class="diagram"><svg viewBox="0 0 660 260" role="img" aria-label="Pemetaan halaman ke frame" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="9s0hr-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="9s0hr-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="9s0hr-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="9s0hr-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="9s0hr-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><rect x="250" y="30" width="160" height="200" rx="10" fill="none" stroke="#1e5ab2" stroke-width="1.8" stroke-dasharray="6 5"/><text x="262" y="50" font-size="13" font-weight="700" fill="#1e5ab2">Tabel halaman</text><polyline points="150,55 510,145" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#9s0hr-arrow)"/><polyline points="150,152.5 510,107.5" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#9s0hr-arrow)"/><polyline points="150,107.5 250,120" fill="none" stroke="#0f1a33" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#9s0hr-arrow)"/><rect x="171.9" y="104.75" width="56.199999999999996" height="17" rx="4" fill="#fff" opacity=".92"/><text x="200" y="117.75" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">di disk</text><rect x="30" y="22" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">Halaman 0</tspan></text><rect x="30" y="82" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="104.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">Halaman 1</tspan></text><rect x="30" y="142" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="164.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">Halaman 2</tspan></text><rect x="30" y="202" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="90" y="224.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="90" dy="0">Halaman 3</tspan></text><rect x="510" y="22" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="44.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">Frame 0</tspan></text><rect x="510" y="82" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="96.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">Frame 1</tspan><tspan x="570" dy="16">(halaman 2)</tspan></text><rect x="510" y="142" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="156.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">Frame 2</tspan><tspan x="570" dy="16">(halaman 0)</tspan></text><rect x="510" y="202" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="224.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">Frame 3</tspan></text></svg><figcaption>Halaman 1 dan 3 sedang tidak berada di RAM (ditandai tidak valid pada tabel halaman).</figcaption></figure>
+<h3>Menerjemahkan alamat</h3>
+<p>Alamat virtual dipisah menjadi <b>nomor halaman</b> dan <b>offset</b>. Offset tidak berubah; nomor halaman diganti nomor frame dari tabel halaman.</p>
+<figure class="codebox"><pre data-lang="python"><code>UKURAN_HALAMAN = 4096                      # 4 KB -&gt; 12 bit offset
+tabel_halaman = {0: 7, 1: 3, 2: None, 3: 5}   # halaman -&gt; frame (None: tidak ada di RAM)
+
+def terjemahkan(alamat_virtual):
+    halaman, offset = divmod(alamat_virtual, UKURAN_HALAMAN)
+    frame = tabel_halaman.get(halaman)
+    if frame is None:
+        return f&quot;0x{alamat_virtual:05X}: PAGE FAULT (halaman {halaman} tidak ada di RAM)&quot;
+    fisik = frame * UKURAN_HALAMAN + offset
+    return f&quot;0x{alamat_virtual:05X}: halaman {halaman}, offset {offset:&gt;4} -&gt; frame {frame} -&gt; fisik 0x{fisik:05X}&quot;
+
+for a in (0x0000, 0x0123, 0x1ABC, 0x2010, 0x3FFF):
+    print(terjemahkan(a))</code></pre><pre class="runout" data-lang="keluaran"><code>0x00000: halaman 0, offset    0 -&gt; frame 7 -&gt; fisik 0x07000
+0x00123: halaman 0, offset  291 -&gt; frame 7 -&gt; fisik 0x07123
+0x01ABC: halaman 1, offset 2748 -&gt; frame 3 -&gt; fisik 0x03ABC
+0x02010: PAGE FAULT (halaman 2 tidak ada di RAM)
+0x03FFF: halaman 3, offset 4095 -&gt; frame 5 -&gt; fisik 0x05FFF</code></pre></figure>
+<h2 id="page-fault-dan-tlb">Page fault dan TLB</h2>
+<figure class="diagram"><svg viewBox="0 0 542 288" role="img" aria-label="Penanganan page fault" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Akses halaman tak</tspan><tspan x="85" dy="16">valid</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">perangkat keras memicu</tspan><tspan x="85" dy="14">page fault</tspan></text><line x1="164" y1="67" x2="192" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">OS memeriksa</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">alamat sah? lokasi</tspan><tspan x="271" dy="14">halaman di disk</tspan></text><line x1="350" y1="67" x2="378" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Cari frame bebas</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">bila penuh, pilih</tspan><tspan x="457" dy="14">halaman korban</tspan></text><path d="M457 128 V154 H85 V160" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="180" r="11" fill="#7a3fb4"/><text x="26" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Baca dari disk</tspan></text><text x="85" y="224" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">muat halaman ke frame,</tspan><tspan x="85" dy="14">perbarui tabel</tspan></text><line x1="164" y1="221" x2="192" y2="221" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="180" r="11" fill="#b3261e"/><text x="212" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Ulangi instruksi</tspan></text><text x="271" y="224" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">program melanjutkan</tspan><tspan x="271" dy="14">seolah tak terjadi</tspan><tspan x="271" dy="14">apa-apa</tspan></text></svg></figure>
+<div class="callout info"><b>Biaya</b><p>Page fault yang memerlukan disk berbiaya jutaan siklus. Dan setiap akses memori perlu menerjemahkan alamat lewat tabel halaman yang juga di memori. Karena itu CPU memakai <b>TLB (Translation Lookaside Buffer)</b>, cache kecil untuk terjemahan terbaru. Hit TLB membuat penerjemahan hampir gratis.</p></div>
+<h2 id="algoritma-pengganti-halaman">Algoritma pengganti halaman</h2>
+<p>Ketika RAM penuh dan halaman baru harus dimuat, halaman mana yang dikeluarkan? Tiga kandidat klasik:</p>
+<table><thead><tr><th>Algoritma</th><th>Korban</th><th>Catatan</th></tr></thead><tbody><tr><td>FIFO</td><td>Halaman yang paling lama berada di memori</td><td>Sederhana; bisa membuang halaman yang masih sering dipakai; menderita anomali Belady</td></tr><tr><td>LRU</td><td>Halaman yang paling lama tidak diakses</td><td>Mendekati optimal pada program berlokalitas; implementasi murni mahal (pendekatan: bit referensi, algoritma clock)</td></tr><tr><td>Optimal (Belady)</td><td>Halaman yang baru akan dipakai paling lama di masa depan</td><td>Tidak dapat diimplementasikan (butuh masa depan); jadi tolok ukur</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="python"><code>def fifo(ref, frame):
+    memori, antre, gagal = set(), [], 0
+    for h in ref:
+        if h not in memori:
+            gagal += 1
+            if len(memori) == frame:
+                memori.discard(antre.pop(0))
+            memori.add(h); antre.append(h)
+    return gagal
+
+def lru(ref, frame):
+    memori, gagal = [], 0                        # urut: paling lama dipakai di depan
+    for h in ref:
+        if h in memori: memori.remove(h)
+        else:
+            gagal += 1
+            if len(memori) == frame: memori.pop(0)
+        memori.append(h)
+    return gagal
+
+def optimal(ref, frame):
+    memori, gagal = [], 0
+    for i, h in enumerate(ref):
+        if h in memori: continue
+        gagal += 1
+        if len(memori) == frame:
+            def berikutnya(x):                   # kapan x dipakai lagi?
+                return ref.index(x, i + 1) if x in ref[i + 1:] else float(&quot;inf&quot;)
+            memori.remove(max(memori, key=berikutnya))
+        memori.append(h)
+    return gagal
+
+ref = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1]
+print(&quot;string referensi:&quot;, ref)
+for f in (3, 4):
+    print(f&quot;{f} frame: FIFO={fifo(ref, f):&gt;2}  LRU={lru(ref, f):&gt;2}  Optimal={optimal(ref, f):&gt;2} page fault&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>string referensi: [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1]
+3 frame: FIFO=15  LRU=12  Optimal= 9 page fault
+4 frame: FIFO=10  LRU= 8  Optimal= 8 page fault</code></pre><figcaption>Pada contoh klasik 3 frame: FIFO 15, LRU 12, Optimal 9 page fault. Optimal selalu terkecil; LRU biasanya di antara keduanya.</figcaption></figure>
+<h3>Anomali Belady</h3>
+<p>Intuisinya, menambah frame seharusnya mengurangi page fault. Pada FIFO, tidak selalu.</p>
+<figure class="codebox"><pre data-lang="python"><code>def fifo(ref, frame):
+    memori, antre, gagal = set(), [], 0
+    for h in ref:
+        if h not in memori:
+            gagal += 1
+            if len(memori) == frame: memori.discard(antre.pop(0))
+            memori.add(h); antre.append(h)
+    return gagal
+
+def lru(ref, frame):
+    memori, gagal = [], 0
+    for h in ref:
+        if h in memori: memori.remove(h)
+        else:
+            gagal += 1
+            if len(memori) == frame: memori.pop(0)
+        memori.append(h)
+    return gagal
+
+ref = [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5]
+for f in (3, 4):
+    print(f&quot;{f} frame: FIFO={fifo(ref, f)} page fault   LRU={lru(ref, f)} page fault&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>3 frame: FIFO=9 page fault   LRU=10 page fault
+4 frame: FIFO=10 page fault   LRU=8 page fault</code></pre><figcaption>FIFO: 9 fault dengan 3 frame, tetapi 10 fault dengan 4 frame. LRU tidak mengalaminya karena termasuk algoritma "stack" yang selalu membaik dengan tambahan frame.</figcaption></figure>
+<h2 id="thrashing">Thrashing</h2>
+<p>Bila total kebutuhan memori proses jauh melebihi RAM, sistem menghabiskan waktu bolak-balik memindahkan halaman dan hampir tidak ada pekerjaan berguna: <b>thrashing</b>. Penangkalnya: batasi jumlah proses aktif, perhatikan <i>working set</i> (halaman yang sedang aktif dipakai proses), atau tambah RAM.</p>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Alamat virtual dibagi menjadi...","options":["Nomor halaman dan offset","Frame dan tag","Segmen dan cache"],"answer":0,"why":"Nomor halaman diterjemahkan; offset tetap."},{"q":"Fungsi TLB?","options":["Cache untuk terjemahan alamat","Menyimpan data pengguna","Mengelola jaringan"],"answer":0,"why":"Menghindari akses tabel halaman setiap kali."},{"q":"Anomali Belady terjadi pada...","options":["FIFO","LRU","Optimal"],"answer":0,"why":"Menambah frame dapat menaikkan page fault."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Alamat virtual 0x2010 dengan halaman 4 KB berada di halaman berapa dan offset berapa?</summary><div>0x2010 = 8208; halaman 8208 // 4096 = 2; offset 8208 − 8192 = 16 (0x10).</div></details><details><summary>2. Mengapa algoritma Optimal tidak dapat dipakai nyata namun berguna?</summary><div>Perlu mengetahui akses masa depan; dipakai sebagai batas bawah untuk menilai algoritma lain.</div></details><details><summary>3. Apa yang dimaksud working set?</summary><div>Kumpulan halaman yang sedang aktif dipakai proses dalam jangka waktu terbaru.</div></details><details><summary>4. Berapa bit offset untuk halaman 8 KB?</summary><div>8 KB = 2¹³ sehingga 13 bit.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Memori virtual memberi isolasi, kemudahan, dan ruang alamat lebih besar dari RAM.</li><li>Paging: halaman virtual dipetakan ke frame lewat tabel halaman; TLB mempercepat.</li><li>Page fault memuat halaman dari disk; bila penuh, algoritma pengganti memilih korban.</li><li>FIFO, LRU, Optimal; anomali Belady pada FIFO; thrashing bila memori terlalu sempit.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu swap?</summary><div>Area disk untuk menyimpan halaman yang dikeluarkan dari RAM.</div></details>
+<details class="faq"><summary>Apa itu copy-on-write?</summary><div>Dua proses (misalnya hasil fork) berbagi halaman yang sama sampai salah satu menulis, baru halaman disalin.</div></details>
+<details class="faq"><summary>Apakah SSD menghapus kebutuhan memori virtual?</summary><div>Tidak. SSD mempercepat swap tetapi tetap jauh lebih lambat dari RAM; memori virtual tetap berguna untuk isolasi dan penyederhanaan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/" rel="noopener" target="_blank">Remzi dan Andrea Arpaci-Dusseau, Operating Systems: Three Easy Pieces (OSTEP)</a></li><li>Silberschatz, Galvin, Gagne, Operating System Concepts (Wiley)</li><li>Andrew Tanenbaum dan Herbert Bos, Modern Operating Systems (Pearson)</li><li><a href="https://dl.acm.org/doi/10.1145/363011.363155" rel="noopener" target="_blank">Belady, Nelson, Shedler, An anomaly in space-time characteristics of certain programs running in a paging machine, CACM 12(6), 1969</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

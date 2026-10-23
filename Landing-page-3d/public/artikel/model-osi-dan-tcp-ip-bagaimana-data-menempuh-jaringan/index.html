@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan</title>
+<meta name="description" content="Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.">
+<meta name="keywords" content="OSI, TCP/IP, jaringan komputer, enkapsulasi, TCP UDP">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/">
+<meta property="og:title" content="Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan">
+<meta property="og:description" content="Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan">
+<meta name="twitter:description" content="Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan","description":"Pahami model berlapis jaringan: tujuh lapis OSI dan empat lapis TCP/IP, enkapsulasi data, protokol di tiap lapis, TCP vs UDP, dan perangkat jaringan, dilengkapi diagram dan simulasi enkapsulasi.","image":["https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"OSI, TCP/IP, jaringan komputer, enkapsulasi, TCP UDP","articleSection":"Dasar Informatika","wordCount":368,"mainEntityOfPage":"https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan","item":"https://muchson.web.id/artikel/model-osi-dan-tcp-ip-bagaimana-data-menempuh-jaringan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu alamat MAC?","acceptedAnswer":{"@type":"Answer","text":"Pengenal 48 bit pada antarmuka jaringan (misalnya AA:BB:CC:00:00:01), dipakai pada jaringan lokal."}},{"@type":"Question","name":"Apa bedanya HTTP dan HTTPS?","acceptedAnswer":{"@type":"Answer","text":"HTTPS adalah HTTP di dalam sambungan terenkripsi TLS sehingga isi tidak dapat dibaca atau diubah di tengah jalan."}},{"@type":"Question","name":"Apa itu NAT?","acceptedAnswer":{"@type":"Answer","text":"Penerjemahan alamat: banyak perangkat berbagi satu alamat IP publik; router mengganti alamat privat dengan alamat publik dan mengingat pemetaannya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-berlapis">Mengapa berlapis</a></li><li><a href="#dua-model">Dua model</a></li><li><a href="#enkapsulasi">Enkapsulasi</a></li><li><a href="#tcp-dan-udp">TCP dan UDP</a></li><li><a href="#perangkat-dan-lapisnya">Perangkat dan lapisnya</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan</h1>
+<p class="lead">Mengirim sebuah pesan melintasi planet melibatkan kabel, gelombang radio, ratusan perangkat perantara, dan miliaran perangkat berbeda. Semuanya bisa bekerja karena jaringan dirancang berlapis: tiap lapis memikirkan satu masalah dan menyerahkan sisanya kepada lapis lain lewat antarmuka sederhana.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> sistem bilangan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Model OSI dan TCP/IP: Bagaimana Data Menempuh Jaringan" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan gagasan arsitektur berlapis dan manfaatnya</li><li>menyebut tujuh lapis OSI dan empat lapis TCP/IP serta padanannya</li><li>menjelaskan enkapsulasi dan dekapsulasi</li><li>membedakan TCP dan UDP dan kapan memakainya</li><li>mengaitkan perangkat (hub, switch, router) dengan lapisnya</li></ul></div>
+<h2 id="mengapa-berlapis">Mengapa berlapis</h2>
+<p>Bayangkan mengirim surat: Anda menulis isi surat, memasukkannya ke amplop beralamat, lalu kantor pos memilah, mengangkut, dan mengantarkannya. Anda tidak perlu tahu rute pesawat. Jaringan bekerja serupa: aplikasi tidak perlu tahu apakah data berjalan lewat kabel tembaga atau serat optik.</p>
+<h2 id="dua-model">Dua model</h2>
+<table><thead><tr><th>Lapis OSI</th><th>Nama</th><th>Tugas</th><th>Contoh</th><th>Lapis TCP/IP</th></tr></thead><tbody><tr><td>7</td><td>Aplikasi</td><td>Layanan untuk pengguna</td><td>HTTP, DNS, SMTP</td><td>Aplikasi</td></tr><tr><td>6</td><td>Presentasi</td><td>Format dan enkripsi data</td><td>TLS, JSON, JPEG</td><td>Aplikasi</td></tr><tr><td>5</td><td>Sesi</td><td>Mengelola dialog</td><td>Sesi dan soket</td><td>Aplikasi</td></tr><tr><td>4</td><td>Transport</td><td>Pengiriman antar proses; keandalan</td><td>TCP, UDP</td><td>Transport</td></tr><tr><td>3</td><td>Jaringan</td><td>Pengalamatan dan pemilihan rute</td><td>IP, ICMP</td><td>Internet</td></tr><tr><td>2</td><td>Data link</td><td>Pengiriman antar perangkat bertetangga</td><td>Ethernet, Wi-Fi, alamat MAC</td><td>Akses jaringan (link)</td></tr><tr><td>1</td><td>Fisik</td><td>Sinyal pada media</td><td>Kabel, radio, serat optik</td><td>Akses jaringan (link)</td></tr></tbody></table>
+<div class="callout info"><b>Dua model, satu kenyataan</b><p>OSI adalah model <b>referensi</b> untuk belajar dan berkomunikasi; Internet sebenarnya berjalan di atas tumpukan <b>TCP/IP</b> yang lebih ringkas. Ungkapan seperti "lapis 7" atau "lapis 3" tetap dipakai sehari-hari: load balancer lapis 7 memahami HTTP, router bekerja di lapis 3.</p></div>
+<h2 id="enkapsulasi">Enkapsulasi</h2>
+<p>Setiap lapis membungkus data dari lapis di atasnya dengan <b>header</b> sendiri (dan terkadang trailer). Penerima membuka bungkus satu per satu dari bawah ke atas (dekapsulasi).</p>
+<figure class="diagram"><svg viewBox="0 0 560 296" role="img" aria-label="Enkapsulasi" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Aplikasi: DATA</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">misalnya permintaan HTTP &quot;GET /beranda&quot;</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Transport: [header TCP] + data</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">menambah port asal/tujuan, nomor urut: disebut segmen</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Jaringan: [header IP] + segmen</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">menambah alamat IP asal/tujuan: disebut paket</text><rect x="62" y="176" width="436" height="48" rx="10" fill="#ebe2fd" stroke="#7a3fb4" stroke-width="2"/><text x="280" y="197" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Data link: [header Ethernet] + paket + [trailer]</text><text x="280" y="215" text-anchor="middle" font-size="12" fill="#4a5568">menambah alamat MAC: disebut frame</text><rect x="76" y="232" width="408" height="48" rx="10" fill="#fde4e1" stroke="#b3261e" stroke-width="2"/><text x="280" y="253" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Fisik: bit pada media</text><text x="280" y="271" text-anchor="middle" font-size="12" fill="#4a5568">sinyal listrik, cahaya, atau radio</text></svg></figure>
+<figure class="codebox"><pre data-lang="python"><code># Simulasi enkapsulasi: setiap lapis menambahkan headernya
+data = &quot;GET /beranda&quot;
+segmen = {&quot;port_asal&quot;: 51512, &quot;port_tujuan&quot;: 80, &quot;nomor_urut&quot;: 1, &quot;isi&quot;: data}
+paket  = {&quot;ip_asal&quot;: &quot;192.168.1.10&quot;, &quot;ip_tujuan&quot;: &quot;203.0.113.5&quot;, &quot;ttl&quot;: 64, &quot;isi&quot;: segmen}
+frame  = {&quot;mac_asal&quot;: &quot;AA:BB:CC:00:00:01&quot;, &quot;mac_tujuan&quot;: &quot;AA:BB:CC:00:00:FE&quot;, &quot;isi&quot;: paket}
+
+def tampil(x, indent=0):
+    for k, v in x.items():
+        if isinstance(v, dict):
+            print(&quot; &quot; * indent + f&quot;{k}:&quot;); tampil(v, indent + 4)
+        else:
+            print(&quot; &quot; * indent + f&quot;{k} = {v}&quot;)
+tampil(frame)
+
+# router: membuka frame, memeriksa IP tujuan, lalu membungkus ulang dengan MAC baru untuk lompatan berikutnya
+frame_baru = {&quot;mac_asal&quot;: &quot;AA:BB:CC:00:00:FE&quot;, &quot;mac_tujuan&quot;: &quot;11:22:33:44:55:66&quot;, &quot;isi&quot;: frame[&quot;isi&quot;]}
+paket_baru = dict(frame_baru[&quot;isi&quot;]); paket_baru[&quot;ttl&quot;] -= 1
+print(&quot;\nsetelah satu router: TTL =&quot;, paket_baru[&quot;ttl&quot;], &quot;| alamat IP tetap&quot;, paket_baru[&quot;ip_tujuan&quot;], &quot;| MAC berubah menjadi&quot;, frame_baru[&quot;mac_tujuan&quot;])</code></pre><pre class="runout" data-lang="keluaran"><code>mac_asal = AA:BB:CC:00:00:01
+mac_tujuan = AA:BB:CC:00:00:FE
+isi:
+    ip_asal = 192.168.1.10
+    ip_tujuan = 203.0.113.5
+    ttl = 64
+    isi:
+        port_asal = 51512
+        port_tujuan = 80
+        nomor_urut = 1
+        isi = GET /beranda
+
+setelah satu router: TTL = 63 | alamat IP tetap 203.0.113.5 | MAC berubah menjadi 11:22:33:44:55:66</code></pre><figcaption>Alamat MAC berlaku per lompatan (hop) dan berubah di setiap router; alamat IP tujuan tetap dari ujung ke ujung. TTL berkurang satu di setiap router sehingga paket tak berputar selamanya.</figcaption></figure>
+<h2 id="tcp-dan-udp">TCP dan UDP</h2>
+<div data-w="compare"><script type="application/json">{"title":"Dua protokol transport","tabs":[{"label":"TCP","html":"\u003cb>Berorientasi koneksi dan andal.\u003c/b> Jabat tangan tiga langkah (SYN, SYN-ACK, ACK), nomor urut, pengakuan (ACK), pengiriman ulang, kendali aliran dan kemacetan. Data tiba utuh dan berurutan. Dipakai: web (HTTP/1.1 dan /2), surel, transfer berkas, SSH."},{"label":"UDP","html":"\u003cb>Tanpa koneksi dan \"upaya terbaik\".\u003c/b> Paket (datagram) dikirim tanpa jaminan tiba atau berurutan, tetapi dengan beban kecil dan latensi rendah. Dipakai: DNS, streaming dan panggilan suara/video, gim daring, dan QUIC (HTTP/3) yang membangun keandalan di atas UDP."}]}</script></div>
+<figure class="codebox"><pre data-lang="python"><code>import socket, threading
+
+# server TCP kecil di komputer ini (127.0.0.1), lalu klien terhubung dan bertukar data
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((&quot;127.0.0.1&quot;, 0)); server.listen(1)
+port = server.getsockname()[1]
+
+def layani():
+    koneksi, _ = server.accept()               # menerima jabat tangan tiga langkah (dikerjakan OS)
+    data = koneksi.recv(1024)
+    koneksi.sendall(b&quot;ECHO: &quot; + data)
+    koneksi.close()
+threading.Thread(target=layani, daemon=True).start()
+
+klien = socket.create_connection((&quot;127.0.0.1&quot;, port))
+klien.sendall(b&quot;halo TCP&quot;)
+print(klien.recv(1024).decode())
+klien.close(); server.close()
+
+# UDP: tanpa koneksi, langsung kirim datagram
+u_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); u_server.bind((&quot;127.0.0.1&quot;, 0))
+u_klien = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+u_klien.sendto(b&quot;halo UDP&quot;, u_server.getsockname())
+data, alamat = u_server.recvfrom(1024)
+print(&quot;UDP diterima:&quot;, data.decode())</code></pre><pre class="runout" data-lang="keluaran"><code>ECHO: halo TCP
+UDP diterima: halo UDP</code></pre></figure>
+<h2 id="perangkat-dan-lapisnya">Perangkat dan lapisnya</h2>
+<table><thead><tr><th>Perangkat</th><th>Lapis</th><th>Fungsi</th></tr></thead><tbody><tr><td>Hub</td><td>1</td><td>Mengulang sinyal ke semua port (kini jarang dipakai)</td></tr><tr><td>Switch</td><td>2</td><td>Meneruskan frame hanya ke port yang tepat berdasarkan alamat MAC</td></tr><tr><td>Router</td><td>3</td><td>Meneruskan paket antar jaringan berdasarkan alamat IP</td></tr><tr><td>Firewall</td><td>3–7</td><td>Menyaring lalu lintas menurut aturan (alamat, port, bahkan isi aplikasi)</td></tr><tr><td>Load balancer</td><td>4 atau 7</td><td>Membagi permintaan ke beberapa server</td></tr><tr><td>Access point</td><td>1–2</td><td>Menghubungkan perangkat nirkabel ke jaringan kabel</td></tr></tbody></table>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Lapis OSI tempat alamat IP berada?","options":["Jaringan (3)","Transport (4)","Data link (2)"],"answer":0,"why":"IP mengatur pengalamatan dan rute."},{"q":"Protokol transport yang menjamin data tiba berurutan?","options":["TCP","UDP","ICMP"],"answer":0,"why":"TCP menambahkan nomor urut dan pengakuan."},{"q":"Apa yang berubah di setiap router sepanjang rute?","options":["Alamat MAC dan TTL","Alamat IP tujuan","Port tujuan"],"answer":0,"why":"IP dan port tetap dari ujung ke ujung."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa panggilan video lebih sering memakai UDP daripada TCP?</summary><div>Keterlambatan lebih merugikan daripada kehilangan satu paket kecil; pengiriman ulang TCP akan menambah jeda.</div></details><details><summary>2. Pada lapis apa kabel yang putus menjadi masalah?</summary><div>Lapis 1 (fisik).</div></details><details><summary>3. Apa fungsi nomor port?</summary><div>Membedakan layanan atau proses pada satu perangkat (misalnya 80 untuk HTTP, 443 untuk HTTPS).</div></details><details><summary>4. Mengapa pembagian lapisan memudahkan inovasi?</summary><div>Satu lapis dapat diganti (misalnya Wi-Fi 5 ke Wi-Fi 6) tanpa mengubah lapis lain selama antarmukanya tetap.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Arsitektur berlapis memecah masalah jaringan menjadi bagian yang dapat diganti.</li><li>OSI 7 lapis sebagai referensi; TCP/IP 4 lapis sebagai praktik.</li><li>Enkapsulasi menambah header di tiap lapis; router mengubah MAC dan TTL per lompatan.</li><li>TCP andal dan berurutan; UDP ringan dan cepat.</li><li>Switch lapis 2, router lapis 3.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu alamat MAC?</summary><div>Pengenal 48 bit pada antarmuka jaringan (misalnya AA:BB:CC:00:00:01), dipakai pada jaringan lokal.</div></details>
+<details class="faq"><summary>Apa bedanya HTTP dan HTTPS?</summary><div>HTTPS adalah HTTP di dalam sambungan terenkripsi TLS sehingga isi tidak dapat dibaca atau diubah di tengah jalan.</div></details>
+<details class="faq"><summary>Apa itu NAT?</summary><div>Penerjemahan alamat: banyak perangkat berbagi satu alamat IP publik; router mengganti alamat privat dengan alamat publik dan mengingat pemetaannya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li>James Kurose dan Keith Ross, Computer Networking: A Top-Down Approach (Pearson)</li><li>Andrew Tanenbaum dan David Wetherall, Computer Networks (Pearson)</li><li><a href="https://developer.mozilla.org/docs/Web/HTTP" rel="noopener" target="_blank">MDN Web Docs: HTTP</a></li><li><a href="https://www.rfc-editor.org/" rel="noopener" target="_blank">RFC Editor: dokumen standar Internet</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

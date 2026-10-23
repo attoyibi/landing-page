@@ -1010,6 +1010,58 @@
         reset();
     };
 
+    /* ---------- twos: 8-bit two's complement, bits <-> unsigned <-> signed ---------- */
+    W.twos = (body, cfg) => {
+        const bits = [0, 0, 0, 0, 0, 1, 0, 1];
+        const row = el('div', { class: 'row', style: 'justify-content:center;gap:6px' });
+        const out = el('div', { class: 'out' });
+        const set = u => { u = ((u % 256) + 256) % 256; for (let i = 0; i < 8; i++) bits[i] = (u >> (7 - i)) & 1; };
+        const num = el('input', { type: 'number', min: -128, max: 255, step: 1, 'aria-label': 'Nilai desimal', style: 'max-width:110px' });
+        const neg = el('button', { class: 'btn ghost', type: 'button' }, 'Negasikan (balik bit + 1)');
+        const draw = () => {
+            row.innerHTML = '';
+            bits.forEach((b, i) => {
+                const w = i === 0 ? -128 : Math.pow(2, 7 - i);
+                const c = el('button', { class: 'chip' + (b ? ' on' : ''), type: 'button', style: 'min-width:48px;min-height:64px;flex-direction:column;display:flex;gap:2px;align-items:center', 'aria-pressed': !!b }, `<b style="font-size:20px">${b}</b><small>${w}</small>`);
+                c.onclick = () => { bits[i] = b ? 0 : 1; draw(); };
+                row.append(c);
+            });
+            const u = bits.reduce((a, b) => a * 2 + b, 0), s = bits[0] ? u - 256 : u;
+            num.value = s;
+            out.innerHTML = `<div class="big">${s}</div><small>${bits.join('')} · tanpa tanda: <b>${u}</b> · bertanda (komplemen dua): <b>${s}</b> · heksa: <b>0x${u.toString(16).toUpperCase().padStart(2, '0')}</b><br>bit paling kiri bernilai −128 saat menyala${s === -128 ? ' · nilai terkecil: −128 tidak punya pasangan positif' : ''}</small>`;
+        };
+        num.oninput = () => { const v = parseInt(num.value, 10); if (!isNaN(v)) { set(v); const keep = num.value; draw(); num.value = keep; } };
+        neg.onclick = () => { set(bits.reduce((a, b) => a * 2 + b, 0) ^ 255); set(bits.reduce((a, b) => a * 2 + b, 0) + 1); draw(); };
+        const tools = el('div', { class: 'row', style: 'justify-content:center;margin:10px 0' });
+        tools.append(el('label', {}, 'Nilai desimal: '), num, neg);
+        body.append(el('p', { class: 'wd' }, 'Ketuk bit atau ketik angka −128 sampai 255. Bit paling kiri pada komplemen dua bernilai −128.'), row, tools, out);
+        draw();
+    };
+
+    /* ---------- subnet: IPv4 network calculator ---------- */
+    W.subnet = (body, cfg) => {
+        const ip = el('input', { type: 'text', value: cfg.ip || '192.168.1.130', class: 'mono', 'aria-label': 'Alamat IPv4' });
+        const pre = el('input', { type: 'range', min: 0, max: 32, value: cfg.prefix || 26, 'aria-label': 'Panjang prefiks' });
+        const lbl = el('b');
+        const out = el('div', { class: 'out mono', style: 'white-space:pre-wrap' });
+        const toS = n => [24, 16, 8, 0].map(s => (n >>> s) & 255).join('.');
+        const bin = n => [24, 16, 8, 0].map(s => ((n >>> s) & 255).toString(2).padStart(8, '0')).join('.');
+        const draw = () => {
+            const p = +pre.value; lbl.textContent = '/' + p;
+            const m = ip.value.trim().match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+            if (!m || m.slice(1).some(x => +x > 255)) { out.innerHTML = '<span style="color:var(--bad)">Alamat IPv4 belum valid (contoh: 192.168.1.130).</span>'; return; }
+            const a = ((+m[1] << 24) | (+m[2] << 16) | (+m[3] << 8) | +m[4]) >>> 0;
+            const mask = p === 0 ? 0 : (0xFFFFFFFF << (32 - p)) >>> 0, net = (a & mask) >>> 0, bc = (net | (~mask >>> 0)) >>> 0;
+            const hosts = p >= 31 ? (p === 31 ? 2 : 1) : Math.pow(2, 32 - p) - 2;
+            out.innerHTML = `Alamat      ${esc(toS(a))}\nBiner       ${bin(a)}\nMask        ${toS(mask)}  (/${p})\nBiner mask  ${bin(mask)}\nJaringan    ${toS(net)}\nBroadcast   ${toS(bc)}\nHost pertama ${p >= 31 ? '-' : toS(net + 1)}\nHost terakhir ${p >= 31 ? '-' : toS(bc - 1)}\nJumlah host ${hosts.toLocaleString('id-ID')}`;
+        };
+        ip.oninput = pre.oninput = draw;
+        const r = el('div', { class: 'row', style: 'align-items:center;margin-bottom:10px;gap:10px' });
+        r.append(el('label', {}, 'IPv4: '), ip, el('label', {}, 'Prefiks: '), pre, lbl);
+        body.append(r, out);
+        draw();
+    };
+
     /* ---------- page chrome ---------- */
     function chrome() {
         const bar = $('.bar i');
