@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman</title>
+<meta name="description" content="Stack bekerja seperti tumpukan piring, queue seperti antrean kasir. Coba simulasi push dan pop, lihat contoh pemakaian nyata, dan kode Python-nya.">
+<meta name="keywords" content="stack, queue, struktur data, LIFO, FIFO">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/">
+<meta property="og:title" content="Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman">
+<meta property="og:description" content="Stack bekerja seperti tumpukan piring, queue seperti antrean kasir. Coba simulasi push dan pop, lihat contoh pemakaian nyata, dan kode Python-nya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman">
+<meta name="twitter:description" content="Stack bekerja seperti tumpukan piring, queue seperti antrean kasir. Coba simulasi push dan pop, lihat contoh pemakaian nyata, dan kode Python-nya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman","description":"Stack bekerja seperti tumpukan piring, queue seperti antrean kasir. Coba simulasi push dan pop, lihat contoh pemakaian nyata, dan kode Python-nya.","image":["https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"stack, queue, struktur data, LIFO, FIFO","articleSection":"Coding & Algoritma","wordCount":138,"mainEntityOfPage":"https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman","item":"https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu call stack?","acceptedAnswer":{"@type":"Answer","text":"Tumpukan yang dipakai komputer untuk melacak fungsi yang sedang dijalankan. Setiap pemanggilan fungsi ditumpuk, lalu dikeluarkan saat selesai."}},{"@type":"Question","name":"Apa itu stack overflow?","acceptedAnswer":{"@type":"Answer","text":"Terjadi saat tumpukan pemanggilan fungsi terlalu dalam, misalnya rekursi tanpa titik berhenti."}},{"@type":"Question","name":"Apakah ada struktur lain yang mirip?","acceptedAnswer":{"@type":"Answer","text":"Ya, misalnya deque (antrean dua arah) dan priority queue (yang paling penting keluar lebih dulu)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dua-aturan-yang-berbeda">Dua aturan yang berbeda</a></li><li><a href="#contoh-pemakaian-nyata">Contoh pemakaian nyata</a></li><li><a href="#kode-python">Kode Python</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman</h1>
+<p class="lead">Dua struktur data paling dasar ini tampak sederhana, tetapi bekerja di balik banyak hal: tombol undo, riwayat halaman browser, antrean cetak, dan cara komputer menjalankan fungsi. Kuncinya satu aturan: siapa yang keluar lebih dulu.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Stack dan Queue: Tumpukan dan Antrean dalam Pemrograman" fetchpriority="high"></figure>
+<h2 id="dua-aturan-yang-berbeda">Dua aturan yang berbeda</h2>
+<figure class="diagram"><svg viewBox="0 0 640 266" role="img" aria-label="Stack dan queue" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="254" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Stack (tumpukan) - LIFO</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Masuk terakhir, keluar pertama</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Seperti tumpukan piring</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Operasi: push dan pop</text><circle cx="32" cy="184" r="4" fill="#1e5ab2"/><text x="46" y="189" font-size="13.5" fill="#0f1a33">Contoh: undo, riwayat halaman</text><circle cx="32" cy="222" r="4" fill="#1e5ab2"/><text x="46" y="227" font-size="13.5" fill="#0f1a33">Dipakai pada rekursi</text><rect x="330" y="6" width="300" height="254" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Queue (antrean) - FIFO</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Masuk pertama, keluar pertama</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Seperti antrean kasir</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Operasi: enqueue dan dequeue</text><circle cx="352" cy="184" r="4" fill="#1f7a46"/><text x="366" y="189" font-size="13.5" fill="#0f1a33">Contoh: antrean cetak, pesan</text><circle cx="352" cy="222" r="4" fill="#1f7a46"/><text x="366" y="227" font-size="13.5" fill="#0f1a33">Dipakai pada pencarian BFS</text></svg></figure>
+<div data-w="stack"><script type="application/json">{"title":"Coba stack dan queue","desc":"Tambahkan beberapa huruf, lalu ambil. Ganti mode untuk melihat perbedaan siapa yang keluar duluan."}</script></div>
+<h2 id="contoh-pemakaian-nyata">Contoh pemakaian nyata</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk kartu: stack atau queue?","items":[{"tag":"Kasus","front":"Tombol undo di editor teks.","backTag":"Jawaban","back":"Stack. Perubahan terakhir dibatalkan lebih dulu."},{"tag":"Kasus","front":"Antrean pekerjaan cetak di kantor.","backTag":"Jawaban","back":"Queue. Yang masuk pertama dicetak pertama."},{"tag":"Kasus","front":"Memeriksa tanda kurung seimbang dalam ekspresi.","backTag":"Jawaban","back":"Stack. Tutup kurung dicocokkan dengan buka kurung terakhir."},{"tag":"Kasus","front":"Tombol kembali (back) di browser.","backTag":"Jawaban","back":"Stack. Halaman terakhir dikunjungi kembali dulu."},{"tag":"Kasus","front":"Antrean pesan di sistem notifikasi.","backTag":"Jawaban","back":"Queue. Pesan diproses sesuai urutan masuk."}]}</script></div>
+<h2 id="kode-python">Kode Python</h2>
+<pre><code># Stack: pakai list
+stack = []
+stack.append(&quot;A&quot;)   # push
+stack.append(&quot;B&quot;)
+print(stack.pop())  # B (terakhir masuk)
+
+# Queue: pakai deque agar cepat di kedua ujung
+from collections import deque
+q = deque()
+q.append(&quot;A&quot;)       # enqueue
+q.append(&quot;B&quot;)
+print(q.popleft())  # A (pertama masuk)</code></pre>
+<div class="callout good"><b>Tips Python</b><p>Pada Python, list sudah cocok untuk stack. Untuk queue, gunakan collections.deque karena menghapus elemen pertama dari list biasa lambat pada data besar.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Ada tiga item masuk berurutan A, B, C. Pada stack, mana yang pertama keluar?","options":["A","B","C"],"answer":2,"why":"Last in, first out: C masuk terakhir."},{"q":"Pada queue dengan urutan masuk yang sama, mana yang pertama keluar?","options":["A","B","C"],"answer":0,"why":"First in, first out: A masuk pertama."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu call stack?</summary><div>Tumpukan yang dipakai komputer untuk melacak fungsi yang sedang dijalankan. Setiap pemanggilan fungsi ditumpuk, lalu dikeluarkan saat selesai.</div></details>
+<details class="faq"><summary>Apa itu stack overflow?</summary><div>Terjadi saat tumpukan pemanggilan fungsi terlalu dalam, misalnya rekursi tanpa titik berhenti.</div></details>
+<details class="faq"><summary>Apakah ada struktur lain yang mirip?</summary><div>Ya, misalnya deque (antrean dua arah) dan priority queue (yang paling penting keluar lebih dulu).</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/hash-table-cara-kerja-dictionary/"><img src="/artikel/hash-table-cara-kerja-dictionary/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Hash Table: Cara Kerja Dictionary yang Sangat Cepat</span></a><a href="/artikel/bfs-pencarian-jalur-terpendek-di-peta/"><img src="/artikel/bfs-pencarian-jalur-terpendek-di-peta/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

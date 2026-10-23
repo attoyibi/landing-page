@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selection Sort dan Insertion Sort: Dua Cara Sederhana</title>
+<meta name="description" content="Bandingkan selection sort dan insertion sort lewat animasi interaktif: cara kerja, kode Python, kelebihan, dan kapan masing-masing berguna dibanding bubble sort.">
+<meta name="keywords" content="selection sort, insertion sort, algoritma pengurutan, Python, big O">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/">
+<meta property="og:title" content="Selection Sort dan Insertion Sort: Dua Cara Sederhana">
+<meta property="og:description" content="Bandingkan selection sort dan insertion sort lewat animasi interaktif: cara kerja, kode Python, kelebihan, dan kapan masing-masing berguna dibanding bubble sort.">
+<meta property="og:image" content="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Selection Sort dan Insertion Sort: Dua Cara Sederhana">
+<meta name="twitter:description" content="Bandingkan selection sort dan insertion sort lewat animasi interaktif: cara kerja, kode Python, kelebihan, dan kapan masing-masing berguna dibanding bubble sort.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Selection Sort dan Insertion Sort: Dua Cara Sederhana","description":"Bandingkan selection sort dan insertion sort lewat animasi interaktif: cara kerja, kode Python, kelebihan, dan kapan masing-masing berguna dibanding bubble sort.","image":["https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"selection sort, insertion sort, algoritma pengurutan, Python, big O","articleSection":"Coding & Algoritma","wordCount":220,"mainEntityOfPage":"https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Selection Sort dan Insertion Sort: Dua Cara Sederhana","item":"https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mana yang sebaiknya dipelajari lebih dulu?","acceptedAnswer":{"@type":"Answer","text":"Bubble sort, lalu selection, lalu insertion. Setelah itu merge sort dan quick sort yang lebih efisien."}},{"@type":"Question","name":"Apakah insertion sort dipakai di dunia nyata?","acceptedAnswer":{"@type":"Answer","text":"Ya, terutama untuk data kecil dan sebagai bagian dari algoritma hibrida."}},{"@type":"Question","name":"Apa artinya algoritma stabil?","acceptedAnswer":{"@type":"Answer","text":"Elemen dengan nilai sama tetap dalam urutan asalnya setelah diurutkan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#selection-sort-pilih-yang-terkecil">Selection sort: pilih yang terkecil</a></li><li><a href="#insertion-sort-sisipkan-ke-tempatnya">Insertion sort: sisipkan ke tempatnya</a></li><li><a href="#perbandingan">Perbandingan</a></li><li><a href="#kode-python">Kode Python</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Selection Sort dan Insertion Sort: Dua Cara Sederhana</h1>
+<p class="lead">Setelah bubble sort, dua algoritma sederhana berikutnya yang sering diajarkan adalah selection sort dan insertion sort. Keduanya sama-sama O(n²) pada kasus umum, tetapi cara berpikirnya berbeda, dan salah satunya sangat berguna di dunia nyata.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Selection Sort dan Insertion Sort: Dua Cara Sederhana" fetchpriority="high"></figure>
+<h2 id="selection-sort-pilih-yang-terkecil">Selection sort: pilih yang terkecil</h2>
+<p>Cari nilai terkecil di seluruh data, tukar dengan elemen pertama. Lalu cari terkecil di sisa data, tukar dengan elemen kedua. Ulangi sampai selesai. Jumlah penukarannya sedikit, tetapi ia selalu memeriksa seluruh sisa data, sehingga tidak diuntungkan oleh data yang sudah hampir urut.</p>
+<div data-w="sort"><script type="application/json">{"algo":"selection","size":9,"title":"Selection sort","desc":"Kuning = sedang dibandingkan. Hijau = sudah di posisi akhir."}</script></div>
+<h2 id="insertion-sort-sisipkan-ke-tempatnya">Insertion sort: sisipkan ke tempatnya</h2>
+<p>Seperti menyusun kartu di tangan: ambil satu kartu, sisipkan ke posisi yang tepat di antara kartu yang sudah terurut. Bila data hampir urut, hampir tidak ada geseran yang diperlukan, sehingga sangat cepat.</p>
+<div data-w="sort"><script type="application/json">{"algo":"insertion","size":9,"title":"Insertion sort","desc":"Bagian kiri selalu terurut. Setiap elemen baru bergeser ke kiri sampai tepat."}</script></div>
+<h2 id="perbandingan">Perbandingan</h2>
+<table><thead><tr><th>Hal</th><th>Bubble</th><th>Selection</th><th>Insertion</th></tr></thead><tbody><tr><td>Penukaran</td><td>Banyak</td><td>Paling sedikit</td><td>Sedang (pergeseran)</td></tr><tr><td>Data hampir urut</td><td>Cepat bila ada penanda berhenti</td><td>Tetap lambat</td><td>Sangat cepat</td></tr><tr><td>Stabil</td><td>Ya</td><td>Tidak (versi umum)</td><td>Ya</td></tr><tr><td>Kompleksitas rata-rata</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td></tr><tr><td>Dipakai nyata</td><td>Hampir tidak</td><td>Jarang</td><td>Ya, untuk data kecil dan hampir urut</td></tr></tbody></table>
+<h2 id="kode-python">Kode Python</h2>
+<pre><code>def selection_sort(a):
+    for i in range(len(a) - 1):
+        m = i
+        for j in range(i + 1, len(a)):
+            if a[j] &lt; a[m]:
+                m = j
+        a[i], a[m] = a[m], a[i]
+    return a
+
+def insertion_sort(a):
+    for i in range(1, len(a)):
+        x, j = a[i], i - 1
+        while j &gt;= 0 and a[j] &gt; x:
+            a[j + 1] = a[j]   # geser ke kanan
+            j -= 1
+        a[j + 1] = x
+    return a</code></pre>
+<div class="callout info"><b>Fakta menarik</b><p>Algoritma pengurutan canggih seperti Timsort (dipakai oleh sorted() di Python) memakai insertion sort untuk potongan kecil, karena pada ukuran kecil ia sangat efisien.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Algoritma yang paling cepat untuk data yang hampir urut?","options":["Selection sort","Insertion sort","Semuanya sama"],"answer":1,"why":"Insertion sort hanya menggeser sedikit."},{"q":"Selection sort dikenal karena...","options":["Jumlah penukaran yang sedikit","Selalu O(n)","Hanya untuk angka negatif"],"answer":0,"why":"Paling banyak n-1 penukaran."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mana yang sebaiknya dipelajari lebih dulu?</summary><div>Bubble sort, lalu selection, lalu insertion. Setelah itu merge sort dan quick sort yang lebih efisien.</div></details>
+<details class="faq"><summary>Apakah insertion sort dipakai di dunia nyata?</summary><div>Ya, terutama untuk data kecil dan sebagai bagian dari algoritma hibrida.</div></details>
+<details class="faq"><summary>Apa artinya algoritma stabil?</summary><div>Elemen dengan nilai sama tetap dalam urutan asalnya setelah diurutkan.</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"><img src="/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Rekursi Dijelaskan: Fungsi yang Memanggil Dirinya Sendiri</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

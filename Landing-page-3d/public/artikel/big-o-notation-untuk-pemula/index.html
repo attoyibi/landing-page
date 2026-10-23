@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</title>
+<meta name="description" content="Big O menjelaskan bagaimana waktu kerja algoritma tumbuh saat data membesar. Pahami O(1), O(n), O(n²) dan lainnya dengan grafik dan kalkulator interaktif.">
+<meta name="keywords" content="Big O, kompleksitas, algoritma, performa, pemula">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
+<meta property="og:title" content="Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma">
+<meta property="og:description" content="Big O menjelaskan bagaimana waktu kerja algoritma tumbuh saat data membesar. Pahami O(1), O(n), O(n²) dan lainnya dengan grafik dan kalkulator interaktif.">
+<meta property="og:image" content="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma">
+<meta name="twitter:description" content="Big O menjelaskan bagaimana waktu kerja algoritma tumbuh saat data membesar. Pahami O(1), O(n), O(n²) dan lainnya dengan grafik dan kalkulator interaktif.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma","description":"Big O menjelaskan bagaimana waktu kerja algoritma tumbuh saat data membesar. Pahami O(1), O(n), O(n²) dan lainnya dengan grafik dan kalkulator interaktif.","image":["https://muchson.web.id/artikel/big-o-notation-untuk-pemula/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Big O, kompleksitas, algoritma, performa, pemula","articleSection":"Coding & Algoritma","wordCount":223,"mainEntityOfPage":"https://muchson.web.id/artikel/big-o-notation-untuk-pemula/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma","item":"https://muchson.web.id/artikel/big-o-notation-untuk-pemula/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Big O mengukur waktu nyata?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Ia mengukur pertumbuhan langkah terhadap ukuran data. Waktu nyata juga bergantung pada perangkat keras dan implementasi."}},{"@type":"Question","name":"Apa bedanya kasus terbaik, rata-rata, dan terburuk?","acceptedAnswer":{"@type":"Answer","text":"Kasus terbaik adalah input paling menguntungkan, terburuk adalah paling merugikan, rata-rata adalah gambaran umum. Biasanya yang dibahas adalah kasus terburuk atau rata-rata."}},{"@type":"Question","name":"Apakah selalu memilih Big O terkecil?","acceptedAnswer":{"@type":"Answer","text":"Tidak selalu. Kesederhanaan kode, ukuran data, dan memori juga dipertimbangkan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#yang-diukur-pertumbuhan-bukan-detik">Yang diukur: pertumbuhan, bukan detik</a></li><li><a href="#kelas-kelas-yang-paling-sering-ditemui">Kelas-kelas yang paling sering ditemui</a></li><li><a href="#cara-membaca-kode">Cara membaca kode</a></li><li><a href="#kapan-big-o-penting">Kapan Big O penting?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</h1>
+<p class="lead">Dua program yang sama-sama benar bisa sangat berbeda kecepatannya saat datanya membesar. Big O adalah bahasa untuk membicarakan perbedaan itu tanpa harus mengukur dengan stopwatch di komputer tertentu.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma" fetchpriority="high"></figure>
+<h2 id="yang-diukur-pertumbuhan-bukan-detik">Yang diukur: pertumbuhan, bukan detik</h2>
+<p>Big O tidak menyebut berapa detik, tetapi bagaimana jumlah langkah <b>tumbuh</b> ketika jumlah data (n) membesar. Jika data digandakan, apakah pekerjaan tetap, ikut dua kali lipat, atau menjadi empat kali? Itulah yang dijawab.</p>
+<div data-w="bigo"><script type="application/json">{"title":"Bandingkan pertumbuhan","desc":"Geser jumlah data (n). Perhatikan mana yang tetap tenang dan mana yang meledak."}</script></div>
+<h2 id="kelas-kelas-yang-paling-sering-ditemui">Kelas-kelas yang paling sering ditemui</h2>
+<table><thead><tr><th>Notasi</th><th>Nama</th><th>Contoh</th></tr></thead><tbody><tr><td>O(1)</td><td>Konstan</td><td>Mengambil elemen list dengan indeks</td></tr><tr><td>O(log n)</td><td>Logaritmik</td><td>Binary search</td></tr><tr><td>O(n)</td><td>Linear</td><td>Mencari di list yang tidak terurut</td></tr><tr><td>O(n log n)</td><td>Linearitmik</td><td>Pengurutan efisien (merge sort)</td></tr><tr><td>O(n²)</td><td>Kuadrat</td><td>Dua perulangan bersarang, bubble sort</td></tr><tr><td>O(2ⁿ)</td><td>Eksponensial</td><td>Rekursi naif seperti Fibonacci tanpa penyimpanan hasil</td></tr></tbody></table>
+<h2 id="cara-membaca-kode">Cara membaca kode</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk kartu untuk menebak kelasnya","items":[{"tag":"Kode","front":"Satu perulangan dari 0 sampai n.","backTag":"Kelas","back":"O(n). Pekerjaan naik lurus mengikuti n."},{"tag":"Kode","front":"Perulangan di dalam perulangan, keduanya sampai n.","backTag":"Kelas","back":"O(n²). Untuk n = 1000 ada sekitar satu juta langkah."},{"tag":"Kode","front":"Setiap langkah membuang separuh data.","backTag":"Kelas","back":"O(log n). Contohnya binary search."},{"tag":"Kode","front":"Mengakses data berdasarkan kunci di dictionary.","backTag":"Kelas","back":"Umumnya O(1) rata-rata."}]}</script></div>
+<div class="callout info"><b>Penyederhanaan</b><p>Big O menyederhanakan: konstanta dan suku kecil diabaikan. 3n + 10 tetap disebut O(n). Itu karena ketika n sangat besar, suku dominanlah yang menentukan.</p></div>
+<h2 id="kapan-big-o-penting">Kapan Big O penting?</h2>
+<p>Pada data kecil, hampir semua algoritma terasa cepat. Big O menjadi penting ketika data tumbuh: puluhan ribu pengguna, jutaan baris, atau perhitungan yang dijalankan berulang. Pada saat itu, memilih O(n log n) daripada O(n²) bisa berarti selisih detik dan jam.</p>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Dua perulangan bersarang, masing-masing n kali, kira-kira berkelas...","options":["O(n)","O(n²)","O(log n)"],"answer":1,"why":"n kali n langkah."},{"q":"Data digandakan. Algoritma O(n) bekerja kira-kira...","options":["Sama","Dua kali lebih lama","Empat kali lebih lama"],"answer":1,"why":"Pertumbuhan linear."},{"q":"Manakah yang paling cepat untuk data sangat besar?","options":["O(n²)","O(n log n)","O(2ⁿ)"],"answer":1,"why":"n log n jauh lebih landai dibanding n² dan 2ⁿ."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Big O mengukur waktu nyata?</summary><div>Tidak. Ia mengukur pertumbuhan langkah terhadap ukuran data. Waktu nyata juga bergantung pada perangkat keras dan implementasi.</div></details>
+<details class="faq"><summary>Apa bedanya kasus terbaik, rata-rata, dan terburuk?</summary><div>Kasus terbaik adalah input paling menguntungkan, terburuk adalah paling merugikan, rata-rata adalah gambaran umum. Biasanya yang dibahas adalah kasus terburuk atau rata-rata.</div></details>
+<details class="faq"><summary>Apakah selalu memilih Big O terkecil?</summary><div>Tidak selalu. Kesederhanaan kode, ukuran data, dan memori juga dipertimbangkan.</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"><img src="/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Rekursi Dijelaskan: Fungsi yang Memanggil Dirinya Sendiri</span></a><a href="/artikel/bfs-pencarian-jalur-terpendek-di-peta/"><img src="/artikel/bfs-pencarian-jalur-terpendek-di-peta/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>BFS: Algoritma Mencari Jalur Terpendek (Simulasi Interaktif)</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debugging: Cara Sistematis Mencari dan Memperbaiki Bug</title>
+<meta name="description" content="Debugging bukan menebak-nebak. Pelajari metode sistematis: mereproduksi, mempersempit, membaca pesan error, dan menguji perbaikan, dengan daftar penyebab umum.">
+<meta name="keywords" content="debugging, bug, error, pemrograman, troubleshooting">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/">
+<meta property="og:title" content="Debugging: Cara Sistematis Mencari dan Memperbaiki Bug">
+<meta property="og:description" content="Debugging bukan menebak-nebak. Pelajari metode sistematis: mereproduksi, mempersempit, membaca pesan error, dan menguji perbaikan, dengan daftar penyebab umum.">
+<meta property="og:image" content="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Debugging: Cara Sistematis Mencari dan Memperbaiki Bug">
+<meta name="twitter:description" content="Debugging bukan menebak-nebak. Pelajari metode sistematis: mereproduksi, mempersempit, membaca pesan error, dan menguji perbaikan, dengan daftar penyebab umum.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Debugging: Cara Sistematis Mencari dan Memperbaiki Bug","description":"Debugging bukan menebak-nebak. Pelajari metode sistematis: mereproduksi, mempersempit, membaca pesan error, dan menguji perbaikan, dengan daftar penyebab umum.","image":["https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"debugging, bug, error, pemrograman, troubleshooting","articleSection":"Coding & Algoritma","wordCount":214,"mainEntityOfPage":"https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Debugging: Cara Sistematis Mencari dan Memperbaiki Bug","item":"https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah AI bisa membantu debugging?","acceptedAnswer":{"@type":"Answer","text":"Sangat bisa untuk menjelaskan error dan mengusulkan penyebab. Tetap uji usulannya dan pahami alasannya."}},{"@type":"Question","name":"Bagaimana menghadapi bug yang muncul sesekali?","acceptedAnswer":{"@type":"Answer","text":"Tambahkan logging, cari pola (waktu, data tertentu, urutan), dan coba reproduksi dengan data yang sama."}},{"@type":"Question","name":"Apa itu breakpoint?","acceptedAnswer":{"@type":"Answer","text":"Titik tempat program berhenti sehingga Anda bisa memeriksa nilai variabel dan menjalankan baris demi baris."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#siklus-debugging">Siklus debugging</a></li><li><a href="#langkah-praktisnya">Langkah praktisnya</a></li><li><a href="#alat-bantu">Alat bantu</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Debugging: Cara Sistematis Mencari dan Memperbaiki Bug</h1>
+<p class="lead">Programmer berpengalaman tidak selalu lebih pintar menulis kode tanpa bug. Mereka lebih pandai mencarinya. Debugging adalah keterampilan yang bisa dipelajari, dengan metode yang hampir sama dengan ilmuwan: hipotesis, eksperimen, kesimpulan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Debugging: Cara Sistematis Mencari dan Memperbaiki Bug" fetchpriority="high"></figure>
+<h2 id="siklus-debugging">Siklus debugging</h2>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Siklus debugging" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M291.5 86.5 Q328.05634918610406 91.94365081389596 335.6 130.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M333.5 191.5 Q328.05634918610406 228.05634918610406 289.4 235.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M228.5 233.5 Q191.94365081389594 228.05634918610406 184.4 189.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M186.5 128.5 Q191.94365081389594 91.94365081389596 230.6 84.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="54" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Reproduksi</tspan><tspan x="260" dy="15">masalah</tspan></text><rect x="303" y="138" width="124" height="54" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="365" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="365" dy="0">Buat dugaan</tspan><tspan x="365" dy="15">penyebab</tspan></text><rect x="198" y="243" width="124" height="69" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="260" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Uji dugaan</tspan><tspan x="260" dy="15">dengan</tspan><tspan x="260" dy="15">eksperimen</tspan></text><rect x="93" y="138" width="124" height="54" rx="10" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><text x="155" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="155" dy="0">Perbaiki dan</tspan><tspan x="155" dy="15">verifikasi</tspan></text></svg><figcaption>Bila dugaan salah, kembali ke langkah dugaan dengan informasi baru.</figcaption></figure>
+<h2 id="langkah-praktisnya">Langkah praktisnya</h2>
+<ol><li><b>Reproduksi.</b> Temukan langkah pasti yang memunculkan bug. Bug yang tidak bisa direproduksi tidak bisa dipastikan sudah diperbaiki.</li><li><b>Baca pesan error.</b> Biasanya menyebut jenis masalah, file, dan baris. Baca dari bawah ke atas untuk melihat sumbernya.</li><li><b>Persempit.</b> Matikan bagian kode atau bagi dua area yang dicurigai, lalu lihat apakah bug tetap muncul.</li><li><b>Periksa asumsi.</b> Cetak nilai variabel di titik kunci. Apakah isinya sesuai bayangan Anda?</li><li><b>Ubah satu hal sekaligus.</b> Bila mengubah banyak, Anda tidak tahu yang mana yang berhasil.</li><li><b>Verifikasi dan tambahkan tes.</b> Pastikan bug hilang dan tidak kembali.</li></ol>
+<div data-w="cards"><script type="application/json">{"title":"Penyebab umum bug, ketuk untuk melihat cara memeriksanya","items":[{"tag":"Penyebab","front":"Off-by-one: perulangan kelebihan atau kurang satu.","backTag":"Periksa","back":"Cetak indeks awal dan akhir. Uji dengan daftar kosong dan satu elemen."},{"tag":"Penyebab","front":"Nilai None/null/undefined yang tidak diduga.","backTag":"Periksa","back":"Cetak nilai sebelum dipakai; tambahkan pemeriksaan."},{"tag":"Penyebab","front":"Tipe data keliru: teks \"5\" dianggap angka 5.","backTag":"Periksa","back":"Cetak tipe dengan type() atau typeof."},{"tag":"Penyebab","front":"Perubahan data bersama (state) tanpa disadari.","backTag":"Periksa","back":"Cari siapa lagi yang mengubah variabel itu."},{"tag":"Penyebab","front":"Lingkungan berbeda: versi pustaka atau konfigurasi.","backTag":"Periksa","back":"Bandingkan versi dan variabel lingkungan antar mesin."}]}</script></div>
+<h2 id="alat-bantu">Alat bantu</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Perlengkapan debugging","items":["Pernyataan print atau log di titik kunci.","Debugger dengan breakpoint untuk melihat nilai langkah demi langkah.","Git untuk membandingkan dan kembali ke versi yang bekerja.","Tes otomatis yang menangkap bug supaya tidak kembali.","Mencari pesan error di dokumentasi atau forum, lalu memeriksa apakah konteksnya sama.","Menjelaskan masalah dengan kata-kata (rubber duck) untuk menemukan kekeliruan pikiran."]}</script></div>
+<div class="callout good"><b>Cara bertanya</b><p>Saat meminta bantuan (kepada rekan atau AI), sertakan: apa yang diharapkan, apa yang terjadi, pesan error lengkap, dan potongan kode terkecil yang masih memunculkan bug. Pertanyaan yang baik sering menjawab separuh masalah.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa mengubah satu hal setiap kali?","options":["Agar tahu perubahan mana yang berpengaruh","Agar kode lebih pendek","Agar lebih cepat"],"answer":0,"why":"Perubahan banyak membuat sebab tidak jelas."},{"q":"Langkah pertama debugging yang baik?","options":["Menulis ulang semuanya","Mereproduksi masalah secara konsisten","Menghapus tes"],"answer":1,"why":"Tanpa reproduksi, sulit memastikan perbaikan."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah AI bisa membantu debugging?</summary><div>Sangat bisa untuk menjelaskan error dan mengusulkan penyebab. Tetap uji usulannya dan pahami alasannya.</div></details>
+<details class="faq"><summary>Bagaimana menghadapi bug yang muncul sesekali?</summary><div>Tambahkan logging, cari pola (waktu, data tertentu, urutan), dan coba reproduksi dengan data yang sama.</div></details>
+<details class="faq"><summary>Apa itu breakpoint?</summary><div>Titik tempat program berhenti sehingga Anda bisa memeriksa nilai variabel dan menjalankan baris demi baris.</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/big-o-notation-untuk-pemula/"><img src="/artikel/big-o-notation-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

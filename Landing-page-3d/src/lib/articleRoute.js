@@ -1,16 +1,6 @@
-import { getArticle } from '../data/articles';
-
-// Articles use real addresses (not #/ routes) so search engines can index each one:
-//   /artikel/            the list
-//   /artikel/<slug>/     one article
-// Each article is also pre-rendered to its own HTML file at build time (scripts/prerender.mjs).
-
-export function parseArticlePath(pathname) {
-    const [page, slug] = pathname.split('/').filter(Boolean);
-    if (page !== 'artikel') return null;
-    const article = slug && getArticle(slug);
-    return article ? { name: 'article', article } : { name: 'articles' };
-}
+// The list of articles lives at a real address, /artikel/, so search engines can index it.
+// Each article itself is a static page (public/artikel/<slug>/index.html) that the host serves directly.
+export const isArticleList = pathname => pathname.split('/').filter(Boolean)[0] === 'artikel';
 
 export const formatDate = iso =>
     new Date(`${iso}T00:00:00`).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });

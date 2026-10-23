@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</title>
+<meta name="description" content="Binary search menemukan data di antara jutaan hanya dalam puluhan langkah. Lihat cara kerjanya langkah demi langkah, kode Python, dan kapan algoritma ini bisa dipakai.">
+<meta name="keywords" content="binary search, algoritma pencarian, Python, big O, struktur data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/">
+<meta property="og:title" content="Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua">
+<meta property="og:description" content="Binary search menemukan data di antara jutaan hanya dalam puluhan langkah. Lihat cara kerjanya langkah demi langkah, kode Python, dan kapan algoritma ini bisa dipakai.">
+<meta property="og:image" content="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua">
+<meta name="twitter:description" content="Binary search menemukan data di antara jutaan hanya dalam puluhan langkah. Lihat cara kerjanya langkah demi langkah, kode Python, dan kapan algoritma ini bisa dipakai.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua","description":"Binary search menemukan data di antara jutaan hanya dalam puluhan langkah. Lihat cara kerjanya langkah demi langkah, kode Python, dan kapan algoritma ini bisa dipakai.","image":["https://muchson.web.id/artikel/binary-search-dijelaskan-visual/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"binary search, algoritma pencarian, Python, big O, struktur data","articleSection":"Coding & Algoritma","wordCount":237,"mainEntityOfPage":"https://muchson.web.id/artikel/binary-search-dijelaskan-visual/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua","item":"https://muchson.web.id/artikel/binary-search-dijelaskan-visual/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya binary search dan linear search?","acceptedAnswer":{"@type":"Answer","text":"Linear memeriksa satu per satu, biner membagi dua rentang setiap langkah. Biner jauh lebih cepat pada data besar yang terurut."}},{"@type":"Question","name":"Apakah binary search bisa untuk teks?","acceptedAnswer":{"@type":"Answer","text":"Bisa, selama data terurut berdasarkan aturan yang sama dengan perbandingan yang dipakai."}},{"@type":"Question","name":"Mengapa mid dihitung dengan (lo + hi) // 2?","acceptedAnswer":{"@type":"Answer","text":"Itu nilai tengah rentang. Pada bahasa dengan bilangan bulat terbatas, rumus lo + (hi - lo) // 2 menghindari overflow."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#idenya-buang-separuh-setiap-langkah">Idenya: buang separuh setiap langkah</a></li><li><a href="#berapa-cepat">Berapa cepat?</a></li><li><a href="#kode-python">Kode Python</a></li><li><a href="#di-mana-binary-search-dipakai">Di mana binary search dipakai?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</h1>
+<p class="lead">Menebak angka 1 sampai 100 dengan petunjuk "lebih besar" atau "lebih kecil"? Strategi terbaik adalah selalu menebak di tengah. Itulah binary search: setiap langkah membuang separuh kemungkinan, sehingga data sebesar apa pun tetap cepat dicari.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua" fetchpriority="high"></figure>
+<h2 id="idenya-buang-separuh-setiap-langkah">Idenya: buang separuh setiap langkah</h2>
+<figure class="diagram"><svg viewBox="0 0 728 104" role="img" aria-label="Langkah binary search" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Ambil nilai</tspan><tspan x="85" dy="16">tengah</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">dari rentang yang</tspan><tspan x="85" dy="14">tersisa</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Bandingkan dengan</tspan><tspan x="271" dy="16">target</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">sama, lebih besar,</tspan><tspan x="271" dy="14">atau kecil?</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Buang separuh</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">yang tidak mungkin</tspan><tspan x="457" dy="14">berisi target</tspan></text><line x1="536" y1="52" x2="564" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Ulangi</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">sampai ketemu atau</tspan><tspan x="643" dy="14">habis</tspan></text></svg><figcaption>Syaratnya: data sudah terurut.</figcaption></figure>
+<div data-w="search"><script type="application/json">{"title":"Bandingkan pencarian biner dan linear","desc":"Pilih angka yang dicari, tekan langkah berikutnya, lalu ganti ke metode linear untuk melihat perbedaan jumlah pengecekan."}</script></div>
+<h2 id="berapa-cepat">Berapa cepat?</h2>
+<p>Linear search memeriksa satu per satu: pada data sebanyak n, kasus terburuk n langkah. Binary search memeriksa sekitar log₂(n) langkah. Untuk satu juta data, itu sekitar 20 langkah, bukan satu juta. Karena itu binary search disebut <b>O(log n)</b>.</p>
+<figure class="diagram"><svg viewBox="0 0 640 136" role="img" aria-label="Jumlah langkah terburuk untuk mencari satu data" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><text x="160" y="29" text-anchor="end" font-size="13.5" fill="#0f1a33">100 data (linear)</text><rect x="170" y="12" width="380" height="26" rx="6" fill="#1e5ab2"/><text x="558" y="30" font-size="13.5" font-weight="700" fill="#0f1a33">100 langkah</text><text x="160" y="69" text-anchor="end" font-size="13.5" fill="#0f1a33">100 data (biner)</text><rect x="170" y="52" width="26.6" height="26" rx="6" fill="#1f7a46"/><text x="204.6" y="70" font-size="13.5" font-weight="700" fill="#0f1a33">7 langkah</text><text x="160" y="109" text-anchor="end" font-size="13.5" fill="#0f1a33">1.000.000 data (biner)</text><rect x="170" y="92" width="76" height="26" rx="6" fill="#9a5b00"/><text x="254" y="110" font-size="13.5" font-weight="700" fill="#0f1a33">20 langkah</text></svg><figcaption>Untuk satu juta data linear, kasus terburuknya satu juta langkah, jauh di luar grafik ini.</figcaption></figure>
+<h2 id="kode-python">Kode Python</h2>
+<pre><code>def binary_search(data, target):
+    lo, hi = 0, len(data) - 1
+    while lo &lt;= hi:
+        mid = (lo + hi) // 2
+        if data[mid] == target:
+            return mid
+        if data[mid] &lt; target:
+            lo = mid + 1      # buang separuh kiri
+        else:
+            hi = mid - 1      # buang separuh kanan
+    return -1                 # tidak ditemukan
+
+print(binary_search([3, 8, 15, 21, 40, 57], 21))   # 3</code></pre>
+<div class="callout warn"><b>Syarat penting</b><p>Binary search hanya bekerja bila data sudah terurut. Mengurutkan dulu juga butuh waktu, jadi untuk satu kali pencarian pada data acak, pencarian linear bisa lebih sederhana.</p></div>
+<h2 id="di-mana-binary-search-dipakai">Di mana binary search dipakai?</h2>
+<ul><li>Mencari kata di kamus atau data terurut pada database (indeks).</li><li>Menebak parameter, misalnya mencari versi pertama yang memunculkan bug (git bisect).</li><li>Fungsi bawaan bahasa pemrograman untuk data terurut (misalnya modul bisect di Python).</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Berapa kira-kira langkah terburuk binary search untuk 1.000 data?","options":["10","500","1000"],"answer":0,"why":"log₂(1000) kira-kira 10."},{"q":"Apa syarat binary search?","options":["Data harus terurut","Data harus berupa angka genap","Data harus kurang dari 100"],"answer":0,"why":"Tanpa urutan, membuang separuh tidak valid."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya binary search dan linear search?</summary><div>Linear memeriksa satu per satu, biner membagi dua rentang setiap langkah. Biner jauh lebih cepat pada data besar yang terurut.</div></details>
+<details class="faq"><summary>Apakah binary search bisa untuk teks?</summary><div>Bisa, selama data terurut berdasarkan aturan yang sama dengan perbandingan yang dipakai.</div></details>
+<details class="faq"><summary>Mengapa mid dihitung dengan (lo + hi) // 2?</summary><div>Itu nilai tengah rentang. Pada bahasa dengan bilangan bulat terbatas, rumus lo + (hi - lo) // 2 menghindari overflow.</div></details>
+
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/selection-sort-dan-insertion-sort-dijelaskan/"><img src="/artikel/selection-sort-dan-insertion-sort-dijelaskan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Selection Sort dan Insertion Sort: Dua Cara Sederhana</span></a><a href="/artikel/hash-table-cara-kerja-dictionary/"><img src="/artikel/hash-table-cara-kerja-dictionary/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Hash Table: Cara Kerja Dictionary yang Sangat Cepat</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

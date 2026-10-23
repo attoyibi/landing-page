@@ -1,0 +1,102 @@
+const D = '2026-10-23';
+const C = 'Belajar & Produktivitas';
+
+export default [
+    {
+        slug: 'teknik-pomodoro-cara-fokus-dan-pewaktunya',
+        title: 'Teknik Pomodoro: Cara Fokus 25 Menit dan Pewaktu Langsung',
+        description: 'Pomodoro memecah kerja menjadi sesi fokus singkat dengan jeda teratur. Pahami aturannya, cara menyesuaikannya, dan pakai pewaktu bawaan di halaman ini.',
+        date: D, category: C, tags: ['pomodoro', 'fokus', 'manajemen waktu', 'produktivitas', 'belajar'], cta: 'none',
+        lead: 'Sulit memulai tugas besar, lalu mudah teralih? Teknik Pomodoro menurunkan beban awal dengan satu janji kecil: fokus penuh hanya 25 menit, lalu istirahat. Sederhana, tetapi efektif bagi banyak orang.',
+        body: [
+            { h2: 'Aturannya' },
+            { svg: 'cycle', label: 'Siklus Pomodoro', items: ['Fokus 25 menit', 'Istirahat 5 menit', 'Ulangi 4 kali', 'Istirahat panjang 15-30 menit'], caption: 'Satu sesi fokus disebut satu "pomodoro".' },
+            { w: 'timer', title: 'Pewaktu Pomodoro', desc: 'Jalankan di tab ini. Saat fase berganti, ponsel yang mendukung akan bergetar.', phases: [{ label: 'Fokus', sec: 1500, hint: 'Satu tugas saja. Abaikan notifikasi.' }, { label: 'Istirahat', sec: 300, hint: 'Berdiri, minum, lihat jauh. Jangan buka media sosial.' }] },
+            { h2: 'Mengapa bisa membantu' },
+            { ul: ['Batas waktu yang jelas membuat memulai terasa ringan.', 'Jeda teratur mengurangi kelelahan dan menjaga kualitas fokus.', 'Menghitung pomodoro memberi gambaran nyata berapa lama suatu tugas.', 'Gangguan dicatat dan ditunda ke jeda, bukan ditanggapi seketika.'] },
+            { h2: 'Menyesuaikan dengan Anda' },
+            { w: 'compare', title: 'Variasi yang bisa dicoba', tabs: [{ label: 'Klasik 25/5', html: 'Cocok untuk tugas yang mudah teralih dan butuh momentum awal.' }, { label: '50/10', html: 'Untuk pekerjaan mendalam seperti menulis atau memprogram yang butuh waktu untuk masuk ke alur.' }, { label: '15/3', html: 'Untuk hari yang berat atau tugas yang sangat tidak disukai. Mulai kecil dulu.' }] },
+            { callout: 'Bila Anda sedang sangat larut dalam sebuah tugas, tidak perlu memutus paksa. Teknik ini alat bantu, bukan aturan. Gunakan terutama saat sulit memulai atau mudah teralih.', kind: 'info', title: 'Fleksibel' },
+            { w: 'checklist', title: 'Persiapan satu sesi', items: ['Tulis satu tugas spesifik untuk sesi ini.', 'Matikan notifikasi atau aktifkan mode fokus.', 'Siapkan air minum dan bahan yang dibutuhkan.', 'Siapkan kertas kecil untuk mencatat gangguan yang muncul.', 'Saat istirahat, benar-benar menjauh dari layar.'] },
+        ],
+        faq: [['Bagaimana bila terganggu di tengah sesi?', 'Catat gangguan singkat dan kembali. Bila gangguan penting, akhiri sesi dan mulai ulang nanti.'], ['Apakah cocok untuk belajar?', 'Ya, sangat cocok. Gabungkan dengan latihan mengingat kembali pada akhir tiap sesi.'], ['Berapa pomodoro sehari yang wajar?', 'Banyak orang mencapai sekitar 6 sampai 10 sesi fokus berkualitas per hari. Mulai dari yang realistis.']],
+    },
+
+    {
+        slug: 'spaced-repetition-cara-belajar-tahan-lama',
+        title: 'Spaced Repetition: Cara Belajar agar Tidak Cepat Lupa',
+        description: 'Mengulang pada jeda yang tepat membuat ingatan bertahan lama. Pahami kurva lupa, jadwal ulang, dan coba kalkulator sederhana untuk melihat dampak mengulang tepat waktu.',
+        date: D, category: C, tags: ['spaced repetition', 'kurva lupa', 'belajar efektif', 'mengingat', 'flashcard'], cta: 'none',
+        lead: 'Anda belajar semalaman sebelum ujian, lalu seminggu kemudian lupa sebagian besar. Itu normal dan bisa dijelaskan. Kabar baiknya, ada cara belajar yang memanfaatkan sifat lupa itu: mengulang tepat ketika ingatan mulai memudar.',
+        body: [
+            { h2: 'Kurva lupa' },
+            `Penelitian sejak abad ke-19, dipelopori Hermann Ebbinghaus, menunjukkan bahwa ingatan baru memudar cepat di awal, lalu melambat. Tiap kali Anda mengingat kembali sesuatu, ingatan itu menjadi lebih kuat dan memudar lebih lambat. Itulah dasar <b>pengulangan berjarak</b>: mengulang pada jeda yang makin panjang.`,
+            { w: 'calc', title: 'Simulasi sederhana kurva lupa', desc: 'Model disederhanakan: ingatan memudar secara eksponensial. "Kekuatan ingatan" menyatakan seberapa lama ingatan bertahan. Hanya untuk gambaran konsep.', inputs: [{ id: 'S', label: 'Kekuatan ingatan', value: 3, min: 1, max: 30, step: 1, unit: 'hari' }, { id: 't', label: 'Hari sejak terakhir belajar', value: 7, min: 0, max: 60, step: 1, unit: 'hari' }], outputs: [{ label: 'Perkiraan yang masih diingat', expr: '100 * exp(-t / S)', fmt: 'pct', big: true }, { label: 'Setelah diulang, kekuatan bertambah (perkiraan 2x)', expr: '100 * exp(-t / (S * 2))', fmt: 'pct', note: 'Setiap pengulangan yang berhasil memperpanjang daya tahan ingatan.' }] },
+            { h2: 'Jadwal ulang yang masuk akal' },
+            { svg: 'timeline', label: 'Contoh jadwal pengulangan berjarak', events: [['Hari 0', 'Belajar materi baru', 'Pahami, bukan hafal.'], ['Hari 1', 'Ulang pertama', 'Uji diri tanpa melihat catatan.'], ['Hari 3', 'Ulang kedua', 'Fokus pada yang masih salah.'], ['Hari 7', 'Ulang ketiga', 'Jeda makin panjang.'], ['Hari 14', 'Ulang keempat', 'Cukup untuk bertahan lama.'], ['Hari 30', 'Ulang kelima', 'Pemantapan jangka panjang.']], caption: 'Jadwal ini contoh. Materi yang sulit perlu diulang lebih sering.' },
+            { h2: 'Cara menerapkannya' },
+            { ol: ['Ubah materi menjadi pertanyaan atau kartu (satu ide per kartu).', 'Uji diri: jawab dari ingatan sebelum melihat jawaban.', 'Jawaban benar: jeda ulang diperpanjang. Salah: ulang lebih cepat.', 'Gunakan aplikasi kartu yang menjadwalkan otomatis, atau buku catatan dengan tanggal.', 'Belajar sedikit tetapi tiap hari lebih baik daripada menjejalkan sekali.'] },
+            { w: 'checklist', title: 'Kebiasaan yang mendukung', desc: 'Centang yang sudah Anda lakukan. Progres tersimpan di browser ini.', items: ['Membuat pertanyaan, bukan hanya menyalin catatan.', 'Menguji diri sebelum membuka jawaban.', 'Mengulang tepat ketika mulai lupa, bukan saat sudah lupa total.', 'Membuat kartu sendiri, bukan hanya memakai punya orang lain.', 'Menyisihkan 15-20 menit tiap hari untuk mengulang.'] },
+            { callout: 'Mengulang dengan membaca ulang terasa nyaman tetapi kurang efektif. Mengingat kembali tanpa melihat (retrieval practice) memberi manfaat jauh lebih besar bagi ingatan jangka panjang.', kind: 'good', title: 'Penting' },
+            { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Kapan waktu terbaik mengulang?', options: ['Tepat ketika mulai lupa', 'Hanya sehari sebelum ujian', 'Tidak perlu mengulang'], answer: 0, why: 'Mengulang saat mulai memudar memperkuat ingatan secara efisien.' }, { q: 'Apa yang terjadi pada jeda ulang setelah berhasil mengingat?', options: ['Diperpanjang', 'Diperpendek', 'Tetap'], answer: 0, why: 'Ingatan lebih kuat sehingga jeda bisa lebih panjang.' }] },
+        ],
+        faq: [['Apakah cocok untuk semua pelajaran?', 'Sangat cocok untuk fakta, kosakata, rumus, dan konsep. Untuk keterampilan, gabungkan dengan latihan langsung.'], ['Berapa kartu baru sebaiknya per hari?', 'Mulai dari sedikit (misalnya 10-20), karena jumlah ulangan menumpuk. Pertahankan yang bisa dikelola.'], ['Apakah ada aplikasinya?', 'Banyak aplikasi kartu dengan penjadwalan otomatis. Pilih yang sesuai kebutuhan Anda.']],
+    },
+
+    {
+        slug: 'active-recall-teknik-belajar-paling-efektif',
+        title: 'Active Recall: Menguji Diri, Cara Belajar Paling Efektif',
+        description: 'Membaca ulang terasa produktif tetapi hasilnya kecil. Active recall memaksa otak mengambil kembali informasi dan terbukti memperkuat ingatan. Begini cara memakainya.',
+        date: D, category: C, tags: ['active recall', 'retrieval practice', 'cara belajar', 'ujian', 'efektif'], cta: 'none',
+        lead: 'Banyak siswa belajar dengan membaca ulang dan menyorot catatan. Rasanya akrab, jadi terasa sudah paham. Padahal keakraban itu menipu. Penelitian pendidikan konsisten menemukan bahwa menguji diri jauh lebih efektif daripada membaca ulang.',
+        body: [
+            { h2: 'Yang terasa belajar vs yang benar-benar belajar' },
+            { svg: 'versus', label: 'Belajar pasif dan belajar aktif', left: { title: 'Pasif (terasa mudah)', items: ['Membaca ulang catatan', 'Menyorot teks', 'Menonton ulang rekaman', 'Menyalin catatan apa adanya', 'Hasil: akrab tapi mudah lupa'] }, right: { title: 'Aktif (terasa sulit)', items: ['Menutup catatan lalu menjelaskan', 'Mengerjakan soal latihan', 'Membuat pertanyaan sendiri', 'Mengajar orang lain', 'Hasil: ingatan lebih kuat'] }, caption: 'Rasa sulit saat mengingat bukan tanda gagal, melainkan tanda otak sedang bekerja.' },
+            { h2: 'Cara menerapkannya' },
+            { w: 'cards', title: 'Ketuk kartu untuk teknik praktis', items: [{ tag: 'Teknik', front: 'Tutup buku, tulis semua yang diingat.', backTag: 'Cara', back: 'Setelah membaca satu bagian, tutup, lalu tulis ringkasan dari ingatan. Bandingkan dan lengkapi.' }, { tag: 'Teknik', front: 'Flashcard dua sisi.', backTag: 'Cara', back: 'Pertanyaan di depan, jawaban di belakang. Jawab keras dulu sebelum membalik.' }, { tag: 'Teknik', front: 'Soal latihan dan ujian lama.', backTag: 'Cara', back: 'Kerjakan tanpa melihat catatan, baru periksa.' }, { tag: 'Teknik', front: 'Metode Feynman.', backTag: 'Cara', back: 'Jelaskan konsep dengan bahasa sederhana seolah kepada anak kecil. Bagian yang tersendat adalah yang belum paham.' }] },
+            { w: 'builder', title: 'Pembuat pertanyaan belajar', desc: 'Isi materi Anda, salin teksnya ke asisten AI untuk dijadikan soal latihan, lalu kerjakan sendiri tanpa melihat.', fields: [{ id: 'topik', label: 'Topik yang dipelajari', placeholder: 'mis. sistem peredaran darah' }, { id: 'level', label: 'Level', value: 'SMA' }, { id: 'jumlah', label: 'Jumlah soal', value: '8' }], template: 'Buat {jumlah} soal latihan tentang {topik} untuk level {level}. Campur soal pilihan ganda, isian singkat, dan satu soal penalaran. Jangan tampilkan jawaban dulu. Setelah saya menjawab semuanya, koreksi dan jelaskan bagian yang salah.' },
+            { h2: 'Rutinitas sederhana' },
+            { w: 'checklist', title: 'Setelah setiap sesi belajar', items: ['Menutup catatan dan menuliskan poin utama dari ingatan.', 'Mengerjakan minimal beberapa soal tanpa melihat jawaban.', 'Menandai hal yang salah atau lupa, dan mengulangnya besok.', 'Menjelaskan satu konsep dengan kata-kata sendiri.', 'Menjadwalkan ulang materi yang masih lemah.'] },
+            { callout: 'Gunakan AI sebagai pembuat soal dan pemberi umpan balik, bukan sebagai penjawab. Bila AI selalu memberi jawaban lebih dulu, Anda kehilangan manfaat utama: usaha mengingat.', kind: 'info', title: 'Dengan bantuan AI' },
+        ],
+        faq: [['Mengapa terasa lebih sulit?', 'Karena otak bekerja mengambil informasi. Kesulitan yang produktif itulah yang memperkuat ingatan.'], ['Apakah membaca ulang tidak berguna sama sekali?', 'Berguna untuk pengenalan awal, tetapi hasilnya jauh lebih kecil dibanding menguji diri.'], ['Berapa lama sebaiknya sesi menguji diri?', 'Sesi singkat tetapi sering. Misalnya 10-20 menit setelah belajar dan beberapa hari kemudian.']],
+    },
+
+    {
+        slug: 'matriks-eisenhower-cara-menentukan-prioritas',
+        title: 'Matriks Eisenhower: Menentukan Mana yang Dikerjakan Dulu',
+        description: 'Bingung memilih antara tugas mendesak dan penting? Matriks Eisenhower membagi tugas menjadi empat kuadran. Coba panduan interaktif untuk menyortir tugas Anda hari ini.',
+        date: D, category: C, tags: ['matriks Eisenhower', 'prioritas', 'manajemen waktu', 'produktivitas', 'urgent important'], cta: 'none',
+        lead: 'Daftar tugas yang panjang membuat kita mengerjakan yang paling berisik, bukan yang paling berharga. Matriks Eisenhower membantu memisahkan yang mendesak dari yang penting, dua hal yang sering tertukar.',
+        body: [
+            { h2: 'Empat kuadran' },
+            { svg: 'matrix', x: 'Mendesak', y: 'Penting', label: 'Matriks Eisenhower', quads: [{ t: 'Penting, tidak mendesak: JADWALKAN', d: 'Belajar, olahraga, perencanaan, hubungan' }, { t: 'Penting dan mendesak: KERJAKAN', d: 'Krisis, tenggat dekat' }, { t: 'Tidak penting, tidak mendesak: HAPUS', d: 'Gulir tanpa tujuan, kegiatan sia-sia' }, { t: 'Mendesak, tidak penting: DELEGASIKAN', d: 'Sebagian pesan, rapat, interupsi' }], caption: 'Kuadran kiri atas adalah tempat hasil jangka panjang dibuat, dan paling mudah terlupakan.' },
+            { h2: 'Latih menggolongkan' },
+            { w: 'quiz', title: 'Masukkan ke kuadran mana?', questions: [{ q: 'Laporan untuk atasan jatuh tempo hari ini.', options: ['Kerjakan sekarang', 'Jadwalkan', 'Delegasikan', 'Hapus'], answer: 0, why: 'Penting dan mendesak.' }, { q: 'Belajar bahasa Inggris 30 menit tiap hari untuk karier.', options: ['Kerjakan sekarang', 'Jadwalkan', 'Delegasikan', 'Hapus'], answer: 1, why: 'Penting tetapi tidak mendesak: jadwalkan.' }, { q: 'Notifikasi grup yang meminta jawaban cepat tentang hal sepele.', options: ['Kerjakan sekarang', 'Jadwalkan', 'Delegasikan atau batasi', 'Hapus'], answer: 2, why: 'Mendesak tetapi tidak penting.' }, { q: 'Menggulir media sosial tanpa tujuan.', options: ['Kerjakan sekarang', 'Jadwalkan', 'Delegasikan', 'Hapus atau batasi'], answer: 3, why: 'Tidak penting dan tidak mendesak.' }] },
+            { h2: 'Cara memakainya tiap hari' },
+            { w: 'checklist', title: 'Rutinitas lima menit', items: ['Tulis semua tugas yang ada di kepala.', 'Beri label tiap tugas: penting atau tidak, mendesak atau tidak.', 'Kerjakan kuadran penting dan mendesak lebih dulu.', 'Jadwalkan waktu khusus untuk kuadran penting tetapi tidak mendesak.', 'Delegasikan, tolak, atau batasi kuadran mendesak tetapi tidak penting.', 'Hapus yang tidak penting dan tidak mendesak dari daftar.'] },
+            { callout: 'Bila Anda terus-menerus memadamkan "kebakaran", mungkin banyak tugas penting yang tidak dijadwalkan sehingga berubah menjadi mendesak. Memberi waktu pada yang penting mencegah krisis.', kind: 'info', title: 'Mengapa penting' },
+        ],
+        faq: [['Siapa penemu matriks ini?', 'Dikaitkan dengan Dwight D. Eisenhower, yang dikenal membedakan hal mendesak dan penting. Bentuk matriksnya dipopulerkan kemudian oleh penulis manajemen.'], ['Apa yang dilakukan bila semuanya terasa penting?', 'Tanyakan: apa akibatnya bila tidak dikerjakan, dan oleh siapa? Itu membantu memilah prioritas yang sebenarnya.'], ['Bagaimana bila atasan menetapkan semua sebagai mendesak?', 'Diskusikan prioritas secara terbuka. Tunjukkan konsekuensi bila semuanya dikerjakan bersamaan.']],
+    },
+
+    {
+        slug: 'membangun-kebiasaan-kecil-yang-bertahan',
+        title: 'Membangun Kebiasaan Kecil yang Bertahan',
+        description: 'Kebiasaan baik gagal karena targetnya terlalu besar. Mulai dari langkah kecil, kaitkan dengan kebiasaan lama, dan lihat dampaknya dengan kalkulator.',
+        date: D, category: C, tags: ['kebiasaan kecil', 'habit', 'konsistensi', 'produktivitas', 'disiplin'], cta: 'none',
+        lead: 'Tahun baru, tekad besar: olahraga satu jam, membaca satu buku seminggu, belajar coding tiap malam. Dua minggu kemudian semuanya berhenti. Masalahnya bukan niat, melainkan ukuran langkah awalnya. Mulailah lebih kecil dari yang Anda kira.',
+        body: [
+            { h2: 'Tiga prinsip' },
+            { svg: 'flow', label: 'Tiga prinsip kebiasaan kecil', steps: [{ t: 'Mulai sangat kecil', d: 'dua menit, satu halaman, lima soal' }, { t: 'Kaitkan dengan kebiasaan lama', d: 'setelah sikat gigi, saya...' }, { t: 'Rayakan dan catat', d: 'tandai di kalender' }], caption: 'Tujuannya membangun identitas dan konsistensi dulu, jumlahnya menyusul.' },
+            { h2: 'Kekuatan kemajuan kecil' },
+            { w: 'calc', title: 'Berapa dampak perbaikan kecil tiap hari?', desc: 'Contoh ilustrasi matematis: perbaikan atau kemunduran kecil yang terakumulasi.', inputs: [{ id: 'p', label: 'Perbaikan per hari', value: 1, min: 0, max: 5, step: 0.5, unit: '%' }, { id: 'hari', label: 'Lama', value: 365, min: 7, max: 730, step: 7, unit: 'hari' }], outputs: [{ label: 'Hasil bila konsisten naik', expr: 'pow(1 + p/100, hari)', fmt: 'num', unit: 'kali', big: true, note: 'Pada 1% selama 365 hari, sekitar 37,8 kali. Ini ilustrasi matematis, bukan prediksi hasil nyata.' }, { label: 'Hasil bila konsisten turun dengan persentase yang sama', expr: 'pow(1 - p/100, hari)', fmt: 'num', unit: 'kali' }] },
+            { h2: 'Rancang kebiasaan Anda' },
+            { w: 'builder', title: 'Rumus kebiasaan', desc: 'Isi, lalu tulis hasilnya di tempat terlihat.', fields: [{ id: 'pemicu', label: 'Setelah saya... (kebiasaan yang sudah ada)', placeholder: 'mis. menyeduh kopi pagi' }, { id: 'aksi', label: 'Saya akan... (versi sangat kecil)', placeholder: 'mis. membaca satu halaman' }, { id: 'hadiah', label: 'Lalu saya... (hadiah kecil)', placeholder: 'mis. mencentang kalender' }], template: 'Setelah {pemicu},\nsaya akan {aksi}.\nLalu saya {hadiah}.' },
+            { h2: 'Kesalahan umum' },
+            { w: 'cards', title: 'Ketuk kartu untuk solusinya', items: [{ tag: 'Kesalahan', front: 'Target terlalu besar di awal.', backTag: 'Solusi', back: 'Kecilkan sampai terasa konyol mudah. Naikkan perlahan.' }, { tag: 'Kesalahan', front: 'Mengandalkan motivasi.', backTag: 'Solusi', back: 'Motivasi naik turun. Bangun pemicu dan lingkungan yang membuatnya otomatis.' }, { tag: 'Kesalahan', front: 'Satu hari terlewat lalu menyerah.', backTag: 'Solusi', back: 'Aturan: jangan melewatkan dua kali berturut-turut.' }, { tag: 'Kesalahan', front: 'Membangun banyak kebiasaan sekaligus.', backTag: 'Solusi', back: 'Satu atau dua dulu sampai stabil.' }] },
+            { w: 'checklist', title: 'Pekan pertama', items: ['Memilih satu kebiasaan saja.', 'Menentukan pemicu yang jelas.', 'Menyiapkan lingkungan (buku di bantal, sepatu di dekat pintu).', 'Mencatat setiap hari di kalender.', 'Meninjau di akhir pekan dan menyesuaikan.'] },
+        ],
+        faq: [['Berapa lama membentuk kebiasaan?', 'Tidak ada angka ajaib. Penelitian menunjukkan rentangnya lebar, dari beberapa minggu hingga beberapa bulan, tergantung kebiasaan dan orangnya.'], ['Bagaimana bila saya gagal sebentar?', 'Wajar. Kembali secepatnya dan perkecil targetnya agar mudah dimulai lagi.'], ['Apakah aplikasi pelacak kebiasaan membantu?', 'Bisa, selama sederhana. Kalender dan centang di kertas juga efektif.']],
+    },
+];
