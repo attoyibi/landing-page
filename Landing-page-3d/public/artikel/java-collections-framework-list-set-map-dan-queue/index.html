@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java Collections: List, Set, Map, dan Queue · Muhammad Muchson</title>
+<meta name="description" content="Kenali Java Collections Framework: ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap, PriorityQueue, dan ArrayDeque, lengkap dengan kompleksitas dan cara memilihnya.">
+<meta name="keywords" content="Java, Collections, HashMap, List, Set">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/">
+<meta property="og:title" content="Java Collections: List, Set, Map, dan Queue">
+<meta property="og:description" content="Kenali Java Collections Framework: ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap, PriorityQueue, dan ArrayDeque, lengkap dengan kompleksitas dan cara memilihnya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Java Collections: List, Set, Map, dan Queue">
+<meta name="twitter:description" content="Kenali Java Collections Framework: ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap, PriorityQueue, dan ArrayDeque, lengkap dengan kompleksitas dan cara memilihnya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Java Collections: List, Set, Map, dan Queue","description":"Kenali Java Collections Framework: ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap, PriorityQueue, dan ArrayDeque, lengkap dengan kompleksitas dan cara memilihnya.","image":["https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, Collections, HashMap, List, Set","articleSection":"PBO dengan Java","wordCount":252,"mainEntityOfPage":"https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Java Collections: List, Set, Map, dan Queue","item":"https://muchson.web.id/artikel/java-collections-framework-list-set-map-dan-queue/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa List<int> tidak bisa?","acceptedAnswer":{"@type":"Answer","text":"Generics hanya menerima tipe referensi; gunakan List."}},{"@type":"Question","name":"Apakah HashMap aman untuk banyak thread?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Pakai ConcurrentHashMap untuk akses bersamaan."}},{"@type":"Question","name":"Apa bedanya Comparable dan Comparator?","acceptedAnswer":{"@type":"Answer","text":"Comparable didefinisikan di class itu sendiri (urutan alami); Comparator di luar, bisa banyak aturan urutan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#peta-besar">Peta besar</a></li><li><a href="#list-set-dan-map-beraksi">List, Set, dan Map beraksi</a></li><li><a href="#queue-deque-dan-priorityqueue">Queue, Deque, dan PriorityQueue</a></li><li><a href="#mengapa-equals-dan-hashcode-penting">Mengapa equals dan hashCode penting</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Java Collections: List, Set, Map, dan Queue</h1>
+<p class="lead">Hampir semua program Java memakai koleksi. Pustaka standar menyediakan hierarki interface dan implementasi dengan karakteristik berbeda. Memilih yang tepat bisa berarti selisih antara program yang cepat dan program yang merayap.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> array dan ArrayList, interface</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Java Collections: List, Set, Map, dan Queue" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menggambarkan hierarki interface Collection dan Map</li><li>memakai List, Set, Map, Queue, dan Deque</li><li>memilih implementasi berdasarkan kompleksitas dan urutan</li><li>menelusuri koleksi dengan for-each dan Iterator</li><li>menjelaskan peran equals dan hashCode pada HashMap dan HashSet</li></ul></div>
+<h2 id="peta-besar">Peta besar</h2>
+<figure class="diagram"><svg viewBox="0 0 643 250" role="img" aria-label="Hierarki koleksi" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="dvs82-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="dvs82-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="dvs82-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="dvs82-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="dvs82-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="130,69 130,41" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><polyline points="58,149 112,101" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><polyline points="130,149 130,101" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><polyline points="202,149 148,101" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><polyline points="382,149 418,101" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><polyline points="470,149 440,101" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><polyline points="558,149 462,101" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#dvs82-open)"/><rect x="65" y="9" width="130" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="29.333333333333332" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">Iterable</tspan></text><rect x="65" y="69" width="130" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="89.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">Collection</tspan></text><rect x="5" y="149" width="70" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="40" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="40" dy="0">List</tspan></text><rect x="95" y="149" width="70" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">Set</tspan></text><rect x="185" y="149" width="70" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="220" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="220" dy="0">Queue</tspan></text><rect x="365" y="69" width="130" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="430" y="89.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="430" dy="0">Map</tspan></text><rect x="325" y="149" width="90" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="370" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="370" dy="0">HashMap</tspan></text><rect x="435" y="149" width="90" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="480" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="480" dy="0">TreeMap</tspan></text><rect x="545" y="149" width="90" height="32" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="590" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="590" dy="0">LinkedHashMap</tspan></text></svg><figcaption>Map bukan turunan Collection karena menyimpan pasangan kunci–nilai.</figcaption></figure>
+<table><thead><tr><th>Interface</th><th>Implementasi umum</th><th>Sifat</th><th>Operasi utama</th></tr></thead><tbody><tr><td>List</td><td>ArrayList, LinkedList</td><td>Berurutan, boleh duplikat</td><td>get(i) O(1) pada ArrayList</td></tr><tr><td>Set</td><td>HashSet / LinkedHashSet / TreeSet</td><td>Tanpa duplikat; Hash tak berurutan, Linked urut sisip, Tree terurut</td><td>contains O(1) Hash, O(log n) Tree</td></tr><tr><td>Map</td><td>HashMap / LinkedHashMap / TreeMap</td><td>Kunci unik → nilai</td><td>get O(1) Hash, O(log n) Tree</td></tr><tr><td>Queue/Deque</td><td>ArrayDeque, PriorityQueue</td><td>FIFO/LIFO, atau berdasarkan prioritas</td><td>offer/poll O(1) atau O(log n) untuk PriorityQueue</td></tr></tbody></table>
+<h2 id="list-set-dan-map-beraksi">List, Set, dan Map beraksi</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List&lt;String&gt; daftar = new ArrayList&lt;&gt;(List.of(&quot;kopi&quot;, &quot;teh&quot;, &quot;kopi&quot;, &quot;susu&quot;));
+        Set&lt;String&gt; unik = new LinkedHashSet&lt;&gt;(daftar);            // hapus duplikat, jaga urutan
+        Set&lt;String&gt; terurut = new TreeSet&lt;&gt;(daftar);               // terurut abjad
+        System.out.println(daftar + &quot; -&gt; &quot; + unik + &quot; | &quot; + terurut);
+
+        Map&lt;String, Integer&gt; hitung = new TreeMap&lt;&gt;();
+        for (String s : daftar) hitung.merge(s, 1, Integer::sum);  // hitung kemunculan
+        System.out.println(hitung);
+
+        for (Map.Entry&lt;String, Integer&gt; e : hitung.entrySet())
+            System.out.println(e.getKey() + &quot; muncul &quot; + e.getValue() + &quot;x&quot;);
+
+        System.out.println(hitung.getOrDefault(&quot;coklat&quot;, 0));
+        System.out.println(hitung.containsKey(&quot;teh&quot;));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>[kopi, teh, kopi, susu] -&gt; [kopi, teh, susu] | [kopi, susu, teh]
+{kopi=2, susu=1, teh=1}
+kopi muncul 2x
+susu muncul 1x
+teh muncul 1x
+0
+true</code></pre></figure>
+<h2 id="queue-deque-dan-priorityqueue">Queue, Deque, dan PriorityQueue</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Deque&lt;Integer&gt; tumpuk = new ArrayDeque&lt;&gt;();     // dipakai sebagai stack
+        tumpuk.push(1); tumpuk.push(2); tumpuk.push(3);
+        System.out.println(tumpuk.pop() + &quot; &quot; + tumpuk.peek());
+
+        Queue&lt;String&gt; antre = new ArrayDeque&lt;&gt;();        // dipakai sebagai queue
+        antre.offer(&quot;Ani&quot;); antre.offer(&quot;Budi&quot;);
+        System.out.println(antre.poll() + &quot; &quot; + antre.size());
+
+        PriorityQueue&lt;int[]&gt; tugas = new PriorityQueue&lt;&gt;((a, b) -&gt; a[0] - b[0]);   // prioritas terkecil dulu
+        tugas.add(new int[]{3, 30}); tugas.add(new int[]{1, 10}); tugas.add(new int[]{2, 20});
+        while (!tugas.isEmpty()) System.out.print(tugas.poll()[1] + &quot; &quot;);
+        System.out.println();
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>3 2
+Ani 1
+10 20 30 </code></pre><figcaption>Untuk stack dan queue pilih ArrayDeque. Kelas Stack dan Vector adalah peninggalan lama.</figcaption></figure>
+<h2 id="mengapa-equals-dan-hashcode-penting">Mengapa equals dan hashCode penting</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+class KunciSalah {
+    final int id;
+    KunciSalah(int id) { this.id = id; }
+}
+class KunciBenar {
+    final int id;
+    KunciBenar(int id) { this.id = id; }
+    @Override public boolean equals(Object o) { return o instanceof KunciBenar k &amp;&amp; k.id == id; }
+    @Override public int hashCode() { return Integer.hashCode(id); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Map&lt;KunciSalah, String&gt; a = new HashMap&lt;&gt;();
+        a.put(new KunciSalah(1), &quot;satu&quot;);
+        System.out.println(&quot;tanpa equals/hashCode : &quot; + a.get(new KunciSalah(1)));
+
+        Map&lt;KunciBenar, String&gt; b = new HashMap&lt;&gt;();
+        b.put(new KunciBenar(1), &quot;satu&quot;);
+        System.out.println(&quot;dengan equals/hashCode: &quot; + b.get(new KunciBenar(1)));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>tanpa equals/hashCode : null
+dengan equals/hashCode: satu</code></pre><figcaption>HashMap menghitung hashCode untuk menemukan "ember", lalu memakai equals untuk memastikan kunci sama. Tanpa keduanya, objek yang isinya sama dianggap berbeda.</figcaption></figure>
+<div data-w="hash"><script type="application/json">{"title":"Cara kerja hash table","desc":"Masukkan kunci dan perhatikan ember tempat ia jatuh serta tabrakan."}</script></div>
+<div class="callout warn"><b>Jebakan</b><p>Jangan mengubah isi objek yang dipakai sebagai kunci HashMap atau elemen HashSet dengan cara yang memengaruhi hashCode. Objek akan "hilang" di embernya. Pakai kunci immutable seperti String atau record.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Koleksi yang tidak mengizinkan duplikat?","options":["List","Set","Queue"],"answer":1,"why":"Set menyimpan elemen unik."},{"q":"Map yang menjaga kunci terurut?","options":["HashMap","TreeMap","ArrayList"],"answer":1,"why":"TreeMap berbasis pohon seimbang, operasi O(log n)."},{"q":"Struktur yang disarankan sebagai stack modern?","options":["Stack","ArrayDeque","Vector"],"answer":1,"why":"ArrayDeque lebih cepat dan tidak tersinkronisasi tanpa perlu."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Hitung frekuensi kata pada kalimat dengan Map.</summary><div>Pisahkan dengan split, lalu hitung.merge(kata, 1, Integer::sum).</div></details><details><summary>2. Hapus duplikat dari List<Integer> sambil menjaga urutan.</summary><div>new ArrayList<>(new LinkedHashSet<>(daftar)).</div></details><details><summary>3. Kapan LinkedHashMap berguna?</summary><div>Saat butuh urutan penyisipan atau urutan akses (misalnya cache LRU).</div></details><details><summary>4. Mengapa iterasi HashMap tidak punya urutan terjamin?</summary><div>Urutan bergantung pada hash dan kapasitas tabel, bukan urutan penyisipan.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Collection (List, Set, Queue) dan Map memiliki beberapa implementasi.</li><li>Pilih Hash untuk kecepatan, Tree untuk urutan terurut, Linked untuk urutan sisip.</li><li>Hash memerlukan equals dan hashCode yang konsisten.</li><li>ArrayDeque untuk stack dan queue; PriorityQueue untuk prioritas.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa List&lt;int&gt; tidak bisa?</summary><div>Generics hanya menerima tipe referensi; gunakan List<Integer>.</div></details>
+<details class="faq"><summary>Apakah HashMap aman untuk banyak thread?</summary><div>Tidak. Pakai ConcurrentHashMap untuk akses bersamaan.</div></details>
+<details class="faq"><summary>Apa bedanya Comparable dan Comparator?</summary><div>Comparable didefinisikan di class itu sendiri (urutan alami); Comparator di luar, bisa banyak aturan urutan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/collections/" rel="noopener" target="_blank">Oracle: Collections (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html" rel="noopener" target="_blank">Java SE API: java.util</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/index.html" rel="noopener" target="_blank">Java SE API Documentation</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

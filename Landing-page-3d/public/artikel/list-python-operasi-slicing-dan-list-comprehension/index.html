@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>List Python: Operasi, Slicing, dan List Comprehension</title>
+<meta name="description" content="Kuasai list Python: operasi umum, slicing, salinan dangkal vs dalam, jebakan list 2D, list comprehension, pengurutan dengan key, dan kompleksitas tiap operasi.">
+<meta name="keywords" content="list Python, list comprehension, slicing, struktur data, mutable">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/">
+<meta property="og:title" content="List Python: Operasi, Slicing, dan List Comprehension">
+<meta property="og:description" content="Kuasai list Python: operasi umum, slicing, salinan dangkal vs dalam, jebakan list 2D, list comprehension, pengurutan dengan key, dan kompleksitas tiap operasi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Algoritma &amp; Pemrograman Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="List Python: Operasi, Slicing, dan List Comprehension">
+<meta name="twitter:description" content="Kuasai list Python: operasi umum, slicing, salinan dangkal vs dalam, jebakan list 2D, list comprehension, pengurutan dengan key, dan kompleksitas tiap operasi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"List Python: Operasi, Slicing, dan List Comprehension","description":"Kuasai list Python: operasi umum, slicing, salinan dangkal vs dalam, jebakan list 2D, list comprehension, pengurutan dengan key, dan kompleksitas tiap operasi.","image":["https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"list Python, list comprehension, slicing, struktur data, mutable","articleSection":"Algoritma & Pemrograman Python","wordCount":373,"mainEntityOfPage":"https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"List Python: Operasi, Slicing, dan List Comprehension","item":"https://muchson.web.id/artikel/list-python-operasi-slicing-dan-list-comprehension/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya list dan array?","acceptedAnswer":{"@type":"Answer","text":"List Python dapat memuat tipe campuran dan ukurannya dinamis. Modul array atau NumPy menyimpan tipe seragam secara padat dan lebih efisien untuk komputasi numerik."}},{"@type":"Question","name":"Mengapa append dikatakan O(1) amortisasi?","acceptedAnswer":{"@type":"Answer","text":"Sesekali list harus mengalokasikan ruang lebih besar dan menyalin isinya (O(n)), tetapi biayanya tersebar sehingga rata-rata per append tetap konstan."}},{"@type":"Question","name":"Kapan memakai tuple, bukan list?","acceptedAnswer":{"@type":"Answer","text":"Bila datanya tetap dan tidak akan diubah, misalnya koordinat. Tuple lebih ringan dan bisa dipakai sebagai kunci kamus."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dasar-dasar-list">Dasar-dasar list</a></li><li><a href="#salinan-dangkal-dalam-atau-sama-sekali-tidak">Salinan: dangkal, dalam, atau sama sekali tidak</a></li><li><a href="#jebakan-klasik-list-2d">Jebakan klasik: list 2D</a></li><li><a href="#list-comprehension">List comprehension</a></li><li><a href="#mengurutkan-dengan-sorted-dan-key">Mengurutkan dengan sorted dan key</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a></p>
+<a class="cat" href="/artikel/kategori/algoritma-pemrograman-python/">Algoritma &amp; Pemrograman Python</a>
+<h1>List Python: Operasi, Slicing, dan List Comprehension</h1>
+<p class="lead">List adalah struktur data paling serbaguna di Python: urutan elemen yang dapat berubah dan boleh berisi tipe apa saja. Hampir setiap program nyata memakainya. Memahami list berarti memahami operasi umumnya, biaya masing-masing, dan beberapa jebakan yang menimpa hampir setiap pemula.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Dasar</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> variabel dan mutabilitas, perulangan for</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="List Python: Operasi, Slicing, dan List Comprehension" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat dan memodifikasi list dengan operasi umum</li><li>memakai indexing, slicing, dan perulangan pada list</li><li>menjelaskan perbedaan salinan dangkal dan dalam serta jebakan list 2D</li><li>menulis list comprehension</li><li>mengurutkan list dengan sorted dan key, serta memperkirakan kompleksitas operasinya</li></ul></div>
+<h2 id="dasar-dasar-list">Dasar-dasar list</h2>
+<figure class="codebox"><pre data-lang="python"><code>nilai = [88, 72, 95, 64]
+print(nilai[0], nilai[-1], nilai[1:3], len(nilai))
+nilai.append(80)          # tambah di akhir
+nilai.insert(1, 100)      # sisipkan di indeks 1
+nilai.remove(64)          # hapus kemunculan pertama dari nilai 64
+akhir = nilai.pop()       # ambil dan hapus elemen terakhir
+print(nilai, akhir)
+print(sorted(nilai), nilai.index(95), nilai.count(72))
+print(sum(nilai), min(nilai), max(nilai))</code></pre><pre class="runout" data-lang="keluaran"><code>88 64 [72, 95] 4
+[88, 100, 72, 95] 80
+[72, 88, 95, 100] 3 1
+355 72 100</code></pre></figure>
+<table><thead><tr><th>Operasi</th><th>Fungsi</th><th>Kompleksitas</th></tr></thead><tbody><tr><td>lst[i]</td><td>Akses berdasarkan indeks</td><td>O(1)</td></tr><tr><td>lst.append(x)</td><td>Tambah di akhir</td><td>O(1) amortisasi</td></tr><tr><td>lst.pop()</td><td>Hapus di akhir</td><td>O(1)</td></tr><tr><td>lst.insert(0, x)</td><td>Sisip di awal</td><td>O(n): semua elemen bergeser</td></tr><tr><td>lst.pop(0)</td><td>Hapus di awal</td><td>O(n)</td></tr><tr><td>x in lst</td><td>Cari elemen</td><td>O(n)</td></tr><tr><td>lst.sort()</td><td>Urutkan di tempat</td><td>O(n log n)</td></tr><tr><td>lst + lain</td><td>Gabung membuat list baru</td><td>O(n + m)</td></tr></tbody></table>
+<div class="callout warn"><b>Pilih struktur yang tepat</b><p>Untuk antrean (pengambilan dari depan), jangan pakai <code>pop(0)</code> pada list besar. Gunakan <code>collections.deque</code> yang menghapus dari depan dalam O(1).</p></div>
+<h2 id="salinan-dangkal-dalam-atau-sama-sekali-tidak">Salinan: dangkal, dalam, atau sama sekali tidak</h2>
+<div data-w="tracer"><script type="application/json">{"title":"Tiga cara \"menyalin\" list","desc":"Amati bahwa b ikut berubah, sedangkan c tidak. Perhatikan juga nilai d.","code":"a = [1, 2, 3]\nb = a            # bukan salinan: dua nama, satu list\nc = a[:]         # salinan dangkal\na.append(4)\nprint(a, b, c)","steps":[{"line":1,"stack":[{"name":"(modul)","vars":{}}],"out":""},{"line":2,"stack":[{"name":"(modul)","vars":{"a":"[1, 2, 3]"}}],"out":""},{"line":3,"stack":[{"name":"(modul)","vars":{"a":"[1, 2, 3]","b":"[1, 2, 3]"}}],"out":""},{"line":4,"stack":[{"name":"(modul)","vars":{"a":"[1, 2, 3]","b":"[1, 2, 3]","c":"[1, 2, 3]"}}],"out":""},{"line":5,"stack":[{"name":"(modul)","vars":{"a":"[1, 2, 3, 4]","b":"[1, 2, 3, 4]","c":"[1, 2, 3]"}}],"out":""},{"line":0,"stack":[{"name":"(modul)","vars":{"a":"[1, 2, 3, 4]","b":"[1, 2, 3, 4]","c":"[1, 2, 3]"}}],"out":"[1, 2, 3, 4] [1, 2, 3, 4] [1, 2, 3]\n"}]}</script></div>
+<h3>Salinan dangkal belum cukup untuk list bersarang</h3>
+<figure class="codebox"><pre data-lang="python"><code>import copy
+asli = [[1, 2], [3, 4]]
+dangkal = asli.copy()
+dalam = copy.deepcopy(asli)
+asli[0].append(99)
+print(dangkal)   # ikut berubah: elemen dalamnya sama
+print(dalam)     # tidak berubah</code></pre><pre class="runout" data-lang="keluaran"><code>[[1, 2, 99], [3, 4]]
+[[1, 2], [3, 4]]</code></pre></figure>
+<h2 id="jebakan-klasik-list-2d">Jebakan klasik: list 2D</h2>
+<figure class="codebox"><pre data-lang="python"><code>salah = [[0] * 3] * 3     # tiga referensi ke SATU list yang sama
+salah[0][0] = 1
+print(salah)
+
+benar = [[0] * 3 for _ in range(3)]   # tiga list terpisah
+benar[0][0] = 1
+print(benar)</code></pre><pre class="runout" data-lang="keluaran"><code>[[1, 0, 0], [1, 0, 0], [1, 0, 0]]
+[[1, 0, 0], [0, 0, 0], [0, 0, 0]]</code></pre><figcaption>Perkalian pada list menyalin referensi, bukan isi. Gunakan comprehension untuk membuat baris yang benar-benar terpisah.</figcaption></figure>
+<h2 id="list-comprehension">List comprehension</h2>
+<p>Cara ringkas membangun list baru dari urutan lain, dengan filter opsional. Bentuk umumnya: <code>[ekspresi for x in urutan if kondisi]</code>.</p>
+<figure class="codebox"><pre data-lang="python"><code>kuadrat = [x * x for x in range(1, 6)]
+genap = [x for x in range(10) if x % 2 == 0]
+nama = [&quot;ani&quot;, &quot;budi&quot;, &quot;citra&quot;]
+kapital = [n.capitalize() for n in nama]
+pasangan = [(i, j) for i in range(2) for j in range(2)]
+print(kuadrat, genap, kapital, pasangan, sep=&quot;\n&quot;)
+
+# setara dengan perulangan biasa:
+hasil = []
+for x in range(1, 6):
+    hasil.append(x * x)
+print(hasil == kuadrat)</code></pre><pre class="runout" data-lang="keluaran"><code>[1, 4, 9, 16, 25]
+[0, 2, 4, 6, 8]
+['Ani', 'Budi', 'Citra']
+[(0, 0), (0, 1), (1, 0), (1, 1)]
+True</code></pre></figure>
+<h2 id="mengurutkan-dengan-sorted-dan-key">Mengurutkan dengan sorted dan key</h2>
+<figure class="codebox"><pre data-lang="python"><code>siswa = [(&quot;Ani&quot;, 88), (&quot;Budi&quot;, 72), (&quot;Citra&quot;, 95)]
+print(sorted(siswa, key=lambda s: s[1]))                # menurut nilai
+print(sorted(siswa, key=lambda s: s[1], reverse=True))  # menurun
+kata = [&quot;pisang&quot;, &quot;apel&quot;, &quot;kiwi&quot;, &quot;jeruk&quot;]
+print(sorted(kata, key=len))                            # menurut panjang
+print(kata)                                              # sorted tidak mengubah aslinya</code></pre><pre class="runout" data-lang="keluaran"><code>[('Budi', 72), ('Ani', 88), ('Citra', 95)]
+[('Citra', 95), ('Ani', 88), ('Budi', 72)]
+['apel', 'kiwi', 'jeruk', 'pisang']
+['pisang', 'apel', 'kiwi', 'jeruk']</code></pre><figcaption>sort() mengubah list di tempat dan mengembalikan None; sorted() membuat list baru. Keduanya stabil: elemen setara mempertahankan urutan awal.</figcaption></figure>
+<div data-w="compare"><script type="application/json">{"title":"Kapan memakai list comprehension?","tabs":[{"label":"Pakai bila","html":"Membangun list baru dari urutan lain dengan transformasi atau filter sederhana. Hasilnya lebih ringkas dan umumnya lebih cepat daripada append dalam perulangan."},{"label":"Jangan bila","html":"Logikanya rumit (banyak percabangan atau efek samping seperti print). Pakai perulangan biasa agar lebih terbaca. Jangan menulis comprehension tiga tingkat."}]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"\u003ccode>a = [1, 2]; b = a; b.append(3)\u003c/code>. Berapa \u003ccode>len(a)\u003c/code>?","options":["2","3","Error"],"answer":1,"why":"a dan b menunjuk list yang sama."},{"q":"Hasil \u003ccode>[x * 2 for x in range(3)]\u003c/code>?","options":["[0, 2, 4]","[2, 4, 6]","[0, 1, 2]"],"answer":0,"why":"x = 0, 1, 2 dikalikan 2."},{"q":"Operasi mana yang paling mahal pada list besar?","options":["lst.append(x)","lst.insert(0, x)","lst[5]"],"answer":1,"why":"Menyisipkan di awal menggeser semua elemen."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat list kuadrat bilangan ganjil dari 1 sampai 15 dengan satu comprehension.</summary><div><code>[x * x for x in range(1, 16, 2)]</code> menghasilkan [1, 9, 25, 49, 81, 121, 169, 225].</div></details><details><summary>2. Hapus duplikat dari list sambil mempertahankan urutan kemunculan pertama.</summary><div><code>hasil = []
+for x in data:
+    if x not in hasil:
+        hasil.append(x)</code>. Cara cepat: <code>list(dict.fromkeys(data))</code>.</div></details><details><summary>3. Mengapa <code>nilai = nilai.sort()</code> berbahaya?</summary><div>sort() mengubah list di tempat dan mengembalikan None, sehingga nilai menjadi None dan datanya hilang dari variabel itu.</div></details><details><summary>4. Putar list ke kanan sebanyak k posisi: [1,2,3,4,5] dengan k = 2 menjadi [4,5,1,2,3].</summary><div><code>k %= len(lst); lst[-k:] + lst[:-k]</code> (bila k tidak 0).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>List: urutan mutable, akses indeks O(1), sisip atau hapus di awal O(n).</li><li>Penugasan tidak menyalin; pakai copy atau deepcopy sesuai kebutuhan.</li><li>Buat list 2D dengan comprehension, bukan perkalian.</li><li>sorted() membuat list baru, sort() mengubah di tempat; keduanya mendukung key.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya list dan array?</summary><div>List Python dapat memuat tipe campuran dan ukurannya dinamis. Modul array atau NumPy menyimpan tipe seragam secara padat dan lebih efisien untuk komputasi numerik.</div></details>
+<details class="faq"><summary>Mengapa append dikatakan O(1) amortisasi?</summary><div>Sesekali list harus mengalokasikan ruang lebih besar dan menyalin isinya (O(n)), tetapi biayanya tersebar sehingga rata-rata per append tetap konstan.</div></details>
+<details class="faq"><summary>Kapan memakai tuple, bukan list?</summary><div>Bila datanya tetap dan tidak akan diubah, misalnya koordinat. Tuple lebih ringan dan bisa dipakai sebagai kunci kamus.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/datastructures.html" rel="noopener" target="_blank">Dokumentasi Python: Lists (tutorial, termasuk list comprehension)</a></li><li><a href="https://docs.python.org/3/howto/sorting.html" rel="noopener" target="_blank">Dokumentasi Python: Sorting Techniques (HOWTO)</a></li><li><a href="https://wiki.python.org/moin/TimeComplexity" rel="noopener" target="_blank">Python Wiki: TimeComplexity (kompleksitas operasi tipe bawaan)</a></li><li><a href="https://docs.python.org/3/library/copy.html" rel="noopener" target="_blank">Dokumentasi Python: copy, shallow and deep copy operations</a></li><li><a href="https://allendowney.github.io/ThinkPython/" rel="noopener" target="_blank">Allen B. Downey, Think Python (edisi ke-3), buku teks terbuka</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/string-python-indexing-slicing-dan-metode/"><img src="/artikel/string-python-indexing-slicing-dan-metode/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>String Python: Indexing, Slicing, dan Metode Penting</span></a><a href="/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/"><img src="/artikel/tuple-set-dan-dictionary-python-kapan-memakai-yang-mana/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tuple, Set, dan Dictionary Python: Kapan Memakai Yang Mana</span></a><a href="/artikel/linked-list-python-node-pointer-dan-operasinya/"><img src="/artikel/linked-list-python-node-pointer-dan-operasinya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Linked List di Python: Node, Pointer, dan Operasinya</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

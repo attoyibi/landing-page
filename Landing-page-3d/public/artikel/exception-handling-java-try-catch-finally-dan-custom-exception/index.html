@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exception Handling Java: try, catch, dan Custom Exception</title>
+<meta name="description" content="Kuasai exception di Java: checked vs unchecked, try-catch-finally, try-with-resources, throws, membuat exception sendiri, dan praktik terbaik penanganan kesalahan.">
+<meta name="keywords" content="Java, exception, try-catch, try-with-resources, custom exception">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/">
+<meta property="og:title" content="Exception Handling Java: try, catch, dan Custom Exception">
+<meta property="og:description" content="Kuasai exception di Java: checked vs unchecked, try-catch-finally, try-with-resources, throws, membuat exception sendiri, dan praktik terbaik penanganan kesalahan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Exception Handling Java: try, catch, dan Custom Exception">
+<meta name="twitter:description" content="Kuasai exception di Java: checked vs unchecked, try-catch-finally, try-with-resources, throws, membuat exception sendiri, dan praktik terbaik penanganan kesalahan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Exception Handling Java: try, catch, dan Custom Exception","description":"Kuasai exception di Java: checked vs unchecked, try-catch-finally, try-with-resources, throws, membuat exception sendiri, dan praktik terbaik penanganan kesalahan.","image":["https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, exception, try-catch, try-with-resources, custom exception","articleSection":"PBO dengan Java","wordCount":370,"mainEntityOfPage":"https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Exception Handling Java: try, catch, dan Custom Exception","item":"https://muchson.web.id/artikel/exception-handling-java-try-catch-finally-dan-custom-exception/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya throw dan throws?","acceptedAnswer":{"@type":"Answer","text":"throw melempar objek exception di dalam method; throws pada tanda tangan method mendeklarasikan exception checked yang mungkin dilempar."}},{"@type":"Question","name":"Apakah exception lambat?","acceptedAnswer":{"@type":"Answer","text":"Membuat stack trace berbiaya, jadi jangan dipakai untuk alur yang sangat sering. Untuk kasus jarang tidak masalah."}},{"@type":"Question","name":"Bolehkah menangkap beberapa exception dalam satu catch?","acceptedAnswer":{"@type":"Answer","text":"Ya, dengan multi-catch: catch (IOException | SQLException e)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#hierarki-exception">Hierarki exception</a></li><li><a href="#try-catch-finally">try, catch, finally</a></li><li><a href="#try-with-resources">try-with-resources</a></li><li><a href="#exception-sendiri">Exception sendiri</a></li><li><a href="#praktik-yang-baik">Praktik yang baik</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Exception Handling Java: try, catch, dan Custom Exception</h1>
+<p class="lead">Program nyata menghadapi hal tak terduga: berkas hilang, masukan salah, jaringan putus. Exception memisahkan alur normal dari penanganan kesalahan sehingga kode tetap bersih. Kuncinya bukan sekadar menangkap, tetapi memutuskan siapa yang berhak dan mampu menangani.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> method Java, inheritance</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Exception Handling Java: try, catch, dan Custom Exception" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan hierarki Throwable, Error, dan Exception</li><li>membedakan checked dan unchecked exception</li><li>memakai try, catch, finally, dan try-with-resources</li><li>membuat custom exception</li><li>menerapkan praktik penanganan kesalahan yang baik</li></ul></div>
+<h2 id="hierarki-exception">Hierarki exception</h2>
+<figure class="diagram"><svg viewBox="0 0 603 250" role="img" aria-label="Hierarki Throwable" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="xphe0-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="xphe0-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="xphe0-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="xphe0-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="xphe0-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="176,92 264,48" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#xphe0-open)"/><polyline points="424,92 336,48" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#xphe0-open)"/><polyline points="76,182 124,128" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#xphe0-open)"/><polyline points="212,182 158,128" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#xphe0-open)"/><polyline points="492,182 468,128" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#xphe0-open)"/><rect x="230" y="12" width="140" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="300" y="34.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="300" dy="0">Throwable</tspan></text><rect x="75" y="92" width="130" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="140" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="140" dy="0">Exception</tspan></text><rect x="395" y="92" width="130" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="460" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="460" dy="0">Error</tspan></text><rect x="0" y="182" width="120" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="60" y="204.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="60" dy="0">IOException</tspan></text><rect x="155" y="182" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="230" y="204.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="230" dy="0">RuntimeException</tspan></text><rect x="405" y="182" width="190" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="500" y="204.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="500" dy="0">OutOfMemoryError</tspan></text></svg><figcaption>Checked: Exception selain RuntimeException (misalnya IOException). Unchecked: RuntimeException dan turunannya, serta Error.</figcaption></figure>
+<table><thead><tr><th>Jenis</th><th>Contoh</th><th>Kompiler memaksa ditangani?</th><th>Penyebab umumnya</th></tr></thead><tbody><tr><td>Checked</td><td>IOException, SQLException</td><td>Ya (try-catch atau throws)</td><td>Kondisi eksternal yang wajar terjadi</td></tr><tr><td>Unchecked</td><td>NullPointerException, IllegalArgumentException</td><td>Tidak</td><td>Kesalahan pemrograman atau pelanggaran kontrak</td></tr><tr><td>Error</td><td>OutOfMemoryError, StackOverflowError</td><td>Tidak</td><td>Masalah JVM; biasanya tidak ditangkap</td></tr></tbody></table>
+<h2 id="try-catch-finally">try, catch, finally</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    static int bagi(int a, int b) { return a / b; }
+
+    public static void main(String[] args) {
+        String[] masukan = {&quot;10&quot;, &quot;0&quot;, &quot;abc&quot;, null};
+        for (String m : masukan) {
+            try {
+                int n = Integer.parseInt(m);
+                System.out.println(&quot;100 / &quot; + n + &quot; = &quot; + bagi(100, n));
+            } catch (NumberFormatException e) {
+                System.out.println(&quot;bukan angka: &quot; + e.getMessage());
+            } catch (ArithmeticException e) {
+                System.out.println(&quot;tidak boleh membagi nol&quot;);
+            } finally {
+                System.out.println(&quot;  (selesai memproses &quot; + m + &quot;)&quot;);   // selalu dijalankan
+            }
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>100 / 10 = 10
+  (selesai memproses 10)
+tidak boleh membagi nol
+  (selesai memproses 0)
+bukan angka: For input string: &quot;abc&quot;
+  (selesai memproses abc)
+bukan angka: Cannot parse null string
+  (selesai memproses null)</code></pre><figcaption>Urutkan catch dari yang paling spesifik ke yang paling umum. finally selalu berjalan, cocok untuk pembersihan.</figcaption></figure>
+<h2 id="try-with-resources">try-with-resources</h2>
+<p>Sumber daya seperti berkas atau koneksi harus ditutup walau terjadi kesalahan. Cara modern: deklarasikan di tanda kurung try; objek yang mengimplementasikan <code>AutoCloseable</code> ditutup otomatis.</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Sumber implements AutoCloseable {
+    private final String nama;
+    Sumber(String nama) { this.nama = nama; System.out.println(&quot;buka &quot; + nama); }
+    void pakai(boolean gagal) {
+        if (gagal) throw new IllegalStateException(&quot;gagal memakai &quot; + nama);
+        System.out.println(&quot;pakai &quot; + nama);
+    }
+    @Override public void close() { System.out.println(&quot;tutup &quot; + nama); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        try (Sumber a = new Sumber(&quot;A&quot;); Sumber b = new Sumber(&quot;B&quot;)) {
+            a.pakai(false);
+            b.pakai(true);
+        } catch (IllegalStateException e) {
+            System.out.println(&quot;ditangkap: &quot; + e.getMessage());
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>buka A
+buka B
+pakai A
+tutup B
+tutup A
+ditangkap: gagal memakai B</code></pre><figcaption>Resource ditutup dalam urutan terbalik (B lalu A), bahkan ketika exception dilempar.</figcaption></figure>
+<h2 id="exception-sendiri">Exception sendiri</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class SaldoTidakCukupException extends Exception {          // checked
+    private final double kekurangan;
+    SaldoTidakCukupException(double kekurangan) {
+        super(&quot;saldo kurang Rp&quot; + String.format(&quot;%.0f&quot;, kekurangan));
+        this.kekurangan = kekurangan;
+    }
+    double getKekurangan() { return kekurangan; }
+}
+
+class Rekening {
+    private double saldo;
+    Rekening(double saldo) { this.saldo = saldo; }
+
+    void tarik(double jumlah) throws SaldoTidakCukupException {        // mendeklarasikan
+        if (jumlah &gt; saldo) throw new SaldoTidakCukupException(jumlah - saldo);
+        saldo -= jumlah;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Rekening r = new Rekening(100_000);
+        try {
+            r.tarik(150_000);
+        } catch (SaldoTidakCukupException e) {
+            System.out.println(e.getMessage() + &quot; (kurang &quot; + e.getKekurangan() + &quot;)&quot;);
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>saldo kurang Rp50000 (kurang 50000.0)</code></pre></figure>
+<div class="callout info"><b>Kapan memakai yang mana</b><p>Gunakan <b>checked</b> exception bila pemanggil bisa dan diharapkan pulih dari kondisi itu. Gunakan <b>unchecked</b> untuk kesalahan pemrograman (argumen null, indeks salah). Banyak kerangka kerja modern lebih menyukai unchecked agar kode tidak tertutup blok try-catch.</p></div>
+<h2 id="praktik-yang-baik">Praktik yang baik</h2>
+<ul><li><b>Jangan menelan exception</b>: catch kosong menyembunyikan bug. Minimal catat log.</li><li><b>Tangkap yang spesifik</b>, bukan <code>catch (Exception e)</code> serampangan.</li><li><b>Tangani di tempat yang mampu</b> memperbaiki atau menerjemahkannya; biarkan sisanya naik.</li><li><b>Sertakan penyebab</b> saat membungkus: <code>throw new LayananException("gagal", e)</code>.</li><li><b>Jangan memakai exception untuk alur normal</b>; periksa kondisi lebih dulu jika murah.</li><li>Pesan error harus membantu: apa yang gagal, dengan nilai apa.</li></ul>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>public class Main {
+    static void layanan() {
+        try {
+            Integer.parseInt(&quot;x&quot;);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException(&quot;konfigurasi port rusak&quot;, e);   // bungkus dengan penyebab
+        }
+    }
+
+    public static void main(String[] args) {
+        try { layanan(); }
+        catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+            System.out.println(&quot;penyebab: &quot; + e.getCause());
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>konfigurasi port rusak
+penyebab: java.lang.NumberFormatException: For input string: &quot;x&quot;</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apakah blok finally selalu berjalan?","options":["Ya (kecuali JVM berhenti)","Tidak, hanya bila ada exception","Hanya jika tidak ada exception"],"answer":0,"why":"Baik ada maupun tidak ada exception."},{"q":"IOException adalah...","options":["Checked exception","Unchecked exception","Error"],"answer":0,"why":"Wajib ditangani atau dideklarasikan."},{"q":"Apa keunggulan try-with-resources?","options":["Menutup resource otomatis","Mempercepat program","Menghilangkan exception"],"answer":0,"why":"close() dipanggil otomatis dalam urutan terbalik."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis metode yang membaca bilangan dari String dan mengembalikan 0 jika tidak valid, tanpa melempar exception.</summary><div>Bungkus Integer.parseInt dalam try-catch NumberFormatException; kembalikan 0 di catch (dan pertimbangkan apakah itu keputusan yang tepat).</div></details><details><summary>2. Mengapa catch (Exception e) {} kosong berbahaya?</summary><div>Kesalahan hilang tanpa jejak sehingga bug sulit dilacak.</div></details><details><summary>3. Ubah SaldoTidakCukupException menjadi unchecked. Apa yang berubah pada tanda tangan tarik?</summary><div>Turunkan dari RuntimeException; klausa throws tidak lagi wajib.</div></details><details><summary>4. Apa yang tercetak bila try mengembalikan nilai dan finally juga mengeluarkan return?</summary><div>Return dalam finally menimpa yang di try; hindari praktik ini.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Throwable → Error dan Exception; RuntimeException dan Error bersifat unchecked.</li><li>try/catch/finally dan try-with-resources mengatur penanganan dan pembersihan.</li><li>Custom exception menyampaikan kesalahan domain dengan data yang berguna.</li><li>Jangan telan exception; tangkap yang spesifik; bungkus dengan penyebab.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya throw dan throws?</summary><div>throw melempar objek exception di dalam method; throws pada tanda tangan method mendeklarasikan exception checked yang mungkin dilempar.</div></details>
+<details class="faq"><summary>Apakah exception lambat?</summary><div>Membuat stack trace berbiaya, jadi jangan dipakai untuk alur yang sangat sering. Untuk kasus jarang tidak masalah.</div></details>
+<details class="faq"><summary>Bolehkah menangkap beberapa exception dalam satu catch?</summary><div>Ya, dengan multi-catch: catch (IOException | SQLException e).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/" rel="noopener" target="_blank">Oracle: Exceptions (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html" rel="noopener" target="_blank">Oracle: The try-with-resources Statement</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

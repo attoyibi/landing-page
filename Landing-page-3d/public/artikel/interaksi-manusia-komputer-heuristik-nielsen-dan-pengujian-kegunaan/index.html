@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability</title>
+<meta name="description" content="Pelajari HCI: sepuluh heuristik Nielsen, evaluasi heuristik, pengujian kegunaan, skor SUS, dan hukum Fitts, dengan contoh perbaikan antarmuka.">
+<meta name="keywords" content="HCI, usability, heuristik Nielsen, UX, SUS">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/">
+<meta property="og:title" content="Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability">
+<meta property="og:description" content="Pelajari HCI: sepuluh heuristik Nielsen, evaluasi heuristik, pengujian kegunaan, skor SUS, dan hukum Fitts, dengan contoh perbaikan antarmuka.">
+<meta property="og:image" content="https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability">
+<meta name="twitter:description" content="Pelajari HCI: sepuluh heuristik Nielsen, evaluasi heuristik, pengujian kegunaan, skor SUS, dan hukum Fitts, dengan contoh perbaikan antarmuka.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability","description":"Pelajari HCI: sepuluh heuristik Nielsen, evaluasi heuristik, pengujian kegunaan, skor SUS, dan hukum Fitts, dengan contoh perbaikan antarmuka.","image":["https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"HCI, usability, heuristik Nielsen, UX, SUS","articleSection":"Sistem Informasi","wordCount":515,"mainEntityOfPage":"https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability","item":"https://muchson.web.id/artikel/interaksi-manusia-komputer-heuristik-nielsen-dan-pengujian-kegunaan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya UX dan UI?","acceptedAnswer":{"@type":"Answer","text":"UI adalah tampilan dan elemen interaksi; UX mencakup seluruh pengalaman, termasuk alur, kecepatan, bantuan, dan emosi."}},{"@type":"Question","name":"Bagaimana dengan aksesibilitas?","acceptedAnswer":{"@type":"Answer","text":"Bagian dari kegunaan: kontras, ukuran teks, dukungan pembaca layar dan keyboard (pedoman WCAG)."}},{"@type":"Question","name":"Apakah perlu peneliti khusus?","acceptedAnswer":{"@type":"Answer","text":"Untuk uji sederhana, tim dapat melakukannya sendiri dengan disiplin; untuk produk besar peneliti UX membantu merancang dan menganalisis."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#apa-itu-kegunaan">Apa itu kegunaan?</a></li><li><a href="#sepuluh-heuristik-kegunaan-nielsen">Sepuluh heuristik kegunaan Nielsen</a></li><li><a href="#contoh-perbaikan-pesan-kesalahan">Contoh perbaikan: pesan kesalahan</a></li><li><a href="#evaluasi-heuristik">Evaluasi heuristik</a></li><li><a href="#pengujian-kegunaan">Pengujian kegunaan</a></li><li><a href="#system-usability-scale-sus">System Usability Scale (SUS)</a></li><li><a href="#dua-hukum-yang-berguna">Dua hukum yang berguna</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability</h1>
+<p class="lead">Sistem yang benar tetapi sulit dipakai tetap gagal: pengguna membuat kesalahan, mencari jalan pintas, atau berhenti memakainya. HCI (Human–Computer Interaction) mempelajari bagaimana manusia berinteraksi dengan sistem dan bagaimana merancang antarmuka yang efektif, efisien, dan menyenangkan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> analisis kebutuhan</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Interaksi Manusia-Komputer: Heuristik Nielsen dan Usability" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan lima atribut kegunaan (usability)</li><li>menerapkan sepuluh heuristik Nielsen pada contoh antarmuka</li><li>melakukan evaluasi heuristik dan pengujian kegunaan sederhana</li><li>menghitung skor System Usability Scale (SUS)</li><li>memakai hukum Fitts dan Hick untuk keputusan tata letak</li></ul></div>
+<h2 id="apa-itu-kegunaan">Apa itu kegunaan?</h2>
+<table><thead><tr><th>Atribut (Nielsen)</th><th>Pertanyaan</th></tr></thead><tbody><tr><td>Learnability</td><td>Seberapa mudah pengguna baru menyelesaikan tugas pertamanya?</td></tr><tr><td>Efficiency</td><td>Seberapa cepat pengguna berpengalaman bekerja?</td></tr><tr><td>Memorability</td><td>Apakah pengguna yang lama tak memakai dapat mengingat caranya?</td></tr><tr><td>Errors</td><td>Seberapa sering dan parah kesalahan, dan seberapa mudah pulih?</td></tr><tr><td>Satisfaction</td><td>Seberapa menyenangkan?</td></tr></tbody></table>
+<h2 id="sepuluh-heuristik-kegunaan-nielsen">Sepuluh heuristik kegunaan Nielsen</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk kartu untuk contohnya","items":[{"tag":"1","front":"Visibilitas status sistem","backTag":"Contoh","back":"Bilah kemajuan saat mengunggah berkas; indikator \"tersimpan\"."},{"tag":"2","front":"Kesesuaian dengan dunia nyata","backTag":"Contoh","back":"Memakai istilah pengguna (\"Keranjang\"), bukan istilah basis data (\"Tabel order_items\")."},{"tag":"3","front":"Kendali dan kebebasan pengguna","backTag":"Contoh","back":"Tombol batal dan urungkan (undo) tersedia."},{"tag":"4","front":"Konsistensi dan standar","backTag":"Contoh","back":"Ikon dan posisi tombol sama di seluruh halaman."},{"tag":"5","front":"Pencegahan kesalahan","backTag":"Contoh","back":"Konfirmasi sebelum menghapus; kolom tanggal memakai pemilih, bukan teks bebas."},{"tag":"6","front":"Mengenali daripada mengingat","backTag":"Contoh","back":"Menampilkan pilihan, bukan meminta pengguna mengingat kode."},{"tag":"7","front":"Fleksibilitas dan efisiensi","backTag":"Contoh","back":"Pintasan keyboard untuk ahli; filter tersimpan."},{"tag":"8","front":"Desain estetis dan minimalis","backTag":"Contoh","back":"Hanya informasi yang relevan; tidak ada kekacauan visual."},{"tag":"9","front":"Membantu pengguna mengenali, mendiagnosis, dan pulih dari kesalahan","backTag":"Contoh","back":"Pesan error jelas dengan saran: \"Kata sandi minimal 8 karakter\", bukan \"Error 500\"."},{"tag":"10","front":"Bantuan dan dokumentasi","backTag":"Contoh","back":"Bantuan singkat kontekstual yang mudah dicari."}]}</script></div>
+<h2 id="contoh-perbaikan-pesan-kesalahan">Contoh perbaikan: pesan kesalahan</h2>
+<table><thead><tr><th>Sebelum</th><th>Masalah</th><th>Sesudah</th></tr></thead><tbody><tr><td>"Error 0x80070057"</td><td>Istilah teknis, tak ada solusi (heuristik 9)</td><td>"Berkas tidak dapat disimpan karena nama terlalu panjang. Persingkat menjadi di bawah 100 karakter."</td></tr><tr><td>"Input tidak valid"</td><td>Tidak menjelaskan bagian mana (heuristik 9)</td><td>"Nomor telepon harus berisi 10–13 angka. Contoh: 081234567890"</td></tr><tr><td>Tombol "Hapus semua" tanpa konfirmasi</td><td>Tidak mencegah kesalahan (heuristik 5)</td><td>Dialog: "Hapus 24 berkas? Tindakan ini tidak dapat dibatalkan." + tombol Batal sebagai bawaan</td></tr></tbody></table>
+<h2 id="evaluasi-heuristik">Evaluasi heuristik</h2>
+<p>Beberapa evaluator ahli memeriksa antarmuka terhadap heuristik dan mencatat pelanggaran beserta tingkat keparahannya. Murah dan cepat, cocok pada tahap awal. Nielsen menemukan bahwa satu evaluator hanya menemukan sebagian masalah, dan tiga sampai lima evaluator menemukan jauh lebih banyak.</p>
+<table><thead><tr><th>Skala keparahan</th><th>Arti</th></tr></thead><tbody><tr><td>0</td><td>Bukan masalah kegunaan</td></tr><tr><td>1</td><td>Kosmetik; perbaiki bila ada waktu</td></tr><tr><td>2</td><td>Masalah kecil; prioritas rendah</td></tr><tr><td>3</td><td>Masalah besar; prioritas tinggi</td></tr><tr><td>4</td><td>Bencana; harus diperbaiki sebelum rilis</td></tr></tbody></table>
+<h2 id="pengujian-kegunaan">Pengujian kegunaan</h2>
+<p>Pengguna sungguhan mengerjakan tugas nyata sementara peneliti mengamati dan <b>tidak membantu</b>. Pengguna diminta berpikir keras (think-aloud). Yang diukur: keberhasilan tugas, waktu, kesalahan, dan komentar.</p>
+<div class="callout info"><b>Berapa pengguna?</b><p>Penelitian klasik Nielsen dan Landauer menunjukkan bahwa sekitar <b>lima pengguna</b> sudah menemukan sebagian besar masalah kegunaan utama dalam satu putaran uji; lebih baik melakukan beberapa putaran kecil dengan perbaikan di antaranya daripada satu uji besar. Angka ini berlaku untuk menemukan masalah, bukan untuk mengukur statistik.</p></div>
+<h2 id="system-usability-scale-sus">System Usability Scale (SUS)</h2>
+<p>SUS adalah kuesioner 10 butir dengan skala 1–5 yang menghasilkan skor 0–100. Butir ganjil bernada positif, butir genap negatif. Skor kontribusi: butir ganjil = jawaban − 1; butir genap = 5 − jawaban; jumlahkan lalu kalikan 2,5.</p>
+<figure class="codebox"><pre data-lang="python"><code>def skor_sus(jawaban):          # 10 jawaban, nilai 1..5
+    total = 0
+    for i, j in enumerate(jawaban, start=1):
+        total += (j - 1) if i % 2 == 1 else (5 - j)
+    return total * 2.5
+
+peserta = {
+    &quot;P1&quot;: [5, 1, 4, 2, 5, 1, 5, 2, 4, 1],
+    &quot;P2&quot;: [4, 2, 4, 2, 4, 2, 4, 3, 4, 2],
+    &quot;P3&quot;: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    &quot;P4&quot;: [5, 2, 5, 1, 4, 1, 5, 1, 5, 2],
+    &quot;P5&quot;: [2, 4, 2, 4, 2, 4, 2, 4, 2, 4],
+}
+skor = {p: skor_sus(j) for p, j in peserta.items()}
+for p, s in skor.items(): print(p, s)
+rata = sum(skor.values()) / len(skor)
+print(&quot;rata-rata SUS:&quot;, rata, &quot;(skor rata-rata lintas studi sekitar 68)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>P1 90.0
+P2 72.5
+P3 50.0
+P4 92.5
+P5 25.0
+rata-rata SUS: 66.0 (skor rata-rata lintas studi sekitar 68)</code></pre><figcaption>Skor SUS bukan persentase. Skor sekitar 68 dianggap rata-rata; di atas 80 tergolong baik.</figcaption></figure>
+<h2 id="dua-hukum-yang-berguna">Dua hukum yang berguna</h2>
+<div data-w="calc"><script type="application/json">{"title":"Hukum Fitts: waktu menjangkau target","desc":"T = a + b · log₂(D/W + 1). Target lebih jauh (D) atau lebih kecil (W) membutuhkan waktu lebih lama. Nilai a dan b disetel sebagai contoh.","inputs":[{"id":"D","label":"Jarak ke target (D)","value":400,"min":50,"max":1000,"step":10,"unit":"px"},{"id":"W","label":"Lebar target (W)","value":40,"min":8,"max":200,"step":2,"unit":"px"}],"outputs":[{"label":"Perkiraan waktu (a=0,1 dtk; b=0,15 dtk)","expr":"0.1 + 0.15 * Math.log2(D / W + 1)","fmt":"num","unit":"detik","big":true}]}</script></div>
+<ul><li><b>Hukum Fitts</b>: tombol penting dibuat besar dan dekat; tombol berbahaya (hapus) kecil dan jauh dari tombol umum. Tepi dan sudut layar "tak terhingga" besarnya karena kursor berhenti di tepi.</li><li><b>Hukum Hick</b>: waktu memilih bertambah dengan jumlah pilihan (≈ log₂ n). Kurangi pilihan, kelompokkan, dan beri bawaan yang masuk akal.</li><li><b>Target sentuh</b>: pedoman umum minimal sekitar 44–48 piksel agar nyaman pada layar sentuh.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Konfirmasi sebelum menghapus berkas melayani heuristik...","options":["Pencegahan kesalahan","Konsistensi","Estetika minimalis"],"answer":0,"why":"Mencegah kesalahan fatal."},{"q":"Pada pengujian kegunaan, fasilitator sebaiknya...","options":["Tidak membantu dan mengamati","Menjelaskan setiap langkah","Menjawab semua pertanyaan"],"answer":0,"why":"Tujuannya melihat kesulitan nyata."},{"q":"Skor SUS rata-rata lintas studi sekitar...","options":["68","25","100"],"answer":0,"why":"Tolok ukur umum."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Nilai pesan "Terjadi kesalahan, coba lagi nanti" terhadap heuristik.</summary><div>Melanggar heuristik 9: tidak menjelaskan masalah atau cara pulih. Perbaiki dengan sebab dan langkah nyata.</div></details><details><summary>2. Mengapa tombol "Hapus akun" tidak diletakkan dekat tombol "Simpan"?</summary><div>Hukum Fitts dan pencegahan kesalahan: tindakan berbahaya dijauhkan dan diberi konfirmasi.</div></details><details><summary>3. Hitung SUS untuk jawaban [4,2,4,2,4,2,4,2,4,2].</summary><div>Ganjil: 3 × 5 = 15; genap: 3 × 5 = 15; total 30 × 2,5 = 75.</div></details><details><summary>4. Rancang tiga tugas untuk uji kegunaan portal akademik.</summary><div>Mengisi KRS, melihat nilai semester lalu, mengunduh kartu ujian.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Kegunaan: mudah dipelajari, efisien, mudah diingat, sedikit kesalahan, menyenangkan.</li><li>Sepuluh heuristik Nielsen adalah daftar periksa evaluasi antarmuka.</li><li>Evaluasi heuristik cepat dan murah; pengujian kegunaan dengan pengguna nyata menemukan masalah yang tak terduga.</li><li>SUS mengukur kegunaan dengan skor 0–100.</li><li>Hukum Fitts dan Hick membantu keputusan tata letak.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya UX dan UI?</summary><div>UI adalah tampilan dan elemen interaksi; UX mencakup seluruh pengalaman, termasuk alur, kecepatan, bantuan, dan emosi.</div></details>
+<details class="faq"><summary>Bagaimana dengan aksesibilitas?</summary><div>Bagian dari kegunaan: kontras, ukuran teks, dukungan pembaca layar dan keyboard (pedoman WCAG).</div></details>
+<details class="faq"><summary>Apakah perlu peneliti khusus?</summary><div>Untuk uji sederhana, tim dapat melakukannya sendiri dengan disiplin; untuk produk besar peneliti UX membantu merancang dan menganalisis.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.nngroup.com/articles/ten-usability-heuristics/" rel="noopener" target="_blank">Nielsen Norman Group: 10 Usability Heuristics for User Interface Design</a></li><li>Jakob Nielsen, Usability Engineering (Morgan Kaufmann, 1993)</li><li><a href="https://hell.meiert.org/core/pdf/sus.pdf" rel="noopener" target="_blank">John Brooke, SUS: A quick and dirty usability scale (1996)</a></li><li><a href="https://www.w3.org/TR/WCAG22/" rel="noopener" target="_blank">W3C: Web Content Accessibility Guidelines (WCAG) 2.2</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a><a href="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/"><img src="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SDLC: Waterfall, Agile, dan Model Pengembangan Lain</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

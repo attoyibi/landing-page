@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas</title>
+<meta name="description" content="Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.">
+<meta name="keywords" content="Linux, command line, bash, pipe, chmod">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/">
+<meta property="og:title" content="Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas">
+<meta property="og:description" content="Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.">
+<meta property="og:image" content="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas">
+<meta name="twitter:description" content="Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas","description":"Belajar command line Linux: navigasi, perintah berkas, pipe dan redirect, grep, find, izin berkas (chmod), proses, dan kebiasaan aman di terminal.","image":["https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Linux, command line, bash, pipe, chmod","articleSection":"Dasar Informatika","wordCount":420,"mainEntityOfPage":"https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas","item":"https://muchson.web.id/artikel/command-line-linux-dasar-navigasi-berkas-pipe-dan-izin/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana mencoba Linux di Windows?","acceptedAnswer":{"@type":"Answer","text":"Pasang WSL (Windows Subsystem for Linux) dengan wsl --install; atau pakai mesin virtual dan Git Bash untuk sebagian perintah."}},{"@type":"Question","name":"Apa bedanya bash dan zsh?","acceptedAnswer":{"@type":"Answer","text":"Keduanya shell. bash adalah standar luas di Linux; zsh bawaan macOS modern dan menawarkan penyelesaian otomatis yang lebih kaya. Perintah dasar identik."}},{"@type":"Question","name":"Bagaimana mengotomasi dengan skrip?","acceptedAnswer":{"@type":"Answer","text":"Tulis perintah dalam berkas .sh dengan baris pertama #!/usr/bin/env bash, beri izin eksekusi, lalu jalankan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#cara-membaca-contoh">Cara membaca contoh</a></li><li><a href="#navigasi-dan-struktur-direktori">Navigasi dan struktur direktori</a></li><li><a href="#mengelola-berkas">Mengelola berkas</a></li><li><a href="#pipe-dan-redirect-kekuatan-sebenarnya">Pipe dan redirect: kekuatan sebenarnya</a></li><li><a href="#mencari-grep-dan-find">Mencari: grep dan find</a></li><li><a href="#izin-berkas">Izin berkas</a></li><li><a href="#proses-dan-lingkungan">Proses dan lingkungan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas</h1>
+<p class="lead">Antarmuka grafis nyaman untuk hal yang sering dilakukan, tetapi baris perintah unggul untuk otomasi, pekerjaan berulang, dan mengelola server yang tidak memiliki layar. Hampir semua server, kontainer, dan sistem cloud dijalankan dengan Linux, sehingga kemampuan dasar baris perintah adalah keterampilan yang akan terus terpakai.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> konsep berkas dan folder</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Command Line Linux Dasar: Navigasi, Pipe, dan Izin Berkas" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>bernavigasi dan mengelola berkas dengan pwd, ls, cd, mkdir, cp, mv, rm</li><li>melihat dan mencari isi: cat, less, head, tail, grep, find</li><li>menggabungkan perintah dengan pipe dan redirect</li><li>membaca dan mengubah izin berkas (chmod)</li><li>bekerja dengan proses dan variabel lingkungan serta kebiasaan aman</li></ul></div>
+<h2 id="cara-membaca-contoh">Cara membaca contoh</h2>
+<p>Tanda <code>$</code> menandakan prompt (jangan diketik). Baris tanpa <code>$</code> adalah keluaran. Contoh dijalankan pada shell bash di Linux, macOS, atau WSL pada Windows; perintah dasarnya sama.</p>
+<h2 id="navigasi-dan-struktur-direktori">Navigasi dan struktur direktori</h2>
+<figure class="codebox"><pre data-lang="bash"><code>$ pwd                      # di mana saya sekarang?
+/home/ani
+$ ls                       # isi direktori
+Dokumen  Unduhan  proyek
+$ ls -la                   # semua (termasuk tersembunyi), format panjang
+$ cd proyek                # masuk ke direktori
+$ cd ..                    # naik satu tingkat
+$ cd ~                     # ke direktori home
+$ cd -                     # kembali ke direktori sebelumnya</code></pre></figure>
+<table><thead><tr><th>Simbol</th><th>Arti</th></tr></thead><tbody><tr><td>/</td><td>Akar sistem berkas (path absolut dimulai dari sini)</td></tr><tr><td>~</td><td>Direktori home pengguna (/home/ani)</td></tr><tr><td>.</td><td>Direktori saat ini</td></tr><tr><td>..</td><td>Direktori induk</td></tr><tr><td>*</td><td>Pengganti nol atau lebih karakter (globbing), misalnya *.txt</td></tr></tbody></table>
+<h2 id="mengelola-berkas">Mengelola berkas</h2>
+<figure class="codebox"><pre data-lang="bash"><code>$ mkdir -p laporan/2026          # buat folder (dan induk bila perlu)
+$ touch catatan.txt              # buat berkas kosong
+$ cp catatan.txt cadangan.txt    # salin
+$ mv cadangan.txt laporan/       # pindah (juga untuk mengganti nama)
+$ rm cadangan.txt                # hapus (TIDAK ada tempat sampah!)
+$ rm -r laporan                  # hapus folder beserta isinya
+$ cat catatan.txt                # tampilkan isi
+$ less log.txt                   # lihat halaman demi halaman (q untuk keluar)
+$ head -n 5 log.txt              # 5 baris pertama
+$ tail -n 5 log.txt              # 5 baris terakhir
+$ tail -f log.txt                # ikuti penambahan baris secara langsung</code></pre></figure>
+<div class="callout warn"><b>Hati-hati</b><p><code>rm</code> tidak memiliki tempat sampah. Perintah seperti <code>rm -rf /</code> atau salah ketik pada <code>rm -rf *</code> dapat menghapus semuanya tanpa konfirmasi. Biasakan memeriksa dengan <code>ls</code> memakai pola yang sama sebelum menghapus, dan jangan pernah menjalankan perintah <code>sudo rm</code> dari sumber yang tidak dipercaya.</p></div>
+<h2 id="pipe-dan-redirect-kekuatan-sebenarnya">Pipe dan redirect: kekuatan sebenarnya</h2>
+<p>Filosofi Unix: program kecil yang melakukan satu hal dengan baik, dihubungkan satu sama lain. <code>|</code> (pipe) mengalirkan keluaran satu perintah menjadi masukan perintah berikutnya; <code>&gt;</code> menulis ke berkas, <code>&gt;&gt;</code> menambahkan, <code>&lt;</code> membaca dari berkas.</p>
+<figure class="diagram"><svg viewBox="0 0 728 118" role="img" aria-label="Pipeline" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">cat akses.log</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">membaca berkas</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">grep &quot;404&quot;</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">menyaring baris</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">sort | uniq -c</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">mengurutkan dan</tspan><tspan x="457" dy="14">menghitung</tspan></text><line x1="536" y1="59" x2="564" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">sort -rn | head</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">peringkat teratas</tspan></text></svg><figcaption>Setiap tahap hanya tahu masukan dan keluaran teks. Itu yang membuat potongan kecil dapat dirangkai bebas.</figcaption></figure>
+<figure class="codebox"><pre data-lang="bash"><code>akses.log (contoh isi):
+10.0.0.5 GET /beranda 200
+10.0.0.7 GET /produk 404
+10.0.0.5 GET /produk 404
+10.0.0.9 GET /beranda 200
+10.0.0.7 GET /produk 404
+
+$ grep &quot; 404&quot; akses.log                      # baris yang mengandung 404
+$ grep -c &quot; 404&quot; akses.log                   # hitung saja
+3
+$ grep &quot; 404&quot; akses.log | cut -d&quot; &quot; -f1 | sort | uniq -c | sort -rn
+      2 10.0.0.7
+      1 10.0.0.5
+$ grep &quot; 404&quot; akses.log &gt; galat.txt          # simpan hasil ke berkas
+$ echo &quot;selesai&quot; &gt;&gt; galat.txt                # tambahkan di akhir</code></pre><figcaption>Satu baris perintah menjawab: alamat IP mana yang paling sering menghasilkan galat 404?</figcaption></figure>
+<h2 id="mencari-grep-dan-find">Mencari: grep dan find</h2>
+<figure class="codebox"><pre data-lang="bash"><code>$ grep -r &quot;TODO&quot; src/             # cari teks di semua berkas dalam src
+$ grep -rn --include=&quot;*.js&quot; &quot;fetch(&quot; .   # dengan nomor baris, hanya berkas .js
+$ grep -i &quot;error&quot; log.txt         # abaikan huruf besar-kecil
+$ find . -name &quot;*.log&quot;            # cari berkas menurut nama
+$ find . -type f -size +10M       # berkas lebih dari 10 MB
+$ find . -mtime -1                # diubah dalam 1 hari terakhir</code></pre></figure>
+<h2 id="izin-berkas">Izin berkas</h2>
+<p>Setiap berkas memiliki izin untuk tiga pihak: pemilik (u), grup (g), dan lainnya (o), masing-masing r (baca), w (tulis), x (eksekusi).</p>
+<figure class="codebox"><pre data-lang="bash"><code>$ ls -l
+-rwxr-xr--  1 ani staf  1204 Okt 23 skrip.sh
+ drwxr-xr-x  2 ani staf  4096 Okt 23 proyek
+
+rwx r-x r--   = pemilik: baca+tulis+jalankan; grup: baca+jalankan; lainnya: baca
+ 7   5   4    = nilai oktal (r=4, w=2, x=1)
+
+$ chmod +x skrip.sh         # tambah izin eksekusi
+$ chmod 644 catatan.txt     # rw-r--r--
+$ chmod 600 kunci.pem       # hanya pemilik (wajib untuk kunci privat SSH)
+$ ./skrip.sh                # menjalankan skrip di direktori saat ini</code></pre><figcaption>Tahu bahwa izin adalah tiga digit oktal (lihat materi sistem bilangan) membuat chmod 755 dan 644 menjadi masuk akal, bukan hafalan.</figcaption></figure>
+<h2 id="proses-dan-lingkungan">Proses dan lingkungan</h2>
+<figure class="codebox"><pre data-lang="bash"><code>$ ps aux | grep node        # lihat proses yang berjalan
+$ top                       # pemantau interaktif (q untuk keluar)
+$ kill 4321                 # minta proses 4321 berhenti baik-baik
+$ kill -9 4321              # paksa berhenti (pilihan terakhir)
+$ perintah &amp;                # jalankan di latar belakang
+$ echo $PATH                # variabel lingkungan: tempat shell mencari program
+$ export API_URL=https://contoh.id   # set variabel untuk proses turunan
+$ history | tail            # perintah terakhir
+$ man grep                  # manual; tekan q untuk keluar</code></pre></figure>
+<div data-w="checklist"><script type="application/json">{"title":"Kebiasaan aman di terminal","items":["Periksa lokasi dengan pwd sebelum menjalankan perintah yang menghapus atau mengubah banyak berkas.","Uji pola dengan ls (atau find tanpa -delete) sebelum rm.","Jangan menempelkan perintah dari internet yang Anda tidak pahami, terutama dengan sudo atau curl ... | sh.","Gunakan sudo seperlunya; jangan bekerja sebagai root sehari-hari.","Cadangkan berkas penting sebelum mengubah dengan sed -i atau skrip massal.","Gunakan Tab untuk melengkapi nama dan panah atas untuk riwayat; Ctrl+C membatalkan perintah.","Simpan perintah yang berguna sebagai skrip kecil dan beri komentar."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pipe (|) berfungsi untuk...","options":["Mengalirkan keluaran satu perintah ke masukan perintah berikutnya","Menghapus berkas","Menyalin direktori"],"answer":0,"why":"Menggabungkan program kecil."},{"q":"chmod 755 memberikan...","options":["rwx untuk pemilik, r-x untuk grup dan lainnya","Semua izin untuk semua","Hanya baca"],"answer":0,"why":"7 = 4+2+1, 5 = 4+1."},{"q":"Perintah untuk menambahkan teks ke akhir berkas?","options":["echo \"teks\" >> berkas","echo \"teks\" > berkas","cat berkas"],"answer":0,"why":">> menambahkan; > menimpa."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis perintah untuk menghitung jumlah berkas .md di direktori saat ini dan subdirektorinya.</summary><div><code>find . -name "*.md" | wc -l</code></div></details><details><summary>2. Apa arti -rw-r----- ?</summary><div>Pemilik baca+tulis; grup baca; lainnya tidak ada akses = 640.</div></details><details><summary>3. Bagaimana menampilkan 10 baris log yang mengandung "ERROR" paling baru?</summary><div><code>grep "ERROR" log.txt | tail -n 10</code></div></details><details><summary>4. Apa perbedaan > dan >>?</summary><div>> menimpa isi berkas; >> menambahkan di akhir.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>pwd, ls, cd, mkdir, cp, mv, rm untuk navigasi dan berkas; rm tidak punya tempat sampah.</li><li>Pipe dan redirect menggabungkan program kecil menjadi alur kerja kuat.</li><li>grep dan find untuk mencari isi dan berkas.</li><li>Izin rwx dalam oktal; chmod mengubahnya.</li><li>Kebiasaan aman: periksa sebelum menghapus dan waspada pada perintah tak dikenal.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana mencoba Linux di Windows?</summary><div>Pasang WSL (Windows Subsystem for Linux) dengan wsl --install; atau pakai mesin virtual dan Git Bash untuk sebagian perintah.</div></details>
+<details class="faq"><summary>Apa bedanya bash dan zsh?</summary><div>Keduanya shell. bash adalah standar luas di Linux; zsh bawaan macOS modern dan menawarkan penyelesaian otomatis yang lebih kaya. Perintah dasar identik.</div></details>
+<details class="faq"><summary>Bagaimana mengotomasi dengan skrip?</summary><div>Tulis perintah dalam berkas .sh dengan baris pertama #!/usr/bin/env bash, beri izin eksekusi, lalu jalankan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://linuxcommand.org/tlcl.php" rel="noopener" target="_blank">The Linux Command Line, William Shotts (gratis)</a></li><li><a href="https://www.gnu.org/software/coreutils/manual/" rel="noopener" target="_blank">GNU Coreutils Manual</a></li><li><a href="https://www.gnu.org/software/bash/manual/" rel="noopener" target="_blank">Bash Reference Manual</a></li><li><a href="https://learn.microsoft.com/windows/wsl/install" rel="noopener" target="_blank">Microsoft Learn: Install WSL</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -56,6 +56,10 @@ const INTRO = {
     'Teknologi Sehari-hari': 'Keamanan digital dan tips teknologi untuk keseharian: kata sandi, phishing, penipuan online, cadangan data, dan pengaturan ponsel.',
     'Belajar & Produktivitas': 'Cara belajar dan bekerja lebih efektif: teknik fokus, mengingat, prioritas, kebiasaan, serta desain pembelajaran dan aksesibilitas.',
     'Karier & Freelance': 'Panduan karier di bidang teknologi: portofolio, CV, wawancara kerja, dan memulai freelance.',
+    'Algoritma & Pemrograman Python': 'Materi kuliah Algoritma dan Pemrograman dengan Python: dasar bahasa, percabangan, perulangan, struktur data, rekursi, kompleksitas, pengurutan, graf, greedy, dynamic programming, dan OOP. Kode dijalankan sungguhan.',
+    'PBO dengan Java': 'Materi kuliah Pemrograman Berorientasi Objek dengan Java: class, enkapsulasi, pewarisan, polimorfisme, interface, exception, koleksi, generics, stream, concurrency, SOLID, dan pola desain.',
+    'Sistem Informasi': 'Materi kuliah Sistem Informasi: konsep dasar, SDLC, analisis kebutuhan, DFD, ERD, normalisasi, SQL, keamanan, tata kelola TI, audit, business intelligence, hukum dan etika.',
+    'Dasar Informatika': 'Fondasi ilmu komputer: bilangan biner, logika, arsitektur CPU, sistem operasi, jaringan, kriptografi, kompilator, matematika diskrit, automata, dan machine learning dasar.',
 };
 const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const slugOf = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');

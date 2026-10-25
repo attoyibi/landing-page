@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generics Java: Tipe Parameter dan Wildcard · Muhammad Muchson</title>
+<meta name="description" content="Pahami generics di Java: class dan method generik, batasan tipe, wildcard, PECS, dan type erasure, supaya kode aman tipe tanpa casting dan tanpa duplikasi.">
+<meta name="keywords" content="Java, generics, wildcard, type erasure, bounded type">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/">
+<meta property="og:title" content="Generics Java: Tipe Parameter dan Wildcard">
+<meta property="og:description" content="Pahami generics di Java: class dan method generik, batasan tipe, wildcard, PECS, dan type erasure, supaya kode aman tipe tanpa casting dan tanpa duplikasi.">
+<meta property="og:image" content="https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Generics Java: Tipe Parameter dan Wildcard">
+<meta name="twitter:description" content="Pahami generics di Java: class dan method generik, batasan tipe, wildcard, PECS, dan type erasure, supaya kode aman tipe tanpa casting dan tanpa duplikasi.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Generics Java: Tipe Parameter dan Wildcard","description":"Pahami generics di Java: class dan method generik, batasan tipe, wildcard, PECS, dan type erasure, supaya kode aman tipe tanpa casting dan tanpa duplikasi.","image":["https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, generics, wildcard, type erasure, bounded type","articleSection":"PBO dengan Java","wordCount":346,"mainEntityOfPage":"https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Generics Java: Tipe Parameter dan Wildcard","item":"https://muchson.web.id/artikel/generics-java-tipe-parameter-wildcard-dan-type-erasure/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu diamond operator?","acceptedAnswer":{"@type":"Answer","text":"Tanda <> pada new ArrayList<>() yang membuat kompiler menyimpulkan argumen tipe dari konteks."}},{"@type":"Question","name":"Mengapa tidak memakai raw type?","acceptedAnswer":{"@type":"Answer","text":"Kompiler tidak bisa memeriksa tipe sehingga kesalahan baru muncul saat runtime."}},{"@type":"Question","name":"Apakah generics ada di C++?","acceptedAnswer":{"@type":"Answer","text":"C++ memiliki template yang menghasilkan kode terpisah per tipe; generics Java memakai erasure dan satu kode untuk semua tipe."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#masalah-tanpa-generics">Masalah tanpa generics</a></li><li><a href="#class-dan-method-generik">Class dan method generik</a></li><li><a href="#generics-tidak-kovarian">Generics tidak kovarian</a></li><li><a href="#type-erasure">Type erasure</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Generics Java: Tipe Parameter dan Wildcard</h1>
+<p class="lead">Sebelum generics, koleksi menyimpan Object dan kita harus casting sambil berharap tidak keliru. Generics memindahkan pemeriksaan tipe dari saat berjalan ke saat kompilasi: kesalahan tertangkap lebih dulu dan kode tidak dipenuhi casting.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> interface, collections</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Generics Java: Tipe Parameter dan Wildcard" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan masalah yang diselesaikan generics</li><li>membuat class dan method generik</li><li>memakai batasan tipe (extends) dan wildcard</li><li>menerapkan aturan PECS</li><li>menjelaskan type erasure dan batasannya</li></ul></div>
+<h2 id="masalah-tanpa-generics">Masalah tanpa generics</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+public class Main {
+    @SuppressWarnings({&quot;rawtypes&quot;, &quot;unchecked&quot;})
+    public static void main(String[] args) {
+        List mentah = new ArrayList();            // tipe mentah (raw): jangan dipakai
+        mentah.add(&quot;teks&quot;);
+        mentah.add(42);
+        try {
+            String s = (String) mentah.get(1);    // baru ketahuan saat berjalan
+        } catch (ClassCastException e) {
+            System.out.println(&quot;ClassCastException saat runtime&quot;);
+        }
+
+        List&lt;String&gt; aman = new ArrayList&lt;&gt;();
+        aman.add(&quot;teks&quot;);
+        // aman.add(42);                          // ditolak kompiler
+        String s = aman.get(0);                   // tanpa casting
+        System.out.println(s);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>ClassCastException saat runtime
+teks</code></pre></figure>
+<h2 id="class-dan-method-generik">Class dan method generik</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Kotak&lt;T&gt; {
+    private T isi;
+    void simpan(T isi) { this.isi = isi; }
+    T ambil() { return isi; }
+}
+
+class Pasangan&lt;K, V&gt; {
+    final K kunci; final V nilai;
+    Pasangan(K kunci, V nilai) { this.kunci = kunci; this.nilai = nilai; }
+    @Override public String toString() { return kunci + &quot; =&gt; &quot; + nilai; }
+}
+
+public class Main {
+    static &lt;T&gt; void tukar(T[] a, int i, int j) {        // method generik
+        T t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+
+    static &lt;T extends Comparable&lt;T&gt;&gt; T maks(T a, T b) {   // batasan: T harus bisa dibandingkan
+        return a.compareTo(b) &gt;= 0 ? a : b;
+    }
+
+    public static void main(String[] args) {
+        Kotak&lt;String&gt; k = new Kotak&lt;&gt;();
+        k.simpan(&quot;halo&quot;);
+        System.out.println(k.ambil().toUpperCase());
+
+        System.out.println(new Pasangan&lt;&gt;(&quot;umur&quot;, 20));
+
+        Integer[] angka = {1, 2, 3};
+        tukar(angka, 0, 2);
+        System.out.println(java.util.Arrays.toString(angka));
+
+        System.out.println(maks(3, 9) + &quot; &quot; + maks(&quot;apel&quot;, &quot;mangga&quot;) + &quot; &quot; + maks(2.5, 1.5));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>HALO
+umur =&gt; 20
+[3, 2, 1]
+9 mangga 2.5</code></pre><figcaption>Satu implementasi bekerja untuk banyak tipe sambil tetap aman tipe.</figcaption></figure>
+<h2 id="generics-tidak-kovarian">Generics tidak kovarian</h2>
+<p><code>List&lt;Integer&gt;</code> <b>bukan</b> subtipe dari <code>List&lt;Number&gt;</code>, walau Integer adalah Number. Bila diperbolehkan, kita bisa memasukkan Double ke list yang sebenarnya berisi Integer. Wildcard menyelesaikan kebutuhan ini dengan aman.</p>
+<table><thead><tr><th>Bentuk</th><th>Artinya</th><th>Boleh membaca?</th><th>Boleh menulis?</th></tr></thead><tbody><tr><td>List<?></td><td>List berisi tipe apa pun</td><td>Sebagai Object</td><td>Tidak (kecuali null)</td></tr><tr><td>List<? extends Number></td><td>List berisi Number atau turunannya (producer)</td><td>Ya, sebagai Number</td><td>Tidak</td></tr><tr><td>List<? super Integer></td><td>List berisi Integer atau induknya (consumer)</td><td>Sebagai Object</td><td>Ya, Integer</td></tr></tbody></table>
+<div class="callout info"><b>Aturan mengingat</b><p><b>PECS</b>: Producer Extends, Consumer Super. Bila parameter <i>menghasilkan</i> nilai untuk Anda baca, pakai <code>? extends T</code>. Bila ia <i>menerima</i> nilai yang Anda tulis, pakai <code>? super T</code>.</p></div>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+public class Main {
+    static double jumlah(List&lt;? extends Number&gt; daftar) {      // producer: hanya membaca
+        double t = 0;
+        for (Number n : daftar) t += n.doubleValue();
+        return t;
+    }
+
+    static void isiAngka(List&lt;? super Integer&gt; tujuan) {        // consumer: menulis Integer
+        for (int i = 1; i &lt;= 3; i++) tujuan.add(i);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(jumlah(List.of(1, 2, 3)) + &quot; &quot; + jumlah(List.of(1.5, 2.5)));
+
+        List&lt;Number&gt; angka = new ArrayList&lt;&gt;();
+        List&lt;Object&gt; objek = new ArrayList&lt;&gt;();
+        isiAngka(angka);
+        isiAngka(objek);
+        System.out.println(angka + &quot; &quot; + objek);
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>6.0 4.0
+[1, 2, 3] [1, 2, 3]</code></pre></figure>
+<h2 id="type-erasure">Type erasure</h2>
+<p>Generics hanya ada saat kompilasi. Kompiler menghapus parameter tipe dan memasukkan casting yang diperlukan, agar kompatibel dengan kode lama. Akibatnya beberapa hal tidak bisa dilakukan:</p>
+<ul><li><code>new T()</code> atau <code>new T[10]</code> tidak diperbolehkan.</li><li><code>x instanceof List&lt;String&gt;</code> tidak diperbolehkan (hanya <code>List&lt;?&gt;</code>).</li><li>Tipe primitif tidak bisa menjadi argumen tipe (<code>List&lt;int&gt;</code>); pakai wrapper.</li><li>Dua method overload yang berbeda hanya pada argumen tipe generik bentrok setelah erasure.</li></ul>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List&lt;String&gt; a = new ArrayList&lt;&gt;();
+        List&lt;Integer&gt; b = new ArrayList&lt;&gt;();
+        System.out.println(a.getClass() == b.getClass());     // sama saat runtime: ArrayList
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>true</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Keuntungan utama generics?","options":["Kesalahan tipe tertangkap saat kompilasi","Program lebih cepat","Kode lebih pendek saja"],"answer":0,"why":"Tanpa casting dan lebih aman."},{"q":"List\u003cInteger> adalah subtipe dari List\u003cNumber>?","options":["Ya","Tidak","Hanya pada Java 21"],"answer":1,"why":"Generics invarian."},{"q":"PECS untuk parameter yang kita baca nilainya?","options":["? extends T","? super T","?"],"answer":0,"why":"Producer Extends."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis method generik salin(List<? extends T> sumber, List<? super T> tujuan).</summary><div><code>static <T> void salin(List<? extends T> s, List<? super T> t) { for (T x : s) t.add(x); }</code></div></details><details><summary>2. Mengapa tidak bisa new T[10]?</summary><div>Karena type erasure: saat runtime T tidak diketahui sehingga array tidak bisa dibuat dengan aman.</div></details><details><summary>3. Buat class generik Tumpukan<T> dengan push, pop, dan kosong().</summary><div>Gunakan ArrayList<T> atau ArrayDeque<T> di dalamnya.</div></details><details><summary>4. Apa beda List<?> dan List<Object>?</summary><div>List<Object> hanya menerima list bertipe tepat Object; List<?> menerima list dengan argumen tipe apa pun (hanya-baca).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Generics memberi keamanan tipe saat kompilasi tanpa casting.</li><li>Class dan method generik; batasan dengan extends.</li><li>Wildcard dan PECS untuk fleksibilitas; generics invarian.</li><li>Type erasure membatasi operasi saat runtime.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu diamond operator?</summary><div>Tanda <> pada new ArrayList<>() yang membuat kompiler menyimpulkan argumen tipe dari konteks.</div></details>
+<details class="faq"><summary>Mengapa tidak memakai raw type?</summary><div>Kompiler tidak bisa memeriksa tipe sehingga kesalahan baru muncul saat runtime.</div></details>
+<details class="faq"><summary>Apakah generics ada di C++?</summary><div>C++ memiliki template yang menghasilkan kode terpisah per tipe; generics Java memakai erasure dan satu kode untuk semua tipe.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/generics/index.html" rel="noopener" target="_blank">Oracle: Generics (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/generics/wildcards.html" rel="noopener" target="_blank">Oracle: Wildcards</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

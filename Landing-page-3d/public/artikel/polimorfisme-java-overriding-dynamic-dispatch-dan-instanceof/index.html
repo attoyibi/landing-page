@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polimorfisme Java: Overriding dan Dynamic Dispatch</title>
+<meta name="description" content="Pahami polimorfisme Java: dynamic dispatch, upcasting dan downcasting, instanceof dengan pola, dan cara menambah jenis baru tanpa mengubah kode lama.">
+<meta name="keywords" content="Java, polimorfisme, dynamic dispatch, upcasting, instanceof">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/">
+<meta property="og:title" content="Polimorfisme Java: Overriding dan Dynamic Dispatch">
+<meta property="og:description" content="Pahami polimorfisme Java: dynamic dispatch, upcasting dan downcasting, instanceof dengan pola, dan cara menambah jenis baru tanpa mengubah kode lama.">
+<meta property="og:image" content="https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Polimorfisme Java: Overriding dan Dynamic Dispatch">
+<meta name="twitter:description" content="Pahami polimorfisme Java: dynamic dispatch, upcasting dan downcasting, instanceof dengan pola, dan cara menambah jenis baru tanpa mengubah kode lama.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Polimorfisme Java: Overriding dan Dynamic Dispatch","description":"Pahami polimorfisme Java: dynamic dispatch, upcasting dan downcasting, instanceof dengan pola, dan cara menambah jenis baru tanpa mengubah kode lama.","image":["https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, polimorfisme, dynamic dispatch, upcasting, instanceof","articleSection":"PBO dengan Java","wordCount":296,"mainEntityOfPage":"https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Polimorfisme Java: Overriding dan Dynamic Dispatch","item":"https://muchson.web.id/artikel/polimorfisme-java-overriding-dynamic-dispatch-dan-instanceof/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya polimorfisme kompilasi dan runtime?","acceptedAnswer":{"@type":"Answer","text":"Overloading adalah polimorfisme saat kompilasi (statis); overriding adalah polimorfisme saat berjalan (dinamis)."}},{"@type":"Question","name":"Apakah polimorfisme memperlambat program?","acceptedAnswer":{"@type":"Answer","text":"Dispatch dinamis berbiaya kecil dan JIT sering menghilangkannya lewat inlining; jarang menjadi masalah."}},{"@type":"Question","name":"Apakah interface juga polimorfik?","acceptedAnswer":{"@type":"Answer","text":"Ya. Variabel bertipe interface dapat menunjuk objek class mana pun yang mengimplementasikannya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#satu-referensi-banyak-jenis-objek">Satu referensi, banyak jenis objek</a></li><li><a href="#dynamic-dispatch">Dynamic dispatch</a></li><li><a href="#upcasting-dan-downcasting">Upcasting dan downcasting</a></li><li><a href="#manfaat-tanpa-rantai-if-else">Manfaat: tanpa rantai if/else</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Polimorfisme Java: Overriding dan Dynamic Dispatch</h1>
+<p class="lead">Polimorfisme berarti "banyak bentuk": satu pemanggilan, perilaku berbeda tergantung jenis objek sebenarnya. Inilah yang membuat kita dapat menambah jenis baru tanpa mengubah kode yang sudah ada.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> inheritance</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Polimorfisme Java: Overriding dan Dynamic Dispatch" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan tipe referensi (deklarasi) dan tipe objek (sebenarnya)</li><li>menjelaskan dynamic dispatch pada pemanggilan method</li><li>melakukan upcasting dan downcasting dengan aman</li><li>memakai instanceof dengan pola</li><li>menunjukkan bagaimana polimorfisme menghilangkan if/else berdasarkan jenis</li></ul></div>
+<h2 id="satu-referensi-banyak-jenis-objek">Satu referensi, banyak jenis objek</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>abstract class Hewan {
+    abstract String suara();
+    void bersuara() { System.out.println(getClass().getSimpleName() + &quot;: &quot; + suara()); }
+}
+class Kucing extends Hewan { String suara() { return &quot;meong&quot;; } }
+class Anjing extends Hewan { String suara() { return &quot;guk&quot;; } }
+class Bebek  extends Hewan { String suara() { return &quot;kwek&quot;; } }
+
+public class Main {
+    public static void main(String[] args) {
+        Hewan[] kandang = { new Kucing(), new Anjing(), new Bebek() };
+        for (Hewan h : kandang) {
+            h.bersuara();                 // method yang dijalankan ditentukan oleh jenis objek sebenarnya
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Kucing: meong
+Anjing: guk
+Bebek: kwek</code></pre><figcaption>Perulangan tidak peduli jenis hewannya. Menambah class Sapi tidak mengubah perulangan sama sekali.</figcaption></figure>
+<h2 id="dynamic-dispatch">Dynamic dispatch</h2>
+<p>Java memilih <b>versi method</b> pada saat program berjalan berdasarkan kelas objek yang sesungguhnya, bukan tipe variabelnya. Sebaliknya, <b>atribut</b> dan method <b>static</b> ditentukan oleh tipe variabel pada saat kompilasi.</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Induk {
+    String nama = &quot;atribut Induk&quot;;
+    String siapa() { return &quot;method Induk&quot;; }
+    static String stat() { return &quot;static Induk&quot;; }
+}
+class Anak extends Induk {
+    String nama = &quot;atribut Anak&quot;;
+    @Override String siapa() { return &quot;method Anak&quot;; }
+    static String stat() { return &quot;static Anak&quot;; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Induk x = new Anak();             // tipe deklarasi Induk, objek sebenarnya Anak
+        System.out.println(x.siapa());    // method: mengikuti objek (Anak)
+        System.out.println(x.nama);       // atribut: mengikuti tipe variabel (Induk)
+        System.out.println(Induk.stat()); // static: mengikuti tipe, bukan objek
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>method Anak
+atribut Induk
+static Induk</code></pre><figcaption>Hanya method instance yang polimorfik. Inilah mengapa atribut sebaiknya private dan diakses lewat method.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 542 118" role="img" aria-label="Cara JVM memilih method" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">x.siapa()</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">kompiler memeriksa:</tspan><tspan x="85" dy="14">Induk punya siapa()?</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Saat dijalankan</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">JVM melihat objek di</tspan><tspan x="271" dy="14">balik x: Anak</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Cari dari bawah</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">Anak.siapa() ada →</tspan><tspan x="457" dy="14">jalankan</tspan></text></svg></figure>
+<h2 id="upcasting-dan-downcasting">Upcasting dan downcasting</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Hewan { void makan() { System.out.println(&quot;makan&quot;); } }
+class Burung extends Hewan { void terbang() { System.out.println(&quot;terbang&quot;); } }
+
+public class Main {
+    public static void main(String[] args) {
+        Hewan h = new Burung();          // upcasting: otomatis, selalu aman
+        h.makan();
+        // h.terbang();                  // error kompilasi: tipe Hewan tidak punya terbang()
+
+        Burung b = (Burung) h;           // downcasting: eksplisit, diperiksa saat berjalan
+        b.terbang();
+
+        Hewan lain = new Hewan();
+        try {
+            Burung salah = (Burung) lain;
+        } catch (ClassCastException e) {
+            System.out.println(&quot;ClassCastException: Hewan bukan Burung&quot;);
+        }
+
+        if (h instanceof Burung bb) {    // instanceof dengan pola: periksa dan cast sekaligus
+            bb.terbang();
+        }
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>makan
+terbang
+ClassCastException: Hewan bukan Burung
+terbang</code></pre></figure>
+<h2 id="manfaat-tanpa-rantai-if-else">Manfaat: tanpa rantai if/else</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>import java.util.List;
+
+interface Bentuk { double luas(); }
+record Lingkaran(double r) implements Bentuk { public double luas() { return Math.PI * r * r; } }
+record Persegi(double s)   implements Bentuk { public double luas() { return s * s; } }
+record Segitiga(double a, double t) implements Bentuk { public double luas() { return 0.5 * a * t; } }
+
+public class Main {
+    static double totalLuas(List&lt;Bentuk&gt; daftar) {
+        double total = 0;
+        for (Bentuk b : daftar) total += b.luas();      // tidak ada if (b instanceof Lingkaran) ...
+        return total;
+    }
+
+    public static void main(String[] args) {
+        List&lt;Bentuk&gt; daftar = List.of(new Lingkaran(1), new Persegi(2), new Segitiga(3, 4));
+        System.out.printf(&quot;%.3f%n&quot;, totalLuas(daftar));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>13.142</code></pre><figcaption>Menambah bentuk baru cukup membuat record baru yang mengimplementasikan Bentuk. totalLuas tidak perlu diubah. Ini yang disebut prinsip open/closed.</figcaption></figure>
+<div class="callout info"><b>Tanda desain</b><p>Bila kode Anda penuh <code>if (x instanceof A) ... else if (x instanceof B) ...</code>, itu tanda bahwa perilaku seharusnya menjadi method yang ditimpa pada masing-masing class.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pada Induk x = new Anak(), method siapa() yang dijalankan ditentukan oleh...","options":["Tipe variabel (Induk)","Objek sebenarnya (Anak)","Urutan penulisan"],"answer":1,"why":"Itulah dynamic dispatch."},{"q":"Downcasting yang salah menyebabkan...","options":["Error kompilasi","ClassCastException saat berjalan","null"],"answer":1,"why":"Diperiksa saat runtime."},{"q":"Atribut yang sama namanya pada Induk dan Anak diakses menurut...","options":["Objek sebenarnya","Tipe variabel","Acak"],"answer":1,"why":"Atribut tidak polimorfik."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan class Sapi ke contoh Hewan. Apa yang perlu diubah di Main?</summary><div>Tidak ada selain menambahkannya ke larik; perulangan tetap sama.</div></details><details><summary>2. Prediksi keluaran: Induk x = new Anak(); x.stat() (static) pada contoh dynamic dispatch.</summary><div>Memanggil static lewat instance mengikuti tipe variabel: "static Induk".</div></details><details><summary>3. Mengapa upcasting tidak memerlukan casting eksplisit?</summary><div>Setiap objek Anak pasti juga sebuah Induk, jadi konversi selalu aman.</div></details><details><summary>4. Kapan instanceof dengan pola tetap wajar dipakai?</summary><div>Saat berurusan dengan data dari luar desain kita (misalnya hasil parsing) atau pada sealed hierarchy dengan switch pola.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Polimorfisme: satu pemanggilan, perilaku mengikuti objek sebenarnya.</li><li>Method instance dipilih saat runtime; atribut dan static mengikuti tipe variabel.</li><li>Upcasting otomatis; downcasting eksplisit dan dapat gagal (gunakan instanceof).</li><li>Polimorfisme menghilangkan rantai if/else dan memudahkan perluasan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya polimorfisme kompilasi dan runtime?</summary><div>Overloading adalah polimorfisme saat kompilasi (statis); overriding adalah polimorfisme saat berjalan (dinamis).</div></details>
+<details class="faq"><summary>Apakah polimorfisme memperlambat program?</summary><div>Dispatch dinamis berbiaya kecil dan JIT sering menghilangkannya lewat inlining; jarang menjadi masalah.</div></details>
+<details class="faq"><summary>Apakah interface juga polimorfik?</summary><div>Ya. Variabel bertipe interface dapat menunjuk objek class mana pun yang mengimplementasikannya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/IandI/polymorphism.html" rel="noopener" target="_blank">Oracle: Polymorphism (Java Tutorials)</a></li><li><a href="https://docs.oracle.com/en/java/javase/21/language/pattern-matching.html" rel="noopener" target="_blank">Oracle: Pattern Matching (Java Language Updates)</a></li><li>Joshua Bloch, Effective Java (edisi ke-3, Addison-Wesley, 2018)</li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

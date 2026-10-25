@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konstruktor, this, dan static di Java · Muhammad Muchson</title>
+<meta name="description" content="Pelajari konstruktor, overloading konstruktor, kata kunci this, anggota static, konstanta, dan urutan inisialisasi objek di Java, dengan contoh kode yang dijalankan.">
+<meta name="keywords" content="Java, konstruktor, this, static, inisialisasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/">
+<meta property="og:title" content="Konstruktor, this, dan static di Java">
+<meta property="og:description" content="Pelajari konstruktor, overloading konstruktor, kata kunci this, anggota static, konstanta, dan urutan inisialisasi objek di Java, dengan contoh kode yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="PBO dengan Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Konstruktor, this, dan static di Java">
+<meta name="twitter:description" content="Pelajari konstruktor, overloading konstruktor, kata kunci this, anggota static, konstanta, dan urutan inisialisasi objek di Java, dengan contoh kode yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Konstruktor, this, dan static di Java","description":"Pelajari konstruktor, overloading konstruktor, kata kunci this, anggota static, konstanta, dan urutan inisialisasi objek di Java, dengan contoh kode yang dijalankan.","image":["https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"Java, konstruktor, this, static, inisialisasi","articleSection":"PBO dengan Java","wordCount":299,"mainEntityOfPage":"https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Konstruktor, this, dan static di Java","item":"https://muchson.web.id/artikel/konstruktor-this-static-dan-blok-inisialisasi-java/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bolehkah konstruktor private?","acceptedAnswer":{"@type":"Answer","text":"Boleh. Dipakai pada Singleton, kelas utilitas, dan factory method yang mengontrol pembuatan objek."}},{"@type":"Question","name":"Apakah final berarti objeknya tidak berubah?","acceptedAnswer":{"@type":"Answer","text":"Tidak. final pada variabel referensi membuat referensinya tidak bisa diarahkan ke objek lain, tetapi isi objek tetap bisa berubah."}},{"@type":"Question","name":"Kapan sebaiknya memakai static?","acceptedAnswer":{"@type":"Answer","text":"Untuk konstanta, fungsi utilitas tanpa keadaan, dan penghitung milik class. Hindari menyimpan keadaan global yang berubah."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#konstruktor">Konstruktor</a></li><li><a href="#static-milik-class-bukan-objek">static: milik class, bukan objek</a></li><li><a href="#urutan-inisialisasi">Urutan inisialisasi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a></p>
+<a class="cat" href="/artikel/kategori/pbo-dengan-java/">PBO dengan Java</a>
+<h1>Konstruktor, this, dan static di Java</h1>
+<p class="lead">Bagaimana memastikan objek lahir dalam keadaan valid? Jawabannya konstruktor. Materi ini juga membahas this (objek saat ini), static (milik class, bukan objek), dan urutan inisialisasi yang sering muncul di soal ujian.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> class dan objek</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Konstruktor, this, dan static di Java" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis konstruktor dan overloading konstruktor</li><li>memakai this untuk membedakan atribut dari parameter dan memanggil konstruktor lain</li><li>membedakan anggota static dan instance</li><li>mendeklarasikan konstanta dengan static final</li><li>memprediksi urutan inisialisasi objek</li></ul></div>
+<h2 id="konstruktor">Konstruktor</h2>
+<p>Konstruktor adalah blok khusus yang dipanggil saat <code>new</code>. Namanya sama dengan class dan tidak punya tipe kembalian. Bila Anda tidak menulis satu pun, Java menyediakan konstruktor kosong bawaan; begitu Anda menulis satu, yang bawaan hilang.</p>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Mahasiswa {
+    String nim, nama;
+    double ipk;
+
+    Mahasiswa(String nim, String nama) {
+        this(nim, nama, 0.0);                // memanggil konstruktor lain
+    }
+
+    Mahasiswa(String nim, String nama, double ipk) {
+        this.nim = nim;                      // this.nim = atribut; nim = parameter
+        this.nama = nama;
+        this.ipk = ipk;
+    }
+
+    @Override public String toString() { return nama + &quot; (&quot; + nim + &quot;), IPK &quot; + ipk; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new Mahasiswa(&quot;A01&quot;, &quot;Ani&quot;));
+        System.out.println(new Mahasiswa(&quot;A02&quot;, &quot;Budi&quot;, 3.4));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Ani (A01), IPK 0.0
+Budi (A02), IPK 3.4</code></pre><figcaption>this(...) harus menjadi pernyataan pertama di konstruktor. Memusatkan inisialisasi di satu konstruktor menghindari kode berulang.</figcaption></figure>
+<div class="callout warn"><b>Jebakan shadowing</b><p>Tanpa <code>this.</code>, <code>nim = nim;</code> hanya menugaskan parameter ke dirinya sendiri dan atribut tetap kosong. Ini salah satu bug paling klasik bagi pemula.</p></div>
+<h2 id="static-milik-class-bukan-objek">static: milik class, bukan objek</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Akun {
+    static int jumlahAkun = 0;                   // satu salinan untuk seluruh class
+    static final double BUNGA = 0.05;             // konstanta
+    private static int nomorBerikut = 1000;
+
+    final int nomor;                              // satu per objek, tidak dapat diubah lagi
+    double saldo;
+
+    Akun(double saldoAwal) {
+        this.nomor = nomorBerikut++;
+        this.saldo = saldoAwal;
+        jumlahAkun++;
+    }
+
+    static double bungaTahunan(double saldo) {    // method static: tidak memakai this
+        return saldo * BUNGA;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Akun a = new Akun(1_000_000);
+        Akun b = new Akun(500_000);
+        System.out.println(a.nomor + &quot; &quot; + b.nomor);
+        System.out.println(&quot;jumlah akun: &quot; + Akun.jumlahAkun);
+        System.out.println(&quot;bunga a: &quot; + Akun.bungaTahunan(a.saldo));
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>1000 1001
+jumlah akun: 2
+bunga a: 50000.0</code></pre></figure>
+<table><thead><tr><th>Jenis anggota</th><th>Disimpan di</th><th>Diakses lewat</th><th>Contoh</th></tr></thead><tbody><tr><td>Instance</td><td>Setiap objek</td><td>objek.anggota</td><td>nama, saldo</td></tr><tr><td>static</td><td>Class (satu salinan)</td><td>NamaClass.anggota</td><td>jumlahAkun, BUNGA</td></tr><tr><td>static final</td><td>Class, tak berubah</td><td>NamaClass.NAMA</td><td>Math.PI</td></tr></tbody></table>
+<h2 id="urutan-inisialisasi">Urutan inisialisasi</h2>
+<figure class="codebox"><span class="codefile">Main.java</span><pre data-lang="java"><code>class Contoh {
+    static { System.out.println(&quot;1. blok static (sekali saat class dimuat)&quot;); }
+    int x = inisialisasi(&quot;2. inisialisasi atribut&quot;);
+    { System.out.println(&quot;3. blok inisialisasi instance&quot;); }
+
+    Contoh() { System.out.println(&quot;4. badan konstruktor&quot;); }
+
+    static int inisialisasi(String pesan) { System.out.println(pesan); return 1; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(&quot;-- objek pertama&quot;);
+        new Contoh();
+        System.out.println(&quot;-- objek kedua&quot;);
+        new Contoh();
+    }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>-- objek pertama
+1. blok static (sekali saat class dimuat)
+2. inisialisasi atribut
+3. blok inisialisasi instance
+4. badan konstruktor
+-- objek kedua
+2. inisialisasi atribut
+3. blok inisialisasi instance
+4. badan konstruktor</code></pre><figcaption>Blok static hanya berjalan sekali saat class pertama kali dipakai; sisanya berjalan setiap kali objek dibuat.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Konstruktor memiliki tipe kembalian?","options":["void","Tidak punya","Nama class"],"answer":1,"why":"Bila diberi tipe kembalian, ia menjadi method biasa."},{"q":"Kapan konstruktor bawaan (tanpa parameter) hilang?","options":["Saat kita menulis konstruktor lain","Tidak pernah","Saat memakai static"],"answer":0,"why":"Java hanya membuatkannya jika tidak ada konstruktor sama sekali."},{"q":"Atribut static dimiliki oleh...","options":["Setiap objek","Class","Method main saja"],"answer":1,"why":"Hanya ada satu salinan untuk seluruh class."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan validasi di konstruktor agar ipk di luar 0 sampai 4 melempar IllegalArgumentException.</summary><div><code>if (ipk < 0 || ipk > 4) throw new IllegalArgumentException("ipk tidak valid");</code></div></details><details><summary>2. Mengapa method static tidak bisa memakai this?</summary><div>Method static tidak terikat pada objek tertentu sehingga tidak ada objek "saat ini".</div></details><details><summary>3. Tulis class dengan penghitung id otomatis berurutan dari 1.</summary><div>Pakai static int berikut = 1 dan this.id = berikut++ pada konstruktor.</div></details><details><summary>4. Berapa kali blok static di Contoh berjalan bila dibuat 100 objek?</summary><div>Sekali.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Konstruktor menyiapkan objek; overloading dan this(...) memusatkan inisialisasi.</li><li>this merujuk ke objek saat ini dan membedakan atribut dari parameter.</li><li>static dimiliki class; static final untuk konstanta.</li><li>Urutan: blok static, inisialisasi atribut dan blok instance, lalu badan konstruktor.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bolehkah konstruktor private?</summary><div>Boleh. Dipakai pada Singleton, kelas utilitas, dan factory method yang mengontrol pembuatan objek.</div></details>
+<details class="faq"><summary>Apakah final berarti objeknya tidak berubah?</summary><div>Tidak. final pada variabel referensi membuat referensinya tidak bisa diarahkan ke objek lain, tetapi isi objek tetap bisa berubah.</div></details>
+<details class="faq"><summary>Kapan sebaiknya memakai static?</summary><div>Untuk konstanta, fungsi utilitas tanpa keadaan, dan penghitung milik class. Hindari menyimpan keadaan global yang berubah.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/constructors.html" rel="noopener" target="_blank">Oracle: Providing Constructors for Your Classes</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html" rel="noopener" target="_blank">Oracle: Understanding Class Members</a></li><li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html" rel="noopener" target="_blank">Oracle: Initializing Fields</a></li><li><a href="https://docs.oracle.com/javase/specs/jls/se21/html/index.html" rel="noopener" target="_blank">The Java Language Specification</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/"><img src="/artikel/pengenalan-java-jdk-jvm-dan-program-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Pengenalan Java: JDK, JVM, dan Program Pertama</span></a><a href="/artikel/tipe-data-variabel-dan-operator-java/"><img src="/artikel/tipe-data-variabel-dan-operator-java/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tipe Data, Variabel, dan Operator di Java</span></a><a href="/artikel/kontrol-alur-java-if-switch-for-while/"><img src="/artikel/kontrol-alur-java-if-switch-for-while/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Kontrol Alur Java: if, switch, for, while</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

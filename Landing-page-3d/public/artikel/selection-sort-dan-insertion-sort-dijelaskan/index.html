@@ -44,6 +44,7 @@
 <h1>Selection Sort dan Insertion Sort: Dua Cara Sederhana</h1>
 <p class="lead">Setelah bubble sort, dua algoritma sederhana berikutnya yang sering diajarkan adalah selection sort dan insertion sort. Keduanya sama-sama O(n²) pada kasus umum, tetapi cara berpikirnya berbeda, dan salah satunya sangat berguna di dunia nyata.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Selection Sort dan Insertion Sort: Dua Cara Sederhana" fetchpriority="high"></figure>
 <h2 id="selection-sort-pilih-yang-terkecil">Selection sort: pilih yang terkecil</h2>
 <p>Cari nilai terkecil di seluruh data, tukar dengan elemen pertama. Lalu cari terkecil di sisa data, tukar dengan elemen kedua. Ulangi sampai selesai. Jumlah penukarannya sedikit, tetapi ia selalu memeriksa seluruh sisa data, sehingga tidak diuntungkan oleh data yang sudah hampir urut.</p>
@@ -54,7 +55,7 @@
 <h2 id="perbandingan">Perbandingan</h2>
 <table><thead><tr><th>Hal</th><th>Bubble</th><th>Selection</th><th>Insertion</th></tr></thead><tbody><tr><td>Penukaran</td><td>Banyak</td><td>Paling sedikit</td><td>Sedang (pergeseran)</td></tr><tr><td>Data hampir urut</td><td>Cepat bila ada penanda berhenti</td><td>Tetap lambat</td><td>Sangat cepat</td></tr><tr><td>Stabil</td><td>Ya</td><td>Tidak (versi umum)</td><td>Ya</td></tr><tr><td>Kompleksitas rata-rata</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td></tr><tr><td>Dipakai nyata</td><td>Hampir tidak</td><td>Jarang</td><td>Ya, untuk data kecil dan hampir urut</td></tr></tbody></table>
 <h2 id="kode-python">Kode Python</h2>
-<pre><code>def selection_sort(a):
+<figure class="codebox"><pre><code>def selection_sort(a):
     for i in range(len(a) - 1):
         m = i
         for j in range(i + 1, len(a)):
@@ -70,7 +71,7 @@ def insertion_sort(a):
             a[j + 1] = a[j]   # geser ke kanan
             j -= 1
         a[j + 1] = x
-    return a</code></pre>
+    return a</code></pre></figure>
 <div class="callout info"><b>Fakta menarik</b><p>Algoritma pengurutan canggih seperti Timsort (dipakai oleh sorted() di Python) memakai insertion sort untuk potongan kecil, karena pada ukuran kecil ia sangat efisien.</p></div>
 <div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Algoritma yang paling cepat untuk data yang hampir urut?","options":["Selection sort","Insertion sort","Semuanya sama"],"answer":1,"why":"Insertion sort hanya menggeser sedikit."},{"q":"Selection sort dikenal karena...","options":["Jumlah penukaran yang sedikit","Selalu O(n)","Hanya untuk angka negatif"],"answer":0,"why":"Paling banyak n-1 penukaran."}]}</script></div>
 <h2 id="tanya-jawab">Tanya jawab</h2>

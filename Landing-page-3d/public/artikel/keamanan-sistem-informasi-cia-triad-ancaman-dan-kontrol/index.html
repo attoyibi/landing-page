@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol</title>
+<meta name="description" content="Pelajari keamanan informasi: CIA triad, ancaman dan kontrol, demo SQL injection dan penyimpanan kata sandi, least privilege, dan pertahanan berlapis.">
+<meta name="keywords" content="keamanan informasi, CIA triad, SQL injection, autentikasi, OWASP">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/">
+<meta property="og:title" content="Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol">
+<meta property="og:description" content="Pelajari keamanan informasi: CIA triad, ancaman dan kontrol, demo SQL injection dan penyimpanan kata sandi, least privilege, dan pertahanan berlapis.">
+<meta property="og:image" content="https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Sistem Informasi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol">
+<meta name="twitter:description" content="Pelajari keamanan informasi: CIA triad, ancaman dan kontrol, demo SQL injection dan penyimpanan kata sandi, least privilege, dan pertahanan berlapis.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol","description":"Pelajari keamanan informasi: CIA triad, ancaman dan kontrol, demo SQL injection dan penyimpanan kata sandi, least privilege, dan pertahanan berlapis.","image":["https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"keamanan informasi, CIA triad, SQL injection, autentikasi, OWASP","articleSection":"Sistem Informasi","wordCount":406,"mainEntityOfPage":"https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol","item":"https://muchson.web.id/artikel/keamanan-sistem-informasi-cia-triad-ancaman-dan-kontrol/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu zero trust?","acceptedAnswer":{"@type":"Answer","text":"Pendekatan yang tidak mempercayai pengguna atau perangkat hanya karena berada di jaringan internal; setiap permintaan diverifikasi."}},{"@type":"Question","name":"Apakah antivirus cukup?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Ia hanya satu lapisan; pembaruan, MFA, cadangan, dan kesadaran pengguna sama pentingnya."}},{"@type":"Question","name":"Dari mana belajar lebih lanjut?","acceptedAnswer":{"@type":"Answer","text":"OWASP Top 10, NIST Cybersecurity Framework, dan latihan legal seperti OWASP Juice Shop atau platform CTF."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#cia-triad">CIA triad</a></li><li><a href="#istilah-yang-sering-tertukar">Istilah yang sering tertukar</a></li><li><a href="#demo-1-sql-injection">Demo 1: SQL injection</a></li><li><a href="#demo-2-menyimpan-kata-sandi">Demo 2: menyimpan kata sandi</a></li><li><a href="#kontrol-berlapis">Kontrol berlapis</a></li><li><a href="#ancaman-umum">Ancaman umum</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a></p>
+<a class="cat" href="/artikel/kategori/sistem-informasi/">Sistem Informasi</a>
+<h1>Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol</h1>
+<p class="lead">Keamanan bukan produk yang dipasang di akhir, melainkan sifat yang dirancang sejak awal. Materi ini memberi kerangka berpikir (CIA triad, ancaman, kerentanan, kontrol) lalu memperagakan dua kelemahan paling klasik, SQL injection dan penyimpanan kata sandi, dengan kode yang dijalankan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> konsep SI, arsitektur SI</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Keamanan Sistem Informasi: CIA Triad, Ancaman, dan Kontrol" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan kerahasiaan, integritas, dan ketersediaan (CIA)</li><li>membedakan aset, ancaman, kerentanan, risiko, dan kontrol</li><li>memperagakan SQL injection dan pencegahannya dengan kueri berparameter</li><li>menjelaskan penyimpanan kata sandi yang aman (hash + salt)</li><li>menerapkan least privilege, pertahanan berlapis, dan autentikasi multifaktor</li></ul></div>
+<h2 id="cia-triad">CIA triad</h2>
+<div data-w="cards"><script type="application/json">{"title":"Tiga tujuan keamanan informasi (ketuk kartu)","items":[{"tag":"Confidentiality","front":"Kerahasiaan","backTag":"Arti","back":"Hanya pihak berwenang yang dapat membaca. Kontrol: autentikasi, otorisasi, enkripsi. Pelanggaran: kebocoran data pelanggan."},{"tag":"Integrity","front":"Integritas","backTag":"Arti","back":"Data tidak berubah tanpa izin dan dapat dipercaya. Kontrol: hash, tanda tangan digital, log audit. Pelanggaran: nilai diubah oleh peretas."},{"tag":"Availability","front":"Ketersediaan","backTag":"Arti","back":"Sistem dan data dapat diakses saat dibutuhkan. Kontrol: redundansi, cadangan, perlindungan DDoS. Pelanggaran: ransomware mengunci data."}]}</script></div>
+<h2 id="istilah-yang-sering-tertukar">Istilah yang sering tertukar</h2>
+<table><thead><tr><th>Istilah</th><th>Arti</th><th>Contoh</th></tr></thead><tbody><tr><td>Aset</td><td>Sesuatu yang berharga</td><td>Basis data pelanggan</td></tr><tr><td>Ancaman</td><td>Penyebab potensial kerugian</td><td>Penyerang, malware, bencana, kesalahan manusia</td></tr><tr><td>Kerentanan</td><td>Kelemahan yang dapat dimanfaatkan</td><td>Perangkat lunak belum di-patch, kata sandi lemah</td></tr><tr><td>Risiko</td><td>Kemungkinan × dampak ancaman memanfaatkan kerentanan</td><td>Peluang kebocoran data dikali kerugiannya</td></tr><tr><td>Kontrol</td><td>Tindakan mengurangi risiko</td><td>Firewall, pelatihan, MFA, cadangan</td></tr></tbody></table>
+<h2 id="demo-1-sql-injection">Demo 1: SQL injection</h2>
+<p>SQL injection terjadi ketika masukan pengguna disambung langsung ke kueri sehingga dapat mengubah makna kueri. Kelemahan ini konsisten berada dalam daftar risiko teratas OWASP selama bertahun-tahun.</p>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE pengguna (nama TEXT, sandi TEXT, peran TEXT);
+INSERT INTO pengguna VALUES ('ani','rahasia123','mahasiswa'),('admin','sangat-rahasia','admin');
+&quot;&quot;&quot;)
+
+def login_rentan(nama, sandi):
+    sql = f&quot;SELECT nama, peran FROM pengguna WHERE nama = '{nama}' AND sandi = '{sandi}'&quot;     # menyambung string: BERBAHAYA
+    return db.execute(sql).fetchall()
+
+def login_aman(nama, sandi):
+    return db.execute(&quot;SELECT nama, peran FROM pengguna WHERE nama = ? AND sandi = ?&quot;, (nama, sandi)).fetchall()   # kueri berparameter
+
+print(&quot;normal           :&quot;, login_rentan(&quot;ani&quot;, &quot;rahasia123&quot;))
+print(&quot;salah sandi      :&quot;, login_rentan(&quot;ani&quot;, &quot;salah&quot;))
+serangan = &quot;' OR '1'='1&quot;
+print(&quot;injection        :&quot;, login_rentan(&quot;admin&quot;, serangan))      # masuk sebagai admin TANPA sandi
+print(&quot;aman, diserang   :&quot;, login_aman(&quot;admin&quot;, serangan))
+print(&quot;aman, sah        :&quot;, login_aman(&quot;ani&quot;, &quot;rahasia123&quot;))</code></pre><pre class="runout" data-lang="keluaran"><code>normal           : [('ani', 'mahasiswa')]
+salah sandi      : []
+injection        : [('ani', 'mahasiswa'), ('admin', 'admin')]
+aman, diserang   : []
+aman, sah        : [('ani', 'mahasiswa')]</code></pre><figcaption>Pada versi rentan, teks "OR 1=1" menjadi bagian dari perintah SQL sehingga kondisi sandi selalu benar. Pada kueri berparameter, masukan hanya dianggap data, bukan kode.</figcaption></figure>
+<div class="callout good"><b>Pertahanan</b><p>Pencegahan utama: <b>kueri berparameter (prepared statement)</b>, validasi dan pembersihan masukan sebagai lapisan tambahan, akun basis data dengan hak minimum, dan pesan kesalahan yang tidak membocorkan struktur basis data.</p></div>
+<h2 id="demo-2-menyimpan-kata-sandi">Demo 2: menyimpan kata sandi</h2>
+<figure class="codebox"><pre data-lang="python"><code>import hashlib, hmac, os
+
+def hash_tanpa_garam(sandi):
+    return hashlib.sha256(sandi.encode()).hexdigest()
+
+# dua pengguna dengan sandi sama menghasilkan hash sama -&gt; mudah ditebak bila bocor
+print(&quot;tanpa garam:&quot;, hash_tanpa_garam(&quot;password1&quot;)[:16], hash_tanpa_garam(&quot;password1&quot;)[:16])
+
+def buat_hash(sandi):
+    garam = os.urandom(16)                                                    # acak per pengguna
+    h = hashlib.pbkdf2_hmac(&quot;sha256&quot;, sandi.encode(), garam, 200_000)         # lambat disengaja
+    return garam.hex() + &quot;:&quot; + h.hex()
+
+def cocok(sandi, tersimpan):
+    garam_hex, h_hex = tersimpan.split(&quot;:&quot;)
+    h = hashlib.pbkdf2_hmac(&quot;sha256&quot;, sandi.encode(), bytes.fromhex(garam_hex), 200_000)
+    return hmac.compare_digest(h.hex(), h_hex)                                 # perbandingan waktu-tetap
+
+a, b = buat_hash(&quot;password1&quot;), buat_hash(&quot;password1&quot;)
+print(&quot;dengan garam: dua hash sama?&quot;, a == b)
+print(&quot;verifikasi benar:&quot;, cocok(&quot;password1&quot;, a), &quot; salah:&quot;, cocok(&quot;salah&quot;, a))</code></pre><pre class="runout" data-lang="keluaran"><code>tanpa garam: 0b14d501a594442a 0b14d501a594442a
+dengan garam: dua hash sama? False
+verifikasi benar: True  salah: False</code></pre><figcaption>Pakai fungsi hash khusus kata sandi yang lambat dan bergaram (bcrypt, scrypt, Argon2, atau PBKDF2). Jangan pernah menyimpan kata sandi apa adanya atau dengan SHA-256 polos.</figcaption></figure>
+<div data-w="password"><script type="application/json">{"title":"Seberapa kuat kata sandi?","desc":"Ketik kata sandi uji (jangan yang asli) dan lihat estimasi entropinya."}</script></div>
+<h2 id="kontrol-berlapis">Kontrol berlapis</h2>
+<figure class="diagram"><svg viewBox="0 0 560 240" role="img" aria-label="Pertahanan berlapis" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Kebijakan dan manusia</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">pelatihan, kesadaran phishing, kebijakan akses</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Perimeter dan jaringan</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">firewall, segmentasi, VPN, pemantauan</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Host dan aplikasi</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">patch, antivirus/EDR, validasi masukan, autentikasi</text><rect x="62" y="176" width="436" height="48" rx="10" fill="#ebe2fd" stroke="#7a3fb4" stroke-width="2"/><text x="280" y="197" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Data</text><text x="280" y="215" text-anchor="middle" font-size="12" fill="#4a5568">enkripsi, cadangan, kontrol akses, log audit</text></svg><figcaption>Defense in depth: bila satu lapisan jebol, lapisan lain masih melindungi.</figcaption></figure>
+<table><thead><tr><th>Prinsip</th><th>Penjelasan</th></tr></thead><tbody><tr><td>Least privilege</td><td>Beri hak akses sekecil mungkin yang diperlukan untuk tugas</td></tr><tr><td>Pemisahan tugas</td><td>Orang yang membuat transaksi berbeda dari yang menyetujuinya</td></tr><tr><td>Autentikasi multifaktor (MFA)</td><td>Sesuatu yang diketahui (sandi) + dimiliki (ponsel/kunci) + adalah (biometrik)</td></tr><tr><td>Gagal aman</td><td>Saat error, sistem menolak akses, bukan membukanya</td></tr><tr><td>Jangan percaya masukan</td><td>Semua data dari luar harus divalidasi</td></tr></tbody></table>
+<h2 id="ancaman-umum">Ancaman umum</h2>
+<ul><li><b>Phishing</b> dan rekayasa sosial: menipu manusia, vektor serangan paling sering berhasil.</li><li><b>Malware dan ransomware</b>: kode jahat; cadangan terpisah (offline) adalah pertahanan terpenting.</li><li><b>XSS (cross-site scripting)</b>: skrip jahat disisipkan ke halaman yang dilihat pengguna lain; cegah dengan meloloskan (escape) keluaran.</li><li><b>DDoS</b>: membanjiri layanan sehingga tidak tersedia.</li><li><b>Ancaman orang dalam</b>: akses sah yang disalahgunakan atau kecerobohan.</li><li><b>Rantai pasok</b>: kerentanan pada pustaka atau penyedia yang Anda pakai.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pelanggaran integritas adalah...","options":["Data diubah tanpa izin","Data dibaca pihak tak berwenang","Sistem tak bisa diakses"],"answer":0,"why":"Integritas menjaga keaslian data."},{"q":"Cara utama mencegah SQL injection?","options":["Kueri berparameter","Menyembunyikan tabel","Memperpanjang sandi"],"answer":0,"why":"Memisahkan kode dari data."},{"q":"Mengapa kata sandi di-hash dengan garam?","options":["Agar hash yang sama tidak mengungkap sandi yang sama dan serangan tabel pelangi gagal","Agar lebih pendek","Agar dapat didekripsi"],"answer":0,"why":"Garam acak per pengguna."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Identifikasi aset, ancaman, kerentanan, dan kontrol: "Laptop dosen berisi data nilai dicuri karena tidak dienkripsi."</summary><div>Aset: data nilai; ancaman: pencurian; kerentanan: tidak dienkripsi; kontrol: enkripsi disk, kebijakan penyimpanan.</div></details><details><summary>2. Mengapa MFA mengurangi dampak kebocoran kata sandi?</summary><div>Penyerang yang memiliki sandi tetap butuh faktor kedua yang dimiliki pengguna.</div></details><details><summary>3. Beri contoh penerapan least privilege di sistem akademik.</summary><div>Mahasiswa hanya melihat nilainya sendiri; dosen hanya mengisi nilai kelasnya; admin tidak memakai akun super untuk pekerjaan harian.</div></details><details><summary>4. Apa bedanya enkripsi dan hashing?</summary><div>Enkripsi dapat dibalik dengan kunci; hashing satu arah dan dipakai untuk verifikasi.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>CIA: kerahasiaan, integritas, ketersediaan.</li><li>Risiko = ancaman memanfaatkan kerentanan pada aset; kontrol menguranginya.</li><li>SQL injection dicegah dengan kueri berparameter; kata sandi disimpan dengan hash lambat bergaram.</li><li>Pertahanan berlapis, least privilege, dan MFA adalah prinsip dasar.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu zero trust?</summary><div>Pendekatan yang tidak mempercayai pengguna atau perangkat hanya karena berada di jaringan internal; setiap permintaan diverifikasi.</div></details>
+<details class="faq"><summary>Apakah antivirus cukup?</summary><div>Tidak. Ia hanya satu lapisan; pembaruan, MFA, cadangan, dan kesadaran pengguna sama pentingnya.</div></details>
+<details class="faq"><summary>Dari mana belajar lebih lanjut?</summary><div>OWASP Top 10, NIST Cybersecurity Framework, dan latihan legal seperti OWASP Juice Shop atau platform CTF.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://owasp.org/www-project-top-ten/" rel="noopener" target="_blank">OWASP Top 10</a></li><li><a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank">NIST Cybersecurity Framework</a></li><li><a href="https://docs.python.org/3/library/hashlib.html" rel="noopener" target="_blank">Dokumentasi Python: hashlib (pbkdf2_hmac)</a></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" rel="noopener" target="_blank">OWASP Password Storage Cheat Sheet</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/"><img src="/artikel/konsep-dasar-sistem-informasi-data-informasi-dan-komponen/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Konsep Dasar Sistem Informasi: Data, Informasi, Komponen</span></a><a href="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/"><img src="/artikel/jenis-jenis-sistem-informasi-tps-mis-dss-ess-dan-erp/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jenis-Jenis Sistem Informasi: TPS, MIS, DSS, ESS, ERP</span></a><a href="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/"><img src="/artikel/sdlc-siklus-hidup-pengembangan-sistem-waterfall-agile-dan-model-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>SDLC: Waterfall, Agile, dan Model Pengembangan Lain</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin</title>
+<meta name="description" content="Pahami proses dan penjadwalan CPU: bandingkan FCFS, SJF, dan Round Robin dengan simulasi serta perhitungan waiting time dan turnaround time.">
+<meta name="keywords" content="sistem operasi, penjadwalan CPU, round robin, proses, context switch">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/">
+<meta property="og:title" content="Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin">
+<meta property="og:description" content="Pahami proses dan penjadwalan CPU: bandingkan FCFS, SJF, dan Round Robin dengan simulasi serta perhitungan waiting time dan turnaround time.">
+<meta property="og:image" content="https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin">
+<meta name="twitter:description" content="Pahami proses dan penjadwalan CPU: bandingkan FCFS, SJF, dan Round Robin dengan simulasi serta perhitungan waiting time dan turnaround time.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin","description":"Pahami proses dan penjadwalan CPU: bandingkan FCFS, SJF, dan Round Robin dengan simulasi serta perhitungan waiting time dan turnaround time.","image":["https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"sistem operasi, penjadwalan CPU, round robin, proses, context switch","articleSection":"Dasar Informatika","wordCount":350,"mainEntityOfPage":"https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin","item":"https://muchson.web.id/artikel/proses-dan-penjadwalan-cpu-fcfs-sjf-round-robin-dengan-simulasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa beda penjadwalan preemptive dan non-preemptive?","acceptedAnswer":{"@type":"Answer","text":"Preemptive dapat menghentikan proses yang berjalan (kehabisan jatah atau ada yang prioritas lebih tinggi); non-preemptive menunggu proses melepaskan CPU."}},{"@type":"Question","name":"Bagaimana pada multi-core?","acceptedAnswer":{"@type":"Answer","text":"Setiap inti punya antrean dan sistem menyeimbangkan beban serta mempertimbangkan afinitas (menjaga proses di inti yang cache-nya masih hangat)."}},{"@type":"Question","name":"Apa itu real-time scheduling?","acceptedAnswer":{"@type":"Answer","text":"Menjamin tugas selesai sebelum tenggat (misalnya pengendali rem); memakai algoritma seperti Rate Monotonic dan EDF."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#program-proses-thread">Program, proses, thread</a></li><li><a href="#ukuran-kinerja">Ukuran kinerja</a></li><li><a href="#simulasi-tiga-algoritma">Simulasi tiga algoritma</a></li><li><a href="#membandingkan">Membandingkan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin</h1>
+<p class="lead">Komputer Anda menjalankan puluhan proses, tetapi hanya memiliki beberapa inti CPU. Sistem operasi menciptakan ilusi bahwa semuanya berjalan bersamaan dengan bergantian memakai CPU. Cara memilih siapa yang berjalan berikutnya, penjadwalan, memengaruhi responsivitas dan keadilan seluruh sistem.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> arsitektur CPU</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Proses dan Penjadwalan CPU: FCFS, SJF, Round Robin" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan program, proses, dan thread</li><li>menjelaskan status proses dan context switch</li><li>menyebut kriteria penjadwalan: waiting time, turnaround time, response time, throughput</li><li>mensimulasikan FCFS, SJF, dan Round Robin serta menghitung metriknya</li><li>menjelaskan kompromi antar algoritma, termasuk konvoi dan kelaparan (starvation)</li></ul></div>
+<h2 id="program-proses-thread">Program, proses, thread</h2>
+<table><thead><tr><th>Istilah</th><th>Arti</th></tr></thead><tbody><tr><td>Program</td><td>Berkas di disk berisi instruksi (pasif)</td></tr><tr><td>Proses</td><td>Program yang sedang dieksekusi beserta ruang alamat, register, dan sumber dayanya (aktif)</td></tr><tr><td>Thread</td><td>Unit eksekusi di dalam proses; thread dalam satu proses berbagi memori</td></tr></tbody></table>
+<figure class="diagram"><svg viewBox="0 0 640 220" role="img" aria-label="Status proses" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="cyb2o-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="cyb2o-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="cyb2o-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="cyb2o-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="cyb2o-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="100,110 175,110" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#cyb2o-arrow)"/><polyline points="265,110 355,110" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#cyb2o-arrow)"/><rect x="268.7" y="101" width="82.6" height="17" rx="4" fill="#fff" opacity=".92"/><text x="310" y="114" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">dijadwalkan</text><polyline points="373,92 310,50 247,92" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#cyb2o-arrow)"/><rect x="237.2" y="62" width="82.6" height="17" rx="4" fill="#fff" opacity=".92"/><text x="278.5" y="75" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">jatah habis</text><polyline points="379.8,128 330.3,172" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#cyb2o-arrow)"/><rect x="320.3" y="141" width="69.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="355" y="154" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">minta I/O</text><polyline points="289.8,172 240.3,128" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#cyb2o-arrow)"/><rect x="223.7" y="141" width="82.6" height="17" rx="4" fill="#fff" opacity=".92"/><text x="265" y="154" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">I/O selesai</text><polyline points="445,110 525,110" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#cyb2o-arrow)"/><rect x="20" y="92" width="80" height="36" rx="18" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="60" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="60" dy="0">Baru</tspan></text><rect x="175" y="92" width="90" height="36" rx="18" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="220" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="220" dy="0">Siap</tspan></text><rect x="355" y="92" width="90" height="36" rx="18" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="400" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="400" dy="0">Berjalan</tspan></text><rect x="260" y="172" width="100" height="36" rx="18" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="310" y="194.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="310" dy="0">Menunggu I/O</tspan></text><rect x="525" y="92" width="90" height="36" rx="18" fill="#e4f6cc" stroke="#1e5ab2" stroke-width="2"/><text x="570" y="114.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="570" dy="0">Selesai</tspan></text></svg><figcaption>Penjadwal hanya memilih dari antrean proses berstatus Siap.</figcaption></figure>
+<div class="callout info"><b>Biaya perpindahan</b><p><b>Context switch</b>: saat CPU berpindah proses, sistem operasi menyimpan keadaan proses lama (register, PC) dan memuat milik proses baru. Ini memerlukan waktu (mikrodetik) dan mengosongkan cache sebagian, jadi berpindah terlalu sering adalah pemborosan.</p></div>
+<h2 id="ukuran-kinerja">Ukuran kinerja</h2>
+<table><thead><tr><th>Ukuran</th><th>Rumus</th><th>Arti</th></tr></thead><tbody><tr><td>Turnaround time</td><td>selesai − tiba</td><td>Waktu total proses berada di sistem</td></tr><tr><td>Waiting time</td><td>turnaround − burst</td><td>Waktu menunggu di antrean siap</td></tr><tr><td>Response time</td><td>pertama dijalankan − tiba</td><td>Seberapa cepat proses mulai direspons</td></tr><tr><td>Throughput</td><td>jumlah proses selesai / waktu</td><td>Kapasitas kerja</td></tr><tr><td>Utilisasi CPU</td><td>waktu CPU sibuk / total</td><td>Efisiensi pemakaian CPU</td></tr></tbody></table>
+<h2 id="simulasi-tiga-algoritma">Simulasi tiga algoritma</h2>
+<p>Empat proses dengan waktu tiba dan lama kerja (burst): P1 (0, 8), P2 (1, 4), P3 (2, 9), P4 (3, 5). Mari bandingkan.</p>
+<figure class="codebox"><pre data-lang="python"><code>proses = {&quot;P1&quot;: (0, 8), &quot;P2&quot;: (1, 4), &quot;P3&quot;: (2, 9), &quot;P4&quot;: (3, 5)}      # (tiba, burst)
+
+def gantt_teks(gantt):
+    return &quot; &quot;.join(f&quot;[{p} {a}-{b}]&quot; for p, a, b in gantt)
+
+def metrik(gantt):
+    selesai, pertama = {}, {}
+    for p, a, b in gantt:
+        selesai[p] = b; pertama.setdefault(p, a)
+    ta = {p: selesai[p] - proses[p][0] for p in proses}
+    tunggu = {p: ta[p] - proses[p][1] for p in proses}
+    resp = {p: pertama[p] - proses[p][0] for p in proses}
+    n = len(proses)
+    return sum(tunggu.values()) / n, sum(ta.values()) / n, sum(resp.values()) / n
+
+def fcfs():
+    waktu, gantt = 0, []
+    for p, (tiba, burst) in sorted(proses.items(), key=lambda x: x[1][0]):
+        waktu = max(waktu, tiba)
+        gantt.append((p, waktu, waktu + burst)); waktu += burst
+    return gantt
+
+def sjf():                                           # non-preemptive: pilih burst terpendek di antara yang sudah tiba
+    sisa, waktu, gantt = dict(proses), 0, []
+    while sisa:
+        siap = [p for p, (t, b) in sisa.items() if t &lt;= waktu]
+        if not siap:
+            waktu = min(t for t, b in sisa.values()); continue
+        p = min(siap, key=lambda x: sisa[x][1])
+        b = sisa.pop(p)[1]
+        gantt.append((p, waktu, waktu + b)); waktu += b
+    return gantt
+
+def round_robin(q):
+    from collections import deque
+    sisa = {p: b for p, (t, b) in proses.items()}
+    belum = sorted(proses, key=lambda p: proses[p][0])
+    antre, waktu, gantt = deque(), 0, []
+    def masukkan():
+        while belum and proses[belum[0]][0] &lt;= waktu: antre.append(belum.pop(0))
+    masukkan()
+    while antre or belum:
+        if not antre: waktu = proses[belum[0]][0]; masukkan(); continue
+        p = antre.popleft()
+        jalan = min(q, sisa[p])
+        gantt.append((p, waktu, waktu + jalan)); waktu += jalan; sisa[p] -= jalan
+        masukkan()                                    # yang tiba selama jalan masuk lebih dulu
+        if sisa[p] &gt; 0: antre.append(p)
+    return gantt
+
+for nama, g in ((&quot;FCFS&quot;, fcfs()), (&quot;SJF (non-preemptive)&quot;, sjf()), (&quot;Round Robin q=3&quot;, round_robin(3))):
+    w, ta, r = metrik(g)
+    print(f&quot;{nama}\n  {gantt_teks(g)}\n  rata-rata: waiting={w:.2f}  turnaround={ta:.2f}  response={r:.2f}\n&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>FCFS
+  [P1 0-8] [P2 8-12] [P3 12-21] [P4 21-26]
+  rata-rata: waiting=8.75  turnaround=15.25  response=8.75
+
+SJF (non-preemptive)
+  [P1 0-8] [P2 8-12] [P4 12-17] [P3 17-26]
+  rata-rata: waiting=7.75  turnaround=14.25  response=7.75
+
+Round Robin q=3
+  [P1 0-3] [P2 3-6] [P3 6-9] [P4 9-12] [P1 12-15] [P2 15-16] [P3 16-19] [P4 19-21] [P1 21-23] [P3 23-26]
+  rata-rata: waiting=13.50  turnaround=20.00  response=3.00
+</code></pre><figcaption>SJF memberi rata-rata waiting time terkecil (terbukti optimal untuk kasus non-preemptive). Round Robin memberi response time terbaik tetapi rata-rata turnaround lebih besar.</figcaption></figure>
+<h2 id="membandingkan">Membandingkan</h2>
+<table><thead><tr><th>Algoritma</th><th>Cara kerja</th><th>Kelebihan</th><th>Kelemahan</th></tr></thead><tbody><tr><td>FCFS</td><td>Siapa datang dulu dilayani dulu</td><td>Sederhana, adil menurut urutan tiba</td><td>Efek konvoi: proses pendek menunggu di belakang proses panjang</td></tr><tr><td>SJF</td><td>Pilih burst terpendek</td><td>Waiting time rata-rata minimum</td><td>Perlu tahu burst (memperkirakan); proses panjang bisa kelaparan (starvation)</td></tr><tr><td>Round Robin</td><td>Jatah waktu (quantum) bergiliran</td><td>Responsif, adil untuk sistem interaktif</td><td>Quantum terlalu kecil: banyak context switch; terlalu besar: mirip FCFS</td></tr><tr><td>Prioritas</td><td>Prioritas tertinggi dahulu</td><td>Memenuhi kebutuhan khusus (real-time)</td><td>Starvation; perlu aging (menaikkan prioritas seiring waktu)</td></tr></tbody></table>
+<div class="callout info"><b>Di dunia nyata</b><p>Sistem operasi nyata memadukan beberapa ide: Linux memakai <b>Completely Fair Scheduler</b> (CFS) dan, sejak kernel 6.6, EEVDF, yang menjaga keadilan waktu CPU antar proses; Windows memakai antrean prioritas multi-level dengan kenaikan prioritas dinamis bagi proses interaktif.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Algoritma dengan waiting time rata-rata minimum untuk kasus non-preemptive?","options":["SJF","FCFS","Round Robin"],"answer":0,"why":"Mengutamakan pekerjaan pendek."},{"q":"Efek konvoi terjadi pada...","options":["FCFS","Round Robin","SJF"],"answer":0,"why":"Proses panjang menahan proses pendek di belakangnya."},{"q":"Quantum Round Robin yang terlalu kecil menyebabkan...","options":["Banyak context switch","Starvation","Deadlock"],"answer":0,"why":"Biaya perpindahan mendominasi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Hitung waiting time P1 pada FCFS contoh di atas.</summary><div>P1 tiba 0 dan langsung jalan 0–8: waiting time 0.</div></details><details><summary>2. Mengapa response time Round Robin bagus?</summary><div>Setiap proses mendapat jatah CPU dalam waktu singkat sejak tiba, tanpa menunggu proses panjang selesai.</div></details><details><summary>3. Apa itu aging dan masalah apa yang diatasinya?</summary><div>Menaikkan prioritas proses yang lama menunggu untuk mencegah starvation.</div></details><details><summary>4. Mengapa SJF sulit diterapkan murni?</summary><div>Burst berikutnya tidak diketahui; perlu diperkirakan dari riwayat (rata-rata eksponensial).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Proses adalah program yang berjalan; status berpindah antara baru, siap, berjalan, menunggu, selesai.</li><li>Metrik: waiting, turnaround, response time, throughput.</li><li>FCFS sederhana tetapi konvoi; SJF optimal tetapi butuh perkiraan; RR responsif.</li><li>Context switch berbiaya; quantum adalah kompromi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa beda penjadwalan preemptive dan non-preemptive?</summary><div>Preemptive dapat menghentikan proses yang berjalan (kehabisan jatah atau ada yang prioritas lebih tinggi); non-preemptive menunggu proses melepaskan CPU.</div></details>
+<details class="faq"><summary>Bagaimana pada multi-core?</summary><div>Setiap inti punya antrean dan sistem menyeimbangkan beban serta mempertimbangkan afinitas (menjaga proses di inti yang cache-nya masih hangat).</div></details>
+<details class="faq"><summary>Apa itu real-time scheduling?</summary><div>Menjamin tugas selesai sebelum tenggat (misalnya pengendali rem); memakai algoritma seperti Rate Monotonic dan EDF.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/" rel="noopener" target="_blank">Remzi dan Andrea Arpaci-Dusseau, Operating Systems: Three Easy Pieces (OSTEP)</a></li><li>Silberschatz, Galvin, Gagne, Operating System Concepts (Wiley)</li><li>Andrew Tanenbaum dan Herbert Bos, Modern Operating Systems (Pearson)</li><li><a href="https://docs.kernel.org/scheduler/sched-design-CFS.html" rel="noopener" target="_blank">Linux kernel documentation: CFS Scheduler</a></li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

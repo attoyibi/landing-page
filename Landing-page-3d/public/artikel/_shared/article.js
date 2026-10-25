@@ -203,9 +203,38 @@
     /* ---------- sort visualiser ---------- */
     function sortFrames(algo, a0) {
         const a = a0.slice(), f = [], n = a.length; let done = [];
-        const snap = (cmp, note) => f.push({ a: a.slice(), cmp: cmp || [], done: done.slice(), note: note || '' });
+        const snap = (cmp, note, pivot) => f.push({ a: a.slice(), cmp: cmp || [], done: done.slice(), note: note || '', pivot: pivot === undefined ? -1 : pivot });
         snap([], 'Susunan awal.');
-        if (algo === 'bubble') {
+        if (algo === 'merge') {
+            const merge = (lo, mid, hi) => {
+                const L = a.slice(lo, mid + 1), R = a.slice(mid + 1, hi + 1); let i = 0, j = 0, k = lo;
+                while (i < L.length && j < R.length) {
+                    const takeL = L[i] <= R[j];
+                    snap([k], `Gabung bagian [${lo}..${hi}]: bandingkan kiri ${L[i]} dan kanan ${R[j]}, ambil ${takeL ? L[i] : R[j]}.`);
+                    a[k++] = takeL ? L[i++] : R[j++];
+                }
+                while (i < L.length) { a[k++] = L[i++]; snap([k - 1], 'Salin sisa bagian kiri.'); }
+                while (j < R.length) { a[k++] = R[j++]; snap([k - 1], 'Salin sisa bagian kanan.'); }
+                snap([], `Bagian [${lo}..${hi}] sudah terurut.`);
+            };
+            const sortR = (lo, hi) => { if (lo >= hi) return; const mid = (lo + hi) >> 1; sortR(lo, mid); sortR(mid + 1, hi); merge(lo, mid, hi); };
+            sortR(0, n - 1);
+        } else if (algo === 'quick') {
+            const qs = (lo, hi) => {
+                if (lo >= hi) { if (lo === hi) done.push(lo); return; }
+                const p = a[hi]; let i = lo - 1;
+                snap([], `Pilih pivot ${p} (elemen terakhir bagian [${lo}..${hi}]).`, hi);
+                for (let j = lo; j < hi; j++) {
+                    snap([j], `Bandingkan ${a[j]} dengan pivot ${p}.`, hi);
+                    if (a[j] < p) { i++; [a[i], a[j]] = [a[j], a[i]]; snap([i, j], `${a[i]} lebih kecil dari pivot: tukar ke sisi kiri.`, hi); }
+                }
+                [a[i + 1], a[hi]] = [a[hi], a[i + 1]];
+                done.push(i + 1);
+                snap([], `Pivot ${p} menempati posisi akhirnya (indeks ${i + 1}).`);
+                qs(lo, i); qs(i + 2, hi);
+            };
+            qs(0, n - 1);
+        } else if (algo === 'bubble') {
             for (let i = 0; i < n - 1; i++) {
                 for (let j = 0; j < n - 1 - i; j++) {
                     snap([j, j + 1], `Bandingkan ${a[j]} dan ${a[j + 1]}.`);
@@ -242,7 +271,7 @@
         const info = el('div', { class: 'out' });
         const draw = () => {
             const fr = frames[k];
-            bars.innerHTML = fr.a.map((v, i) => `<i class="${fr.done.includes(i) ? 'sorted' : fr.cmp.includes(i) ? 'cmp' : ''}" style="height:${v * 1.5}px" title="${v}"></i>`).join('');
+            bars.innerHTML = fr.a.map((v, i) => `<i class="${fr.pivot === i && !fr.done.includes(i) ? 'pivot' : fr.done.includes(i) ? 'sorted' : fr.cmp.includes(i) ? 'cmp' : ''}" style="height:${v * 1.5}px" title="${v}"></i>`).join('');
             info.innerHTML = `<b>${esc(fr.note)}</b><br><small>Langkah ${k + 1} dari ${frames.length} · ${fr.a.join(', ')}</small>`;
             prev.disabled = k === 0; next.disabled = k === frames.length - 1;
         };
@@ -738,6 +767,298 @@
         const g = el('div', { style: 'display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px' });
         [['Filter (WHERE)', col], ['Operator', op], ['Nilai', val], ['Urutkan (ORDER BY)', ord], ['Arah', dir]].forEach(([l, n]) => { const d = el('div'); d.append(el('label', {}, l), n); g.append(d); });
         body.append(g, sql, res);
+        draw();
+    };
+
+    /* ---------- tracer: step through a program that was really executed at build time ---------- */
+    W.tracer = (body, cfg) => {
+        const lines = cfg.code.split('\n');
+        let k = 0, timer = null;
+        const code = el('div', { class: 'tr-code', role: 'group', 'aria-label': 'Kode program' });
+        const state = el('div', { class: 'tr-state' });
+        const info = el('p', { class: 'wd', style: 'margin:10px 0 0' });
+        const draw = () => {
+            const st = cfg.steps[k];
+            code.innerHTML = lines.map((l, i) => `<div class="${i + 1 === st.line ? 'cur' : ''}"><i>${i + 1}</i>${esc(l) || ' '}</div>`).join('');
+            const cur = $('.cur', code); if (cur && code.scrollHeight > code.clientHeight) cur.scrollIntoView({ block: 'nearest' });
+            const frames = st.stack.map((f, i) => {
+                const rows = Object.entries(f.vars);
+                return `<div class="tr-frame"><h4>${i === st.stack.length - 1 ? '▶ ' : ''}${esc(f.name === '(modul)' ? 'Variabel global' : f.name + '()')}</h4>${rows.length ? `<table>${rows.map(([n, v]) => `<tr><td>${esc(n)}</td><td>${esc(v)}</td></tr>`).join('')}</table>` : '<div style="padding:6px 10px;color:var(--muted)">(belum ada variabel)</div>'}</div>`;
+            }).join('');
+            state.innerHTML = `<b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)">Memori</b><div style="margin-top:6px">${frames}</div><div class="tr-out"><small>Keluaran (print)</small>${esc(st.out) || '<span style="opacity:.5">(belum ada)</span>'}</div>`;
+            info.textContent = st.line === 0 ? `Program selesai. Langkah ${k + 1} dari ${cfg.steps.length}.` : `Langkah ${k + 1} dari ${cfg.steps.length}: akan menjalankan baris ${st.line}.`;
+            prev.disabled = k === 0; next.disabled = k >= cfg.steps.length - 1;
+        };
+        const prev = el('button', { class: 'btn ghost', type: 'button' }, '◀ Mundur');
+        const next = el('button', { class: 'btn', type: 'button' }, 'Maju ▶');
+        const play = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis');
+        const reset = el('button', { class: 'btn ghost', type: 'button' }, 'Ulang');
+        const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Putar otomatis'; };
+        prev.onclick = () => { stop(); k = Math.max(0, k - 1); draw(); };
+        next.onclick = () => { stop(); k = Math.min(cfg.steps.length - 1, k + 1); draw(); };
+        reset.onclick = () => { stop(); k = 0; draw(); };
+        play.onclick = () => {
+            if (timer) return stop();
+            play.textContent = 'Jeda';
+            timer = setInterval(() => { if (k >= cfg.steps.length - 1) return stop(); k++; draw(); }, 700);
+        };
+        const grid = el('div', { class: 'tr-grid' }); grid.append(code, state);
+        const row = el('div', { class: 'row', style: 'margin-top:10px' }); row.append(prev, next, play, reset);
+        body.append(grid, info, row);
+        draw();
+    };
+
+    /* ---------- truth table of a boolean expression (Python syntax: and, or, not) ---------- */
+    W.truth = (body, cfg) => {
+        const inp = el('input', { type: 'text', value: cfg.expr || 'p and not q', class: 'mono', 'aria-label': 'Ekspresi logika' });
+        const out = el('div', { style: 'overflow-x:auto;margin-top:10px' });
+        const draw = () => {
+            const src = inp.value.trim();
+            const okTokens = (src.match(/[A-Za-z_]+/g) || []).every(t => ['and', 'or', 'not', 'xor', 'True', 'False'].includes(t) || /^[a-z]$/i.test(t));
+            if (!src || !okTokens || /[^A-Za-z\s()=!]/.test(src)) { out.innerHTML = '<span style="color:var(--bad)">Gunakan variabel satu huruf (p, q, r), dan, or, not, tanda kurung.</span>'; return; }
+            const vars = [...new Set((src.replace(/\b(and|or|not|True|False|xor)\b/g, ' ').match(/\b[a-z]\b/gi) || []).map(v => v.toLowerCase()))].sort();
+            if (vars.length > 4) { out.innerHTML = '<span style="color:var(--bad)">Maksimal 4 variabel.</span>'; return; }
+            const js = src.replace(/\bxor\b/g, '!=').replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!').replace(/\bTrue\b/g, 'true').replace(/\bFalse\b/g, 'false').replace(/\b([a-z])\b/gi, m => 'v_' + m.toLowerCase());
+            let fn; try { fn = new Function(...vars.map(v => 'v_' + v), 'return !!(' + js + ')'); fn(...vars.map(() => true)); } catch (e) { out.innerHTML = '<span style="color:var(--bad)">Ekspresi belum valid.</span>'; return; }
+            const rows = []; for (let i = 0; i < 1 << vars.length; i++) { const vals = vars.map((_, k) => !!((i >> (vars.length - 1 - k)) & 1)); rows.push([...vals, fn(...vals)]); }
+            const T = v => `<td style="text-align:center;padding:6px 12px;border-bottom:1px solid var(--line);font-weight:${v ? 700 : 400};color:${v ? 'var(--good)' : 'var(--bad)'}">${v ? 'True' : 'False'}</td>`;
+            out.innerHTML = `<table style="display:table;margin:0"><thead><tr>${vars.map(v => `<th style="text-align:center">${v}</th>`).join('')}<th style="text-align:center;background:var(--brand-soft)">${esc(src)}</th></tr></thead><tbody>${rows.map(r => '<tr>' + r.map(T).join('') + '</tr>').join('')}</tbody></table>`;
+        };
+        inp.oninput = draw;
+        const chips = el('div', { class: 'chips' });
+        (cfg.examples || ['p and q', 'p or q', 'not (p and q)', 'not p or not q', 'p and (q or r)', 'p xor q']).forEach(e => { const c = el('button', { class: 'chip', type: 'button' }, esc(e)); c.onclick = () => { inp.value = e; draw(); }; chips.append(c); });
+        body.append(el('label', {}, 'Ekspresi (variabel p, q, r, s)'), inp, chips, out);
+        draw();
+    };
+
+    /* ---------- loopgrid: order in which a nested loop visits (i, j) ---------- */
+    W.loopgrid = (body, cfg) => {
+        const R = cfg.rows || 4, C = cfg.cols || 5;
+        let k = 0, timer = null;
+        const grid = el('div', { style: `display:grid;grid-template-columns:repeat(${C},1fr);gap:4px;max-width:${C * 58}px` });
+        const info = el('div', { class: 'out' });
+        const draw = () => {
+            grid.innerHTML = '';
+            for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) {
+                const n = i * C + j, on = n === k - 1, done = n < k - 1;
+                const c = el('div', { style: `border:1px solid var(--line);border-radius:8px;padding:8px 0;text-align:center;font-size:13px;background:${on ? '#ffd166' : done ? 'var(--brand-soft)' : '#fff'}` }, `<b>${i},${j}</b><br><small style="color:var(--muted)">${n < k ? n + 1 : '·'}</small>`);
+                grid.append(c);
+            }
+            info.innerHTML = k === 0 ? `Baris luar <code>i</code> berjalan ${R} kali, baris dalam <code>j</code> berjalan ${C} kali tiap putaran luar. Total <b>${R * C}</b> eksekusi badan perulangan.` : `Eksekusi ke-<b>${k}</b> dari ${R * C}: <code>i = ${Math.floor((k - 1) / C)}</code>, <code>j = ${(k - 1) % C}</code>. Perulangan dalam selesai penuh dulu sebelum <code>i</code> bertambah.`;
+        };
+        const next = el('button', { class: 'btn', type: 'button' }, 'Langkah ▶'), play = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis'), reset = el('button', { class: 'btn ghost', type: 'button' }, 'Ulang');
+        const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Putar otomatis'; };
+        next.onclick = () => { stop(); k = Math.min(R * C, k + 1); draw(); };
+        reset.onclick = () => { stop(); k = 0; draw(); };
+        play.onclick = () => { if (timer) return stop(); play.textContent = 'Jeda'; timer = setInterval(() => { if (k >= R * C) return stop(); k++; draw(); }, 250); };
+        const row = el('div', { class: 'row', style: 'margin-top:10px' }); row.append(next, play, reset);
+        body.append(el('div', { class: 'mono', style: 'margin-bottom:8px' }, `for i in range(${R}): for j in range(${C}): ...`), grid, info, row);
+        draw();
+    };
+
+    /* ---------- slice: how s[start:stop:step] picks characters ---------- */
+    W.slice = (body, cfg) => {
+        const s = el('input', { type: 'text', value: cfg.text || 'PYTHON', maxlength: 16, class: 'mono', 'aria-label': 'String' });
+        const a = el('input', { type: 'text', value: cfg.start ?? '', placeholder: 'awal', 'aria-label': 'Awal', class: 'mono' });
+        const b = el('input', { type: 'text', value: cfg.stop ?? '', placeholder: 'akhir', 'aria-label': 'Akhir', class: 'mono' });
+        const c = el('input', { type: 'text', value: cfg.step ?? '', placeholder: 'langkah', 'aria-label': 'Langkah', class: 'mono' });
+        const out = el('div', { class: 'out' });
+        const toI = v => (v.trim() === '' ? null : Number.isInteger(Number(v)) ? Number(v) : NaN);
+        const draw = () => {
+            const t = s.value, n = t.length, A = toI(a.value), B = toI(b.value), Cc = toI(c.value);
+            if ([A, B, Cc].some(Number.isNaN) || Cc === 0) { out.innerHTML = '<span style="color:var(--bad)">Awal, akhir, dan langkah harus bilangan bulat; langkah tidak boleh 0.</span>'; return; }
+            const step = Cc ?? 1; let idx = [];
+            const norm = (v, d) => (v === null ? d : v < 0 ? Math.max(step < 0 ? -1 : 0, v + n) : Math.min(v, step < 0 ? n - 1 : n));
+            let i = norm(A, step > 0 ? 0 : n - 1); const stop = norm(B, step > 0 ? n : -1);
+            for (; step > 0 ? i < stop : i > stop; i += step) if (i >= 0 && i < n) idx.push(i);
+            const cell = (ch, k) => `<div style="text-align:center"><div style="font-size:11px;color:var(--muted)">${k - n}</div><div style="border:2px solid ${idx.includes(k) ? '#e09b00' : 'var(--line)'};background:${idx.includes(k) ? '#fff1d6' : '#fff'};border-radius:8px;padding:6px 0;min-width:30px;font-weight:700" class="mono">${esc(ch)}</div><div style="font-size:11px;color:var(--brand)">${k}</div></div>`;
+            out.innerHTML = `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">${[...t].map((ch, k) => cell(ch, k)).join('')}</div><div class="mono">s[${a.value}:${b.value}${c.value !== '' ? ':' + c.value : ''}] = <b>'${esc(idx.map(k => t[k]).join(''))}'</b></div><small style="color:var(--muted)">Angka biru di bawah = indeks positif, abu-abu di atas = indeks negatif.</small>`;
+        };
+        [s, a, b, c].forEach(x => (x.oninput = draw));
+        const g = el('div', { style: 'display:grid;grid-template-columns:repeat(4,1fr);gap:8px' });
+        [['String', s], ['Awal', a], ['Akhir (tidak termasuk)', b], ['Langkah', c]].forEach(([l, n]) => { const d = el('div'); d.append(el('label', {}, l), n); g.append(d); });
+        body.append(g, out);
+        draw();
+    };
+
+    /* ---------- linked: singly linked list with operations and step counts ---------- */
+    W.linked = (body, cfg) => {
+        let vals = (cfg.values || [3, 8, 5]).slice(), hl = -1, hasTail = false, busy = false;
+        const view = el('div', { class: 'out', style: 'overflow-x:auto;min-height:110px' });
+        const info = el('div', { class: 'out', style: 'margin-top:8px' });
+        const inp = el('input', { type: 'number', value: 7, 'aria-label': 'Nilai', style: 'max-width:110px' });
+        const draw = () => {
+            const node = (v, i) => `<div style="display:flex;align-items:center"><div style="border:2px solid ${i === hl ? '#e09b00' : '#1e5ab2'};border-radius:8px;display:flex;background:${i === hl ? '#fff1d6' : '#e8f1ff'}"><span style="padding:10px 14px;font-weight:700" class="mono">${v}</span><span style="padding:10px 8px;border-left:2px solid ${i === hl ? '#e09b00' : '#1e5ab2'};color:#4a5568">•</span></div><span style="margin:0 4px;color:#4a5568">→</span></div>`;
+            view.innerHTML = `<div style="display:flex;align-items:center;flex-wrap:nowrap;gap:0"><div style="margin-right:8px;font-size:12px;font-weight:700;color:var(--brand)">head →</div>${vals.map(node).join('') || ''}<div class="mono" style="padding:8px 10px;border:2px dashed #9aa3b5;border-radius:8px;color:#4a5568">None</div>${hasTail && vals.length ? '<div style="margin-left:8px;font-size:12px;font-weight:700;color:var(--good)">← tail</div>' : ''}</div>`;
+        };
+        const say = (t) => { info.innerHTML = t; };
+        const animate = (upto, done) => { busy = true; let i = 0; const t = setInterval(() => { hl = i; draw(); if (i >= upto) { clearInterval(t); busy = false; setTimeout(() => { hl = -1; draw(); }, 600); done && done(); } i++; }, 350); };
+        const num = () => { const v = Number(inp.value); return Number.isFinite(v) ? v : 0; };
+        const btn = (label, fn, ghost) => { const b = el('button', { class: 'btn' + (ghost ? ' ghost' : ''), type: 'button' }, label); b.onclick = () => { if (!busy) fn(); }; return b; };
+        const row = el('div', { class: 'row', style: 'margin:10px 0' });
+        row.append(inp,
+            btn('Sisip di depan', () => { vals.unshift(num()); draw(); say('<b>Sisip di depan (head)</b>: buat node baru, arahkan ke head lama, lalu head menunjuk node baru. <b>1 langkah, O(1)</b>, tak peduli panjang list.'); }),
+            btn('Sisip di belakang', () => { const n = vals.length; vals.push(num()); if (hasTail) { draw(); say('<b>Sisip di belakang dengan pointer tail</b>: tail.next diarahkan ke node baru. <b>1 langkah, O(1)</b>.'); } else { animate(Math.max(0, n - 1), () => say(`<b>Sisip di belakang tanpa tail</b>: harus menelusuri dari head sampai node terakhir: <b>${n} langkah, O(n)</b>.`)); draw(); } }),
+            btn('Hapus nilai', () => { const v = num(), i = vals.indexOf(v); if (i < 0) return say(`Nilai ${v} tidak ada di list. Pencarian memeriksa semua ${vals.length} node: O(n).`); animate(i, () => { vals.splice(i, 1); draw(); say(`<b>Hapus ${v}</b>: telusuri sampai node sebelumnya (${i + 1} langkah), lalu sambungkan ke node sesudahnya. Pencarian O(n), pengaitan ulang O(1).`); }); }, true),
+            btn('Cari nilai', () => { const v = num(), i = vals.indexOf(v); if (i < 0) { animate(vals.length - 1, () => say(`Nilai ${v} <b>tidak ditemukan</b> setelah memeriksa ${vals.length} node. O(n).`)); } else animate(i, () => say(`Nilai ${v} ditemukan di indeks ${i} setelah <b>${i + 1} langkah</b>. Linked list tidak bisa melompat ke indeks, tidak seperti array: akses O(n).`)); }, true));
+        const chk = el('label', { style: 'display:flex;gap:8px;align-items:center;font-weight:400' }, '<input type="checkbox"> Simpan pointer tail (sisip belakang jadi O(1))');
+        $('input', chk).onchange = e => { hasTail = e.target.checked; draw(); };
+        body.append(view, row, chk, info);
+        draw(); say('Coba sisip dan cari. Perhatikan jumlah langkah penelusuran pada tiap operasi.');
+    };
+
+    /* ---------- bst: binary search tree, insert / search / traversals ---------- */
+    W.bst = (body, cfg) => {
+        let root = null, hi = new Set(), seq = [], busy = false;
+        const ins = (n, v) => { if (!n) return { v, l: null, r: null }; if (v < n.v) n.l = ins(n.l, v); else if (v > n.v) n.r = ins(n.r, v); return n; };
+        const height = n => (n ? 1 + Math.max(height(n.l), height(n.r)) : 0);
+        const svg = el('div', { class: 'diagram', style: 'margin:10px 0;padding:8px;overflow-x:auto' });
+        const info = el('div', { class: 'out' });
+        const inp = el('input', { type: 'number', value: 45, 'aria-label': 'Nilai', style: 'max-width:110px' });
+        const layout = () => { const pos = new Map(); let x = 0; const go = (n, d) => { if (!n) return; go(n.l, d + 1); pos.set(n, [x++, d]); go(n.r, d + 1); }; go(root, 0); return pos; };
+        const draw = () => {
+            if (!root) { svg.innerHTML = '<p style="text-align:center;color:var(--muted);margin:30px 0">Pohon masih kosong. Sisipkan nilai.</p>'; return; }
+            const pos = layout(), W2 = Math.max(300, pos.size * 46 + 20), H2 = height(root) * 62 + 20; let s = `<svg viewBox="0 0 ${W2} ${H2}" style="min-width:${Math.min(W2, 700)}px" role="img" aria-label="Pohon biner pencarian">`;
+            const P = n => [20 + pos.get(n)[0] * 46 + 12, 30 + pos.get(n)[1] * 62];
+            pos.forEach((_, n) => { [n.l, n.r].forEach(c => { if (c) { const a = P(n), b = P(c); s += `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#8a94a8" stroke-width="2"/>`; } }); });
+            pos.forEach((_, n) => { const [x, y] = P(n), on = hi.has(n.v); s += `<circle cx="${x}" cy="${y}" r="17" fill="${on ? '#ffd166' : '#e8f1ff'}" stroke="#1e5ab2" stroke-width="2"/><text x="${x}" y="${y + 5}" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33">${n.v}</text>`; });
+            svg.innerHTML = s + '</svg>';
+        };
+        const say = t => { info.innerHTML = t; };
+        const stats = () => `Jumlah node: <b>${seq.length}</b>, tinggi pohon: <b>${height(root)}</b>.`;
+        const run = (order, label, done) => { busy = true; let i = 0; hi = new Set(); const t = setInterval(() => { if (i >= order.length) { clearInterval(t); busy = false; setTimeout(() => { hi = new Set(); draw(); }, 500); return done && done(); } hi = new Set([order[i]]); draw(); i++; }, 450); };
+        const walk = { inorder: n => (n ? [...walk.inorder(n.l), n.v, ...walk.inorder(n.r)] : []), preorder: n => (n ? [n.v, ...walk.preorder(n.l), ...walk.preorder(n.r)] : []), postorder: n => (n ? [...walk.postorder(n.l), ...walk.postorder(n.r), n.v] : []), level: n => { const out = [], q = n ? [n] : []; while (q.length) { const c = q.shift(); out.push(c.v); if (c.l) q.push(c.l); if (c.r) q.push(c.r); } return out; } };
+        const num = () => Number(inp.value);
+        const btn = (label, fn, ghost) => { const b = el('button', { class: 'btn' + (ghost ? ' ghost' : ''), type: 'button' }, label); b.onclick = () => { if (!busy) fn(); }; return b; };
+        const insert = v => { if (!Number.isFinite(v) || seq.includes(v)) return false; seq.push(v); root = ins(root, v); return true; };
+        const row = el('div', { class: 'row', style: 'margin:6px 0' });
+        row.append(inp,
+            btn('Sisipkan', () => { const v = num(); if (insert(v)) { draw(); say(`Sisip ${v}: bandingkan dengan akar, ke kiri bila lebih kecil, ke kanan bila lebih besar, sampai menemukan tempat kosong. ${stats()}`); } else say('Nilai tidak valid atau sudah ada (BST ini tidak menyimpan duplikat).'); }),
+            btn('Cari', () => { const v = num(); const path = []; let n = root; while (n) { path.push(n.v); if (v === n.v) break; n = v < n.v ? n.l : n.r; } run(path, 'cari', () => say(path[path.length - 1] === v ? `<b>${v}</b> ditemukan setelah ${path.length} perbandingan (jalur: ${path.join(' → ')}). Pohon seimbang membuat jalurnya pendek: O(log n).` : `<b>${v}</b> tidak ada. Jalur yang diperiksa: ${path.join(' → ') || '(kosong)'}.`)); }, true),
+            btn('Isi contoh', () => { root = null; seq = []; [50, 30, 70, 20, 40, 60, 80].forEach(insert); draw(); say(`Pohon seimbang. ${stats()}`); }, true),
+            btn('Isi menaik (buruk)', () => { root = null; seq = []; [10, 20, 30, 40, 50, 60].forEach(insert); draw(); say(`Sisipan terurut membuat pohon melengkung menjadi "linked list": tinggi = jumlah node, pencarian O(n). ${stats()}`); }, true),
+            btn('Kosongkan', () => { root = null; seq = []; draw(); say('Dikosongkan.'); }, true));
+        const trow = el('div', { class: 'row', style: 'margin:6px 0' });
+        [['inorder', 'In-order (kiri, akar, kanan)'], ['preorder', 'Pre-order (akar, kiri, kanan)'], ['postorder', 'Post-order (kiri, kanan, akar)'], ['level', 'Per tingkat (BFS)']].forEach(([k, l]) => trow.append(btn(l, () => { if (!root) return; const o = walk[k](root); run(o, k, () => say(`<b>${l}</b>: ${o.join(', ')}${k === 'inorder' ? '. Perhatikan: hasil in-order BST selalu terurut menaik.' : ''}`)); }, true)));
+        body.append(row, svg, trow, info);
+        [50, 30, 70, 20, 40, 60, 80].forEach(insert); draw(); say(`Pohon contoh. ${stats()} Coba sisip nilai atau jalankan penelusuran.`);
+    };
+
+    /* ---------- graphsearch: BFS / DFS step by step on a small graph ---------- */
+    W.graphsearch = (body, cfg) => {
+        const N = cfg.nodes, E = cfg.edges, adj = {}; N.forEach(n => (adj[n.id] = [])); E.forEach(([a, b]) => { adj[a].push(b); adj[b].push(a); }); Object.values(adj).forEach(l => l.sort());
+        let mode = 'bfs', frames = [], k = 0, timer = null;
+        const build = () => {
+            frames = []; const seen = new Set([cfg.start]), order = []; const store = [cfg.start];
+            frames.push({ cur: null, seen: [...seen], order: [], store: [...store], note: `Mulai dari ${cfg.start}: masukkan ke ${mode === 'bfs' ? 'antrean' : 'tumpukan'}.` });
+            while (store.length) {
+                const u = mode === 'bfs' ? store.shift() : store.pop(); order.push(u);
+                frames.push({ cur: u, seen: [...seen], order: [...order], store: [...store], note: `Ambil ${u} dari ${mode === 'bfs' ? 'depan antrean' : 'puncak tumpukan'} dan kunjungi.` });
+                const nb = mode === 'bfs' ? adj[u] : [...adj[u]].reverse();
+                const added = []; nb.forEach(v => { if (!seen.has(v)) { seen.add(v); store.push(v); added.push(v); } });
+                frames.push({ cur: u, seen: [...seen], order: [...order], store: [...store], note: added.length ? `Tetangga ${u} yang belum dikunjungi (${mode === 'bfs' ? added : [...added].reverse()}) dimasukkan.` : `${u} tidak punya tetangga baru.` });
+            }
+            frames.push({ cur: null, seen: [...seen], order: [...order], store: [], note: `Selesai. Urutan kunjungan: ${order.join(' → ')}.` });
+            k = 0;
+        };
+        const view = el('div', { class: 'diagram', style: 'margin:10px 0' }), info = el('div', { class: 'out' });
+        const draw = () => {
+            const f = frames[k], W2 = Math.max(...N.map(n => n.x)) + 40, H2 = Math.max(...N.map(n => n.y)) + 40;
+            let s = `<svg viewBox="0 0 ${W2} ${H2}" role="img" aria-label="Graf yang dijelajahi">`;
+            E.forEach(([a, b]) => { const A = N.find(n => n.id === a), B = N.find(n => n.id === b); s += `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="#8a94a8" stroke-width="2.5"/>`; });
+            N.forEach(n => { const vis = f.order.includes(n.id), cur = f.cur === n.id, inS = f.store.includes(n.id); s += `<circle cx="${n.x}" cy="${n.y}" r="20" fill="${cur ? '#ffd166' : vis ? '#cfe0fb' : inS ? '#e4f6cc' : '#fff'}" stroke="${cur ? '#e09b00' : '#1e5ab2'}" stroke-width="2.5"/><text x="${n.x}" y="${n.y + 5}" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33">${n.id}</text>`; });
+            view.innerHTML = s + '</svg>';
+            info.innerHTML = `<b>${esc(f.note)}</b><div class="mono" style="margin-top:6px">${mode === 'bfs' ? 'Antrean (depan → belakang)' : 'Tumpukan (dasar → puncak)'}: [${f.store.join(', ')}]<br>Urutan kunjungan: ${f.order.join(', ') || '-'}</div><small style="color:var(--muted)">Kuning = sedang diproses, biru muda = sudah dikunjungi, hijau muda = sudah ditemukan menunggu giliran.</small>`;
+            next.disabled = k >= frames.length - 1; prev.disabled = k === 0;
+        };
+        const chips = el('div', { class: 'chips' });
+        [['bfs', 'BFS (antrean)'], ['dfs', 'DFS (tumpukan)']].forEach(([m, l]) => { const c = el('button', { class: 'chip', type: 'button', 'aria-pressed': m === mode }, l); c.onclick = () => { mode = m; stop(); $$('.chip', chips).forEach(x => x.setAttribute('aria-pressed', x === c)); build(); draw(); }; chips.append(c); });
+        const prev = el('button', { class: 'btn ghost', type: 'button' }, '◀ Mundur'), next = el('button', { class: 'btn', type: 'button' }, 'Maju ▶'), play = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis');
+        const stop = () => { clearInterval(timer); timer = null; play.textContent = 'Putar otomatis'; };
+        prev.onclick = () => { stop(); k--; draw(); }; next.onclick = () => { stop(); k++; draw(); };
+        play.onclick = () => { if (timer) return stop(); play.textContent = 'Jeda'; timer = setInterval(() => { if (k >= frames.length - 1) return stop(); k++; draw(); }, 700); };
+        const row = el('div', { class: 'row', style: 'margin-top:8px' }); row.append(prev, next, play);
+        body.append(chips, view, info, row);
+        build(); draw();
+    };
+
+    /* ---------- hanoi: Tower of Hanoi ---------- */
+    W.hanoi = (body, cfg) => {
+        let n = cfg.n || 3, moves = [], k = 0, timer = null, pegs;
+        const view = el('div', { class: 'diagram', style: 'margin:10px 0' }), info = el('div', { class: 'out' });
+        const r = el('input', { type: 'range', min: 1, max: 6, value: n, 'aria-label': 'Jumlah cakram' }), lab = el('label', {});
+        const solve = (m, a, b, c) => { if (m === 0) return; solve(m - 1, a, c, b); moves.push([a, c, m]); solve(m - 1, b, a, c); };
+        const reset = () => { stop(); moves = []; solve(n, 0, 1, 2); pegs = [Array.from({ length: n }, (_, i) => n - i), [], []]; k = 0; draw(); };
+        const apply = i => { const [a, c] = moves[i]; pegs[c].push(pegs[a].pop()); };
+        const draw = () => {
+            lab.innerHTML = `Jumlah cakram: <b>${n}</b> · langkah minimum 2<sup>${n}</sup> − 1 = <b>${(1 << n) - 1}</b>`;
+            let s = `<svg viewBox="0 0 480 210" role="img" aria-label="Menara Hanoi">`; const names = ['A (asal)', 'B (bantu)', 'C (tujuan)'];
+            pegs.forEach((p, i) => { const cx = 80 + i * 160; s += `<rect x="${cx - 4}" y="40" width="8" height="140" rx="4" fill="#8a94a8"/><rect x="${cx - 70}" y="180" width="140" height="8" rx="4" fill="#4a5568"/><text x="${cx}" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#0f1a33">${names[i]}</text>`; p.forEach((d, h) => { const w = 18 + d * 20, y = 170 - h * 20, last = k > 0 && moves[k - 1][2] === d; s += `<rect x="${cx - w / 2}" y="${y}" width="${w}" height="16" rx="6" fill="${last ? '#ffd166' : ['#1e5ab2', '#1f7a46', '#9a5b00', '#7a3fb4', '#b3261e', '#0b7285'][(d - 1) % 6]}" stroke="#0f1a33" stroke-width="1"/><text x="${cx}" y="${y + 12}" text-anchor="middle" font-size="11" font-weight="700" fill="${last ? '#0f1a33' : '#fff'}">${d}</text>`; }); });
+            view.innerHTML = s + '</svg>';
+            const m = k > 0 ? moves[k - 1] : null;
+            info.innerHTML = m ? `Langkah <b>${k}</b> dari ${moves.length}: pindahkan cakram <b>${m[2]}</b> dari <b>${'ABC'[m[0]]}</b> ke <b>${'ABC'[m[1]]}</b>.` : 'Semua cakram di tiang A. Tujuan: pindahkan semuanya ke tiang C, satu cakram per langkah, tanpa menaruh cakram besar di atas yang lebih kecil.';
+            nx.disabled = k >= moves.length; pv.disabled = k === 0;
+        };
+        const pv = el('button', { class: 'btn ghost', type: 'button' }, '◀ Mundur'), nx = el('button', { class: 'btn', type: 'button' }, 'Maju ▶'), pl = el('button', { class: 'btn ghost', type: 'button' }, 'Putar otomatis');
+        const stop = () => { clearInterval(timer); timer = null; pl.textContent = 'Putar otomatis'; };
+        nx.onclick = () => { stop(); if (k < moves.length) { apply(k); k++; draw(); } };
+        pv.onclick = () => { stop(); if (k > 0) { k--; const [a, c] = moves[k]; pegs[a].push(pegs[c].pop()); draw(); } };
+        pl.onclick = () => { if (timer) return stop(); pl.textContent = 'Jeda'; timer = setInterval(() => { if (k >= moves.length) return stop(); apply(k); k++; draw(); }, 600); };
+        r.oninput = () => { n = Number(r.value); reset(); };
+        const row = el('div', { class: 'row', style: 'margin-top:8px' }); row.append(pv, nx, pl);
+        body.append(lab, r, view, info, row);
+        reset();
+    };
+
+    /* ---------- twos: 8-bit two's complement, bits <-> unsigned <-> signed ---------- */
+    W.twos = (body, cfg) => {
+        const bits = [0, 0, 0, 0, 0, 1, 0, 1];
+        const row = el('div', { class: 'row', style: 'justify-content:center;gap:6px' });
+        const out = el('div', { class: 'out' });
+        const set = u => { u = ((u % 256) + 256) % 256; for (let i = 0; i < 8; i++) bits[i] = (u >> (7 - i)) & 1; };
+        const num = el('input', { type: 'number', min: -128, max: 255, step: 1, 'aria-label': 'Nilai desimal', style: 'max-width:110px' });
+        const neg = el('button', { class: 'btn ghost', type: 'button' }, 'Negasikan (balik bit + 1)');
+        const draw = () => {
+            row.innerHTML = '';
+            bits.forEach((b, i) => {
+                const w = i === 0 ? -128 : Math.pow(2, 7 - i);
+                const c = el('button', { class: 'chip' + (b ? ' on' : ''), type: 'button', style: 'min-width:48px;min-height:64px;flex-direction:column;display:flex;gap:2px;align-items:center', 'aria-pressed': !!b }, `<b style="font-size:20px">${b}</b><small>${w}</small>`);
+                c.onclick = () => { bits[i] = b ? 0 : 1; draw(); };
+                row.append(c);
+            });
+            const u = bits.reduce((a, b) => a * 2 + b, 0), s = bits[0] ? u - 256 : u;
+            num.value = s;
+            out.innerHTML = `<div class="big">${s}</div><small>${bits.join('')} · tanpa tanda: <b>${u}</b> · bertanda (komplemen dua): <b>${s}</b> · heksa: <b>0x${u.toString(16).toUpperCase().padStart(2, '0')}</b><br>bit paling kiri bernilai −128 saat menyala${s === -128 ? ' · nilai terkecil: −128 tidak punya pasangan positif' : ''}</small>`;
+        };
+        num.oninput = () => { const v = parseInt(num.value, 10); if (!isNaN(v)) { set(v); const keep = num.value; draw(); num.value = keep; } };
+        neg.onclick = () => { set(bits.reduce((a, b) => a * 2 + b, 0) ^ 255); set(bits.reduce((a, b) => a * 2 + b, 0) + 1); draw(); };
+        const tools = el('div', { class: 'row', style: 'justify-content:center;margin:10px 0' });
+        tools.append(el('label', {}, 'Nilai desimal: '), num, neg);
+        body.append(el('p', { class: 'wd' }, 'Ketuk bit atau ketik angka −128 sampai 255. Bit paling kiri pada komplemen dua bernilai −128.'), row, tools, out);
+        draw();
+    };
+
+    /* ---------- subnet: IPv4 network calculator ---------- */
+    W.subnet = (body, cfg) => {
+        const ip = el('input', { type: 'text', value: cfg.ip || '192.168.1.130', class: 'mono', 'aria-label': 'Alamat IPv4' });
+        const pre = el('input', { type: 'range', min: 0, max: 32, value: cfg.prefix || 26, 'aria-label': 'Panjang prefiks' });
+        const lbl = el('b');
+        const out = el('div', { class: 'out mono', style: 'white-space:pre-wrap' });
+        const toS = n => [24, 16, 8, 0].map(s => (n >>> s) & 255).join('.');
+        const bin = n => [24, 16, 8, 0].map(s => ((n >>> s) & 255).toString(2).padStart(8, '0')).join('.');
+        const draw = () => {
+            const p = +pre.value; lbl.textContent = '/' + p;
+            const m = ip.value.trim().match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+            if (!m || m.slice(1).some(x => +x > 255)) { out.innerHTML = '<span style="color:var(--bad)">Alamat IPv4 belum valid (contoh: 192.168.1.130).</span>'; return; }
+            const a = ((+m[1] << 24) | (+m[2] << 16) | (+m[3] << 8) | +m[4]) >>> 0;
+            const mask = p === 0 ? 0 : (0xFFFFFFFF << (32 - p)) >>> 0, net = (a & mask) >>> 0, bc = (net | (~mask >>> 0)) >>> 0;
+            const hosts = p >= 31 ? (p === 31 ? 2 : 1) : Math.pow(2, 32 - p) - 2;
+            out.innerHTML = `Alamat      ${esc(toS(a))}\nBiner       ${bin(a)}\nMask        ${toS(mask)}  (/${p})\nBiner mask  ${bin(mask)}\nJaringan    ${toS(net)}\nBroadcast   ${toS(bc)}\nHost pertama ${p >= 31 ? '-' : toS(net + 1)}\nHost terakhir ${p >= 31 ? '-' : toS(bc - 1)}\nJumlah host ${hosts.toLocaleString('id-ID')}`;
+        };
+        ip.oninput = pre.oninput = draw;
+        const r = el('div', { class: 'row', style: 'align-items:center;margin-bottom:10px;gap:10px' });
+        r.append(el('label', {}, 'IPv4: '), ip, el('label', {}, 'Prefiks: '), pre, lbl);
+        body.append(r, out);
         draw();
     };
 

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU</title>
+<meta name="description" content="Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.">
+<meta name="keywords" content="half adder, full adder, ALU, rangkaian kombinasional, arsitektur komputer">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/">
+<meta property="og:title" content="Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU">
+<meta property="og:description" content="Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.">
+<meta property="og:image" content="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Dasar Informatika">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU">
+<meta name="twitter:description" content="Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU","description":"Bangun penjumlah biner dari gerbang: half adder, full adder, ripple-carry 8 bit, pengurangan dengan komplemen dua, dan ALU mini dalam Python.","image":["https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"id","keywords":"half adder, full adder, ALU, rangkaian kombinasional, arsitektur komputer","articleSection":"Dasar Informatika","wordCount":432,"mainEntityOfPage":"https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU","item":"https://muchson.web.id/artikel/dari-gerbang-ke-penjumlah-half-adder-full-adder-dan-alu/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana perkalian dilakukan?","acceptedAnswer":{"@type":"Answer","text":"Dengan geser dan tambah (seperti perkalian manual) atau rangkaian khusus seperti array multiplier dan algoritma Booth."}},{"@type":"Question","name":"Apa bedanya rangkaian kombinasional dan sekuensial?","acceptedAnswer":{"@type":"Answer","text":"Kombinasional: keluaran hanya bergantung masukan saat ini (penjumlah). Sekuensial: ada memori/keadaan (flip-flop, register)."}},{"@type":"Question","name":"Di mana belajar membangun komputer dari gerbang?","acceptedAnswer":{"@type":"Answer","text":"Proyek nand2tetris membimbing dari NAND sampai komputer penuh dengan simulator perangkat keras gratis."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#menjumlahkan-dua-bit">Menjumlahkan dua bit</a></li><li><a href="#full-adder">Full adder</a></li><li><a href="#ripple-carry-adder-8-bit">Ripple-carry adder 8 bit</a></li><li><a href="#pengurangan-penjumlahan-komplemen-dua">Pengurangan = penjumlahan komplemen dua</a></li><li><a href="#alu-mini-dan-flag">ALU mini dan flag</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a></p>
+<a class="cat" href="/artikel/kategori/dasar-informatika/">Dasar Informatika</a>
+<h1>Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU</h1>
+<p class="lead">Bagaimana kumpulan gerbang AND dan XOR bisa menjumlahkan? Jawabannya adalah salah satu momen paling memuaskan dalam informatika: penjumlahan dua bit ternyata persis fungsi XOR untuk hasil dan AND untuk bawaan. Dari sana, menyusun penjumlah 8 bit dan unit aritmetika prosesor hanya soal merangkai.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> logika boolean, komplemen dua</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Dari Gerbang ke Penjumlah: Half Adder, Full Adder, dan ALU" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membangun half adder dan full adder dari gerbang</li><li>menyusun ripple-carry adder dari beberapa full adder</li><li>melakukan pengurangan dengan penjumlahan komplemen dua</li><li>menjelaskan ALU dan flag status (zero, carry, negative, overflow)</li><li>memahami keterbatasan kecepatan ripple-carry dan gagasan carry-lookahead</li></ul></div>
+<h2 id="menjumlahkan-dua-bit">Menjumlahkan dua bit</h2>
+<table><thead><tr><th>A</th><th>B</th><th>Jumlah (S)</th><th>Bawaan (C)</th><th>Gerbang</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td><td></td></tr><tr><td>0</td><td>1</td><td>1</td><td>0</td><td></td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td><td></td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>S = A ⊕ B; C = A · B</td></tr></tbody></table>
+<p>Itulah <b>half adder</b>: jumlah = XOR, bawaan = AND. Disebut "setengah" karena tidak menerima bawaan dari posisi sebelumnya.</p>
+<h2 id="full-adder">Full adder</h2>
+<p>Untuk menjumlahkan beberapa bit, setiap posisi perlu menerima bawaan dari posisi kanan. Full adder memiliki tiga masukan (A, B, bawaan masuk Cin) dan dua keluaran (S, Cout).</p>
+<figure class="codebox"><pre data-lang="python"><code>def half_adder(a, b):
+    return a ^ b, a &amp; b                       # (jumlah, bawaan)
+
+def full_adder(a, b, cin):
+    s1, c1 = half_adder(a, b)
+    s2, c2 = half_adder(s1, cin)
+    return s2, c1 | c2                         # jumlah, bawaan keluar
+
+print(&quot;half adder:&quot;)
+for a in (0, 1):
+    for b in (0, 1):
+        print(f&quot;  {a}+{b} -&gt; S={half_adder(a, b)[0]} C={half_adder(a, b)[1]}&quot;)
+print(&quot;full adder:&quot;)
+for a in (0, 1):
+    for b in (0, 1):
+        for c in (0, 1):
+            s, co = full_adder(a, b, c)
+            print(f&quot;  {a}+{b}+{c} -&gt; S={s} Cout={co}   ({a + b + c} = {co}{s} biner)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>half adder:
+  0+0 -&gt; S=0 C=0
+  0+1 -&gt; S=1 C=0
+  1+0 -&gt; S=1 C=0
+  1+1 -&gt; S=0 C=1
+full adder:
+  0+0+0 -&gt; S=0 Cout=0   (0 = 00 biner)
+  0+0+1 -&gt; S=1 Cout=0   (1 = 01 biner)
+  0+1+0 -&gt; S=1 Cout=0   (1 = 01 biner)
+  0+1+1 -&gt; S=0 Cout=1   (2 = 10 biner)
+  1+0+0 -&gt; S=1 Cout=0   (1 = 01 biner)
+  1+0+1 -&gt; S=0 Cout=1   (2 = 10 biner)
+  1+1+0 -&gt; S=0 Cout=1   (2 = 10 biner)
+  1+1+1 -&gt; S=1 Cout=1   (3 = 11 biner)</code></pre><figcaption>Full adder dibuat dari dua half adder dan satu OR. Hasil jumlah tiga bit selalu muat dalam dua bit (Cout, S).</figcaption></figure>
+<h2 id="ripple-carry-adder-8-bit">Ripple-carry adder 8 bit</h2>
+<figure class="diagram"><svg viewBox="0 0 728 118" role="img" aria-label="Delapan full adder berderet" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">FA bit 0</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">A0 + B0 + 0</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">FA bit 1</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">A1 + B1 + C0</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">...</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">bawaan merambat ke</tspan><tspan x="457" dy="14">kiri</tspan></text><line x1="536" y1="59" x2="564" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">FA bit 7</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">A7 + B7 + C6 → Cout</tspan></text></svg><figcaption>Bawaan "beriak" dari bit paling kanan ke kiri; bit 7 harus menunggu bit 0 sampai 6.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>def full_adder(a, b, cin):
+    s = a ^ b ^ cin
+    cout = (a &amp; b) | (cin &amp; (a ^ b))
+    return s, cout
+
+def penjumlah(x, y, lebar=8, cin=0):
+    hasil, c = 0, cin
+    for i in range(lebar):                      # dari bit paling kanan
+        bit_x, bit_y = (x &gt;&gt; i) &amp; 1, (y &gt;&gt; i) &amp; 1
+        s, c = full_adder(bit_x, bit_y, c)
+        hasil |= s &lt;&lt; i
+    return hasil, c                              # (hasil, bawaan keluar akhir)
+
+for x, y in [(23, 42), (200, 100), (255, 1), (127, 1)]:
+    h, c = penjumlah(x, y)
+    print(f&quot;{x:&gt;3} + {y:&gt;3} = {h:&gt;3} (biner {h:08b}), bawaan keluar {c}   [benar: {x + y}]&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code> 23 +  42 =  65 (biner 01000001), bawaan keluar 0   [benar: 65]
+200 + 100 =  44 (biner 00101100), bawaan keluar 1   [benar: 300]
+255 +   1 =   0 (biner 00000000), bawaan keluar 1   [benar: 256]
+127 +   1 = 128 (biner 10000000), bawaan keluar 0   [benar: 128]</code></pre><figcaption>Bila bawaan keluar bernilai 1, hasil sesungguhnya tidak muat dalam 8 bit (200 + 100 = 300 = 256 + 44).</figcaption></figure>
+<h2 id="pengurangan-penjumlahan-komplemen-dua">Pengurangan = penjumlahan komplemen dua</h2>
+<p>Mengapa tidak membuat rangkaian pengurang terpisah? Karena <code>A − B = A + (−B)</code>, dan <code>−B</code> adalah B dibalik bitnya lalu ditambah 1. Dengan memberi bawaan masuk = 1 dan membalik B lewat XOR, penjumlah yang sama dapat mengurangi.</p>
+<figure class="codebox"><pre data-lang="python"><code>def full_adder(a, b, cin):
+    return a ^ b ^ cin, (a &amp; b) | (cin &amp; (a ^ b))
+
+def tambah_kurang(x, y, kurang=False, lebar=8):
+    mask = (1 &lt;&lt; lebar) - 1
+    if kurang:
+        y = (~y) &amp; mask                          # balik semua bit B
+    hasil, c = 0, 1 if kurang else 0             # +1 lewat bawaan masuk
+    for i in range(lebar):
+        s, c = full_adder((x &gt;&gt; i) &amp; 1, (y &gt;&gt; i) &amp; 1, c)
+        hasil |= s &lt;&lt; i
+    return hasil, c
+
+def tanda(h, lebar=8): return h - (1 &lt;&lt; lebar) if h &gt;&gt; (lebar - 1) else h
+
+for x, y in [(50, 20), (20, 50), (100, 100)]:
+    h, _ = tambah_kurang(x, y, kurang=True)
+    print(f&quot;{x:&gt;3} - {y:&gt;3} = {tanda(h):&gt;4}  (biner {h:08b})&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code> 50 -  20 =   30  (biner 00011110)
+ 20 -  50 =  -30  (biner 11100010)
+100 - 100 =    0  (biner 00000000)</code></pre></figure>
+<h2 id="alu-mini-dan-flag">ALU mini dan flag</h2>
+<p>Unit aritmetika dan logika (ALU) menggabungkan penjumlah dengan operasi logika dan memilih satu hasil lewat kode operasi. Selain hasil, ia menghasilkan <b>flag</b> status yang dipakai instruksi percabangan.</p>
+<figure class="codebox"><pre data-lang="python"><code>LEBAR = 8
+MASK = (1 &lt;&lt; LEBAR) - 1
+
+def alu(op, a, b):
+    if   op == &quot;ADD&quot;: mentah = a + b
+    elif op == &quot;SUB&quot;: mentah = a - b
+    elif op == &quot;AND&quot;: mentah = a &amp; b
+    elif op == &quot;OR&quot;:  mentah = a | b
+    elif op == &quot;XOR&quot;: mentah = a ^ b
+    else: raise ValueError(op)
+    hasil = mentah &amp; MASK
+    flag = {
+        &quot;Z&quot;: hasil == 0,                                    # zero
+        &quot;N&quot;: bool(hasil &gt;&gt; (LEBAR - 1)),                    # negative (bit tanda)
+        &quot;C&quot;: mentah &gt; MASK or mentah &lt; 0,                   # carry / borrow
+    }
+    if op in (&quot;ADD&quot;, &quot;SUB&quot;):
+        sa, sb, sh = (a &gt;&gt; 7) &amp; 1, (b &gt;&gt; 7) &amp; 1, (hasil &gt;&gt; 7) &amp; 1
+        flag[&quot;V&quot;] = (sa == sb and sh != sa) if op == &quot;ADD&quot; else (sa != sb and sh != sa)   # overflow bertanda
+    return hasil, flag
+
+for op, a, b in [(&quot;ADD&quot;, 100, 27), (&quot;ADD&quot;, 100, 100), (&quot;SUB&quot;, 5, 5), (&quot;SUB&quot;, 3, 5), (&quot;AND&quot;, 0b1100, 0b1010)]:
+    h, f = alu(op, a, b)
+    print(f&quot;{op} {a:&gt;3},{b:&gt;3} -&gt; {h:&gt;3} ({h:08b})  flag: &quot; + &quot; &quot;.join(k + &quot;=&quot; + str(int(v)) for k, v in f.items()))</code></pre><pre class="runout" data-lang="keluaran"><code>ADD 100, 27 -&gt; 127 (01111111)  flag: Z=0 N=0 C=0 V=0
+ADD 100,100 -&gt; 200 (11001000)  flag: Z=0 N=1 C=0 V=1
+SUB   5,  5 -&gt;   0 (00000000)  flag: Z=1 N=0 C=0 V=0
+SUB   3,  5 -&gt; 254 (11111110)  flag: Z=0 N=1 C=1 V=0
+AND  12, 10 -&gt;   8 (00001000)  flag: Z=0 N=0 C=0</code></pre><figcaption>Instruksi seperti "lompat jika nol" (JZ) atau "lompat jika negatif" (JN) memeriksa flag ini. Perhatikan 100 + 100 = 200 menyalakan flag overflow bertanda (V) karena sebagai bilangan bertanda 8 bit hasilnya −56.</figcaption></figure>
+<div class="callout info"><b>Kecepatan vs jumlah gerbang</b><p>Ripple-carry sederhana tetapi lambat: waktu bertambah dengan lebar kata karena bawaan merambat satu per satu. Prosesor nyata memakai <b>carry-lookahead</b> atau varian yang lebih cepat, yang menghitung bawaan beberapa posisi sekaligus, dengan menambah gerbang demi kecepatan.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Hasil jumlah half adder adalah gerbang...","options":["XOR","AND","OR"],"answer":0,"why":"Bawaan adalah AND."},{"q":"Bagaimana mengurangi dengan penjumlah?","options":["Balik bit pengurang dan tambah 1 (komplemen dua)","Menukar A dan B","Memakai OR"],"answer":0,"why":"A − B = A + (−B)."},{"q":"Flag Z pada ALU menandakan...","options":["Hasil nol","Hasil negatif","Ada bawaan"],"answer":0,"why":"Zero flag."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Jumlahkan 0110 + 0111 secara manual dengan bawaan.</summary><div>0110 + 0111 = 1101 (6 + 7 = 13); tidak ada bawaan keluar pada 4 bit.</div></details><details><summary>2. Berapa gerbang dasar (XOR, AND, OR) yang dibutuhkan satu full adder dari dua half adder?</summary><div>Dua XOR, dua AND, dan satu OR = 5 gerbang.</div></details><details><summary>3. Mengapa overflow bertanda dan carry berbeda?</summary><div>Carry relevan untuk bilangan tanpa tanda; overflow bertanda untuk komplemen dua (tanda hasil salah akibat melampaui rentang).</div></details><details><summary>4. Mengapa kecepatan ripple-carry buruk untuk 64 bit?</summary><div>Bawaan harus melewati 64 full adder berurutan sehingga jeda gerbang bertambah linear.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Half adder: XOR dan AND; full adder: tiga masukan; ripple-carry merangkai full adder.</li><li>Pengurangan memakai penjumlah dengan komplemen dua.</li><li>ALU menghasilkan hasil dan flag (Z, N, C, V).</li><li>Kecepatan penjumlah adalah pertukaran antara jumlah gerbang dan waktu rambat.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana perkalian dilakukan?</summary><div>Dengan geser dan tambah (seperti perkalian manual) atau rangkaian khusus seperti array multiplier dan algoritma Booth.</div></details>
+<details class="faq"><summary>Apa bedanya rangkaian kombinasional dan sekuensial?</summary><div>Kombinasional: keluaran hanya bergantung masukan saat ini (penjumlah). Sekuensial: ada memori/keadaan (flip-flop, register).</div></details>
+<details class="faq"><summary>Di mana belajar membangun komputer dari gerbang?</summary><div>Proyek nand2tetris membimbing dari NAND sampai komputer penuh dengan simulator perangkat keras gratis.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.nand2tetris.org/" rel="noopener" target="_blank">Nisan dan Schocken, The Elements of Computing Systems (nand2tetris), MIT Press</a></li><li>David Patterson dan John Hennessy, Computer Organization and Design (Morgan Kaufmann)</li><li>Andrew Tanenbaum dan Todd Austin, Structured Computer Organization (Pearson)</li><li>Charles Petzold, Code: The Hidden Language of Computer Hardware and Software (Microsoft Press)</li></ul>
+
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/"><img src="/artikel/sistem-bilangan-biner-oktal-heksadesimal-dan-konversi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Sistem Bilangan: Biner, Oktal, Heksadesimal, dan Konversi</span></a><a href="/artikel/komplemen-dua-dan-floating-point-ieee-754/"><img src="/artikel/komplemen-dua-dan-floating-point-ieee-754/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Komplemen Dua dan Floating Point IEEE 754</span></a><a href="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/"><img src="/artikel/logika-boolean-gerbang-logika-dan-tabel-kebenaran/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Logika Boolean, Gerbang Logika, dan Tabel Kebenaran</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
