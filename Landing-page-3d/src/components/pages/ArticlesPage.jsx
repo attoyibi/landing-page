@@ -3,6 +3,7 @@ import { Search, X } from 'lucide-react';
 
 import ArticleCard from '../ui/ArticleCard';
 import { useArticles } from '../../lib/useArticles';
+import { categorySlug } from '../../lib/articleRoute';
 
 const PAGE = 12;
 const norm = s => s.toLowerCase();
@@ -87,6 +88,18 @@ const ArticlesPage = () => {
                         </button>
                     ))}
                 </div>
+
+                {articles && (
+                    <p className="caption text-ink-muted mb-6">
+                        Halaman topik:{' '}
+                        {categories.map(([c], i) => (
+                            <React.Fragment key={c}>
+                                {i > 0 && ' · '}
+                                <a href={`/artikel/kategori/${categorySlug(c)}/`}>{c}</a>
+                            </React.Fragment>
+                        ))}
+                    </p>
+                )}
 
                 {articles === null && <p className="body text-ink-muted">Memuat artikel...</p>}
                 {articles && filtering && (

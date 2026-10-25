@@ -47,3 +47,8 @@ Muchson believes that great learning design is invisible — when done well, lea
 - **LinkedIn**: https://www.linkedin.com/in/muhammad-muchson-attoyibi/
 - **Email**: muhammadmuchson@gmail.com
 - **Portfolio**: https://docs.google.com/document/d/1GnEpFjQ72T5ROxAjVVxRghW8EKjMiMOWKiVwmHU-VLo/edit?tab=t.0
+
+
+## Articles
+
+muchson.web.id hosts 100+ educational articles in Indonesian (with interactive simulations and diagrams) on eye health and glasses, AI for everyone, coding and algorithms, everyday digital security, learning and productivity, and careers. Index: https://muchson.web.id/artikel/ . Sitemap: https://muchson.web.id/sitemap.xml . Author: Muhammad Muchson Attoyibi.
