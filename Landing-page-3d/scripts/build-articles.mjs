@@ -46,6 +46,8 @@ if (drafts.length) console.log(`Draf (belum didaftarkan di src/data/articles.js)
 
 if (errors.length) { console.error('\nArtikel bermasalah:\n- ' + errors.join('\n- ') + '\n'); process.exit(1); }
 
+// Newest first; articles with the same date keep their order from src/data/articles.js (sort is stable).
+items.sort((a, b) => b.date.localeCompare(a.date));
 await writeFile(join(pub, 'artikel', 'index.json'), JSON.stringify(items));
 const newest = items.map(i => i.date).sort().pop() || new Date().toISOString().slice(0, 10);
 const url = (loc, lastmod, priority) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${priority}</priority>\n  </url>`;

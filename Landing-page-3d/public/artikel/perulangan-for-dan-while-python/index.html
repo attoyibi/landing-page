@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perulangan For dan While di Python: Contoh dan Latihan</title>
+<meta name="description" content="Belajar perulangan for dan while di Python: range, loop list, break, continue, loop bersarang, kesalahan umum, dan soal latihan.">
+<meta name="keywords" content="perulangan Python, for loop Python, while loop, belajar Python, Python dasar">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/perulangan-for-dan-while-python/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/perulangan-for-dan-while-python/">
+<meta property="og:title" content="Perulangan For dan While di Python: Contoh dan Latihan">
+<meta property="og:description" content="Belajar perulangan for dan while di Python: range, loop list, break, continue, loop bersarang, kesalahan umum, dan soal latihan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/perulangan-for-dan-while-python/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Perulangan For dan While di Python: Contoh dan Latihan">
+<meta name="twitter:description" content="Belajar perulangan for dan while di Python: range, loop list, break, continue, loop bersarang, kesalahan umum, dan soal latihan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/perulangan-for-dan-while-python/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Perulangan For dan While di Python: Contoh dan Latihan","description":"Belajar perulangan for dan while di Python: range, loop list, break, continue, loop bersarang, kesalahan umum, dan soal latihan.","image":["https://muchson.web.id/artikel/perulangan-for-dan-while-python/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"perulangan Python, for loop Python, while loop, belajar Python, Python dasar","articleSection":"Coding & Algoritma","wordCount":209,"mainEntityOfPage":"https://muchson.web.id/artikel/perulangan-for-dan-while-python/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Perulangan For dan While di Python: Contoh dan Latihan","item":"https://muchson.web.id/artikel/perulangan-for-dan-while-python/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa beda for dan while di Python?","acceptedAnswer":{"@type":"Answer","text":"for mengulang untuk setiap item dalam urutan atau rentang. while mengulang selama kondisi bernilai benar."}},{"@type":"Question","name":"Kenapa range(1, 10) tidak sampai 10?","acceptedAnswer":{"@type":"Answer","text":"range berhenti sebelum angka akhir. Gunakan range(1, 11) untuk mendapatkan 1 sampai 10."}},{"@type":"Question","name":"Bagaimana menghentikan loop di tengah?","acceptedAnswer":{"@type":"Answer","text":"Gunakan break untuk keluar, atau continue untuk melewati satu putaran dan lanjut ke berikutnya."}},{"@type":"Question","name":"Bagaimana menghentikan program yang loop tanpa akhir?","acceptedAnswer":{"@type":"Answer","text":"Tekan Ctrl + C di terminal, lalu perbaiki kondisi loop-nya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#for-mengulang-untuk-setiap-item">For: mengulang untuk setiap item</a></li><li><a href="#while-mengulang-selama-kondisi-benar">While: mengulang selama kondisi benar</a></li><li><a href="#for-atau-while">For atau while?</a></li><li><a href="#break-dan-continue">break dan continue</a></li><li><a href="#perulangan-bersarang">Perulangan bersarang</a></li><li><a href="#kesalahan-umum">Kesalahan umum</a></li><li><a href="#latihan">Latihan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Perulangan For dan While di Python: Contoh dan Latihan</h1>
+<p class="lead">Perulangan adalah salah satu alat paling kuat dalam pemrograman: satu blok kode bisa dijalankan ratusan atau jutaan kali. Python punya dua jenis perulangan utama, for dan while. Artikel ini menjelaskan kapan memakai masing-masing, lengkap dengan contoh yang bisa langsung dicoba.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Perulangan For dan While di Python: Contoh dan Latihan" fetchpriority="high"></figure>
+<h2 id="for-mengulang-untuk-setiap-item">For: mengulang untuk setiap item</h2>
+<p><code>for</code> dipakai ketika kita tahu apa yang akan diulang: setiap angka dalam rentang, setiap item dalam list, setiap huruf dalam teks.</p>
+<pre><code>for i in range(5):
+    print(&quot;Ulangan ke-&quot;, i)
+# 0, 1, 2, 3, 4  (range berhenti SEBELUM 5)
+
+for i in range(1, 11, 2):
+    print(i)
+# 1, 3, 5, 7, 9  (mulai 1, sebelum 11, lompat 2)
+
+belanja = [&quot;beras&quot;, &quot;telur&quot;, &quot;minyak&quot;]
+for barang in belanja:
+    print(&quot;- &quot; + barang)</code></pre>
+<table><thead><tr><th>Bentuk range</th><th>Menghasilkan</th></tr></thead><tbody><tr><td><code>range(5)</code></td><td>0, 1, 2, 3, 4</td></tr><tr><td><code>range(2, 6)</code></td><td>2, 3, 4, 5</td></tr><tr><td><code>range(10, 0, -2)</code></td><td>10, 8, 6, 4, 2</td></tr></tbody></table>
+<h3>enumerate: butuh nomor urut</h3>
+<pre><code>peserta = [&quot;Ani&quot;, &quot;Budi&quot;, &quot;Cici&quot;]
+for nomor, nama in enumerate(peserta, start=1):
+    print(f&quot;{nomor}. {nama}&quot;)</code></pre>
+<h2 id="while-mengulang-selama-kondisi-benar">While: mengulang selama kondisi benar</h2>
+<p><code>while</code> dipakai ketika kita tidak tahu berapa kali harus mengulang, hanya tahu kapan harus berhenti.</p>
+<pre><code>saldo = 100000
+hari = 0
+while saldo &gt;= 15000:
+    saldo -= 15000        # jajan harian
+    hari += 1
+print(f&quot;Uang cukup untuk {hari} hari, sisa {saldo}&quot;)</code></pre>
+<pre><code># meminta input sampai valid
+while True:
+    umur = input(&quot;Umur: &quot;)
+    if umur.isdigit():
+        break
+    print(&quot;Masukkan angka ya.&quot;)
+print(&quot;Terima kasih&quot;)</code></pre>
+<div class="callout warn"><b>Awas loop tanpa akhir</b><p>Pastikan sesuatu di dalam while mengubah kondisi, misalnya saldo berkurang. Kalau tidak, program berjalan selamanya (infinite loop). Tekan Ctrl + C di terminal untuk menghentikannya.</p></div>
+<h2 id="for-atau-while">For atau while?</h2>
+<figure class="diagram"><svg viewBox="0 0 640 228" role="img" aria-label="Kapan memakai for dan while" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="216" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">for</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Jumlah ulangan diketahui</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Mengolah setiap item list</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Rentang angka tertentu</text><circle cx="32" cy="184" r="4" fill="#1e5ab2"/><text x="46" y="189" font-size="13.5" fill="#0f1a33">Lebih aman dari loop tanpa akhir</text><rect x="330" y="6" width="300" height="216" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">while</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Berhenti saat kondisi tercapai</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Menunggu input valid</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Simulasi sampai target</text><circle cx="352" cy="184" r="4" fill="#1f7a46"/><text x="366" y="189" font-size="13.5" fill="#0f1a33">Perlu hati-hati mengubah kondisi</text></svg></figure>
+<h2 id="break-dan-continue">break dan continue</h2>
+<pre><code>nilai = [80, 92, 45, 77, 100]
+
+for n in nilai:
+    if n &lt; 50:
+        print(&quot;Ada yang remedial, berhenti memeriksa&quot;)
+        break          # keluar dari loop
+    print(&quot;Lulus:&quot;, n)
+
+for n in nilai:
+    if n &lt; 75:
+        continue       # lewati, lanjut ke item berikutnya
+    print(&quot;Di atas KKM:&quot;, n)</code></pre>
+<h2 id="perulangan-bersarang">Perulangan bersarang</h2>
+<pre><code>for baris in range(1, 6):
+    for kolom in range(1, 6):
+        print(f&quot;{baris * kolom:3}&quot;, end=&quot;&quot;)
+    print()
+# Tabel perkalian 5 x 5</code></pre>
+<h2 id="kesalahan-umum">Kesalahan umum</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk perbaikannya","items":[{"tag":"Kesalahan","front":"Mengira range(1, 10) sampai 10.","backTag":"Perbaikan","back":"range berhenti sebelum angka akhir. Untuk 1 sampai 10, pakai range(1, 11)."},{"tag":"Kesalahan","front":"Lupa titik dua atau indentasi setelah for/while.","backTag":"Perbaikan","back":"Python memakai indentasi (biasanya 4 spasi) untuk menandai isi loop."},{"tag":"Kesalahan","front":"Mengubah list sambil di-loop.","backTag":"Perbaikan","back":"Buat list baru, misalnya dengan list comprehension, daripada menghapus item saat iterasi."},{"tag":"Kesalahan","front":"While tanpa perubahan kondisi.","backTag":"Perbaikan","back":"Pastikan ada baris yang membuat kondisi akhirnya salah, atau pakai break."}]}</script></div>
+<h2 id="latihan">Latihan</h2>
+<div data-w="quiz"><script type="application/json">{"title":"Tebak keluarannya","questions":[{"q":"Berapa kali \"halo\" dicetak? \u003ccode>for i in range(3, 8): print(\"halo\")\u003c/code>","options":["5","8","3"],"answer":0,"why":"range(3, 8) menghasilkan 3, 4, 5, 6, 7: lima angka."},{"q":"Nilai total? \u003ccode>total = 0; for i in range(1, 5): total += i\u003c/code>","options":["10","15","4"],"answer":0,"why":"1 + 2 + 3 + 4 = 10."},{"q":"Apa yang terjadi? \u003ccode>x = 1; while x > 0: x += 1\u003c/code>","options":["Berhenti setelah 1 kali","Loop tanpa akhir","Error sintaks"],"answer":1,"why":"x terus bertambah sehingga x > 0 selalu benar."}]}</script></div>
+<div data-w="checklist"><script type="application/json">{"title":"Soal latihan mandiri","desc":"Centang yang sudah berhasil Anda kerjakan.","items":["Cetak bilangan genap dari 2 sampai 50.","Hitung jumlah digit sebuah angka dengan while.","Cari nilai tertinggi dalam list tanpa memakai max().","Program tebak angka dengan petunjuk lebih besar atau kecil.","Cetak segitiga bintang setinggi n baris."]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa beda for dan while di Python?</summary><div>for mengulang untuk setiap item dalam urutan atau rentang. while mengulang selama kondisi bernilai benar.</div></details>
+<details class="faq"><summary>Kenapa range(1, 10) tidak sampai 10?</summary><div>range berhenti sebelum angka akhir. Gunakan range(1, 11) untuk mendapatkan 1 sampai 10.</div></details>
+<details class="faq"><summary>Bagaimana menghentikan loop di tengah?</summary><div>Gunakan break untuk keluar, atau continue untuk melewati satu putaran dan lanjut ke berikutnya.</div></details>
+<details class="faq"><summary>Bagaimana menghentikan program yang loop tanpa akhir?</summary><div>Tekan Ctrl + C di terminal, lalu perbaiki kondisi loop-nya.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/controlflow.html" rel="noopener" target="_blank">Python: More Control Flow Tools (tutorial resmi)</a></li><li><a href="https://docs.python.org/3/library/functions.html" rel="noopener" target="_blank">Python: fungsi bawaan range dan enumerate</a></li><li><a href="https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/" rel="noopener" target="_blank">Roadmap belajar Python dari nol (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/percabangan-if-elif-else-python/"><img src="/artikel/percabangan-if-elif-else-python/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Percabangan If, Elif, Else di Python dengan Contoh</span></a><a href="/artikel/roadmap-belajar-python-dari-nol/"><img src="/artikel/roadmap-belajar-python-dari-nol/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Roadmap Belajar Python dari Nol: Urutan dan Latihannya</span></a><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -183,7 +183,7 @@ export default [
         ],
         sources: [
             ['PostgreSQL Documentation', 'https://www.postgresql.org/docs/'],
-            ['MongoDB: What is NoSQL?', 'https://www.mongodb.com/resources/basics/databases/nosql-explained'],
+            ['MongoDB Manual', 'https://www.mongodb.com/docs/manual/'],
             ['SQL dasar untuk pemula (artikel terkait)', 'https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/'],
         ],
     },

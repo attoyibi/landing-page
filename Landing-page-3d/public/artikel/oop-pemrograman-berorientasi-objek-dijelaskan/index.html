@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana</title>
+<meta name="description" content="Penjelasan OOP untuk pemula dengan analogi cetakan kue: class, object, enkapsulasi, inheritance, dan polymorphism, plus contoh Python.">
+<meta name="keywords" content="OOP, pemrograman berorientasi objek, class dan object, Python OOP, konsep pemrograman">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/">
+<meta property="og:title" content="OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana">
+<meta property="og:description" content="Penjelasan OOP untuk pemula dengan analogi cetakan kue: class, object, enkapsulasi, inheritance, dan polymorphism, plus contoh Python.">
+<meta property="og:image" content="https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana">
+<meta name="twitter:description" content="Penjelasan OOP untuk pemula dengan analogi cetakan kue: class, object, enkapsulasi, inheritance, dan polymorphism, plus contoh Python.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana","description":"Penjelasan OOP untuk pemula dengan analogi cetakan kue: class, object, enkapsulasi, inheritance, dan polymorphism, plus contoh Python.","image":["https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"OOP, pemrograman berorientasi objek, class dan object, Python OOP, konsep pemrograman","articleSection":"Coding & Algoritma","wordCount":290,"mainEntityOfPage":"https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana","item":"https://muchson.web.id/artikel/oop-pemrograman-berorientasi-objek-dijelaskan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu OOP?","acceptedAnswer":{"@type":"Answer","text":"Pendekatan pemrograman yang menyusun program sebagai kumpulan object yang punya data (atribut) dan perilaku (method), dibuat dari rancangan bernama class."}},{"@type":"Question","name":"Apa beda class dan object?","acceptedAnswer":{"@type":"Answer","text":"Class adalah cetakan atau rancangan. Object adalah benda nyata yang dibuat dari class tersebut."}},{"@type":"Question","name":"Apa saja pilar OOP?","acceptedAnswer":{"@type":"Answer","text":"Enkapsulasi, abstraksi, inheritance (pewarisan), dan polymorphism."}},{"@type":"Question","name":"Bahasa apa yang mendukung OOP?","acceptedAnswer":{"@type":"Answer","text":"Banyak bahasa populer mendukung OOP, seperti Java, Python, C#, JavaScript, PHP, dan Kotlin."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#class-dan-object-cetakan-dan-kue">Class dan object: cetakan dan kue</a></li><li><a href="#empat-pilar-oop">Empat pilar OOP</a></li><li><a href="#kapan-oop-berguna-kapan-tidak">Kapan OOP berguna, kapan tidak</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana</h1>
+<p class="lead">OOP (Object-Oriented Programming) sering menjadi materi yang membuat mahasiswa dan pemula bingung: class, object, inheritance, polymorphism. Padahal idenya dekat dengan cara kita memandang dunia sehari-hari: ada cetakan, dan ada benda-benda yang dibuat dari cetakan itu.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana" fetchpriority="high"></figure>
+<h2 id="class-dan-object-cetakan-dan-kue">Class dan object: cetakan dan kue</h2>
+<p><b>Class</b> adalah cetakan atau rancangan. <b>Object</b> adalah benda nyata yang dibuat dari cetakan itu. Cetakan kue bintang (class) bisa dipakai membuat banyak kue (object). Semua kue berbentuk bintang, tetapi masing-masing bisa punya topping berbeda.</p>
+<pre><code>class Kucing:
+    def __init__(self, nama, warna):
+        self.nama = nama      # atribut
+        self.warna = warna
+        self.lapar = True
+
+    def makan(self):          # method
+        self.lapar = False
+        return f&quot;{self.nama} kenyang&quot;
+
+    def bersuara(self):
+        return &quot;Meong!&quot;
+
+oyen = Kucing(&quot;Oyen&quot;, &quot;oranye&quot;)    # object 1
+mochi = Kucing(&quot;Mochi&quot;, &quot;putih&quot;)   # object 2
+print(oyen.makan())     # Oyen kenyang
+print(mochi.lapar)      # True</code></pre>
+<table><thead><tr><th>Istilah</th><th>Artinya</th><th>Di contoh</th></tr></thead><tbody><tr><td>Class</td><td>Cetakan</td><td><code>Kucing</code></td></tr><tr><td>Object (instance)</td><td>Benda dari cetakan</td><td><code>oyen</code>, <code>mochi</code></td></tr><tr><td>Atribut</td><td>Data milik object</td><td><code>nama</code>, <code>warna</code>, <code>lapar</code></td></tr><tr><td>Method</td><td>Perilaku atau aksi object</td><td><code>makan()</code>, <code>bersuara()</code></td></tr><tr><td>Constructor</td><td>Fungsi yang dijalankan saat object dibuat</td><td><code>__init__</code></td></tr></tbody></table>
+<div class="callout info"><b>Ternyata akrab sejak kecil</b><p>Anak yang belajar Scratch sudah mengenal ide ini lewat clone: satu sprite menjadi cetakan, dan setiap clone punya posisi dan variabel lokalnya sendiri.</p></div>
+<h2 id="empat-pilar-oop">Empat pilar OOP</h2>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Empat pilar OOP" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M291.5 86.5 Q328.05634918610406 91.94365081389596 335.6 130.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M333.5 191.5 Q328.05634918610406 228.05634918610406 289.4 235.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M228.5 233.5 Q191.94365081389594 228.05634918610406 184.4 189.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M186.5 128.5 Q191.94365081389594 91.94365081389596 230.6 84.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="39" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Enkapsulasi</tspan></text><rect x="303" y="138" width="124" height="39" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="365" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="365" dy="0">Abstraksi</tspan></text><rect x="198" y="243" width="124" height="39" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="260" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Inheritance</tspan></text><rect x="93" y="138" width="124" height="39" rx="10" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><text x="155" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="155" dy="0">Polymorphism</tspan></text></svg></figure>
+<h3>1. Enkapsulasi: membungkus data</h3>
+<p>Data dan cara mengubahnya disatukan dalam object, dan akses langsung ke data dibatasi. Saldo rekening tidak diubah sembarangan, melainkan lewat method <code>setor()</code> dan <code>tarik()</code> yang memeriksa aturan.</p>
+<pre><code>class Rekening:
+    def __init__(self, pemilik):
+        self.pemilik = pemilik
+        self._saldo = 0          # konvensi: jangan diakses langsung dari luar
+
+    def setor(self, jumlah):
+        if jumlah &lt;= 0:
+            raise ValueError(&quot;Jumlah harus positif&quot;)
+        self._saldo += jumlah
+
+    def tarik(self, jumlah):
+        if jumlah &gt; self._saldo:
+            raise ValueError(&quot;Saldo tidak cukup&quot;)
+        self._saldo -= jumlah
+
+    @property
+    def saldo(self):
+        return self._saldo</code></pre>
+<h3>2. Abstraksi: sembunyikan yang rumit</h3>
+<p>Pengguna object cukup tahu <i>apa</i> yang bisa dilakukan, tidak perlu tahu <i>bagaimana</i>. Saat menekan tombol rem mobil, Anda tidak perlu memahami hidrolik.</p>
+<h3>3. Inheritance: pewarisan</h3>
+<p>Class baru bisa mewarisi atribut dan method class lain, lalu menambah atau mengubahnya.</p>
+<pre><code>class Hewan:
+    def __init__(self, nama):
+        self.nama = nama
+    def bersuara(self):
+        return &quot;...&quot;
+
+class Kucing(Hewan):
+    def bersuara(self):
+        return &quot;Meong!&quot;
+
+class Anjing(Hewan):
+    def bersuara(self):
+        return &quot;Guk!&quot;</code></pre>
+<h3>4. Polymorphism: satu perintah, banyak bentuk</h3>
+<p>Object berbeda bisa menanggapi perintah yang sama dengan caranya masing-masing.</p>
+<pre><code>kebun_binatang = [Kucing(&quot;Oyen&quot;), Anjing(&quot;Bruno&quot;), Kucing(&quot;Mochi&quot;)]
+for h in kebun_binatang:
+    print(h.nama, h.bersuara())
+# Oyen Meong!
+# Bruno Guk!
+# Mochi Meong!</code></pre>
+<h2 id="kapan-oop-berguna-kapan-tidak">Kapan OOP berguna, kapan tidak</h2>
+<table><thead><tr><th>Cocok</th><th>Kurang perlu</th></tr></thead><tbody><tr><td>Program besar dengan banyak "benda" (pengguna, produk, pesanan)</td><td>Skrip kecil sekali pakai</td></tr><tr><td>Banyak jenis yang berbagi perilaku (berbagai metode pembayaran)</td><td>Pengolahan data sederhana</td></tr><tr><td>Game dengan banyak karakter</td><td>Fungsi matematika murni</td></tr></tbody></table>
+<div class="callout warn"><b>Jangan berlebihan</b><p>Kesalahan umum pemula adalah membuat hierarki inheritance yang terlalu dalam. Banyak programmer berpengalaman menyarankan lebih memilih komposisi (object berisi object lain) daripada pewarisan bertingkat-tingkat.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Cek pemahaman","questions":[{"q":"Dalam analogi cetakan kue, object adalah ...","options":["Cetakannya","Kue yang dibuat","Resepnya"],"answer":1,"why":"Class adalah cetakan, object adalah benda yang dibuat dari cetakan."},{"q":"Membatasi perubahan saldo hanya lewat method setor dan tarik adalah contoh ...","options":["Enkapsulasi","Inheritance","Polymorphism"],"answer":0,"why":"Data dibungkus dan aksesnya dikontrol."},{"q":"Kucing dan Anjing sama-sama punya bersuara() tapi hasilnya berbeda. Ini ...","options":["Abstraksi","Polymorphism","Constructor"],"answer":1,"why":"Satu perintah, banyak bentuk tanggapan."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu OOP?</summary><div>Pendekatan pemrograman yang menyusun program sebagai kumpulan object yang punya data (atribut) dan perilaku (method), dibuat dari rancangan bernama class.</div></details>
+<details class="faq"><summary>Apa beda class dan object?</summary><div>Class adalah cetakan atau rancangan. Object adalah benda nyata yang dibuat dari class tersebut.</div></details>
+<details class="faq"><summary>Apa saja pilar OOP?</summary><div>Enkapsulasi, abstraksi, inheritance (pewarisan), dan polymorphism.</div></details>
+<details class="faq"><summary>Bahasa apa yang mendukung OOP?</summary><div>Banyak bahasa populer mendukung OOP, seperti Java, Python, C#, JavaScript, PHP, dan Kotlin.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://docs.python.org/3/tutorial/classes.html" rel="noopener" target="_blank">Python: Classes (tutorial resmi)</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects" rel="noopener" target="_blank">MDN: JavaScript objects dan pemrograman berorientasi objek</a></li><li><a href="https://muchson.web.id/artikel/clone-di-scratch-dijelaskan-untuk-anak/" rel="noopener" target="_blank">Clone di Scratch: satu sprite banyak salinan (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/big-o-notation-untuk-pemula/"><img src="/artikel/big-o-notation-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

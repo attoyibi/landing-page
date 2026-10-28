@@ -25,7 +25,7 @@ public/artikel/
 src/data/articles.js  DAFTAR artikel yang tayang: satu baris per artikel
 ```
 
-Alamat tiap artikel: `https://muchson.web.id/artikel/<nama-artikel>/`. Halaman daftar `/artikel/` dibuat oleh React (ada pencarian dan filter kategori), dan 3 artikel terbaru tampil di beranda.
+Alamat tiap artikel: `https://muchson.web.id/artikel/<nama-artikel>/`. Halaman daftar `/artikel/` dibuat oleh React (ada pencarian dan filter kategori) dan diurutkan dari tanggal terbaru; artikel bertanggal sama mengikuti urutan di `articles.js`. Tiga artikel terbaru tampil di beranda.
 
 Karena tiap artikel adalah file HTML sungguhan di alamat sendiri, mesin pencari mengindeksnya langsung tanpa perlu menjalankan JavaScript.
 
@@ -57,7 +57,7 @@ Jika ada yang kurang di `<head>`, `npm run build` berhenti dan menyebut file ser
 
 Opsional: `<meta name="cover-credit" content="Foto: Nama, lisensi">` bila memakai foto yang butuh atribusi.
 
-Kategori yang dipakai sekarang: **Mata & Kacamata**, **AI untuk Semua**, **Coding & Algoritma**, **Teknologi Sehari-hari**, **Belajar & Produktivitas**, **Karier & Freelance**. Kategori baru muncul otomatis sebagai filter bila dipakai.
+Kategori yang dipakai sekarang: **Mata & Kacamata**, **AI untuk Semua**, **Coding & Algoritma**, **Teknologi Sehari-hari**, **Belajar & Produktivitas**, **Karier & Freelance**, **Coding untuk Anak**, **Pendidikan Anak**. Kategori baru muncul otomatis sebagai filter bila dipakai (warna dan ikon sampulnya diatur di `PALETTE` dan `MOTIF` pada `artikel-src/lib.mjs`).
 
 ### Gambar sampul
 
@@ -78,6 +78,8 @@ npm run artikel     # buat semua artikel dari artikel-src/content, perbarui arti
 
 Kelebihannya: mengubah tampilan (template) cukup mengedit satu file lalu menjalankan ulang, bukan mengedit ratusan HTML. Lihat [artikel-src/lib.mjs](artikel-src/lib.mjs) untuk template dan diagram, serta [artikel-src/content/01-contoh.mjs](artikel-src/content/01-contoh.mjs) untuk contoh lengkap.
 
+Sampul `cover.png` hanya dibuat ulang bila `cover.svg` berubah. Rendering huruf berbeda antar komputer, jadi tanpa aturan ini setiap `npm run artikel` akan mengubah semua PNG.
+
 > Peringatan: menjalankan `npm run artikel` menimpa isi folder artikel yang berasal dari generator. Jangan mengedit HTML hasil generator langsung; ubah berkas konten lalu jalankan ulang. Artikel yang Anda buat manual (tidak ada di `artikel-src`) tidak disentuh, tetapi daftar di `articles.js` ditulis ulang dari berkas konten, jadi tambahkan lagi baris artikel manual Anda setelahnya.
 
 ### Bentuk satu artikel di berkas konten
@@ -90,7 +92,8 @@ Kelebihannya: mengubah tampilan (template) cukup mengedit satu file lalu menjala
   date: '2026-10-23',
   category: 'AI untuk Semua',
   tags: ['kata kunci 1', 'kata kunci 2'],
-  cta: 'none',                          // 'lensara' = kotak promo toko, 'jasa' = ajakan menghubungi Muchson, 'none' = tanpa
+  cta: 'none',                          // 'lensara' = kotak promo toko, 'jasa' = ajakan menghubungi Muchson, 'pixelkode' = kelas coding anak, 'none' = tanpa
+  ctaNote: 'Kalimat khusus artikel ini',  // opsional, tampil di kotak PixelKode di atas teks umum
   lead: 'Paragraf pembuka.',
   body: [ ...blok... ],
   faq: [['Pertanyaan?', 'Jawaban.']],  // juga menjadi data terstruktur FAQ untuk Google
@@ -109,7 +112,10 @@ Kelebihannya: mengubah tampilan (template) cukup mengedit satu file lalu menjala
 | Tabel | `{ table: { head: ['A', 'B'], rows: [['1', '2']] } }` |
 | Kode | `{ code: 'print(1)' }` |
 | Diagram SVG | `{ svg: 'flow' \| 'bars' \| 'cycle' \| 'matrix' \| 'timeline' \| 'versus' \| 'layers' \| 'scale', ...data }` |
+| Blok Scratch | `{ blocks: [['event', 'ketika 🏁 diklik'], ['control', 'ulangi (10)', [['motion', 'gerak (10) langkah']]]] }` atau `{ scripts: [[...], [...]] }` untuk beberapa skrip berdampingan |
 | Widget interaktif | `{ w: 'nama-widget', ...konfigurasi }` |
+
+Blok Scratch juga dirender statis sebagai HTML (terbaca mesin pencari dan pembaca layar). Satu blok = `[kategori, teks, isi?, isiJikaTidak?]`; kategori: `event`, `control`, `motion`, `looks`, `sound`, `sensing`, `operator`, `variable`, `list`, `my`, `pen`. Di dalam teks, `(x)` menjadi kolom isian, `[x]` menjadi pilihan dropdown, dan `{x}` menjadi kondisi. Teks yang diawali "ketika" atau "definisikan" menjadi blok topi.
 
 Diagram SVG dirender saat generate (statis, terbaca mesin pencari). Contoh data tiap diagram ada di artikel-artikel yang sudah ada, misalnya `flow` memakai `steps: [{ t: 'Judul', d: 'keterangan' }]`.
 
@@ -143,6 +149,7 @@ Semua berjalan di browser, tanpa server, dan didefinisikan di [public/artikel/_s
 | `minirag` | Pencarian dokumen mini dan prompt RAG | `docs: [{ title, text }]`, `examples` |
 | `nexttoken` | Cara model bahasa menebak kata berikutnya | `start`, `model: { kata: { berikutnya: bobot } }` |
 | `eyefocus`, `astig`, `rx`, `frame` | Simulasi mata minus, silinder, resep, dan ukuran frame | (tanpa konfigurasi) |
+| `robo` | Puzzle robot grid: susun perintah maju, belok kiri/kanan, ambil permata (seperti latihan Robo di PixelKode) | `levels: [{ name, goal, map, max }]`, `repeat: true` untuk pilihan "ulangi N kali". Peta: `#` dinding, `.` lantai, `> < ^ v` posisi awal Robo, `F` bendera, `*` permata. `max` = jumlah blok untuk bintang efisiensi |
 
 Menambah widget baru: tambahkan fungsi `W.namaWidget = (body, cfg) => { ... }` di `article.js`, lalu pakai `{ w: 'namaWidget', ... }` di artikel.
 
@@ -155,6 +162,12 @@ Kotak promo (`cta: 'lensara'`) membaca isinya dari [public/artikel/_shared/promo
 Aturan editorial yang dipakai: artikel bersifat edukatif dan jujur lebih dulu (misalnya bukti kacamata blue light memang lemah, dan itu ditulis apa adanya), baru di akhir ada ajakan ke toko.
 
 ---
+
+## Kotak PixelKode di artikel
+
+Artikel dengan `cta: 'pixelkode'` menampilkan kotak kelas coding anak. Teks, tombol, dan alamatnya dibaca dari [public/artikel/_shared/pixelkode.json](public/artikel/_shared/pixelkode.json), jadi bisa diubah tanpa membuat ulang artikel. Tautan otomatis membawa penanda `utm_source=muchson.web.id&utm_medium=artikel&utm_campaign=<nama-artikel>` agar kunjungan dari tiap artikel bisa dihitung. Untuk tautan PixelKode di dalam teks artikel, pakai `pk(slug, path)` dari `artikel-src/lib.mjs`.
+
+Aturan editorialnya sama dengan Lensara: isi artikel edukatif dan jujur lebih dulu, lalu PixelKode disebut sebagai salah satu pilihan, dengan keterangan bahwa kelas itu buatan penulis.
 
 ## SEO yang sudah diterapkan
 

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM</title>
+<meta name="description" content="Belajar JavaScript dasar dengan contoh yang bisa dicoba di browser: variabel, kondisi, perulangan, fungsi, array, objek, dan DOM.">
+<meta name="keywords" content="JavaScript dasar, belajar JavaScript, DOM, pemrograman web, tutorial JavaScript">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/">
+<meta property="og:title" content="JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM">
+<meta property="og:description" content="Belajar JavaScript dasar dengan contoh yang bisa dicoba di browser: variabel, kondisi, perulangan, fungsi, array, objek, dan DOM.">
+<meta property="og:image" content="https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM">
+<meta name="twitter:description" content="Belajar JavaScript dasar dengan contoh yang bisa dicoba di browser: variabel, kondisi, perulangan, fungsi, array, objek, dan DOM.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM","description":"Belajar JavaScript dasar dengan contoh yang bisa dicoba di browser: variabel, kondisi, perulangan, fungsi, array, objek, dan DOM.","image":["https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"JavaScript dasar, belajar JavaScript, DOM, pemrograman web, tutorial JavaScript","articleSection":"Coding & Algoritma","wordCount":274,"mainEntityOfPage":"https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM","item":"https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah perlu memasang aplikasi untuk belajar JavaScript?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Anda bisa mencoba langsung di konsol browser, lalu memakai editor teks gratis seperti VS Code untuk proyek."}},{"@type":"Question","name":"Apa beda let, const, dan var?","acceptedAnswer":{"@type":"Answer","text":"const untuk nilai yang tidak diganti, let untuk nilai yang berubah. var adalah cara lama yang sebaiknya dihindari di kode baru."}},{"@type":"Question","name":"Apa itu DOM?","acceptedAnswer":{"@type":"Answer","text":"Representasi halaman web yang bisa dibaca dan diubah oleh JavaScript, misalnya untuk mengganti teks atau bereaksi saat tombol diklik."}},{"@type":"Question","name":"Setelah JavaScript dasar, belajar apa?","acceptedAnswer":{"@type":"Answer","text":"Proyek kecil dengan DOM, lalu fetch API untuk mengambil data, kemudian kerangka kerja seperti React."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tempat-mencoba-konsol-browser">Tempat mencoba: konsol browser</a></li><li><a href="#variabel-dan-tipe-data">Variabel dan tipe data</a></li><li><a href="#kondisi">Kondisi</a></li><li><a href="#perulangan">Perulangan</a></li><li><a href="#fungsi">Fungsi</a></li><li><a href="#array-dan-objek">Array dan objek</a></li><li><a href="#dom-mengubah-halaman-web">DOM: mengubah halaman web</a></li><li><a href="#latihan">Latihan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM</h1>
+<p class="lead">JavaScript adalah bahasa yang membuat halaman web hidup: tombol yang bereaksi, formulir yang memeriksa isian, dan konten yang berubah tanpa memuat ulang halaman. Kabar baiknya, Anda bisa mulai belajar sekarang juga tanpa memasang apa pun, cukup dengan browser.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM" fetchpriority="high"></figure>
+<h2 id="tempat-mencoba-konsol-browser">Tempat mencoba: konsol browser</h2>
+<p>Buka halaman apa saja di Chrome atau Edge, tekan <b>F12</b> (atau klik kanan → Inspect), lalu pilih tab <b>Console</b>. Ketik <code>2 + 3</code> dan tekan Enter. Selamat, Anda baru menjalankan JavaScript.</p>
+<h2 id="variabel-dan-tipe-data">Variabel dan tipe data</h2>
+<pre><code>let nama = &quot;Dina&quot;;        // teks (string)
+let umur = 12;            // angka (number)
+let sudahLulus = false;   // benar/salah (boolean)
+const kota = &quot;Malang&quot;;    // const: tidak bisa diganti
+
+umur = umur + 1;
+console.log(nama + &quot; berumur &quot; + umur);
+console.log(`${nama} tinggal di ${kota}`);  // template literal</code></pre>
+<div class="callout info"><b>Kebiasaan modern</b><p>Pakai <code>const</code> secara bawaan, dan <code>let</code> hanya bila nilainya memang akan berubah. Hindari <code>var</code> pada kode baru karena perilakunya lebih membingungkan.</p></div>
+<h2 id="kondisi">Kondisi</h2>
+<pre><code>const nilai = 78;
+
+if (nilai &gt;= 85) {
+  console.log(&quot;A&quot;);
+} else if (nilai &gt;= 70) {
+  console.log(&quot;B&quot;);
+} else {
+  console.log(&quot;Perlu remedial&quot;);
+}
+
+// === membandingkan nilai DAN tipe
+console.log(5 == &quot;5&quot;);   // true  (hindari)
+console.log(5 === &quot;5&quot;);  // false (gunakan ini)</code></pre>
+<h2 id="perulangan">Perulangan</h2>
+<pre><code>for (let i = 1; i &lt;= 5; i++) {
+  console.log(&quot;Langkah ke-&quot; + i);
+}
+
+const buah = [&quot;apel&quot;, &quot;jeruk&quot;, &quot;mangga&quot;];
+for (const b of buah) {
+  console.log(b.toUpperCase());
+}</code></pre>
+<h2 id="fungsi">Fungsi</h2>
+<pre><code>function hitungDiskon(harga, persen) {
+  return harga - harga * persen / 100;
+}
+
+// fungsi panah (arrow function)
+const formatRupiah = (n) =&gt; &quot;Rp&quot; + n.toLocaleString(&quot;id-ID&quot;);
+
+console.log(formatRupiah(hitungDiskon(150000, 20)));  // Rp120.000</code></pre>
+<h2 id="array-dan-objek">Array dan objek</h2>
+<pre><code>const produk = [
+  { nama: &quot;Kaos&quot;, harga: 80000, stok: 12 },
+  { nama: &quot;Topi&quot;, harga: 50000, stok: 0 },
+  { nama: &quot;Tas&quot;, harga: 200000, stok: 4 },
+];
+
+const tersedia = produk.filter(p =&gt; p.stok &gt; 0);
+const namaSaja = tersedia.map(p =&gt; p.nama);
+const total = produk.reduce((jml, p) =&gt; jml + p.harga * p.stok, 0);
+
+console.log(namaSaja);  // [&quot;Kaos&quot;, &quot;Tas&quot;]
+console.log(total);     // 1760000</code></pre>
+<p>Tiga metode <code>filter</code>, <code>map</code>, dan <code>reduce</code> sangat sering dipakai dalam pekerjaan nyata. Kuasai ketiganya dan Anda akan membaca banyak kode modern dengan lebih mudah.</p>
+<h2 id="dom-mengubah-halaman-web">DOM: mengubah halaman web</h2>
+<p><b>DOM</b> (Document Object Model) adalah representasi halaman web yang bisa dibaca dan diubah JavaScript. Contoh kecil: tombol yang menghitung klik.</p>
+<pre><code>&lt;!-- index.html --&gt;
+&lt;button id=&quot;tombol&quot;&gt;Klik aku&lt;/button&gt;
+&lt;p id=&quot;hasil&quot;&gt;Belum diklik&lt;/p&gt;
+
+&lt;script&gt;
+  let jumlah = 0;
+  const tombol = document.querySelector(&quot;#tombol&quot;);
+  const hasil = document.querySelector(&quot;#hasil&quot;);
+
+  tombol.addEventListener(&quot;click&quot;, () =&gt; {
+    jumlah++;
+    hasil.textContent = `Diklik ${jumlah} kali`;
+  });
+&lt;/script&gt;</code></pre>
+<div class="callout good"><b>Pola utama DOM</b><p>Polanya selalu sama: pilih elemen (querySelector), dengarkan kejadian (addEventListener), lalu ubah sesuatu (textContent, classList, style). Pola ini adalah inti interaktivitas web.</p></div>
+<h2 id="latihan">Latihan</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Tantangan latihan JavaScript","desc":"Centang yang sudah berhasil Anda buat.","items":["Konversi suhu Celsius ke Fahrenheit dengan fungsi.","Cetak angka 1-30; ganti kelipatan 3 dengan \"Fizz\" dan kelipatan 5 dengan \"Buzz\".","Hitung total belanja dari array objek produk.","Tombol yang mengganti tema terang dan gelap halaman.","Formulir yang menampilkan pesan bila email kosong.","Daftar tugas sederhana: tambah dan hapus item."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Cek pemahaman","questions":[{"q":"Hasil dari \u003ccode>5 === \"5\"\u003c/code>?","options":["true","false"],"answer":1,"why":"Operator === membandingkan nilai dan tipe. Angka 5 berbeda tipe dengan teks \"5\"."},{"q":"Metode array untuk mengambil item yang memenuhi syarat?","options":["map","filter","push"],"answer":1,"why":"filter mengembalikan array baru berisi item yang lolos syarat."},{"q":"Untuk menjalankan kode saat tombol diklik, kita memakai ...","options":["addEventListener(\"click\", ...)","console.log","const"],"answer":0,"why":"addEventListener mendaftarkan fungsi yang dijalankan saat kejadian terjadi."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah perlu memasang aplikasi untuk belajar JavaScript?</summary><div>Tidak. Anda bisa mencoba langsung di konsol browser, lalu memakai editor teks gratis seperti VS Code untuk proyek.</div></details>
+<details class="faq"><summary>Apa beda let, const, dan var?</summary><div>const untuk nilai yang tidak diganti, let untuk nilai yang berubah. var adalah cara lama yang sebaiknya dihindari di kode baru.</div></details>
+<details class="faq"><summary>Apa itu DOM?</summary><div>Representasi halaman web yang bisa dibaca dan diubah oleh JavaScript, misalnya untuk mengganti teks atau bereaksi saat tombol diklik.</div></details>
+<details class="faq"><summary>Setelah JavaScript dasar, belajar apa?</summary><div>Proyek kecil dengan DOM, lalu fetch API untuk mengambil data, kemudian kerangka kerja seperti React.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" rel="noopener" target="_blank">MDN: JavaScript Guide</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction" rel="noopener" target="_blank">MDN: Introduction to the DOM</a></li><li><a href="https://javascript.info/" rel="noopener" target="_blank">javascript.info: The Modern JavaScript Tutorial</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/big-o-notation-untuk-pemula/"><img src="/artikel/big-o-notation-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

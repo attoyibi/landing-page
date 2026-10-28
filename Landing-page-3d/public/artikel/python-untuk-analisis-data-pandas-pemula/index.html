@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python untuk Analisis Data: Pandas untuk Pemula</title>
+<meta name="description" content="Analisis data dengan Python dan pandas: membaca Excel, menyaring, mengelompokkan, membersihkan data kotor, dan membuat laporan otomatis.">
+<meta name="keywords" content="pandas, analisis data Python, data analyst, Python Excel, belajar data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/">
+<meta property="og:title" content="Python untuk Analisis Data: Pandas untuk Pemula">
+<meta property="og:description" content="Analisis data dengan Python dan pandas: membaca Excel, menyaring, mengelompokkan, membersihkan data kotor, dan membuat laporan otomatis.">
+<meta property="og:image" content="https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Coding &amp; Algoritma">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python untuk Analisis Data: Pandas untuk Pemula">
+<meta name="twitter:description" content="Analisis data dengan Python dan pandas: membaca Excel, menyaring, mengelompokkan, membersihkan data kotor, dan membuat laporan otomatis.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Python untuk Analisis Data: Pandas untuk Pemula","description":"Analisis data dengan Python dan pandas: membaca Excel, menyaring, mengelompokkan, membersihkan data kotor, dan membuat laporan otomatis.","image":["https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"pandas, analisis data Python, data analyst, Python Excel, belajar data","articleSection":"Coding & Algoritma","wordCount":198,"mainEntityOfPage":"https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Python untuk Analisis Data: Pandas untuk Pemula","item":"https://muchson.web.id/artikel/python-untuk-analisis-data-pandas-pemula/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu pandas?","acceptedAnswer":{"@type":"Answer","text":"Pustaka Python untuk mengolah data tabel, mirip Excel tetapi bisa diotomatiskan dengan kode."}},{"@type":"Question","name":"Apakah pandas bisa membaca file Excel?","acceptedAnswer":{"@type":"Answer","text":"Bisa, dengan pd.read_excel. Pasang juga pustaka openpyxl untuk berkas .xlsx."}},{"@type":"Question","name":"Perlu belajar Python dasar dulu?","acceptedAnswer":{"@type":"Answer","text":"Ya, minimal variabel, list, dan fungsi. Setelah itu pandas bisa dipelajari sambil mengolah data nyata."}},{"@type":"Question","name":"Pandas atau Excel?","acceptedAnswer":{"@type":"Answer","text":"Excel bagus untuk eksplorasi cepat. Pandas unggul untuk tugas berulang, data besar, dan proses yang perlu dicatat dan diulang."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#persiapan">Persiapan</a></li><li><a href="#membaca-data">Membaca data</a></li><li><a href="#memilih-dan-menyaring">Memilih dan menyaring</a></li><li><a href="#mengelompokkan-dan-meringkas">Mengelompokkan dan meringkas</a></li><li><a href="#membersihkan-data-kotor">Membersihkan data kotor</a></li><li><a href="#menyimpan-laporan">Menyimpan laporan</a></li><li><a href="#seberapa-banyak-waktu-yang-dihemat">Seberapa banyak waktu yang dihemat?</a></li><li><a href="#langkah-berikutnya">Langkah berikutnya</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Coding &amp; Algoritma</p>
+<span class="cat">Coding &amp; Algoritma</span>
+<h1>Python untuk Analisis Data: Pandas untuk Pemula</h1>
+<p class="lead">Jika pekerjaan Anda melibatkan Excel berulang setiap minggu, menggabungkan file, menyaring baris, membuat ringkasan, Python dengan pustaka pandas bisa menghemat banyak jam. Sekali skrip dibuat, laporan berikutnya cukup dijalankan ulang. Artikel ini memandu langkah pertamanya dengan contoh data penjualan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Python untuk Analisis Data: Pandas untuk Pemula" fetchpriority="high"></figure>
+<h2 id="persiapan">Persiapan</h2>
+<pre><code>pip install pandas openpyxl
+# openpyxl dibutuhkan untuk membaca dan menulis berkas .xlsx</code></pre>
+<p>Bila tidak ingin memasang apa pun, Anda bisa mencoba di layanan notebook daring seperti Google Colab.</p>
+<h2 id="membaca-data">Membaca data</h2>
+<pre><code>import pandas as pd
+
+df = pd.read_excel(&quot;penjualan.xlsx&quot;)   # atau pd.read_csv(&quot;penjualan.csv&quot;)
+
+print(df.head())        # 5 baris pertama
+print(df.shape)         # (jumlah baris, jumlah kolom)
+df.info()               # tipe data dan nilai kosong per kolom</code></pre>
+<p>Misalkan datanya berisi kolom: <code>tanggal</code>, <code>cabang</code>, <code>produk</code>, <code>qty</code>, <code>harga</code>.</p>
+<h2 id="memilih-dan-menyaring">Memilih dan menyaring</h2>
+<pre><code># kolom tertentu
+df[[&quot;produk&quot;, &quot;qty&quot;]]
+
+# baris dengan syarat
+df[df[&quot;cabang&quot;] == &quot;Malang&quot;]
+df[(df[&quot;qty&quot;] &gt;= 10) &amp; (df[&quot;cabang&quot;] != &quot;Madiun&quot;)]
+
+# kolom baru
+df[&quot;omzet&quot;] = df[&quot;qty&quot;] * df[&quot;harga&quot;]</code></pre>
+<div class="callout warn"><b>Jebakan umum</b><p>Di pandas, gabungan syarat memakai & (dan) serta | (atau), dan setiap syarat dibungkus tanda kurung. Kata and/or Python biasa tidak bekerja di sini.</p></div>
+<h2 id="mengelompokkan-dan-meringkas">Mengelompokkan dan meringkas</h2>
+<pre><code>ringkas = (
+    df.groupby(&quot;cabang&quot;)
+      .agg(total_omzet=(&quot;omzet&quot;, &quot;sum&quot;),
+           transaksi=(&quot;omzet&quot;, &quot;count&quot;),
+           rata_qty=(&quot;qty&quot;, &quot;mean&quot;))
+      .sort_values(&quot;total_omzet&quot;, ascending=False)
+)
+print(ringkas)
+
+# tabel pivot: cabang x produk
+pivot = df.pivot_table(index=&quot;cabang&quot;, columns=&quot;produk&quot;, values=&quot;omzet&quot;, aggfunc=&quot;sum&quot;, fill_value=0)</code></pre>
+<h2 id="membersihkan-data-kotor">Membersihkan data kotor</h2>
+<table><thead><tr><th>Masalah</th><th>Solusi pandas</th></tr></thead><tbody><tr><td>Nilai kosong</td><td><code>df.dropna()</code> atau <code>df["qty"].fillna(0)</code></td></tr><tr><td>Baris ganda</td><td><code>df.drop_duplicates()</code></td></tr><tr><td>Spasi dan huruf tidak seragam</td><td><code>df["cabang"].str.strip().str.title()</code></td></tr><tr><td>Tanggal terbaca sebagai teks</td><td><code>pd.to_datetime(df["tanggal"], dayfirst=True)</code></td></tr><tr><td>Angka berformat "Rp1.250.000"</td><td><code>df["harga"].str.replace(r"[^0-9]", "", regex=True).astype(int)</code></td></tr></tbody></table>
+<h2 id="menyimpan-laporan">Menyimpan laporan</h2>
+<pre><code>with pd.ExcelWriter(&quot;laporan_mingguan.xlsx&quot;) as w:
+    ringkas.to_excel(w, sheet_name=&quot;Per cabang&quot;)
+    pivot.to_excel(w, sheet_name=&quot;Cabang x produk&quot;)
+print(&quot;Laporan selesai&quot;)</code></pre>
+<h2 id="seberapa-banyak-waktu-yang-dihemat">Seberapa banyak waktu yang dihemat?</h2>
+<div data-w="calc"><script type="application/json">{"title":"Hitung penghematan otomasi","desc":"Bandingkan waktu membuat laporan manual dengan membuat skrip sekali lalu menjalankannya.","inputs":[{"id":"manual","label":"Menit membuat laporan manual","value":90,"min":10,"max":480,"step":10},{"id":"frek","label":"Laporan per bulan","value":4,"min":1,"max":30,"step":1},{"id":"buat","label":"Jam membuat skrip pertama kali","value":6,"min":1,"max":40,"step":1}],"outputs":[{"label":"Jam dihemat dalam 1 tahun","expr":"manual * frek * 12 / 60 - buat","fmt":"num","unit":"jam","big":true},{"label":"Balik modal setelah","expr":"buat * 60 / manual","fmt":"num","unit":"laporan"}]}</script></div>
+<h2 id="langkah-berikutnya">Langkah berikutnya</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Peta belajar data","desc":"Centang yang sudah dikuasai.","items":["Membaca CSV dan Excel dengan pandas.","Menyaring, membuat kolom baru, dan mengurutkan.","groupby dan pivot_table.","Membersihkan data kotor.","Membuat grafik dengan matplotlib atau langsung dari pandas.","Menggabungkan beberapa tabel dengan merge.","Dasar SQL untuk mengambil data dari database.","Statistik dasar: rata-rata, median, sebaran."]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu pandas?</summary><div>Pustaka Python untuk mengolah data tabel, mirip Excel tetapi bisa diotomatiskan dengan kode.</div></details>
+<details class="faq"><summary>Apakah pandas bisa membaca file Excel?</summary><div>Bisa, dengan pd.read_excel. Pasang juga pustaka openpyxl untuk berkas .xlsx.</div></details>
+<details class="faq"><summary>Perlu belajar Python dasar dulu?</summary><div>Ya, minimal variabel, list, dan fungsi. Setelah itu pandas bisa dipelajari sambil mengolah data nyata.</div></details>
+<details class="faq"><summary>Pandas atau Excel?</summary><div>Excel bagus untuk eksplorasi cepat. Pandas unggul untuk tugas berulang, data besar, dan proses yang perlu dicatat dan diulang.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://pandas.pydata.org/docs/getting_started/index.html" rel="noopener" target="_blank">pandas: Getting started</a></li><li><a href="https://pandas.pydata.org/docs/user_guide/index.html" rel="noopener" target="_blank">pandas: User Guide</a></li><li><a href="https://muchson.web.id/artikel/ai-untuk-excel-dan-google-sheets-rumus/" rel="noopener" target="_blank">AI untuk Excel dan Google Sheets (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a><a href="/artikel/binary-search-dijelaskan-visual/"><img src="/artikel/binary-search-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Dijelaskan Visual: Mencari dengan Membagi Dua</span></a><a href="/artikel/big-o-notation-untuk-pemula/"><img src="/artikel/big-o-notation-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
