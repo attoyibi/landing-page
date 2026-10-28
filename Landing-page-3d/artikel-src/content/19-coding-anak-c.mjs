@@ -80,7 +80,7 @@ export default [
     {
         slug: 'koordinat-x-y-di-scratch-untuk-anak',
         title: 'Koordinat X dan Y di Scratch: Matematika Terasa Seperti Main',
-        description: 'Penjelasan koordinat x dan y di panggung Scratch untuk anak: ukuran panggung, empat kuadran, bilangan negatif, blok pergi ke dan meluncur, serta latihan interaktif.',
+        description: 'Koordinat x dan y di panggung Scratch untuk anak: ukuran panggung, empat kuadran, bilangan negatif, blok gerak, dan latihan interaktif.',
         date: D, category: C, tags: ['koordinat Scratch', 'koordinat kartesius', 'matematika anak', 'coding untuk anak', 'bilangan negatif'], cta: 'pixelkode',
         ctaNote: 'Modul Angkasa di PixelKode mengajarkan koordinat lewat "Tur Planet" dan "Rasi Bintang": anak menerbangkan roket ke titik-titik tertentu sambil memahami x, y, dan bilangan negatif.',
         lead: 'Banyak anak baru bertemu koordinat kartesius dan bilangan negatif di kelas atas SD atau SMP, dan sering merasa itu abstrak. Di Scratch, koordinat langsung terlihat: ubah angka x, kucing berpindah ke kanan atau kiri. Artikel ini menjelaskan sistem koordinat panggung Scratch dan cara memanfaatkannya untuk belajar matematika sambil bermain.',
@@ -147,7 +147,7 @@ export default [
     {
         slug: 'siarkan-pesan-scratch-cerita-interaktif',
         title: 'Siarkan Pesan di Scratch: Membuat Cerita Interaktif',
-        description: 'Cara memakai blok siarkan pesan (broadcast) di Scratch agar sprite saling berkomunikasi: dialog bergantian, pergantian adegan, cerita bercabang, dan contoh proyek.',
+        description: 'Cara memakai blok siarkan pesan di Scratch agar sprite saling berkomunikasi: dialog bergantian, pindah adegan, dan cerita bercabang.',
         date: D, category: C, tags: ['broadcast Scratch', 'siarkan pesan', 'cerita interaktif', 'coding untuk anak', 'Scratch'], cta: 'pixelkode',
         ctaNote: 'Pelajaran 9 PixelKode membahas pesan: Robo membuka gerbang warna dengan "kirim pesan", lalu anak membuat cerita dengan dialog yang tertata di Studio.',
         lead: 'Ketika proyek Scratch punya lebih dari satu tokoh, muncul masalah: bagaimana tokoh B tahu kapan tokoh A selesai bicara? Menebak dengan blok "tunggu" mudah meleset. Jawabannya adalah siarkan pesan, cara sprite saling mengirim sinyal. Konsep ini juga memperkenalkan ide penting dalam pemrograman modern: program yang dijalankan oleh kejadian.',
@@ -221,7 +221,7 @@ export default [
     {
         slug: 'clone-di-scratch-dijelaskan-untuk-anak',
         title: 'Clone di Scratch: Satu Sprite, Banyak Salinan',
-        description: 'Penjelasan clone di Scratch untuk anak: analogi cetakan kue, tiga blok clone, contoh hujan meteor dan kembang api, variabel lokal, batas jumlah clone, dan bug umum.',
+        description: 'Clone di Scratch untuk anak: analogi cetakan kue, tiga blok clone, contoh hujan meteor dan kembang api, variabel lokal, dan bug umum.',
         date: D, category: C, tags: ['clone Scratch', 'klon Scratch', 'coding untuk anak', 'game Scratch', 'variabel lokal'], cta: 'pixelkode',
         ctaNote: 'Modul Clone di PixelKode (Pelajaran 29-31) membahas cetakan dan salinan, variabel lokal dan global, lalu menutupnya dengan proyek akhir "Hujan Meteor".',
         lead: 'Bayangkan game dengan 30 meteor jatuh. Membuat 30 sprite meteor dengan skrip yang sama akan sangat merepotkan, dan mengubah satu hal berarti mengubah 30 tempat. Clone menyelesaikan masalah ini: satu sprite menjadi cetakan, lalu salinannya dibuat sebanyak yang dibutuhkan selama program berjalan. Konsep ini juga pengantar ke ide penting pemrograman: kelas dan objek.',
@@ -287,7 +287,7 @@ export default [
     {
         slug: 'ide-proyek-scratch-untuk-anak-sesuai-level',
         title: '30 Ide Proyek Scratch untuk Anak, dari yang Termudah',
-        description: 'Daftar 30 ide proyek Scratch untuk anak SD yang disusun berdasarkan tingkat kesulitan dan konsep coding yang dilatih, plus tips memilih proyek dan pemilih ide interaktif.',
+        description: '30 ide proyek Scratch untuk anak SD, disusun dari yang termudah sampai game lengkap, dengan konsep coding yang dilatih tiap proyek.',
         date: D, category: C, tags: ['ide proyek Scratch', 'proyek Scratch anak', 'coding untuk anak', 'game Scratch', 'Scratch'], cta: 'pixelkode',
         ctaNote: 'Bingung memilih proyek berikutnya? PixelKode menyusun 70 proyek Studio berurutan, dari "Halo, Oyen!" sampai "Hujan Meteor", lengkap dengan contoh hasil interaktif di setiap tugas.',
         lead: 'Pertanyaan "aku mau bikin apa?" sering menghentikan anak sebelum mulai. Daftar ini berisi 30 ide proyek Scratch yang disusun dari yang paling mudah sampai menantang, lengkap dengan konsep yang dilatih. Pilih yang sesuai minat dan level anak, lalu biarkan ia memodifikasinya menjadi versinya sendiri.',

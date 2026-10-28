@@ -7,7 +7,7 @@ export default [
     {
         slug: 'coding-tanpa-komputer-permainan-unplugged-di-rumah',
         title: 'Coding Tanpa Komputer: 10 Permainan Unplugged di Rumah',
-        description: '10 permainan coding tanpa komputer (unplugged) untuk anak 4-11 tahun: robot manusia, kode kartu, sortir, biner dengan jari, dan lainnya. Bahan murah, langkah jelas.',
+        description: '10 permainan coding tanpa komputer untuk anak 4-11 tahun: robot manusia, kartu biner, tebak angka, kode rahasia, dan lainnya.',
         date: D, category: C, tags: ['coding unplugged', 'coding tanpa komputer', 'permainan edukatif', 'berpikir komputasional', 'kegiatan anak di rumah'], cta: 'pixelkode',
         ctaNote: 'Setelah anak lancar dengan permainan "robot manusia", ia siap memberi perintah ke Robo sungguhan di Pelajaran 1 PixelKode, gratis dan langsung di browser.',
         lead: 'Anak tidak harus duduk di depan layar untuk mulai belajar coding. Konsep inti seperti algoritma, pola, dan logika bisa dilatih dengan kertas, kartu, dan badan sendiri. Pendekatan ini disebut computer science unplugged, dikembangkan antara lain oleh peneliti di University of Canterbury, Selandia Baru. Berikut 10 permainan yang bisa langsung dimainkan di rumah.',
@@ -88,7 +88,7 @@ export default [
     {
         slug: 'urutan-belajar-coding-anak-scratchjr-scratch-python',
         title: 'Urutan Belajar Coding Anak: ScratchJr, Scratch, lalu Python',
-        description: 'Peta jalan belajar coding anak dari usia 5 sampai remaja: ScratchJr, Scratch, Python, dan pengembangan web. Kapan naik tahap, apa yang dipelajari, dan contoh proyek.',
+        description: 'Peta jalan belajar coding anak dari usia 5 tahun: ScratchJr, Scratch, Python, sampai proyek nyata, lengkap dengan tanda kapan naik tahap.',
         date: D, category: C, tags: ['roadmap coding anak', 'ScratchJr', 'Scratch', 'Python untuk anak', 'belajar coding anak'], cta: 'pixelkode',
         ctaNote: 'PixelKode mengisi tahap Scratch (8-11 tahun) dengan 32 pelajaran berurutan. Setelah lulus, proyek anak tetap bisa dibuka di Scratch dan dilanjutkan ke tahap berikutnya.',
         lead: 'Orang tua sering bertanya: setelah Scratch, lalu apa? Haruskah langsung Python? Bagaimana dengan robotik dan pembuatan aplikasi? Artikel ini menyusun peta jalan yang realistis dari usia 5 tahun sampai remaja, lengkap dengan tanda kapan anak siap naik tahap.',
@@ -158,7 +158,7 @@ export default [
     {
         slug: 'kapan-anak-siap-pindah-dari-scratch-ke-python',
         title: 'Kapan Anak Siap Pindah dari Scratch ke Python?',
-        description: 'Tanda anak siap beralih dari Scratch ke Python, tes kesiapan interaktif, perbandingan konsep blok dan teks, serta rencana transisi 4 minggu dengan proyek pertama.',
+        description: 'Tanda anak siap beralih dari Scratch ke Python, tes kesiapan, perbandingan blok dan kode teks, serta rencana transisi empat minggu.',
         date: D, category: C, tags: ['Scratch ke Python', 'Python untuk anak', 'belajar coding anak', 'transisi coding', 'Scratch'], cta: 'pixelkode',
         ctaNote: 'Belum siap ke Python? Pastikan dasar Scratch-nya kuat dulu. PixelKode menutup semua konsep yang dibutuhkan sebelum Python: variabel, operator logika, prosedur berparameter, dan clone.',
         lead: 'Ada anak yang pindah ke Python terlalu cepat lalu kehilangan semangat karena terus bertemu pesan error. Ada juga yang bertahun-tahun di Scratch sampai bosan. Artikel ini membantu Anda membaca tanda kesiapan anak, lalu memberi rencana transisi bertahap supaya peralihannya mulus.',
@@ -227,7 +227,7 @@ export default [
     {
         slug: 'cara-memilih-kursus-coding-anak',
         title: 'Cara Memilih Kursus Coding Anak: 12 Pertanyaan Sebelum Bayar',
-        description: 'Panduan jujur memilih kursus coding anak: 12 pertanyaan untuk penyelenggara, tanda bahaya janji berlebihan, cara menilai kelas percobaan, dan daftar periksa interaktif.',
+        description: 'Panduan jujur memilih kursus coding anak: 12 pertanyaan untuk penyelenggara, tanda bahaya janji berlebihan, dan cara menilai kelas percobaan.',
         date: D, category: C, tags: ['kursus coding anak', 'les coding anak', 'memilih kursus', 'coding untuk anak', 'kelas coding online'], cta: 'pixelkode',
         ctaNote: 'Saya juga penyelenggara kursus (PixelKode), jadi silakan uji kelas saya dengan 12 pertanyaan yang sama. Kurikulum lengkapnya terbuka di halaman depan, dan dua pelajaran pertama bisa dicoba tanpa mendaftar.',
         lead: 'Kursus coding anak kini banyak sekali, dengan harga dan janji yang sangat beragam. Sebagai orang yang membuat kursus coding anak sendiri, saya ingin memberi panduan yang jujur: pertanyaan yang sebaiknya Anda ajukan ke penyelenggara mana pun, termasuk ke saya, sebelum membayar.',
@@ -309,7 +309,7 @@ export default [
     {
         slug: 'kursus-coding-anak-online-atau-offline',
         title: 'Kursus Coding Anak Online atau Offline? Plus Hitung Biayanya',
-        description: 'Perbandingan kursus coding anak online dan offline: kelebihan, kekurangan, syarat agar kelas online efektif, dan kalkulator biaya per jam untuk membandingkan harga.',
+        description: 'Kursus coding anak online atau offline? Kelebihan masing-masing, syarat kelas online efektif, dan kalkulator biaya per jam belajar.',
         date: D, category: C, tags: ['kursus coding online', 'les coding anak', 'biaya kursus coding', 'belajar online anak', 'coding untuk anak'], cta: 'pixelkode',
         ctaNote: 'Paket Kelas Bersama Guru di PixelKode berupa 4 sesi online 90 menit per bulan, maksimal 6 anak, dengan proyek yang diperiksa guru. Masukkan angkanya ke kalkulator di atas untuk membandingkan.',
         lead: 'Setelah pandemi, kursus coding online menjadi pilihan umum, tetapi banyak orang tua masih ragu: apakah anak bisa fokus di depan laptop, dan apakah hasilnya setara dengan kelas tatap muka? Artikel ini membandingkan keduanya secara jujur dan memberi kalkulator untuk menghitung biaya per jam belajar.',

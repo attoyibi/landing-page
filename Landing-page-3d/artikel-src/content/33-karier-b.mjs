@@ -5,7 +5,7 @@ export default [
     {
         slug: 'profil-linkedin-yang-menarik-recruiter',
         title: 'Profil LinkedIn yang Menarik Recruiter: Panduan Lengkap',
-        description: 'Cara membuat profil LinkedIn yang ditemukan dan dilirik recruiter: foto, headline, about, pengalaman berbasis hasil, keahlian, dan kebiasaan aktif yang membangun reputasi.',
+        description: 'Cara membuat profil LinkedIn yang ditemukan recruiter: foto, headline, about, pengalaman berbasis hasil, keahlian, dan kebiasaan aktif.',
         date: D, category: C, tags: ['LinkedIn', 'profil LinkedIn', 'personal branding', 'mencari kerja', 'recruiter'], cta: 'jasa',
         lead: 'Banyak recruiter memakai LinkedIn untuk mencari kandidat, bukan hanya menerima lamaran. Profil yang lengkap dan jelas membuat Anda ditemukan dalam pencarian dan dihubungi lebih dulu. Panduan ini membahas setiap bagian profil dari sudut pandang orang yang membacanya: recruiter yang sibuk.',
         body: [
@@ -62,7 +62,7 @@ export default [
     {
         slug: 'skill-digital-yang-paling-dicari-dan-cara-mempelajarinya',
         title: 'Skill Digital yang Paling Dicari dan Cara Mempelajarinya',
-        description: 'Skill yang paling cepat tumbuh menurut Future of Jobs Report 2025 WEF, skill digital yang relevan untuk berbagai profesi, dan rencana belajar 90 hari yang realistis.',
+        description: 'Skill yang paling cepat tumbuh menurut Future of Jobs Report 2025 WEF, skill digital per profesi, dan rencana belajar 90 hari.',
         date: D, category: C, tags: ['skill digital', 'skill yang dicari', 'Future of Jobs', 'upskilling', 'karier'], cta: 'jasa',
         lead: 'Dunia kerja berubah cepat. Menurut Future of Jobs Report 2025 dari World Economic Forum, pemberi kerja memperkirakan 39% keterampilan inti pekerja akan berubah pada 2030. Artikel ini merangkum keterampilan yang paling cepat tumbuh dan cara mempelajarinya tanpa harus berhenti bekerja.',
         body: [
@@ -120,7 +120,7 @@ export default [
     {
         slug: 'cara-negosiasi-gaji-saat-tawaran-kerja',
         title: 'Cara Negosiasi Gaji saat Tawaran Kerja (Dengan Skrip)',
-        description: 'Langkah negosiasi gaji yang profesional: riset kisaran, menentukan angka, efek tawaran pertama, skrip kalimat, negosiasi selain gaji pokok, dan kesalahan yang sebaiknya dihindari.',
+        description: 'Langkah negosiasi gaji yang profesional: riset kisaran pasar, efek tawaran pertama, skrip kalimat, komponen selain gaji, dan kesalahan umum.',
         date: D, category: C, tags: ['negosiasi gaji', 'tawaran kerja', 'ekspektasi gaji', 'karier', 'wawancara kerja'], cta: 'jasa',
         lead: 'Banyak orang menerima tawaran gaji pertama karena takut terlihat serakah atau takut tawaran dibatalkan. Padahal negosiasi yang sopan dan berbasis data adalah hal wajar di banyak perusahaan. Selisih kecil di awal bisa berlipat selama bertahun-tahun karena kenaikan gaji sering dihitung dari angka awal.',
         body: [
@@ -188,7 +188,7 @@ export default [
     {
         slug: 'surat-lamaran-kerja-yang-baik-dan-contohnya',
         title: 'Surat Lamaran Kerja yang Baik: Struktur dan Contohnya',
-        description: 'Cara menulis surat lamaran kerja atau cover letter yang dibaca recruiter: struktur 4 paragraf, contoh bahasa Indonesia, versi email, dan pembuat surat lamaran interaktif.',
+        description: 'Cara menulis surat lamaran kerja yang dibaca recruiter: struktur empat paragraf, contoh bahasa Indonesia, versi email, dan pembuat surat.',
         date: D, category: C, tags: ['surat lamaran kerja', 'cover letter', 'contoh surat lamaran', 'melamar kerja', 'karier'], cta: 'jasa',
         lead: 'Surat lamaran kerja sering diperlakukan sebagai formalitas: disalin dari templat, diganti nama perusahaannya, lalu dikirim. Recruiter bisa merasakannya. Surat lamaran yang baik singkat, spesifik, dan menjawab satu pertanyaan: kenapa Anda cocok untuk posisi ini di perusahaan ini?',
         body: [
@@ -233,7 +233,7 @@ export default [
     {
         slug: 'kerja-remote-untuk-perusahaan-luar-negeri',
         title: 'Kerja Remote untuk Perusahaan Luar Negeri dari Indonesia',
-        description: 'Panduan bekerja remote untuk perusahaan luar negeri dari Indonesia: jenis peran, cara melamar, menghadapi beda zona waktu, menerima pembayaran, kewajiban pajak, dan cara menghindari penipuan.',
+        description: 'Panduan kerja remote untuk perusahaan luar negeri dari Indonesia: jenis peran, zona waktu, pembayaran, pajak, dan cara menghindari penipuan.',
         date: D, category: C, tags: ['kerja remote', 'remote work luar negeri', 'freelance internasional', 'gaji dolar', 'karier'], cta: 'jasa',
         lead: 'Bekerja dari Indonesia untuk perusahaan di Singapura, Australia, Eropa, atau Amerika kini semakin umum, terutama di bidang teknologi, desain, pemasaran digital, dan dukungan pelanggan. Peluangnya nyata, tetapi persaingannya global dan ada hal praktis yang perlu disiapkan: zona waktu, pembayaran, pajak, dan kewaspadaan terhadap lowongan palsu.',
         body: [
@@ -292,7 +292,7 @@ export default [
     {
         slug: 'karier-cyber-security-untuk-pemula',
         title: 'Karier Cyber Security untuk Pemula: Peran, Skill, dan Jalur',
-        description: 'Panduan memulai karier keamanan siber: peran yang tersedia, skill dasar, sertifikasi tingkat pemula, tempat latihan legal, dan rencana belajar 6 bulan untuk pemula.',
+        description: 'Memulai karier keamanan siber: peran yang tersedia, skill dasar, tempat latihan legal, sertifikasi pemula, dan rencana belajar 6 bulan.',
         date: D, category: C, tags: ['cyber security', 'keamanan siber', 'karier IT', 'ethical hacking', 'sertifikasi keamanan'], cta: 'jasa',
         lead: 'Keamanan siber termasuk keterampilan yang paling cepat tumbuh menurut Future of Jobs Report 2025 WEF. Bagi banyak pemula, bidang ini terdengar identik dengan hacker di film. Kenyataannya jauh lebih beragam: ada yang memantau serangan, mengaudit sistem, menyusun kebijakan, sampai mendidik pengguna. Artikel ini memetakan jalurnya.',
         body: [

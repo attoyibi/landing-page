@@ -91,7 +91,7 @@ export default [
     {
         slug: 'scratch-adalah-panduan-lengkap-orang-tua',
         title: 'Scratch Adalah: Panduan Lengkap untuk Orang Tua',
-        description: 'Scratch adalah bahasa pemrograman blok gratis dari MIT. Pahami cara kerjanya, apa yang bisa dibuat anak, keamanannya, dan cara mendampingi tanpa harus bisa coding.',
+        description: 'Scratch adalah bahasa pemrograman blok gratis dari MIT. Pahami cara kerjanya, apa yang dipelajari anak, keamanannya, dan cara mendampinginya.',
         date: D, category: C, tags: ['Scratch', 'Scratch adalah', 'coding untuk anak', 'MIT', 'pemrograman blok'], cta: 'pixelkode',
         ctaNote: 'Studio di PixelKode sengaja dibuat sama dengan editor Scratch 3, termasuk nama dan warna bloknya. Proyek anak bisa diunduh sebagai .sb3 dan dibuka di Scratch kapan saja.',
         lead: 'Kalau anak Anda pernah pulang sekolah bercerita tentang "kucing oranye yang bisa diprogram", besar kemungkinan itu Scratch. Panduan ini menjelaskan apa itu Scratch, kenapa dipakai jutaan sekolah, apa yang sebenarnya dipelajari anak di dalamnya, dan bagaimana Anda bisa mendampingi meski belum pernah coding sama sekali.',
@@ -166,7 +166,7 @@ export default [
     {
         slug: 'cara-memakai-scratch-online-offline-dan-akun',
         title: 'Cara Memakai Scratch: Online, Offline, dan Membuat Akun',
-        description: 'Panduan langkah demi langkah memakai Scratch: langsung di browser, membuat akun yang aman untuk anak, aplikasi offline, menyimpan .sb3, dan mengatasi masalah umum.',
+        description: 'Cara memakai Scratch langkah demi langkah: langsung di browser, akun yang aman untuk anak, aplikasi offline, menyimpan .sb3, dan solusi masalah umum.',
         date: D, category: C, tags: ['cara memakai Scratch', 'Scratch offline', 'akun Scratch', 'Scratch 3', 'coding untuk anak'], cta: 'pixelkode',
         ctaNote: 'Proyek Studio di PixelKode bisa diunduh sebagai berkas .sb3, lalu dibuka di Scratch lewat menu Berkas → Muat dari komputermu, persis seperti cara di artikel ini.',
         lead: 'Scratch bisa dipakai dengan tiga cara: langsung di browser tanpa akun, di browser dengan akun, atau lewat aplikasi offline. Masing-masing punya kelebihan. Artikel ini memandu Anda memilih dan menyiapkannya dalam 10 menit, termasuk pengaturan yang aman untuk anak.',
@@ -237,7 +237,7 @@ export default [
     {
         slug: 'berpikir-komputasional-untuk-anak-4-pilar',
         title: 'Berpikir Komputasional untuk Anak: 4 Pilar dan Contohnya',
-        description: 'Berpikir komputasional bukan berarti anak harus di depan komputer. Pahami 4 pilarnya (dekomposisi, pola, abstraksi, algoritma) lewat contoh sehari-hari dan latihan.',
+        description: 'Empat pilar berpikir komputasional (dekomposisi, pola, abstraksi, algoritma) dijelaskan lewat contoh sehari-hari, latihan Robo, dan kuis.',
         date: D, category: C, tags: ['berpikir komputasional', 'computational thinking', 'coding untuk anak', 'Kurikulum Merdeka', 'logika anak'], cta: 'pixelkode',
         ctaNote: 'Latihan Robo di PixelKode dirancang khusus untuk melatih keempat pilar ini: memecah rute, menemukan pola langkah, lalu meringkasnya dengan blok ulangi dan blok buatan sendiri.',
         lead: 'Istilah berpikir komputasional kini muncul di kurikulum sekolah, brosur kursus, sampai soal lomba. Kedengarannya teknis, padahal anak Anda mungkin sudah melakukannya saat menyusun Lego atau merencanakan rute bersepeda. Artikel ini menjelaskan empat pilarnya dengan contoh dari dapur, kamar, dan game, plus cara melatihnya di rumah.',
@@ -311,7 +311,7 @@ export default [
     {
         slug: 'algoritma-untuk-anak-penjelasan-dan-latihan',
         title: 'Algoritma untuk Anak: Penjelasan Sederhana dan Latihan',
-        description: 'Cara menjelaskan algoritma kepada anak SD dengan contoh sehari-hari, kesalahan umum, dan latihan Robo interaktif bertingkat yang bisa langsung dicoba di halaman ini.',
+        description: 'Cara menjelaskan algoritma kepada anak SD dengan contoh sehari-hari, kesalahan umum, dan latihan Robo bertingkat yang bisa langsung dicoba.',
         date: D, category: C, tags: ['algoritma untuk anak', 'pengertian algoritma', 'coding untuk anak', 'logika anak', 'latihan algoritma'], cta: 'pixelkode',
         ctaNote: 'Latihan di artikel ini adalah cuplikan dari Pelajaran 1 PixelKode. Versi lengkapnya punya 5 level bertahap, petunjuk bertingkat saat anak macet, dan pemeriksaan otomatis.',
         lead: 'Algoritma terdengar seperti kata untuk ilmuwan, padahal setiap pagi anak Anda menjalankan beberapa algoritma: bangun, mandi, sikat gigi, memakai seragam. Artikel ini menunjukkan cara menjelaskan algoritma dengan bahasa anak, kesalahan yang paling sering terjadi, dan latihan bertingkat bersama Robo yang bisa langsung dimainkan.',

@@ -7,7 +7,7 @@ export default [
     {
         slug: 'pengulangan-loop-untuk-anak',
         title: 'Pengulangan (Loop) untuk Anak: Program Pendek, Hasil Panjang',
-        description: 'Cara mengajarkan konsep loop atau pengulangan kepada anak: contoh sehari-hari, blok ulangi dan selamanya di Scratch, loop bersarang, dan latihan Robo interaktif.',
+        description: 'Cara mengajarkan loop kepada anak: contoh sehari-hari, blok ulangi dan selamanya di Scratch, loop bersarang, dan latihan Robo interaktif.',
         date: D, category: C, tags: ['loop', 'pengulangan', 'coding untuk anak', 'Scratch', 'algoritma'], cta: 'pixelkode',
         ctaNote: 'Pelajaran 2 PixelKode khusus membahas pengulangan: 5 level Robo "Pola dan Ulangi", animasi berjalan di Studio, dan tantangan bintang loop di dalam loop.',
         lead: 'Bayangkan menulis "maju 1 langkah" seratus kali. Membosankan, mudah salah hitung, dan susah diubah. Pengulangan atau loop menyelesaikan masalah itu, dan konsep ini sering menjadi momen "aha!" pertama anak dalam belajar coding. Berikut cara menjelaskannya, contoh di Scratch, dan latihan untuk mencoba langsung.',
@@ -83,7 +83,7 @@ export default [
     {
         slug: 'percabangan-jika-maka-untuk-anak',
         title: 'Percabangan Jika-Maka: Mengajari Anak Logika Keputusan',
-        description: 'Cara mengajarkan percabangan jika-maka (if-then) kepada anak: contoh sehari-hari, blok jika di Scratch, operator dan, atau, tidak, serta latihan dan kuis interaktif.',
+        description: 'Mengajarkan percabangan jika-maka kepada anak: contoh sehari-hari, blok jika di Scratch, operator dan, atau, tidak, plus kuis logika.',
         date: D, category: C, tags: ['percabangan', 'if else', 'logika anak', 'coding untuk anak', 'Scratch'], cta: 'pixelkode',
         ctaNote: 'Modul Game di PixelKode memakai percabangan untuk membuat Robo memilih jalan, lalu modul Logika melatih dan, atau, tidak lewat game labirin buatan anak sendiri.',
         lead: 'Program yang hanya berjalan lurus tidak bisa bereaksi. Game baru terasa hidup ketika komputer bisa memutuskan: jika pemain menyentuh bintang, tambah skor; jika menyentuh meteor, kurangi nyawa. Inilah percabangan. Kabar baiknya, anak sudah memakai logika ini setiap hari. Tugas kita tinggal menamainya.',
@@ -151,7 +151,7 @@ export default [
     {
         slug: 'variabel-untuk-anak-belajar-dari-skor-game',
         title: 'Variabel untuk Anak: Belajar dari Skor dan Nyawa di Game',
-        description: 'Menjelaskan variabel kepada anak dengan analogi kotak bernama, contoh skor, nyawa, dan pewaktu di Scratch, kesalahan umum, serta kalkulator interaktif untuk mencoba sendiri.',
+        description: 'Menjelaskan variabel kepada anak lewat skor, nyawa, dan pewaktu di game Scratch: analogi kotak bernama, kesalahan umum, dan simulasi skor.',
         date: D, category: C, tags: ['variabel', 'coding untuk anak', 'Scratch', 'skor game', 'konsep pemrograman'], cta: 'pixelkode',
         ctaNote: 'Modul Variabel di PixelKode berisi 6 pelajaran: Robo menghitung, tipe data, skor dan nyawa di game Tangkap Bintang, blok berparameter, sampai membuat chatbot.',
         lead: 'Variabel sering dianggap konsep yang sulit, padahal anak sudah memakainya setiap kali bermain: skor, jumlah nyawa, koin yang terkumpul, waktu tersisa. Artikel ini membantu Anda menjelaskan variabel dengan analogi yang melekat, menunjukkan cara memakainya di Scratch, dan memberi latihan untuk dicoba bersama.',
@@ -218,7 +218,7 @@ export default [
     {
         slug: 'debugging-untuk-anak-salah-bagian-dari-belajar',
         title: 'Debugging untuk Anak: Salah Itu Bagian dari Belajar',
-        description: 'Debugging melatih anak tidak takut salah. Pelajari langkah mencari bug yang bisa diajarkan, kalimat pendamping yang tepat, dan latihan menemukan kesalahan program.',
+        description: 'Debugging melatih anak tidak takut salah. Lima langkah mencari bug, kalimat pendamping yang tepat, dan latihan menemukan kesalahan program.',
         date: D, category: C, tags: ['debugging', 'growth mindset', 'coding untuk anak', 'pemecahan masalah', 'pola asuh'], cta: 'pixelkode',
         ctaNote: 'Pelajaran 15 PixelKode, "Testing Game", sepenuhnya tentang berburu bug: Robo dengan program yang sengaja rusak, debugger langkah demi langkah, dan petunjuk bertahap.',
         lead: 'Di sekolah, salah sering berarti nilai berkurang. Di coding, salah adalah kejadian sehari-hari yang bahkan punya nama sendiri: bug. Programmer profesional menghabiskan banyak waktunya untuk mencari dan memperbaiki bug. Bagi anak, ini kesempatan langka untuk belajar bahwa kesalahan bisa diselidiki, dipahami, dan diperbaiki, bukan disembunyikan.',

@@ -7,7 +7,7 @@ export default [
     {
         slug: 'gaya-belajar-visual-auditori-kinestetik-mitos',
         title: 'Gaya Belajar Visual, Auditori, Kinestetik: Mitos atau Fakta?',
-        description: 'Benarkah anak belajar lebih baik bila diajar sesuai gaya belajar visual, auditori, atau kinestetiknya? Ini kata riset, kenapa mitos ini bertahan, dan strategi yang terbukti efektif.',
+        description: 'Benarkah anak belajar lebih baik bila diajar sesuai gaya belajarnya? Ini kata riset, kenapa mitosnya bertahan, dan strategi yang terbukti.',
         date: D, category: C, tags: ['gaya belajar', 'visual auditori kinestetik', 'mitos pendidikan', 'cara belajar efektif', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'Pelajaran di PixelKode sengaja menggabungkan banyak cara: gambar dan contoh interaktif, latihan Robo yang melibatkan gerak, dan proyek yang dibuat sendiri. Bukan karena gaya belajar, melainkan karena konsepnya memang paling jelas lewat cara itu.',
         lead: '"Anak saya tipe visual, jadi harus belajar pakai gambar." Kalimat ini sangat populer di kalangan orang tua dan guru. Banyak tes gaya belajar beredar di internet. Masalahnya, penelitian yang dirancang untuk mengujinya tidak menemukan bukti yang kuat. Artikel ini menjelaskan apa yang sebenarnya diketahui ilmu pendidikan, dan apa yang lebih layak menjadi fokus.',
@@ -75,7 +75,7 @@ export default [
 
     {
         slug: 'pentingnya-bermain-untuk-perkembangan-anak',
-        title: 'Pentingnya Bermain untuk Perkembangan Anak (Bukan Buang Waktu)',
+        title: 'Pentingnya Bermain untuk Perkembangan Anak',
         description: 'Kenapa bermain adalah cara utama anak belajar menurut dokter anak: manfaatnya untuk otak, bahasa, dan sosial, jenis-jenis bermain, dan cara memberinya ruang.',
         date: D, category: C, tags: ['pentingnya bermain', 'bermain anak', 'tumbuh kembang anak', 'belajar sambil bermain', 'pola asuh'], cta: 'pixelkode',
         ctaNote: 'Prinsip "belajar sambil bermain" juga menjadi dasar PixelKode: anak menyusun blok, mencoba, salah, dan mencoba lagi seperti bermain, lalu memamerkan karyanya di galeri kelas.',
@@ -148,7 +148,7 @@ export default [
     {
         slug: 'melatih-problem-solving-dan-berpikir-kritis-anak',
         title: 'Melatih Problem Solving dan Berpikir Kritis pada Anak',
-        description: 'Cara melatih anak memecahkan masalah dan berpikir kritis di rumah: 4 langkah Polya, pertanyaan pemicu, kegiatan sehari-hari, dan latihan interaktif untuk anak SD.',
+        description: 'Cara melatih anak memecahkan masalah dan berpikir kritis: 4 langkah Polya, pertanyaan pemicu, kegiatan sehari-hari, dan latihan interaktif.',
         date: D, category: C, tags: ['problem solving anak', 'berpikir kritis', 'keterampilan abad 21', 'pendidikan anak', 'logika anak'], cta: 'pixelkode',
         ctaNote: 'Setiap level Robo di PixelKode adalah latihan problem solving kecil: pahami peta, rencanakan rute, jalankan, lalu periksa. Petunjuk bertahap membantu tanpa membocorkan jawaban.',
         lead: 'Kita ingin anak bisa menyelesaikan masalahnya sendiri: soal matematika yang sulit, mainan yang rusak, atau konflik dengan teman. Kemampuan ini tidak muncul begitu saja. Ia dilatih lewat pengalaman kecil sehari-hari, ketika orang dewasa menahan diri untuk tidak langsung memberi jawaban.',
@@ -318,7 +318,7 @@ export default [
     {
         slug: 'cara-membantu-pr-anak-tanpa-mengerjakannya',
         title: 'Cara Membantu PR Anak Tanpa Mengerjakannya',
-        description: 'Panduan membantu PR anak SD yang benar menurut riset: kapan membantu, kalimat yang dipakai, cara mengatasi drama PR, dan peran orang tua yang paling berdampak bagi prestasi.',
+        description: 'Cara membantu PR anak yang benar menurut riset: kapan membantu, kalimat saat anak macet, mengatasi drama PR, dan tangga kemandirian.',
         date: D, category: C, tags: ['membantu PR anak', 'pekerjaan rumah', 'pendampingan belajar', 'pola asuh', 'anak SD'], cta: 'pixelkode',
         ctaNote: 'Di PixelKode, petunjuk muncul bertahap saat anak macet dan pemeriksaan otomatis menunjukkan target mana yang sudah tercapai. Orang tua cukup menemani, tidak perlu menjadi guru coding.',
         lead: 'Jam tujuh malam, PR belum selesai, anak menangis, orang tua frustrasi, dan akhirnya PR dikerjakan orang tua. Skenario ini sangat umum. Penelitian menunjukkan cara orang tua terlibat dalam PR lebih penting daripada seberapa banyak. Berikut cara membantu yang benar-benar membuat anak belajar.',

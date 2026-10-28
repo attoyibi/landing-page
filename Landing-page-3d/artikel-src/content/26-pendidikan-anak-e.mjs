@@ -7,7 +7,7 @@ export default [
     {
         slug: 'manfaat-membacakan-buku-untuk-anak-dan-caranya',
         title: 'Manfaat Membacakan Buku untuk Anak dan Cara Melakukannya',
-        description: 'Kenapa membacakan buku penting untuk bahasa dan otak anak menurut dokter anak, teknik dialogic reading (PEER dan CROWD), memilih buku sesuai usia, dan rutinitas 15 menit.',
+        description: 'Kenapa membacakan buku penting untuk bahasa anak, teknik dialogic reading (PEER dan CROWD), memilih buku sesuai usia, dan rutinitasnya.',
         date: D, category: C, tags: ['membacakan buku', 'read aloud', 'literasi anak', 'dialogic reading', 'minat baca anak'], cta: 'pixelkode',
         ctaNote: 'Anak yang terbiasa dibacakan cerita sering suka membuat cerita sendiri. Di PixelKode, cerita itu bisa dihidupkan menjadi animasi dan cerita interaktif di Studio.',
         lead: 'Membacakan buku adalah salah satu kegiatan paling sederhana dan paling bermanfaat yang bisa dilakukan orang tua. Tidak butuh biaya besar, tidak butuh keahlian khusus, dan manfaatnya terasa bertahun-tahun. Artikel ini menjelaskan kenapa, lalu memberi teknik agar sesi membaca bersama jauh lebih efektif daripada sekadar membaca teks keras-keras.',
@@ -68,7 +68,7 @@ export default [
     {
         slug: 'kegiatan-liburan-sekolah-anak-yang-mendidik',
         title: 'Kegiatan Liburan Sekolah Anak yang Mendidik dan Seru',
-        description: 'Ide kegiatan liburan sekolah yang mendidik untuk anak SD: proyek, membaca, gerak, keterampilan hidup, dan coding, plus cara menyusun jadwal liburan yang seimbang tanpa membuat anak jenuh.',
+        description: 'Ide kegiatan liburan sekolah yang mendidik untuk anak SD: proyek, membaca, gerak, keterampilan hidup, dan jadwal liburan yang seimbang.',
         date: D, category: C, tags: ['kegiatan liburan anak', 'liburan sekolah', 'kegiatan anak di rumah', 'proyek anak', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'Liburan adalah waktu yang pas untuk mencoba coding tanpa tekanan sekolah. Dua pelajaran pertama PixelKode gratis dan bisa langsung dimulai di browser.',
         lead: 'Liburan sekolah sering berakhir dengan dua kemungkinan: anak seharian di depan layar, atau orang tua kehabisan ide. Liburan yang baik tidak harus mahal atau penuh les. Yang dibutuhkan adalah ritme yang seimbang: istirahat, bergerak, membaca, dan satu atau dua proyek yang membuat anak bangga.',
@@ -138,8 +138,8 @@ export default [
 
     {
         slug: 'memilih-les-dan-ekstrakurikuler-anak',
-        title: 'Memilih Les dan Ekstrakurikuler Anak: Jangan Sampai Kelelahan',
-        description: 'Cara memilih les dan ekstrakurikuler anak yang tepat: menyeimbangkan akademik, gerak, seni, dan teknologi, tanda jadwal terlalu padat, dan kalkulator jam kegiatan mingguan anak.',
+        title: 'Memilih Les dan Ekstrakurikuler Anak agar Tidak Kelelahan',
+        description: 'Cara memilih les dan ekstrakurikuler anak, menjaga keseimbangan kegiatan, tanda jadwal terlalu padat, dan kalkulator jam kegiatan mingguan.',
         date: D, category: C, tags: ['memilih les anak', 'ekstrakurikuler', 'jadwal anak padat', 'kursus anak', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'Jika coding masuk daftar pilihan, PixelKode bisa dijalankan dari rumah 2 kali seminggu, sehingga tidak menambah waktu perjalanan ke jadwal anak yang sudah padat.',
         lead: 'Les matematika, les bahasa Inggris, renang, piano, robotik, mengaji, ditambah ekstrakurikuler di sekolah. Niatnya baik: memberi anak kesempatan sebanyak mungkin. Namun jadwal yang terlalu padat bisa membuat anak lelah, kehilangan waktu bermain, dan justru menurunkan semangat belajar. Berikut cara memilih dengan bijak.',
@@ -207,7 +207,7 @@ export default [
     {
         slug: 'fungsi-eksekutif-anak-kemampuan-mengatur-diri',
         title: 'Fungsi Eksekutif Anak: Kendali Diri yang Bisa Dilatih',
-        description: 'Fungsi eksekutif adalah "pusat kendali" otak: memori kerja, kendali diri, dan fleksibilitas berpikir. Pahami perkembangannya pada anak dan permainan sehari-hari untuk melatihnya.',
+        description: 'Fungsi eksekutif adalah pusat kendali otak: memori kerja, kendali diri, dan fleksibilitas berpikir. Pahami perkembangannya dan cara melatihnya.',
         date: D, category: C, tags: ['fungsi eksekutif', 'executive function', 'regulasi diri anak', 'perkembangan otak anak', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'Coding melatih ketiga komponen fungsi eksekutif sekaligus: mengingat tujuan program (memori kerja), tidak asal klik (kendali diri), dan mencoba strategi lain saat buntu (fleksibilitas).',
         lead: 'Kenapa ada anak yang bisa mengingat tiga instruksi sekaligus, menunggu giliran dengan sabar, dan beralih rencana saat keadaan berubah, sementara anak lain kesulitan? Jawabannya sering terletak pada fungsi eksekutif. Kabar baiknya, kemampuan ini bukan bakat tetap. Ia berkembang dan bisa dilatih lewat kegiatan sehari-hari.',

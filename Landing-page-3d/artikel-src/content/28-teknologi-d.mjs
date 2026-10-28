@@ -5,7 +5,7 @@ export default [
     {
         slug: 'akun-google-gmail-diretas-cara-memulihkan',
         title: 'Akun Google atau Gmail Diretas: Cara Memulihkannya',
-        description: 'Tanda akun Google atau Gmail diretas, langkah darurat memulihkan lewat jalur resmi Google, memeriksa perangkat dan aplikasi pihak ketiga, serta pengaturan agar tidak terulang.',
+        description: 'Tanda akun Google atau Gmail diretas, cara memulihkan lewat jalur resmi Google, memeriksa perangkat dan penerusan email, dan mencegahnya.',
         date: D, category: C, tags: ['akun Google diretas', 'Gmail diretas', 'pemulihan akun Google', 'keamanan akun', '2FA'], cta: 'none',
         lead: 'Akun Google adalah kunci banyak hal: Gmail, foto, kontak, YouTube, Drive, bahkan login ke aplikasi lain. Bila akun ini diambil alih, dampaknya bisa luas. Artikel ini menjelaskan tanda-tanda akun diretas, langkah pemulihan lewat jalur resmi, dan pengaturan yang membuatnya jauh lebih sulit terulang.',
         body: [
@@ -187,7 +187,7 @@ export default [
     {
         slug: 'cara-cek-imei-hp-terdaftar-resmi',
         title: 'Cara Cek IMEI HP Terdaftar Resmi dan Kenapa Penting',
-        description: 'Apa itu IMEI, cara melihat nomor IMEI di HP, cara mengecek status pendaftarannya lewat layanan resmi terbaru, aturan HP dari luar negeri, dan tips membeli HP bekas.',
+        description: 'Apa itu IMEI, cara melihat nomornya, cara mengecek status pendaftaran lewat layanan resmi terbaru, aturan HP luar negeri, dan tips HP bekas.',
         date: D, category: C, tags: ['cek IMEI', 'IMEI terdaftar', 'IMEI Kemenperin', 'IMEI Bea Cukai', 'beli HP bekas'], cta: 'none',
         lead: 'Sejak 15 September 2020, ponsel dengan IMEI yang tidak terdaftar di Indonesia diblokir dari jaringan seluler. Artinya HP masih menyala, tetapi tidak bisa menelepon atau memakai data seluler dengan kartu operator Indonesia. Bila Anda membeli HP, terutama bekas atau dari luar negeri, memeriksa IMEI adalah langkah wajib.',
         body: [
@@ -239,7 +239,7 @@ export default [
     {
         slug: 'qris-cara-kerja-dan-tips-aman-membayar',
         title: 'QRIS: Cara Kerja, Keuntungan, dan Tips Aman Membayar',
-        description: 'Apa itu QRIS dan bagaimana cara kerjanya, kenapa satu kode QR bisa dibayar dari banyak aplikasi, modus penipuan QR palsu, dan langkah aman sebelum menekan tombol bayar.',
+        description: 'Apa itu QRIS dan cara kerjanya, kenapa satu kode bisa dibayar dari banyak aplikasi, modus QR palsu, dan langkah aman sebelum membayar.',
         date: D, category: C, tags: ['QRIS', 'pembayaran QR', 'dompet digital', 'penipuan QRIS', 'Bank Indonesia'], cta: 'none',
         lead: 'Dari warung kopi sampai kotak amal masjid, kode QRIS kini ada di mana-mana. Cukup pindai, masukkan nominal, bayar. Tapi kemudahan ini juga dimanfaatkan penipu, misalnya dengan menempel stiker QR palsu di atas QR asli. Artikel ini menjelaskan cara kerja QRIS dan kebiasaan sederhana agar pembayaran tetap aman.',
         body: [

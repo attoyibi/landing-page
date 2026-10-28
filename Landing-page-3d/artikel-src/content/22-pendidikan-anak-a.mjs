@@ -7,7 +7,7 @@ export default [
     {
         slug: 'screen-time-anak-berapa-jam-yang-wajar',
         title: 'Screen Time Anak: Berapa Jam yang Wajar Menurut Usia?',
-        description: 'Batas screen time anak menurut WHO, AAP, dan dokter anak, dijelaskan per usia. Lengkap dengan kalkulator waktu harian, tanda berlebihan, dan cara membuat aturan keluarga.',
+        description: 'Batas screen time anak menurut WHO dan AAP per usia, apa kata penelitian, kalkulator waktu harian, dan cara membuat aturan keluarga.',
         date: D, category: C, tags: ['screen time anak', 'batas gadget anak', 'waktu layar anak', 'pola asuh digital', 'kesehatan anak'], cta: 'pixelkode',
         ctaNote: 'Kalau sebagian jatah layar anak ingin diisi kegiatan mencipta, kelas coding seperti PixelKode dirancang 45-60 menit per pelajaran, cukup 2 kali seminggu.',
         lead: '"Berapa lama anak boleh main HP?" adalah salah satu pertanyaan yang paling sering diajukan orang tua. Jawabannya tidak hanya soal jam, tetapi juga usia, jenis kegiatan, dan apa yang tergeser oleh layar. Artikel ini merangkum rekomendasi organisasi kesehatan, lalu membantu Anda menyusun aturan yang realistis untuk keluarga.',
@@ -85,7 +85,7 @@ export default [
     {
         slug: 'screen-time-aktif-vs-pasif-untuk-anak',
         title: 'Screen Time Aktif vs Pasif: Tidak Semua Waktu Layar Sama',
-        description: 'Bedanya screen time aktif dan pasif pada anak, contoh masing-masing, cara menilai kualitas aplikasi atau tontonan, dan strategi menggeser waktu layar menjadi lebih bermakna.',
+        description: 'Beda screen time aktif dan pasif pada anak, empat pertanyaan menilai kualitas aplikasi, dan cara menggeser waktu layar jadi lebih bermakna.',
         date: D, category: C, tags: ['screen time aktif', 'screen time pasif', 'aplikasi edukasi anak', 'pola asuh digital', 'waktu layar'], cta: 'pixelkode',
         ctaNote: 'Coding adalah contoh screen time aktif yang paling jelas: anak merancang, mencoba, salah, dan memperbaiki. Dua pelajaran pertama PixelKode bisa dicoba gratis tanpa daftar.',
         lead: 'Dua anak sama-sama 1 jam di depan tablet. Yang satu menggulir video pendek tanpa henti, yang lain membuat animasi tentang kucingnya. Angka jamnya sama, tetapi pengalamannya sangat berbeda. Memahami beda waktu layar aktif dan pasif membantu orang tua membuat aturan yang lebih adil dan efektif.',
@@ -155,7 +155,7 @@ export default [
     {
         slug: 'anak-kecanduan-gadget-tanda-dan-cara-mengatasi',
         title: 'Anak Kecanduan Gadget? Tanda, Penyebab, dan Cara Mengatasi',
-        description: 'Kenali beda anak yang sering main gadget dengan kecanduan, tanda yang perlu diwaspadai, penyebabnya, dan langkah bertahap mengurangi gadget tanpa drama, plus kapan perlu ke ahli.',
+        description: 'Beda anak sering main gadget dan kecanduan, tanda yang perlu diwaspadai, rencana 4 minggu mengurangi gadget, dan kapan perlu ke ahli.',
         date: D, category: C, tags: ['anak kecanduan gadget', 'kecanduan HP anak', 'gaming disorder', 'pola asuh digital', 'screen time anak'], cta: 'pixelkode',
         ctaNote: 'Salah satu cara mengurangi tontonan pasif adalah memberi anak kegiatan layar yang punya titik selesai. Setiap pelajaran PixelKode selesai dalam satu sesi, ditutup kuis dan cerita singkat ke guru.',
         lead: 'Anak menangis keras saat HP diambil, makan harus sambil menonton, dan tidak tertarik bermain di luar. Banyak orang tua menyebutnya kecanduan gadget. Kadang memang perlu perhatian serius, kadang yang terjadi adalah kebiasaan yang bisa diubah. Artikel ini membantu membedakannya, lalu memberi langkah bertahap yang realistis.',
@@ -230,8 +230,8 @@ export default [
 
     {
         slug: 'parental-control-family-link-screen-time-youtube',
-        title: 'Parental Control: Family Link, Screen Time iPhone, dan YouTube',
-        description: 'Panduan mengatur parental control di HP anak: Google Family Link untuk Android, Screen Time untuk iPhone dan iPad, YouTube Kids, SafeSearch, dan batasnya yang perlu dipahami.',
+        title: 'Parental Control: Family Link, Screen Time iPhone, YouTube',
+        description: 'Cara mengatur parental control: Google Family Link di Android, Screen Time di iPhone, YouTube Kids, serta aturan usia akun di Indonesia.',
         date: D, category: C, tags: ['parental control', 'Google Family Link', 'Screen Time iPhone', 'YouTube Kids', 'keamanan anak online'], cta: 'pixelkode',
         ctaNote: 'Saat memilih aplikasi untuk anak, carilah yang tanpa iklan dan tanpa obrolan publik. Di PixelKode, komentar hanya ada di galeri kelas, pendek, dan bisa dihapus guru.',
         lead: 'Parental control membantu orang tua mengatur waktu layar, menyaring konten, dan menyetujui aplikasi yang diunduh anak. Fitur ini bukan pengganti pendampingan, tetapi jaring pengaman yang sangat berguna. Berikut cara mengaturnya di perangkat yang paling umum di rumah Indonesia.',
@@ -306,8 +306,8 @@ export default [
 
     {
         slug: 'keamanan-internet-untuk-anak-aturan-dan-tanda-bahaya',
-        title: 'Keamanan Internet untuk Anak: Aturan Keluarga dan Tanda Bahaya',
-        description: 'Panduan keamanan internet untuk anak: data pribadi, orang asing di game, perundungan daring, grooming, penipuan, dan apa yang harus dilakukan bila anak mengalami masalah.',
+        title: 'Keamanan Internet untuk Anak: Aturan dan Tanda Bahaya',
+        description: 'Lima aturan keamanan internet untuk anak, tanda perundungan daring dan grooming, serta langkah dan tempat melapor bila anak bermasalah.',
         date: D, category: C, tags: ['keamanan internet anak', 'cyberbullying', 'grooming online', 'literasi digital', 'pola asuh digital'], cta: 'pixelkode',
         ctaNote: 'Di PixelKode tidak ada iklan dan tidak ada obrolan publik. Interaksi hanya di galeri kelas berupa reaksi dan komentar pendek yang bisa dihapus guru.',
         lead: 'Internet membuka dunia untuk anak, tetapi juga membuka pintu bagi orang asing, perundungan, dan penipuan. Kita tidak bisa mengawasi setiap detik. Yang bisa dilakukan adalah membekali anak dengan aturan yang jelas, membangun kepercayaan agar ia mau bercerita, dan mengenali tanda bahaya sejak dini.',

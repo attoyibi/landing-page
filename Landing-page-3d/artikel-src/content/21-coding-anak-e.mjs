@@ -7,7 +7,7 @@ export default [
     {
         slug: 'robotik-atau-coding-visual-mana-dulu-untuk-anak',
         title: 'Robotik atau Coding Visual: Mana Dulu untuk Anak?',
-        description: 'Perbandingan jujur kelas robotik dan coding visual (Scratch) untuk anak: konsep yang dipelajari, biaya perangkat, usia yang cocok, dan urutan yang paling masuk akal.',
+        description: 'Perbandingan kelas robotik dan coding visual untuk anak: konsep yang dipelajari, biaya perangkat, usia yang cocok, dan urutan yang masuk akal.',
         date: D, category: C, tags: ['robotik anak', 'coding visual', 'Scratch', 'les robotik', 'coding untuk anak'], cta: 'pixelkode',
         ctaNote: 'PixelKode menggabungkan keduanya secara sederhana: latihan Robo melatih logika memprogram robot di layar, sedangkan Studio melatih kreativitas membuat animasi dan game.',
         lead: 'Robot yang bergerak sungguhan memang memikat. Banyak orang tua lalu bertanya: lebih baik les robotik atau belajar coding di komputer dulu? Jawabannya bergantung pada usia, minat, dan anggaran. Artikel ini membandingkan keduanya dan memberi urutan yang masuk akal untuk kebanyakan anak.',
@@ -69,7 +69,7 @@ export default [
     {
         slug: 'anak-suka-main-game-arahkan-jadi-pembuat-game',
         title: 'Anak Suka Main Game? Arahkan Jadi Pembuat Game',
-        description: 'Cara mengubah anak yang suka main game menjadi pembuat game: membedah game favorit, mulai dari game kecil, aturan waktu layar, dan langkah praktis yang bisa dicoba minggu ini.',
+        description: 'Cara mengubah anak yang suka main game menjadi pembuat game: membedah game favorit, membuat versi mini, dan aturan waktu layar yang adil.',
         date: D, category: C, tags: ['anak suka main game', 'membuat game', 'coding untuk anak', 'screen time', 'Scratch'], cta: 'pixelkode',
         ctaNote: 'Di PixelKode, game pertama anak (Tangkap Bintang) dirancang dengan dokumen desain sederhana, diuji untuk mencari bug, lalu dipresentasikan, persis siklus pembuat game sungguhan.',
         lead: 'Melarang game sering berakhir dengan pertengkaran. Membiarkan tanpa batas juga bukan pilihan. Ada jalan tengah yang sering berhasil: memakai rasa suka anak pada game sebagai pintu untuk belajar membuat game. Anak yang tadinya hanya bermain mulai bertanya "bagaimana cara membuatnya?", dan pertanyaan itu adalah awal yang sangat baik.',
@@ -134,7 +134,7 @@ export default [
     {
         slug: 'mapel-koding-dan-kecerdasan-artifisial-di-sekolah',
         title: 'Mapel Koding dan AI di Sekolah: Yang Perlu Orang Tua Tahu',
-        description: 'Penjelasan mata pelajaran pilihan Koding dan Kecerdasan Artifisial sesuai Permendikdasmen 13/2025: mulai kelas berapa, wajib atau tidak, dan cara orang tua mendukung di rumah.',
+        description: 'Mapel pilihan Koding dan Kecerdasan Artifisial menurut Permendikdasmen 13/2025: mulai kelas berapa, wajib atau tidak, dan peran orang tua.',
         date: D, category: C, tags: ['mapel koding dan AI', 'Koding dan Kecerdasan Artifisial', 'Permendikdasmen 13 2025', 'kurikulum', 'coding untuk anak'], cta: 'pixelkode',
         ctaNote: 'Konsep berpikir komputasional yang menjadi dasar mapel ini (algoritma, pola, kondisi, variabel) dilatih bertahap di PixelKode lewat latihan Robo dan proyek Studio.',
         lead: 'Sejak tahun ajaran 2025/2026, Koding dan Kecerdasan Artifisial (KKA) menjadi mata pelajaran pilihan di sekolah Indonesia. Banyak orang tua bertanya: apakah anak saya wajib ikut, mulai kelas berapa, dan apa yang perlu disiapkan di rumah? Artikel ini merangkum yang sudah jelas dari kebijakan resminya, dan memberi saran praktis yang tidak bergantung pada sekolah.',
@@ -198,7 +198,7 @@ export default [
     {
         slug: 'tantangan-bebras-contoh-soal-dan-cara-berlatih',
         title: 'Tantangan Bebras: Contoh Soal dan Cara Anak Berlatih',
-        description: 'Kenali Tantangan Bebras, kompetisi berpikir komputasional untuk siswa SD sampai SMA. Contoh soal bergaya Bebras dengan pembahasan, kategori, dan cara berlatih di rumah.',
+        description: 'Kenali Tantangan Bebras, kompetisi berpikir komputasional untuk SD sampai SMA, lengkap dengan contoh soal, pembahasan, dan cara berlatih.',
         date: D, category: C, tags: ['Bebras', 'Tantangan Bebras', 'berpikir komputasional', 'soal logika anak', 'lomba anak'], cta: 'pixelkode',
         ctaNote: 'Banyak soal Bebras tentang urutan, pola, dan aturan, persis yang dilatih di level-level Robo PixelKode. Latihan rutin membuat anak lebih tenang menghadapi soal yang belum pernah dilihat.',
         lead: 'Tantangan Bebras adalah kompetisi berpikir komputasional yang soalnya berupa teka-teki menarik, tanpa perlu bisa memprogram. Di Indonesia, tantangan ini diikuti siswa dari SD sampai SMA. Artikel ini menjelaskan apa itu Bebras, memberi contoh soal bergaya Bebras dengan pembahasannya, dan cara berlatih di rumah.',
@@ -274,7 +274,7 @@ export default [
     {
         slug: 'mengenalkan-ai-kepada-anak-dengan-aman',
         title: 'Mengenalkan AI kepada Anak: Penjelasan dan Aturan Aman',
-        description: 'Cara menjelaskan kecerdasan buatan (AI) kepada anak SD dengan analogi sederhana, aktivitas mengajari mesin, aturan keluarga memakai chatbot, dan hal yang perlu diwaspadai.',
+        description: 'Cara menjelaskan AI kepada anak SD dengan analogi sederhana, aktivitas mengajari mesin, dan aturan keluarga memakai chatbot dengan aman.',
         date: D, category: C, tags: ['AI untuk anak', 'kecerdasan buatan anak', 'chatbot anak', 'literasi AI', 'keamanan digital anak'], cta: 'pixelkode',
         ctaNote: 'Sebelum memahami AI, anak perlu paham cara komputer menjalankan perintah. PixelKode membangun dasar itu, termasuk proyek "Chatbot Robo" di modul Variabel yang menunjukkan bedanya chatbot berbasis aturan dengan AI.',
         lead: 'Anak-anak kini tumbuh bersama asisten suara, rekomendasi video, filter wajah, dan chatbot. Mereka akan memakai AI, dengan atau tanpa penjelasan dari kita. Lebih baik mereka memahaminya sejak awal: apa itu AI, apa yang bisa dan tidak bisa dilakukannya, dan bagaimana memakainya dengan aman.',

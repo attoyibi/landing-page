@@ -7,7 +7,7 @@ export default [
     {
         slug: 'belajar-coding-dari-nol-mulai-dari-mana',
         title: 'Belajar Coding dari Nol: Mulai dari Mana?',
-        description: 'Panduan realistis belajar coding dari nol: pilih tujuan, bahasa pertama, urutan materi, jadwal belajar, proyek pertama, dan kesalahan pemula yang membuat banyak orang berhenti.',
+        description: 'Panduan realistis belajar coding dari nol: tentukan tujuan, bahasa pertama, urutan materi, jadwal belajar, dan kesalahan pemula yang umum.',
         date: D, category: C, tags: ['belajar coding dari nol', 'belajar pemrograman', 'coding pemula', 'roadmap programmer', 'karier IT'], cta: 'jasa',
         lead: 'Setiap tahun banyak orang memutuskan belajar coding, lalu berhenti setelah dua minggu. Penyebabnya jarang karena "tidak berbakat". Biasanya karena tujuan yang tidak jelas, materi yang melompat-lompat, dan terlalu banyak menonton tanpa membuat. Panduan ini memberi jalur yang lebih realistis.',
         body: [
@@ -135,7 +135,7 @@ export default [
     {
         slug: 'frontend-backend-fullstack-bedanya',
         title: 'Frontend, Backend, dan Fullstack: Bedanya dan Skill-nya',
-        description: 'Beda frontend, backend, dan fullstack developer dijelaskan dengan analogi restoran, skill yang dibutuhkan, contoh tugas harian, dan cara memilih jalur yang cocok untuk Anda.',
+        description: 'Beda frontend, backend, dan fullstack developer dengan analogi restoran, skill yang dibutuhkan, contoh tugas, dan cara memilih jalurnya.',
         date: D, category: C, tags: ['frontend', 'backend', 'fullstack developer', 'web developer', 'karier programmer'], cta: 'jasa',
         lead: 'Lowongan programmer sering menulis "frontend developer", "backend engineer", atau "fullstack". Bagi pemula, ketiganya terdengar mirip. Padahal pekerjaannya cukup berbeda. Memahami perbedaannya membantu Anda memilih jalur belajar yang sesuai minat.',
         body: [
@@ -198,7 +198,7 @@ export default [
     {
         slug: 'javascript-dasar-untuk-pemula',
         title: 'JavaScript Dasar untuk Pemula: Variabel, Fungsi, dan DOM',
-        description: 'Belajar JavaScript dasar dengan contoh yang bisa langsung dicoba di browser: variabel, tipe data, kondisi, perulangan, fungsi, array, objek, dan mengubah halaman web lewat DOM.',
+        description: 'Belajar JavaScript dasar dengan contoh yang bisa dicoba di browser: variabel, kondisi, perulangan, fungsi, array, objek, dan DOM.',
         date: D, category: C, tags: ['JavaScript dasar', 'belajar JavaScript', 'DOM', 'pemrograman web', 'tutorial JavaScript'], cta: 'jasa',
         lead: 'JavaScript adalah bahasa yang membuat halaman web hidup: tombol yang bereaksi, formulir yang memeriksa isian, dan konten yang berubah tanpa memuat ulang halaman. Kabar baiknya, Anda bisa mulai belajar sekarang juga tanpa memasang apa pun, cukup dengan browser.',
         body: [
@@ -251,7 +251,7 @@ export default [
     {
         slug: 'oop-pemrograman-berorientasi-objek-dijelaskan',
         title: 'OOP (Pemrograman Berorientasi Objek) Dijelaskan Sederhana',
-        description: 'Penjelasan OOP untuk pemula dengan analogi cetakan kue: class, object, atribut, method, enkapsulasi, inheritance, dan polymorphism, lengkap dengan contoh kode Python.',
+        description: 'Penjelasan OOP untuk pemula dengan analogi cetakan kue: class, object, enkapsulasi, inheritance, dan polymorphism, plus contoh Python.',
         date: D, category: C, tags: ['OOP', 'pemrograman berorientasi objek', 'class dan object', 'Python OOP', 'konsep pemrograman'], cta: 'jasa',
         lead: 'OOP (Object-Oriented Programming) sering menjadi materi yang membuat mahasiswa dan pemula bingung: class, object, inheritance, polymorphism. Padahal idenya dekat dengan cara kita memandang dunia sehari-hari: ada cetakan, dan ada benda-benda yang dibuat dari cetakan itu.',
         body: [
@@ -381,7 +381,7 @@ export default [
     {
         slug: 'contoh-algoritma-flowchart-dan-pseudocode',
         title: 'Contoh Algoritma, Flowchart, dan Pseudocode Sehari-hari',
-        description: 'Penjelasan algoritma, flowchart, dan pseudocode dengan contoh soal sehari-hari dan pemrograman: simbol flowchart standar, aturan pseudocode, dan latihan dengan pembahasan.',
+        description: 'Contoh algoritma, flowchart, dan pseudocode dari kegiatan sehari-hari sampai soal pemrograman, simbol flowchart standar, dan latihan.',
         date: D, category: C, tags: ['contoh algoritma', 'flowchart', 'pseudocode', 'diagram alir', 'informatika'], cta: 'jasa',
         lead: 'Algoritma, flowchart, dan pseudocode adalah materi wajib di pelajaran Informatika dan kuliah pemrograman dasar. Ketiganya adalah cara menuliskan langkah penyelesaian masalah sebelum menjadi kode. Artikel ini memberi contoh yang lengkap, mulai dari kegiatan sehari-hari sampai soal yang sering muncul di tugas sekolah dan kuliah.',
         body: [

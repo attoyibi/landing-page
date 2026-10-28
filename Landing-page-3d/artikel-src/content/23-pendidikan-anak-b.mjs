@@ -7,7 +7,7 @@ export default [
     {
         slug: 'cara-mengajari-anak-membaca-tahapan-dan-permainan',
         title: 'Cara Mengajari Anak Membaca: Tahapan dan Permainan di Rumah',
-        description: 'Tahapan anak belajar membaca dalam bahasa Indonesia, dari kesadaran bunyi sampai memahami bacaan, permainan sederhana di rumah, kesalahan yang sering terjadi, dan tanda perlu bantuan.',
+        description: 'Tahapan anak belajar membaca dalam bahasa Indonesia, permainan kesadaran bunyi di rumah, kesalahan umum, dan tanda perlu bantuan ahli.',
         date: D, category: C, tags: ['cara mengajari anak membaca', 'belajar membaca', 'calistung', 'literasi anak', 'anak TK'], cta: 'pixelkode',
         ctaNote: 'Lancar membaca kalimat pendek adalah salah satu tanda anak siap belajar coding dengan blok berteks. Setelah itu, membaca instruksi di PixelKode juga menjadi latihan membaca yang menyenangkan.',
         lead: 'Melihat anak membaca kata pertamanya adalah momen yang membahagiakan. Namun prosesnya sering membuat orang tua cemas: kapan harus mulai, metode apa yang benar, dan kenapa anak tetangga sudah lancar sementara anak saya belum? Artikel ini menjelaskan tahapan belajar membaca, permainan yang terbukti membantu, dan kapan perlu mencari bantuan.',
@@ -74,7 +74,7 @@ export default [
     {
         slug: 'anak-susah-fokus-belajar-penyebab-dan-cara-membantu',
         title: 'Anak Susah Fokus Belajar: Penyebab dan Cara Membantunya',
-        description: 'Kenapa anak susah fokus saat belajar? Penyebab umum dari tidur, lingkungan, tugas yang terlalu panjang, sampai kemungkinan ADHD, plus strategi praktis dan pewaktu belajar untuk anak.',
+        description: 'Kenapa anak susah fokus belajar: penyebab umum dari tidur sampai tugas terlalu besar, strategi praktis, pewaktu belajar, dan kapan konsultasi.',
         date: D, category: C, tags: ['anak susah fokus', 'konsentrasi anak', 'cara belajar anak', 'ADHD', 'fungsi eksekutif'], cta: 'pixelkode',
         ctaNote: 'Pelajaran di PixelKode dipecah menjadi tugas-tugas pendek (materi, Robo, Studio, kuis) dengan target yang jelas, sehingga anak tahu persis apa yang harus diselesaikan berikutnya.',
         lead: 'Duduk lima menit, lalu bangun mengambil minum. Kembali, lalu meraut pensil. Lalu bertanya hal lain. Orang tua yang mendampingi anak belajar pasti akrab dengan pemandangan ini. Kabar baiknya, kebanyakan masalah fokus punya penyebab yang bisa diperbaiki. Artikel ini membahas penyebab umum, strategi yang bisa langsung dicoba, dan kapan perlu konsultasi.',
@@ -154,7 +154,7 @@ export default [
     {
         slug: 'growth-mindset-pada-anak-cara-memuji-yang-benar',
         title: 'Growth Mindset pada Anak: Cara Memuji yang Benar',
-        description: 'Apa itu growth mindset, kenapa pujian "kamu pintar" bisa berbalik arah, cara memuji proses yang benar, apa kata riset terbaru, dan kalimat praktis untuk dipakai setiap hari.',
+        description: 'Apa itu growth mindset, kenapa pujian kamu pintar bisa berbalik arah, apa kata riset terbaru, dan kalimat pujian yang lebih membantu.',
         date: D, category: C, tags: ['growth mindset', 'cara memuji anak', 'motivasi belajar anak', 'Carol Dweck', 'pola asuh'], cta: 'pixelkode',
         ctaNote: 'Di PixelKode, bintang efisiensi dan petunjuk bertahap dirancang untuk menghargai proses: anak didorong mencoba lagi dengan cara lebih baik, bukan sekadar benar atau salah.',
         lead: '"Wah, kamu pintar sekali!" terdengar seperti pujian yang sempurna. Penelitian psikologi menunjukkan pujian seperti ini, bila terlalu sering, justru bisa membuat sebagian anak takut mencoba hal sulit. Artikel ini menjelaskan konsep growth mindset, apa kata riset (termasuk batas-batasnya), dan cara memuji yang lebih membantu.',
@@ -214,7 +214,7 @@ export default [
     {
         slug: 'cara-memotivasi-anak-belajar-tanpa-memaksa',
         title: 'Cara Memotivasi Anak Belajar Tanpa Memaksa',
-        description: 'Kenapa hadiah dan ancaman sering tidak bertahan lama, tiga kebutuhan dasar motivasi menurut teori self-determination, dan cara praktis membuat anak mau belajar dari dalam dirinya.',
+        description: 'Kenapa hadiah dan ancaman tidak bertahan lama, tiga kebutuhan dasar motivasi menurut riset, dan cara praktis membuat anak mau belajar.',
         date: D, category: C, tags: ['memotivasi anak belajar', 'motivasi intrinsik', 'anak malas belajar', 'pola asuh', 'self-determination theory'], cta: 'pixelkode',
         ctaNote: 'PixelKode memakai prinsip yang sama: anak memilih proyek di Laboratorium (otonomi), mendapat pemeriksaan otomatis dan bintang (kompetensi), dan memamerkan karya di galeri kelas (keterhubungan).',
         lead: '"Kalau nilaimu bagus, nanti dibelikan mainan." "Kalau tidak belajar, HP disita." Hampir semua orang tua pernah memakai cara ini, dan sering berhasil sebentar. Masalahnya, begitu hadiah atau ancaman hilang, semangat belajarnya ikut hilang. Psikologi motivasi menawarkan cara yang lebih tahan lama.',
@@ -282,7 +282,7 @@ export default [
     {
         slug: 'cara-mengajarkan-matematika-yang-menyenangkan',
         title: 'Cara Mengajarkan Matematika yang Menyenangkan untuk Anak',
-        description: 'Strategi mengajarkan matematika di rumah: benda nyata, gambar, lalu simbol; permainan angka harian; mengatasi rasa cemas matematika; dan latihan interaktif untuk anak SD.',
+        description: 'Strategi mengajarkan matematika di rumah: benda, gambar, lalu simbol; permainan angka harian; dan cara agar rasa cemas tidak menular.',
         date: D, category: C, tags: ['mengajarkan matematika anak', 'matematika menyenangkan', 'anak tidak suka matematika', 'kecemasan matematika', 'belajar di rumah'], cta: 'pixelkode',
         ctaNote: 'Di PixelKode, matematika muncul alami: koordinat untuk memindahkan roket, derajat untuk menggambar bintang, dan variabel untuk skor game. Anak memakai angka karena butuh, bukan karena disuruh.',
         lead: 'Banyak anak dan orang dewasa merasa matematika menakutkan. Padahal di usia SD, matematika bisa terasa seperti teka-teki dan permainan. Kuncinya ada pada urutan mengajar yang tepat, banyak bermain dengan angka, dan menjaga agar rasa cemas tidak menular dari orang tua ke anak.',

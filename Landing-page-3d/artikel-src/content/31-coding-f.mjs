@@ -5,7 +5,7 @@ export default [
     {
         slug: 'perulangan-for-dan-while-python',
         title: 'Perulangan For dan While di Python: Contoh dan Latihan',
-        description: 'Belajar perulangan for dan while di Python dengan contoh nyata: range, loop list, break, continue, loop bersarang, kesalahan umum, dan soal latihan dengan pembahasan.',
+        description: 'Belajar perulangan for dan while di Python: range, loop list, break, continue, loop bersarang, kesalahan umum, dan soal latihan.',
         date: D, category: C, tags: ['perulangan Python', 'for loop Python', 'while loop', 'belajar Python', 'Python dasar'], cta: 'jasa',
         lead: 'Perulangan adalah salah satu alat paling kuat dalam pemrograman: satu blok kode bisa dijalankan ratusan atau jutaan kali. Python punya dua jenis perulangan utama, for dan while. Artikel ini menjelaskan kapan memakai masing-masing, lengkap dengan contoh yang bisa langsung dicoba.',
         body: [
@@ -67,7 +67,7 @@ export default [
     {
         slug: 'percabangan-if-elif-else-python',
         title: 'Percabangan If, Elif, Else di Python dengan Contoh',
-        description: 'Panduan percabangan Python: if, elif, else, operator perbandingan dan logika, kondisi bersarang, match-case, kesalahan umum, dan soal latihan nilai, diskon, dan tahun kabisat.',
+        description: 'Percabangan Python dengan contoh: if, elif, else, operator perbandingan dan logika, match-case, kesalahan umum, dan latihan soal.',
         date: D, category: C, tags: ['if else Python', 'percabangan Python', 'elif', 'Python dasar', 'belajar Python'], cta: 'jasa',
         lead: 'Program menjadi pintar ketika bisa memilih: memberi diskon bila belanja cukup banyak, menampilkan pesan berbeda untuk nilai yang berbeda, atau menolak kata sandi yang terlalu pendek. Semua itu memakai percabangan. Di Python, percabangan ditulis dengan if, elif, dan else.',
         body: [
@@ -191,7 +191,7 @@ export default [
     {
         slug: 'cloud-computing-untuk-pemula-iaas-paas-saas',
         title: 'Cloud Computing untuk Pemula: IaaS, PaaS, dan SaaS',
-        description: 'Apa itu cloud computing menurut definisi NIST, beda IaaS, PaaS, dan SaaS dengan analogi pizza, contoh layanan, kelebihan dan risiko, serta cara mulai belajar cloud.',
+        description: 'Apa itu cloud computing menurut NIST, beda IaaS, PaaS, dan SaaS dengan analogi pizza, contoh layanan, risiko, dan cara mulai belajar.',
         date: D, category: C, tags: ['cloud computing', 'IaaS PaaS SaaS', 'AWS', 'Google Cloud', 'belajar cloud'], cta: 'jasa',
         lead: 'Menyimpan foto di Google Photos, rapat lewat Zoom, dan aplikasi startup yang berjalan di AWS: semuanya memakai cloud computing. Istilahnya sering terdengar, tetapi jarang dijelaskan dengan jelas. Artikel ini menguraikan definisinya, jenis layanannya, dan kenapa banyak perusahaan beralih ke cloud.',
         body: [
@@ -261,7 +261,7 @@ export default [
     {
         slug: 'python-untuk-analisis-data-pandas-pemula',
         title: 'Python untuk Analisis Data: Pandas untuk Pemula',
-        description: 'Belajar analisis data dengan Python dan pandas: membaca Excel dan CSV, memilih dan menyaring data, mengelompokkan, membersihkan data kotor, dan membuat ringkasan laporan.',
+        description: 'Analisis data dengan Python dan pandas: membaca Excel, menyaring, mengelompokkan, membersihkan data kotor, dan membuat laporan otomatis.',
         date: D, category: C, tags: ['pandas', 'analisis data Python', 'data analyst', 'Python Excel', 'belajar data'], cta: 'jasa',
         lead: 'Jika pekerjaan Anda melibatkan Excel berulang setiap minggu, menggabungkan file, menyaring baris, membuat ringkasan, Python dengan pustaka pandas bisa menghemat banyak jam. Sekali skrip dibuat, laporan berikutnya cukup dijalankan ulang. Artikel ini memandu langkah pertamanya dengan contoh data penjualan.',
         body: [

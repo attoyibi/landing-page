@@ -7,7 +7,7 @@ export default [
     {
         slug: 'literasi-digital-untuk-anak-4-pilar',
         title: 'Literasi Digital untuk Anak: 4 Pilar dan Cara Melatihnya',
-        description: 'Apa itu literasi digital untuk anak, empat pilarnya (cakap, etika, budaya, dan aman digital), cara mengenali hoaks, dan kegiatan keluarga untuk melatihnya sesuai usia.',
+        description: 'Empat pilar literasi digital untuk anak (cakap, etika, budaya, aman digital), cara mengenali hoaks, dan latihannya sesuai usia.',
         date: D, category: C, tags: ['literasi digital anak', 'hoaks', 'etika digital', 'keamanan digital', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'Bagian "cakap digital" paling kuat dilatih dengan membuat sesuatu. Anak yang pernah membuat program sendiri lebih paham bahwa aplikasi dibuat manusia dengan aturan tertentu.',
         lead: 'Anak-anak sekarang sering disebut "digital native" karena lahir di era ponsel pintar. Tetapi lancar memakai aplikasi tidak sama dengan cakap digital. Banyak anak bisa mengunggah video dalam hitungan detik, tetapi belum bisa membedakan berita palsu, menjaga data pribadi, atau memahami bahwa aplikasi dirancang untuk menahan perhatian mereka.',
@@ -72,8 +72,8 @@ export default [
 
     {
         slug: 'kebutuhan-tidur-anak-sesuai-usia-dan-pengaruhnya',
-        title: 'Kebutuhan Tidur Anak Sesuai Usia dan Pengaruhnya pada Belajar',
-        description: 'Berapa jam tidur yang dibutuhkan anak menurut usia, kenapa tidur penting untuk belajar dan emosi, tanda kurang tidur, dan cara membangun rutinitas tidur, plus kalkulator jam tidur.',
+        title: 'Kebutuhan Tidur Anak Sesuai Usia dan Pengaruhnya',
+        description: 'Berapa jam tidur yang dibutuhkan anak menurut usia, kenapa tidur penting untuk belajar, tanda kurang tidur, dan kalkulator jam tidur.',
         date: D, category: C, tags: ['kebutuhan tidur anak', 'jam tidur anak', 'kesehatan anak', 'rutinitas tidur', 'belajar anak'], cta: 'pixelkode',
         ctaNote: 'Coding dan kegiatan layar lain sebaiknya selesai setidaknya satu jam sebelum tidur. Jadwalkan pelajaran PixelKode di sore hari, bukan menjelang tidur.',
         lead: 'Saat anak sulit fokus, mudah marah, atau nilai menurun, kita sering mencari penyebab yang rumit. Padahal salah satu penyebab paling umum sangat sederhana: kurang tidur. Tidur bukan waktu kosong; di sanalah otak anak menyimpan apa yang dipelajarinya hari itu.',
@@ -137,7 +137,7 @@ export default [
     {
         slug: 'anak-mudah-frustrasi-saat-gagal-cara-mendampingi',
         title: 'Anak Mudah Frustrasi saat Gagal? Cara Mendampinginya',
-        description: 'Kenapa anak mudah marah, menangis, atau menyerah saat gagal, langkah mendampingi emosinya, membangun toleransi frustrasi, dan latihan "gagal yang aman" yang bisa dicoba di rumah.',
+        description: 'Kenapa anak mudah marah atau menyerah saat gagal, tiga langkah mendampingi emosinya, dan cara membangun toleransi frustrasi di rumah.',
         date: D, category: C, tags: ['anak mudah frustrasi', 'emosi anak', 'anak mudah menyerah', 'regulasi emosi', 'pola asuh'], cta: 'pixelkode',
         ctaNote: 'Di PixelKode, "gagal" terjadi dalam skala kecil dan aman: Robo menabrak dinding, anak memperbaiki satu blok, lalu mencoba lagi. Petunjuk bertahap mencegah anak macet terlalu lama.',
         lead: 'Puzzle dilempar, gambar dirobek, atau tangis meledak karena kalah main ular tangga. Anak yang mudah frustrasi bisa membuat orang tua bingung harus tegas atau menghibur. Kabar baiknya, kemampuan menghadapi kegagalan bisa dilatih. Kuncinya ada pada cara kita mendampingi emosi anak di saat-saat itu.',
@@ -202,7 +202,7 @@ export default [
     {
         slug: 'mengenali-bakat-dan-minat-anak',
         title: 'Mengenali Bakat dan Minat Anak: Cara yang Masuk Akal',
-        description: 'Cara mengenali bakat dan minat anak tanpa label terburu-buru: tahap perkembangan minat, tanda minat yang tumbuh, kehati-hatian terhadap tes bakat, dan jurnal pengamatan untuk orang tua.',
+        description: 'Cara mengenali bakat dan minat anak tanpa label terburu-buru: tahap perkembangan minat, hati-hati dengan tes bakat, dan jurnal pengamatan.',
         date: D, category: C, tags: ['bakat anak', 'minat anak', 'mengenali potensi anak', 'tes bakat', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'Coding cocok sebagai salah satu "pintu" yang dicoba anak: ada yang tertarik pada game, ada yang pada cerita, ada yang pada seni. Dua pelajaran gratis PixelKode cukup untuk melihat minat awalnya.',
         lead: 'Orang tua ingin tahu sejak dini: anak saya berbakat apa? Banyak tes bakat menjanjikan jawaban cepat. Penelitian tentang perkembangan minat memberi gambaran yang berbeda: minat dan kemampuan tumbuh dari pengalaman, dan sering baru terlihat jelas setelah anak mencoba banyak hal dengan sungguh-sungguh.',
@@ -267,7 +267,7 @@ export default [
     {
         slug: 'menumbuhkan-kreativitas-anak-4p-projects-passion-peers-play',
         title: 'Menumbuhkan Kreativitas Anak: 4P dari MIT',
-        description: 'Cara menumbuhkan kreativitas anak dengan kerangka 4P (projects, passion, peers, play) dari pencipta Scratch, spiral belajar kreatif, contoh kegiatan, dan kebiasaan yang mematikan kreativitas.',
+        description: 'Cara menumbuhkan kreativitas anak dengan kerangka 4P dari pencipta Scratch: projects, passion, peers, play, plus contoh kegiatan di rumah.',
         date: D, category: C, tags: ['kreativitas anak', 'menumbuhkan kreativitas', 'Mitchel Resnick', 'Scratch', 'pendidikan anak'], cta: 'pixelkode',
         ctaNote: 'PixelKode memakai keempat P: proyek di setiap pelajaran, Laboratorium untuk proyek bebas sesuai minat, galeri kelas untuk berbagi dengan teman, dan suasana bermain yang membuat salah terasa biasa.',
         lead: 'Kreativitas sering dianggap bakat bawaan: ada anak yang kreatif, ada yang tidak. Mitchel Resnick, profesor di MIT Media Lab dan pemimpin tim yang menciptakan Scratch, berpendapat lain. Menurutnya, kreativitas bisa ditumbuhkan, dan ia merangkum caranya dalam empat P: projects, passion, peers, dan play.',

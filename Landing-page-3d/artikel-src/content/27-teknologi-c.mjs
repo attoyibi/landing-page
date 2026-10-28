@@ -5,7 +5,7 @@ export default [
     {
         slug: 'hp-lemot-penyebab-dan-cara-mengatasi',
         title: 'HP Lemot? 12 Penyebab dan Cara Mengatasinya',
-        description: 'Penyebab HP Android dan iPhone lemot, dari memori penuh, aplikasi berat, sampai baterai menua, lengkap dengan langkah perbaikan berurutan dan cara tahu kapan HP memang perlu diganti.',
+        description: 'Penyebab HP Android dan iPhone lemot, dari memori penuh sampai baterai menua, langkah perbaikan berurutan, dan kapan HP perlu diganti.',
         date: D, category: C, tags: ['HP lemot', 'cara mengatasi HP lemot', 'Android lemot', 'iPhone lemot', 'tips HP'], cta: 'none',
         lead: 'HP yang tadinya gesit lama-lama terasa berat: aplikasi lambat terbuka, keyboard tersendat, kamera butuh beberapa detik untuk siap. Sebelum membeli HP baru, ada banyak penyebab yang bisa diperbaiki sendiri dalam setengah jam. Artikel ini mengurutkan langkahnya dari yang paling mudah dan paling sering berhasil.',
         body: [
@@ -87,7 +87,7 @@ export default [
     {
         slug: 'memori-hp-penuh-cara-mengosongkan',
         title: 'Memori HP Penuh: Cara Mengosongkan Tanpa Kehilangan Foto',
-        description: 'Cara mengosongkan memori HP yang penuh: cari pemakan ruang terbesar, bersihkan WhatsApp, pindahkan foto ke cloud dengan aman, hapus cache, dan kalkulator kebutuhan penyimpanan.',
+        description: 'Cara mengosongkan memori HP yang penuh: cari pemakan ruang terbesar, bersihkan WhatsApp, pindahkan foto ke cloud dengan aman, dan hapus cache.',
         date: D, category: C, tags: ['memori HP penuh', 'penyimpanan penuh', 'WhatsApp memori penuh', 'cara mengosongkan HP', 'tips HP'], cta: 'none',
         lead: '"Penyimpanan hampir penuh." Notifikasi ini biasanya muncul di saat yang paling tidak tepat, misalnya ketika hendak memotret momen penting. Banyak orang langsung menghapus foto secara acak. Padahal ada cara yang lebih cerdas: cari dulu apa yang paling banyak memakan ruang, lalu bersihkan dari sana.',
         body: [
@@ -161,7 +161,7 @@ export default [
     {
         slug: 'baterai-hp-cepat-habis-penyebab-dan-cara-merawat',
         title: 'Baterai HP Cepat Habis: Penyebab dan Cara Merawatnya',
-        description: 'Kenapa baterai HP cepat habis dan cepat rusak, mitos dan fakta mengisi daya semalaman, kebiasaan yang memperpanjang umur baterai lithium-ion, dan kapan baterai perlu diganti.',
+        description: 'Kenapa baterai HP cepat habis dan cepat rusak, mitos mengecas semalaman, kebiasaan yang memperpanjang umur baterai, dan kapan harus ganti.',
         date: D, category: C, tags: ['baterai HP cepat habis', 'merawat baterai HP', 'kesehatan baterai', 'cara charge HP', 'tips HP'], cta: 'none',
         lead: 'Pagi 100%, siang tinggal 20%. Baterai yang cepat habis adalah salah satu keluhan HP paling umum. Sebagian penyebabnya ada di pengaturan dan kebiasaan pemakaian, sebagian lagi karena baterai memang menua. Artikel ini membedakan keduanya dan meluruskan beberapa mitos yang masih beredar.',
         body: [
@@ -221,7 +221,7 @@ export default [
     {
         slug: 'laptop-lemot-cara-mempercepat-windows',
         title: 'Laptop Lemot: Cara Mempercepat Windows Tanpa Install Ulang',
-        description: 'Langkah mempercepat laptop Windows yang lemot: aplikasi startup, Task Manager, penyimpanan, pembaruan, mode daya, malware, sampai upgrade SSD dan RAM yang paling terasa hasilnya.',
+        description: 'Cara mempercepat laptop Windows yang lemot: aplikasi startup, Task Manager, penyimpanan, pembaruan, malware, sampai upgrade SSD dan RAM.',
         date: D, category: C, tags: ['laptop lemot', 'mempercepat Windows', 'Windows 11 lambat', 'upgrade SSD', 'tips laptop'], cta: 'none',
         lead: 'Laptop butuh lima menit untuk menyala, browser tersendat, dan kipas berbunyi keras padahal hanya membuka dokumen. Sebelum menyerah dan menginstal ulang Windows, coba langkah-langkah berikut. Banyak laptop kembali gesit hanya dengan merapikan program startup, atau dengan satu upgrade murah: mengganti hard disk dengan SSD.',
         body: [
@@ -280,8 +280,8 @@ export default [
 
     {
         slug: 'cara-memilih-laptop-untuk-kuliah-dan-kerja',
-        title: 'Cara Memilih Laptop untuk Kuliah dan Kerja (Spesifikasi Jelas)',
-        description: 'Panduan memilih laptop sesuai kebutuhan: prosesor, RAM, SSD, layar, baterai, dan bobot dijelaskan sederhana, rekomendasi spesifikasi per jurusan atau pekerjaan, dan daftar cek sebelum membeli.',
+        title: 'Cara Memilih Laptop untuk Kuliah dan Kerja',
+        description: 'Panduan memilih laptop: prosesor, RAM, SSD, layar, dan baterai dijelaskan sederhana, rekomendasi per jurusan, dan daftar cek sebelum membeli.',
         date: D, category: C, tags: ['memilih laptop', 'laptop kuliah', 'spesifikasi laptop', 'laptop kerja', 'tips beli laptop'], cta: 'none',
         lead: 'Brosur laptop penuh angka dan istilah: Core i5, Ryzen 7, 16 GB, 512 GB NVMe, IPS, 60 Hz. Mudah tergoda membeli yang angkanya paling besar, atau sebaliknya membeli yang paling murah lalu menyesal setahun kemudian. Panduan ini membantu Anda membaca spesifikasi dan memilih yang pas dengan kebutuhan nyata.',
         body: [

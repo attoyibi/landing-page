@@ -63,7 +63,7 @@ export default [
     {
         slug: 'cara-mencatat-efektif-metode-cornell',
         title: 'Cara Mencatat Efektif dengan Metode Cornell (Plus Template)',
-        description: 'Panduan metode catatan Cornell: membagi halaman, menulis selama kuliah, membuat pertanyaan isyarat, merangkum, dan cara mengulangnya agar catatan benar-benar dipakai belajar.',
+        description: 'Panduan metode catatan Cornell: membagi halaman, mencatat saat kuliah, membuat pertanyaan isyarat, merangkum, dan mengulang catatan.',
         date: D, category: C, tags: ['metode Cornell', 'cara mencatat', 'catatan kuliah', 'teknik belajar', 'produktivitas'], cta: 'none',
         lead: 'Banyak mahasiswa mencatat rajin, tetapi catatannya jarang dibuka lagi, atau saat dibuka terasa seperti salinan slide. Metode Cornell, yang dikembangkan Walter Pauk dari Cornell University, mengubah catatan menjadi alat belajar: setiap halaman sudah dirancang untuk diuji ulang.',
         body: [
@@ -116,7 +116,7 @@ export default [
     {
         slug: 'mind-map-cara-membuat-dan-kapan-efektif',
         title: 'Mind Map: Cara Membuat dan Kapan Benar-Benar Efektif',
-        description: 'Cara membuat mind map yang membantu belajar dan berpikir, contoh untuk materi pelajaran dan rencana proyek, apa kata riset tentang efektivitasnya, serta kapan sebaiknya memakai alat lain.',
+        description: 'Cara membuat mind map yang membantu belajar dan berpikir, apa kata riset tentang efektivitasnya, dan kapan sebaiknya memakai alat lain.',
         date: D, category: C, tags: ['mind map', 'peta pikiran', 'teknik belajar', 'brainstorming', 'produktivitas'], cta: 'none',
         lead: 'Mind map atau peta pikiran adalah diagram yang menaruh satu ide di tengah lalu bercabang ke ide-ide terkait. Teknik ini populer untuk belajar, merencanakan, dan brainstorming. Tetapi seperti alat lain, mind map efektif untuk tugas tertentu dan kurang cocok untuk tugas lain.',
         body: [
@@ -166,7 +166,7 @@ export default [
     {
         slug: 'cara-mengatasi-malas-dan-prokrastinasi',
         title: 'Cara Mengatasi Malas dan Prokrastinasi Menurut Riset',
-        description: 'Kenapa kita menunda pekerjaan, rumus motivasi dari riset prokrastinasi, dan strategi praktis: aturan 2 menit, implementation intention, memecah tugas, dan mengatur lingkungan.',
+        description: 'Kenapa kita menunda pekerjaan menurut riset, dan strategi yang terbukti: rencana jika-maka, memecah tugas, aturan 5 menit, dan atur lingkungan.',
         date: D, category: C, tags: ['prokrastinasi', 'mengatasi malas', 'menunda pekerjaan', 'produktivitas', 'kebiasaan'], cta: 'none',
         lead: 'Tugas sudah jelas, tenggat semakin dekat, tetapi tangan malah membuka media sosial. Prokrastinasi bukan sekadar malas atau kurang disiplin. Riset psikologi menunjukkan ia lebih berkaitan dengan cara kita mengelola emosi tidak nyaman dan cara tugas dirancang. Kabar baiknya, ada strategi yang terbukti membantu.',
         body: [
@@ -215,7 +215,7 @@ export default [
     {
         slug: 'cara-belajar-efektif-menjelang-ujian',
         title: 'Cara Belajar Efektif Menjelang Ujian: Jadwal 2 Minggu',
-        description: 'Strategi belajar menjelang ujian yang didukung riset: latihan soal, jadwal berjarak, mencampur topik, tidur cukup, dan jadwal 2 minggu yang bisa disesuaikan, plus hal yang perlu dihindari.',
+        description: 'Strategi belajar menjelang ujian yang didukung riset: latihan soal, belajar berjarak, mencampur topik, tidur cukup, dan jadwal 2 minggu.',
         date: D, category: C, tags: ['cara belajar efektif', 'belajar untuk ujian', 'UTBK', 'jadwal belajar', 'teknik belajar'], cta: 'none',
         lead: 'Membaca ulang buku dan menstabilo halaman adalah cara belajar paling populer menjelang ujian, sekaligus salah satu yang paling tidak efektif menurut riset. Artikel ini merangkum strategi yang terbukti bekerja, lalu menyusunnya menjadi jadwal dua minggu yang realistis, cocok untuk ujian sekolah, UTBK, maupun ujian kuliah.',
         body: [
@@ -277,7 +277,7 @@ export default [
     {
         slug: 'kecanduan-hp-cara-fokus-kembali-saat-bekerja',
         title: 'Kecanduan HP Saat Bekerja? Cara Mengembalikan Fokus',
-        description: 'Kenapa HP begitu mengganggu fokus menurut riset, biaya tersembunyi dari interupsi, dan langkah praktis: mode fokus, pengaturan notifikasi, blok kerja mendalam, dan aturan jarak HP.',
+        description: 'Kenapa HP sangat mengganggu fokus menurut riset, biaya tersembunyi interupsi, dan langkah praktis: mode fokus, notifikasi, dan kerja mendalam.',
         date: D, category: C, tags: ['kecanduan HP', 'fokus kerja', 'deep work', 'notifikasi', 'produktivitas'], cta: 'none',
         lead: 'Niatnya hanya mengecek satu pesan, tahu-tahu 20 menit berlalu di media sosial. Kembali ke pekerjaan pun terasa berat. Ini bukan semata soal lemah kemauan. HP dan aplikasinya dirancang untuk menarik perhatian, dan otak kita membayar mahal setiap kali beralih tugas. Kabar baiknya, beberapa perubahan pengaturan dan kebiasaan bisa mengembalikan fokus.',
         body: [
@@ -327,7 +327,7 @@ export default [
     {
         slug: 'time-blocking-cara-mengatur-jadwal-harian',
         title: 'Time Blocking: Cara Mengatur Jadwal Harian agar Selesai',
-        description: 'Cara menerapkan time blocking untuk mengatur hari: memetakan tugas ke blok kalender, memperkirakan waktu dengan jujur, blok cadangan, dan contoh jadwal untuk pekerja dan mahasiswa.',
+        description: 'Cara menerapkan time blocking: memetakan tugas ke blok kalender, memperkirakan waktu dengan jujur, blok cadangan, dan contoh jadwal.',
         date: D, category: C, tags: ['time blocking', 'manajemen waktu', 'jadwal harian', 'produktivitas', 'perencanaan'], cta: 'none',
         lead: 'Daftar tugas panjang tidak memberi tahu kapan setiap tugas dikerjakan. Akibatnya, hari habis untuk membalas pesan dan rapat, sementara pekerjaan penting tertunda. Time blocking mengubah daftar tugas menjadi jadwal: setiap pekerjaan mendapat blok waktu di kalender, seperti janji temu dengan diri sendiri.',
         body: [
@@ -397,7 +397,7 @@ export default [
     {
         slug: 'membaca-cepat-mitos-dan-cara-membaca-efektif',
         title: 'Membaca Cepat: Mitos, Fakta, dan Cara Membaca Lebih Efektif',
-        description: 'Benarkah bisa membaca ribuan kata per menit dengan tetap paham? Fakta riset tentang speed reading, kecepatan baca yang realistis, dan strategi membaca efektif untuk buku dan dokumen kerja.',
+        description: 'Benarkah bisa membaca ribuan kata per menit tanpa kehilangan pemahaman? Fakta riset speed reading dan strategi membaca yang lebih efektif.',
         date: D, category: C, tags: ['membaca cepat', 'speed reading', 'cara membaca efektif', 'literasi', 'belajar'], cta: 'none',
         lead: 'Kursus membaca cepat sering menjanjikan kemampuan membaca ribuan kata per menit dengan pemahaman penuh. Klaim ini menarik di tengah banjir informasi. Tetapi riset psikologi membaca memberi gambaran yang berbeda. Kabar baiknya, ada cara yang lebih realistis untuk membaca lebih banyak dan lebih paham.',
         body: [

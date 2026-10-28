@@ -5,7 +5,7 @@ export default [
     {
         slug: 'ai-machine-learning-deep-learning-bedanya',
         title: 'AI, Machine Learning, dan Deep Learning: Apa Bedanya?',
-        description: 'Penjelasan sederhana beda AI, machine learning, deep learning, dan AI generatif dengan analogi, contoh sehari-hari, diagram lapisan, dan kuis untuk menguji pemahaman.',
+        description: 'Beda AI, machine learning, deep learning, dan AI generatif dijelaskan sederhana dengan analogi, contoh sehari-hari, diagram, dan kuis.',
         date: D, category: C, tags: ['AI', 'machine learning', 'deep learning', 'AI generatif', 'kecerdasan buatan'], cta: 'jasa',
         lead: 'Istilah AI, machine learning, deep learning, dan AI generatif sering dipakai bergantian, bahkan di berita dan iklan. Padahal keempatnya punya hubungan yang jelas, seperti boneka matryoshka yang saling memuat. Memahaminya membantu Anda menilai klaim produk dan berita teknologi dengan lebih jernih.',
         body: [
@@ -66,7 +66,7 @@ export default [
     {
         slug: 'ai-detector-akurat-atau-tidak',
         title: 'AI Detector Akurat atau Tidak? Fakta Pendeteksi Tulisan AI',
-        description: 'Seberapa akurat pendeteksi tulisan AI? Fakta riset tentang salah deteksi, bias terhadap penulis non-native, kenapa OpenAI menutup detektornya, dan cara menilai karya yang lebih adil.',
+        description: 'Seberapa akurat pendeteksi tulisan AI? Fakta riset soal salah deteksi, bias terhadap penulis non-native, dan cara menilai karya lebih adil.',
         date: D, category: C, tags: ['AI detector', 'deteksi tulisan AI', 'ChatGPT', 'integritas akademik', 'Turnitin'], cta: 'jasa',
         lead: 'Mahasiswa panik karena esai yang ditulisnya sendiri dinilai "90% AI". Guru bingung harus percaya hasil detektor atau tidak. Pendeteksi tulisan AI kini banyak dipakai, tetapi bukti menunjukkan alat ini jauh dari sempurna. Artikel ini merangkum faktanya dan menawarkan cara yang lebih adil untuk menilai keaslian tulisan.',
         body: [
@@ -121,7 +121,7 @@ export default [
     {
         slug: 'ai-untuk-guru-modul-ajar-soal-dan-umpan-balik',
         title: 'AI untuk Guru: Modul Ajar, Soal, dan Umpan Balik',
-        description: 'Cara guru memakai AI untuk menyusun modul ajar, membuat soal berlevel, memberi umpan balik, dan menyesuaikan materi, lengkap dengan contoh prompt, batasan, dan etika yang perlu dijaga.',
+        description: 'Cara guru memakai AI untuk modul ajar, soal berlevel, dan umpan balik, lengkap dengan contoh prompt, batasan, dan etika yang perlu dijaga.',
         date: D, category: C, tags: ['AI untuk guru', 'modul ajar AI', 'membuat soal dengan AI', 'ChatGPT untuk guru', 'pembelajaran mendalam'], cta: 'jasa',
         lead: 'Guru Indonesia menghabiskan banyak waktu di luar kelas: menyusun modul ajar, membuat soal, menilai, dan menulis laporan. AI generatif bisa menghemat sebagian besar waktu itu, asalkan dipakai sebagai asisten yang diperiksa, bukan pengganti penilaian profesional guru. Artikel ini memberi contoh prompt yang siap pakai dan batasan yang perlu dijaga.',
         body: [
@@ -184,7 +184,7 @@ export default [
     {
         slug: 'cara-belajar-bahasa-inggris-dengan-ai',
         title: 'Cara Belajar Bahasa Inggris dengan AI: 8 Latihan Efektif',
-        description: 'Delapan cara memakai AI untuk belajar bahasa Inggris secara efektif: percakapan, koreksi tulisan, kosakata dengan spaced repetition, latihan wawancara, dan prompt siap pakai sesuai level CEFR.',
+        description: 'Delapan cara memakai AI untuk belajar bahasa Inggris: percakapan, koreksi tulisan, kosakata, latihan wawancara, dan prompt sesuai level.',
         date: D, category: C, tags: ['belajar bahasa Inggris', 'AI untuk belajar', 'ChatGPT bahasa Inggris', 'speaking practice', 'CEFR'], cta: 'jasa',
         lead: 'Banyak orang Indonesia bisa membaca bahasa Inggris, tetapi kaku saat berbicara dan menulis karena jarang punya teman latihan. Chatbot AI bisa menjadi partner latihan yang sabar, tersedia kapan saja, dan tidak menghakimi. Kuncinya adalah memakai AI untuk berlatih secara aktif, bukan untuk menerjemahkan semuanya.',
         body: [
@@ -243,7 +243,7 @@ export default [
     {
         slug: 'ai-untuk-membuat-cv-dan-surat-lamaran',
         title: 'AI untuk Membuat CV dan Surat Lamaran yang Tetap Jujur',
-        description: 'Cara memakai AI untuk menyusun CV dan surat lamaran: menggali pencapaian, menyesuaikan dengan lowongan, prompt siap pakai, dan batasan agar tidak terdengar generik atau mengarang.',
+        description: 'Cara memakai AI untuk CV dan surat lamaran: menggali pencapaian, menyesuaikan dengan lowongan, prompt siap pakai, dan menjaga kejujuran.',
         date: D, category: C, tags: ['CV dengan AI', 'surat lamaran kerja', 'ChatGPT CV', 'melamar kerja', 'karier'], cta: 'jasa',
         lead: 'Recruiter kini sering menerima surat lamaran yang terdengar mirip satu sama lain: "I am writing to express my keen interest..." Tanda khas teks AI yang tidak disunting. AI bisa sangat membantu menyusun CV dan surat lamaran, tetapi hanya bila dipakai untuk menggali dan merapikan cerita Anda sendiri, bukan mengarang yang baru.',
         body: [
@@ -296,7 +296,7 @@ export default [
     {
         slug: 'belajar-ai-dari-nol-roadmap-untuk-pemula',
         title: 'Belajar AI dari Nol: Roadmap untuk Pemula (Juga Non-IT)',
-        description: 'Peta jalan belajar AI dari nol untuk pemula, termasuk yang bukan lulusan IT: tiga jalur (pengguna cerdas, pembuat solusi, engineer), urutan materi, sumber gratis, dan proyek latihan.',
+        description: 'Peta jalan belajar AI dari nol, termasuk untuk non-IT: tiga jalur sesuai tujuan, urutan materi, sumber gratis tepercaya, dan proyek latihan.',
         date: D, category: C, tags: ['belajar AI', 'roadmap AI', 'belajar machine learning', 'kursus AI gratis', 'karier AI'], cta: 'jasa',
         lead: 'Ingin belajar AI tetapi bingung mulai dari mana? Sebagian roadmap langsung menyarankan kalkulus dan aljabar linear, yang membuat banyak orang mundur. Padahal tidak semua orang perlu menjadi peneliti AI. Artikel ini membagi jalur belajar AI menjadi tiga, sesuai tujuan Anda, lengkap dengan urutan materi dan sumber gratis.',
         body: [
