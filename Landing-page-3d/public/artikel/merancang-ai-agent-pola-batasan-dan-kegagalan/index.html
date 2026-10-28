@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum</title>
+<meta name="description" content="Merancang AI agent untuk developer: kapan cukup workflow, lima pola dari prompt chaining sampai orchestrator-workers, batas keamanan, dan kegagalan umum.">
+<meta name="keywords" content="AI agent, agentic workflow, LLM, arsitektur AI, otomasi AI">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/">
+<meta property="og:title" content="Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum">
+<meta property="og:description" content="Merancang AI agent untuk developer: kapan cukup workflow, lima pola dari prompt chaining sampai orchestrator-workers, batas keamanan, dan kegagalan umum.">
+<meta property="og:image" content="https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="AI untuk Semua">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum">
+<meta name="twitter:description" content="Merancang AI agent untuk developer: kapan cukup workflow, lima pola dari prompt chaining sampai orchestrator-workers, batas keamanan, dan kegagalan umum.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum","description":"Merancang AI agent untuk developer: kapan cukup workflow, lima pola dari prompt chaining sampai orchestrator-workers, batas keamanan, dan kegagalan umum.","image":["https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"AI agent, agentic workflow, LLM, arsitektur AI, otomasi AI","articleSection":"AI untuk Semua","wordCount":197,"mainEntityOfPage":"https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum","item":"https://muchson.web.id/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Perlukah framework seperti LangChain?","acceptedAnswer":{"@type":"Answer","text":"Tidak wajib. Banyak pola bisa ditulis dengan beberapa puluh baris kode langsung ke API. Framework membantu untuk hal tertentu, tetapi bisa menyembunyikan apa yang sebenarnya dikirim ke model."}},{"@type":"Question","name":"Bagaimana mengukur keberhasilan agent?","acceptedAnswer":{"@type":"Answer","text":"Dengan eval set tugas nyata: persentase tugas selesai benar, jumlah langkah, biaya, dan seberapa sering perlu bantuan manusia."}},{"@type":"Question","name":"Apa hubungannya dengan MCP?","acceptedAnswer":{"@type":"Answer","text":"MCP memudahkan memberi agen akses ke alat dan data yang standar. Prinsip hak minimum tetap berlaku."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#workflow-atau-agent">Workflow atau agent?</a></li><li><a href="#lima-pola-yang-sering-dipakai">Lima pola yang sering dipakai</a></li><li><a href="#anatomi-agent-sungguhan">Anatomi agent sungguhan</a></li><li><a href="#kegagalan-yang-sering-terjadi">Kegagalan yang sering terjadi</a></li><li><a href="#apakah-tugas-anda-butuh-agent">Apakah tugas Anda butuh agent?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › AI untuk Semua</p>
+<span class="cat">AI untuk Semua</span>
+<h1>Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum</h1>
+<p class="lead">Setelah membangun beberapa sistem AI untuk materi pelatihan dan otomasi kerja, saya belajar satu hal: agen yang paling berguna biasanya yang paling sederhana. Banyak masalah yang awalnya terlihat butuh "agen otonom" ternyata cukup diselesaikan dengan alur langkah yang jelas dan satu atau dua panggilan model.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum" fetchpriority="high"></figure>
+<h2 id="workflow-atau-agent">Workflow atau agent?</h2>
+<p>Tulisan Anthropic "Building effective agents" (Desember 2024) membedakan dua hal yang sering dicampur:</p>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Dua bentuk sistem berbasis LLM" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="178" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Workflow</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Langkah ditentukan kode Anda</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Mudah diprediksi dan diuji</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Cocok untuk tugas yang urutannya jelas</text><rect x="330" y="6" width="300" height="178" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Agent</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Model memutuskan langkah dan alat sendiri</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Fleksibel untuk tugas terbuka</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Lebih mahal, lebih sulit diprediksi</text></svg></figure>
+<p>Rekomendasinya: mulai dari solusi paling sederhana, dan tambah otonomi hanya bila jelas memberi hasil lebih baik.</p>
+<h2 id="lima-pola-yang-sering-dipakai">Lima pola yang sering dipakai</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk contoh penerapan","items":[{"tag":"Pola 1","front":"Prompt chaining: tugas dipecah menjadi langkah berurutan.","backTag":"Contoh","back":"Membuat modul ajar: (1) susun tujuan belajar, (2) buat kerangka, (3) tulis isi per bagian, (4) buat soal latihan. Output tiap langkah dicek kode sebelum lanjut."},{"tag":"Pola 2","front":"Routing: klasifikasi dulu, lalu kirim ke penanganan khusus.","backTag":"Contoh","back":"Pesan pelanggan diklasifikasi: pertanyaan produk, keluhan, atau tagihan. Masing-masing punya prompt dan alat sendiri, bahkan model berbeda."},{"tag":"Pola 3","front":"Paralelisasi: beberapa panggilan sekaligus lalu digabung.","backTag":"Contoh","back":"Menilai esai dari tiga aspek (isi, struktur, bahasa) secara paralel, lalu menggabungkan umpan balik."},{"tag":"Pola 4","front":"Orchestrator-workers: satu model membagi tugas ke model lain.","backTag":"Contoh","back":"Riset materi: orchestrator menentukan subtopik, worker mencari dan meringkas tiap subtopik, orchestrator menyusun hasil akhir."},{"tag":"Pola 5","front":"Evaluator-optimizer: satu membuat, satu menilai, diulang.","backTag":"Contoh","back":"Menerjemahkan materi pelatihan ke bahasa Jerman, lalu penilai memeriksa istilah teknis dan nada formal, diulang sampai lolos rubrik."}]}</script></div>
+<h2 id="anatomi-agent-sungguhan">Anatomi agent sungguhan</h2>
+<pre><code>def jalankan_agent(tugas, alat, maks_langkah=8):
+    pesan = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: tugas}]
+    for langkah in range(maks_langkah):
+        respon = model(pesan, tools=alat)
+        if respon.stop_reason != &quot;tool_use&quot;:
+            return respon.teks                     # selesai
+        hasil = [jalankan_alat(p) for p in respon.panggilan_alat]  # validasi + izin di sini
+        pesan += [respon.sebagai_pesan(), hasil_sebagai_pesan(hasil)]
+        catat(langkah, respon, hasil)              # log setiap langkah
+    return &quot;Berhenti: batas langkah tercapai, butuh bantuan manusia.&quot;</code></pre>
+<ul><li><b>Batas langkah dan biaya</b> per tugas.</li><li><b>Log setiap langkah</b> agar bisa ditelusuri ketika hasilnya aneh.</li><li><b>Titik berhenti untuk manusia</b> pada keputusan berisiko.</li><li><b>Lingkungan terbatas (sandbox)</b> bila agen menjalankan kode.</li></ul>
+<h2 id="kegagalan-yang-sering-terjadi">Kegagalan yang sering terjadi</h2>
+<table><thead><tr><th>Gejala</th><th>Penyebab umum</th><th>Perbaikan</th></tr></thead><tbody><tr><td>Agen berputar-putar memanggil alat yang sama</td><td>Hasil alat tidak informatif atau tujuan kabur</td><td>Pesan error yang jelas, kriteria selesai yang eksplisit, batas langkah</td></tr><tr><td>Memilih alat yang salah</td><td>Deskripsi alat mirip atau samar</td><td>Kurangi jumlah alat, perjelas kapan dipakai</td></tr><tr><td>Mengarang hasil tanpa memanggil alat</td><td>Instruksi tidak menekankan sumber</td><td>Wajibkan jawaban berdasar hasil alat, evaluasi dengan kasus uji</td></tr><tr><td>Biaya membengkak</td><td>Konteks makin panjang tiap langkah</td><td>Ringkas riwayat, pakai model kecil untuk langkah sederhana</td></tr><tr><td>Tindakan berbahaya</td><td>Hak akses terlalu luas, prompt injection</td><td>Hak minimum dan konfirmasi manusia</td></tr></tbody></table>
+<h2 id="apakah-tugas-anda-butuh-agent">Apakah tugas Anda butuh agent?</h2>
+<div data-w="choose"><script type="application/json">{"title":"Cek kebutuhan","questions":[{"q":"Apakah langkah-langkah tugasnya bisa ditulis di awal?","options":[{"t":"Ya, urutannya hampir selalu sama","add":{"wf":3}},{"t":"Tidak, tergantung temuan di tengah jalan","add":{"ag":3}}]},{"q":"Seberapa mahal bila terjadi kesalahan?","options":[{"t":"Tinggi (uang, data pelanggan, keputusan medis)","add":{"wf":2}},{"t":"Rendah, hasil selalu ditinjau manusia","add":{"ag":2}}]},{"q":"Apakah ada cara memeriksa hasil secara otomatis?","options":[{"t":"Ya (tes lulus, angka cocok, format valid)","add":{"ag":2}},{"t":"Sulit diperiksa","add":{"wf":2}}]}],"results":{"wf":{"title":"Mulai dengan workflow","text":"Tulis langkahnya di kode, gunakan model untuk bagian yang butuh bahasa. Lebih murah, mudah diuji, dan lebih aman."},"ag":{"title":"Agent layak dicoba","text":"Tugas terbuka dengan hasil yang bisa diverifikasi adalah tempat agen bersinar, misalnya agen coding yang bisa menjalankan tes. Tetap pasang batas langkah dan log."}}}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pola yang mengklasifikasikan input lalu mengirim ke penanganan khusus?","options":["Routing","Paralelisasi","Evaluator-optimizer"],"answer":0,"why":"Routing memisahkan jenis input."},{"q":"Pengaman penting pada loop agent?","options":["Batas langkah dan log","Temperature tinggi","Menghapus system prompt"],"answer":0,"why":"Batas mencegah biaya dan loop tak berujung, log membantu penelusuran."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Perlukah framework seperti LangChain?</summary><div>Tidak wajib. Banyak pola bisa ditulis dengan beberapa puluh baris kode langsung ke API. Framework membantu untuk hal tertentu, tetapi bisa menyembunyikan apa yang sebenarnya dikirim ke model.</div></details>
+<details class="faq"><summary>Bagaimana mengukur keberhasilan agent?</summary><div>Dengan eval set tugas nyata: persentase tugas selesai benar, jumlah langkah, biaya, dan seberapa sering perlu bantuan manusia.</div></details>
+<details class="faq"><summary>Apa hubungannya dengan MCP?</summary><div>MCP memudahkan memberi agen akses ke alat dan data yang standar. Prinsip hak minimum tetap berlaku.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://www.anthropic.com/engineering/building-effective-agents" rel="noopener" target="_blank">Anthropic Engineering: Building effective agents</a></li><li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview" rel="noopener" target="_blank">Claude Docs: Tool use with Claude</a></li><li><a href="https://muchson.web.id/artikel/ai-agent-vs-chatbot-apa-bedanya/" rel="noopener" target="_blank">AI agent vs chatbot (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/ai-agent-vs-chatbot-apa-bedanya/"><img src="/artikel/ai-agent-vs-chatbot-apa-bedanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>AI Agent vs Chatbot: Apa Bedanya dan Kapan Memakainya</span></a><a href="/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/"><img src="/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Membuat AI Agent dengan n8n: Langkah demi Langkah</span></a><a href="/artikel/tool-use-function-calling-cara-ai-memakai-alat/"><img src="/artikel/tool-use-function-calling-cara-ai-memakai-alat/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Tool Use (Function Calling): Cara AI Memakai Alat</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

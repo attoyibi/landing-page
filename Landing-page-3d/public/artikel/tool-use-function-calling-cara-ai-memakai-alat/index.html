@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Use (Function Calling): Cara AI Memakai Alat</title>
+<meta name="description" content="Cara kerja tool use atau function calling pada model AI: definisi alat dengan JSON Schema, alur tool_use dan tool_result, contoh cek stok, dan keamanannya.">
+<meta name="keywords" content="tool use, function calling, AI agent, LLM, integrasi API">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/">
+<meta property="og:title" content="Tool Use (Function Calling): Cara AI Memakai Alat">
+<meta property="og:description" content="Cara kerja tool use atau function calling pada model AI: definisi alat dengan JSON Schema, alur tool_use dan tool_result, contoh cek stok, dan keamanannya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="AI untuk Semua">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tool Use (Function Calling): Cara AI Memakai Alat">
+<meta name="twitter:description" content="Cara kerja tool use atau function calling pada model AI: definisi alat dengan JSON Schema, alur tool_use dan tool_result, contoh cek stok, dan keamanannya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tool Use (Function Calling): Cara AI Memakai Alat","description":"Cara kerja tool use atau function calling pada model AI: definisi alat dengan JSON Schema, alur tool_use dan tool_result, contoh cek stok, dan keamanannya.","image":["https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"tool use, function calling, AI agent, LLM, integrasi API","articleSection":"AI untuk Semua","wordCount":303,"mainEntityOfPage":"https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Tool Use (Function Calling): Cara AI Memakai Alat","item":"https://muchson.web.id/artikel/tool-use-function-calling-cara-ai-memakai-alat/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa beda tool use dan MCP?","acceptedAnswer":{"@type":"Answer","text":"Tool use adalah kemampuan model memanggil alat dalam satu API. MCP adalah protokol standar agar alat dan sumber data bisa dipakai ulang oleh banyak aplikasi AI."}},{"@type":"Question","name":"Apakah semua model mendukung tool use?","acceptedAnswer":{"@type":"Answer","text":"Sebagian besar model besar modern mendukung, dengan format yang sedikit berbeda antar penyedia. Kualitas pemilihan alat juga bervariasi."}},{"@type":"Question","name":"Bisakah model memanggil beberapa alat sekaligus?","acceptedAnswer":{"@type":"Answer","text":"Bisa. Model dapat meminta beberapa alat dalam satu respons; aplikasi menjalankan semuanya dan mengirim hasilnya bersama."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#model-tidak-menjalankan-alat-aplikasi-anda-yang-menjalankan">Model tidak menjalankan alat, aplikasi Anda yang menjalankan</a></li><li><a href="#mendefinisikan-alat">Mendefinisikan alat</a></li><li><a href="#menjalankan-putaran-lengkap">Menjalankan putaran lengkap</a></li><li><a href="#contoh-alat-yang-berguna">Contoh alat yang berguna</a></li><li><a href="#prinsip-desain-alat-yang-baik">Prinsip desain alat yang baik</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › AI untuk Semua</p>
+<span class="cat">AI untuk Semua</span>
+<h1>Tool Use (Function Calling): Cara AI Memakai Alat</h1>
+<p class="lead">Model bahasa tidak tahu stok gudang Anda hari ini, tidak bisa membuka database, dan tidak bisa mengirim email. Dengan tool use, model bisa meminta aplikasi Anda menjalankan fungsi tertentu, menerima hasilnya, lalu menyusun jawaban. Inilah dasar dari hampir semua AI agent.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Tool Use (Function Calling): Cara AI Memakai Alat" fetchpriority="high"></figure>
+<h2 id="model-tidak-menjalankan-alat-aplikasi-anda-yang-menjalankan">Model tidak menjalankan alat, aplikasi Anda yang menjalankan</h2>
+<p>Ini poin paling penting. Model hanya <b>meminta</b>: "tolong panggil cek_stok dengan sku FR-01". Kode Anda yang memutuskan dan menjalankan fungsi itu, lalu mengirim hasilnya kembali.</p>
+<figure class="diagram"><svg viewBox="0 0 542 228" role="img" aria-label="Alur tool use" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">User bertanya</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">&quot;Frame FR-01 masih</tspan><tspan x="85" dy="14">ada?&quot;</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Model minta alat</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">tool_use: cek_stok</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Aplikasi</tspan><tspan x="457" dy="16">menjalankan</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">query database</tspan></text><path d="M457 98 V124 H85 V130" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="150" r="11" fill="#7a3fb4"/><text x="26" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Kirim tool_result</tspan></text><text x="85" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">{&quot;stok&quot;: 3}</tspan></text><line x1="164" y1="176" x2="192" y2="176" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="150" r="11" fill="#b3261e"/><text x="212" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Model menjawab</tspan></text><text x="271" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">&quot;Masih ada 3 unit.&quot;</tspan></text></svg></figure>
+<h2 id="mendefinisikan-alat">Mendefinisikan alat</h2>
+<p>Setiap alat punya nama, deskripsi, dan skema input dalam format JSON Schema. Deskripsi yang jelas sangat menentukan kapan model memilih alat itu.</p>
+<pre><code>tools = [{
+    &quot;name&quot;: &quot;cek_stok&quot;,
+    &quot;description&quot;: &quot;Mengecek stok produk di gudang berdasarkan SKU. &quot;
+                   &quot;Gunakan ketika pengguna menanyakan ketersediaan barang.&quot;,
+    &quot;input_schema&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+            &quot;sku&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Kode SKU, contoh FR-01&quot;}
+        },
+        &quot;required&quot;: [&quot;sku&quot;],
+    },
+}]</code></pre>
+<h2 id="menjalankan-putaran-lengkap">Menjalankan putaran lengkap</h2>
+<pre><code>pesan = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Frame FR-01 masih ada?&quot;}]
+respon = client.messages.create(model=MODEL, max_tokens=500, tools=tools, messages=pesan)
+
+while respon.stop_reason == &quot;tool_use&quot;:
+    pesan.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: respon.content})
+    hasil = []
+    for blok in respon.content:
+        if blok.type == &quot;tool_use&quot; and blok.name == &quot;cek_stok&quot;:
+            stok = db_cek_stok(blok.input[&quot;sku&quot;])          # fungsi Anda sendiri
+            hasil.append({&quot;type&quot;: &quot;tool_result&quot;, &quot;tool_use_id&quot;: blok.id,
+                          &quot;content&quot;: json.dumps({&quot;stok&quot;: stok})})
+    pesan.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: hasil})
+    respon = client.messages.create(model=MODEL, max_tokens=500, tools=tools, messages=pesan)
+
+print(respon.content[0].text)   # &quot;Frame FR-01 masih tersedia 3 unit.&quot;</code></pre>
+<div class="callout warn"><b>Batasi putaran</b><p>Selalu batasi jumlah putaran loop (misalnya maksimal 5-10). Tanpa batas, model yang bingung bisa terus memanggil alat dan menghabiskan biaya.</p></div>
+<h2 id="contoh-alat-yang-berguna">Contoh alat yang berguna</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk melihat risikonya","items":[{"tag":"Baca saja","front":"cari_produk, cek_status_pesanan, cari_dokumen","backTag":"Risiko","back":"Rendah. Tetap filter data berdasarkan pengguna yang login, jangan biarkan model menentukan user_id."},{"tag":"Menulis","front":"buat_tiket, simpan_catatan","backTag":"Risiko","back":"Sedang. Validasi input dan catat siapa yang memicu."},{"tag":"Tindakan nyata","front":"kirim_email, refund, hapus_data","backTag":"Risiko","back":"Tinggi. Minta konfirmasi manusia sebelum dieksekusi, dan batasi nominal atau cakupannya."}]}</script></div>
+<h2 id="prinsip-desain-alat-yang-baik">Prinsip desain alat yang baik</h2>
+<ul><li><b>Sedikit alat yang jelas</b> lebih baik daripada puluhan alat yang mirip.</li><li><b>Nama dan deskripsi spesifik</b>, termasuk kapan <i>tidak</i> boleh dipakai.</li><li><b>Validasi semua input</b> dari model, seperti input dari pengguna.</li><li><b>Hak akses mengikuti pengguna</b>, bukan model: alat hanya bisa melihat data milik pengguna yang sedang login.</li><li><b>Kembalikan error yang informatif</b> ("SKU tidak ditemukan") agar model bisa memperbaiki langkahnya.</li><li>Bila perlu input yang pasti sesuai skema, beberapa API menyediakan opsi <i>strict</i> pada definisi alat.</li></ul>
+<div class="callout bad"><b>Waspada</b><p>Tool use adalah pintu masuk prompt injection: teks berbahaya di dokumen atau email bisa "membujuk" model memanggil alat. Lihat artikel tentang prompt injection.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Siapa yang benar-benar menjalankan fungsi cek_stok?","options":["Model AI di server penyedia","Kode aplikasi Anda","Browser pengguna"],"answer":1,"why":"Model hanya meminta; aplikasi yang menjalankan."},{"q":"Alat \"refund\" sebaiknya...","options":["Langsung dijalankan bila model memintanya","Membutuhkan konfirmasi manusia dan batas nominal","Tidak perlu log"],"answer":1,"why":"Tindakan berisiko tinggi butuh pengaman."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa beda tool use dan MCP?</summary><div>Tool use adalah kemampuan model memanggil alat dalam satu API. MCP adalah protokol standar agar alat dan sumber data bisa dipakai ulang oleh banyak aplikasi AI.</div></details>
+<details class="faq"><summary>Apakah semua model mendukung tool use?</summary><div>Sebagian besar model besar modern mendukung, dengan format yang sedikit berbeda antar penyedia. Kualitas pemilihan alat juga bervariasi.</div></details>
+<details class="faq"><summary>Bisakah model memanggil beberapa alat sekaligus?</summary><div>Bisa. Model dapat meminta beberapa alat dalam satu respons; aplikasi menjalankan semuanya dan mengirim hasilnya bersama.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview" rel="noopener" target="_blank">Claude Docs: Tool use with Claude</a></li><li><a href="https://json-schema.org/learn/getting-started-step-by-step" rel="noopener" target="_blank">JSON Schema: Getting Started</a></li><li><a href="https://muchson.web.id/artikel/apa-itu-mcp-model-context-protocol-pemula/" rel="noopener" target="_blank">Apa itu MCP (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/ai-agent-vs-chatbot-apa-bedanya/"><img src="/artikel/ai-agent-vs-chatbot-apa-bedanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>AI Agent vs Chatbot: Apa Bedanya dan Kapan Memakainya</span></a><a href="/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/"><img src="/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Membuat AI Agent dengan n8n: Langkah demi Langkah</span></a><a href="/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/"><img src="/artikel/merancang-ai-agent-pola-batasan-dan-kegagalan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Merancang AI Agent: Pola, Batasan, dan Kegagalan Umum</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

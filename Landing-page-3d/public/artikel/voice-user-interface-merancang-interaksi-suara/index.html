@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice User Interface: Merancang Interaksi Suara</title>
+<meta name="description" content="Dasar merancang voice user interface: beda dengan antarmuka layar, menulis dialog, menangani salah dengar, konfirmasi, kepribadian, dan menguji dengan pengguna.">
+<meta name="keywords" content="voice user interface, VUI, asisten suara, conversation design, UX">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/">
+<meta property="og:title" content="Voice User Interface: Merancang Interaksi Suara">
+<meta property="og:description" content="Dasar merancang voice user interface: beda dengan antarmuka layar, menulis dialog, menangani salah dengar, konfirmasi, kepribadian, dan menguji dengan pengguna.">
+<meta property="og:image" content="https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="UX &amp; Produk">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voice User Interface: Merancang Interaksi Suara">
+<meta name="twitter:description" content="Dasar merancang voice user interface: beda dengan antarmuka layar, menulis dialog, menangani salah dengar, konfirmasi, kepribadian, dan menguji dengan pengguna.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Voice User Interface: Merancang Interaksi Suara","description":"Dasar merancang voice user interface: beda dengan antarmuka layar, menulis dialog, menangani salah dengar, konfirmasi, kepribadian, dan menguji dengan pengguna.","image":["https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"voice user interface, VUI, asisten suara, conversation design, UX","articleSection":"UX & Produk","wordCount":252,"mainEntityOfPage":"https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Voice User Interface: Merancang Interaksi Suara","item":"https://muchson.web.id/artikel/voice-user-interface-merancang-interaksi-suara/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah AI generatif mengubah desain suara?","acceptedAnswer":{"@type":"Answer","text":"Ya. Model bahasa membuat percakapan lebih fleksibel, tetapi prinsip singkat, konfirmasi, dan jalur pemulihan tetap penting, ditambah risiko jawaban yang mengarang."}},{"@type":"Question","name":"Bagaimana dengan campuran bahasa Indonesia dan Inggris?","acceptedAnswer":{"@type":"Answer","text":"Uji pengenalan ucapan dengan kalimat campuran yang memang dipakai pengguna, dan siapkan sinonim untuk istilah yang sering diucapkan berbeda."}},{"@type":"Question","name":"Apakah antarmuka suara inklusif?","acceptedAnswer":{"@type":"Answer","text":"Sangat membantu pengguna tunanetra dan yang tangannya sedang sibuk, tetapi menyulitkan pengguna tuli atau dengan gangguan bicara. Sediakan alternatif teks."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#apa-yang-berbeda-dari-antarmuka-layar">Apa yang berbeda dari antarmuka layar</a></li><li><a href="#prinsip-menulis-dialog">Prinsip menulis dialog</a></li><li><a href="#menangani-kesalahan">Menangani kesalahan</a></li><li><a href="#konfirmasi-kapan-perlu">Konfirmasi: kapan perlu</a></li><li><a href="#kepribadian-dan-konsistensi">Kepribadian dan konsistensi</a></li><li><a href="#menguji-tanpa-membangun-dulu">Menguji tanpa membangun dulu</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › UX &amp; Produk</p>
+<span class="cat">UX &amp; Produk</span>
+<h1>Voice User Interface: Merancang Interaksi Suara</h1>
+<p class="lead">Di layar, pengguna bisa melihat semua pilihan sekaligus. Dalam percakapan suara, semuanya berurutan dan hilang begitu diucapkan. Merancang antarmuka suara bukan sekadar mengubah teks menjadi suara, melainkan merancang percakapan yang terasa wajar, singkat, dan memaafkan kesalahan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Voice User Interface: Merancang Interaksi Suara" fetchpriority="high"></figure>
+<h2 id="apa-yang-berbeda-dari-antarmuka-layar">Apa yang berbeda dari antarmuka layar</h2>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Layar dan suara" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="178" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Layar</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Banyak pilihan terlihat sekaligus</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Pengguna mengatur tempo sendiri</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Mudah kembali dan membaca ulang</text><rect x="330" y="6" width="300" height="178" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Suara</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Informasi berurutan, cepat hilang</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Beban ingatan lebih tinggi</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Kesalahan pengenalan ucapan bisa terjadi</text></svg></figure>
+<h2 id="prinsip-menulis-dialog">Prinsip menulis dialog</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk contoh","items":[{"tag":"Singkat","front":"Satu informasi utama per giliran.","backTag":"Contoh","back":"\"Pesanan Anda tiba besok antara jam 10 dan 12.\" Bukan paragraf status lengkap."},{"tag":"Tanpa menu panjang","front":"Hindari \"Tekan atau ucapkan satu untuk...\" yang panjang.","backTag":"Contoh","back":"\"Mau cek pesanan, ubah alamat, atau bicara dengan admin?\" Maksimal tiga pilihan."},{"tag":"Bahasa lisan","front":"Tulis seperti orang bicara, bukan seperti teks.","backTag":"Contoh","back":"\"Oke, sudah saya catat\" terdengar wajar; \"Permintaan Anda telah berhasil diproses\" terdengar seperti robot."},{"tag":"Beri arah","front":"Akhiri giliran dengan jelas apa yang bisa dilakukan berikutnya.","backTag":"Contoh","back":"\"Ada lagi yang bisa saya bantu?\" atau langsung menutup bila tugas sudah selesai."}]}</script></div>
+<h2 id="menangani-kesalahan">Menangani kesalahan</h2>
+<p>Pengenalan ucapan bisa salah, terutama dengan aksen, kebisingan, campuran bahasa, dan nama lokal. Rancang jalur pemulihan sejak awal.</p>
+<table><thead><tr><th>Situasi</th><th>Respons yang buruk</th><th>Respons yang lebih baik</th></tr></thead><tbody><tr><td>Tidak terdengar</td><td>"Maaf, saya tidak mengerti." (diulang terus)</td><td>Pertama: "Maaf, bisa diulang?" Kedua: beri contoh, "Misalnya, ucapkan cek pesanan."</td></tr><tr><td>Tidak yakin</td><td>Langsung menjalankan</td><td>"Maksud Anda Madiun, Jawa Timur?"</td></tr><tr><td>Gagal berkali-kali</td><td>Mengulang tanpa akhir</td><td>Tawarkan jalur lain: kirim tautan, atau sambungkan ke manusia</td></tr></tbody></table>
+<h2 id="konfirmasi-kapan-perlu">Konfirmasi: kapan perlu</h2>
+<ul><li><b>Konfirmasi eksplisit</b> untuk tindakan berisiko atau mahal: "Transfer 500 ribu ke Budi. Benar?"</li><li><b>Konfirmasi implisit</b> untuk tindakan ringan: "Oke, alarm jam 6 pagi." Pengguna bisa mengoreksi bila salah.</li><li>Jangan mengonfirmasi segala hal; itu membuat percakapan lambat dan melelahkan.</li></ul>
+<h2 id="kepribadian-dan-konsistensi">Kepribadian dan konsistensi</h2>
+<p>Asisten suara selalu punya kesan kepribadian, disengaja atau tidak. Tentukan nada (ramah, ringkas, sopan) dan pertahankan di semua dialog. Untuk konteks Indonesia, perhatikan sapaan (Kak, Bapak/Ibu, Anda) yang sesuai pengguna.</p>
+<h2 id="menguji-tanpa-membangun-dulu">Menguji tanpa membangun dulu</h2>
+<p>Metode "Wizard of Oz": satu orang berperan sebagai sistem dan membacakan dialog dari naskah, sementara peserta berbicara seolah dengan mesin. Cara murah ini cepat menunjukkan bagian dialog yang membingungkan sebelum ada kode.</p>
+<div data-w="checklist"><script type="application/json">{"title":"Periksa naskah dialog Anda","items":["Setiap giliran singkat dengan satu informasi utama.","Pilihan maksimal tiga.","Ada respons untuk tidak terdengar, tidak yakin, dan gagal berulang.","Tindakan berisiko dikonfirmasi eksplisit.","Ada jalan keluar ke manusia atau kanal lain.","Diuji dengan dibacakan keras-keras dan dengan peserta.","Mencakup aksen dan nama lokal dalam data uji."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa menu suara sebaiknya maksimal sekitar tiga pilihan?","options":["Batas teknis","Pengguna harus mengingat pilihan yang sudah diucapkan","Agar lebih murah"],"answer":1,"why":"Informasi suara berurutan dan cepat hilang."},{"q":"Transfer uang sebaiknya memakai konfirmasi...","options":["Implisit","Eksplisit","Tanpa konfirmasi"],"answer":1,"why":"Tindakan berisiko perlu persetujuan jelas."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah AI generatif mengubah desain suara?</summary><div>Ya. Model bahasa membuat percakapan lebih fleksibel, tetapi prinsip singkat, konfirmasi, dan jalur pemulihan tetap penting, ditambah risiko jawaban yang mengarang.</div></details>
+<details class="faq"><summary>Bagaimana dengan campuran bahasa Indonesia dan Inggris?</summary><div>Uji pengenalan ucapan dengan kalimat campuran yang memang dipakai pengguna, dan siapkan sinonim untuk istilah yang sering diucapkan berbeda.</div></details>
+<details class="faq"><summary>Apakah antarmuka suara inklusif?</summary><div>Sangat membantu pengguna tunanetra dan yang tangannya sedang sibuk, tetapi menyulitkan pengguna tuli atau dengan gangguan bicara. Sediakan alternatif teks.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://developer.amazon.com/en-US/docs/alexa/workshops/build-an-engaging-skill/design-vui/index.html" rel="noopener" target="_blank">Amazon Alexa: Design an Engaging Voice User Interface</a></li><li><a href="https://developer.amazon.com/blogs/alexa/post/ea99c8a1-36fa-4778-bbc3-56a6cee6e3b9/announcing-the-amazon-alexa-voice-design-guide" rel="noopener" target="_blank">Amazon Alexa Design Guide (blog pengumuman)</a></li><li><a href="https://muchson.web.id/artikel/chatbot-ai-layanan-pelanggan-yang-tidak-mengecewakan/" rel="noopener" target="_blank">Chatbot AI layanan pelanggan (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/customer-journey-map-cara-membuat/"><img src="/artikel/customer-journey-map-cara-membuat/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Customer Journey Map: Cara Membuat dan Memakainya</span></a><a href="/artikel/desain-inklusif-merancang-untuk-semua-orang/"><img src="/artikel/desain-inklusif-merancang-untuk-semua-orang/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Desain Inklusif: Merancang Produk untuk Semua Orang</span></a><a href="/artikel/dark-pattern-desain-menipu-dan-cara-menghindarinya/"><img src="/artikel/dark-pattern-desain-menipu-dan-cara-menghindarinya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Dark Pattern: Desain yang Menipu dan Cara Menghindarinya</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

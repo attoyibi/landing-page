@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostgreSQL untuk Pemula: Instal sampai Query Pertama</title>
+<meta name="description" content="Mulai belajar PostgreSQL: kenapa banyak dipakai developer, cara instal atau pakai Docker, perintah psql, membuat tabel, tipe data penting, dan query pertama.">
+<meta name="keywords" content="PostgreSQL, belajar database, psql, SQL, Postgres pemula">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/">
+<meta property="og:title" content="PostgreSQL untuk Pemula: Instal sampai Query Pertama">
+<meta property="og:description" content="Mulai belajar PostgreSQL: kenapa banyak dipakai developer, cara instal atau pakai Docker, perintah psql, membuat tabel, tipe data penting, dan query pertama.">
+<meta property="og:image" content="https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PostgreSQL untuk Pemula: Instal sampai Query Pertama">
+<meta name="twitter:description" content="Mulai belajar PostgreSQL: kenapa banyak dipakai developer, cara instal atau pakai Docker, perintah psql, membuat tabel, tipe data penting, dan query pertama.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PostgreSQL untuk Pemula: Instal sampai Query Pertama","description":"Mulai belajar PostgreSQL: kenapa banyak dipakai developer, cara instal atau pakai Docker, perintah psql, membuat tabel, tipe data penting, dan query pertama.","image":["https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"PostgreSQL, belajar database, psql, SQL, Postgres pemula","articleSection":"Rekayasa Software","wordCount":191,"mainEntityOfPage":"https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"PostgreSQL untuk Pemula: Instal sampai Query Pertama","item":"https://muchson.web.id/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"PostgreSQL atau MySQL untuk pemula?","acceptedAnswer":{"@type":"Answer","text":"Keduanya bagus. PostgreSQL unggul pada fitur lanjutan dan kepatuhan standar; MySQL sangat umum di hosting murah. Konsep SQL-nya hampir sama."}},{"@type":"Question","name":"Apakah PostgreSQL cocok untuk Laravel?","acceptedAnswer":{"@type":"Answer","text":"Ya. Laravel mendukung PostgreSQL bawaan; cukup ubah DB_CONNECTION=pgsql di file .env."}},{"@type":"Question","name":"Aplikasi GUI apa yang enak dipakai?","acceptedAnswer":{"@type":"Answer","text":"pgAdmin (resmi), DBeaver (gratis, multi-database), atau TablePlus."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#kenapa-postgresql">Kenapa PostgreSQL?</a></li><li><a href="#cara-tercepat-menjalankannya">Cara tercepat menjalankannya</a></li><li><a href="#perintah-psql-yang-sering-dipakai">Perintah psql yang sering dipakai</a></li><li><a href="#membuat-database-dan-tabel-pertama">Membuat database dan tabel pertama</a></li><li><a href="#tipe-data-yang-perlu-anda-kenal">Tipe data yang perlu Anda kenal</a></li><li><a href="#mencari-di-dalam-jsonb">Mencari di dalam JSONB</a></li><li><a href="#menghubungkan-dari-kode">Menghubungkan dari kode</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>PostgreSQL untuk Pemula: Instal sampai Query Pertama</h1>
+<p class="lead">PostgreSQL adalah database relasional open source yang sudah dikembangkan lebih dari 35 tahun. Dalam Stack Overflow Developer Survey 2025, PostgreSQL menjadi database yang paling banyak dipakai responden, sekitar 55%. Kalau Anda hanya sempat belajar satu database, ini pilihan yang aman.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="PostgreSQL untuk Pemula: Instal sampai Query Pertama" fetchpriority="high"></figure>
+<h2 id="kenapa-postgresql">Kenapa PostgreSQL?</h2>
+<ul><li><b>Gratis dan terbuka</b>, tanpa lisensi berbayar untuk fitur inti.</li><li><b>Patuh standar SQL</b> dan transaksi yang andal (ACID).</li><li><b>Tipe data kaya:</b> JSONB, array, rentang waktu, UUID, hingga data geografis lewat PostGIS.</li><li><b>Ekstensi:</b> pgvector untuk pencarian AI, pg_trgm untuk pencarian teks mirip.</li><li><b>Didukung di mana-mana:</b> Supabase, Neon, AWS RDS, Google Cloud SQL, Railway.</li></ul>
+<h2 id="cara-tercepat-menjalankannya">Cara tercepat menjalankannya</h2>
+<div data-w="compare"><script type="application/json">{"title":"Pilih cara instal","tabs":[{"label":"Docker","html":"\u003cpre>\u003ccode>docker run --name pg -e POSTGRES_PASSWORD=rahasia \\\n  -p 5432:5432 -d postgres:17\n\ndocker exec -it pg psql -U postgres\u003c/code>\u003c/pre>Paling bersih: tidak mengotori sistem, mudah dihapus."},{"label":"Windows/macOS","html":"Unduh installer dari postgresql.org/download. Paket ini menyertakan \u003cb>psql\u003c/b> (baris perintah) dan bisa ditambah \u003cb>pgAdmin\u003c/b> (tampilan grafis)."},{"label":"Cloud gratis","html":"Buat proyek di Supabase atau Neon, salin connection string, lalu sambungkan dengan psql, DBeaver, atau langsung dari kode."}]}</script></div>
+<h2 id="perintah-psql-yang-sering-dipakai">Perintah psql yang sering dipakai</h2>
+<table><thead><tr><th>Perintah</th><th>Fungsi</th></tr></thead><tbody><tr><td><code>\l</code></td><td>Daftar database</td></tr><tr><td><code>\c tokodb</code></td><td>Pindah ke database tokodb</td></tr><tr><td><code>\dt</code></td><td>Daftar tabel</td></tr><tr><td><code>\d produk</code></td><td>Struktur tabel produk</td></tr><tr><td><code>\x</code></td><td>Tampilan hasil vertikal (enak untuk baris lebar)</td></tr><tr><td><code>\q</code></td><td>Keluar</td></tr></tbody></table>
+<h2 id="membuat-database-dan-tabel-pertama">Membuat database dan tabel pertama</h2>
+<pre><code>CREATE DATABASE tokodb;
+\c tokodb
+
+CREATE TABLE produk (
+  id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nama        TEXT NOT NULL,
+  harga       INTEGER NOT NULL CHECK (harga &gt;= 0),  -- rupiah, bilangan bulat
+  stok        INTEGER NOT NULL DEFAULT 0,
+  atribut     JSONB,
+  dibuat_pada TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+INSERT INTO produk (nama, harga, stok, atribut) VALUES
+  ('Frame Titanium', 450000, 12, '{&quot;warna&quot;: &quot;hitam&quot;}'),
+  ('Lensa Blue Light', 300000, 40, '{&quot;indeks&quot;: 1.56}'),
+  ('Kain Microfiber', 15000, 200, NULL);
+
+SELECT nama, harga FROM produk WHERE harga &lt; 400000 ORDER BY harga;</code></pre>
+<h2 id="tipe-data-yang-perlu-anda-kenal">Tipe data yang perlu Anda kenal</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk kapan memakainya","items":[{"tag":"Tipe","front":"TEXT vs VARCHAR(n)","backTag":"Kapan","back":"Di PostgreSQL keduanya sama cepat. Pakai TEXT, dan tambah CHECK bila perlu batas panjang."},{"tag":"Tipe","front":"INTEGER / BIGINT / NUMERIC","backTag":"Kapan","back":"Uang rupiah: INTEGER atau BIGINT. Butuh desimal pasti (kurs, pajak): NUMERIC(12,2). Hindari REAL/FLOAT untuk uang."},{"tag":"Tipe","front":"TIMESTAMPTZ","backTag":"Kapan","back":"Hampir selalu pilih ini untuk waktu. Disimpan dalam UTC dan ditampilkan sesuai zona waktu sesi."},{"tag":"Tipe","front":"JSONB","backTag":"Kapan","back":"Atribut yang bervariasi antar baris. Bisa diindeks dan dicari. Jangan jadikan pengganti semua kolom."},{"tag":"Tipe","front":"UUID","backTag":"Kapan","back":"Id yang tidak mudah ditebak atau dibuat di banyak tempat. PostgreSQL 13+ punya gen_random_uuid()."}]}</script></div>
+<h2 id="mencari-di-dalam-jsonb">Mencari di dalam JSONB</h2>
+<pre><code>SELECT nama FROM produk WHERE atribut-&gt;&gt;'warna' = 'hitam';
+
+-- index agar pencarian JSONB cepat
+CREATE INDEX idx_produk_atribut ON produk USING GIN (atribut);</code></pre>
+<h2 id="menghubungkan-dari-kode">Menghubungkan dari kode</h2>
+<pre><code>// Node.js dengan pg
+import pg from 'pg';
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const { rows } = await pool.query(
+  'SELECT nama, harga FROM produk WHERE harga &lt; $1', [400000]
+);</code></pre>
+<div class="callout warn"><b>Pakai parameter</b><p>Selalu kirim nilai lewat parameter ($1, $2) seperti contoh di atas, bukan menggabungkan string. Ini mencegah SQL injection.</p></div>
+<div data-w="checklist"><script type="application/json">{"title":"Langkah belajar berikutnya","items":["Membuat tabel dengan PRIMARY KEY dan FOREIGN KEY.","JOIN dua atau tiga tabel.","GROUP BY dengan COUNT, SUM, AVG.","Membuat INDEX dan membaca EXPLAIN ANALYZE.","Transaksi BEGIN, COMMIT, ROLLBACK.","Backup dengan pg_dump dan restore."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tipe yang paling tepat untuk waktu pembuatan pesanan?","options":["TEXT","TIMESTAMPTZ","INTEGER"],"answer":1,"why":"TIMESTAMPTZ menyimpan waktu lengkap dengan zona waktu."},{"q":"Perintah psql untuk melihat struktur tabel produk?","options":["\\dt produk","\\d produk","SHOW produk"],"answer":1,"why":"\\d nama_tabel menampilkan kolom, tipe, dan index."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>PostgreSQL atau MySQL untuk pemula?</summary><div>Keduanya bagus. PostgreSQL unggul pada fitur lanjutan dan kepatuhan standar; MySQL sangat umum di hosting murah. Konsep SQL-nya hampir sama.</div></details>
+<details class="faq"><summary>Apakah PostgreSQL cocok untuk Laravel?</summary><div>Ya. Laravel mendukung PostgreSQL bawaan; cukup ubah DB_CONNECTION=pgsql di file .env.</div></details>
+<details class="faq"><summary>Aplikasi GUI apa yang enak dipakai?</summary><div>pgAdmin (resmi), DBeaver (gratis, multi-database), atau TablePlus.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://www.postgresql.org/docs/current/tutorial.html" rel="noopener" target="_blank">PostgreSQL Tutorial (dokumentasi resmi)</a></li><li><a href="https://www.postgresql.org/docs/current/datatype.html" rel="noopener" target="_blank">PostgreSQL: Data Types</a></li><li><a href="https://survey.stackoverflow.co/2025/technology" rel="noopener" target="_blank">Stack Overflow Developer Survey 2025: Technology</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/index-database-kenapa-query-lambat/"><img src="/artikel/index-database-kenapa-query-lambat/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Index Database: Kenapa Query Lambat dan Cara Mempercepat</span></a><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

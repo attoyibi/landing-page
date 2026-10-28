@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semantic Versioning: Arti Angka Versi 2.4.1 · Muhammad Muchson</title>
+<meta name="description" content="Arti angka versi MAJOR.MINOR.PATCH menurut Semantic Versioning, simbol ^ dan ~ di package.json, versi pre-release, changelog, dan kapan menaikkan setiap angka.">
+<meta name="keywords" content="semantic versioning, semver, package.json, changelog, rilis software">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/">
+<meta property="og:title" content="Semantic Versioning: Arti Angka Versi 2.4.1">
+<meta property="og:description" content="Arti angka versi MAJOR.MINOR.PATCH menurut Semantic Versioning, simbol ^ dan ~ di package.json, versi pre-release, changelog, dan kapan menaikkan setiap angka.">
+<meta property="og:image" content="https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Semantic Versioning: Arti Angka Versi 2.4.1">
+<meta name="twitter:description" content="Arti angka versi MAJOR.MINOR.PATCH menurut Semantic Versioning, simbol ^ dan ~ di package.json, versi pre-release, changelog, dan kapan menaikkan setiap angka.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Semantic Versioning: Arti Angka Versi 2.4.1","description":"Arti angka versi MAJOR.MINOR.PATCH menurut Semantic Versioning, simbol ^ dan ~ di package.json, versi pre-release, changelog, dan kapan menaikkan setiap angka.","image":["https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"semantic versioning, semver, package.json, changelog, rilis software","articleSection":"Rekayasa Software","wordCount":243,"mainEntityOfPage":"https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Semantic Versioning: Arti Angka Versi 2.4.1","item":"https://muchson.web.id/artikel/semantic-versioning-arti-angka-versi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah aplikasi (bukan library) perlu SemVer?","acceptedAnswer":{"@type":"Answer","text":"Tidak wajib. SemVer paling penting untuk library dan API yang dipakai orang lain. Aplikasi boleh memakai versi berbasis tanggal, misalnya 2026.10."}},{"@type":"Question","name":"Bagaimana mengotomatiskan versi?","acceptedAnswer":{"@type":"Answer","text":"Alat seperti semantic-release atau Changesets membaca pesan commit atau catatan perubahan untuk menaikkan versi dan menulis changelog otomatis."}},{"@type":"Question","name":"Apa itu Conventional Commits?","acceptedAnswer":{"@type":"Answer","text":"Konvensi pesan commit seperti feat:, fix:, dan BREAKING CHANGE yang bisa dipetakan otomatis ke MINOR, PATCH, dan MAJOR."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tiga-angka-tiga-janji">Tiga angka, tiga janji</a></li><li><a href="#versi-0-x-x-masa-percobaan">Versi 0.x.x: masa percobaan</a></li><li><a href="#pre-release-dan-metadata">Pre-release dan metadata</a></li><li><a href="#simbol-dan-di-package-json">Simbol ^ dan ~ di package.json</a></li><li><a href="#tentukan-sendiri-versi-berapa-berikutnya">Tentukan sendiri: versi berapa berikutnya?</a></li><li><a href="#changelog-catatan-untuk-manusia">Changelog: catatan untuk manusia</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Semantic Versioning: Arti Angka Versi 2.4.1</h1>
+<p class="lead">Versi 2.4.1 bukan angka acak. Dalam Semantic Versioning, tiap angka adalah janji kepada pengguna perangkat lunak Anda: apakah pembaruan ini aman dipasang begitu saja, atau berpotensi merusak kode mereka.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Semantic Versioning: Arti Angka Versi 2.4.1" fetchpriority="high"></figure>
+<h2 id="tiga-angka-tiga-janji">Tiga angka, tiga janji</h2>
+<table><thead><tr><th>Bagian</th><th>Naikkan bila</th><th>Contoh</th></tr></thead><tbody><tr><td><b>MAJOR</b> (2.x.x)</td><td>Ada perubahan yang tidak kompatibel: fungsi dihapus, parameter berubah arti.</td><td>1.9.3 → 2.0.0</td></tr><tr><td><b>MINOR</b> (x.4.x)</td><td>Fitur baru yang tetap kompatibel dengan versi sebelumnya.</td><td>2.3.7 → 2.4.0</td></tr><tr><td><b>PATCH</b> (x.x.1)</td><td>Perbaikan bug yang kompatibel.</td><td>2.4.0 → 2.4.1</td></tr></tbody></table>
+<p>Saat MINOR naik, PATCH kembali ke 0. Saat MAJOR naik, MINOR dan PATCH kembali ke 0.</p>
+<figure class="diagram"><svg viewBox="0 0 600 316" role="img" aria-label="Contoh perjalanan versi sebuah library" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><line x1="110" y1="20" x2="110" y2="292" stroke="#dde3ee" stroke-width="4"/><text x="96" y="35" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">1.0.0</text><circle cx="110" cy="30" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="31" font-size="15" font-weight="700" fill="#0f1a33">Rilis stabil pertama</text><text x="132" y="52" font-size="12.5" fill="#4a5568">API publik dinyatakan stabil.</text><text x="96" y="109" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">1.0.1</text><circle cx="110" cy="104" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="105" font-size="15" font-weight="700" fill="#0f1a33">Perbaikan bug</text><text x="132" y="126" font-size="12.5" fill="#4a5568">Format tanggal salah diperbaiki.</text><text x="96" y="183" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">1.1.0</text><circle cx="110" cy="178" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="179" font-size="15" font-weight="700" fill="#0f1a33">Fitur baru</text><text x="132" y="200" font-size="12.5" fill="#4a5568">Tambah opsi bahasa Indonesia.</text><text x="96" y="257" text-anchor="end" font-size="14" font-weight="700" fill="#1e5ab2">2.0.0</text><circle cx="110" cy="252" r="9" fill="#fff" stroke="#1e5ab2" stroke-width="4"/><text x="132" y="253" font-size="15" font-weight="700" fill="#0f1a33">Perubahan besar</text><text x="132" y="274" font-size="12.5" fill="#4a5568">Fungsi lama dihapus, nama parameter diganti.</text></svg></figure>
+<h2 id="versi-0-x-x-masa-percobaan">Versi 0.x.x: masa percobaan</h2>
+<p>Spesifikasi SemVer menyatakan versi <b>0.y.z</b> untuk pengembangan awal: apa pun boleh berubah kapan saja. Versi <b>1.0.0</b> menandai API publik yang stabil. Banyak proyek terlalu lama di 0.x karena takut "berjanji"; padahal bila sudah dipakai orang di produksi, sebaiknya sudah 1.0.0.</p>
+<h2 id="pre-release-dan-metadata">Pre-release dan metadata</h2>
+<pre><code>2.0.0-alpha.1   # versi uji awal
+2.0.0-beta.3    # fitur lengkap, masih diuji
+2.0.0-rc.1      # release candidate
+2.0.0           # rilis final
+2.0.0+build.57  # metadata build, tidak memengaruhi urutan versi</code></pre>
+<h2 id="simbol-dan-di-package-json">Simbol ^ dan ~ di package.json</h2>
+<p>npm dan banyak manajer paket lain memakai SemVer untuk memutuskan versi mana yang boleh dipasang otomatis.</p>
+<table><thead><tr><th>Penulisan</th><th>Boleh memasang</th><th>Tidak boleh</th></tr></thead><tbody><tr><td><code>"4.17.21"</code></td><td>Persis 4.17.21</td><td>Versi lain</td></tr><tr><td><code>"~4.17.21"</code></td><td>4.17.x (patch saja)</td><td>4.18.0</td></tr><tr><td><code>"^4.17.21"</code></td><td>4.x.x selama ≥ 4.17.21</td><td>5.0.0</td></tr><tr><td><code>"^0.3.2"</code></td><td>0.3.x saja</td><td>0.4.0 (pada 0.x, minor dianggap major)</td></tr></tbody></table>
+<div class="callout info"><b>Selalu commit lockfile</b><p>Lockfile (package-lock.json, pnpm-lock.yaml, composer.lock) mencatat versi persis yang terpasang. Commit lockfile agar semua orang dan server CI memasang versi yang sama.</p></div>
+<h2 id="tentukan-sendiri-versi-berapa-berikutnya">Tentukan sendiri: versi berapa berikutnya?</h2>
+<div data-w="cards"><script type="application/json">{"title":"Versi sekarang 3.2.5. Ketuk untuk jawabannya","items":[{"tag":"Perubahan","front":"Memperbaiki typo pada pesan error.","backTag":"Versi","back":"3.2.6 (PATCH)"},{"tag":"Perubahan","front":"Menambah fungsi exportCsv() baru, fungsi lama tetap.","backTag":"Versi","back":"3.3.0 (MINOR)"},{"tag":"Perubahan","front":"Mengganti nama fungsi getUser() menjadi fetchUser() tanpa alias.","backTag":"Versi","back":"4.0.0 (MAJOR), karena kode pengguna yang memanggil getUser() akan rusak."},{"tag":"Perubahan","front":"Menandai fungsi lama sebagai deprecated, tapi masih berfungsi.","backTag":"Versi","back":"3.3.0 (MINOR). Penghapusannya nanti di versi MAJOR berikutnya."}]}</script></div>
+<h2 id="changelog-catatan-untuk-manusia">Changelog: catatan untuk manusia</h2>
+<p>Angka versi memberi tahu <i>seberapa besar</i> perubahan; changelog memberi tahu <i>apa</i> yang berubah. Format populer dari keepachangelog.com mengelompokkan perubahan: Added, Changed, Deprecated, Removed, Fixed, Security.</p>
+<pre><code>## [2.4.0] - 2026-10-28
+### Added
+- Opsi bahasa Indonesia pada format tanggal.
+### Fixed
+- Pembulatan Rupiah salah untuk nilai negatif.
+
+## [2.3.1] - 2026-09-12
+### Security
+- Perbarui dependensi yang memiliki celah keamanan.</code></pre>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Dengan \"^1.4.0\", versi mana yang boleh terpasang otomatis?","options":["2.0.0","1.9.2","1.3.9"],"answer":1,"why":"Caret mengizinkan minor dan patch yang lebih baru di major yang sama."},{"q":"Menghapus sebuah parameter wajib dari fungsi publik membutuhkan kenaikan...","options":["PATCH","MINOR","MAJOR"],"answer":2,"why":"Kode pengguna yang lama bisa rusak, jadi tidak kompatibel."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah aplikasi (bukan library) perlu SemVer?</summary><div>Tidak wajib. SemVer paling penting untuk library dan API yang dipakai orang lain. Aplikasi boleh memakai versi berbasis tanggal, misalnya 2026.10.</div></details>
+<details class="faq"><summary>Bagaimana mengotomatiskan versi?</summary><div>Alat seperti semantic-release atau Changesets membaca pesan commit atau catatan perubahan untuk menaikkan versi dan menulis changelog otomatis.</div></details>
+<details class="faq"><summary>Apa itu Conventional Commits?</summary><div>Konvensi pesan commit seperti feat:, fix:, dan BREAKING CHANGE yang bisa dipetakan otomatis ke MINOR, PATCH, dan MAJOR.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://semver.org/" rel="noopener" target="_blank">Semantic Versioning 2.0.0 (spesifikasi resmi)</a></li><li><a href="https://docs.npmjs.com/about-semantic-versioning" rel="noopener" target="_blank">npm Docs: About semantic versioning</a></li><li><a href="https://keepachangelog.com/en/1.1.0/" rel="noopener" target="_blank">Keep a Changelog</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

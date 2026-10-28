@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</title>
+<meta name="description" content="Prinsip clean code dengan contoh sebelum dan sesudah: nama yang jelas, fungsi kecil, komentar seperlunya, hindari duplikasi, dan cara merapikan kode lama.">
+<meta name="keywords" content="clean code, kode bersih, refactoring, best practice, software engineering">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/">
+<meta property="og:title" content="Clean Code: Prinsip Menulis Kode yang Mudah Dibaca">
+<meta property="og:description" content="Prinsip clean code dengan contoh sebelum dan sesudah: nama yang jelas, fungsi kecil, komentar seperlunya, hindari duplikasi, dan cara merapikan kode lama.">
+<meta property="og:image" content="https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Clean Code: Prinsip Menulis Kode yang Mudah Dibaca">
+<meta name="twitter:description" content="Prinsip clean code dengan contoh sebelum dan sesudah: nama yang jelas, fungsi kecil, komentar seperlunya, hindari duplikasi, dan cara merapikan kode lama.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Clean Code: Prinsip Menulis Kode yang Mudah Dibaca","description":"Prinsip clean code dengan contoh sebelum dan sesudah: nama yang jelas, fungsi kecil, komentar seperlunya, hindari duplikasi, dan cara merapikan kode lama.","image":["https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"clean code, kode bersih, refactoring, best practice, software engineering","articleSection":"Rekayasa Software","wordCount":424,"mainEntityOfPage":"https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Clean Code: Prinsip Menulis Kode yang Mudah Dibaca","item":"https://muchson.web.id/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah clean code membuat program lebih lambat?","acceptedAnswer":{"@type":"Answer","text":"Hampir tidak pernah berarti. Fungsi kecil dan nama panjang tidak memengaruhi kecepatan secara nyata pada bahasa modern. Optimasi dilakukan setelah ada pengukuran."}},{"@type":"Question","name":"Buku apa yang sebaiknya dibaca?","acceptedAnswer":{"@type":"Answer","text":"Clean Code (Robert C. Martin) dan Refactoring (Martin Fowler) adalah dua rujukan klasik. Baca dengan kritis; tidak semua aturannya cocok untuk semua bahasa."}},{"@type":"Question","name":"Bagaimana dengan kode lama yang sudah berantakan?","acceptedAnswer":{"@type":"Answer","text":"Jangan menulis ulang semuanya. Rapikan bagian yang sedang Anda ubah, dan tambahkan tes sebelum mengubah perilaku."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-kode-yang-jalan-belum-cukup">Mengapa kode yang &quot;jalan&quot; belum cukup</a></li><li><a href="#1-nama-yang-menjelaskan-maksud">1. Nama yang menjelaskan maksud</a></li><li><a href="#2-fungsi-kecil-yang-melakukan-satu-hal">2. Fungsi kecil yang melakukan satu hal</a></li><li><a href="#3-keluar-lebih-awal-kurangi-sarang">3. Keluar lebih awal, kurangi sarang</a></li><li><a href="#4-komentar-untuk-mengapa-bukan-apa">4. Komentar untuk &quot;mengapa&quot;, bukan &quot;apa&quot;</a></li><li><a href="#5-jangan-ulangi-diri-sendiri-tetapi-jangan-terburu-buru">5. Jangan ulangi diri sendiri, tetapi jangan terburu-buru</a></li><li><a href="#contoh-lengkap-merapikan-satu-fungsi">Contoh lengkap: merapikan satu fungsi</a></li><li><a href="#cara-menerapkan-di-tim-tanpa-drama">Cara menerapkan di tim tanpa drama</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</h1>
+<p class="lead">Kode dibaca jauh lebih sering daripada ditulis. Anda sendiri, enam bulan dari sekarang, adalah pembaca yang paling sering lupa konteks. Clean code bukan soal gaya yang indah, melainkan soal mengurangi waktu yang dibutuhkan orang lain (dan Anda) untuk memahami dan mengubah kode dengan aman.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Clean Code: Prinsip Menulis Kode yang Mudah Dibaca" fetchpriority="high"></figure>
+<h2 id="mengapa-kode-yang-jalan-belum-cukup">Mengapa kode yang "jalan" belum cukup</h2>
+<p>Program yang berjalan hari ini akan diubah besok: fitur baru, bug, aturan bisnis berubah. Bila kodenya sulit dibaca, setiap perubahan menjadi mahal dan berisiko. Itulah sebabnya tim profesional menilai kode dari dua sisi: <b>benar</b> dan <b>mudah diubah</b>.</p>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Lingkaran kode berantakan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M289.95828026329735 76.76596467718915 Q322.86174265592996 73.47823391906641 331.8998726319136 107.23831522525397" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M348.4178893949067 162.7712862362522 Q361.71243620934376 193.04837387624883 332.39762665238845 212.07658514012257" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M284.6869805962839 244.94678440936949 Q260 266.94678440936946 232.84432134408775 244.94678440936949" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M186.8395036932059 209.7287137637478 Q158.28756379065624 193.04837387624883 170.81924095068769 160.42341485987745" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M190.0973460523062 105.78725091344138 Q197.13825734407004 73.47823391906643 232.03893842092248 75.31490036537656" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="54" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Kode sulit</tspan><tspan x="260" dy="15">dibaca</tspan></text><rect x="297.8609342109911" y="105.55321559063051" width="124" height="54" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="359.8609342109911" y="123.55321559063051" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="359.8609342109911" dy="0">Perubahan jadi</tspan><tspan x="359.8609342109911" dy="15">lambat</tspan></text><rect x="259.71745149070966" y="222.94678440936949" width="124" height="54" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="321.71745149070966" y="240.94678440936949" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="321.71745149070966" dy="0">Tambal cepat</tspan><tspan x="321.71745149070966" dy="15">di sana-sini</tspan></text><rect x="136.28254850929034" y="222.94678440936949" width="124" height="54" rx="10" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><text x="198.28254850929034" y="240.94678440936949" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="198.28254850929034" dy="0">Bug baru</tspan><tspan x="198.28254850929034" dy="15">muncul</tspan></text><rect x="98.13906578900887" y="105.55321559063054" width="124" height="54" rx="10" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><text x="160.13906578900887" y="123.55321559063054" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="160.13906578900887" dy="0">Kode makin</tspan><tspan x="160.13906578900887" dy="15">sulit dibaca</tspan></text></svg><figcaption>Merapikan sedikit setiap kali menyentuh kode memutus lingkaran ini.</figcaption></figure>
+<h2 id="1-nama-yang-menjelaskan-maksud">1. Nama yang menjelaskan maksud</h2>
+<p>Nama variabel dan fungsi adalah dokumentasi paling murah. Nama yang baik menjawab: <i>ini apa, untuk apa</i>.</p>
+<pre><code># Sebelum
+d = 7
+def calc(a, b):
+    return a * b * 0.11
+
+# Sesudah
+BATAS_HARI_RETUR = 7
+TARIF_PPN = 0.11
+
+def hitung_ppn(harga_satuan, jumlah):
+    return harga_satuan * jumlah * TARIF_PPN</code></pre>
+<ul><li>Gunakan kata benda untuk data (<code>pesanan</code>, <code>total_bayar</code>) dan kata kerja untuk fungsi (<code>kirim_email</code>, <code>hitung_diskon</code>).</li><li>Hindari singkatan pribadi seperti <code>tmp2</code>, <code>dt</code>, <code>flg</code>.</li><li>Angka "ajaib" seperti 0.11 atau 7 diberi nama konstanta.</li><li>Boolean dinamai seperti pertanyaan: <code>sudah_bayar</code>, <code>is_aktif</code>.</li></ul>
+<h2 id="2-fungsi-kecil-yang-melakukan-satu-hal">2. Fungsi kecil yang melakukan satu hal</h2>
+<p>Fungsi yang panjang biasanya mengerjakan beberapa hal sekaligus: memvalidasi, menghitung, menyimpan, mengirim notifikasi. Pecah menjadi fungsi-fungsi dengan nama yang menjelaskan langkahnya.</p>
+<pre><code>def proses_pesanan(pesanan):
+    validasi(pesanan)
+    total = hitung_total(pesanan)
+    simpan(pesanan, total)
+    kirim_konfirmasi(pesanan.email, total)</code></pre>
+<p>Fungsi utama di atas bisa dibaca seperti daftar langkah. Detail tiap langkah ada di fungsinya masing-masing.</p>
+<h2 id="3-keluar-lebih-awal-kurangi-sarang">3. Keluar lebih awal, kurangi sarang</h2>
+<pre><code># Sebelum: bersarang tiga tingkat
+def bisa_checkout(user, keranjang):
+    if user:
+        if user.aktif:
+            if keranjang:
+                return True
+    return False
+
+# Sesudah: guard clause
+def bisa_checkout(user, keranjang):
+    if not user or not user.aktif:
+        return False
+    return len(keranjang) &gt; 0</code></pre>
+<h2 id="4-komentar-untuk-mengapa-bukan-apa">4. Komentar untuk "mengapa", bukan "apa"</h2>
+<p>Kode yang jelas sudah menjelaskan <i>apa</i> yang dilakukan. Komentar paling berharga menjelaskan <i>mengapa</i>: alasan bisnis, keputusan yang tidak terlihat, atau jebakan yang pernah terjadi.</p>
+<pre><code># Buruk: mengulang kode
+i += 1  # tambah i dengan 1
+
+# Baik: menjelaskan alasan
+# Bank mitra menolak transfer di atas 50 juta per transaksi,
+# jadi pembayaran besar dipecah.
+for bagian in pecah_nominal(total, 50_000_000):
+    transfer(bagian)</code></pre>
+<h2 id="5-jangan-ulangi-diri-sendiri-tetapi-jangan-terburu-buru">5. Jangan ulangi diri sendiri, tetapi jangan terburu-buru</h2>
+<p>Prinsip DRY (<i>Don't Repeat Yourself</i>) mengajak kita menyatukan logika yang sama di satu tempat. Namun dua potong kode yang <b>kebetulan</b> mirip belum tentu logika yang sama. Banyak engineer memakai aturan praktis "tiga kali": baru diekstrak menjadi fungsi bersama ketika pola yang sama muncul ketiga kalinya.</p>
+<h2 id="contoh-lengkap-merapikan-satu-fungsi">Contoh lengkap: merapikan satu fungsi</h2>
+<div data-w="compare"><script type="application/json">{"title":"Sebelum dan sesudah","tabs":[{"label":"Sebelum","html":"\u003cpre>\u003ccode>def f(l):\n    t = 0\n    for x in l:\n        if x[2] == 1:\n            t = t + x[1] * x[0]\n    if t &gt; 500000:\n        t = t - t * 0.1\n    return t\u003c/code>\u003c/pre>Apa itu x[2]? Mengapa 500000? Pembaca harus menebak."},{"label":"Sesudah","html":"\u003cpre>\u003ccode>BATAS_DISKON = 500_000\nDISKON = 0.10\n\ndef total_belanja(item_list):\n    subtotal = sum(i.harga * i.jumlah\n                   for i in item_list if i.dipilih)\n    if subtotal &gt; BATAS_DISKON:\n        subtotal *= 1 - DISKON\n    return subtotal\u003c/code>\u003c/pre>Nama dan konstanta menjelaskan aturan bisnisnya."}]}</script></div>
+<h2 id="cara-menerapkan-di-tim-tanpa-drama">Cara menerapkan di tim tanpa drama</h2>
+<ol><li><b>Aturan pramuka:</b> tinggalkan kode sedikit lebih rapi daripada saat Anda menemukannya. Cukup satu nama yang diperbaiki.</li><li><b>Otomatiskan gaya:</b> pakai formatter (Prettier, Black, Laravel Pint) dan linter (ESLint, Ruff) agar debat spasi dan tanda kutip hilang.</li><li><b>Sepakati sedikit aturan tertulis</b> di README atau CONTRIBUTING, bukan puluhan.</li><li><b>Refactor dengan tes.</b> Tanpa tes, merapikan kode bisa diam-diam merusak perilaku.</li></ol>
+<div data-w="checklist"><script type="application/json">{"title":"Periksa kode Anda sebelum commit","items":["Nama variabel dan fungsi bisa dipahami tanpa membaca isinya.","Tidak ada angka ajaib tanpa nama.","Fungsi saya kurang dari sekitar 30 baris, atau punya alasan jelas.","Sarang if tidak lebih dari dua tingkat.","Komentar menjelaskan alasan, bukan mengulang kode.","Kode mati dan console.log sisa debug sudah dihapus.","Formatter dan linter sudah dijalankan."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Komentar mana yang paling berguna?","options":["# loop setiap item","# API pajak membulatkan ke bawah, jadi kita bulatkan sendiri","# variabel total"],"answer":1,"why":"Komentar terbaik menjelaskan alasan yang tidak terlihat dari kode."},{"q":"Kapan sebaiknya mengekstrak kode yang mirip menjadi satu fungsi?","options":["Begitu ada dua yang mirip","Ketika jelas logikanya sama, sering kali saat muncul ketiga kalinya","Tidak perlu pernah"],"answer":1,"why":"Kemiripan kebetulan bisa berpisah arah di masa depan."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah clean code membuat program lebih lambat?</summary><div>Hampir tidak pernah berarti. Fungsi kecil dan nama panjang tidak memengaruhi kecepatan secara nyata pada bahasa modern. Optimasi dilakukan setelah ada pengukuran.</div></details>
+<details class="faq"><summary>Buku apa yang sebaiknya dibaca?</summary><div>Clean Code (Robert C. Martin) dan Refactoring (Martin Fowler) adalah dua rujukan klasik. Baca dengan kritis; tidak semua aturannya cocok untuk semua bahasa.</div></details>
+<details class="faq"><summary>Bagaimana dengan kode lama yang sudah berantakan?</summary><div>Jangan menulis ulang semuanya. Rapikan bagian yang sedang Anda ubah, dan tambahkan tes sebelum mengubah perilaku.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://refactoring.com/catalog/" rel="noopener" target="_blank">Martin Fowler: Refactoring (katalog teknik refactoring)</a></li><li><a href="https://google.github.io/eng-practices/review/reviewer/looking-for.html" rel="noopener" target="_blank">Google Engineering Practices: What to look for in a code review</a></li><li><a href="https://peps.python.org/pep-0008/" rel="noopener" target="_blank">PEP 8: Style Guide for Python Code</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/technical-debt-utang-teknis-dan-cara-mengelola/"><img src="/artikel/technical-debt-utang-teknis-dan-cara-mengelola/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Technical Debt: Utang Teknis dan Cara Mengelolanya</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

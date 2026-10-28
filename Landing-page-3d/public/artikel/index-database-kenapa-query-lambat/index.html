@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Index Database: Kenapa Query Lambat dan Cara Mempercepat</title>
+<meta name="description" content="Cara kerja index database dengan analogi buku, kapan index membantu atau merugikan, index gabungan, membaca EXPLAIN ANALYZE, dan memperbaiki query.">
+<meta name="keywords" content="index database, query lambat, EXPLAIN ANALYZE, optimasi SQL, PostgreSQL">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/index-database-kenapa-query-lambat/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/index-database-kenapa-query-lambat/">
+<meta property="og:title" content="Index Database: Kenapa Query Lambat dan Cara Mempercepat">
+<meta property="og:description" content="Cara kerja index database dengan analogi buku, kapan index membantu atau merugikan, index gabungan, membaca EXPLAIN ANALYZE, dan memperbaiki query.">
+<meta property="og:image" content="https://muchson.web.id/artikel/index-database-kenapa-query-lambat/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Index Database: Kenapa Query Lambat dan Cara Mempercepat">
+<meta name="twitter:description" content="Cara kerja index database dengan analogi buku, kapan index membantu atau merugikan, index gabungan, membaca EXPLAIN ANALYZE, dan memperbaiki query.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/index-database-kenapa-query-lambat/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Index Database: Kenapa Query Lambat dan Cara Mempercepat","description":"Cara kerja index database dengan analogi buku, kapan index membantu atau merugikan, index gabungan, membaca EXPLAIN ANALYZE, dan memperbaiki query.","image":["https://muchson.web.id/artikel/index-database-kenapa-query-lambat/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"index database, query lambat, EXPLAIN ANALYZE, optimasi SQL, PostgreSQL","articleSection":"Rekayasa Software","wordCount":322,"mainEntityOfPage":"https://muchson.web.id/artikel/index-database-kenapa-query-lambat/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Index Database: Kenapa Query Lambat dan Cara Mempercepat","item":"https://muchson.web.id/artikel/index-database-kenapa-query-lambat/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah primary key otomatis ber-index?","acceptedAnswer":{"@type":"Answer","text":"Ya, di PostgreSQL dan MySQL primary key dan kolom UNIQUE otomatis memiliki index."}},{"@type":"Question","name":"Apakah foreign key otomatis ber-index?","acceptedAnswer":{"@type":"Answer","text":"Di PostgreSQL tidak. Index kolom foreign key yang sering dipakai JOIN atau ON DELETE, karena sering kali dibutuhkan."}},{"@type":"Question","name":"Berapa banyak index yang wajar?","acceptedAnswer":{"@type":"Answer","text":"Tidak ada angka pasti. Buat index untuk pola query nyata, lalu pantau index yang tidak pernah dipakai (pg_stat_user_indexes)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#analogi-indeks-di-belakang-buku">Analogi: indeks di belakang buku</a></li><li><a href="#membuat-index">Membuat index</a></li><li><a href="#membaca-explain-analyze">Membaca EXPLAIN ANALYZE</a></li><li><a href="#index-gabungan-dan-urutan-kolom">Index gabungan dan urutan kolom</a></li><li><a href="#kapan-index-tidak-membantu-atau-malah-merugikan">Kapan index tidak membantu atau malah merugikan</a></li><li><a href="#langkah-memperbaiki-query-lambat">Langkah memperbaiki query lambat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Index Database: Kenapa Query Lambat dan Cara Mempercepat</h1>
+<p class="lead">Aplikasi yang tadinya cepat tiba-tiba lambat setelah datanya mencapai ratusan ribu baris. Dalam banyak kasus, penyebabnya satu: database terpaksa membaca seluruh tabel karena tidak ada index yang cocok. Menambahkan satu baris CREATE INDEX bisa mengubah waktu query dari detik menjadi milidetik.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Index Database: Kenapa Query Lambat dan Cara Mempercepat" fetchpriority="high"></figure>
+<h2 id="analogi-indeks-di-belakang-buku">Analogi: indeks di belakang buku</h2>
+<p>Mencari kata "fotosintesis" di buku biologi 500 halaman tanpa indeks berarti membaca halaman demi halaman. Dengan indeks di belakang buku, Anda langsung tahu: halaman 212. Index database bekerja sama: struktur terpisah yang tersusun urut dan menunjuk ke lokasi baris.</p>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Tanpa dan dengan index" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="178" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Sequential scan</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Baca semua baris</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Waktu tumbuh sebanding jumlah data: O(n)</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Wajar untuk tabel kecil</text><rect x="330" y="6" width="300" height="178" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Index scan (B-tree)</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Langsung ke baris yang cocok</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Waktu tumbuh sangat lambat: O(log n)</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Butuh ruang dan perawatan</text></svg></figure>
+<div data-w="calc"><script type="application/json">{"title":"Berapa langkah pencarian?","desc":"Perkiraan jumlah perbandingan: tanpa index (rata-rata separuh tabel) vs pencarian berurutan seperti B-tree (sekitar log₂ n).","inputs":[{"id":"n","label":"Jumlah baris","value":1000000,"min":1000,"max":100000000,"step":1000}],"outputs":[{"label":"Tanpa index (rata-rata)","expr":"n / 2","fmt":"num","unit":" baris dibaca"},{"label":"Dengan pencarian terurut","expr":"ceil(log2(n))","fmt":"num","unit":" langkah","big":true,"note":"B-tree sungguhan lebih efisien lagi karena satu simpulnya menampung banyak kunci."}]}</script></div>
+<h2 id="membuat-index">Membuat index</h2>
+<pre><code>-- query yang sering dipakai
+SELECT * FROM pesanan WHERE email_pelanggan = 'ani@contoh.id';
+
+-- index untuk kolom di WHERE
+CREATE INDEX idx_pesanan_email ON pesanan (email_pelanggan);
+
+-- di produksi PostgreSQL, hindari mengunci tabel saat membuat index
+CREATE INDEX CONCURRENTLY idx_pesanan_email ON pesanan (email_pelanggan);</code></pre>
+<h2 id="membaca-explain-analyze">Membaca EXPLAIN ANALYZE</h2>
+<pre><code>EXPLAIN ANALYZE
+SELECT * FROM pesanan WHERE email_pelanggan = 'ani@contoh.id';
+
+-- Sebelum index:
+Seq Scan on pesanan  (actual time=0.02..412.3 rows=3 loops=1)
+  Filter: (email_pelanggan = 'ani@contoh.id')
+  Rows Removed by Filter: 1999997
+
+-- Sesudah index:
+Index Scan using idx_pesanan_email on pesanan  (actual time=0.03..0.05 rows=3)</code></pre>
+<ul><li><b>Seq Scan</b> pada tabel besar dengan banyak "Rows Removed by Filter" adalah tanda index mungkin dibutuhkan.</li><li><b>actual time</b> menunjukkan waktu nyata dalam milidetik.</li><li>Bandingkan <b>rows</b> perkiraan dan aktual; selisih jauh bisa berarti statistik usang (jalankan ANALYZE).</li></ul>
+<h2 id="index-gabungan-dan-urutan-kolom">Index gabungan dan urutan kolom</h2>
+<p>Index pada <code>(status, dibuat_pada)</code> membantu query yang memfilter <code>status</code>, atau <code>status</code> dan <code>dibuat_pada</code> bersama. Ia kurang membantu query yang hanya memfilter <code>dibuat_pada</code>. Seperti buku telepon yang urut nama belakang lalu nama depan: mudah mencari "Santoso, Budi", sulit mencari semua "Budi".</p>
+<pre><code>CREATE INDEX idx_pesanan_status_tanggal ON pesanan (status, dibuat_pada DESC);
+
+-- terbantu
+SELECT * FROM pesanan WHERE status = 'baru' ORDER BY dibuat_pada DESC LIMIT 20;</code></pre>
+<h2 id="kapan-index-tidak-membantu-atau-malah-merugikan">Kapan index tidak membantu atau malah merugikan</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk penjelasannya","items":[{"tag":"Kasus","front":"WHERE lower(email) = ... padahal index pada email.","backTag":"Kenapa","back":"Fungsi pada kolom membuat index biasa tidak terpakai. Buat expression index: CREATE INDEX ON t (lower(email))."},{"tag":"Kasus","front":"WHERE nama LIKE '%sari%'","backTag":"Kenapa","back":"Wildcard di depan tidak bisa memakai B-tree. Pakai index trigram (pg_trgm) atau full-text search."},{"tag":"Kasus","front":"Kolom jenis_kelamin dengan dua nilai.","backTag":"Kenapa","back":"Selektivitas rendah; database sering memilih seq scan karena separuh tabel tetap harus dibaca."},{"tag":"Kasus","front":"Tabel log yang ditulis ribuan kali per detik dengan 10 index.","backTag":"Kenapa","back":"Setiap INSERT juga memperbarui semua index. Terlalu banyak index memperlambat penulisan."}]}</script></div>
+<h2 id="langkah-memperbaiki-query-lambat">Langkah memperbaiki query lambat</h2>
+<ol><li>Temukan query paling lambat atau paling sering (pg_stat_statements, slow query log).</li><li>Jalankan EXPLAIN ANALYZE dengan parameter nyata.</li><li>Cari Seq Scan besar, sort mahal, atau loop bersarang dengan banyak baris.</li><li>Tambahkan index yang sesuai pola WHERE, JOIN, dan ORDER BY.</li><li>Ukur lagi. Hapus index yang tidak pernah dipakai.</li><li>Periksa juga masalah N+1 di kode aplikasi (ORM memanggil query di dalam loop).</li></ol>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Index pada (kota, tanggal) paling membantu untuk...","options":["WHERE tanggal = '2026-10-01'","WHERE kota = 'Malang' AND tanggal > '2026-10-01'","Semua query tabel itu"],"answer":1,"why":"Kolom paling kiri index harus dipakai dalam filter."},{"q":"Kekurangan menambah banyak index adalah...","options":["SELECT jadi lambat","INSERT/UPDATE jadi lebih lambat dan butuh ruang","Data hilang"],"answer":1,"why":"Setiap penulisan harus memperbarui setiap index."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah primary key otomatis ber-index?</summary><div>Ya, di PostgreSQL dan MySQL primary key dan kolom UNIQUE otomatis memiliki index.</div></details>
+<details class="faq"><summary>Apakah foreign key otomatis ber-index?</summary><div>Di PostgreSQL tidak. Index kolom foreign key yang sering dipakai JOIN atau ON DELETE, karena sering kali dibutuhkan.</div></details>
+<details class="faq"><summary>Berapa banyak index yang wajar?</summary><div>Tidak ada angka pasti. Buat index untuk pola query nyata, lalu pantau index yang tidak pernah dipakai (pg_stat_user_indexes).</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://www.postgresql.org/docs/current/indexes.html" rel="noopener" target="_blank">PostgreSQL Docs: Indexes</a></li><li><a href="https://www.postgresql.org/docs/current/using-explain.html" rel="noopener" target="_blank">PostgreSQL Docs: Using EXPLAIN</a></li><li><a href="https://use-the-index-luke.com/" rel="noopener" target="_blank">Use The Index, Luke! (Markus Winand)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/"><img src="/artikel/postgresql-untuk-pemula-instal-dan-query-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>PostgreSQL untuk Pemula: Instal sampai Query Pertama</span></a><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

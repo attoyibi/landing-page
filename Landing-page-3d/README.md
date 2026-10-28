@@ -57,7 +57,7 @@ Jika ada yang kurang di `<head>`, `npm run build` berhenti dan menyebut file ser
 
 Opsional: `<meta name="cover-credit" content="Foto: Nama, lisensi">` bila memakai foto yang butuh atribusi.
 
-Kategori yang dipakai sekarang: **Mata & Kacamata**, **AI untuk Semua**, **Coding & Algoritma**, **Teknologi Sehari-hari**, **Belajar & Produktivitas**, **Karier & Freelance**, **Coding untuk Anak**, **Pendidikan Anak**. Kategori baru muncul otomatis sebagai filter bila dipakai (warna dan ikon sampulnya diatur di `PALETTE` dan `MOTIF` pada `artikel-src/lib.mjs`).
+Kategori yang dipakai sekarang: **Mata & Kacamata**, **AI untuk Semua**, **Coding & Algoritma**, **Teknologi Sehari-hari**, **Belajar & Produktivitas**, **Karier & Freelance**, **Coding untuk Anak**, **Pendidikan Anak**, **Rekayasa Software**, **Desain Pembelajaran**, **UX & Produk**, **Customer Success**, **Green IT**. Kategori baru muncul otomatis sebagai filter bila dipakai (warna dan ikon sampulnya diatur di `PALETTE` dan `MOTIF` pada `artikel-src/lib.mjs`).
 
 ### Gambar sampul
 

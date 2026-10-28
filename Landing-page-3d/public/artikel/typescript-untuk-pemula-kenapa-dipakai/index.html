@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya</title>
+<meta name="description" content="TypeScript untuk developer JavaScript: tipe dasar, interface, union, generics sederhana, bug yang dicegah, cara mulai di proyek lama, dan kesalahan umum.">
+<meta name="keywords" content="TypeScript, JavaScript, tipe data, frontend, Node.js">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/">
+<meta property="og:title" content="TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya">
+<meta property="og:description" content="TypeScript untuk developer JavaScript: tipe dasar, interface, union, generics sederhana, bug yang dicegah, cara mulai di proyek lama, dan kesalahan umum.">
+<meta property="og:image" content="https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya">
+<meta name="twitter:description" content="TypeScript untuk developer JavaScript: tipe dasar, interface, union, generics sederhana, bug yang dicegah, cara mulai di proyek lama, dan kesalahan umum.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya","description":"TypeScript untuk developer JavaScript: tipe dasar, interface, union, generics sederhana, bug yang dicegah, cara mulai di proyek lama, dan kesalahan umum.","image":["https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"TypeScript, JavaScript, tipe data, frontend, Node.js","articleSection":"Rekayasa Software","wordCount":227,"mainEntityOfPage":"https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya","item":"https://muchson.web.id/artikel/typescript-untuk-pemula-kenapa-dipakai/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah TypeScript memperlambat aplikasi?","acceptedAnswer":{"@type":"Answer","text":"Tidak saat berjalan, karena yang dijalankan tetap JavaScript. Yang bertambah hanya sedikit waktu kompilasi saat pengembangan."}},{"@type":"Question","name":"Interface atau type?","acceptedAnswer":{"@type":"Answer","text":"Keduanya mirip untuk bentuk objek. Banyak tim memakai interface untuk objek dan type untuk union atau kombinasi. Yang penting konsisten."}},{"@type":"Question","name":"Apakah Node.js bisa menjalankan TypeScript langsung?","acceptedAnswer":{"@type":"Answer","text":"Versi Node.js terbaru mendukung menjalankan file .ts dengan menghapus tipe (type stripping). Untuk proyek besar, tetap jalankan tsc untuk pemeriksaan tipe."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#bug-yang-dicegah-typescript">Bug yang dicegah TypeScript</a></li><li><a href="#tipe-dasar">Tipe dasar</a></li><li><a href="#interface-dan-type-untuk-bentuk-objek">Interface dan type untuk bentuk objek</a></li><li><a href="#union-dan-literal-membatasi-pilihan">Union dan literal: membatasi pilihan</a></li><li><a href="#generics-tipe-yang-bisa-diisi">Generics: tipe yang bisa diisi</a></li><li><a href="#manfaat-yang-paling-terasa">Manfaat yang paling terasa</a></li><li><a href="#cara-mulai-di-proyek-javascript-lama">Cara mulai di proyek JavaScript lama</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya</h1>
+<p class="lead">JavaScript membiarkan Anda mengirim angka ke fungsi yang mengharapkan teks, lalu baru error saat aplikasi dipakai pengguna. TypeScript menambahkan tipe ke JavaScript sehingga banyak kesalahan seperti itu tertangkap di editor, sebelum kode dijalankan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="TypeScript untuk Pemula: Kenapa Banyak Tim Memakainya" fetchpriority="high"></figure>
+<h2 id="bug-yang-dicegah-typescript">Bug yang dicegah TypeScript</h2>
+<pre><code>// JavaScript: lolos, tapi hasilnya salah
+function totalHarga(harga, jumlah) { return harga * jumlah; }
+totalHarga('45000', 2);        // 90000? hampir kebetulan
+totalHarga({ harga: 45000 }, 2); // NaN, ketahuan belakangan
+
+// TypeScript: ditandai merah di editor
+function totalHarga(harga: number, jumlah: number): number {
+  return harga * jumlah;
+}
+totalHarga('45000', 2);
+// Error: Argument of type 'string' is not assignable to parameter of type 'number'.</code></pre>
+<p>Kode TypeScript dikompilasi menjadi JavaScript biasa. Tipe hanya ada saat pengembangan; di browser dan Node.js yang berjalan tetap JavaScript.</p>
+<h2 id="tipe-dasar">Tipe dasar</h2>
+<pre><code>let nama: string = 'Ani';
+let umur: number = 21;
+let aktif: boolean = true;
+let nilai: number[] = [80, 92];
+let kosong: string | null = null;    // union: string ATAU null
+
+// TypeScript sering bisa menebak sendiri (inference)
+let kota = 'Malang';   // otomatis string</code></pre>
+<h2 id="interface-dan-type-untuk-bentuk-objek">Interface dan type untuk bentuk objek</h2>
+<pre><code>interface Produk {
+  id: number;
+  nama: string;
+  harga: number;
+  diskon?: number;        // opsional
+  readonly sku: string;   // tidak boleh diubah
+}
+
+function tampilkan(p: Produk) {
+  return `${p.nama}: Rp${p.harga - (p.diskon ?? 0)}`;
+}
+
+tampilkan({ id: 1, nama: 'Frame', harga: 450000, sku: 'FR-01' });   // ok
+tampilkan({ id: 1, nama: 'Frame', sku: 'FR-01' });
+// Error: Property 'harga' is missing</code></pre>
+<h2 id="union-dan-literal-membatasi-pilihan">Union dan literal: membatasi pilihan</h2>
+<pre><code>type StatusPesanan = 'baru' | 'dibayar' | 'dikirim' | 'selesai';
+
+function label(s: StatusPesanan) {
+  switch (s) {
+    case 'baru': return 'Menunggu pembayaran';
+    case 'dibayar': return 'Sedang dikemas';
+    case 'dikirim': return 'Dalam perjalanan';
+    case 'selesai': return 'Selesai';
+  }
+}
+label('dibatalkan'); // Error: tidak termasuk pilihan</code></pre>
+<p>Typo seperti <code>'dikrim'</code> langsung ketahuan, dan editor memberi saran otomatis untuk setiap pilihan.</p>
+<h2 id="generics-tipe-yang-bisa-diisi">Generics: tipe yang bisa diisi</h2>
+<pre><code>interface ResponsApi&lt;T&gt; {
+  data: T;
+  error: string | null;
+}
+
+async function ambil&lt;T&gt;(url: string): Promise&lt;ResponsApi&lt;T&gt;&gt; {
+  const res = await fetch(url);
+  return res.json();
+}
+
+const hasil = await ambil&lt;Produk[]&gt;('/api/produk');
+hasil.data[0].nama;   // editor tahu ini string</code></pre>
+<h2 id="manfaat-yang-paling-terasa">Manfaat yang paling terasa</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk penjelasan","items":[{"tag":"Manfaat","front":"Autocomplete yang akurat","backTag":"Artinya","back":"Editor tahu field apa saja yang dimiliki objek, sehingga Anda tidak perlu bolak-balik membuka dokumentasi."},{"tag":"Manfaat","front":"Refactor lebih berani","backTag":"Artinya","back":"Ganti nama field, dan semua tempat yang belum diubah langsung ditandai merah."},{"tag":"Manfaat","front":"Dokumentasi yang selalu benar","backTag":"Artinya","back":"Tipe fungsi menjelaskan input dan output tanpa komentar tambahan."},{"tag":"Batas","front":"Tidak memeriksa data dari luar saat runtime","backTag":"Artinya","back":"Respons API tetap bisa tidak sesuai tipe. Validasi dengan Zod atau sejenisnya di batas sistem."}]}</script></div>
+<h2 id="cara-mulai-di-proyek-javascript-lama">Cara mulai di proyek JavaScript lama</h2>
+<ol><li>Pasang: <code>npm install -D typescript</code>, lalu <code>npx tsc --init</code>.</li><li>Aktifkan <code>allowJs</code> agar file .js dan .ts bisa hidup bersama.</li><li>Ubah file satu per satu, mulai dari utilitas kecil.</li><li>Setelah sebagian besar file .ts, aktifkan <code>strict: true</code>.</li><li>Hindari <code>any</code>; bila terpaksa, pakai <code>unknown</code> lalu periksa tipenya.</li></ol>
+<div class="callout warn"><b>Jebakan any</b><p>Memberi tipe any di mana-mana mematikan manfaat TypeScript. Anggap any sebagai utang yang harus dibayar.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Kapan pemeriksaan tipe TypeScript terjadi?","options":["Saat kompilasi/di editor","Saat aplikasi berjalan di browser","Saat deploy saja"],"answer":0,"why":"Tipe dihapus saat dikompilasi menjadi JavaScript."},{"q":"diskon?: number berarti...","options":["diskon wajib","diskon boleh tidak ada","diskon bisa string"],"answer":1,"why":"Tanda tanya menandai properti opsional."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah TypeScript memperlambat aplikasi?</summary><div>Tidak saat berjalan, karena yang dijalankan tetap JavaScript. Yang bertambah hanya sedikit waktu kompilasi saat pengembangan.</div></details>
+<details class="faq"><summary>Interface atau type?</summary><div>Keduanya mirip untuk bentuk objek. Banyak tim memakai interface untuk objek dan type untuk union atau kombinasi. Yang penting konsisten.</div></details>
+<details class="faq"><summary>Apakah Node.js bisa menjalankan TypeScript langsung?</summary><div>Versi Node.js terbaru mendukung menjalankan file .ts dengan menghapus tipe (type stripping). Untuk proyek besar, tetap jalankan tsc untuk pemeriksaan tipe.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://www.typescriptlang.org/docs/handbook/intro.html" rel="noopener" target="_blank">TypeScript Handbook</a></li><li><a href="https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html" rel="noopener" target="_blank">TypeScript: Migrating from JavaScript</a></li><li><a href="https://muchson.web.id/artikel/javascript-dasar-untuk-pemula/" rel="noopener" target="_blank">JavaScript dasar untuk pemula (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/vue-react-atau-angular-memilih-framework-frontend/"><img src="/artikel/vue-react-atau-angular-memilih-framework-frontend/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Vue, React, atau Angular? Cara Memilih Framework</span></a><a href="/artikel/vue-3-untuk-pemula-composition-api/"><img src="/artikel/vue-3-untuk-pemula-composition-api/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Vue 3 untuk Pemula: Composition API dengan Contoh</span></a><a href="/artikel/node-js-dan-express-membuat-api-pertama/"><img src="/artikel/node-js-dan-express-membuat-api-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Node.js dan Express: Membuat REST API Pertama</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

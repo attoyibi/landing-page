@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analisis Kohort untuk Memahami Retensi Pengguna</title>
+<meta name="description" content="Membuat dan membaca tabel kohort retensi: mengelompokkan pengguna per bulan bergabung, membaca kurva retensi, contoh SQL, dan menilai dampak perbaikan.">
+<meta name="keywords" content="analisis kohort, cohort analysis, retensi, product analytics, SQL">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/">
+<meta property="og:title" content="Analisis Kohort untuk Memahami Retensi Pengguna">
+<meta property="og:description" content="Membuat dan membaca tabel kohort retensi: mengelompokkan pengguna per bulan bergabung, membaca kurva retensi, contoh SQL, dan menilai dampak perbaikan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Customer Success">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Analisis Kohort untuk Memahami Retensi Pengguna">
+<meta name="twitter:description" content="Membuat dan membaca tabel kohort retensi: mengelompokkan pengguna per bulan bergabung, membaca kurva retensi, contoh SQL, dan menilai dampak perbaikan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Analisis Kohort untuk Memahami Retensi Pengguna","description":"Membuat dan membaca tabel kohort retensi: mengelompokkan pengguna per bulan bergabung, membaca kurva retensi, contoh SQL, dan menilai dampak perbaikan.","image":["https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"analisis kohort, cohort analysis, retensi, product analytics, SQL","articleSection":"Customer Success","wordCount":252,"mainEntityOfPage":"https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Analisis Kohort untuk Memahami Retensi Pengguna","item":"https://muchson.web.id/artikel/analisis-kohort-untuk-retensi-pengguna/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Alat apa untuk analisis kohort?","acceptedAnswer":{"@type":"Answer","text":"Mixpanel, Amplitude, PostHog, dan Google Analytics punya laporan kohort. Spreadsheet dan SQL juga cukup untuk memulai."}},{"@type":"Question","name":"Berapa pengguna minimal per kohort?","acceptedAnswer":{"@type":"Answer","text":"Semakin kecil kohort, semakin besar fluktuasi acak. Untuk kohort kecil, gunakan periode lebih panjang (per kuartal) atau gabungkan beberapa bulan."}},{"@type":"Question","name":"Apa bedanya retensi pengguna dan retensi pendapatan?","acceptedAnswer":{"@type":"Answer","text":"Retensi pengguna menghitung orang; retensi pendapatan menghitung uang. Keduanya bisa berbeda arah bila pelanggan besar dan kecil berperilaku berbeda."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#apa-itu-kohort">Apa itu kohort</a></li><li><a href="#bentuk-kurva-retensi">Bentuk kurva retensi</a></li><li><a href="#membuat-tabel-kohort-dengan-sql">Membuat tabel kohort dengan SQL</a></li><li><a href="#definisi-aktif-menentukan-hasil">Definisi &quot;aktif&quot; menentukan hasil</a></li><li><a href="#memakai-kohort-untuk-keputusan">Memakai kohort untuk keputusan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Customer Success</p>
+<span class="cat">Customer Success</span>
+<h1>Analisis Kohort untuk Memahami Retensi Pengguna</h1>
+<p class="lead">Angka "pengguna aktif bulan ini" bisa naik walau produk memburuk, asalkan pemasaran mendatangkan banyak pengguna baru. Analisis kohort memisahkan pengguna berdasarkan kapan mereka bergabung, sehingga Anda bisa melihat apakah pengguna yang datang belakangan bertahan lebih baik atau lebih buruk dari yang lama.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Analisis Kohort untuk Memahami Retensi Pengguna" fetchpriority="high"></figure>
+<h2 id="apa-itu-kohort">Apa itu kohort</h2>
+<p>Kohort adalah kelompok pengguna yang berbagi titik awal yang sama, biasanya bulan pendaftaran. Tabel kohort menunjukkan persentase dari tiap kelompok yang masih aktif setelah 1, 2, 3 bulan, dan seterusnya.</p>
+<table><thead><tr><th>Kohort</th><th>Bulan 0</th><th>Bulan 1</th><th>Bulan 2</th><th>Bulan 3</th></tr></thead><tbody><tr><td>Juni</td><td>100%</td><td>42%</td><td>30%</td><td>26%</td></tr><tr><td>Juli</td><td>100%</td><td>45%</td><td>33%</td><td>29%</td></tr><tr><td>Agustus (onboarding baru)</td><td>100%</td><td>58%</td><td>46%</td><td></td></tr><tr><td>September</td><td>100%</td><td>61%</td><td></td><td></td></tr></tbody></table>
+<p>Cara membaca: baca <b>ke samping</b> untuk melihat penurunan satu kohort dari waktu ke waktu, dan <b>ke bawah</b> pada kolom yang sama untuk membandingkan kohort. Di contoh ini, setelah onboarding baru di Agustus, retensi bulan 1 naik dari sekitar 45% ke 58-61%.</p>
+<h2 id="bentuk-kurva-retensi">Bentuk kurva retensi</h2>
+<figure class="diagram"><svg viewBox="0 0 640 256" role="img" aria-label="Contoh kurva retensi kohort Juli" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><text x="160" y="29" text-anchor="end" font-size="13.5" fill="#0f1a33">Bulan 0</text><rect x="170" y="12" width="380" height="26" rx="6" fill="#1e5ab2"/><text x="558" y="30" font-size="13.5" font-weight="700" fill="#0f1a33">100%</text><text x="160" y="69" text-anchor="end" font-size="13.5" fill="#0f1a33">Bulan 1</text><rect x="170" y="52" width="171" height="26" rx="6" fill="#1f7a46"/><text x="349" y="70" font-size="13.5" font-weight="700" fill="#0f1a33">45%</text><text x="160" y="109" text-anchor="end" font-size="13.5" fill="#0f1a33">Bulan 2</text><rect x="170" y="92" width="125.4" height="26" rx="6" fill="#9a5b00"/><text x="303.4" y="110" font-size="13.5" font-weight="700" fill="#0f1a33">33%</text><text x="160" y="149" text-anchor="end" font-size="13.5" fill="#0f1a33">Bulan 3</text><rect x="170" y="132" width="110.19999999999999" height="26" rx="6" fill="#7a3fb4"/><text x="288.2" y="150" font-size="13.5" font-weight="700" fill="#0f1a33">29%</text><text x="160" y="189" text-anchor="end" font-size="13.5" fill="#0f1a33">Bulan 4</text><rect x="170" y="172" width="102.60000000000001" height="26" rx="6" fill="#b3261e"/><text x="280.6" y="190" font-size="13.5" font-weight="700" fill="#0f1a33">27%</text><text x="160" y="229" text-anchor="end" font-size="13.5" fill="#0f1a33">Bulan 5</text><rect x="170" y="212" width="98.8" height="26" rx="6" fill="#0b7285"/><text x="276.8" y="230" font-size="13.5" font-weight="700" fill="#0f1a33">26%</text></svg><figcaption>Kurva yang mendatar (di sini sekitar 26%) menandakan ada kelompok pengguna yang menemukan nilai jangka panjang. Kurva yang terus turun ke nol adalah tanda bahaya.</figcaption></figure>
+<div class="callout info"><b>Bulan pertama menentukan</b><p>Penurunan terbesar biasanya terjadi di periode pertama. Karena itu perbaikan onboarding sering memberi dampak retensi paling besar.</p></div>
+<h2 id="membuat-tabel-kohort-dengan-sql">Membuat tabel kohort dengan SQL</h2>
+<pre><code>-- PostgreSQL: retensi bulanan berdasarkan bulan daftar
+WITH pengguna AS (
+  SELECT id, date_trunc('month', dibuat_pada) AS kohort
+  FROM users
+),
+aktivitas AS (
+  SELECT DISTINCT user_id, date_trunc('month', waktu) AS bulan
+  FROM events
+)
+SELECT
+  p.kohort,
+  (EXTRACT(YEAR FROM age(a.bulan, p.kohort)) * 12
+   + EXTRACT(MONTH FROM age(a.bulan, p.kohort)))::int AS bulan_ke,
+  COUNT(DISTINCT a.user_id) AS aktif
+FROM pengguna p
+JOIN aktivitas a ON a.user_id = p.id AND a.bulan &gt;= p.kohort
+GROUP BY 1, 2
+ORDER BY 1, 2;
+-- bagi 'aktif' dengan jumlah pengguna di bulan_ke = 0 untuk mendapat persentase</code></pre>
+<h2 id="definisi-aktif-menentukan-hasil">Definisi "aktif" menentukan hasil</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk contoh definisi yang baik","items":[{"tag":"Lemah","front":"Aktif = membuka aplikasi.","backTag":"Lebih baik","back":"Aktif = melakukan tindakan bernilai, misalnya menyelesaikan satu pelajaran atau mencatat satu transaksi."},{"tag":"Lemah","front":"Periode harian untuk produk yang dipakai bulanan.","backTag":"Lebih baik","back":"Sesuaikan periode dengan frekuensi pemakaian alami produk: harian, mingguan, atau bulanan."}]}</script></div>
+<h2 id="memakai-kohort-untuk-keputusan">Memakai kohort untuk keputusan</h2>
+<ul><li>Menilai dampak perubahan: apakah kohort setelah perubahan bertahan lebih baik?</li><li>Membandingkan kanal akuisisi: pengguna dari iklan vs rekomendasi.</li><li>Membandingkan segmen: paket, wilayah, jenis perangkat.</li><li>Memproyeksikan pendapatan dan CLV dengan lebih realistis.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Membandingkan kolom \"Bulan 1\" dari atas ke bawah menunjukkan...","options":["Penurunan satu kohort dari waktu ke waktu","Apakah kohort yang lebih baru bertahan lebih baik di bulan pertama","Total pengguna"],"answer":1,"why":"Kolom yang sama membandingkan kohort berbeda pada usia yang sama."},{"q":"Kurva retensi yang mendatar berarti...","options":["Produk gagal","Ada kelompok pengguna yang menemukan nilai jangka panjang","Data salah"],"answer":1,"why":"Sebagian pengguna terus bertahan."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Alat apa untuk analisis kohort?</summary><div>Mixpanel, Amplitude, PostHog, dan Google Analytics punya laporan kohort. Spreadsheet dan SQL juga cukup untuk memulai.</div></details>
+<details class="faq"><summary>Berapa pengguna minimal per kohort?</summary><div>Semakin kecil kohort, semakin besar fluktuasi acak. Untuk kohort kecil, gunakan periode lebih panjang (per kuartal) atau gabungkan beberapa bulan.</div></details>
+<details class="faq"><summary>Apa bedanya retensi pengguna dan retensi pendapatan?</summary><div>Retensi pengguna menghitung orang; retensi pendapatan menghitung uang. Keduanya bisa berbeda arah bila pelanggan besar dan kecil berperilaku berbeda.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://www.postgresql.org/docs/current/functions-datetime.html" rel="noopener" target="_blank">PostgreSQL Docs: Date/Time Functions (date_trunc, age)</a></li><li><a href="https://muchson.web.id/artikel/metrik-ux-framework-heart-google/" rel="noopener" target="_blank">Metrik UX dengan framework HEART (artikel terkait)</a></li><li><a href="https://muchson.web.id/artikel/churn-rate-cara-menghitung-dan-menurunkan/" rel="noopener" target="_blank">Churn rate (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/customer-health-score-cara-membuat/"><img src="/artikel/customer-health-score-cara-membuat/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Customer Health Score: Cara Membuat dan Memakainya</span></a><a href="/artikel/customer-lifetime-value-clv-cara-menghitung/"><img src="/artikel/customer-lifetime-value-clv-cara-menghitung/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Customer Lifetime Value (CLV): Cara Menghitungnya</span></a><a href="/artikel/playbook-customer-success-cara-menyusun/"><img src="/artikel/playbook-customer-success-cara-menyusun/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Playbook Customer Success: Cara Menyusun dan Memakainya</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

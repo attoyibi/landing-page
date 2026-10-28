@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Green Software: Prinsip Menulis Kode Hemat Energi</title>
+<meta name="description" content="Prinsip green software untuk developer: efisiensi energi, sadar karbon, efisiensi perangkat, Software Carbon Intensity (ISO/IEC 21031), dan contoh praktik.">
+<meta name="keywords" content="green software, software berkelanjutan, SCI, efisiensi kode, developer">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/">
+<meta property="og:title" content="Green Software: Prinsip Menulis Kode Hemat Energi">
+<meta property="og:description" content="Prinsip green software untuk developer: efisiensi energi, sadar karbon, efisiensi perangkat, Software Carbon Intensity (ISO/IEC 21031), dan contoh praktik.">
+<meta property="og:image" content="https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Green IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Green Software: Prinsip Menulis Kode Hemat Energi">
+<meta name="twitter:description" content="Prinsip green software untuk developer: efisiensi energi, sadar karbon, efisiensi perangkat, Software Carbon Intensity (ISO/IEC 21031), dan contoh praktik.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Green Software: Prinsip Menulis Kode Hemat Energi","description":"Prinsip green software untuk developer: efisiensi energi, sadar karbon, efisiensi perangkat, Software Carbon Intensity (ISO/IEC 21031), dan contoh praktik.","image":["https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"green software, software berkelanjutan, SCI, efisiensi kode, developer","articleSection":"Green IT","wordCount":240,"mainEntityOfPage":"https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Green Software: Prinsip Menulis Kode Hemat Energi","item":"https://muchson.web.id/artikel/green-software-prinsip-kode-hemat-energi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah bahasa pemrograman tertentu lebih hijau?","acceptedAnswer":{"@type":"Answer","text":"Ada penelitian yang membandingkan energi antar bahasa untuk tugas tertentu, tetapi untuk sebagian besar aplikasi web, desain arsitektur, query, dan data yang dikirim jauh lebih berpengaruh daripada pilihan bahasa."}},{"@type":"Question","name":"Bagaimana mengukur energi aplikasi saya?","acceptedAnswer":{"@type":"Answer","text":"Mulai dari perkiraan dengan alat seperti Cloud Carbon Footprint atau dasbor emisi penyedia cloud, lalu ukur lebih detail di server dengan alat pemantau energi bila perlu."}},{"@type":"Question","name":"Apakah developer perlu sertifikasi khusus?","acceptedAnswer":{"@type":"Answer","text":"Tidak wajib. Green Software Foundation menyediakan materi belajar gratis tentang prinsip green software."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tiga-cara-mengurangi-emisi-software">Tiga cara mengurangi emisi software</a></li><li><a href="#mengukur-software-carbon-intensity-sci">Mengukur: Software Carbon Intensity (SCI)</a></li><li><a href="#praktik-di-kode-dan-arsitektur">Praktik di kode dan arsitektur</a></li><li><a href="#prinsip-lain-dari-green-software-foundation">Prinsip lain dari Green Software Foundation</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Green IT</p>
+<span class="cat">Green IT</span>
+<h1>Green Software: Prinsip Menulis Kode Hemat Energi</h1>
+<p class="lead">Developer jarang memikirkan listrik, karena server ada di tempat lain dan tagihannya dibayar orang lain. Padahal keputusan kode, seperti query yang boros, gambar yang terlalu besar, atau server yang selalu menyala, berdampak pada energi dan emisi. Green Software Foundation merumuskan prinsip agar software lebih hemat karbon.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Green Software: Prinsip Menulis Kode Hemat Energi" fetchpriority="high"></figure>
+<h2 id="tiga-cara-mengurangi-emisi-software">Tiga cara mengurangi emisi software</h2>
+<figure class="diagram"><svg viewBox="0 0 542 104" role="img" aria-label="Tiga tuas utama" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Efisiensi energi</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">pakai lebih sedikit</tspan><tspan x="85" dy="14">listrik</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Sadar karbon</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">pakai listrik yang</tspan><tspan x="271" dy="14">lebih bersih</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Efisiensi</tspan><tspan x="457" dy="16">perangkat</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">pakai lebih sedikit</tspan><tspan x="457" dy="14">perangkat keras</tspan></text></svg></figure>
+<h2 id="mengukur-software-carbon-intensity-sci">Mengukur: Software Carbon Intensity (SCI)</h2>
+<p>SCI adalah spesifikasi dari Green Software Foundation yang telah diadopsi menjadi standar <b>ISO/IEC 21031:2024</b>. Ia mengukur emisi <b>per unit kerja</b> yang bermakna, sehingga bisa dibandingkan dari versi ke versi.</p>
+<pre><code>SCI = ((E × I) + M) per R
+
+E = energi yang dipakai software (kWh)
+I = intensitas karbon listrik (g CO₂e per kWh) di lokasi dan waktu itu
+M = emisi tersemat (embodied) perangkat keras, dialokasikan ke software
+R = unit fungsional: per pengguna, per permintaan API, per transaksi</code></pre>
+<div data-w="calc"><script type="application/json">{"title":"Hitung SCI sederhana per 1.000 permintaan","inputs":[{"id":"e","label":"Energi per 1.000 permintaan","value":0.05,"min":0.001,"max":10,"step":0.001,"unit":"kWh"},{"id":"i","label":"Intensitas karbon listrik","value":700,"min":20,"max":1000,"step":10,"unit":"g CO₂e/kWh"},{"id":"m","label":"Emisi tersemat dialokasikan per 1.000 permintaan","value":10,"min":0,"max":1000,"step":1,"unit":"g CO₂e"}],"outputs":[{"label":"SCI","expr":"e * i + m","fmt":"num","unit":"g CO₂e per 1.000 permintaan","big":true,"note":"Intensitas karbon listrik sangat berbeda antar negara dan jam. Jaringan yang banyak memakai batu bara bisa beberapa kali lebih tinggi daripada jaringan berbasis energi terbarukan."}]}</script></div>
+<h2 id="praktik-di-kode-dan-arsitektur">Praktik di kode dan arsitektur</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk contoh","items":[{"tag":"Data","front":"Kirim data seperlunya.","backTag":"Contoh","back":"Pagination, pilih kolom yang dibutuhkan, kompres respons (gzip/brotli), dan cache."},{"tag":"Query","front":"Query yang efisien.","backTag":"Contoh","back":"Index yang tepat, hindari N+1, jangan memuat ribuan baris untuk menampilkan satu angka."},{"tag":"Aset","front":"Gambar dan video yang ringan.","backTag":"Contoh","back":"Format modern (WebP/AVIF), ukuran sesuai tampilan, lazy loading."},{"tag":"Server","front":"Skala sesuai beban.","backTag":"Contoh","back":"Autoscaling, matikan lingkungan staging di malam hari, hapus server dan storage yang tidak terpakai."},{"tag":"Waktu","front":"Geser pekerjaan berat.","backTag":"Contoh","back":"Batch job, pelatihan model, atau backup dijadwalkan saat intensitas karbon jaringan rendah."},{"tag":"AI","front":"Pilih model sesuai tugas.","backTag":"Contoh","back":"Model kecil untuk klasifikasi sederhana, cache jawaban yang berulang."}]}</script></div>
+<div class="callout info"><b>Hijau sekaligus hemat</b><p>Banyak langkah green software sama dengan langkah menghemat biaya cloud dan mempercepat aplikasi. Ini membuat argumennya mudah diterima tim dan manajemen.</p></div>
+<h2 id="prinsip-lain-dari-green-software-foundation">Prinsip lain dari Green Software Foundation</h2>
+<ul><li><b>Ukur</b>: yang tidak diukur tidak bisa diperbaiki.</li><li><b>Efisiensi jaringan</b>: kurangi data yang berpindah.</li><li><b>Demand shaping</b>: sesuaikan perilaku aplikasi dengan ketersediaan energi bersih, misalnya mode hemat saat intensitas tinggi.</li><li><b>Komitmen iklim</b>: pahami perbedaan klaim kompensasi karbon dan pengurangan emisi nyata.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Huruf R dalam rumus SCI berarti...","options":["Region server","Unit fungsional, misalnya per permintaan","RAM"],"answer":1,"why":"SCI adalah intensitas per unit kerja."},{"q":"Menjadwalkan backup saat listrik lebih bersih termasuk prinsip...","options":["Sadar karbon","Efisiensi perangkat","Aksesibilitas"],"answer":0,"why":"Memakai listrik pada waktu intensitas karbon rendah."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah bahasa pemrograman tertentu lebih hijau?</summary><div>Ada penelitian yang membandingkan energi antar bahasa untuk tugas tertentu, tetapi untuk sebagian besar aplikasi web, desain arsitektur, query, dan data yang dikirim jauh lebih berpengaruh daripada pilihan bahasa.</div></details>
+<details class="faq"><summary>Bagaimana mengukur energi aplikasi saya?</summary><div>Mulai dari perkiraan dengan alat seperti Cloud Carbon Footprint atau dasbor emisi penyedia cloud, lalu ukur lebih detail di server dengan alat pemantau energi bila perlu.</div></details>
+<details class="faq"><summary>Apakah developer perlu sertifikasi khusus?</summary><div>Tidak wajib. Green Software Foundation menyediakan materi belajar gratis tentang prinsip green software.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://greensoftware.foundation/standards/sci/" rel="noopener" target="_blank">Green Software Foundation: Software Carbon Intensity (SCI) Specification</a></li><li><a href="https://learn.greensoftware.foundation/" rel="noopener" target="_blank">Green Software Foundation: Principles of Green Software Engineering</a></li><li><a href="https://muchson.web.id/artikel/index-database-kenapa-query-lambat/" rel="noopener" target="_blank">Index database (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/green-it-adalah-teknologi-yang-ramah-lingkungan/"><img src="/artikel/green-it-adalah-teknologi-yang-ramah-lingkungan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Green IT Adalah: Teknologi yang Lebih Ramah Lingkungan</span></a><a href="/artikel/jejak-karbon-digital-email-streaming-dan-cloud/"><img src="/artikel/jejak-karbon-digital-email-streaming-dan-cloud/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Jejak Karbon Digital: Email, Streaming, dan Cloud</span></a><a href="/artikel/pue-data-center-mengukur-efisiensi-energi/"><img src="/artikel/pue-data-center-mengukur-efisiensi-energi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>PUE Data Center: Mengukur Efisiensi Energi Pusat Data</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

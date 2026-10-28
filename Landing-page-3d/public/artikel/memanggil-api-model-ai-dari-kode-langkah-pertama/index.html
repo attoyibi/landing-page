@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memanggil API Model AI dari Kode: Langkah Pertama</title>
+<meta name="description" content="Panduan pertama memakai API model bahasa dari Python dan JavaScript: API key, struktur pesan, system prompt, token, streaming, error, dan menjaga biaya.">
+<meta name="keywords" content="API AI, LLM API, Claude API, Python, integrasi AI">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/">
+<meta property="og:title" content="Memanggil API Model AI dari Kode: Langkah Pertama">
+<meta property="og:description" content="Panduan pertama memakai API model bahasa dari Python dan JavaScript: API key, struktur pesan, system prompt, token, streaming, error, dan menjaga biaya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="AI untuk Semua">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Memanggil API Model AI dari Kode: Langkah Pertama">
+<meta name="twitter:description" content="Panduan pertama memakai API model bahasa dari Python dan JavaScript: API key, struktur pesan, system prompt, token, streaming, error, dan menjaga biaya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Memanggil API Model AI dari Kode: Langkah Pertama","description":"Panduan pertama memakai API model bahasa dari Python dan JavaScript: API key, struktur pesan, system prompt, token, streaming, error, dan menjaga biaya.","image":["https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"API AI, LLM API, Claude API, Python, integrasi AI","articleSection":"AI untuk Semua","wordCount":218,"mainEntityOfPage":"https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Memanggil API Model AI dari Kode: Langkah Pertama","item":"https://muchson.web.id/artikel/memanggil-api-model-ai-dari-kode-langkah-pertama/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah memakai API berbayar?","acceptedAnswer":{"@type":"Answer","text":"Ya, umumnya dibayar per token input dan output. Beberapa penyedia memberi kredit uji coba. Pantau pemakaian di dashboard dan pasang batas pengeluaran."}},{"@type":"Question","name":"Apakah data yang dikirim lewat API dipakai untuk melatih model?","acceptedAnswer":{"@type":"Answer","text":"Kebijakannya berbeda antar penyedia dan antar paket. Baca kebijakan penggunaan data di dokumentasi penyedia sebelum mengirim data pelanggan."}},{"@type":"Question","name":"Bisakah memanggil API langsung dari aplikasi Flutter?","acceptedAnswer":{"@type":"Answer","text":"Sebaiknya lewat server perantara milik Anda agar API key aman dan Anda bisa membatasi pemakaian."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#bagian-bagian-sebuah-permintaan">Bagian-bagian sebuah permintaan</a></li><li><a href="#contoh-python">Contoh Python</a></li><li><a href="#percakapan-model-tidak-mengingat-apa-pun">Percakapan: model tidak mengingat apa pun</a></li><li><a href="#streaming-agar-terasa-cepat">Streaming agar terasa cepat</a></li><li><a href="#aturan-wajib-sebelum-ke-produksi">Aturan wajib sebelum ke produksi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › AI untuk Semua</p>
+<span class="cat">AI untuk Semua</span>
+<h1>Memanggil API Model AI dari Kode: Langkah Pertama</h1>
+<p class="lead">Memakai chatbot di browser dan memanggil model AI dari aplikasi Anda sendiri adalah dua hal yang berbeda. Lewat API, Anda menentukan instruksi, format jawaban, data yang dikirim, dan apa yang terjadi dengan hasilnya. Inilah pintu masuk untuk membuat fitur AI di produk sendiri.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Memanggil API Model AI dari Kode: Langkah Pertama" fetchpriority="high"></figure>
+<h2 id="bagian-bagian-sebuah-permintaan">Bagian-bagian sebuah permintaan</h2>
+<figure class="diagram"><svg viewBox="0 0 542 228" role="img" aria-label="Satu panggilan API" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Aplikasi Anda</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">server, bukan browser</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Kirim permintaan</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">model, system,</tspan><tspan x="271" dy="14">messages</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Model memproses</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">menghitung token</tspan></text><path d="M457 98 V124 H85 V130" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="150" r="11" fill="#7a3fb4"/><text x="26" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Respons</tspan></text><text x="85" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">teks + jumlah token</tspan></text><line x1="164" y1="176" x2="192" y2="176" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="150" r="11" fill="#b3261e"/><text x="212" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Aplikasi memakai</tspan><tspan x="271" dy="16">hasil</tspan></text><text x="271" y="210" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">tampilkan / simpan /</tspan><tspan x="271" dy="14">validasi</tspan></text></svg></figure>
+<table><thead><tr><th>Bagian</th><th>Isi</th></tr></thead><tbody><tr><td><b>model</b></td><td>Nama model yang dipakai. Cek daftar terbaru di dokumentasi penyedia.</td></tr><tr><td><b>system</b></td><td>Instruksi peran dan aturan yang berlaku sepanjang percakapan.</td></tr><tr><td><b>messages</b></td><td>Riwayat percakapan: bergantian user dan assistant.</td></tr><tr><td><b>max_tokens</b></td><td>Batas panjang jawaban.</td></tr><tr><td><b>temperature</b></td><td>Opsional: rendah lebih konsisten, tinggi lebih bervariasi.</td></tr></tbody></table>
+<h2 id="contoh-python">Contoh Python</h2>
+<pre><code># pip install anthropic
+# simpan kunci di variabel lingkungan ANTHROPIC_API_KEY
+import anthropic
+
+client = anthropic.Anthropic()
+
+respon = client.messages.create(
+    model=&quot;claude-sonnet-5-5&quot;,   # ganti sesuai model yang tersedia untuk akun Anda
+    max_tokens=500,
+    system=&quot;Kamu asisten toko optik. Jawab singkat dalam bahasa Indonesia. &quot;
+           &quot;Jangan memberi diagnosis medis.&quot;,
+    messages=[
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Apa beda lensa indeks 1.56 dan 1.67?&quot;}
+    ],
+)
+
+print(respon.content[0].text)
+print(respon.usage.input_tokens, respon.usage.output_tokens)</code></pre>
+<h3>Contoh JavaScript (Node.js)</h3>
+<pre><code>// npm install @anthropic-ai/sdk
+import Anthropic from '@anthropic-ai/sdk';
+const client = new Anthropic();   // membaca ANTHROPIC_API_KEY
+
+const respon = await client.messages.create({
+  model: 'claude-sonnet-5-5',
+  max_tokens: 500,
+  messages: [{ role: 'user', content: 'Buat 3 ide judul artikel tentang Flutter.' }],
+});
+console.log(respon.content[0].text);</code></pre>
+<p>Penyedia lain (OpenAI, Google Gemini, dan model open source lewat layanan seperti OpenRouter) memakai pola yang sangat mirip: kirim daftar pesan, terima teks dan jumlah token.</p>
+<h2 id="percakapan-model-tidak-mengingat-apa-pun">Percakapan: model tidak mengingat apa pun</h2>
+<p>API bersifat <b>stateless</b>. Model tidak menyimpan percakapan sebelumnya; Anda yang mengirim ulang riwayat setiap kali.</p>
+<pre><code>riwayat = [
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Nama saya Ani.&quot;},
+    {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;Halo Ani!&quot;},
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Siapa nama saya?&quot;},
+]
+# kirim seluruh riwayat agar model bisa menjawab &quot;Ani&quot;</code></pre>
+<div class="callout info"><b>Riwayat = biaya</b><p>Karena riwayat dikirim ulang, percakapan yang panjang makin mahal di setiap giliran. Ringkas atau potong riwayat lama bila tidak lagi relevan.</p></div>
+<h2 id="streaming-agar-terasa-cepat">Streaming agar terasa cepat</h2>
+<pre><code>with client.messages.stream(
+    model=&quot;claude-sonnet-5-5&quot;, max_tokens=800,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Jelaskan rekursi untuk pemula.&quot;}],
+) as stream:
+    for teks in stream.text_stream:
+        print(teks, end=&quot;&quot;, flush=True)</code></pre>
+<p>Pengguna melihat jawaban muncul kata demi kata, bukan menunggu beberapa detik di layar kosong.</p>
+<h2 id="aturan-wajib-sebelum-ke-produksi">Aturan wajib sebelum ke produksi</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk alasannya","items":[{"tag":"Aturan","front":"API key hanya di server.","backTag":"Alasan","back":"Kunci di kode frontend atau aplikasi mobile bisa diambil siapa pun dan dipakai atas tagihan Anda."},{"tag":"Aturan","front":"Tangani error dan rate limit.","backTag":"Alasan","back":"Status 429 (terlalu banyak permintaan) dan 529/503 (sibuk) bisa terjadi. Ulangi dengan jeda yang makin panjang (exponential backoff). SDK resmi sudah melakukan sebagian."},{"tag":"Aturan","front":"Batasi biaya per pengguna.","backTag":"Alasan","back":"Tanpa batas, satu pengguna iseng bisa menghabiskan anggaran. Batasi panjang input, jumlah permintaan, dan max_tokens."},{"tag":"Aturan","front":"Jangan percaya output begitu saja.","backTag":"Alasan","back":"Validasi format, jangan langsung menjalankan output sebagai kode atau SQL, dan tampilkan sebagai teks yang di-escape."}]}</script></div>
+<div data-w="checklist"><script type="application/json">{"title":"Proyek latihan pertama","items":["Skrip yang meringkas file teks menjadi 5 poin.","Endpoint API kecil (Express/Laravel) yang memanggil model dan mengembalikan JSON.","Simpan jumlah token tiap permintaan ke log.","Tambahkan batas panjang input dan pesan error yang ramah.","Tambahkan streaming ke tampilan."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Di mana API key sebaiknya disimpan?","options":["Di kode JavaScript frontend","Di variabel lingkungan server","Di dalam prompt"],"answer":1,"why":"Kunci harus tetap di sisi server."},{"q":"Agar model ingat percakapan sebelumnya, Anda harus...","options":["Mengaktifkan memori di server penyedia","Mengirim ulang riwayat pesan","Menaikkan temperature"],"answer":1,"why":"Messages API bersifat stateless."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah memakai API berbayar?</summary><div>Ya, umumnya dibayar per token input dan output. Beberapa penyedia memberi kredit uji coba. Pantau pemakaian di dashboard dan pasang batas pengeluaran.</div></details>
+<details class="faq"><summary>Apakah data yang dikirim lewat API dipakai untuk melatih model?</summary><div>Kebijakannya berbeda antar penyedia dan antar paket. Baca kebijakan penggunaan data di dokumentasi penyedia sebelum mengirim data pelanggan.</div></details>
+<details class="faq"><summary>Bisakah memanggil API langsung dari aplikasi Flutter?</summary><div>Sebaiknya lewat server perantara milik Anda agar API key aman dan Anda bisa membatasi pemakaian.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://platform.claude.com/docs/en/overview" rel="noopener" target="_blank">Claude Platform Docs: overview</a></li><li><a href="https://platform.claude.com/docs/en/build-with-claude/streaming" rel="noopener" target="_blank">Claude Docs: Streaming Messages</a></li><li><a href="https://muchson.web.id/artikel/apa-itu-token-dan-context-window-pada-ai/" rel="noopener" target="_blank">Apa itu token dan context window (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/rag-adalah/"><img src="/artikel/rag-adalah/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>RAG Adalah: Cara AI Menjawab dari Dokumen Anda (Dengan Demo)</span></a><a href="/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/"><img src="/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Apa Itu AI? Penjelasan Sederhana untuk Pemula</span></a><a href="/artikel/cara-menggunakan-chatgpt-untuk-pemula/"><img src="/artikel/cara-menggunakan-chatgpt-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Cara Menggunakan ChatGPT untuk Pemula: Langkah Pertama</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

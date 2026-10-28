@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laravel untuk Pemula: MVC, Routing, dan Eloquent</title>
+<meta name="description" content="Panduan Laravel untuk pemula: instalasi, struktur folder, routing, controller, Blade, migration, Eloquent ORM, validasi form, dan alur request dalam pola MVC.">
+<meta name="keywords" content="Laravel, PHP, MVC, Eloquent, belajar Laravel">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/">
+<meta property="og:title" content="Laravel untuk Pemula: MVC, Routing, dan Eloquent">
+<meta property="og:description" content="Panduan Laravel untuk pemula: instalasi, struktur folder, routing, controller, Blade, migration, Eloquent ORM, validasi form, dan alur request dalam pola MVC.">
+<meta property="og:image" content="https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Laravel untuk Pemula: MVC, Routing, dan Eloquent">
+<meta name="twitter:description" content="Panduan Laravel untuk pemula: instalasi, struktur folder, routing, controller, Blade, migration, Eloquent ORM, validasi form, dan alur request dalam pola MVC.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Laravel untuk Pemula: MVC, Routing, dan Eloquent","description":"Panduan Laravel untuk pemula: instalasi, struktur folder, routing, controller, Blade, migration, Eloquent ORM, validasi form, dan alur request dalam pola MVC.","image":["https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"Laravel, PHP, MVC, Eloquent, belajar Laravel","articleSection":"Rekayasa Software","wordCount":241,"mainEntityOfPage":"https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Laravel untuk Pemula: MVC, Routing, dan Eloquent","item":"https://muchson.web.id/artikel/laravel-untuk-pemula-mvc-routing-eloquent/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah PHP masih relevan?","acceptedAnswer":{"@type":"Answer","text":"Ya. PHP menjalankan sebagian besar situs web di dunia, dan Laravel adalah salah satu framework backend paling populer dengan ekosistem yang aktif."}},{"@type":"Question","name":"Laravel atau Node.js untuk backend?","acceptedAnswer":{"@type":"Answer","text":"Laravel memberi banyak fitur siap pakai dan struktur jelas. Node.js menarik bila ingin satu bahasa (JavaScript) di frontend dan backend. Keduanya layak."}},{"@type":"Question","name":"Di mana men-deploy Laravel?","acceptedAnswer":{"@type":"Answer","text":"VPS dengan Nginx dan PHP-FPM, Laravel Forge, Laravel Cloud, atau shared hosting yang mendukung PHP 8.2+ dan Composer."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#alur-sebuah-request-dalam-mvc">Alur sebuah request dalam MVC</a></li><li><a href="#instalasi">Instalasi</a></li><li><a href="#migration-struktur-tabel-sebagai-kode">Migration: struktur tabel sebagai kode</a></li><li><a href="#route-dan-controller">Route dan controller</a></li><li><a href="#blade-template-yang-aman">Blade: template yang aman</a></li><li><a href="#eloquent-database-dengan-bahasa-php">Eloquent: database dengan bahasa PHP</a></li><li><a href="#fitur-yang-membuat-laravel-produktif">Fitur yang membuat Laravel produktif</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Laravel untuk Pemula: MVC, Routing, dan Eloquent</h1>
+<p class="lead">Laravel adalah framework PHP yang membuat pekerjaan backend sehari-hari terasa ringan: routing, database, autentikasi, antrean, email, hingga penjadwalan sudah tersedia dengan gaya penulisan yang rapi. Banyak aplikasi bisnis di Indonesia dibangun dengan Laravel, dan lowongannya selalu ada.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Laravel untuk Pemula: MVC, Routing, dan Eloquent" fetchpriority="high"></figure>
+<h2 id="alur-sebuah-request-dalam-mvc">Alur sebuah request dalam MVC</h2>
+<figure class="diagram"><svg viewBox="0 0 542 228" role="img" aria-label="Dari URL sampai halaman" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Request</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">GET /produk</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Route</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">routes/web.php</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Controller</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">logika</tspan></text><path d="M457 98 V124 H85 V130" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="150" r="11" fill="#7a3fb4"/><text x="26" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Model</tspan></text><text x="85" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">Eloquent ↔ database</tspan></text><line x1="164" y1="176" x2="192" y2="176" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="150" r="11" fill="#b3261e"/><text x="212" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">View</tspan></text><text x="271" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">Blade → HTML</tspan></text></svg><figcaption>Model mengurus data, View mengurus tampilan, Controller menghubungkan keduanya.</figcaption></figure>
+<h2 id="instalasi">Instalasi</h2>
+<pre><code># butuh PHP 8.2+ dan Composer
+composer create-project laravel/laravel toko
+cd toko
+php artisan serve
+# buka http://127.0.0.1:8000</code></pre>
+<table><thead><tr><th>Folder</th><th>Isi</th></tr></thead><tbody><tr><td><code>app/Models</code></td><td>Model Eloquent</td></tr><tr><td><code>app/Http/Controllers</code></td><td>Controller</td></tr><tr><td><code>routes/web.php</code></td><td>Route halaman web</td></tr><tr><td><code>resources/views</code></td><td>Template Blade</td></tr><tr><td><code>database/migrations</code></td><td>Riwayat struktur tabel</td></tr><tr><td><code>.env</code></td><td>Konfigurasi rahasia: database, mail, key</td></tr></tbody></table>
+<h2 id="migration-struktur-tabel-sebagai-kode">Migration: struktur tabel sebagai kode</h2>
+<pre><code>php artisan make:model Produk -mc   # model + migration + controller
+
+// database/migrations/xxxx_create_produks_table.php
+Schema::create('produks', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('nama');
+    $table-&gt;unsignedInteger('harga');
+    $table-&gt;unsignedInteger('stok')-&gt;default(0);
+    $table-&gt;timestamps();
+});
+
+php artisan migrate</code></pre>
+<p>Migration membuat perubahan struktur database tercatat di Git, sehingga semua anggota tim dan server punya struktur yang sama.</p>
+<h2 id="route-dan-controller">Route dan controller</h2>
+<pre><code>// routes/web.php
+use App\Http\Controllers\ProdukController;
+Route::resource('produk', ProdukController::class);
+// otomatis: index, create, store, show, edit, update, destroy
+
+// app/Http/Controllers/ProdukController.php
+public function index()
+{
+    $produk = Produk::orderBy('nama')-&gt;paginate(10);
+    return view('produk.index', compact('produk'));
+}
+
+public function store(Request $request)
+{
+    $data = $request-&gt;validate([
+        'nama'  =&gt; 'required|string|max:100',
+        'harga' =&gt; 'required|integer|min:0',
+        'stok'  =&gt; 'integer|min:0',
+    ]);
+    Produk::create($data);
+    return redirect()-&gt;route('produk.index')-&gt;with('ok', 'Produk tersimpan');
+}</code></pre>
+<div class="callout warn"><b>Mass assignment</b><p>Agar Produk::create($data) berjalan, daftarkan kolom yang boleh diisi di model: protected $fillable = ['nama', 'harga', 'stok']. Ini mencegah pengguna mengisi kolom lain seperti is_admin (mass assignment).</p></div>
+<h2 id="blade-template-yang-aman">Blade: template yang aman</h2>
+<pre><code>{{-- resources/views/produk/index.blade.php --}}
+@extends('layouts.app')
+
+@section('content')
+  @if (session('ok'))
+    &lt;div class=&quot;alert&quot;&gt;{{ session('ok') }}&lt;/div&gt;
+  @endif
+
+  @forelse ($produk as $p)
+    &lt;p&gt;{{ $p-&gt;nama }} - Rp{{ number_format($p-&gt;harga, 0, ',', '.') }}&lt;/p&gt;
+  @empty
+    &lt;p&gt;Belum ada produk.&lt;/p&gt;
+  @endforelse
+
+  {{ $produk-&gt;links() }}
+@endsection</code></pre>
+<p><code>{{ }}</code> otomatis meng-escape HTML sehingga aman dari XSS. Hindari <code>{!! !!}</code> untuk data dari pengguna.</p>
+<h2 id="eloquent-database-dengan-bahasa-php">Eloquent: database dengan bahasa PHP</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk melihat kodenya","items":[{"tag":"Tugas","front":"Produk dengan stok di bawah 5.","backTag":"Eloquent","back":"Produk::where('stok', '\u003c', 5)->get();"},{"tag":"Tugas","front":"Relasi: satu kategori punya banyak produk.","backTag":"Eloquent","back":"public function produk() { return $this->hasMany(Produk::class); } lalu $kategori->produk"},{"tag":"Tugas","front":"Hindari N+1 saat menampilkan produk dan kategorinya.","backTag":"Eloquent","back":"Produk::with('kategori')->get(); // eager loading"},{"tag":"Tugas","front":"Kurangi stok secara atomik.","backTag":"Eloquent","back":"Produk::whereKey($id)->where('stok', '>', 0)->decrement('stok');"}]}</script></div>
+<h2 id="fitur-yang-membuat-laravel-produktif">Fitur yang membuat Laravel produktif</h2>
+<ul><li><b>Starter kit</b> (Breeze, atau starter kit React/Vue/Livewire) untuk login, daftar, reset password.</li><li><b>Queue</b> untuk pekerjaan berat di belakang layar: kirim email, proses gambar.</li><li><b>Task scheduling</b> menggantikan banyak cron job.</li><li><b>Artisan</b> untuk membuat file dan menjalankan perintah.</li><li><b>Pest/PHPUnit</b> untuk pengujian, sudah terpasang.</li></ul>
+<div data-w="checklist"><script type="application/json">{"title":"Proyek latihan: katalog toko","items":["Migration dan model Produk serta Kategori dengan relasi.","CRUD produk dengan validasi.","Pencarian nama produk dan pagination.","Login admin dengan starter kit.","Upload foto produk ke storage.","Satu tes fitur untuk menyimpan produk."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Di mana konfigurasi koneksi database ditulis?","options":["routes/web.php",".env","resources/views"],"answer":1,"why":".env menyimpan konfigurasi dan tidak di-commit."},{"q":"with('kategori') pada Eloquent berguna untuk...","options":["Validasi","Eager loading agar tidak terjadi N+1","Membuat tabel"],"answer":1,"why":"Relasi dimuat sekaligus dengan sedikit query."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah PHP masih relevan?</summary><div>Ya. PHP menjalankan sebagian besar situs web di dunia, dan Laravel adalah salah satu framework backend paling populer dengan ekosistem yang aktif.</div></details>
+<details class="faq"><summary>Laravel atau Node.js untuk backend?</summary><div>Laravel memberi banyak fitur siap pakai dan struktur jelas. Node.js menarik bila ingin satu bahasa (JavaScript) di frontend dan backend. Keduanya layak.</div></details>
+<details class="faq"><summary>Di mana men-deploy Laravel?</summary><div>VPS dengan Nginx dan PHP-FPM, Laravel Forge, Laravel Cloud, atau shared hosting yang mendukung PHP 8.2+ dan Composer.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://laravel.com/docs/installation" rel="noopener" target="_blank">Laravel Docs: Installation</a></li><li><a href="https://laravel.com/docs/eloquent" rel="noopener" target="_blank">Laravel Docs: Eloquent ORM</a></li><li><a href="https://laravel.com/docs/validation" rel="noopener" target="_blank">Laravel Docs: Validation</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

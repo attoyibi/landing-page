@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL</title>
+<meta name="description" content="SQL JOIN dengan contoh tabel siswa dan kelas: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, self join, kesalahan umum duplikasi baris, dan latihan soal.">
+<meta name="keywords" content="SQL JOIN, LEFT JOIN, INNER JOIN, belajar SQL, query database">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/">
+<meta property="og:title" content="SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL">
+<meta property="og:description" content="SQL JOIN dengan contoh tabel siswa dan kelas: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, self join, kesalahan umum duplikasi baris, dan latihan soal.">
+<meta property="og:image" content="https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL">
+<meta name="twitter:description" content="SQL JOIN dengan contoh tabel siswa dan kelas: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, self join, kesalahan umum duplikasi baris, dan latihan soal.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL","description":"SQL JOIN dengan contoh tabel siswa dan kelas: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, self join, kesalahan umum duplikasi baris, dan latihan soal.","image":["https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"SQL JOIN, LEFT JOIN, INNER JOIN, belajar SQL, query database","articleSection":"Rekayasa Software","wordCount":219,"mainEntityOfPage":"https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL","item":"https://muchson.web.id/artikel/sql-join-inner-left-right-dijelaskan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah JOIN sama dengan INNER JOIN?","acceptedAnswer":{"@type":"Answer","text":"Ya, menulis JOIN saja berarti INNER JOIN."}},{"@type":"Question","name":"JOIN atau subquery, mana lebih cepat?","acceptedAnswer":{"@type":"Answer","text":"Optimizer database modern sering mengubah keduanya menjadi rencana yang mirip. Pilih yang paling mudah dibaca, lalu ukur dengan EXPLAIN bila perlu."}},{"@type":"Question","name":"Apa itu self join?","acceptedAnswer":{"@type":"Answer","text":"Menggabungkan tabel dengan dirinya sendiri, misalnya tabel karyawan dengan kolom atasan_id yang menunjuk karyawan lain."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dua-tabel-contoh">Dua tabel contoh</a></li><li><a href="#inner-join-hanya-yang-punya-pasangan">INNER JOIN: hanya yang punya pasangan</a></li><li><a href="#left-join-semua-dari-tabel-kiri">LEFT JOIN: semua dari tabel kiri</a></li><li><a href="#right-join-dan-full-outer-join">RIGHT JOIN dan FULL OUTER JOIN</a></li><li><a href="#menggabungkan-join-dengan-group-by">Menggabungkan JOIN dengan GROUP BY</a></li><li><a href="#kesalahan-umum">Kesalahan umum</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL</h1>
+<p class="lead">Data yang dinormalisasi tersebar di banyak tabel. JOIN adalah cara menyatukannya kembali saat dibutuhkan. Begitu paham JOIN, Anda bisa menjawab pertanyaan seperti "siswa mana yang belum ikut kelas apa pun?" dengan satu query.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="SQL JOIN Dijelaskan: INNER, LEFT, RIGHT, FULL" fetchpriority="high"></figure>
+<h2 id="dua-tabel-contoh">Dua tabel contoh</h2>
+<table><thead><tr><th>siswa.id</th><th>siswa.nama</th><th>siswa.kelas_id</th></tr></thead><tbody><tr><td>1</td><td>Ani</td><td>10</td></tr><tr><td>2</td><td>Budi</td><td>20</td></tr><tr><td>3</td><td>Citra</td><td>NULL</td></tr><tr><td>4</td><td>Dodi</td><td>10</td></tr></tbody></table>
+<table><thead><tr><th>kelas.id</th><th>kelas.nama</th></tr></thead><tbody><tr><td>10</td><td>Python Dasar</td></tr><tr><td>20</td><td>Web Dasar</td></tr><tr><td>30</td><td>Data Science</td></tr></tbody></table>
+<p>Perhatikan: Citra belum punya kelas, dan kelas Data Science belum punya siswa.</p>
+<h2 id="inner-join-hanya-yang-punya-pasangan">INNER JOIN: hanya yang punya pasangan</h2>
+<pre><code>SELECT s.nama, k.nama AS kelas
+FROM siswa s
+INNER JOIN kelas k ON k.id = s.kelas_id;</code></pre>
+<table><thead><tr><th>nama</th><th>kelas</th></tr></thead><tbody><tr><td>Ani</td><td>Python Dasar</td></tr><tr><td>Budi</td><td>Web Dasar</td></tr><tr><td>Dodi</td><td>Python Dasar</td></tr></tbody></table>
+<p>Citra dan Data Science tidak muncul karena tidak punya pasangan.</p>
+<h2 id="left-join-semua-dari-tabel-kiri">LEFT JOIN: semua dari tabel kiri</h2>
+<pre><code>SELECT s.nama, k.nama AS kelas
+FROM siswa s
+LEFT JOIN kelas k ON k.id = s.kelas_id;</code></pre>
+<table><thead><tr><th>nama</th><th>kelas</th></tr></thead><tbody><tr><td>Ani</td><td>Python Dasar</td></tr><tr><td>Budi</td><td>Web Dasar</td></tr><tr><td>Citra</td><td>NULL</td></tr><tr><td>Dodi</td><td>Python Dasar</td></tr></tbody></table>
+<h3>Pola penting: mencari yang tidak punya pasangan</h3>
+<pre><code>-- siswa yang belum ikut kelas
+SELECT s.nama
+FROM siswa s
+LEFT JOIN kelas k ON k.id = s.kelas_id
+WHERE k.id IS NULL;   -- hasil: Citra</code></pre>
+<h2 id="right-join-dan-full-outer-join">RIGHT JOIN dan FULL OUTER JOIN</h2>
+<div data-w="compare"><script type="application/json">{"title":"Hasil masing-masing","tabs":[{"label":"RIGHT JOIN","html":"Semua baris dari tabel \u003cb>kanan\u003c/b> (kelas), siswa diisi NULL bila tidak ada.\u003cbr>Ani-Python, Dodi-Python, Budi-Web, \u003cb>NULL-Data Science\u003c/b>.\u003cbr>Dalam praktik, banyak orang menukar urutan tabel dan memakai LEFT JOIN agar lebih mudah dibaca."},{"label":"FULL OUTER JOIN","html":"Semua baris dari \u003cb>kedua\u003c/b> tabel.\u003cbr>Ani-Python, Budi-Web, \u003cb>Citra-NULL\u003c/b>, Dodi-Python, \u003cb>NULL-Data Science\u003c/b>.\u003cbr>Berguna untuk membandingkan dua daftar dan mencari yang tidak cocok di kedua sisi. MySQL tidak mendukung FULL JOIN secara langsung."}]}</script></div>
+<figure class="diagram"><svg viewBox="0 0 560 380" role="img" aria-label="Peta jenis JOIN" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="60" y="20" width="230" height="170" rx="12" fill="#e4f6cc"/><text x="175" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">LEFT JOIN</text><text x="175" y="78" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="175" dy="0">Kiri lengkap</tspan></text><rect x="300" y="20" width="230" height="170" rx="12" fill="#e8f1ff"/><text x="415" y="50" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">FULL OUTER</text><text x="415" y="78" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="415" dy="0">Keduanya lengkap</tspan></text><rect x="60" y="200" width="230" height="170" rx="12" fill="#fff1d6"/><text x="175" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">INNER JOIN</text><text x="175" y="258" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="175" dy="0">Hanya pasangan</tspan></text><rect x="300" y="200" width="230" height="170" rx="12" fill="#fde4e1"/><text x="415" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#0f1a33">RIGHT JOIN</text><text x="415" y="258" text-anchor="middle" font-size="12.5" fill="#4a5568"><tspan x="415" dy="0">Kanan lengkap</tspan></text><text x="290" y="376" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5568">Ambil yang tidak berpasangan dari kanan →</text><text transform="translate(18 195) rotate(-90)" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5568">Ambil yang tidak berpasangan dari kiri →</text></svg></figure>
+<h2 id="menggabungkan-join-dengan-group-by">Menggabungkan JOIN dengan GROUP BY</h2>
+<pre><code>-- jumlah siswa per kelas, termasuk kelas kosong
+SELECT k.nama, COUNT(s.id) AS jumlah_siswa
+FROM kelas k
+LEFT JOIN siswa s ON s.kelas_id = k.id
+GROUP BY k.nama
+ORDER BY jumlah_siswa DESC;
+-- Python Dasar 2, Web Dasar 1, Data Science 0</code></pre>
+<div class="callout warn"><b>Jebakan COUNT</b><p>Gunakan COUNT(s.id), bukan COUNT(*). Pada kelas kosong, LEFT JOIN menghasilkan satu baris berisi NULL, sehingga COUNT(*) akan menghitung 1.</p></div>
+<h2 id="kesalahan-umum">Kesalahan umum</h2>
+<ul><li><b>Lupa kondisi ON</b> sehingga terjadi perkalian kartesius: 1.000 × 1.000 = 1 juta baris.</li><li><b>Baris berlipat</b> saat menggabungkan dua relasi satu-ke-banyak sekaligus (misalnya pesanan dengan item dan pembayaran). Agregasi dulu di subquery.</li><li><b>Filter tabel kanan di WHERE</b> pada LEFT JOIN, yang diam-diam mengubahnya menjadi INNER JOIN. Pindahkan kondisi itu ke ON.</li></ul>
+<pre><code>-- Salah: LEFT JOIN berubah jadi INNER
+SELECT s.nama, k.nama FROM siswa s
+LEFT JOIN kelas k ON k.id = s.kelas_id
+WHERE k.nama = 'Python Dasar';
+
+-- Benar bila ingin tetap menampilkan semua siswa
+SELECT s.nama, k.nama FROM siswa s
+LEFT JOIN kelas k ON k.id = s.kelas_id AND k.nama = 'Python Dasar';</code></pre>
+<div data-w="quiz"><script type="application/json">{"title":"Latihan","questions":[{"q":"Query untuk kelas yang belum punya siswa?","options":["kelas INNER JOIN siswa","kelas LEFT JOIN siswa ... WHERE s.id IS NULL","siswa LEFT JOIN kelas"],"answer":1,"why":"Ambil semua kelas, lalu saring yang pasangannya kosong."},{"q":"Berapa baris hasil INNER JOIN pada contoh di atas?","options":["3","4","5"],"answer":0,"why":"Ani, Budi, dan Dodi punya kelas."},{"q":"Hasil COUNT(*) untuk Data Science pada LEFT JOIN + GROUP BY?","options":["0","1","NULL"],"answer":1,"why":"Ada satu baris berisi NULL, dan COUNT(*) menghitung baris."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah JOIN sama dengan INNER JOIN?</summary><div>Ya, menulis JOIN saja berarti INNER JOIN.</div></details>
+<details class="faq"><summary>JOIN atau subquery, mana lebih cepat?</summary><div>Optimizer database modern sering mengubah keduanya menjadi rencana yang mirip. Pilih yang paling mudah dibaca, lalu ukur dengan EXPLAIN bila perlu.</div></details>
+<details class="faq"><summary>Apa itu self join?</summary><div>Menggabungkan tabel dengan dirinya sendiri, misalnya tabel karyawan dengan kolom atasan_id yang menunjuk karyawan lain.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://www.postgresql.org/docs/current/tutorial-join.html" rel="noopener" target="_blank">PostgreSQL Tutorial: Joins Between Tables</a></li><li><a href="https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/" rel="noopener" target="_blank">SQL dasar SELECT, WHERE, ORDER BY (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

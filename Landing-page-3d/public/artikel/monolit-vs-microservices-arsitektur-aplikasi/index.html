@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monolit vs Microservices: Arsitektur yang Tepat</title>
+<meta name="description" content="Kapan aplikasi cukup monolit dan kapan perlu microservices: kelebihan, biaya tersembunyi, modular monolith sebagai jalan tengah, dan tanda harus memecah.">
+<meta name="keywords" content="microservices, monolit, arsitektur software, system design, backend">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/">
+<meta property="og:title" content="Monolit vs Microservices: Arsitektur yang Tepat">
+<meta property="og:description" content="Kapan aplikasi cukup monolit dan kapan perlu microservices: kelebihan, biaya tersembunyi, modular monolith sebagai jalan tengah, dan tanda harus memecah.">
+<meta property="og:image" content="https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Monolit vs Microservices: Arsitektur yang Tepat">
+<meta name="twitter:description" content="Kapan aplikasi cukup monolit dan kapan perlu microservices: kelebihan, biaya tersembunyi, modular monolith sebagai jalan tengah, dan tanda harus memecah.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Monolit vs Microservices: Arsitektur yang Tepat","description":"Kapan aplikasi cukup monolit dan kapan perlu microservices: kelebihan, biaya tersembunyi, modular monolith sebagai jalan tengah, dan tanda harus memecah.","image":["https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"microservices, monolit, arsitektur software, system design, backend","articleSection":"Rekayasa Software","wordCount":277,"mainEntityOfPage":"https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Monolit vs Microservices: Arsitektur yang Tepat","item":"https://muchson.web.id/artikel/monolit-vs-microservices-arsitektur-aplikasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah microservices lebih cepat?","acceptedAnswer":{"@type":"Answer","text":"Tidak otomatis. Panggilan lewat jaringan lebih lambat daripada pemanggilan fungsi di memori. Keuntungan utamanya adalah skala organisasi dan skala bagian tertentu."}},{"@type":"Question","name":"Apa itu strangler fig pattern?","acceptedAnswer":{"@type":"Answer","text":"Cara memigrasi monolit sedikit demi sedikit: fitur baru atau bagian tertentu dipindah ke layanan baru, lalu bagian lama dimatikan bertahap."}},{"@type":"Question","name":"Apakah serverless sama dengan microservices?","acceptedAnswer":{"@type":"Answer","text":"Tidak sama. Serverless adalah model menjalankan kode tanpa mengelola server; bisa dipakai untuk monolit maupun microservices."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dua-bentuk-dasar">Dua bentuk dasar</a></li><li><a href="#biaya-tersembunyi-microservices">Biaya tersembunyi microservices</a></li><li><a href="#jalan-tengah-modular-monolith">Jalan tengah: modular monolith</a></li><li><a href="#tanda-sudah-saatnya-memecah">Tanda sudah saatnya memecah</a></li><li><a href="#hukum-conway">Hukum Conway</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Monolit vs Microservices: Arsitektur yang Tepat</h1>
+<p class="lead">Microservices sering terdengar seperti tanda tim yang modern. Kenyataannya, banyak tim kecil yang memecah aplikasinya terlalu dini lalu menghabiskan waktu mengurus jaringan, deploy, dan data yang tersebar, bukan membangun fitur. Pertanyaan yang tepat bukan "mana yang lebih modern", tetapi "masalah apa yang sedang kita selesaikan".</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Monolit vs Microservices: Arsitektur yang Tepat" fetchpriority="high"></figure>
+<h2 id="dua-bentuk-dasar">Dua bentuk dasar</h2>
+<figure class="diagram"><svg viewBox="0 0 640 228" role="img" aria-label="Monolit dan microservices" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="216" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Monolit</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Satu aplikasi, satu deploy</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Biasanya satu database</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Pemanggilan fungsi biasa di memori</text><circle cx="32" cy="184" r="4" fill="#1e5ab2"/><text x="46" y="189" font-size="13.5" fill="#0f1a33">Mudah di-debug dan dites ujung ke ujung</text><rect x="330" y="6" width="300" height="216" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">Microservices</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Banyak layanan kecil, deploy masing-masing</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Database per layanan</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Berkomunikasi lewat jaringan (HTTP, pesan)</text><circle cx="352" cy="184" r="4" fill="#1f7a46"/><text x="366" y="189" font-size="13.5" fill="#0f1a33">Bisa diskalakan dan dikembangkan terpisah</text></svg></figure>
+<h2 id="biaya-tersembunyi-microservices">Biaya tersembunyi microservices</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk melihat dampaknya","items":[{"tag":"Biaya","front":"Jaringan bisa gagal","backTag":"Dampak","back":"Panggilan antar layanan bisa lambat atau putus. Butuh timeout, retry, dan circuit breaker."},{"tag":"Biaya","front":"Data tersebar","backTag":"Dampak","back":"Tidak ada lagi JOIN dan transaksi lintas database. Konsistensi butuh pola seperti saga dan event."},{"tag":"Biaya","front":"Operasional berlipat","backTag":"Dampak","back":"Setiap layanan butuh pipeline, monitoring, log, dan alert. Butuh tracing terdistribusi untuk mencari bug."},{"tag":"Biaya","front":"Perubahan lintas layanan","backTag":"Dampak","back":"Satu fitur bisa menyentuh empat layanan dan butuh koordinasi rilis antar tim."}]}</script></div>
+<p>Martin Fowler menulis pola yang sering terjadi: hampir semua kisah sukses microservices berawal dari monolit yang tumbuh terlalu besar, sementara banyak sistem yang dibangun sebagai microservices sejak awal berakhir bermasalah. Ia menyebutnya <i>MonolithFirst</i>.</p>
+<h2 id="jalan-tengah-modular-monolith">Jalan tengah: modular monolith</h2>
+<p>Satu aplikasi dan satu deploy, tetapi dibagi ke modul dengan batas yang tegas: modul Pesanan tidak mengakses tabel milik modul Pembayaran secara langsung, melainkan lewat antarmuka yang jelas.</p>
+<pre><code>app/
+  Modules/
+    Katalog/      # produk, kategori
+    Pesanan/      # keranjang, checkout
+    Pembayaran/   # tagihan, callback gateway
+    Pengguna/     # akun, alamat
+# aturan: modul hanya memanggil API publik modul lain,
+# tidak membaca tabel modul lain secara langsung</code></pre>
+<p>Bila suatu hari modul Pembayaran benar-benar perlu dipisah, batasnya sudah ada sehingga pemisahan jauh lebih mudah.</p>
+<h2 id="tanda-sudah-saatnya-memecah">Tanda sudah saatnya memecah</h2>
+<div data-w="choose"><script type="application/json">{"title":"Cek kondisi sistem Anda","questions":[{"q":"Berapa developer yang bekerja di kode yang sama?","options":[{"t":"Kurang dari 10","add":{"mono":3}},{"t":"10 sampai 30, mulai sering bentrok","add":{"modul":3}},{"t":"Lebih dari 30 dalam beberapa tim terpisah","add":{"micro":3}}]},{"q":"Apakah ada bagian dengan kebutuhan skala sangat berbeda?","options":[{"t":"Tidak, beban relatif merata","add":{"mono":2}},{"t":"Ya, satu bagian (misalnya pemrosesan video) jauh lebih berat","add":{"micro":2,"modul":1}}]},{"q":"Kemampuan operasional tim?","options":[{"t":"Deploy masih semi manual","add":{"mono":3}},{"t":"CI/CD, monitoring, dan container sudah matang","add":{"micro":2}}]}],"results":{"mono":{"title":"Monolit yang rapi sudah tepat","text":"Fokus pada kode yang modular, tes otomatis, dan deploy yang mudah. Skalakan dengan menambah instance di belakang load balancer."},"modul":{"title":"Rapikan menjadi modular monolith","text":"Tegaskan batas modul dan kepemilikan data dulu. Ini memberi sebagian besar manfaat microservices tanpa biaya jaringan."},"micro":{"title":"Microservices mulai masuk akal","text":"Pisahkan satu layanan dengan batas paling jelas lebih dulu (strangler pattern), ukur hasilnya, baru lanjut ke yang lain."}}}</script></div>
+<h2 id="hukum-conway">Hukum Conway</h2>
+<p>Melvin Conway mengamati bahwa struktur sistem cenderung mencerminkan struktur komunikasi organisasi yang membuatnya. Microservices paling berhasil ketika setiap layanan dimiliki satu tim yang bisa mengembangkan dan merilisnya secara mandiri. Bila satu tim kecil memegang sepuluh layanan, Anda mendapat kerumitan tanpa manfaat kemandirian.</p>
+<div class="callout info"><b>Prinsip</b><p>Arsitektur adalah alat untuk masalah yang nyata hari ini, bukan untuk masalah yang mungkin datang lima tahun lagi. Desain yang modular membuat Anda tetap siap berubah.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pendekatan yang disarankan Martin Fowler untuk sistem baru?","options":["Microservices sejak awal","Monolith first","Tanpa arsitektur"],"answer":1,"why":"Batas layanan yang tepat baru terlihat setelah domain dipahami."},{"q":"Modular monolith artinya...","options":["Banyak deploy terpisah","Satu deploy dengan batas modul yang tegas","Monolit tanpa struktur"],"answer":1,"why":"Batas internal yang jelas tanpa biaya jaringan."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah microservices lebih cepat?</summary><div>Tidak otomatis. Panggilan lewat jaringan lebih lambat daripada pemanggilan fungsi di memori. Keuntungan utamanya adalah skala organisasi dan skala bagian tertentu.</div></details>
+<details class="faq"><summary>Apa itu strangler fig pattern?</summary><div>Cara memigrasi monolit sedikit demi sedikit: fitur baru atau bagian tertentu dipindah ke layanan baru, lalu bagian lama dimatikan bertahap.</div></details>
+<details class="faq"><summary>Apakah serverless sama dengan microservices?</summary><div>Tidak sama. Serverless adalah model menjalankan kode tanpa mengelola server; bisa dipakai untuk monolit maupun microservices.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://martinfowler.com/bliki/MonolithFirst.html" rel="noopener" target="_blank">Martin Fowler: MonolithFirst</a></li><li><a href="https://martinfowler.com/articles/microservices.html" rel="noopener" target="_blank">James Lewis dan Martin Fowler: Microservices</a></li><li><a href="https://martinfowler.com/bliki/ConwaysLaw.html" rel="noopener" target="_blank">Martin Fowler: Conway's Law</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/desain-rest-api-yang-baik-endpoint-status-error/"><img src="/artikel/desain-rest-api-yang-baik-endpoint-status-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Desain REST API yang Baik: Endpoint, Status, Error</span></a><a href="/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/"><img src="/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>GraphQL vs REST: Bedanya dan Kapan Memakainya</span></a><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

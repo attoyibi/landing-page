@@ -136,6 +136,11 @@ const PALETTE = {
     'Karier & Freelance': ['#1c5a34', '#1f7a46', 'coin'],
     'Coding untuk Anak': ['#5a2d91', '#e0761b', 'blocks'],
     'Pendidikan Anak': ['#8a2456', '#d0487a', 'sprout'],
+    'Rekayasa Software': ['#1e293b', '#3b5bdb', 'gear'],
+    'Desain Pembelajaran': ['#0b4f6c', '#138a8a', 'cap'],
+    'UX & Produk': ['#6b1d3a', '#c2410c', 'cursor'],
+    'Customer Success': ['#134e4a', '#0f9d76', 'chat'],
+    'Green IT': ['#1a4d2e', '#3f8f2f', 'leaf'],
 };
 const MOTIF = {
     eye: '<ellipse cx="0" cy="0" rx="150" ry="85" fill="none" stroke="#fff" stroke-width="12"/><circle cx="0" cy="0" r="50" fill="#fff"/><circle cx="0" cy="0" r="22" fill="#0f3d8a"/>',
@@ -145,6 +150,11 @@ const MOTIF = {
     book: '<g fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round"><path d="M0 -60C-40 -80 -90 -80 -130 -62V70C-90 52 -40 52 0 72Z"/><path d="M0 -60C40 -80 90 -80 130 -62V70C90 52 40 52 0 72Z"/></g>',
     blocks: '<g transform="translate(35 0) scale(.82)" stroke="#fff" stroke-width="10" fill="none" stroke-linejoin="round"><path d="M-130 -95H-70L-60 -82H-30L-20 -95H70V-45H-20L-30 -32H-60L-70 -45H-130Z"/><path d="M-110 -30H-50L-40 -17H-10L0 -30H130V20H0L-10 33H-40L-50 20H-110Z"/><path d="M-130 35H-70L-60 48H-30L-20 35H40V85H-130Z"/></g>',
     sprout: '<g fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M0 100V-10"/><path d="M0 20C-20 -40 -80 -50 -120 -40C-110 0 -60 30 0 20Z"/><path d="M0 -10C15 -70 70 -95 115 -85C110 -40 60 -5 0 -10Z"/><path d="M-80 100H80"/></g>',
+    gear: '<g transform="translate(45 0) scale(.72)"><g fill="none" stroke="#fff" stroke-linecap="round"><circle r="78" stroke-width="12"/><circle r="32" stroke-width="12"/><path stroke-width="26" d="M0 -112V-84M0 84V112M-112 0H-84M84 0H112M-79 -79L-60 -60M60 60L79 79M-79 79L-60 60M60 -60L79 -79"/></g></g>',
+    cap: '<g transform="translate(45 0) scale(.72)"><g fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"><path d="M-140 -20L0 -80L140 -20L0 40Z"/><path d="M-80 5V65C-40 95 40 95 80 65V5"/><path d="M140 -20V60"/></g><circle cx="140" cy="72" r="13" fill="#fff"/></g>',
+    cursor: '<g transform="translate(45 0) scale(.72)"><g fill="none" stroke="#fff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"><rect x="-140" y="-95" width="230" height="160" rx="14"/><path d="M-140 -55H90M-110 -20H-20M-110 15H-50"/></g><path d="M40 0V115L68 88L90 130L110 120L88 78L125 75Z" fill="#fff"/></g>',
+    chat: '<g transform="translate(45 0) scale(.72)"><path d="M-130 -90H130V50H-20L-80 100V50H-130Z" fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round"/><path d="M0 25C-60 -15 -50 -60 -20 -60C-8 -60 0 -50 0 -42C0 -50 8 -60 20 -60C50 -60 60 -15 0 25Z" fill="#fff"/></g>',
+    leaf: '<g transform="translate(45 0) scale(.72)"><g fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M-110 100C-120 -20 -40 -100 120 -100C120 40 40 110 -60 60"/><path d="M-110 100C-60 30 0 -10 60 -40"/><path d="M-20 15V52M20 -10H52"/></g><circle cx="-20" cy="62" r="10" fill="#fff"/><circle cx="62" cy="-10" r="10" fill="#fff"/></g>',
     coin: '<circle cx="0" cy="0" r="85" fill="none" stroke="#fff" stroke-width="12"/><text x="0" y="28" text-anchor="middle" font-size="86" font-weight="700" fill="#fff" font-family="Arial,sans-serif">Rp</text>',
 };
 export function coverSvg(a) {

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GraphQL vs REST: Bedanya dan Kapan Memakainya</title>
+<meta name="description" content="Perbandingan GraphQL dan REST dengan contoh query: masalah over-fetching, skema, resolver, N+1, caching, keamanan, dan panduan memilih untuk proyek Anda.">
+<meta name="keywords" content="GraphQL, REST API, backend, Apollo, API">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/">
+<meta property="og:title" content="GraphQL vs REST: Bedanya dan Kapan Memakainya">
+<meta property="og:description" content="Perbandingan GraphQL dan REST dengan contoh query: masalah over-fetching, skema, resolver, N+1, caching, keamanan, dan panduan memilih untuk proyek Anda.">
+<meta property="og:image" content="https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GraphQL vs REST: Bedanya dan Kapan Memakainya">
+<meta name="twitter:description" content="Perbandingan GraphQL dan REST dengan contoh query: masalah over-fetching, skema, resolver, N+1, caching, keamanan, dan panduan memilih untuk proyek Anda.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GraphQL vs REST: Bedanya dan Kapan Memakainya","description":"Perbandingan GraphQL dan REST dengan contoh query: masalah over-fetching, skema, resolver, N+1, caching, keamanan, dan panduan memilih untuk proyek Anda.","image":["https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"GraphQL, REST API, backend, Apollo, API","articleSection":"Rekayasa Software","wordCount":187,"mainEntityOfPage":"https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"GraphQL vs REST: Bedanya dan Kapan Memakainya","item":"https://muchson.web.id/artikel/graphql-vs-rest-bedanya-dan-kapan-memakai/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah GraphQL lebih cepat dari REST?","acceptedAnswer":{"@type":"Answer","text":"Tidak otomatis. GraphQL bisa mengurangi jumlah permintaan dari klien, tetapi performa server tergantung resolver dan query database Anda."}},{"@type":"Question","name":"Library apa yang dipakai?","acceptedAnswer":{"@type":"Answer","text":"Di Node.js: Apollo Server, GraphQL Yoga. Di Laravel: Lighthouse. Di Python: Strawberry, Graphene. Di klien: Apollo Client, urql, atau Relay."}},{"@type":"Question","name":"Apakah GraphQL butuh database khusus?","acceptedAnswer":{"@type":"Answer","text":"Tidak. GraphQL adalah lapisan API; datanya boleh dari PostgreSQL, MySQL, Firebase, atau REST API lain."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#masalah-yang-ingin-diselesaikan-graphql">Masalah yang ingin diselesaikan GraphQL</a></li><li><a href="#bagaimana-graphql-bekerja-di-server">Bagaimana GraphQL bekerja di server</a></li><li><a href="#perbandingan-langsung">Perbandingan langsung</a></li><li><a href="#jebakan-yang-perlu-diketahui">Jebakan yang perlu diketahui</a></li><li><a href="#kapan-memilih-yang-mana">Kapan memilih yang mana?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>GraphQL vs REST: Bedanya dan Kapan Memakainya</h1>
+<p class="lead">GraphQL sering diperkenalkan sebagai "pengganti REST". Kenyataannya lebih menarik: GraphQL menyelesaikan masalah tertentu dengan sangat baik, tetapi membawa kerumitan baru. Artikel ini membandingkan keduanya dengan contoh yang sama agar Anda bisa memilih dengan sadar.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="GraphQL vs REST: Bedanya dan Kapan Memakainya" fetchpriority="high"></figure>
+<h2 id="masalah-yang-ingin-diselesaikan-graphql">Masalah yang ingin diselesaikan GraphQL</h2>
+<p>Bayangkan halaman profil di aplikasi mobile butuh: nama pengguna, tiga pesanan terakhir, dan nama produk tiap pesanan. Dengan REST klasik:</p>
+<pre><code>GET /users/7            → 30 field, padahal butuh 2 (over-fetching)
+GET /users/7/orders     → semua pesanan, padahal butuh 3
+GET /products/101       → satu per satu untuk tiap produk (under-fetching)
+GET /products/205
+GET /products/318</code></pre>
+<p>Dengan GraphQL, klien menulis satu query yang menyebutkan <b>persis</b> data yang dibutuhkan:</p>
+<pre><code>query {
+  user(id: 7) {
+    name
+    orders(last: 3) {
+      total
+      items { product { name } }
+    }
+  }
+}</code></pre>
+<p>Server menjawab dengan bentuk JSON yang sama persis dengan query. Satu permintaan, tanpa field berlebih.</p>
+<h2 id="bagaimana-graphql-bekerja-di-server">Bagaimana GraphQL bekerja di server</h2>
+<figure class="diagram"><svg viewBox="0 0 728 104" role="img" aria-label="Perjalanan sebuah query GraphQL" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Klien kirim query</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">POST /graphql</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Validasi ke skema</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">field dan tipe harus</tspan><tspan x="271" dy="14">ada</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Resolver</tspan><tspan x="457" dy="16">dijalankan</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">tiap field punya</tspan><tspan x="457" dy="14">fungsi</tspan></text><line x1="536" y1="52" x2="564" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Gabung hasil</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">JSON sesuai bentuk</tspan><tspan x="643" dy="14">query</tspan></text></svg></figure>
+<pre><code># Skema: kontrak antara klien dan server
+type User {
+  id: ID!
+  name: String!
+  orders(last: Int): [Order!]!
+}
+
+type Order {
+  id: ID!
+  total: Int!
+  items: [OrderItem!]!
+}
+
+type Query {
+  user(id: ID!): User
+}</code></pre>
+<h2 id="perbandingan-langsung">Perbandingan langsung</h2>
+<table><thead><tr><th>Aspek</th><th>REST</th><th>GraphQL</th></tr></thead><tbody><tr><td>Endpoint</td><td>Banyak URL</td><td>Biasanya satu (/graphql)</td></tr><tr><td>Bentuk data</td><td>Ditentukan server</td><td>Dipilih klien</td></tr><tr><td>Caching HTTP</td><td>Mudah (GET + URL unik)</td><td>Perlu strategi khusus (persisted query, cache klien)</td></tr><tr><td>Kontrak</td><td>OpenAPI (opsional)</td><td>Skema wajib dan bertipe</td></tr><tr><td>Upload file</td><td>Sederhana</td><td>Butuh spesifikasi tambahan</td></tr><tr><td>Kurva belajar</td><td>Rendah</td><td>Lebih tinggi</td></tr><tr><td>Status error</td><td>Kode status HTTP</td><td>Sering 200 dengan array errors</td></tr></tbody></table>
+<h2 id="jebakan-yang-perlu-diketahui">Jebakan yang perlu diketahui</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk solusinya","items":[{"tag":"Masalah N+1","front":"Query 50 pesanan, lalu resolver produk memanggil database 50 kali.","backTag":"Solusi","back":"Gunakan DataLoader (batching): kumpulkan semua id produk, ambil sekaligus dengan satu query."},{"tag":"Query terlalu berat","front":"Klien bisa meminta data bersarang sangat dalam dan membebani server.","backTag":"Solusi","back":"Batasi kedalaman dan kompleksitas query, pakai rate limit, atau hanya izinkan persisted queries."},{"tag":"Otorisasi","front":"Satu endpoint membuat aturan akses mudah terlupa di field tertentu.","backTag":"Solusi","back":"Periksa izin di lapisan bisnis atau resolver untuk setiap tipe, bukan hanya di pintu masuk."},{"tag":"Introspection","front":"Siapa pun bisa melihat seluruh skema di produksi.","backTag":"Solusi","back":"Pertimbangkan mematikan introspection di produksi untuk API privat."}]}</script></div>
+<h2 id="kapan-memilih-yang-mana">Kapan memilih yang mana?</h2>
+<div data-w="choose"><script type="application/json">{"title":"Jawab tiga pertanyaan","questions":[{"q":"Siapa pemakai API Anda?","options":[{"t":"Banyak klien berbeda (web, mobile, partner) dengan kebutuhan data berbeda","add":{"gql":3}},{"t":"Satu frontend milik sendiri","add":{"rest":2}},{"t":"Publik/pihak ketiga yang butuh dokumentasi sederhana","add":{"rest":3}}]},{"q":"Seberapa rumit relasi datanya?","options":[{"t":"Banyak relasi bersarang (user, pesanan, produk, ulasan)","add":{"gql":2}},{"t":"Cukup datar, CRUD biasa","add":{"rest":2}}]},{"q":"Pengalaman tim?","options":[{"t":"Sudah terbiasa GraphQL","add":{"gql":2}},{"t":"Baru pertama","add":{"rest":2}}]}],"results":{"gql":{"title":"GraphQL layak dipertimbangkan","text":"Kebutuhan data yang beragam dan relasi bersarang adalah kekuatan GraphQL. Siapkan DataLoader, batas kompleksitas query, dan otorisasi per tipe sejak awal."},"rest":{"title":"REST kemungkinan lebih tepat","text":"Untuk CRUD biasa dan API publik, REST lebih sederhana, mudah di-cache, dan mudah dipahami. Anda selalu bisa menambah endpoint khusus untuk kebutuhan layar tertentu."}}}</script></div>
+<div class="callout info"><b>Bukan harus salah satu</b><p>Banyak perusahaan memakai keduanya: REST untuk API publik dan webhook, GraphQL sebagai lapisan untuk aplikasi frontend mereka sendiri.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Masalah N+1 di GraphQL biasanya diatasi dengan...","options":["Menambah server","Batching memakai DataLoader","Mengganti ke REST"],"answer":1,"why":"Batching menggabungkan banyak panggilan menjadi satu query."},{"q":"Keunggulan utama GraphQL adalah...","options":["Klien memilih persis data yang dibutuhkan","Caching HTTP otomatis","Tidak perlu skema"],"answer":0,"why":"Klien menentukan bentuk data."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah GraphQL lebih cepat dari REST?</summary><div>Tidak otomatis. GraphQL bisa mengurangi jumlah permintaan dari klien, tetapi performa server tergantung resolver dan query database Anda.</div></details>
+<details class="faq"><summary>Library apa yang dipakai?</summary><div>Di Node.js: Apollo Server, GraphQL Yoga. Di Laravel: Lighthouse. Di Python: Strawberry, Graphene. Di klien: Apollo Client, urql, atau Relay.</div></details>
+<details class="faq"><summary>Apakah GraphQL butuh database khusus?</summary><div>Tidak. GraphQL adalah lapisan API; datanya boleh dari PostgreSQL, MySQL, Firebase, atau REST API lain.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://graphql.org/learn/" rel="noopener" target="_blank">GraphQL.org: Learn GraphQL</a></li><li><a href="https://graphql.org/learn/best-practices/" rel="noopener" target="_blank">GraphQL.org: Best Practices (pagination, caching, authorization)</a></li><li><a href="https://github.com/graphql/dataloader" rel="noopener" target="_blank">DataLoader (GitHub graphql/dataloader)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/desain-rest-api-yang-baik-endpoint-status-error/"><img src="/artikel/desain-rest-api-yang-baik-endpoint-status-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Desain REST API yang Baik: Endpoint, Status, Error</span></a><a href="/artikel/node-js-dan-express-membuat-api-pertama/"><img src="/artikel/node-js-dan-express-membuat-api-pertama/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Node.js dan Express: Membuat REST API Pertama</span></a><a href="/artikel/monolit-vs-microservices-arsitektur-aplikasi/"><img src="/artikel/monolit-vs-microservices-arsitektur-aplikasi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Monolit vs Microservices: Arsitektur yang Tepat</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Normalisasi Database 1NF, 2NF, 3NF dengan Contoh</title>
+<meta name="description" content="Normalisasi database dengan satu contoh tabel nyata yang dipecah bertahap: 1NF, 2NF, 3NF, anomali data, dan kapan denormalisasi justru tepat.">
+<meta name="keywords" content="normalisasi database, 1NF 2NF 3NF, desain database, ERD, basis data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/">
+<meta property="og:title" content="Normalisasi Database 1NF, 2NF, 3NF dengan Contoh">
+<meta property="og:description" content="Normalisasi database dengan satu contoh tabel nyata yang dipecah bertahap: 1NF, 2NF, 3NF, anomali data, dan kapan denormalisasi justru tepat.">
+<meta property="og:image" content="https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Normalisasi Database 1NF, 2NF, 3NF dengan Contoh">
+<meta name="twitter:description" content="Normalisasi database dengan satu contoh tabel nyata yang dipecah bertahap: 1NF, 2NF, 3NF, anomali data, dan kapan denormalisasi justru tepat.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Normalisasi Database 1NF, 2NF, 3NF dengan Contoh","description":"Normalisasi database dengan satu contoh tabel nyata yang dipecah bertahap: 1NF, 2NF, 3NF, anomali data, dan kapan denormalisasi justru tepat.","image":["https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"normalisasi database, 1NF 2NF 3NF, desain database, ERD, basis data","articleSection":"Rekayasa Software","wordCount":311,"mainEntityOfPage":"https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Normalisasi Database 1NF, 2NF, 3NF dengan Contoh","item":"https://muchson.web.id/artikel/normalisasi-database-1nf-2nf-3nf-dengan-contoh/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah perlu sampai BCNF atau 4NF?","acceptedAnswer":{"@type":"Answer","text":"Untuk sebagian besar aplikasi bisnis, 3NF sudah cukup. BCNF dan bentuk lebih tinggi relevan pada kasus ketergantungan yang lebih rumit."}},{"@type":"Question","name":"Apakah normalisasi membuat query lebih lambat?","acceptedAnswer":{"@type":"Answer","text":"Butuh JOIN lebih banyak, tetapi dengan index yang tepat JOIN di database relasional sangat cepat. Masalah performa biasanya datang dari index yang hilang."}},{"@type":"Question","name":"Bagaimana menggambar rancangannya?","acceptedAnswer":{"@type":"Answer","text":"Gunakan ERD (Entity Relationship Diagram) dengan alat seperti dbdiagram.io atau draw.io."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tabel-awal-yang-bermasalah">Tabel awal yang bermasalah</a></li><li><a href="#tiga-anomali-yang-muncul">Tiga anomali yang muncul</a></li><li><a href="#1nf-satu-sel-satu-nilai">1NF: satu sel, satu nilai</a></li><li><a href="#2nf-semua-kolom-bergantung-pada-kunci-utuh">2NF: semua kolom bergantung pada kunci utuh</a></li><li><a href="#3nf-tidak-ada-ketergantungan-transitif">3NF: tidak ada ketergantungan transitif</a></li><li><a href="#kapan-denormalisasi-justru-tepat">Kapan denormalisasi justru tepat?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Normalisasi Database 1NF, 2NF, 3NF dengan Contoh</h1>
+<p class="lead">Normalisasi sering diajarkan sebagai deretan definisi yang membingungkan. Padahal idenya sederhana: simpan setiap fakta di satu tempat saja, supaya data tidak saling bertentangan. Kita akan memperbaiki satu tabel berantakan sampai rapi.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Normalisasi Database 1NF, 2NF, 3NF dengan Contoh" fetchpriority="high"></figure>
+<h2 id="tabel-awal-yang-bermasalah">Tabel awal yang bermasalah</h2>
+<p>Sebuah kursus mencatat pendaftaran di satu spreadsheet:</p>
+<table><thead><tr><th>id_daftar</th><th>nama_siswa</th><th>hp_siswa</th><th>kelas</th><th>pengajar</th><th>hp_pengajar</th></tr></thead><tbody><tr><td>1</td><td>Ani</td><td>0812..., 0857...</td><td>Python Dasar, Web</td><td>Muchson</td><td>0813...</td></tr><tr><td>2</td><td>Budi</td><td>0819...</td><td>Python Dasar</td><td>Muchson</td><td>0813...</td></tr><tr><td>3</td><td>Citra</td><td>0821...</td><td>Scratch Anak</td><td>Rina</td><td>0877...</td></tr></tbody></table>
+<h2 id="tiga-anomali-yang-muncul">Tiga anomali yang muncul</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk contohnya","items":[{"tag":"Anomali update","front":"Nomor HP pengajar berganti.","backTag":"Akibat","back":"Harus diubah di banyak baris. Bila satu terlewat, data saling bertentangan."},{"tag":"Anomali insert","front":"Ada kelas baru tapi belum ada siswa.","backTag":"Akibat","back":"Tidak bisa dicatat karena setiap baris harus berisi siswa."},{"tag":"Anomali delete","front":"Citra keluar, barisnya dihapus.","backTag":"Akibat","back":"Informasi bahwa Rina mengajar Scratch Anak ikut hilang."}]}</script></div>
+<h2 id="1nf-satu-sel-satu-nilai">1NF: satu sel, satu nilai</h2>
+<p>Bentuk normal pertama mensyaratkan setiap kolom berisi nilai <b>atomik</b> (tidak ada daftar dalam satu sel) dan tiap baris bisa diidentifikasi unik. Kolom <code>hp_siswa</code> dan <code>kelas</code> milik Ani berisi dua nilai, jadi melanggar.</p>
+<table><thead><tr><th>nama_siswa</th><th>kelas</th><th>pengajar</th><th>hp_pengajar</th></tr></thead><tbody><tr><td>Ani</td><td>Python Dasar</td><td>Muchson</td><td>0813...</td></tr><tr><td>Ani</td><td>Web</td><td>Muchson</td><td>0813...</td></tr><tr><td>Budi</td><td>Python Dasar</td><td>Muchson</td><td>0813...</td></tr><tr><td>Citra</td><td>Scratch Anak</td><td>Rina</td><td>0877...</td></tr></tbody></table>
+<p>Nomor HP siswa yang lebih dari satu dipindah ke tabel tersendiri (<code>hp_siswa</code>: id_siswa, nomor).</p>
+<h2 id="2nf-semua-kolom-bergantung-pada-kunci-utuh">2NF: semua kolom bergantung pada kunci utuh</h2>
+<p>Misalkan kunci tabel di atas adalah gabungan (siswa, kelas). Kolom <code>pengajar</code> hanya bergantung pada <b>kelas</b>, bukan pada siswa. Ini ketergantungan parsial. Solusinya: pisahkan.</p>
+<pre><code>siswa(id_siswa PK, nama)
+kelas(id_kelas PK, nama_kelas, id_pengajar)
+pendaftaran(id_siswa FK, id_kelas FK, tanggal_daftar)   -- PK gabungan</code></pre>
+<h2 id="3nf-tidak-ada-ketergantungan-transitif">3NF: tidak ada ketergantungan transitif</h2>
+<p>Di tabel kelas, <code>hp_pengajar</code> bergantung pada pengajar, bukan pada kelas. Ketergantungan "kelas → pengajar → hp" disebut transitif. Pindahkan data pengajar ke tabelnya sendiri.</p>
+<pre><code>CREATE TABLE pengajar (
+  id_pengajar SERIAL PRIMARY KEY,
+  nama TEXT NOT NULL,
+  hp   TEXT
+);
+CREATE TABLE kelas (
+  id_kelas SERIAL PRIMARY KEY,
+  nama_kelas TEXT NOT NULL,
+  id_pengajar INT REFERENCES pengajar(id_pengajar)
+);
+CREATE TABLE siswa (
+  id_siswa SERIAL PRIMARY KEY,
+  nama TEXT NOT NULL
+);
+CREATE TABLE pendaftaran (
+  id_siswa INT REFERENCES siswa(id_siswa),
+  id_kelas INT REFERENCES kelas(id_kelas),
+  tanggal_daftar DATE DEFAULT current_date,
+  PRIMARY KEY (id_siswa, id_kelas)
+);</code></pre>
+<figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Ringkasan tiga bentuk normal" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">3NF</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Kolom bukan kunci tidak bergantung pada kolom bukan kunci lain.</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">2NF</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Semua kolom bergantung pada seluruh kunci, bukan sebagian.</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">1NF</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Nilai atomik, tidak ada daftar dalam satu sel, baris unik.</text></svg><figcaption>Setiap tingkat memenuhi syarat tingkat di bawahnya.</figcaption></figure>
+<p>Sekarang nomor HP Muchson cukup diubah di <b>satu</b> baris, kelas baru bisa dibuat tanpa siswa, dan menghapus pendaftaran Citra tidak menghapus informasi pengajar.</p>
+<h2 id="kapan-denormalisasi-justru-tepat">Kapan denormalisasi justru tepat?</h2>
+<ul><li><b>Laporan dan analitik</b> yang membaca jutaan baris: tabel ringkasan atau materialized view lebih cepat.</li><li><b>Snapshot historis:</b> harga di tabel pesanan harus disalin dari tabel produk, karena harga produk bisa berubah setelah transaksi.</li><li><b>Kebutuhan baca yang sangat tinggi</b> dengan cache atau kolom hitungan (misalnya jumlah_komentar).</li></ul>
+<div class="callout info"><b>Aturan praktis</b><p>Mulailah dari desain ternormalisasi (biasanya 3NF). Denormalisasi adalah keputusan sadar berdasarkan pengukuran, bukan titik awal.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Sel berisi \"Python, Web, Scratch\" melanggar...","options":["1NF","2NF","3NF"],"answer":0,"why":"Satu sel harus berisi satu nilai."},{"q":"kelas → pengajar → hp_pengajar adalah contoh ketergantungan...","options":["Parsial","Transitif","Atomik"],"answer":1,"why":"hp bergantung pada kelas melalui pengajar."},{"q":"Kenapa harga disalin ke tabel pesanan?","options":["Kesalahan desain","Agar riwayat transaksi tidak berubah saat harga produk naik","Agar 3NF"],"answer":1,"why":"Ini denormalisasi yang disengaja untuk menyimpan fakta pada saat transaksi."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah perlu sampai BCNF atau 4NF?</summary><div>Untuk sebagian besar aplikasi bisnis, 3NF sudah cukup. BCNF dan bentuk lebih tinggi relevan pada kasus ketergantungan yang lebih rumit.</div></details>
+<details class="faq"><summary>Apakah normalisasi membuat query lebih lambat?</summary><div>Butuh JOIN lebih banyak, tetapi dengan index yang tepat JOIN di database relasional sangat cepat. Masalah performa biasanya datang dari index yang hilang.</div></details>
+<details class="faq"><summary>Bagaimana menggambar rancangannya?</summary><div>Gunakan ERD (Entity Relationship Diagram) dengan alat seperti dbdiagram.io atau draw.io.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://doi.org/10.1145/362384.362685" rel="noopener" target="_blank">E. F. Codd (1970): A Relational Model of Data for Large Shared Data Banks</a></li><li><a href="https://www.postgresql.org/docs/current/ddl-constraints.html" rel="noopener" target="_blank">PostgreSQL Docs: Constraints (primary key dan foreign key)</a></li><li><a href="https://muchson.web.id/artikel/database-sql-vs-nosql-bedanya/" rel="noopener" target="_blank">Database SQL vs NoSQL (artikel terkait)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

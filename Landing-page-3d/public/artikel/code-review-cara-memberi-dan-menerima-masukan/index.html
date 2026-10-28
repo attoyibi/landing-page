@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Review: Cara Memberi dan Menerima Masukan</title>
+<meta name="description" content="Panduan code review untuk tim developer: apa yang diperiksa, ukuran pull request ideal, cara menulis komentar yang membantu, dan menerima kritik.">
+<meta name="keywords" content="code review, pull request, kerja tim developer, GitHub, kualitas kode">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/">
+<meta property="og:title" content="Code Review: Cara Memberi dan Menerima Masukan">
+<meta property="og:description" content="Panduan code review untuk tim developer: apa yang diperiksa, ukuran pull request ideal, cara menulis komentar yang membantu, dan menerima kritik.">
+<meta property="og:image" content="https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Code Review: Cara Memberi dan Menerima Masukan">
+<meta name="twitter:description" content="Panduan code review untuk tim developer: apa yang diperiksa, ukuran pull request ideal, cara menulis komentar yang membantu, dan menerima kritik.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Code Review: Cara Memberi dan Menerima Masukan","description":"Panduan code review untuk tim developer: apa yang diperiksa, ukuran pull request ideal, cara menulis komentar yang membantu, dan menerima kritik.","image":["https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"code review, pull request, kerja tim developer, GitHub, kualitas kode","articleSection":"Rekayasa Software","wordCount":396,"mainEntityOfPage":"https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Code Review: Cara Memberi dan Menerima Masukan","item":"https://muchson.web.id/artikel/code-review-cara-memberi-dan-menerima-masukan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Berapa jumlah reviewer yang ideal?","acceptedAnswer":{"@type":"Answer","text":"Untuk sebagian besar perubahan, satu reviewer yang paham area itu sudah cukup. Perubahan berisiko tinggi seperti keamanan atau pembayaran layak ditinjau dua orang."}},{"@type":"Question","name":"Bolehkah AI dipakai untuk code review?","acceptedAnswer":{"@type":"Answer","text":"Boleh sebagai lapisan tambahan untuk menangkap hal umum. Keputusan desain dan konteks bisnis tetap perlu reviewer manusia."}},{"@type":"Question","name":"Bagaimana kalau di tim hanya saya developernya?","acceptedAnswer":{"@type":"Answer","text":"Review diri sendiri di tampilan diff setelah jeda beberapa jam, dan andalkan tes serta linter otomatis."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#untuk-apa-code-review">Untuk apa code review?</a></li><li><a href="#ukuran-pull-request-kecil-itu-cepat">Ukuran pull request: kecil itu cepat</a></li><li><a href="#apa-yang-diperiksa-berurutan-dari-yang-terpenting">Apa yang diperiksa, berurutan dari yang terpenting</a></li><li><a href="#menulis-komentar-yang-membantu">Menulis komentar yang membantu</a></li><li><a href="#untuk-penulis-pr-cara-menerima-masukan">Untuk penulis PR: cara menerima masukan</a></li><li><a href="#kecepatan-review-penting">Kecepatan review penting</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>Code Review: Cara Memberi dan Menerima Masukan</h1>
+<p class="lead">Code review adalah kebiasaan tim yang paling sering disalahpahami. Sebagian menganggapnya ajang mencari kesalahan, sebagian hanya mengetik "LGTM" tanpa membaca. Padahal tujuan utamanya sederhana: kesehatan kode tim terus membaik dari waktu ke waktu, dan pengetahuan tidak hanya tersimpan di kepala satu orang.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Code Review: Cara Memberi dan Menerima Masukan" fetchpriority="high"></figure>
+<h2 id="untuk-apa-code-review">Untuk apa code review?</h2>
+<ul><li><b>Menemukan bug lebih awal</b>, saat masih murah diperbaiki.</li><li><b>Menyebarkan pengetahuan:</b> lebih dari satu orang paham bagian sistem itu.</li><li><b>Menjaga konsistensi</b> desain dan gaya.</li><li><b>Mendidik:</b> developer baru belajar standar tim dari komentar nyata.</li></ul>
+<p>Panduan code review Google merumuskan standarnya dengan pragmatis: setujui perubahan bila perubahan itu <b>jelas memperbaiki kesehatan kode secara keseluruhan</b>, meski belum sempurna. Tidak ada kode yang sempurna; yang ada kode yang lebih baik.</p>
+<h2 id="ukuran-pull-request-kecil-itu-cepat">Ukuran pull request: kecil itu cepat</h2>
+<p>PR berisi 2.000 baris akan dibaca sekilas. PR berisi 200 baris akan dibaca dengan sungguh-sungguh. Pecah pekerjaan besar menjadi beberapa PR yang masing-masing bisa dipahami sendiri.</p>
+<figure class="diagram"><svg viewBox="0 0 640 176" role="img" aria-label="Perkiraan perhatian reviewer menurut ukuran PR (ilustrasi)" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><text x="160" y="29" text-anchor="end" font-size="13.5" fill="#0f1a33">&lt; 200 baris</text><rect x="170" y="12" width="380" height="26" rx="6" fill="#1e5ab2"/><text x="558" y="30" font-size="13.5" font-weight="700" fill="#0f1a33">90%</text><text x="160" y="69" text-anchor="end" font-size="13.5" fill="#0f1a33">200-400 baris</text><rect x="170" y="52" width="295.55555555555554" height="26" rx="6" fill="#1f7a46"/><text x="473.55555555555554" y="70" font-size="13.5" font-weight="700" fill="#0f1a33">70%</text><text x="160" y="109" text-anchor="end" font-size="13.5" fill="#0f1a33">400-1000 baris</text><rect x="170" y="92" width="168.88888888888889" height="26" rx="6" fill="#9a5b00"/><text x="346.8888888888889" y="110" font-size="13.5" font-weight="700" fill="#0f1a33">40%</text><text x="160" y="149" text-anchor="end" font-size="13.5" fill="#0f1a33">&gt; 1000 baris</text><rect x="170" y="132" width="63.33333333333333" height="26" rx="6" fill="#7a3fb4"/><text x="241.33333333333331" y="150" font-size="13.5" font-weight="700" fill="#0f1a33">15%</text></svg><figcaption>Ilustrasi pola umum, bukan data survei. Semakin besar PR, semakin dangkal pemeriksaannya.</figcaption></figure>
+<h2 id="apa-yang-diperiksa-berurutan-dari-yang-terpenting">Apa yang diperiksa, berurutan dari yang terpenting</h2>
+<ol><li><b>Desain:</b> apakah pendekatannya masuk akal dan cocok dengan sistem?</li><li><b>Kebenaran:</b> apakah melakukan yang dimaksud? Bagaimana kasus kosong, null, error jaringan?</li><li><b>Keamanan:</b> input divalidasi? Ada data sensitif yang bocor ke log?</li><li><b>Tes:</b> ada tes untuk perilaku baru dan kasus tepi?</li><li><b>Keterbacaan:</b> nama, struktur, komentar.</li><li><b>Gaya:</b> sebaiknya sudah diurus formatter, bukan manusia.</li></ol>
+<h2 id="menulis-komentar-yang-membantu">Menulis komentar yang membantu</h2>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk melihat versi yang lebih baik","items":[{"tag":"Kurang baik","front":"\"Ini salah.\"","backTag":"Lebih baik","back":"\"Kalau daftar pesanan kosong, baris 42 akan error karena indeks [0]. Bagaimana kalau dicek dulu panjangnya?\""},{"tag":"Kurang baik","front":"\"Kenapa tidak pakai cara yang benar?\"","backTag":"Lebih baik","back":"\"Ada helper formatRupiah() di utils yang sudah menangani pembulatan. Mungkin bisa dipakai di sini?\""},{"tag":"Kurang baik","front":"\"Ganti nama variabel.\"","backTag":"Lebih baik","back":"\"Nit: data agak umum. Mungkin pesananTertunda supaya jelas isinya?\""},{"tag":"Kurang baik","front":"Diam saja pada bagian yang bagus.","backTag":"Lebih baik","back":"\"Pemisahan validasi ke fungsi sendiri ini rapi sekali, jadi gampang dites.\""}]}</script></div>
+<table><thead><tr><th>Label</th><th>Artinya</th></tr></thead><tbody><tr><td><b>Nit:</b></td><td>Saran kecil, tidak memblokir.</td></tr><tr><td><b>Opsional:</b></td><td>Boleh diabaikan, hanya ide.</td></tr><tr><td><b>Pertanyaan:</b></td><td>Saya ingin memahami, belum tentu ada masalah.</td></tr><tr><td><b>Wajib/Blocking:</b></td><td>Harus diperbaiki sebelum merge (bug, keamanan).</td></tr></tbody></table>
+<p>Label seperti ini membuat penulis PR tahu mana yang harus dikerjakan dan mana yang boleh dilewati.</p>
+<h2 id="untuk-penulis-pr-cara-menerima-masukan">Untuk penulis PR: cara menerima masukan</h2>
+<ul><li>Tulis deskripsi PR: <b>apa</b> yang berubah, <b>mengapa</b>, dan <b>cara menguji</b>. Tambahkan tangkapan layar untuk perubahan tampilan.</li><li>Review kode Anda sendiri di tampilan diff sebelum meminta orang lain.</li><li>Ingat: yang dikomentari adalah kode, bukan Anda.</li><li>Bila tidak setuju, jelaskan alasannya dengan data. Bila buntu, diskusi singkat lewat panggilan lebih cepat dari 20 balasan komentar.</li><li>Balas setiap komentar, misalnya "Sudah diperbaiki di commit abc123".</li></ul>
+<h2 id="kecepatan-review-penting">Kecepatan review penting</h2>
+<p>PR yang menunggu dua hari membuat penulisnya berpindah konteks, lalu konflik merge bertambah. Banyak tim menyepakati target respons pertama dalam satu hari kerja. Respons pertama tidak harus approve; cukup komentar awal.</p>
+<div data-w="checklist"><script type="application/json">{"title":"Checklist sebelum klik Approve","items":["Saya paham tujuan perubahan ini.","Saya membaca seluruh diff, bukan hanya sekilas.","Kasus kosong, error, dan batas sudah dipikirkan.","Tidak ada rahasia (API key, password) di kode.","Ada tes untuk perilaku baru, atau alasan jelas kenapa tidak.","CI hijau."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Kapan sebaiknya reviewer menyetujui PR menurut panduan Google?","options":["Hanya bila sempurna","Bila jelas memperbaiki kesehatan kode secara keseluruhan","Bila penulisnya senior"],"answer":1,"why":"Kesempurnaan bukan syarat; perbaikan bersih adalah syarat."},{"q":"Siapa yang sebaiknya mengurus perdebatan spasi dan tanda kutip?","options":["Reviewer paling teliti","Formatter dan linter otomatis","Ketua tim"],"answer":1,"why":"Mesin konsisten dan tidak membuat orang tersinggung."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Berapa jumlah reviewer yang ideal?</summary><div>Untuk sebagian besar perubahan, satu reviewer yang paham area itu sudah cukup. Perubahan berisiko tinggi seperti keamanan atau pembayaran layak ditinjau dua orang.</div></details>
+<details class="faq"><summary>Bolehkah AI dipakai untuk code review?</summary><div>Boleh sebagai lapisan tambahan untuk menangkap hal umum. Keputusan desain dan konteks bisnis tetap perlu reviewer manusia.</div></details>
+<details class="faq"><summary>Bagaimana kalau di tim hanya saya developernya?</summary><div>Review diri sendiri di tampilan diff setelah jeda beberapa jam, dan andalkan tes serta linter otomatis.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://google.github.io/eng-practices/review/reviewer/standard.html" rel="noopener" target="_blank">Google Engineering Practices: The Standard of Code Review</a></li><li><a href="https://google.github.io/eng-practices/review/reviewer/comments.html" rel="noopener" target="_blank">Google Engineering Practices: How to write code review comments</a></li><li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews" rel="noopener" target="_blank">GitHub Docs: About pull request reviews</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a><a href="/artikel/ci-cd-untuk-pemula-github-actions/"><img src="/artikel/ci-cd-untuk-pemula-github-actions/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>CI/CD untuk Pemula: Otomasi Tes dan Deploy</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI/CD untuk Pemula: Otomasi Tes dan Deploy · Muhammad Muchson</title>
+<meta name="description" content="Apa itu CI/CD dan cara membuat pipeline pertama dengan GitHub Actions: tes otomatis, build, deploy, menyimpan secret dengan aman, dan kesalahan umum.">
+<meta name="keywords" content="CI/CD, GitHub Actions, DevOps, deploy otomatis, pipeline">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/">
+<meta property="og:title" content="CI/CD untuk Pemula: Otomasi Tes dan Deploy">
+<meta property="og:description" content="Apa itu CI/CD dan cara membuat pipeline pertama dengan GitHub Actions: tes otomatis, build, deploy, menyimpan secret dengan aman, dan kesalahan umum.">
+<meta property="og:image" content="https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-28">
+<meta property="article:section" content="Rekayasa Software">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CI/CD untuk Pemula: Otomasi Tes dan Deploy">
+<meta name="twitter:description" content="Apa itu CI/CD dan cara membuat pipeline pertama dengan GitHub Actions: tes otomatis, build, deploy, menyimpan secret dengan aman, dan kesalahan umum.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"CI/CD untuk Pemula: Otomasi Tes dan Deploy","description":"Apa itu CI/CD dan cara membuat pipeline pertama dengan GitHub Actions: tes otomatis, build, deploy, menyimpan secret dengan aman, dan kesalahan umum.","image":["https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/cover.png"],"datePublished":"2026-10-28","dateModified":"2026-10-28","inLanguage":"id","keywords":"CI/CD, GitHub Actions, DevOps, deploy otomatis, pipeline","articleSection":"Rekayasa Software","wordCount":304,"mainEntityOfPage":"https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"CI/CD untuk Pemula: Otomasi Tes dan Deploy","item":"https://muchson.web.id/artikel/ci-cd-untuk-pemula-github-actions/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah GitHub Actions gratis?","acceptedAnswer":{"@type":"Answer","text":"Untuk repositori publik, runner standar gratis. Repositori privat mendapat kuota menit gratis per bulan sesuai paket akun; cek halaman billing GitHub untuk angka terbaru."}},{"@type":"Question","name":"Selain GitHub Actions, ada apa saja?","acceptedAnswer":{"@type":"Answer","text":"GitLab CI, Bitbucket Pipelines, CircleCI, Jenkins, dan fitur build bawaan platform hosting seperti Vercel, Netlify, atau Cloudflare."}},{"@type":"Question","name":"Apakah proyek pribadi butuh CI?","acceptedAnswer":{"@type":"Answer","text":"CI paling sederhana (lint dan tes) hanya butuh beberapa baris YAML dan sangat membantu, bahkan untuk proyek satu orang."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#ci-dan-cd-dalam-satu-kalimat">CI dan CD dalam satu kalimat</a></li><li><a href="#pipeline-pertama-dengan-github-actions">Pipeline pertama dengan GitHub Actions</a></li><li><a href="#menyimpan-secret-dengan-benar">Menyimpan secret dengan benar</a></li><li><a href="#kebiasaan-yang-membuat-ci-bermanfaat">Kebiasaan yang membuat CI bermanfaat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › Rekayasa Software</p>
+<span class="cat">Rekayasa Software</span>
+<h1>CI/CD untuk Pemula: Otomasi Tes dan Deploy</h1>
+<p class="lead">Pernah lupa menjalankan tes sebelum upload ke server? Atau deploy manual yang langkahnya hanya diingat satu orang? CI/CD memindahkan langkah-langkah itu ke mesin: setiap kali kode dikirim, tes berjalan sendiri, dan bila semuanya hijau, aplikasi bisa terpasang otomatis.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-28">28 Oktober 2026</time><span>·</span><span>2 menit baca</span></div>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="CI/CD untuk Pemula: Otomasi Tes dan Deploy" fetchpriority="high"></figure>
+<h2 id="ci-dan-cd-dalam-satu-kalimat">CI dan CD dalam satu kalimat</h2>
+<ul><li><b>Continuous Integration (CI):</b> setiap perubahan kode digabung sering dan otomatis diuji, sehingga kesalahan ketahuan dalam menit, bukan minggu.</li><li><b>Continuous Delivery:</b> kode yang lolos selalu dalam keadaan siap dirilis; rilis tinggal satu klik.</li><li><b>Continuous Deployment:</b> selangkah lebih jauh, kode yang lolos langsung terpasang ke produksi tanpa klik.</li></ul>
+<figure class="diagram"><svg viewBox="0 0 542 228" role="img" aria-label="Alur pipeline sederhana" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Push / PR</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">developer mengirim</tspan><tspan x="85" dy="14">kode</tspan></text><line x1="164" y1="52" x2="192" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Install</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">ambil dependensi</tspan></text><line x1="350" y1="52" x2="378" y2="52" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="84" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Lint &amp; tes</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">gagal = berhenti</tspan></text><path d="M457 98 V124 H85 V130" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="150" r="11" fill="#7a3fb4"/><text x="26" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Build</tspan></text><text x="85" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">hasil siap pakai</tspan></text><line x1="164" y1="176" x2="192" y2="176" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="134" width="150" height="84" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="150" r="11" fill="#b3261e"/><text x="212" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Deploy</tspan></text><text x="271" y="194" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">staging atau produksi</tspan></text></svg><figcaption>Setiap langkah adalah gerbang. Bila satu gagal, langkah berikutnya tidak berjalan.</figcaption></figure>
+<h2 id="pipeline-pertama-dengan-github-actions">Pipeline pertama dengan GitHub Actions</h2>
+<p>GitHub Actions membaca file YAML di folder <code>.github/workflows/</code>. Contoh berikut menjalankan lint dan tes untuk proyek Node.js setiap ada push dan pull request.</p>
+<pre><code># .github/workflows/ci.yml
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test</code></pre>
+<table><thead><tr><th>Bagian</th><th>Arti</th></tr></thead><tbody><tr><td><code>on</code></td><td>Kapan workflow berjalan (push, PR, jadwal).</td></tr><tr><td><code>jobs</code></td><td>Kumpulan pekerjaan; bisa paralel.</td></tr><tr><td><code>runs-on</code></td><td>Mesin virtual yang dipakai.</td></tr><tr><td><code>steps</code></td><td>Langkah berurutan: aksi siap pakai (<code>uses</code>) atau perintah (<code>run</code>).</td></tr><tr><td><code>npm ci</code></td><td>Install persis sesuai package-lock, lebih konsisten dari npm install.</td></tr></tbody></table>
+<h3>Versi Python</h3>
+<pre><code>      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: pytest</code></pre>
+<h2 id="menyimpan-secret-dengan-benar">Menyimpan secret dengan benar</h2>
+<p>Token deploy, API key, dan password database <b>tidak boleh</b> ditulis di file workflow. Simpan di <i>Settings → Secrets and variables → Actions</i>, lalu panggil sebagai <code>${{ secrets.NAMA }}</code>. GitHub menyamarkan nilainya di log.</p>
+<pre><code>      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}</code></pre>
+<div class="callout bad"><b>Secret yang bocor</b><p>Bila sebuah secret pernah ter-commit ke repositori, anggap sudah bocor walau commit-nya dihapus. Cabut (revoke) dan buat yang baru.</p></div>
+<h2 id="kebiasaan-yang-membuat-ci-bermanfaat">Kebiasaan yang membuat CI bermanfaat</h2>
+<ul><li><b>Cepat:</b> usahakan di bawah 10 menit. Pakai cache dependensi.</li><li><b>Wajib hijau sebelum merge:</b> aktifkan branch protection yang mensyaratkan status check.</li><li><b>Pisahkan staging dan produksi:</b> deploy otomatis ke staging, produksi dengan persetujuan.</li><li><b>Jangan abaikan tes yang "kadang gagal":</b> tes tidak stabil membuat tim berhenti percaya pada CI. Perbaiki akarnya.</li></ul>
+<div data-w="cards"><script type="application/json">{"title":"Ketuk untuk melihat solusinya","items":[{"tag":"Masalah","front":"CI butuh 25 menit setiap push.","backTag":"Solusi","back":"Cache dependensi, jalankan job paralel, dan pisahkan tes end-to-end yang lambat ke jadwal malam."},{"tag":"Masalah","front":"\"Di laptop saya jalan, di CI gagal.\"","backTag":"Solusi","back":"Biasanya beda versi runtime atau dependensi. Kunci versi (lockfile, .nvmrc) dan pakai npm ci."},{"tag":"Masalah","front":"Deploy produksi terjadi dari branch fitur.","backTag":"Solusi","back":"Tambahkan kondisi if pada branch main dan environment dengan reviewer wajib."}]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Di mana file workflow GitHub Actions disimpan?","options":["/workflows",".github/workflows/","config/ci"],"answer":1,"why":"GitHub hanya membaca workflow di .github/workflows/."},{"q":"Beda continuous delivery dan continuous deployment?","options":["Tidak ada","Delivery siap rilis dengan satu klik; deployment langsung terpasang otomatis","Deployment hanya untuk mobile"],"answer":1,"why":"Perbedaannya pada langkah terakhir: manual atau otomatis."}]}</script></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah GitHub Actions gratis?</summary><div>Untuk repositori publik, runner standar gratis. Repositori privat mendapat kuota menit gratis per bulan sesuai paket akun; cek halaman billing GitHub untuk angka terbaru.</div></details>
+<details class="faq"><summary>Selain GitHub Actions, ada apa saja?</summary><div>GitLab CI, Bitbucket Pipelines, CircleCI, Jenkins, dan fitur build bawaan platform hosting seperti Vercel, Netlify, atau Cloudflare.</div></details>
+<details class="faq"><summary>Apakah proyek pribadi butuh CI?</summary><div>CI paling sederhana (lint dan tes) hanya butuh beberapa baris YAML dan sangat membantu, bahkan untuk proyek satu orang.</div></details>
+<h2 id="sumber">Sumber dan bacaan lanjut</h2><ul class="sources"><li><a href="https://docs.github.com/en/actions/about-github-actions/understanding-github-actions" rel="noopener" target="_blank">GitHub Docs: Understanding GitHub Actions</a></li><li><a href="https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions" rel="noopener" target="_blank">GitHub Docs: Using secrets in GitHub Actions</a></li><li><a href="https://martinfowler.com/articles/continuousIntegration.html" rel="noopener" target="_blank">Martin Fowler: Continuous Integration</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/"><img src="/artikel/clean-code-prinsip-menulis-kode-yang-mudah-dibaca/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Clean Code: Prinsip Menulis Kode yang Mudah Dibaca</span></a><a href="/artikel/code-review-cara-memberi-dan-menerima-masukan/"><img src="/artikel/code-review-cara-memberi-dan-menerima-masukan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Code Review: Cara Memberi dan Menerima Masukan</span></a><a href="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/"><img src="/artikel/unit-testing-untuk-pemula-kenapa-dan-cara-mulai/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Unit Testing untuk Pemula: Kenapa dan Cara Memulai</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
