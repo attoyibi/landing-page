@@ -5,6 +5,8 @@
 export const SITE = 'https://muchson.web.id';
 export const STORE = 'https://cms-online-store-glasses.muhammadmuchson.workers.dev/';
 export const PIXELKODE = 'https://pixelkode-vp.vercel.app';
+// A link to PixelKode for use inside article text, tagged so visits from each article can be counted.
+export const pk = (slug, path = '/coba') => `${PIXELKODE}${path}?utm_source=muchson.web.id&amp;utm_medium=artikel&amp;utm_campaign=${slug}`;
 
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const strip = s => String(s).replace(/<[^>]+>/g, '');
@@ -202,8 +204,7 @@ export function cta(a) {
     }
     if (a.cta === 'pixelkode') {
         // Texts and links can be changed later in public/artikel/_shared/pixelkode.json without regenerating.
-        const utm = `?utm_source=muchson.web.id&amp;utm_medium=artikel&amp;utm_campaign=${a.slug}`;
-        return `<aside class="cta kids" data-promo="pixelkode.json"><span class="tag" data-p="tag">Kelas coding anak · PixelKode</span><h2 data-p="title">Coba 2 pelajaran coding gratis untuk anak 8–11 tahun</h2>${a.ctaNote ? `<p class="note">${a.ctaNote}</p>` : ''}<p data-p="text">PixelKode adalah kelas visual programming berbahasa Indonesia yang saya kembangkan: 32 pelajaran berurutan, latihan Robo, dan Studio dengan blok seperti Scratch. Berjalan di browser, tanpa instal, tanpa kartu kredit.</p><div class="cta-row"><a class="btn" data-p="link" href="${PIXELKODE}/coba${utm}" target="_blank" rel="noopener">Coba gratis sekarang</a><a class="btn ghost" data-p="link2" href="${PIXELKODE}/${utm}" target="_blank" rel="noopener">Lihat kurikulum dan harga</a></div><small data-p="terms">Pelajaran 1 dan 2 gratis tanpa daftar. Paket berbayar tidak diperpanjang otomatis.</small></aside>`;
+        return `<aside class="cta kids" data-promo="pixelkode.json"><span class="tag" data-p="tag">Kelas coding anak · PixelKode</span><h2 data-p="title">Coba 2 pelajaran coding gratis untuk anak 8–11 tahun</h2>${a.ctaNote ? `<p class="note">${a.ctaNote}</p>` : ''}<p data-p="text">PixelKode adalah kelas visual programming berbahasa Indonesia yang saya kembangkan: 32 pelajaran berurutan, latihan Robo, dan Studio dengan blok seperti Scratch. Berjalan di browser, tanpa instal, tanpa kartu kredit.</p><div class="cta-row"><a class="btn" data-p="link" href="${pk(a.slug)}" target="_blank" rel="noopener">Coba gratis sekarang</a><a class="btn ghost" data-p="link2" href="${pk(a.slug, '/')}" target="_blank" rel="noopener">Lihat kurikulum dan harga</a></div><small data-p="terms">Pelajaran 1 dan 2 gratis tanpa daftar. Paket berbayar tidak diperpanjang otomatis.</small></aside>`;
     }
     if (a.cta === 'jasa') {
         return `<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>`;
