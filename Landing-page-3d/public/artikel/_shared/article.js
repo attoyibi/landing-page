@@ -764,15 +764,129 @@
         });
 
         // The promo text lives in one file so it can change without touching the articles.
+        // data-promo names the file in _shared/ (empty = promo.json, the Lensara box; pixelkode.json for PixelKode).
         const promo = $('.cta[data-promo]');
         if (promo) {
-            fetch('/artikel/_shared/promo.json').then(r => r.json()).then(p => {
+            fetch('/artikel/_shared/' + (promo.dataset.promo || 'promo.json')).then(r => r.json()).then(p => {
                 const set = (s, v) => { const n = $(s, promo); if (n && v) n.innerHTML = v; };
                 set('[data-p=tag]', p.tag); set('[data-p=title]', p.title); set('[data-p=text]', p.text); set('[data-p=terms]', p.terms);
-                const a = $('[data-p=link]', promo); if (a && p.url) a.href = p.url;
+                // keep the tracking query (utm_...) that the static link already carries
+                const link = (sel, url, label) => {
+                    const a = $(sel, promo); if (!a) return;
+                    if (url) a.href = url.includes('?') ? url : url + (a.getAttribute('href').match(/\?.*$/) || [''])[0];
+                    if (label) a.textContent = label;
+                };
+                link('[data-p=link]', p.url, p.button); link('[data-p=link2]', p.url2, p.button2);
             }).catch(() => {});
         }
     }
+
+    /* ---------- robo: grid robot puzzle, same map legend as the PixelKode robot lessons ---------- */
+    // cfg.levels: [{ name, goal, map: ['#####', '#>.F#', '#####'], max }]
+    //   map: # wall, . floor, > < ^ v robot start (facing right/left/up/down), F flag, * gem
+    //   max: number of blocks for the efficiency star (optional). cfg.repeat: true adds "ulangi N kali".
+    W.robo = (body, cfg) => {
+        const levels = cfg.levels || [{ map: cfg.map, goal: cfg.goal, max: cfg.max }];
+        const D = [[0, -1], [1, 0], [0, 1], [-1, 0]], ARROW = ['▲', '▶', '▼', '◀'];
+        const NAME = { maju: '⬆ maju 1 langkah', kiri: '↺ belok kiri', kanan: '↻ belok kanan', ambil: '💎 ambil permata' };
+        const hasGem = levels.some(l => l.map.join('').includes('*'));
+        const cmds = cfg.cmds || ['maju', 'kiri', 'kanan'].concat(hasGem ? ['ambil'] : []);
+        let li = 0, prog = [], rep = 1, timer = null, world;
+        const parse = rows => {
+            const w = { h: rows.length, w: Math.max(...rows.map(r => r.length)), wall: new Set(), gem: new Set(), trail: new Set() };
+            rows.forEach((row, y) => [...row].forEach((c, x) => {
+                const k = x + ',' + y;
+                if (c === '#') w.wall.add(k); else if (c === '*') w.gem.add(k); else if (c === 'F') w.flag = k;
+                else if ('^>v<'.includes(c)) w.bot = { x, y, d: '^>v<'.indexOf(c) };
+            }));
+            w.start = { ...w.bot }; return w;
+        };
+        const head = el('p', { class: 'wd' });
+        const grid = el('div', { class: 'robo', role: 'img' });
+        const list = el('ol', { class: 'robo-prog', 'aria-label': 'Program yang disusun' });
+        const info = el('div', { class: 'out', 'aria-live': 'polite' });
+        const pal = el('div', { class: 'row' });
+        cmds.forEach(c => {
+            const b = el('button', { class: 'chip', type: 'button' }, NAME[c]);
+            b.onclick = () => { if (!timer && prog.length < 30) { prog.push(c); drawProg(); } };
+            pal.append(b);
+        });
+        const repSel = el('select', { 'aria-label': 'Ulangi program', style: 'width:auto' });
+        [1, 2, 3, 4, 5, 6].forEach(n => repSel.append(el('option', { value: n }, n === 1 ? 'jalankan 1 kali' : `ulangi ${n} kali`)));
+        repSel.onchange = () => { rep = +repSel.value; drawProg(); };
+        const go = el('button', { class: 'btn', type: 'button' }, 'Jalankan ▶');
+        const undo = el('button', { class: 'btn ghost', type: 'button' }, 'Hapus terakhir');
+        const clr = el('button', { class: 'btn ghost', type: 'button' }, 'Kosongkan');
+        const nxt = el('button', { class: 'btn ghost', type: 'button', hidden: '' }, 'Level berikutnya →');
+        const draw = () => {
+            const w = world;
+            grid.style.gridTemplateColumns = `repeat(${w.w}, 1fr)`;
+            grid.style.maxWidth = Math.min(460, w.w * 56) + 'px';
+            grid.innerHTML = '';
+            for (let y = 0; y < w.h; y++) for (let x = 0; x < w.w; x++) {
+                const k = x + ',' + y, b = el('b');
+                if (w.wall.has(k)) b.className = 'w';
+                else if (w.trail.has(k)) b.className = 't';
+                if (w.bot.x === x && w.bot.y === y) b.innerHTML = `<span class="r">${ARROW[w.bot.d]}</span>`;
+                else if (w.gem.has(k)) b.textContent = '💎';
+                else if (w.flag === k) b.textContent = '🏁';
+                grid.append(b);
+            }
+            grid.setAttribute('aria-label', `Peta ${w.w} kali ${w.h} kotak. Robo menghadap ${['atas', 'kanan', 'bawah', 'kiri'][w.bot.d]}. Permata tersisa ${w.gem.size}.`);
+        };
+        const drawProg = (on = -1) => {
+            list.innerHTML = prog.length ? prog.map((c, i) => `<li class="${i === on ? 'on' : ''}">${esc(NAME[c])}</li>`).join('') : '<li class="empty">Program masih kosong. Ketuk perintah di atas.</li>';
+            if (rep > 1 && prog.length) list.insertAdjacentHTML('afterbegin', `<li class="rep">🔁 ulangi ${rep} kali:</li>`);
+        };
+        const load = () => {
+            const L = levels[li];
+            world = parse(L.map); prog = []; rep = 1; repSel.value = '1';
+            head.innerHTML = `${levels.length > 1 ? `<b>Level ${li + 1}/${levels.length}${L.name ? ': ' + esc(L.name) : ''}.</b> ` : ''}${esc(L.goal || 'Bawa Robo ke bendera 🏁.')}`;
+            info.textContent = 'Susun perintah, lalu tekan Jalankan.'; nxt.hidden = true; draw(); drawProg();
+        };
+        const reset = () => { world = parse(levels[li].map); draw(); };
+        const stop = msg => { clearInterval(timer); timer = null; info.innerHTML = msg; go.disabled = false; };
+        go.onclick = () => {
+            if (!prog.length) { info.textContent = 'Program masih kosong.'; return; }
+            reset(); go.disabled = true;
+            const steps = []; for (let r = 0; r < rep; r++) prog.forEach((c, i) => steps.push([c, i]));
+            let k = 0;
+            timer = setInterval(() => {
+                const w = world, L = levels[li];
+                if (k >= steps.length) {
+                    const ok = w.flag === w.bot.x + ',' + w.bot.y && w.gem.size === 0;
+                    const used = prog.length + (rep > 1 ? 1 : 0);
+                    if (!ok) return stop(w.gem.size ? `Program selesai, tapi masih ada ${w.gem.size} permata. Coba ikuti jalannya dengan jari, kotak demi kotak.` : 'Program selesai, tapi Robo belum sampai di bendera. Hitung lagi langkahnya.');
+                    const star = L.max ? (used <= L.max ? ' ⭐ Bintang efisiensi: program sudah sependek mungkin!' : ` Bisakah dibuat lebih pendek? Targetnya ${L.max} blok.`) : '';
+                    if (li < levels.length - 1) nxt.hidden = false;
+                    return stop(`<b>Berhasil dengan ${used} blok.</b>${star}`);
+                }
+                const [c, i] = steps[k++];
+                drawProg(i);
+                if (c === 'kiri') w.bot.d = (w.bot.d + 3) % 4;
+                else if (c === 'kanan') w.bot.d = (w.bot.d + 1) % 4;
+                else if (c === 'ambil') {
+                    const key = w.bot.x + ',' + w.bot.y;
+                    if (!w.gem.has(key)) { draw(); return stop(`Langkah ${k}: tidak ada permata di kotak ini. Robo harus berdiri di atas permata dulu.`); }
+                    w.gem.delete(key);
+                } else {
+                    const nx = w.bot.x + D[w.bot.d][0], ny = w.bot.y + D[w.bot.d][1];
+                    if (nx < 0 || ny < 0 || nx >= w.w || ny >= w.h || w.wall.has(nx + ',' + ny)) { draw(); return stop(`Aduh, langkah ${k}: Robo menabrak dinding. Itu namanya bug, dan wajar terjadi. Perbaiki lalu coba lagi.`); }
+                    w.trail.add(w.bot.x + ',' + w.bot.y); w.bot.x = nx; w.bot.y = ny;
+                }
+                draw();
+            }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 120 : 420);
+        };
+        undo.onclick = () => { if (!timer) { prog.pop(); drawProg(); } };
+        clr.onclick = () => { if (!timer) { prog = []; drawProg(); reset(); info.textContent = 'Susun perintah, lalu tekan Jalankan.'; } };
+        nxt.onclick = () => { li++; load(); };
+        const ctl = el('div', { class: 'row', style: 'margin-top:8px' });
+        ctl.append(go, undo, clr, nxt);
+        body.append(head, grid, el('p', { class: 'wd', style: 'margin:10px 0 4px' }, 'Perintah:'), pal);
+        if (cfg.repeat) { const r = el('div', { class: 'row', style: 'margin-top:8px' }); r.append(repSel); body.append(r); }
+        body.append(list, ctl, info);
+        load();
+    };
 
     function init() {
         chrome();

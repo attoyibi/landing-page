@@ -4,6 +4,7 @@
 
 export const SITE = 'https://muchson.web.id';
 export const STORE = 'https://cms-online-store-glasses.muhammadmuchson.workers.dev/';
+export const PIXELKODE = 'https://pixelkode-vp.vercel.app';
 
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const strip = s => String(s).replace(/<[^>]+>/g, '');
@@ -131,6 +132,8 @@ const PALETTE = {
     'Teknologi Sehari-hari': ['#1b3b6f', '#2f6fd0', 'shield'],
     'Belajar & Produktivitas': ['#7a3b00', '#c9760a', 'book'],
     'Karier & Freelance': ['#1c5a34', '#1f7a46', 'coin'],
+    'Coding untuk Anak': ['#5a2d91', '#e0761b', 'blocks'],
+    'Pendidikan Anak': ['#8a2456', '#d0487a', 'sprout'],
 };
 const MOTIF = {
     eye: '<ellipse cx="0" cy="0" rx="150" ry="85" fill="none" stroke="#fff" stroke-width="12"/><circle cx="0" cy="0" r="50" fill="#fff"/><circle cx="0" cy="0" r="22" fill="#0f3d8a"/>',
@@ -138,6 +141,8 @@ const MOTIF = {
     code: '<g stroke="#fff" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-60 -60L-130 0L-60 60"/><path d="M60 -60L130 0L60 60"/><path d="M18 -75L-18 75"/></g>',
     shield: '<path d="M0 -95L85 -60V10C85 60 40 90 0 105C-40 90 -85 60 -85 10V-60Z" fill="none" stroke="#fff" stroke-width="12"/><path d="M-35 5L-8 32L40 -25" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>',
     book: '<g fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round"><path d="M0 -60C-40 -80 -90 -80 -130 -62V70C-90 52 -40 52 0 72Z"/><path d="M0 -60C40 -80 90 -80 130 -62V70C90 52 40 52 0 72Z"/></g>',
+    blocks: '<g stroke="#fff" stroke-width="9" fill="none" stroke-linejoin="round"><path d="M-130 -95H-70L-60 -82H-30L-20 -95H70V-45H-20L-30 -32H-60L-70 -45H-130Z"/><path d="M-110 -30H-50L-40 -17H-10L0 -30H130V20H0L-10 33H-40L-50 20H-110Z"/><path d="M-130 35H-70L-60 48H-30L-20 35H40V85H-130Z"/></g>',
+    sprout: '<g fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M0 100V-10"/><path d="M0 20C-20 -40 -80 -50 -120 -40C-110 0 -60 30 0 20Z"/><path d="M0 -10C15 -70 70 -95 115 -85C110 -40 60 -5 0 -10Z"/><path d="M-80 100H80"/></g>',
     coin: '<circle cx="0" cy="0" r="85" fill="none" stroke="#fff" stroke-width="12"/><text x="0" y="28" text-anchor="middle" font-size="86" font-weight="700" fill="#fff" font-family="Arial,sans-serif">Rp</text>',
 };
 export function coverSvg(a) {
@@ -150,6 +155,20 @@ export function coverSvg(a) {
 /* ------------------------------------------------------------------ page */
 const dateId = iso => new Date(`${iso}T00:00:00`).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 const widgetJson = cfg => JSON.stringify(cfg).replace(/</g, '\\u003c');
+
+/* Scratch-style block stacks, static HTML (readable by search engines and screen readers).
+   One block = [category, text, children?, elseChildren?]. In the text, (x) is a number/text input,
+   [x] a dropdown and {x} a condition. A block whose text starts with "ketika" or "definisikan" is a hat. */
+const SB_CAT = { event: 'ev', control: 'ct', motion: 'mo', looks: 'lo', sound: 'so', sensing: 'se', operator: 'op', variable: 'va', list: 'li', my: 'my', pen: 'pe' };
+const sbText = t => esc(t).replace(/\(([^()]*)\)/g, '<span class="sb-in">$1</span>').replace(/\[([^[\]]*)\]/g, '<span class="sb-dd">$1 ▾</span>').replace(/\{([^{}]*)\}/g, '<span class="sb-bool">$1</span>');
+function sbStack(list) {
+    return list.map(([cat, text, inner, inner2]) => {
+        const c = 'sb-' + (SB_CAT[cat] || cat);
+        if (!inner) return `<div class="sb-b ${c}${/^(ketika|definisikan)/.test(text) ? ' hat' : ''}">${sbText(text)}</div>`;
+        return `<div class="sb-c ${c}"><div class="sb-h">${sbText(text)}</div><div class="sb-i">${sbStack(inner)}</div>${inner2 ? `<div class="sb-h">jika tidak</div><div class="sb-i">${sbStack(inner2)}</div>` : ''}<div class="sb-f"></div></div>`;
+    }).join('');
+}
+const sbPlain = list => list.map(([, t, i, j]) => strip(t) + (i ? ' { ' + sbPlain(i) + (j ? ' } jika tidak { ' + sbPlain(j) : '') + ' }' : '')).join(', ');
 
 function renderBlock(b, ctx) {
     if (typeof b === 'string') return `<p>${b}</p>`;
@@ -167,6 +186,10 @@ function renderBlock(b, ctx) {
         if (!fn) throw new Error(`diagram tidak dikenal: ${b.svg}`);
         return `<figure class="diagram">${fn(b)}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
     }
+    if (b.blocks || b.scripts) {
+        const scripts = b.scripts || [b.blocks];
+        return `<figure class="diagram sbs-fig"><div class="sbs" role="img" aria-label="${esc('Contoh blok: ' + scripts.map(sbPlain).join(' | '))}">${scripts.map(s => `<div class="sb">${sbStack(s)}</div>`).join('')}</div>${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
+    }
     if (b.svgraw) return `<figure class="diagram">${b.svgraw}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
     throw new Error('blok tidak dikenal: ' + JSON.stringify(b).slice(0, 80));
 }
@@ -176,6 +199,11 @@ const textOf = a => strip([a.lead, ...a.body.map(b => (typeof b === 'string' ? b
 export function cta(a) {
     if (a.cta === 'lensara') {
         return `<aside class="cta" data-promo><span class="tag" data-p="tag">Info toko Lensara</span><h2 data-p="title">Promo sekarang: cukup Rp100.000</h2><p data-p="text">Lensara adalah optik di Madiun yang melayani konsultasi, pilihan frame, dan lensa minus, silinder, sampai blue light. Tanyakan kebutuhan mata Anda, lalu ambil promo yang sedang berjalan.</p><a class="btn" data-p="link" href="${STORE}" target="_blank" rel="noopener">Lihat koleksi dan promo</a><small data-p="terms">Syarat dan ketentuan berlaku. Cek rincian promo, ketersediaan, dan produk yang ikut promo di toko sebelum memesan.</small></aside>`;
+    }
+    if (a.cta === 'pixelkode') {
+        // Texts and links can be changed later in public/artikel/_shared/pixelkode.json without regenerating.
+        const utm = `?utm_source=muchson.web.id&amp;utm_medium=artikel&amp;utm_campaign=${a.slug}`;
+        return `<aside class="cta kids" data-promo="pixelkode.json"><span class="tag" data-p="tag">Kelas coding anak · PixelKode</span><h2 data-p="title">Coba 2 pelajaran coding gratis untuk anak 8–11 tahun</h2>${a.ctaNote ? `<p class="note">${a.ctaNote}</p>` : ''}<p data-p="text">PixelKode adalah kelas visual programming berbahasa Indonesia yang saya kembangkan: 32 pelajaran berurutan, latihan Robo, dan Studio dengan blok seperti Scratch. Berjalan di browser, tanpa instal, tanpa kartu kredit.</p><div class="cta-row"><a class="btn" data-p="link" href="${PIXELKODE}/coba${utm}" target="_blank" rel="noopener">Coba gratis sekarang</a><a class="btn ghost" data-p="link2" href="${PIXELKODE}/${utm}" target="_blank" rel="noopener">Lihat kurikulum dan harga</a></div><small data-p="terms">Pelajaran 1 dan 2 gratis tanpa daftar. Paket berbayar tidak diperpanjang otomatis.</small></aside>`;
     }
     if (a.cta === 'jasa') {
         return `<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>`;

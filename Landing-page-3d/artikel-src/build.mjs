@@ -3,7 +3,7 @@
 // (Only needed for articles written as content objects. A hand-made HTML file dropped into
 //  public/artikel/<slug>/ works without this; see README.md.)
 
-import { readdir, writeFile, mkdir } from 'node:fs/promises';
+import { readdir, readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { Resvg } from '@resvg/resvg-js';
@@ -31,6 +31,11 @@ for (const a of all) {
     await mkdir(dir, { recursive: true });
     const svg = coverSvg(a);
     await writeFile(join(dir, 'index.html'), page(a, all));
+    // Re-render the PNG only when the cover changed: font rendering differs between machines, so
+    // regenerating every PNG would rewrite all of them on each run.
+    const same = await readFile(join(dir, 'cover.svg'), 'utf8').then(old => old === svg, () => false)
+        && await access(join(dir, 'cover.png')).then(() => true, () => false);
+    if (same) continue;
     await writeFile(join(dir, 'cover.svg'), svg);
     const png = new Resvg(svg, { font: { loadSystemFonts: true, defaultFontFamily: 'Arial' }, fitTo: { mode: 'width', value: 1200 } }).render().asPng();
     await writeFile(join(dir, 'cover.png'), png);
