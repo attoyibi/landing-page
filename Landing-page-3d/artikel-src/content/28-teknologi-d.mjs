@@ -4,7 +4,7 @@ const C = 'Teknologi Sehari-hari';
 export default [
     {
         slug: 'akun-google-gmail-diretas-cara-memulihkan',
-        title: 'Akun Google atau Gmail Diretas: Cara Memulihkan dan Mengamankan',
+        title: 'Akun Google atau Gmail Diretas: Cara Memulihkannya',
         description: 'Tanda akun Google atau Gmail diretas, langkah darurat memulihkan lewat jalur resmi Google, memeriksa perangkat dan aplikasi pihak ketiga, serta pengaturan agar tidak terulang.',
         date: D, category: C, tags: ['akun Google diretas', 'Gmail diretas', 'pemulihan akun Google', 'keamanan akun', '2FA'], cta: 'none',
         lead: 'Akun Google adalah kunci banyak hal: Gmail, foto, kontak, YouTube, Drive, bahkan login ke aplikasi lain. Bila akun ini diambil alih, dampaknya bisa luas. Artikel ini menjelaskan tanda-tanda akun diretas, langkah pemulihan lewat jalur resmi, dan pengaturan yang membuatnya jauh lebih sulit terulang.',
@@ -67,7 +67,7 @@ export default [
     {
         slug: 'data-pribadi-bocor-langkah-yang-harus-dilakukan',
         title: 'Data Pribadi Bocor: Langkah yang Harus Dilakukan',
-        description: 'Apa yang harus dilakukan saat data pribadi bocor: cek apakah email Anda ada di kebocoran, prioritas akun yang diamankan, waspada penipuan lanjutan, dan hak Anda menurut UU PDP.',
+        description: 'Yang harus dilakukan saat data pribadi bocor: cek email Anda di kebocoran, akun yang diamankan lebih dulu, waspada penipuan lanjutan, dan hak Anda di UU PDP.',
         date: D, category: C, tags: ['data bocor', 'kebocoran data', 'UU PDP', 'perlindungan data pribadi', 'keamanan akun'], cta: 'none',
         lead: 'Berita kebocoran data muncul berkali-kali: nama, NIK, nomor HP, email, bahkan alamat. Kita tidak bisa menarik kembali data yang sudah bocor. Yang bisa dilakukan adalah memperkecil dampaknya: mengamankan akun penting dan mewaspadai penipuan yang memanfaatkan data itu.',
         body: [
@@ -128,7 +128,7 @@ export default [
     {
         slug: 'tertipu-online-langkah-darurat-dan-cara-melapor',
         title: 'Tertipu Online? Langkah Darurat dan Cara Melapor',
-        description: 'Langkah darurat setelah tertipu transfer atau belanja online: hubungi bank, lapor ke Indonesia Anti-Scam Centre OJK, CekRekening.id, polisi, dan cara menyimpan bukti yang benar.',
+        description: 'Langkah darurat setelah tertipu transfer atau belanja online: hubungi bank, lapor ke IASC OJK, CekRekening.id, dan polisi, plus cara menyimpan bukti.',
         date: D, category: C, tags: ['tertipu online', 'lapor penipuan', 'IASC OJK', 'cek rekening penipu', 'penipuan transfer'], cta: 'none',
         lead: 'Sudah transfer, barang tidak datang, dan nomor penjual tidak bisa dihubungi. Rasa panik dan malu sering membuat korban diam. Padahal dalam kasus penipuan transfer, kecepatan melapor sangat menentukan: semakin cepat rekening pelaku diblokir, semakin besar peluang dana tertahan.',
         body: [
@@ -293,7 +293,7 @@ export default [
     {
         slug: 'hp-disadap-atau-kena-virus-tanda-dan-cara-cek',
         title: 'HP Disadap atau Kena Virus? Tanda dan Cara Mengeceknya',
-        description: 'Tanda HP terkena malware atau aplikasi penyadap (stalkerware), cara memeriksa di Android dan iPhone, langkah membersihkan dengan aman, dan cara mencegahnya, tanpa panik berlebihan.',
+        description: 'Tanda HP terkena malware atau aplikasi penyadap, cara memeriksa di Android dan iPhone, langkah membersihkan dengan aman, dan cara mencegahnya.',
         date: D, category: C, tags: ['HP disadap', 'HP kena virus', 'stalkerware', 'malware Android', 'keamanan HP'], cta: 'none',
         lead: 'Baterai cepat panas, iklan muncul di mana-mana, atau seseorang seolah tahu isi chat Anda. Wajar bila mulai curiga HP disadap atau terkena virus. Banyak gejala sebenarnya punya penyebab biasa, tetapi ada tanda-tanda yang memang perlu ditanggapi serius. Artikel ini membantu membedakannya dan memberi langkah pemeriksaan yang aman.',
         body: [
