@@ -47,6 +47,8 @@ if (drafts.length) console.log(`Draf (belum didaftarkan di src/data/articles.js)
 if (errors.length) { console.error('\nArtikel bermasalah:\n- ' + errors.join('\n- ') + '\n'); process.exit(1); }
 
 await writeFile(join(pub, 'artikel', 'index.json'), JSON.stringify(items));
+// The home page only needs three cards: a tiny file keeps its first load light however many articles exist.
+await writeFile(join(pub, 'artikel', 'latest.json'), JSON.stringify([...items].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3)));
 
 // ---- Category pages: /artikel/kategori/<slug>/ (static, so each topic can be found and indexed on its own)
 const INTRO = {

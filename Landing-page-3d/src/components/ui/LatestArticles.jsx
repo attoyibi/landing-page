@@ -5,7 +5,7 @@ import { useArticles } from '../../lib/useArticles';
 
 // Home page: the three newest articles. Renders nothing until the list is loaded (or if there is none).
 const LatestArticles = () => {
-    const articles = useArticles();
+    const articles = useArticles('/artikel/latest.json');
     if (!articles || articles.length === 0) return null;
     const latest = [...articles].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
 
