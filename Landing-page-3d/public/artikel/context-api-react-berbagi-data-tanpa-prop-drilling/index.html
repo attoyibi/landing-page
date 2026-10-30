@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context API React: Berbagi Data Tanpa Prop Drilling</title>
+<meta name="description" content="Pahami React Context: masalah prop drilling, createContext dan Provider, useContext, pola context dengan reducer, kapan context cukup, dan jebakan performanya.">
+<meta name="keywords" content="React Context, useContext, prop drilling, state global, Provider">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/">
+<meta property="og:title" content="Context API React: Berbagi Data Tanpa Prop Drilling">
+<meta property="og:description" content="Pahami React Context: masalah prop drilling, createContext dan Provider, useContext, pola context dengan reducer, kapan context cukup, dan jebakan performanya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Context API React: Berbagi Data Tanpa Prop Drilling">
+<meta name="twitter:description" content="Pahami React Context: masalah prop drilling, createContext dan Provider, useContext, pola context dengan reducer, kapan context cukup, dan jebakan performanya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Context API React: Berbagi Data Tanpa Prop Drilling","description":"Pahami React Context: masalah prop drilling, createContext dan Provider, useContext, pola context dengan reducer, kapan context cukup, dan jebakan performanya.","image":["https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"React Context, useContext, prop drilling, state global, Provider","articleSection":"React & Web Modern","wordCount":463,"mainEntityOfPage":"https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Context API React: Berbagi Data Tanpa Prop Drilling","item":"https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya Context dan Redux?","acceptedAnswer":{"@type":"Answer","text":"Context hanya mengirim nilai; Redux menyediakan penyimpanan terpusat, pola aksi-reducer, middleware, dan devtools, dengan pembaruan selektif yang efisien."}},{"@type":"Question","name":"Bolehkah memakai beberapa Provider?","acceptedAnswer":{"@type":"Answer","text":"Boleh dan umum; urutan bersarang menentukan context mana yang tersedia bagi komponen di dalamnya."}},{"@type":"Question","name":"Apakah Context bekerja saat rendering di server?","acceptedAnswer":{"@type":"Answer","text":"Ya, seperti contoh di atas yang dijalankan dengan renderToString."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#masalah-prop-drilling">Masalah: prop drilling</a></li><li><a href="#context-tiga-langkah">Context: tiga langkah</a></li><li><a href="#pola-yang-rapi-provider-hook-khusus">Pola yang rapi: Provider + hook khusus</a></li><li><a href="#jebakan-semua-pembaca-ikut-render-ulang">Jebakan: semua pembaca ikut render ulang</a></li><li><a href="#kapan-memakai-apa">Kapan memakai apa</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Context API React: Berbagi Data Tanpa Prop Drilling</h1>
+<p class="lead">Mengirim props lewat lima tingkat komponen hanya agar komponen paling dalam bisa membaca tema atau pengguna yang login itu melelahkan, dan merusak keterbacaan. Context menyediakan jalur pintas: nilai ditaruh di satu titik pohon dan dibaca oleh komponen di bawahnya. Namun Context bukan pengganti semua state management.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> props, useState, useReducer</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Context API React: Berbagi Data Tanpa Prop Drilling" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan prop drilling dan kapan menjadi masalah</li><li>membuat dan memakai Context dengan createContext, Provider, dan useContext</li><li>memadukan Context dengan useReducer untuk state aplikasi</li><li>mengenali jebakan performa Context dan cara mengurangi render ulang</li><li>memilih antara Context, props, composition, dan pustaka state eksternal</li></ul></div>
+<h2 id="masalah-prop-drilling">Masalah: prop drilling</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>// Tema dikirim lewat banyak tingkat yang tidak membutuhkannya
+&lt;Aplikasi tema={tema}&gt;
+  &lt;Tata letak tema={tema}&gt;
+    &lt;Sidebar tema={tema}&gt;
+      &lt;TombolMenu tema={tema} /&gt;   // hanya komponen ini yang butuh tema
+    &lt;/Sidebar&gt;
+  &lt;/Tata letak&gt;
+&lt;/Aplikasi&gt;</code></pre><figcaption>Komponen perantara dipaksa mengenal props yang bukan urusannya, dan setiap perubahan struktur menuntut mengubah banyak file.</figcaption></figure>
+<h2 id="context-tiga-langkah">Context: tiga langkah</h2>
+<ol><li><b>Buat</b> context dengan <code>createContext(nilaiBawaan)</code>.</li><li><b>Sediakan</b> nilainya dengan <code>&lt;Context.Provider value=...&gt;</code> di atas komponen yang membutuhkan.</li><li><b>Baca</b> dengan <code>useContext(Context)</code> di komponen mana pun di bawah Provider.</li></ol>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+const { createContext, useContext } = React;
+
+const TemaContext = createContext('terang');            // nilai bawaan bila tak ada Provider
+
+function TombolMenu() {
+    const tema = useContext(TemaContext);                // dibaca langsung tanpa props
+    return &lt;button className={'tombol-' + tema}&gt;Menu ({tema})&lt;/button&gt;;
+}
+function Sidebar()  { return &lt;aside&gt;&lt;TombolMenu /&gt;&lt;/aside&gt;; }      // tidak tahu apa pun soal tema
+function TataLetak() { return &lt;main&gt;&lt;Sidebar /&gt;&lt;/main&gt;; }
+
+function Aplikasi({ tema }) {
+    return (
+        &lt;TemaContext.Provider value={tema}&gt;
+            &lt;TataLetak /&gt;
+        &lt;/TemaContext.Provider&gt;
+    );
+}
+
+console.log(renderToString(&lt;Aplikasi tema=&quot;gelap&quot; /&gt;));
+console.log(renderToString(&lt;TombolMenu /&gt;));               // di luar Provider: memakai nilai bawaan</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;main&gt;&lt;aside&gt;&lt;button class=&quot;tombol-gelap&quot;&gt;Menu (&lt;!-- --&gt;gelap&lt;!-- --&gt;)&lt;/button&gt;&lt;/aside&gt;&lt;/main&gt;
+&lt;button class=&quot;tombol-terang&quot;&gt;Menu (&lt;!-- --&gt;terang&lt;!-- --&gt;)&lt;/button&gt;</code></pre><figcaption>Sidebar dan TataLetak tidak menerima apa pun. Di luar Provider, komponen jatuh ke nilai bawaan createContext.</figcaption></figure>
+<h2 id="pola-yang-rapi-provider-hook-khusus">Pola yang rapi: Provider + hook khusus</h2>
+<p>Bungkus context dalam modul sendiri: Provider yang mengelola state, dan hook khusus yang memberi pesan galat bila dipakai di luar Provider.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+const { createContext, useContext, useReducer } = React;
+
+const AuthContext = createContext(null);
+
+function authReducer(state, aksi) {
+    switch (aksi.tipe) {
+        case 'masuk':  return { pengguna: aksi.pengguna };
+        case 'keluar': return { pengguna: null };
+        default: throw new Error('aksi tidak dikenal');
+    }
+}
+
+export function AuthProvider({ children, awal = { pengguna: null } }) {
+    const [state, dispatch] = useReducer(authReducer, awal);
+    return &lt;AuthContext.Provider value={{ ...state, dispatch }}&gt;{children}&lt;/AuthContext.Provider&gt;;
+}
+
+export function useAuth() {
+    const ctx = useContext(AuthContext);
+    if (ctx === null) throw new Error('useAuth harus dipakai di dalam &lt;AuthProvider&gt;');
+    return ctx;
+}
+
+function Salam() {
+    const { pengguna } = useAuth();
+    return &lt;p&gt;{pengguna ? 'Halo, ' + pengguna.nama : 'Silakan masuk'}&lt;/p&gt;;
+}
+
+console.log(renderToString(&lt;AuthProvider&gt;&lt;Salam /&gt;&lt;/AuthProvider&gt;));
+console.log(renderToString(&lt;AuthProvider awal={{ pengguna: { nama: 'Ani' } }}&gt;&lt;Salam /&gt;&lt;/AuthProvider&gt;));
+try { renderToString(&lt;Salam /&gt;); } catch (e) { console.log('galat jelas:', e.message); }</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;p&gt;Silakan masuk&lt;/p&gt;
+&lt;p&gt;Halo, Ani&lt;/p&gt;
+galat jelas: useAuth harus dipakai di dalam &lt;AuthProvider&gt;</code></pre><figcaption>Hook useAuth menyembunyikan detail Context dan memberi pesan galat yang jelas bila lupa membungkus dengan Provider.</figcaption></figure>
+<h2 id="jebakan-semua-pembaca-ikut-render-ulang">Jebakan: semua pembaca ikut render ulang</h2>
+<p>Saat nilai <code>value</code> pada Provider berubah, <b>setiap komponen yang memanggil useContext(context itu) dirender ulang</b>, walau ia hanya memakai sebagian nilai. Dan membuat objek baru di <code>value={{ ... }}</code> setiap render membuat nilainya selalu "berubah".</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Mengapa value={{ a, b }} selalu dianggap berubah: objek baru setiap render
+const render1 = { pengguna: 'Ani', dispatch: () =&gt; {} };
+const render2 = { pengguna: 'Ani', dispatch: () =&gt; {} };     // isinya sama, objeknya berbeda
+console.log('dianggap sama oleh React?', Object.is(render1, render2));
+
+// Perbaikan: stabilkan nilai (di React: useMemo) atau pecah context
+const stabil = { pengguna: 'Ani' };
+console.log('objek yang sama dipakai ulang?', Object.is(stabil, stabil));</code></pre><pre class="runout" data-lang="keluaran"><code>dianggap sama oleh React? false
+objek yang sama dipakai ulang? true</code></pre></figure>
+<ul><li><b>Pecah context</b> menurut seberapa sering berubah: konteks tema (jarang) terpisah dari konteks keranjang (sering).</li><li><b>Pisahkan state dan dispatch</b> ke dua context agar komponen yang hanya mengirim aksi tidak ikut render saat state berubah.</li><li><b>Stabilkan nilai</b> dengan <code>useMemo</code> bila Provider sendiri sering dirender ulang oleh induknya.</li><li><b>Pertimbangkan composition</b>: kirim komponen sebagai children atau props agar perantara tidak perlu mengenal data.</li></ul>
+<h2 id="kapan-memakai-apa">Kapan memakai apa</h2>
+<table><thead><tr><th>Kebutuhan</th><th>Pilihan</th></tr></thead><tbody><tr><td>Data jarang berubah dan dipakai di banyak tempat (tema, bahasa, pengguna)</td><td>Context</td></tr><tr><td>Data hanya dipakai satu atau dua tingkat di bawah</td><td>Props biasa</td></tr><tr><td>Perantara hanya meneruskan elemen</td><td>Composition (children)</td></tr><tr><td>State global besar yang sering berubah dan perlu pembaruan selektif</td><td>Pustaka state (Zustand, Redux Toolkit, Jotai)</td></tr><tr><td>Data dari server dengan cache</td><td>TanStack Query atau SWR, bukan Context</td></tr></tbody></table>
+<div class="callout warn"><b>Salah kaprah</b><p>Context <b>bukan alat manajemen state</b> sendirian; ia adalah mekanisme pengiriman nilai. State tetap berasal dari useState atau useReducer. Jangan memasukkan semua state aplikasi ke satu context raksasa.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Masalah yang diselesaikan Context?","options":["Prop drilling","Kecepatan jaringan","Routing"],"answer":0,"why":"Mengirim nilai ke komponen dalam tanpa melewati perantara."},{"q":"Saat value Provider berubah...","options":["Semua pembaca context itu dirender ulang","Tidak ada yang berubah","Hanya Provider"],"answer":0,"why":"Karena itu pecah context menurut frekuensi perubahan."},{"q":"Untuk data server dengan cache, sebaiknya...","options":["Pustaka seperti TanStack Query","Context saja","Variabel global"],"answer":0,"why":"Menangani cache, status, dan sinkronisasi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat context bahasa ("id" atau "en") dengan tombol untuk mengganti.</summary><div>Provider memegang useState("id") dan menyediakan { bahasa, setBahasa }; komponen membaca dengan useContext.</div></details><details><summary>2. Mengapa membungkus useContext dalam hook khusus berguna?</summary><div>Menyembunyikan detail, memberi pesan galat jelas di luar Provider, dan memudahkan mengganti implementasi.</div></details><details><summary>3. Kapan composition lebih baik daripada Context?</summary><div>Saat hanya satu atau dua tingkat perantara; mengirim JSX sebagai children menghindari ketergantungan global.</div></details><details><summary>4. Mengapa memisahkan context state dan dispatch mengurangi render?</summary><div>Komponen yang hanya memanggil dispatch (stabil) tidak berlangganan state, sehingga tidak dirender ulang saat state berubah.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Context mengirim nilai ke komponen mana pun di bawah Provider tanpa melewati props.</li><li>createContext, Provider, useContext; bungkus dalam Provider dan hook khusus.</li><li>Nilai berubah → semua pembaca ikut render ulang; pecah context dan stabilkan nilai.</li><li>Context bukan pengganti state management dan bukan cache data server.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya Context dan Redux?</summary><div>Context hanya mengirim nilai; Redux menyediakan penyimpanan terpusat, pola aksi-reducer, middleware, dan devtools, dengan pembaruan selektif yang efisien.</div></details>
+<details class="faq"><summary>Bolehkah memakai beberapa Provider?</summary><div>Boleh dan umum; urutan bersarang menentukan context mana yang tersedia bagi komponen di dalamnya.</div></details>
+<details class="faq"><summary>Apakah Context bekerja saat rendering di server?</summary><div>Ya, seperti contoh di atas yang dijalankan dengan renderToString.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/passing-data-deeply-with-context" rel="noopener" target="_blank">React: Passing Data Deeply with Context</a></li><li><a href="https://react.dev/learn/scaling-up-with-reducer-and-context" rel="noopener" target="_blank">React: Scaling Up with Reducer and Context</a></li><li><a href="https://react.dev/reference/react/useContext" rel="noopener" target="_blank">React: useContext reference</a></li><li><a href="https://react.dev/reference/react/hooks" rel="noopener" target="_blank">React Reference: Hooks</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

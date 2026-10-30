@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom Hook React: Cara Membuat dan Contoh yang Berguna</title>
+<meta name="description" content="Belajar membuat custom hook di React: ekstrak logika berulang, aturan penamaan use, contoh useDebounce, useLocalStorage, dan useToggle, serta cara menguji logikanya.">
+<meta name="keywords" content="custom hook, React hooks, useDebounce, useLocalStorage, refactoring React">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/">
+<meta property="og:title" content="Custom Hook React: Cara Membuat dan Contoh yang Berguna">
+<meta property="og:description" content="Belajar membuat custom hook di React: ekstrak logika berulang, aturan penamaan use, contoh useDebounce, useLocalStorage, dan useToggle, serta cara menguji logikanya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Custom Hook React: Cara Membuat dan Contoh yang Berguna">
+<meta name="twitter:description" content="Belajar membuat custom hook di React: ekstrak logika berulang, aturan penamaan use, contoh useDebounce, useLocalStorage, dan useToggle, serta cara menguji logikanya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Custom Hook React: Cara Membuat dan Contoh yang Berguna","description":"Belajar membuat custom hook di React: ekstrak logika berulang, aturan penamaan use, contoh useDebounce, useLocalStorage, dan useToggle, serta cara menguji logikanya.","image":["https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"custom hook, React hooks, useDebounce, useLocalStorage, refactoring React","articleSection":"React & Web Modern","wordCount":397,"mainEntityOfPage":"https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Custom Hook React: Cara Membuat dan Contoh yang Berguna","item":"https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Pustaka hook siap pakai apa yang populer?","acceptedAnswer":{"@type":"Answer","text":"usehooks-ts, react-use, dan ahooks berisi puluhan hook umum. Periksa dulu bundel dan kebutuhan sebelum menambahnya."}},{"@type":"Question","name":"Bisakah hook memanggil hook lain?","acceptedAnswer":{"@type":"Answer","text":"Ya, itulah kekuatan komposisinya, selama aturan hooks tetap dipatuhi."}},{"@type":"Question","name":"Apakah hook bisa async?","acceptedAnswer":{"@type":"Answer","text":"Hook sendiri tidak async; ia mengelola state dan efek untuk pekerjaan asinkron (misalnya useFetch) dan mengembalikan status yang berubah."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#aturan-dan-ide-dasar">Aturan dan ide dasar</a></li><li><a href="#contoh-1-usetoggle">Contoh 1: useToggle</a></li><li><a href="#contoh-2-usedebounce">Contoh 2: useDebounce</a></li><li><a href="#contoh-3-uselocalstorage">Contoh 3: useLocalStorage</a></li><li><a href="#kapan-layak-membuat-hook">Kapan layak membuat hook</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Custom Hook React: Cara Membuat dan Contoh yang Berguna</h1>
+<p class="lead">Custom hook adalah cara React untuk berbagi logika yang bersifat stateful antar komponen: fungsi biasa yang namanya diawali "use" dan memanggil hook lain. Bila Anda menyalin pasangan useState dan useEffect yang sama ke tiga komponen, itulah sinyal untuk mengekstraknya menjadi hook.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> useState, useEffect</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Custom Hook React: Cara Membuat dan Contoh yang Berguna" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan apa itu custom hook dan aturannya</li><li>mengekstrak logika berulang menjadi hook</li><li>membuat hook useToggle, useDebounce, dan useLocalStorage</li><li>memisahkan logika murni dari bagian yang memakai hook agar mudah diuji</li><li>mengenali kapan sebuah hook layak dibuat</li></ul></div>
+<h2 id="aturan-dan-ide-dasar">Aturan dan ide dasar</h2>
+<ul><li>Custom hook adalah <b>fungsi</b> yang namanya dimulai dengan <code>use</code> dan memanggil hook lain di dalamnya.</li><li>Ia <b>berbagi logika</b>, bukan berbagi state: setiap komponen yang memanggilnya mendapat salinan state sendiri.</li><li>Aturan hooks tetap berlaku: panggil di tingkat atas, bukan dalam kondisi atau perulangan.</li><li>Awalan <code>use</code> memberi tahu linter dan pembaca bahwa fungsi ini mengikuti aturan hooks.</li></ul>
+<h2 id="contoh-1-usetoggle">Contoh 1: useToggle</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useState, useCallback } from 'react';
+
+export function useToggle(awal = false) {
+    const [nilai, setNilai] = useState(awal);
+    const balik = useCallback(() =&gt; setNilai(n =&gt; !n), []);
+    return [nilai, balik, setNilai];
+}
+
+// pemakaian
+function Panel() {
+    const [buka, balikBuka] = useToggle();
+    return (
+        &lt;&gt;
+            &lt;button onClick={balikBuka}&gt;{buka ? 'Tutup' : 'Buka'}&lt;/button&gt;
+            {buka &amp;&amp; &lt;p&gt;Isi panel&lt;/p&gt;}
+        &lt;/&gt;
+    );
+}</code></pre></figure>
+<h2 id="contoh-2-usedebounce">Contoh 2: useDebounce</h2>
+<p>Saat pengguna mengetik di kolom pencarian, kita tidak ingin menembak API di setiap huruf. Debounce menunda nilai sampai pengguna berhenti mengetik sejenak.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useState, useEffect } from 'react';
+
+export function useDebounce(nilai, tundaMs = 400) {
+    const [ditunda, setDitunda] = useState(nilai);
+    useEffect(() =&gt; {
+        const id = setTimeout(() =&gt; setDitunda(nilai), tundaMs);
+        return () =&gt; clearTimeout(id);          // ketikan baru membatalkan timer sebelumnya
+    }, [nilai, tundaMs]);
+    return ditunda;
+}
+
+function Pencarian() {
+    const [kata, setKata] = useState('');
+    const kataTunda = useDebounce(kata, 400);   // hanya berubah setelah 400 ms tanpa ketikan
+    // useEffect(() =&gt; { cariKeApi(kataTunda); }, [kataTunda]);
+    return &lt;input value={kata} onChange={e =&gt; setKata(e.target.value)} /&gt;;
+}</code></pre></figure>
+<p>Logika intinya, yaitu "tunda dan batalkan yang sebelumnya", dapat dijalankan dan dipahami tanpa React:</p>
+<figure class="codebox"><pre data-lang="javascript"><code>function buatDebounce(fn, tundaMs) {
+    let id;
+    return (...args) =&gt; {
+        clearTimeout(id);                    // batalkan pemanggilan yang tertunda
+        id = setTimeout(() =&gt; fn(...args), tundaMs);
+    };
+}
+
+const cari = buatDebounce(kata =&gt; console.log('mencari ke server:', kata), 50);
+
+// pengguna mengetik &quot;r&quot;, &quot;re&quot;, &quot;rea&quot;, &quot;reac&quot; dengan jeda pendek, lalu berhenti
+['r', 're', 'rea', 'reac'].forEach((kata, i) =&gt; setTimeout(() =&gt; { console.log('ketik:', kata); cari(kata); }, i * 10));
+setTimeout(() =&gt; console.log('(selesai)'), 200);</code></pre><pre class="runout" data-lang="keluaran"><code>ketik: r
+ketik: re
+ketik: rea
+ketik: reac
+mencari ke server: reac
+(selesai)</code></pre><figcaption>Empat ketikan hanya menghasilkan satu panggilan ke server, yaitu untuk nilai terakhir. Itu penghematan permintaan sekaligus mencegah hasil usang tiba belakangan.</figcaption></figure>
+<h2 id="contoh-3-uselocalstorage">Contoh 3: useLocalStorage</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useState, useEffect } from 'react';
+
+export function useLocalStorage(kunci, awal) {
+    const [nilai, setNilai] = useState(() =&gt; {
+        try {
+            const tersimpan = window.localStorage.getItem(kunci);
+            return tersimpan !== null ? JSON.parse(tersimpan) : awal;
+        } catch {
+            return awal;                          // localStorage bisa diblokir atau berisi data rusak
+        }
+    });
+
+    useEffect(() =&gt; {
+        try { window.localStorage.setItem(kunci, JSON.stringify(nilai)); } catch { /* abaikan */ }
+    }, [kunci, nilai]);
+
+    return [nilai, setNilai];
+}
+
+// const [tema, setTema] = useLocalStorage('tema', 'terang');</code></pre><figcaption>Perhatikan inisialisasi malas (fungsi di useState) agar localStorage dibaca sekali, dan try/catch karena localStorage dapat gagal (mode privat, kuota penuh, data rusak).</figcaption></figure>
+<h3>Ekstrak logika murninya agar bisa diuji</h3>
+<figure class="codebox"><pre data-lang="javascript"><code>// Bagian yang tidak butuh React dipisahkan: mudah diuji
+function bacaTersimpan(penyimpanan, kunci, awal) {
+    try {
+        const teks = penyimpanan.getItem(kunci);
+        return teks !== null ? JSON.parse(teks) : awal;
+    } catch {
+        return awal;
+    }
+}
+
+// penyimpanan tiruan
+const tiruan = data =&gt; ({ getItem: k =&gt; (k in data ? data[k] : null) });
+
+console.log('belum ada     -&gt;', bacaTersimpan(tiruan({}), 'tema', 'terang'));
+console.log('ada           -&gt;', bacaTersimpan(tiruan({ tema: '&quot;gelap&quot;' }), 'tema', 'terang'));
+console.log('data rusak    -&gt;', bacaTersimpan(tiruan({ tema: '{bukan json' }), 'tema', 'terang'));
+console.log('akses gagal   -&gt;', bacaTersimpan({ getItem() { throw new Error('diblokir'); } }, 'tema', 'terang'));</code></pre><pre class="runout" data-lang="keluaran"><code>belum ada     -&gt; terang
+ada           -&gt; gelap
+data rusak    -&gt; terang
+akses gagal   -&gt; terang</code></pre></figure>
+<h2 id="kapan-layak-membuat-hook">Kapan layak membuat hook</h2>
+<table><thead><tr><th>Tanda</th><th>Tindakan</th></tr></thead><tbody><tr><td>Pasangan useState + useEffect yang sama muncul di beberapa komponen</td><td>Ekstrak ke hook</td></tr><tr><td>Komponen terlalu panjang karena logika non-tampilan</td><td>Pindahkan logika ke hook bernama jelas</td></tr><tr><td>Hanya dipakai sekali dan sederhana</td><td>Biarkan di komponen; jangan memaksa abstraksi</td></tr><tr><td>Hook yang hanya membungkus satu useState</td><td>Biasanya tidak perlu</td></tr></tbody></table>
+<div class="callout good"><b>Penamaan</b><p>Nama hook harus menjelaskan <b>tujuan</b> (<code>useOnlineStatus</code>, <code>useDebounce</code>), bukan siklus hidup (<code>useMount</code>). Hindari hook "serba bisa" yang menerima callback awal-akhir; hook yang baik punya satu tanggung jawab yang jelas.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Custom hook harus diawali...","options":["use","get","hook"],"answer":0,"why":"Konvensi yang dikenali linter."},{"q":"Dua komponen memanggil useToggle yang sama. State-nya...","options":["Terpisah untuk masing-masing","Dibagi bersama","Berubah serentak"],"answer":0,"why":"Hook berbagi logika, bukan state."},{"q":"Tujuan debounce pada pencarian?","options":["Mengurangi permintaan saat pengguna masih mengetik","Mempercepat render","Menyimpan hasil"],"answer":0,"why":"Menunda hingga ada jeda."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat hook useOnlineStatus yang melacak navigator.onLine dengan event "online" dan "offline".</summary><div>State awal navigator.onLine; useEffect menambah dua listener dan membersihkannya di cleanup.</div></details><details><summary>2. Mengapa useLocalStorage memakai try/catch?</summary><div>Akses dapat dilempar galat (mode privat, diblokir, kuota penuh) dan JSON.parse bisa gagal pada data rusak.</div></details><details><summary>3. Apa bedanya custom hook dan komponen?</summary><div>Hook mengembalikan nilai (logika) tanpa tampilan; komponen mengembalikan JSX.</div></details><details><summary>4. Bagaimana membuat useDebounce lebih umum untuk fungsi, bukan nilai?</summary><div>Simpan fungsi di ref dan kembalikan fungsi yang menunda pemanggilannya (seperti buatDebounce), dengan cleanup saat dilepas.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Custom hook: fungsi berawalan use yang berbagi logika, bukan state.</li><li>Ekstrak bila logika stateful berulang; beri nama sesuai tujuan.</li><li>useToggle, useDebounce, dan useLocalStorage adalah contoh praktis.</li><li>Pisahkan logika murni agar bisa diuji tanpa React; jangan memaksa abstraksi dini.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Pustaka hook siap pakai apa yang populer?</summary><div>usehooks-ts, react-use, dan ahooks berisi puluhan hook umum. Periksa dulu bundel dan kebutuhan sebelum menambahnya.</div></details>
+<details class="faq"><summary>Bisakah hook memanggil hook lain?</summary><div>Ya, itulah kekuatan komposisinya, selama aturan hooks tetap dipatuhi.</div></details>
+<details class="faq"><summary>Apakah hook bisa async?</summary><div>Hook sendiri tidak async; ia mengelola state dan efek untuk pekerjaan asinkron (misalnya useFetch) dan mengembalikan status yang berubah.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/reusing-logic-with-custom-hooks" rel="noopener" target="_blank">React: Reusing Logic with Custom Hooks</a></li><li><a href="https://react.dev/reference/rules/rules-of-hooks" rel="noopener" target="_blank">React: Rules of Hooks</a></li><li><a href="https://developer.mozilla.org/docs/Web/API/Web_Storage_API" rel="noopener" target="_blank">MDN: Web Storage API</a></li><li><a href="https://react.dev/reference/react/hooks" rel="noopener" target="_blank">React Reference: Hooks</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

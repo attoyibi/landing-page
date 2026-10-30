@@ -208,4 +208,9 @@ export const ARTICLES = [
     'useeffect-react-kapan-dipakai-dependency-dan-cleanup',
     'render-list-react-map-key-dan-filter-yang-benar',
     'form-react-controlled-component-validasi-dan-submit',
+    'usereducer-react-kelola-state-kompleks-dengan-reducer',
+    'context-api-react-berbagi-data-tanpa-prop-drilling',
+    'custom-hook-react-cara-membuat-dan-contoh-yang-berguna',
+    'optimasi-performa-react-memo-usememo-usecallback-dan-profiling',
+    'react-router-routing-halaman-parameter-dan-navigasi',
 ];

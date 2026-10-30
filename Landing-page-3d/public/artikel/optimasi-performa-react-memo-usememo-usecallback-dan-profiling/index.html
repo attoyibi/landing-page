@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optimasi Performa React: memo, useMemo, useCallback</title>
+<meta name="description" content="Pahami kapan React lambat dan cara memperbaikinya: render ulang, React.memo, useMemo, useCallback, memindahkan state, virtualisasi, dan profiling dengan React DevTools.">
+<meta name="keywords" content="performa React, React.memo, useMemo, useCallback, render ulang">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/">
+<meta property="og:title" content="Optimasi Performa React: memo, useMemo, useCallback">
+<meta property="og:description" content="Pahami kapan React lambat dan cara memperbaikinya: render ulang, React.memo, useMemo, useCallback, memindahkan state, virtualisasi, dan profiling dengan React DevTools.">
+<meta property="og:image" content="https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Optimasi Performa React: memo, useMemo, useCallback">
+<meta name="twitter:description" content="Pahami kapan React lambat dan cara memperbaikinya: render ulang, React.memo, useMemo, useCallback, memindahkan state, virtualisasi, dan profiling dengan React DevTools.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Optimasi Performa React: memo, useMemo, useCallback","description":"Pahami kapan React lambat dan cara memperbaikinya: render ulang, React.memo, useMemo, useCallback, memindahkan state, virtualisasi, dan profiling dengan React DevTools.","image":["https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"performa React, React.memo, useMemo, useCallback, render ulang","articleSection":"React & Web Modern","wordCount":510,"mainEntityOfPage":"https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Optimasi Performa React: memo, useMemo, useCallback","item":"https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah semua komponen sebaiknya dibungkus memo?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Pembungkusan sembarangan menambah kerumitan dan biaya perbandingan; pakai di titik yang terbukti bermasalah."}},{"@type":"Question","name":"Apa itu useDeferredValue?","acceptedAnswer":{"@type":"Answer","text":"Hook untuk menunda pembaruan bagian UI yang berat agar input tetap responsif; nilai \"tertunda\" menyusul setelah render mendesak selesai."}},{"@type":"Question","name":"Bagaimana menganalisis ukuran bundel?","acceptedAnswer":{"@type":"Answer","text":"Gunakan plugin visualisasi (misalnya rollup-plugin-visualizer untuk Vite) untuk melihat paket yang memakan ruang dan pertimbangkan impor dinamis."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#kapan-sebuah-komponen-dirender-ulang">Kapan sebuah komponen dirender ulang</a></li><li><a href="#perbaikan-pertama-pindahkan-state-ke-bawah">Perbaikan pertama: pindahkan state ke bawah</a></li><li><a href="#react-memo-lewati-render-bila-props-sama">React.memo: lewati render bila props sama</a></li><li><a href="#usememo-dan-usecallback-menyimpan-hasil-antar-render">useMemo dan useCallback: menyimpan hasil antar render</a></li><li><a href="#tanda-dan-solusi-masalah-performa">Tanda dan solusi masalah performa</a></li><li><a href="#react-compiler">React Compiler</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Optimasi Performa React: memo, useMemo, useCallback</h1>
+<p class="lead">Banyak orang mengoptimasi React dengan menaburkan useMemo dan useCallback di mana-mana, lalu heran mengapa tidak ada bedanya. Optimasi yang efektif dimulai dengan mengukur dan memahami <i>mengapa</i> render terjadi. Sering kali perbaikan terbaik bukan memoisasi, melainkan menata ulang tempat state berada.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> useState, useEffect, props</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Optimasi Performa React: memo, useMemo, useCallback" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan kapan dan mengapa komponen dirender ulang</li><li>membedakan render dari pembaruan DOM dan mengapa render murah itu normal</li><li>memakai React.memo, useMemo, dan useCallback pada tempat yang tepat</li><li>memperbaiki masalah dengan memindahkan state dan komposisi</li><li>mengukur dengan Profiler sebelum dan sesudah mengoptimasi</li></ul></div>
+<h2 id="kapan-sebuah-komponen-dirender-ulang">Kapan sebuah komponen dirender ulang</h2>
+<ul><li>State komponen itu berubah.</li><li>Induknya dirender ulang (dan komponen tidak dibungkus memo).</li><li>Context yang dibacanya berubah.</li></ul>
+<p>Render adalah memanggil fungsi komponen untuk menghitung JSX; hanya bila hasilnya berbeda React menyentuh DOM. Render ulang yang menghasilkan keluaran sama itu <b>murah dan wajar</b>. Optimasi baru perlu bila render menjadi <i>lambat</i> (pekerjaan berat per render) atau <i>terlalu sering</i> pada pohon besar.</p>
+<div class="callout warn"><b>Mulai dari pengukuran</b><p>Pertama <b>ukur</b>. Buka React DevTools → Profiler, rekam interaksi yang terasa lambat, lalu lihat komponen mana yang memakan waktu dan mengapa ia dirender. Mengoptimasi tanpa mengukur sering menambah kerumitan tanpa manfaat.</p></div>
+<h2 id="perbaikan-pertama-pindahkan-state-ke-bawah">Perbaikan pertama: pindahkan state ke bawah</h2>
+<p>Bila state yang cepat berubah (misalnya isi kotak ketik) berada di komponen besar, seluruh anaknya ikut dirender. Pindahkan state ke komponen kecil yang benar-benar memakainya.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>// Sebelum: setiap ketikan merender ulang DaftarBerat
+function Halaman() {
+    const [kata, setKata] = useState('');
+    return (
+        &lt;&gt;
+            &lt;input value={kata} onChange={e =&gt; setKata(e.target.value)} /&gt;
+            &lt;DaftarBerat /&gt;
+        &lt;/&gt;
+    );
+}
+
+// Sesudah: state dipindah ke komponen sendiri; Halaman tidak lagi dirender saat mengetik
+function KotakCari() {
+    const [kata, setKata] = useState('');
+    return &lt;input value={kata} onChange={e =&gt; setKata(e.target.value)} /&gt;;
+}
+function Halaman() {
+    return (
+        &lt;&gt;
+            &lt;KotakCari /&gt;
+            &lt;DaftarBerat /&gt;
+        &lt;/&gt;
+    );
+}</code></pre><figcaption>Tanpa memo atau hook tambahan. Teknik serupa: mengangkat bagian yang berubah ke children sehingga induk tidak merender ulang bagian statis.</figcaption></figure>
+<h2 id="react-memo-lewati-render-bila-props-sama">React.memo: lewati render bila props sama</h2>
+<p><code>React.memo(Komponen)</code> membuat React melewati render ulang bila props <b>sama</b> dibandingkan sebelumnya (perbandingan dangkal dengan <code>Object.is</code>). Perhatikan jebakannya: objek, array, dan fungsi yang dibuat di dalam komponen induk selalu "baru" pada setiap render.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Perbandingan dangkal seperti yang dilakukan React.memo
+function samaDangkal(a, b) {
+    const ka = Object.keys(a), kb = Object.keys(b);
+    return ka.length === kb.length &amp;&amp; ka.every(k =&gt; Object.is(a[k], b[k]));
+}
+
+const fungsiTetap = () =&gt; {};
+console.log('props primitif sama      :', samaDangkal({ nama: 'Ani', umur: 20 }, { nama: 'Ani', umur: 20 }));
+console.log('objek baru, isi sama     :', samaDangkal({ gaya: { warna: 'biru' } }, { gaya: { warna: 'biru' } }));
+console.log('fungsi baru tiap render  :', samaDangkal({ klik: () =&gt; {} }, { klik: () =&gt; {} }));
+console.log('fungsi yang distabilkan  :', samaDangkal({ klik: fungsiTetap }, { klik: fungsiTetap }));</code></pre><pre class="runout" data-lang="keluaran"><code>props primitif sama      : true
+objek baru, isi sama     : false
+fungsi baru tiap render  : false
+fungsi yang distabilkan  : true</code></pre><figcaption>memo hanya berguna bila props benar-benar stabil. Itulah alasan useCallback dan useMemo sering menyertainya.</figcaption></figure>
+<h2 id="usememo-dan-usecallback-menyimpan-hasil-antar-render">useMemo dan useCallback: menyimpan hasil antar render</h2>
+<table><thead><tr><th>Hook</th><th>Menyimpan</th><th>Pakai bila</th></tr></thead><tbody><tr><td>useMemo(() => hitung(a, b), [a, b])</td><td>Hasil perhitungan</td><td>Perhitungan benar-benar mahal, atau agar objek/array stabil sebagai props atau dependency</td></tr><tr><td>useCallback(fn, [deps])</td><td>Fungsi itu sendiri</td><td>Fungsi dikirim ke komponen memo atau menjadi dependency efek</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="javascript"><code>// Seberapa mahal sebuah perhitungan? Ukur dulu.
+function hitungMahal(n) { let t = 0; for (let i = 0; i &lt; n; i++) t += Math.sqrt(i); return t; }
+
+let t0 = performance.now();
+for (let i = 0; i &lt; 200; i++) hitungMahal(10_000);      // 200 render x pekerjaan ringan
+console.log('200 x 10 ribu iterasi  :', (performance.now() - t0).toFixed(1), 'ms  -&gt; useMemo tidak diperlukan');
+
+t0 = performance.now();
+for (let i = 0; i &lt; 20; i++) hitungMahal(5_000_000);    // 20 render x pekerjaan berat
+console.log('20 x 5 juta iterasi    :', (performance.now() - t0).toFixed(0), 'ms  -&gt; memoisasi layak dipertimbangkan');
+
+// memoisasi sederhana: hasil dipakai ulang bila argumen sama
+function memo(fn) { const cache = new Map(); return n =&gt; cache.has(n) ? cache.get(n) : (cache.set(n, fn(n)), cache.get(n)); }
+const cepat = memo(hitungMahal);
+t0 = performance.now();
+for (let i = 0; i &lt; 20; i++) cepat(5_000_000);
+console.log('20 x dengan cache      :', (performance.now() - t0).toFixed(0), 'ms');</code></pre><pre class="runout" data-lang="keluaran"><code>200 x 10 ribu iterasi  : 5.2 ms  -&gt; useMemo tidak diperlukan
+20 x 5 juta iterasi    : 194 ms  -&gt; memoisasi layak dipertimbangkan
+20 x dengan cache      : 10 ms</code></pre><figcaption>Angka milidetik berbeda di tiap mesin, tetapi pola intinya konsisten: memoisasi menguntungkan hanya saat pekerjaan per render memang berat.</figcaption></figure>
+<h2 id="tanda-dan-solusi-masalah-performa">Tanda dan solusi masalah performa</h2>
+<table><thead><tr><th>Gejala</th><th>Penyebab umum</th><th>Solusi</th></tr></thead><tbody><tr><td>Mengetik terasa lambat</td><td>State di komponen besar; render daftar berat tiap ketikan</td><td>Pindahkan state ke bawah; debounce; useDeferredValue</td></tr><tr><td>Daftar ribuan item lambat</td><td>Terlalu banyak elemen DOM</td><td>Virtualisasi (TanStack Virtual, react-window), paginasi</td></tr><tr><td>Seluruh aplikasi render saat context berubah</td><td>Satu context raksasa</td><td>Pecah context, pustaka state selektif</td></tr><tr><td>Halaman awal lambat dimuat</td><td>Bundel JavaScript besar</td><td>Code splitting dengan React.lazy dan Suspense; analisis bundel</td></tr><tr><td>Komponen memo tetap render</td><td>Props objek/fungsi tidak stabil</td><td>useMemo/useCallback pada props, atau komposisi</td></tr></tbody></table>
+<h2 id="react-compiler">React Compiler</h2>
+<p>React Compiler (alat build dari tim React, kini tersedia dalam rilis stabil) dapat <b>menambahkan memoisasi otomatis</b> pada waktu kompilasi, sehingga Anda tidak perlu menulis useMemo dan useCallback secara manual di banyak kasus. Tetap saja, pemahaman tentang render, state yang diletakkan dengan baik, dan pengukuran tidak tergantikan.</p>
+<div data-w="checklist"><script type="application/json">{"title":"Sebelum mengoptimasi","items":["Saya sudah merekam masalahnya dengan React DevTools Profiler (bukan menebak).","Saya sudah mencoba memindahkan state ke bawah atau memakai komposisi.","Daftar panjang memakai virtualisasi atau paginasi.","Bundel sudah dianalisis; rute berat dimuat malas.","Props yang diberikan ke komponen memo stabil (objek, array, fungsi).","Saya membandingkan hasil sebelum dan sesudah dengan pengukuran yang sama."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Render ulang yang menghasilkan JSX sama...","options":["Tidak mengubah DOM dan biasanya murah","Selalu merusak DOM","Dilarang"],"answer":0,"why":"React hanya memperbarui DOM bila ada perbedaan."},{"q":"Mengapa React.memo kadang tidak bekerja?","options":["Props objek atau fungsi baru tiap render","memo rusak","Komponen terlalu kecil"],"answer":0,"why":"Perbandingan dangkal menganggap referensi baru sebagai berubah."},{"q":"Langkah pertama optimasi?","options":["Mengukur dengan Profiler","Menambah useMemo di mana-mana","Menulis ulang dengan Redux"],"answer":0,"why":"Optimasi tanpa data sering sia-sia."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Kotak ketik membuat tabel besar lambat. Beri dua perbaikan tanpa memo.</summary><div>Pindahkan state kotak ke komponen sendiri; atau gunakan useDeferredValue/debounce untuk nilai yang dipakai tabel.</div></details><details><summary>2. Kapan useCallback tidak berguna?</summary><div>Bila fungsi tidak dikirim ke komponen memo dan tidak menjadi dependency efek; ia hanya menambah kerumitan.</div></details><details><summary>3. Mengapa menyimpan perhitungan murah di useMemo bisa lebih lambat?</summary><div>useMemo sendiri punya biaya (menyimpan dan membandingkan dependency); untuk pekerjaan kecil biayanya melebihi manfaat.</div></details><details><summary>4. Apa fungsi key pada pengoptimalan daftar?</summary><div>Key stabil membuat React memindahkan elemen alih-alih membuang dan membuat ulang, menjaga state dan mengurangi pekerjaan DOM.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Render murah itu normal; optimasi perlu bila lambat atau terlalu sering pada pohon besar.</li><li>Ukur dengan Profiler, lalu coba pindahkan state ke bawah dan komposisi lebih dulu.</li><li>React.memo, useMemo, useCallback bekerja bila props stabil dan pekerjaan memang berat.</li><li>Virtualisasi untuk daftar panjang, code splitting untuk bundel besar; React Compiler dapat mengotomasi memoisasi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah semua komponen sebaiknya dibungkus memo?</summary><div>Tidak. Pembungkusan sembarangan menambah kerumitan dan biaya perbandingan; pakai di titik yang terbukti bermasalah.</div></details>
+<details class="faq"><summary>Apa itu useDeferredValue?</summary><div>Hook untuk menunda pembaruan bagian UI yang berat agar input tetap responsif; nilai "tertunda" menyusul setelah render mendesak selesai.</div></details>
+<details class="faq"><summary>Bagaimana menganalisis ukuran bundel?</summary><div>Gunakan plugin visualisasi (misalnya rollup-plugin-visualizer untuk Vite) untuk melihat paket yang memakan ruang dan pertimbangkan impor dinamis.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/render-and-commit" rel="noopener" target="_blank">React: Render and Commit</a></li><li><a href="https://react.dev/reference/react/memo" rel="noopener" target="_blank">React: memo reference</a></li><li><a href="https://react.dev/reference/react/useMemo" rel="noopener" target="_blank">React: useMemo reference</a></li><li><a href="https://react.dev/learn/react-compiler" rel="noopener" target="_blank">React Compiler</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

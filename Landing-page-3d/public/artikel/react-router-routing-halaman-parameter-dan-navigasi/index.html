@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>React Router: Routing Halaman, Parameter, dan Navigasi</title>
+<meta name="description" content="Belajar routing di aplikasi React dengan React Router: rute, link, parameter dinamis, nested route, redirect, halaman 404, dan memahami cara pencocokan path bekerja.">
+<meta name="keywords" content="React Router, routing, SPA, parameter URL, navigasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/">
+<meta property="og:title" content="React Router: Routing Halaman, Parameter, dan Navigasi">
+<meta property="og:description" content="Belajar routing di aplikasi React dengan React Router: rute, link, parameter dinamis, nested route, redirect, halaman 404, dan memahami cara pencocokan path bekerja.">
+<meta property="og:image" content="https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="React Router: Routing Halaman, Parameter, dan Navigasi">
+<meta name="twitter:description" content="Belajar routing di aplikasi React dengan React Router: rute, link, parameter dinamis, nested route, redirect, halaman 404, dan memahami cara pencocokan path bekerja.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"React Router: Routing Halaman, Parameter, dan Navigasi","description":"Belajar routing di aplikasi React dengan React Router: rute, link, parameter dinamis, nested route, redirect, halaman 404, dan memahami cara pencocokan path bekerja.","image":["https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"React Router, routing, SPA, parameter URL, navigasi","articleSection":"React & Web Modern","wordCount":483,"mainEntityOfPage":"https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"React Router: Routing Halaman, Parameter, dan Navigasi","item":"https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya BrowserRouter dan HashRouter?","acceptedAnswer":{"@type":"Answer","text":"BrowserRouter memakai alamat bersih (/produk) dan butuh SPA fallback di server; HashRouter memakai /#/produk dan bekerja tanpa konfigurasi server."}},{"@type":"Question","name":"Apakah React Router satu-satunya pilihan?","acceptedAnswer":{"@type":"Answer","text":"Ada alternatif seperti TanStack Router, dan framework dengan routing berbasis berkas (Next.js, Remix)."}},{"@type":"Question","name":"Apa itu loader dan action?","acceptedAnswer":{"@type":"Answer","text":"Pada mode data React Router, loader mengambil data sebelum rute tampil dan action menangani submit form, sehingga pengambilan data terintegrasi dengan routing."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#bagaimana-spa-berpindah-halaman">Bagaimana SPA &quot;berpindah halaman&quot;</a></li><li><a href="#rute-dasar">Rute dasar</a></li><li><a href="#parameter-dinamis-dan-query-string">Parameter dinamis dan query string</a></li><li><a href="#nested-route-dan-layout">Nested route dan Layout</a></li><li><a href="#bagaimana-pencocokan-path-bekerja">Bagaimana pencocokan path bekerja</a></li><li><a href="#hal-praktis-yang-sering-terlewat">Hal praktis yang sering terlewat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>React Router: Routing Halaman, Parameter, dan Navigasi</h1>
+<p class="lead">Aplikasi React biasa berupa satu halaman HTML (single-page application). Routing membuat pengguna tetap merasakan banyak halaman: alamat di bilah browser berubah, tombol kembali berfungsi, dan setiap tampilan dapat dibagikan lewat tautan. React Router adalah pustaka routing yang paling banyak dipakai.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> komponen React, useState</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="React Router: Routing Halaman, Parameter, dan Navigasi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan bagaimana SPA mengelola banyak halaman</li><li>mendefinisikan rute, Link, dan nested route dengan React Router</li><li>membaca parameter dinamis dan query string</li><li>menangani redirect, halaman 404, dan navigasi terprogram</li><li>memahami logika pencocokan path dengan implementasi sederhana</li></ul></div>
+<h2 id="bagaimana-spa-berpindah-halaman">Bagaimana SPA "berpindah halaman"</h2>
+<p>Alih-alih meminta HTML baru dari server, SPA memakai <b>History API</b> browser untuk mengubah alamat tanpa muat ulang, lalu memilih komponen mana yang tampil berdasarkan alamat. Karena itu tautan harus memakai komponen <code>Link</code> (bukan <code>&lt;a href&gt;</code> biasa) agar tidak memuat ulang seluruh halaman.</p>
+<div data-w="compare"><script type="application/json">{"title":"Dua cara berpindah","tabs":[{"label":"\u003ca href> biasa","html":"Browser meminta halaman baru ke server, semua JavaScript dimuat ulang, state aplikasi hilang."},{"label":"\u003cLink> React Router","html":"Mengubah URL lewat History API dan merender komponen rute baru tanpa muat ulang. State di luar rute tetap hidup, transisi cepat."}]}</script></div>
+<h2 id="rute-dasar">Rute dasar</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
+
+function Aplikasi() {
+    return (
+        &lt;BrowserRouter&gt;
+            &lt;nav&gt;
+                &lt;NavLink to=&quot;/&quot;&gt;Beranda&lt;/NavLink&gt;
+                &lt;NavLink to=&quot;/produk&quot;&gt;Produk&lt;/NavLink&gt;
+            &lt;/nav&gt;
+            &lt;Routes&gt;
+                &lt;Route path=&quot;/&quot; element={&lt;Beranda /&gt;} /&gt;
+                &lt;Route path=&quot;/produk&quot; element={&lt;DaftarProduk /&gt;} /&gt;
+                &lt;Route path=&quot;/produk/:id&quot; element={&lt;DetailProduk /&gt;} /&gt;
+                &lt;Route path=&quot;*&quot; element={&lt;TidakDitemukan /&gt;} /&gt;      {/* cadangan: 404 */}
+            &lt;/Routes&gt;
+        &lt;/BrowserRouter&gt;
+    );
+}</code></pre><figcaption>NavLink adalah Link yang otomatis memberi kelas "active" pada tautan yang cocok. Path "*" menangkap semua alamat yang tidak cocok.</figcaption></figure>
+<h2 id="parameter-dinamis-dan-query-string">Parameter dinamis dan query string</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+
+function DetailProduk() {
+    const { id } = useParams();                          // dari /produk/:id  -&gt; &quot;42&quot;
+    const [params, setParams] = useSearchParams();        // dari ?urut=murah&amp;hal=2
+    const navigate = useNavigate();
+
+    const urut = params.get('urut') ?? 'terbaru';
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;Produk #{id} (urut: {urut})&lt;/h1&gt;
+            &lt;button onClick={() =&gt; setParams({ urut: 'murah' })}&gt;Termurah&lt;/button&gt;
+            &lt;button onClick={() =&gt; navigate('/produk')}&gt;Kembali&lt;/button&gt;
+            &lt;button onClick={() =&gt; navigate('/masuk', { replace: true })}&gt;Keluar&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><figcaption>Parameter path (/produk/42) menyatakan identitas sumber daya; query string (?urut=murah) menyatakan variasi tampilan. Keduanya membuat tampilan bisa dibagikan lewat tautan.</figcaption></figure>
+<h2 id="nested-route-dan-layout">Nested route dan Layout</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { Outlet } from 'react-router-dom';
+
+function TataLetak() {
+    return (
+        &lt;div&gt;
+            &lt;header&gt;Situs Saya&lt;/header&gt;
+            &lt;main&gt;&lt;Outlet /&gt;&lt;/main&gt;        {/* anak rute tampil di sini */}
+            &lt;footer&gt;2026&lt;/footer&gt;
+        &lt;/div&gt;
+    );
+}
+
+&lt;Routes&gt;
+    &lt;Route element={&lt;TataLetak /&gt;}&gt;
+        &lt;Route index element={&lt;Beranda /&gt;} /&gt;
+        &lt;Route path=&quot;produk&quot; element={&lt;DaftarProduk /&gt;} /&gt;
+        &lt;Route path=&quot;produk/:id&quot; element={&lt;DetailProduk /&gt;} /&gt;
+    &lt;/Route&gt;
+    &lt;Route path=&quot;/masuk&quot; element={&lt;Masuk /&gt;} /&gt;     {/* tanpa tata letak */}
+&lt;/Routes&gt;</code></pre></figure>
+<h2 id="bagaimana-pencocokan-path-bekerja">Bagaimana pencocokan path bekerja</h2>
+<p>Di balik layar, router memecah path menjadi segmen dan membandingkannya dengan pola rute: segmen biasa harus sama persis, <code>:nama</code> mencocokkan apa saja dan menjadi parameter, dan <code>*</code> mencocokkan sisanya. Implementasi mini berikut menunjukkan idenya dan bisa Anda jalankan.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>function cocokkan(pola, path) {
+    const ps = pola.split('/').filter(Boolean);
+    const xs = path.split('?')[0].split('/').filter(Boolean);
+    const params = {};
+    for (let i = 0; i &lt; ps.length; i++) {
+        if (ps[i] === '*') return { params };                          // cadangan: menerima sisanya
+        if (xs[i] === undefined) return null;
+        if (ps[i].startsWith(':')) params[ps[i].slice(1)] = decodeURIComponent(xs[i]);
+        else if (ps[i] !== xs[i]) return null;
+    }
+    return xs.length === ps.length ? { params } : null;
+}
+
+const rute = ['/', '/produk', '/produk/:id', '/pengguna/:nama/pesanan/:no', '*'];
+function resolusi(path) {
+    for (const r of rute) { const c = cocokkan(r, path); if (c) return { rute: r, ...c }; }
+}
+
+for (const p of ['/', '/produk', '/produk/42', '/pengguna/ani%20lestari/pesanan/7', '/tidak/ada', '/produk/42/ulasan']) {
+    const h = resolusi(p);
+    console.log(p.padEnd(36), '-&gt;', h.rute.padEnd(30), JSON.stringify(h.params));
+}</code></pre><pre class="runout" data-lang="keluaran"><code>/                                    -&gt; /                              {}
+/produk                              -&gt; /produk                        {}
+/produk/42                           -&gt; /produk/:id                    {&quot;id&quot;:&quot;42&quot;}
+/pengguna/ani%20lestari/pesanan/7    -&gt; /pengguna/:nama/pesanan/:no    {&quot;nama&quot;:&quot;ani lestari&quot;,&quot;no&quot;:&quot;7&quot;}
+/tidak/ada                           -&gt; *                              {}
+/produk/42/ulasan                    -&gt; *                              {}</code></pre><figcaption>Urutan rute penting: rute spesifik harus lebih dulu daripada cadangan "*". React Router modern memberi peringkat kecocokan secara otomatis, tetapi prinsipnya sama.</figcaption></figure>
+<h2 id="hal-praktis-yang-sering-terlewat">Hal praktis yang sering terlewat</h2>
+<ul><li><b>Server harus mengembalikan index.html untuk semua alamat</b> (SPA fallback); bila tidak, membuka /produk/42 langsung memberi 404. Cloudflare Pages dan Vercel menyediakan pengaturan ini, atau gunakan <code>HashRouter</code> sebagai cadangan.</li><li><b>Pindah halaman harus mengembalikan fokus dan gulir ke atas</b>; tanpa ini pengguna pembaca layar tidak tahu halaman berganti.</li><li><b>Judul dokumen</b> perlu diperbarui per rute agar tab dan riwayat bermakna.</li><li><b>SEO</b>: halaman SPA murni dirender di browser; bila penting bagi mesin pencari, pakai rendering di server atau prerender (Next.js, Remix, React Router framework mode).</li><li><b>Rute yang dilindungi</b> (butuh login) dikerjakan dengan komponen pembungkus yang mengalihkan dengan <code>&lt;Navigate to="/masuk" replace /&gt;</code> bila belum masuk.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa memakai \u003cLink> alih-alih \u003ca>?","options":["Menghindari muat ulang halaman penuh","Lebih cantik","Wajib oleh HTML"],"answer":0,"why":"Link mengubah URL lewat History API."},{"q":"Path \"/produk/:id\" cocok dengan...","options":["/produk/42","/produk","/produk/42/ulasan"],"answer":0,"why":":id mencocokkan satu segmen."},{"q":"Mengapa server perlu \"SPA fallback\"?","options":["Agar membuka alamat dalam langsung tetap memuat aplikasi","Untuk keamanan","Untuk kompresi"],"answer":0,"why":"Server tidak punya berkas untuk /produk/42."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis rute untuk halaman profil di /pengguna/:nama dan baca namanya.</summary><div><code>&lt;Route path="/pengguna/:nama" element={&lt;Profil /&gt;} /&gt;</code> dan <code>const { nama } = useParams();</code></div></details><details><summary>2. Apa bedanya parameter path dan query string?</summary><div>Parameter path mengidentifikasi sumber daya (/produk/42); query string menyaring atau mengatur tampilan (?urut=murah).</div></details><details><summary>3. Bagaimana mengalihkan pengguna yang belum login dari rute terlindungi?</summary><div>Komponen pembungkus memeriksa status login dan mengembalikan <code>&lt;Navigate to="/masuk" replace /&gt;</code> bila belum masuk.</div></details><details><summary>4. Mengapa halaman SPA murni kurang ideal untuk SEO dan apa alternatifnya?</summary><div>Konten dirender di browser sehingga tidak selalu terbaca penjelajah sederhana; gunakan SSR/SSG atau prerender.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>SPA mengganti tampilan lewat History API tanpa muat ulang; gunakan Link/NavLink.</li><li>Routes, Route, parameter :id, useParams, useSearchParams, useNavigate, Outlet untuk tata letak bersarang.</li><li>Pencocokan path membandingkan segmen; rute cadangan "*" untuk 404.</li><li>Siapkan SPA fallback di server, kelola fokus dan judul halaman, dan pikirkan SEO.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya BrowserRouter dan HashRouter?</summary><div>BrowserRouter memakai alamat bersih (/produk) dan butuh SPA fallback di server; HashRouter memakai /#/produk dan bekerja tanpa konfigurasi server.</div></details>
+<details class="faq"><summary>Apakah React Router satu-satunya pilihan?</summary><div>Ada alternatif seperti TanStack Router, dan framework dengan routing berbasis berkas (Next.js, Remix).</div></details>
+<details class="faq"><summary>Apa itu loader dan action?</summary><div>Pada mode data React Router, loader mengambil data sebelum rute tampil dan action menangani submit form, sehingga pengambilan data terintegrasi dengan routing.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://reactrouter.com/" rel="noopener" target="_blank">React Router Documentation</a></li><li><a href="https://reactrouter.com/start/library/installation" rel="noopener" target="_blank">React Router: Tutorial</a></li><li><a href="https://developer.mozilla.org/docs/Web/API/History_API" rel="noopener" target="_blank">MDN: History API</a></li><li><a href="https://react.dev/learn" rel="noopener" target="_blank">React Documentation (react.dev)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

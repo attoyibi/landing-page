@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>useReducer React: Kelola State Kompleks dengan Reducer</title>
+<meta name="description" content="Pelajari useReducer: pola reducer, action, kapan lebih baik dari useState, dan cara menguji logika state sebagai fungsi murni, lengkap dengan contoh keranjang belanja.">
+<meta name="keywords" content="useReducer, reducer, React state, state management, Redux">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/">
+<meta property="og:title" content="useReducer React: Kelola State Kompleks dengan Reducer">
+<meta property="og:description" content="Pelajari useReducer: pola reducer, action, kapan lebih baik dari useState, dan cara menguji logika state sebagai fungsi murni, lengkap dengan contoh keranjang belanja.">
+<meta property="og:image" content="https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="useReducer React: Kelola State Kompleks dengan Reducer">
+<meta name="twitter:description" content="Pelajari useReducer: pola reducer, action, kapan lebih baik dari useState, dan cara menguji logika state sebagai fungsi murni, lengkap dengan contoh keranjang belanja.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"useReducer React: Kelola State Kompleks dengan Reducer","description":"Pelajari useReducer: pola reducer, action, kapan lebih baik dari useState, dan cara menguji logika state sebagai fungsi murni, lengkap dengan contoh keranjang belanja.","image":["https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"useReducer, reducer, React state, state management, Redux","articleSection":"React & Web Modern","wordCount":395,"mainEntityOfPage":"https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"useReducer React: Kelola State Kompleks dengan Reducer","item":"https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa hubungan useReducer dengan Redux?","acceptedAnswer":{"@type":"Answer","text":"Redux memakai pola reducer yang sama, tetapi dengan satu penyimpanan global dan alat bantu (devtools, middleware). useReducer bersifat lokal pada komponen, kecuali digabung dengan Context."}},{"@type":"Question","name":"Apakah dispatch berubah antar render?","acceptedAnswer":{"@type":"Answer","text":"Tidak; identitas dispatch stabil sehingga aman diteruskan ke anak atau dimasukkan ke dependency."}},{"@type":"Question","name":"Bagaimana menangani efek samping pada aksi?","acceptedAnswer":{"@type":"Answer","text":"Lakukan di event handler atau useEffect, lalu kirim aksi hasilnya (misalnya sukses atau gagal)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#reducer-satu-fungsi-untuk-semua-perubahan">Reducer: satu fungsi untuk semua perubahan</a></li><li><a href="#memakainya-di-komponen">Memakainya di komponen</a></li><li><a href="#usestate-atau-usereducer">useState atau useReducer?</a></li><li><a href="#menguji-reducer-tanpa-react">Menguji reducer tanpa React</a></li><li><a href="#state-asinkron-modelkan-statusnya">State asinkron: modelkan statusnya</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>useReducer React: Kelola State Kompleks dengan Reducer</h1>
+<p class="lead">Ketika satu komponen mulai memiliki lima state yang saling terkait dan tujuh fungsi yang mengubahnya, kode menjadi sulit diikuti. useReducer memusatkan semua cara state berubah di satu tempat, dalam sebuah fungsi murni yang mudah dibaca dan diuji. Pola yang sama menjadi inti Redux.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> useState, render list</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="useReducer React: Kelola State Kompleks dengan Reducer" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan pola reducer: (state, action) → state baru</li><li>memakai useReducer pada komponen React</li><li>memilih antara useState dan useReducer</li><li>menulis dan menguji reducer sebagai fungsi murni</li><li>menangani aksi tak dikenal dan status asinkron secara terstruktur</li></ul></div>
+<h2 id="reducer-satu-fungsi-untuk-semua-perubahan">Reducer: satu fungsi untuk semua perubahan</h2>
+<p>Reducer menerima <b>state sekarang</b> dan sebuah <b>aksi</b> (objek yang menjelaskan apa yang terjadi), lalu mengembalikan <b>state baru</b>. Ia murni: tanpa efek samping, tanpa mengubah state lama. Karena murni, ia bisa dijalankan dan diuji di luar React.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Reducer keranjang belanja
+function keranjangReducer(state, aksi) {
+    switch (aksi.tipe) {
+        case 'tambah': {
+            const ada = state.item.find(i =&gt; i.id === aksi.produk.id);
+            const item = ada
+                ? state.item.map(i =&gt; i.id === aksi.produk.id ? { ...i, jumlah: i.jumlah + 1 } : i)
+                : [...state.item, { ...aksi.produk, jumlah: 1 }];
+            return { ...state, item };
+        }
+        case 'kurang': {
+            const item = state.item
+                .map(i =&gt; i.id === aksi.id ? { ...i, jumlah: i.jumlah - 1 } : i)
+                .filter(i =&gt; i.jumlah &gt; 0);                         // jumlah 0 -&gt; hapus
+            return { ...state, item };
+        }
+        case 'kupon':
+            return { ...state, kupon: aksi.kode };
+        case 'kosongkan':
+            return { ...state, item: [] };
+        default:
+            throw new Error('Aksi tidak dikenal: ' + aksi.tipe);
+    }
+}
+
+const hitungTotal = s =&gt; {
+    const subtotal = s.item.reduce((t, i) =&gt; t + i.harga * i.jumlah, 0);
+    return s.kupon === 'HEMAT10' ? Math.round(subtotal * 0.9) : subtotal;
+};
+
+let state = { item: [], kupon: '' };
+const kopi = { id: 1, nama: 'Kopi', harga: 20000 };
+const teh = { id: 2, nama: 'Teh', harga: 15000 };
+const urutan = [
+    { tipe: 'tambah', produk: kopi }, { tipe: 'tambah', produk: kopi }, { tipe: 'tambah', produk: teh },
+    { tipe: 'kupon', kode: 'HEMAT10' }, { tipe: 'kurang', id: 2 },
+];
+for (const a of urutan) {
+    state = keranjangReducer(state, a);
+    console.log(a.tipe.padEnd(7), 'item:', state.item.map(i =&gt; i.nama + 'x' + i.jumlah).join(', ') || '-', '| total', hitungTotal(state));
+}
+try { keranjangReducer(state, { tipe: 'terbang' }); } catch (e) { console.log('galat:', e.message); }</code></pre><pre class="runout" data-lang="keluaran"><code>tambah  item: Kopix1 | total 20000
+tambah  item: Kopix2 | total 40000
+tambah  item: Kopix2, Tehx1 | total 55000
+kupon   item: Kopix2, Tehx1 | total 49500
+kurang  item: Kopix2 | total 36000
+galat: Aksi tidak dikenal: terbang</code></pre><figcaption>Seluruh aturan keranjang ada dalam satu fungsi. Total dihitung dari state saat dibutuhkan, bukan disimpan.</figcaption></figure>
+<h2 id="memakainya-di-komponen">Memakainya di komponen</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useReducer } from 'react';
+
+function Keranjang({ produk }) {
+    const [state, kirim] = useReducer(keranjangReducer, { item: [], kupon: '' });
+
+    return (
+        &lt;div&gt;
+            {produk.map(p =&gt; (
+                &lt;button key={p.id} onClick={() =&gt; kirim({ tipe: 'tambah', produk: p })}&gt;
+                    Tambah {p.nama}
+                &lt;/button&gt;
+            ))}
+            &lt;ul&gt;
+                {state.item.map(i =&gt; (
+                    &lt;li key={i.id}&gt;
+                        {i.nama} x {i.jumlah}
+                        &lt;button onClick={() =&gt; kirim({ tipe: 'kurang', id: i.id })}&gt;-&lt;/button&gt;
+                    &lt;/li&gt;
+                ))}
+            &lt;/ul&gt;
+            &lt;p&gt;Total: Rp{hitungTotal(state).toLocaleString('id-ID')}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><figcaption>Komponen hanya "mengirim" apa yang terjadi (dispatch). Aturan bagaimana state berubah berada di reducer.</figcaption></figure>
+<h2 id="usestate-atau-usereducer">useState atau useReducer?</h2>
+<table><thead><tr><th></th><th>useState</th><th>useReducer</th></tr></thead><tbody><tr><td>Cocok untuk</td><td>State sederhana dan independen</td><td>Beberapa nilai saling terkait atau banyak jenis perubahan</td></tr><tr><td>Logika pembaruan</td><td>Tersebar di handler</td><td>Terpusat di reducer</td></tr><tr><td>Pengujian</td><td>Lewat komponen</td><td>Reducer diuji sebagai fungsi biasa</td></tr><tr><td>Kode</td><td>Lebih pendek untuk kasus kecil</td><td>Lebih panjang di awal, lebih rapi saat tumbuh</td></tr><tr><td>Debugging</td><td>Sulit melacak sumber perubahan</td><td>Setiap perubahan punya nama aksi</td></tr></tbody></table>
+<div class="callout info"><b>Pedoman</b><p>Tidak ada aturan keras. Mulai dengan <code>useState</code>; pindah ke <code>useReducer</code> ketika Anda mendapati handler yang bolak-balik mengubah banyak state sekaligus atau ketika pembaruan state mulai sulit dipahami.</p></div>
+<h2 id="menguji-reducer-tanpa-react">Menguji reducer tanpa React</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>const assert = require('node:assert');
+
+function reducer(state, aksi) {
+    switch (aksi.tipe) {
+        case 'tambah': return { ...state, hitung: state.hitung + (aksi.jumlah ?? 1) };
+        case 'reset':  return { ...state, hitung: 0 };
+        default: return state;
+    }
+}
+
+const kasus = [
+    ['menambah satu secara bawaan', { hitung: 0 }, { tipe: 'tambah' }, { hitung: 1 }],
+    ['menambah sebanyak jumlah',    { hitung: 2 }, { tipe: 'tambah', jumlah: 5 }, { hitung: 7 }],
+    ['reset kembali ke nol',        { hitung: 9 }, { tipe: 'reset' }, { hitung: 0 }],
+    ['aksi tak dikenal tak mengubah', { hitung: 4 }, { tipe: 'x' }, { hitung: 4 }],
+];
+let lulus = 0;
+for (const [nama, awal, aksi, harapan] of kasus) {
+    try { assert.deepStrictEqual(reducer(awal, aksi), harapan); console.log('LULUS ', nama); lulus++; }
+    catch (e) { console.log('GAGAL ', nama); }
+}
+console.log(lulus + '/' + kasus.length + ' lulus');
+
+const awal = { hitung: 3 };
+reducer(awal, { tipe: 'tambah' });
+console.log('state asli tidak berubah:', JSON.stringify(awal));</code></pre><pre class="runout" data-lang="keluaran"><code>LULUS  menambah satu secara bawaan
+LULUS  menambah sebanyak jumlah
+LULUS  reset kembali ke nol
+LULUS  aksi tak dikenal tak mengubah
+4/4 lulus
+state asli tidak berubah: {&quot;hitung&quot;:3}</code></pre><figcaption>Tes seperti ini cepat, tidak butuh browser, dan menangkap kesalahan aturan bisnis sebelum sampai ke layar.</figcaption></figure>
+<h2 id="state-asinkron-modelkan-statusnya">State asinkron: modelkan statusnya</h2>
+<p>Alih-alih tiga state terpisah (<code>memuat</code>, <code>data</code>, <code>galat</code>) yang bisa saling bertentangan (memuat dan galat sekaligus?), modelkan satu <b>status</b> dengan kemungkinan terbatas.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>function fetchReducer(state, aksi) {
+    switch (aksi.tipe) {
+        case 'mulai':  return { status: 'memuat', data: state.data, galat: null };
+        case 'sukses': return { status: 'sukses', data: aksi.data, galat: null };
+        case 'gagal':  return { status: 'gagal', data: state.data, galat: aksi.galat };
+        default: return state;
+    }
+}
+let s = { status: 'diam', data: null, galat: null };
+for (const a of [{ tipe: 'mulai' }, { tipe: 'sukses', data: [1, 2, 3] }, { tipe: 'mulai' }, { tipe: 'gagal', galat: 'Koneksi putus' }]) {
+    s = fetchReducer(s, a);
+    console.log(a.tipe.padEnd(7), JSON.stringify(s));
+}</code></pre><pre class="runout" data-lang="keluaran"><code>mulai   {&quot;status&quot;:&quot;memuat&quot;,&quot;data&quot;:null,&quot;galat&quot;:null}
+sukses  {&quot;status&quot;:&quot;sukses&quot;,&quot;data&quot;:[1,2,3],&quot;galat&quot;:null}
+mulai   {&quot;status&quot;:&quot;memuat&quot;,&quot;data&quot;:[1,2,3],&quot;galat&quot;:null}
+gagal   {&quot;status&quot;:&quot;gagal&quot;,&quot;data&quot;:[1,2,3],&quot;galat&quot;:&quot;Koneksi putus&quot;}</code></pre><figcaption>Keadaan mustahil (memuat sambil sukses) tidak bisa terjadi karena status hanya satu nilai pada satu waktu. Setelah gagal, data lama tetap ada agar bisa ditampilkan bersama pesan galat.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Reducer harus...","options":["Murni dan tidak mengubah state lama","Memanggil API","Mengubah state langsung"],"answer":0,"why":"Murni sehingga mudah diuji dan dapat diprediksi."},{"q":"Hasil useReducer adalah...","options":["[state, dispatch]","[state, setState]","state saja"],"answer":0,"why":"dispatch mengirim aksi ke reducer."},{"q":"Kapan useReducer lebih baik dari useState?","options":["State saling terkait dengan banyak jenis perubahan","Hanya satu angka","Tidak pernah"],"answer":0,"why":"Memusatkan logika pembaruan."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan aksi "hapus" yang menghapus item ber-id tertentu dari keranjang.</summary><div><code>case "hapus": return { ...state, item: state.item.filter(i => i.id !== aksi.id) };</code></div></details><details><summary>2. Mengapa reducer tidak boleh memanggil fetch?</summary><div>Reducer harus murni dan deterministik; permintaan jaringan adalah efek samping yang dilakukan di event handler atau efek, lalu hasilnya dikirim sebagai aksi.</div></details><details><summary>3. Apa yang terjadi bila reducer mengubah state langsung dan mengembalikan objek yang sama?</summary><div>React menganggap tidak ada perubahan (referensi sama) dan tidak merender ulang; mode pengembangan juga bisa memanggil reducer dua kali sehingga mengungkap bug.</div></details><details><summary>4. Berikan dua keuntungan menamai aksi.</summary><div>Alur perubahan mudah dilacak dan didebug, serta daftar aksi menjadi dokumentasi perilaku state.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Reducer: (state, aksi) → state baru, fungsi murni.</li><li>useReducer mengembalikan [state, dispatch]; komponen mengirim aksi, reducer menentukan perubahan.</li><li>Pilih bila state saling terkait atau jenis perubahan banyak; reducer mudah diuji tanpa React.</li><li>Modelkan status asinkron sebagai satu nilai status untuk menghindari keadaan mustahil.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa hubungan useReducer dengan Redux?</summary><div>Redux memakai pola reducer yang sama, tetapi dengan satu penyimpanan global dan alat bantu (devtools, middleware). useReducer bersifat lokal pada komponen, kecuali digabung dengan Context.</div></details>
+<details class="faq"><summary>Apakah dispatch berubah antar render?</summary><div>Tidak; identitas dispatch stabil sehingga aman diteruskan ke anak atau dimasukkan ke dependency.</div></details>
+<details class="faq"><summary>Bagaimana menangani efek samping pada aksi?</summary><div>Lakukan di event handler atau useEffect, lalu kirim aksi hasilnya (misalnya sukses atau gagal).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/extracting-state-logic-into-a-reducer" rel="noopener" target="_blank">React: Extracting State Logic into a Reducer</a></li><li><a href="https://react.dev/reference/react/useReducer" rel="noopener" target="_blank">React: useReducer reference</a></li><li><a href="https://redux.js.org/style-guide/" rel="noopener" target="_blank">Redux: Style Guide</a></li><li><a href="https://react.dev/reference/react/hooks" rel="noopener" target="_blank">React Reference: Hooks</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
