@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Widget Flutter: Layout Row, Column, Expanded, dan Stack</title>
+<meta name="description" content="Susun tampilan Flutter: pohon widget, Row, Column, Expanded, Stack, ListView, dan aturan constraints yang menjelaskan layout serta galat overflow.">
+<meta name="keywords" content="Flutter, widget, layout, Row Column, Expanded">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/">
+<meta property="og:title" content="Widget Flutter: Layout Row, Column, Expanded, dan Stack">
+<meta property="og:description" content="Susun tampilan Flutter: pohon widget, Row, Column, Expanded, Stack, ListView, dan aturan constraints yang menjelaskan layout serta galat overflow.">
+<meta property="og:image" content="https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Widget Flutter: Layout Row, Column, Expanded, dan Stack">
+<meta name="twitter:description" content="Susun tampilan Flutter: pohon widget, Row, Column, Expanded, Stack, ListView, dan aturan constraints yang menjelaskan layout serta galat overflow.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Widget Flutter: Layout Row, Column, Expanded, dan Stack","description":"Susun tampilan Flutter: pohon widget, Row, Column, Expanded, Stack, ListView, dan aturan constraints yang menjelaskan layout serta galat overflow.","image":["https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Flutter, widget, layout, Row Column, Expanded","articleSection":"Flutter & Mobile","wordCount":479,"mainEntityOfPage":"https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Widget Flutter: Layout Row, Column, Expanded, dan Stack","item":"https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa muncul garis kuning-hitam bertuliskan overflowed?","acceptedAnswer":{"@type":"Answer","text":"Anak lebih besar dari ruang yang tersedia; beri ruang dengan Expanded/Flexible, bungkus dengan SingleChildScrollView, atau ubah ukuran."}},{"@type":"Question","name":"Apa bedanya Container dan SizedBox?","acceptedAnswer":{"@type":"Answer","text":"Container memiliki banyak properti (warna, dekorasi, padding, margin); SizedBox lebih ringan untuk sekadar ukuran atau jarak."}},{"@type":"Question","name":"Bagaimana membuat layout responsif?","acceptedAnswer":{"@type":"Answer","text":"LayoutBuilder dan MediaQuery untuk membaca ukuran layar, lalu mengubah susunan (dibahas di materi responsif)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#widget-dan-pohon-widget">Widget dan pohon widget</a></li><li><a href="#aturan-utama-layout-constraints">Aturan utama layout: constraints</a></li><li><a href="#row-dan-column">Row dan Column</a></li><li><a href="#expanded-dan-flexible-membagi-sisa-ruang">Expanded dan Flexible: membagi sisa ruang</a></li><li><a href="#stack-menumpuk-widget">Stack: menumpuk widget</a></li><li><a href="#daftar-yang-dapat-digulir-listview">Daftar yang dapat digulir: ListView</a></li><li><a href="#memecah-widget-agar-tetap-terbaca">Memecah widget agar tetap terbaca</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>Widget Flutter: Layout Row, Column, Expanded, dan Stack</h1>
+<p class="lead">Di Flutter, semuanya adalah widget: teks, tombol, jarak, bahkan penataan posisi. Antarmuka dibangun dengan menyusun widget kecil menjadi pohon besar. Awalnya terasa banyak kurung, tetapi begitu Anda memahami aturan tunggal yang mengatur ukuran dan posisi, yaitu constraints turun, ukuran naik, layout menjadi dapat diprediksi.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Dart</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Widget Flutter: Layout Row, Column, Expanded, dan Stack" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memahami pohon widget dan komposisi</li><li>menyusun layout dengan Row, Column, Expanded, Flexible, Stack, dan Padding</li><li>menjelaskan aturan constraints dan penyebab galat overflow</li><li>memakai ListView untuk daftar yang dapat digulir</li><li>merapikan kode dengan memecah widget</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="widget-dan-pohon-widget">Widget dan pohon widget</h2>
+<figure class="codebox"><pre data-lang="dart"><code>import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(const AplikasiSaya());
+
+class AplikasiSaya extends StatelessWidget {
+  const AplikasiSaya({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Toko',
+      theme: ThemeData(colorSchemeSeed: Colors.teal, useMaterial3: true),
+      home: const Beranda(),
+    );
+  }
+}
+
+class Beranda extends StatelessWidget {
+  const Beranda({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Toko Saya')),
+      body: const Center(child: Text('Halo, Flutter!')),
+    );
+  }
+}</code></pre><figcaption>Pohon: MaterialApp → Scaffold → (AppBar, Center → Text). Setiap widget menerima widget anak lewat child atau children. Gunakan const di mana mungkin: widget konstan tidak dibangun ulang sehingga lebih hemat.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 620 243" role="img" aria-label="Pohon widget" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="k163r-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="k163r-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="k163r-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="k163r-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="k163r-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="310,48 310,77" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="276.4,113 203.6,152" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="343.6,113 416.4,152" fill="none" stroke="#0f1a33" stroke-width="1.8"/><polyline points="450,188 450,205" fill="none" stroke="#0f1a33" stroke-width="1.8"/><rect x="235" y="12" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="310" y="34.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="310" dy="0">MaterialApp</tspan></text><rect x="235" y="77" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="310" y="99.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="310" dy="0">Scaffold</tspan></text><rect x="105" y="152" width="130" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="170" y="174.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="170" dy="0">AppBar</tspan></text><rect x="385" y="152" width="130" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="450" y="174.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="450" dy="0">Center</tspan></text><rect x="385" y="205" width="130" height="30" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="450" y="224.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="450" dy="0">Text</tspan></text></svg></figure>
+<h2 id="aturan-utama-layout-constraints">Aturan utama layout: constraints</h2>
+<div class="callout info"><b>Satu aturan</b><p><b>Constraints turun, ukuran naik, induk menentukan posisi.</b> (1) Induk memberi anak batasan (lebar dan tinggi minimum/maksimum). (2) Anak memilih ukurannya sendiri dalam batas itu. (3) Induk menempatkan anak. Hampir semua galat layout Flutter bisa dijelaskan dengan aturan ini.</p></div>
+<figure class="codebox"><pre data-lang="javascript"><code>// Peragaan aturan constraints dalam JavaScript: induk memberi batas, anak memilih ukuran, induk menempatkan
+function ukurText(batas, teks) {
+    const lebarAlami = teks.length * 9;                       // lebar yang diinginkan teks
+    return { lebar: Math.min(Math.max(lebarAlami, batas.minL), batas.maxL), tinggi: 20 };
+}
+function Row(batas, anak) {
+    let x = 0; const posisi = [];
+    for (const a of anak) {
+        const ukur = ukurText({ minL: 0, maxL: Infinity }, a);    // Row memberi lebar TAK TERBATAS pada anak non-flex
+        posisi.push({ teks: a, x, lebar: ukur.lebar }); x += ukur.lebar;
+    }
+    return { totalLebar: x, tersedia: batas.maxL, overflow: Math.max(0, x - batas.maxL), posisi };
+}
+const hasil = Row({ maxL: 200 }, ['Nama pengguna panjang', 'Tombol', 'Ikon']);
+console.log('lebar tersedia:', hasil.tersedia, '| lebar total anak:', hasil.totalLebar, '| overflow:', hasil.overflow, 'px  &lt;- &quot;RenderFlex overflowed&quot;');
+console.log('solusi: bungkus anak yang boleh menyusut dengan Expanded/Flexible agar menerima batas, bukan lebar tak terbatas.');</code></pre><pre class="runout" data-lang="keluaran"><code>lebar tersedia: 200 | lebar total anak: 279 | overflow: 79 px  &lt;- &quot;RenderFlex overflowed&quot;
+solusi: bungkus anak yang boleh menyusut dengan Expanded/Flexible agar menerima batas, bukan lebar tak terbatas.</code></pre><figcaption>Row menanyakan ukuran tiap anak non-flex dengan lebar tak terbatas; bila jumlahnya melebihi ruang, muncul peringatan overflow bergaris kuning-hitam di layar.</figcaption></figure>
+<h2 id="row-dan-column">Row dan Column</h2>
+<figure class="codebox"><pre data-lang="dart"><code>Column(
+  mainAxisAlignment: MainAxisAlignment.start,        // sumbu utama (vertikal pada Column)
+  crossAxisAlignment: CrossAxisAlignment.start,      // sumbu silang (horizontal)
+  children: [
+    const Text('Kopi Gayo', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+    const SizedBox(height: 4),                       // jarak
+    const Text('Biji pilihan, sangrai medium'),
+    const SizedBox(height: 12),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,   // sebar ke dua ujung
+      children: [
+        const Text('Rp65.000', style: TextStyle(color: Colors.teal)),
+        FilledButton(onPressed: () {}, child: const Text('Beli')),
+      ],
+    ),
+  ],
+)</code></pre><figcaption>Row bersumbu utama horizontal, Column vertikal. mainAxisAlignment mengatur penyebaran sepanjang sumbu utama; crossAxisAlignment mengatur penempatan pada sumbu lainnya.</figcaption></figure>
+<table><thead><tr><th>Nilai mainAxisAlignment</th><th>Efek pada Row</th></tr></thead><tbody><tr><td>start</td><td>Rapat ke kiri</td></tr><tr><td>end</td><td>Rapat ke kanan</td></tr><tr><td>center</td><td>Di tengah</td></tr><tr><td>spaceBetween</td><td>Sebar; anak pertama dan terakhir menempel tepi</td></tr><tr><td>spaceAround / spaceEvenly</td><td>Sebar dengan jarak di sekitar anak</td></tr></tbody></table>
+<h2 id="expanded-dan-flexible-membagi-sisa-ruang">Expanded dan Flexible: membagi sisa ruang</h2>
+<figure class="codebox"><pre data-lang="dart"><code>Row(
+  children: [
+    const Icon(Icons.shopping_bag),                  // lebar alami
+    const SizedBox(width: 8),
+    Expanded(                                         // mengambil SEMUA sisa lebar; teks panjang dipotong
+      child: Text('Nama produk yang sangat panjang sekali', overflow: TextOverflow.ellipsis),
+    ),
+    const SizedBox(width: 8),
+    const Text('Rp65.000'),
+  ],
+)
+
+// membagi menurut perbandingan
+Row(
+  children: [
+    Expanded(flex: 2, child: Container(height: 40, color: Colors.teal)),    // 2 bagian
+    Expanded(flex: 1, child: Container(height: 40, color: Colors.orange)),  // 1 bagian
+  ],
+)</code></pre><figcaption>Flexible boleh lebih kecil dari ruang yang disediakan; Expanded memaksa mengisi seluruhnya (Expanded adalah Flexible dengan fit: tight).</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Peragaan Expanded: bagi sisa ruang menurut flex
+function bagiRuang(lebarTotal, anak) {
+    const tetap = anak.filter(a =&gt; !a.flex).reduce((j, a) =&gt; j + a.lebar, 0);
+    const sisa = Math.max(0, lebarTotal - tetap);
+    const totalFlex = anak.reduce((j, a) =&gt; j + (a.flex || 0), 0);
+    return anak.map(a =&gt; ({ nama: a.nama, lebar: a.flex ? Math.round(sisa * a.flex / totalFlex) : a.lebar }));
+}
+console.log(bagiRuang(360, [{ nama: 'ikon', lebar: 24 }, { nama: 'judul', flex: 2 }, { nama: 'harga', flex: 1 }]));
+console.log(bagiRuang(360, [{ nama: 'ikon', lebar: 24 }, { nama: 'nama', flex: 1 }, { nama: 'harga', lebar: 80 }]));</code></pre><pre class="runout" data-lang="keluaran"><code>[
+  { nama: 'ikon', lebar: 24 },
+  { nama: 'judul', lebar: 224 },
+  { nama: 'harga', lebar: 112 }
+]
+[
+  { nama: 'ikon', lebar: 24 },
+  { nama: 'nama', lebar: 256 },
+  { nama: 'harga', lebar: 80 }
+]</code></pre></figure>
+<h2 id="stack-menumpuk-widget">Stack: menumpuk widget</h2>
+<figure class="codebox"><pre data-lang="dart"><code>Stack(
+  alignment: Alignment.bottomLeft,                  // penempatan anak tanpa Positioned
+  children: [
+    Image.network('https://contoh.id/banner.jpg', width: double.infinity, height: 180, fit: BoxFit.cover),
+    Container(                                       // lapisan gelap di atas gambar
+      padding: const EdgeInsets.all(12),
+      color: Colors.black54,
+      width: double.infinity,
+      child: const Text('Promo Akhir Pekan', style: TextStyle(color: Colors.white, fontSize: 18)),
+    ),
+    const Positioned(top: 8, right: 8, child: Chip(label: Text('-20%'))),   // posisi absolut
+  ],
+)</code></pre><figcaption>Stack menumpuk anak dari bawah ke atas; Positioned menempatkan anak pada koordinat tertentu terhadap Stack.</figcaption></figure>
+<h2 id="daftar-yang-dapat-digulir-listview">Daftar yang dapat digulir: ListView</h2>
+<div class="callout warn"><b>Salah umum</b><p>Jangan menaruh <code>Column</code> berisi banyak item di dalam layar yang perlu digulir. Column tidak dapat digulir dan akan overflow. Pakai <code>ListView</code>, dan <code>ListView.builder</code> untuk daftar panjang: item dibuat <b>malas</b> hanya saat terlihat, sehingga 10.000 item tetap ringan.</p></div>
+<figure class="codebox"><pre data-lang="dart"><code>ListView.builder(
+  itemCount: produk.length,
+  itemBuilder: (context, i) {
+    final p = produk[i];
+    return ListTile(
+      leading: const CircleAvatar(child: Icon(Icons.coffee)),
+      title: Text(p.nama),
+      subtitle: Text('Stok ${p.stok}'),
+      trailing: Text('Rp${p.harga}'),
+      onTap: () {},
+    );
+  },
+)
+
+// pemisah antar item: ListView.separated(separatorBuilder: (_, __) =&gt; const Divider(), ...)
+// grid: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), ...)</code></pre></figure>
+<h2 id="memecah-widget-agar-tetap-terbaca">Memecah widget agar tetap terbaca</h2>
+<ul><li>Bila method <code>build</code> melewati sekitar 40–60 baris atau berkurung dalam, pecah menjadi widget terpisah (<code>class KartuProduk extends StatelessWidget</code>), bukan sekadar method pembantu.</li><li>Beri <code>const</code> pada konstruktor dan pemakaiannya bila semua field final.</li><li>Gunakan <code>Padding</code>, <code>SizedBox</code>, <code>Align</code>, dan <code>Container</code> hanya sesuai keperluan: Container yang hanya memberi padding lebih baik diganti Padding.</li><li>Aktifkan <b>Flutter Inspector</b> dan "Debug Paint" di DevTools untuk melihat batas dan ukuran widget saat menelusuri masalah layout.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Aturan layout Flutter?","options":["Constraints turun, ukuran naik, induk menempatkan","Anak menentukan semuanya","Posisi absolut selalu"],"answer":0,"why":"Membantu menjelaskan sebagian besar galat layout."},{"q":"Widget untuk mengisi sisa ruang di Row?","options":["Expanded","Padding","Align"],"answer":0,"why":"Mengambil sisa ruang menurut flex."},{"q":"Untuk daftar panjang yang dapat digulir sebaiknya...","options":["ListView.builder","Column dengan banyak anak","Stack"],"answer":0,"why":"Membuat item secara malas."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Teks panjang di dalam Row menyebabkan overflow. Apa perbaikannya?</summary><div>Bungkus Text dengan Expanded atau Flexible dan atur overflow: TextOverflow.ellipsis.</div></details><details><summary>2. Buat kartu: gambar di kiri (80x80), judul dan harga di kanan memenuhi sisa ruang.</summary><div>Row dengan SizedBox/Image 80x80, SizedBox lebar 12, lalu Expanded berisi Column (judul dan harga).</div></details><details><summary>3. Kapan memakai Stack?</summary><div>Saat widget perlu bertumpuk: lencana di atas gambar, teks di atas banner, tombol mengambang.</div></details><details><summary>4. Mengapa const pada widget bermanfaat?</summary><div>Widget const dibuat sekali saat kompilasi dan tidak dibangun ulang, menghemat kerja saat state berubah.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Semua adalah widget; UI adalah pohon widget yang disusun lewat child dan children.</li><li>Constraints turun, ukuran naik, induk menempatkan: kunci memahami layout dan galat overflow.</li><li>Row/Column (sumbu utama dan silang), Expanded/Flexible (bagi sisa ruang), Stack/Positioned (menumpuk).</li><li>ListView.builder untuk daftar panjang; pecah widget dan gunakan const.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa muncul garis kuning-hitam bertuliskan overflowed?</summary><div>Anak lebih besar dari ruang yang tersedia; beri ruang dengan Expanded/Flexible, bungkus dengan SingleChildScrollView, atau ubah ukuran.</div></details>
+<details class="faq"><summary>Apa bedanya Container dan SizedBox?</summary><div>Container memiliki banyak properti (warna, dekorasi, padding, margin); SizedBox lebih ringan untuk sekadar ukuran atau jarak.</div></details>
+<details class="faq"><summary>Bagaimana membuat layout responsif?</summary><div>LayoutBuilder dan MediaQuery untuk membaca ukuran layar, lalu mengubah susunan (dibahas di materi responsif).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/ui/layout" rel="noopener" target="_blank">Flutter: Layouts</a></li><li><a href="https://docs.flutter.dev/ui/layout/constraints" rel="noopener" target="_blank">Flutter: Understanding constraints</a></li><li><a href="https://docs.flutter.dev/ui/widgets" rel="noopener" target="_blank">Flutter: Widget catalog</a></li><li><a href="https://docs.flutter.dev/tools/devtools/inspector" rel="noopener" target="_blank">Flutter: Inspector</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/"><img src="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Async di Dart: Future, async/await, dan Stream</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

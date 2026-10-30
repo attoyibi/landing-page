@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTTP dan JSON di Flutter: Model, fromJson, Error Handling</title>
+<meta name="description" content="Ambil data API di Flutter: paket http, model dengan fromJson dan toJson, penanganan galat, lapisan repository, dan uji parsing tanpa jaringan.">
+<meta name="keywords" content="Flutter HTTP, JSON Dart, fromJson, API Flutter, model data">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/">
+<meta property="og:title" content="HTTP dan JSON di Flutter: Model, fromJson, Error Handling">
+<meta property="og:description" content="Ambil data API di Flutter: paket http, model dengan fromJson dan toJson, penanganan galat, lapisan repository, dan uji parsing tanpa jaringan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HTTP dan JSON di Flutter: Model, fromJson, Error Handling">
+<meta name="twitter:description" content="Ambil data API di Flutter: paket http, model dengan fromJson dan toJson, penanganan galat, lapisan repository, dan uji parsing tanpa jaringan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"HTTP dan JSON di Flutter: Model, fromJson, Error Handling","description":"Ambil data API di Flutter: paket http, model dengan fromJson dan toJson, penanganan galat, lapisan repository, dan uji parsing tanpa jaringan.","image":["https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Flutter HTTP, JSON Dart, fromJson, API Flutter, model data","articleSection":"Flutter & Mobile","wordCount":460,"mainEntityOfPage":"https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"HTTP dan JSON di Flutter: Model, fromJson, Error Handling","item":"https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah perlu json_serializable?","acceptedAnswer":{"@type":"Answer","text":"Untuk model banyak dan kompleks, ya: ia menghasilkan fromJson/toJson dan mengurangi kesalahan ketik; untuk beberapa model sederhana, kode manual cukup."}},{"@type":"Question","name":"Bagaimana mengunggah berkas?","acceptedAnswer":{"@type":"Answer","text":"Dengan http.MultipartRequest atau Dio FormData; sertakan progres bagi pengguna."}},{"@type":"Question","name":"Bagaimana dengan GraphQL atau gRPC?","acceptedAnswer":{"@type":"Answer","text":"Ada paket (graphql_flutter, grpc), tetapi REST JSON tetap paling umum untuk kebanyakan aplikasi."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#memanggil-api">Memanggil API</a></li><li><a href="#model-dengan-fromjson-dan-tojson">Model dengan fromJson dan toJson</a></li><li><a href="#bila-json-tidak-sesuai-harapan">Bila JSON tidak sesuai harapan</a></li><li><a href="#lapisan-repository-dengan-galat-bertipe">Lapisan repository dengan galat bertipe</a></li><li><a href="#praktik-penting-lain">Praktik penting lain</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>HTTP dan JSON di Flutter: Model, fromJson, Error Handling</h1>
+<p class="lead">Hampir setiap aplikasi seluler berbicara dengan server. Tugasnya tampak sederhana: panggil URL, dapatkan JSON, tampilkan. Namun yang membedakan aplikasi yang andal dari yang sering crash adalah cara Anda memodelkan data, menangani respons yang tidak diharapkan, dan memisahkan kode jaringan dari tampilan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> async Dart, class Dart</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="HTTP dan JSON di Flutter: Model, fromJson, Error Handling" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memanggil API dengan paket http dan membaca status serta isi</li><li>memodelkan JSON menjadi class Dart dengan fromJson dan toJson</li><li>menangani data yang hilang, bertipe salah, atau bernilai null dengan aman</li><li>membuat lapisan repository dengan galat bertipe</li><li>menguji parsing JSON tanpa jaringan</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="memanggil-api">Memanggil API</h2>
+<figure class="codebox"><pre data-lang="bash"><code>flutter pub add http</code></pre></figure>
+<figure class="codebox"><pre data-lang="dart"><code>import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+Future&lt;List&lt;Produk&gt;&gt; ambilProduk() async {
+  final uri = Uri.https('api.contoh.id', '/v1/produk', {'halaman': '1'});     // query terenkode otomatis
+  final respons = await http
+      .get(uri, headers: {'Accept': 'application/json'})
+      .timeout(const Duration(seconds: 10));                                   // jangan menunggu selamanya
+
+  if (respons.statusCode != 200) {
+    throw ApiGalat(respons.statusCode, 'Gagal memuat produk');
+  }
+  final json = jsonDecode(utf8.decode(respons.bodyBytes)) as Map&lt;String, dynamic&gt;;   // utf8.decode: aman untuk karakter non-ASCII
+  return (json['data'] as List&lt;dynamic&gt;)
+      .map((e) =&gt; Produk.fromJson(e as Map&lt;String, dynamic&gt;))
+      .toList();
+}</code></pre><figcaption>Di Android, izinkan akses internet di AndroidManifest (uses-permission INTERNET; sudah ada pada mode debug). Di macOS/iOS pastikan entitlements/App Transport Security sesuai (HTTPS).</figcaption></figure>
+<h2 id="model-dengan-fromjson-dan-tojson">Model dengan fromJson dan toJson</h2>
+<figure class="codebox"><pre data-lang="dart"><code>import 'dart:convert';
+
+class Produk {
+  final int id;
+  final String nama;
+  final int harga;
+  final String? deskripsi;          // boleh tidak ada
+  final DateTime dibuat;
+  final List&lt;String&gt; tag;
+
+  const Produk({
+    required this.id,
+    required this.nama,
+    required this.harga,
+    this.deskripsi,
+    required this.dibuat,
+    this.tag = const [],
+  });
+
+  factory Produk.fromJson(Map&lt;String, dynamic&gt; json) {
+    return Produk(
+      id: json['id'] as int,
+      nama: json['nama'] as String,
+      harga: (json['harga'] as num).toInt(),                        // num: angka bisa tiba sebagai int atau double
+      deskripsi: json['deskripsi'] as String?,
+      dibuat: DateTime.parse(json['dibuat'] as String),
+      tag: (json['tag'] as List&lt;dynamic&gt;? ?? []).cast&lt;String&gt;(),
+    );
+  }
+
+  Map&lt;String, dynamic&gt; toJson() =&gt; {
+        'id': id,
+        'nama': nama,
+        'harga': harga,
+        'deskripsi': deskripsi,
+        'dibuat': dibuat.toIso8601String(),
+        'tag': tag,
+      };
+
+  @override
+  String toString() =&gt; 'Produk($id, $nama, Rp$harga, tag: $tag)';
+}
+
+void main() {
+  const teks = '{&quot;data&quot;:[{&quot;id&quot;:1,&quot;nama&quot;:&quot;Kopi Gayo&quot;,&quot;harga&quot;:65000,&quot;deskripsi&quot;:null,&quot;dibuat&quot;:&quot;2026-10-30T08:00:00Z&quot;,&quot;tag&quot;:[&quot;organik&quot;,&quot;lokal&quot;]},'
+      '{&quot;id&quot;:2,&quot;nama&quot;:&quot;Teh Hijau&quot;,&quot;harga&quot;:40000.0,&quot;dibuat&quot;:&quot;2026-10-29T10:30:00Z&quot;}]}';
+
+  final json = jsonDecode(teks) as Map&lt;String, dynamic&gt;;
+  final produk = (json['data'] as List&lt;dynamic&gt;).map((e) =&gt; Produk.fromJson(e as Map&lt;String, dynamic&gt;)).toList();
+  for (final p in produk) {
+    print(p);
+  }
+  print(jsonEncode(produk.first.toJson()));
+  print('tahun dibuat: ${produk.first.dibuat.year}');
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Produk(1, Kopi Gayo, Rp65000, tag: [organik, lokal])
+Produk(2, Teh Hijau, Rp40000, tag: [])
+{&quot;id&quot;:1,&quot;nama&quot;:&quot;Kopi Gayo&quot;,&quot;harga&quot;:65000,&quot;deskripsi&quot;:null,&quot;dibuat&quot;:&quot;2026-10-30T08:00:00.000Z&quot;,&quot;tag&quot;:[&quot;organik&quot;,&quot;lokal&quot;]}
+tahun dibuat: 2026</code></pre><figcaption>Perhatikan harga 40000.0 dan "deskripsi" yang tidak ada pada data kedua: model menangani keduanya (num.toInt dan String?). Ini jenis variasi data yang sering terjadi pada API nyata.</figcaption></figure>
+<h2 id="bila-json-tidak-sesuai-harapan">Bila JSON tidak sesuai harapan</h2>
+<div class="callout warn"><b>Data luar tidak dapat dipercaya</b><p>Cast <code>as int</code> pada nilai yang ternyata <code>String</code> melempar <code>TypeError</code> saat berjalan dan membuat layar crash. API nyata berubah, mengirim null, atau mengirim bentuk berbeda. Putuskan sejak awal: <b>gagal keras dengan galat yang jelas</b> (dan dilaporkan) atau <b>toleran</b> dengan nilai bawaan, tetapi jangan membiarkannya crash tanpa penjelasan.</p></div>
+<figure class="codebox"><pre data-lang="dart"><code>class FormatTidakValid implements Exception {
+  final String pesan;
+  FormatTidakValid(this.pesan);
+  @override
+  String toString() =&gt; 'FormatTidakValid: $pesan';
+}
+
+T ambil&lt;T&gt;(Map&lt;String, dynamic&gt; json, String kunci) {
+  final nilai = json[kunci];
+  if (nilai is! T) {
+    throw FormatTidakValid('&quot;$kunci&quot; diharapkan $T tetapi ${nilai.runtimeType} ($nilai)');
+  }
+  return nilai;
+}
+
+void main() {
+  final bagus = {'id': 1, 'nama': 'Kopi'};
+  print(ambil&lt;int&gt;(bagus, 'id'));
+
+  final buruk = {'id': '1', 'nama': null};
+  for (final kunci in ['id', 'nama', 'harga']) {
+    try {
+      print(ambil&lt;Object&gt;(buruk, kunci));
+    } catch (e) {
+      print(e);
+    }
+  }
+  try {
+    ambil&lt;int&gt;(buruk, 'id');
+  } on FormatTidakValid catch (e) {
+    print('ditangkap: $e');
+  }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>1
+1
+FormatTidakValid: &quot;nama&quot; diharapkan Object tetapi Null (null)
+FormatTidakValid: &quot;harga&quot; diharapkan Object tetapi Null (null)
+ditangkap: FormatTidakValid: &quot;id&quot; diharapkan int tetapi String (1)</code></pre><figcaption>Pesan galat yang menyebut kunci, tipe yang diharapkan, dan nilai sebenarnya mempercepat pencarian bug saat API berubah. Untuk model besar, paket seperti json_serializable atau freezed menghasilkan kode ini otomatis.</figcaption></figure>
+<h2 id="lapisan-repository-dengan-galat-bertipe">Lapisan repository dengan galat bertipe</h2>
+<figure class="codebox"><pre data-lang="dart"><code>sealed class ApiGalat implements Exception {
+  const ApiGalat(this.pesan);
+  final String pesan;
+}
+class TanpaKoneksi extends ApiGalat { const TanpaKoneksi() : super('Tidak ada koneksi internet.'); }
+class WaktuHabis extends ApiGalat { const WaktuHabis() : super('Server terlalu lama menjawab.'); }
+class StatusGalat extends ApiGalat { const StatusGalat(this.kode) : super('Server menolak (kode kode).'); final int kode; }
+class DataRusak extends ApiGalat { const DataRusak(super.pesan); }
+
+class ProdukRepository {
+  ProdukRepository(this._klien);
+  final http.Client _klien;                                // diinjeksi: mudah ditukar dengan tiruan saat tes
+
+  Future&lt;List&lt;Produk&gt;&gt; semua() async {
+    try {
+      final r = await _klien.get(Uri.https('api.contoh.id', '/v1/produk')).timeout(const Duration(seconds: 10));
+      if (r.statusCode != 200) throw StatusGalat(r.statusCode);
+      return _urai(utf8.decode(r.bodyBytes));
+    } on SocketException { throw const TanpaKoneksi(); }
+    on TimeoutException { throw const WaktuHabis(); }
+    on FormatException catch (e) { throw DataRusak('JSON rusak: ${e.message}'); }
+  }
+}
+
+// Di antarmuka: ubah galat bertipe menjadi pesan ramah dan tombol &quot;Coba lagi&quot;
+// switch (galat) { TanpaKoneksi() =&gt; ..., WaktuHabis() =&gt; ..., StatusGalat(:final kode) =&gt; ..., DataRusak() =&gt; ... }</code></pre><figcaption>Repository menerjemahkan detail teknis (SocketException, kode status) menjadi galat domain yang dapat diputuskan UI. Tampilan tidak perlu tahu tentang paket http.</figcaption></figure>
+<h2 id="praktik-penting-lain">Praktik penting lain</h2>
+<ul><li><b>Jangan menaruh kunci rahasia di aplikasi</b>: apa pun yang ada di APK dapat diekstrak. Rahasia berada di server; aplikasi memakai token pengguna.</li><li><b>HTTPS saja</b> dan pertimbangkan certificate pinning untuk aplikasi sensitif.</li><li><b>Caching dan offline</b>: simpan respons terakhir di penyimpanan lokal agar aplikasi tetap berguna tanpa koneksi.</li><li><b>Dio</b> adalah alternatif populer (interceptor, pembatalan, unggah progres); http cukup untuk banyak kasus.</li><li><b>Parsing berat</b> di isolate (compute) bila respons sangat besar.</li><li><b>Mock</b> klien HTTP di tes (http/testing MockClient) agar tes tidak memanggil jaringan.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa memakai (json[\"harga\"] as num).toInt()?","options":["Angka JSON bisa tiba sebagai int atau double","Agar lebih cepat","Wajib oleh Dart"],"answer":0,"why":"40000 dan 40000.0 sama-sama sah dalam JSON."},{"q":"Fungsi factory Produk.fromJson?","options":["Membuat objek dari Map hasil jsonDecode","Mengirim HTTP","Menyimpan basis data"],"answer":0,"why":"Konstruktor pabrik untuk parsing."},{"q":"Mengapa menaruh kunci rahasia API di aplikasi seluler berbahaya?","options":["APK dapat didekompilasi dan kunci diekstrak","Memperlambat aplikasi","Dilarang Dart"],"answer":0,"why":"Rahasia harus di server."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat model Pengguna dengan id, nama, surel opsional, dan fromJson yang aman.</summary><div>Field surel bertipe String?; nama dan id dengan cast; gunakan json["surel"] as String?.</div></details><details><summary>2. Mengapa menyuntikkan http.Client ke repository?</summary><div>Agar dapat diganti klien tiruan saat tes, tanpa jaringan sungguhan.</div></details><details><summary>3. Apa yang terjadi pada aplikasi bila API mengirim "id": "1" (string) dan model memakai as int?</summary><div>TypeError saat berjalan (crash) kecuali ditangani; pakai pemeriksaan tipe atau galat bertipe.</div></details><details><summary>4. Bagaimana menampilkan pesan ramah saat tidak ada koneksi?</summary><div>Tangkap SocketException di repository, ubah ke galat TanpaKoneksi, dan UI menampilkan pesan serta tombol coba lagi.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Paket http: get dengan timeout; periksa statusCode; decode utf8 lalu jsonDecode.</li><li>Model dengan fromJson/toJson; tangani num, String?, dan daftar yang hilang.</li><li>Data luar tidak dapat dipercaya: galat jelas atau nilai bawaan, jangan crash diam-diam.</li><li>Repository menerjemahkan galat teknis menjadi galat bertipe; suntikkan klien untuk tes; rahasia tetap di server.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah perlu json_serializable?</summary><div>Untuk model banyak dan kompleks, ya: ia menghasilkan fromJson/toJson dan mengurangi kesalahan ketik; untuk beberapa model sederhana, kode manual cukup.</div></details>
+<details class="faq"><summary>Bagaimana mengunggah berkas?</summary><div>Dengan http.MultipartRequest atau Dio FormData; sertakan progres bagi pengguna.</div></details>
+<details class="faq"><summary>Bagaimana dengan GraphQL atau gRPC?</summary><div>Ada paket (graphql_flutter, grpc), tetapi REST JSON tetap paling umum untuk kebanyakan aplikasi.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/cookbook/networking/fetch-data" rel="noopener" target="_blank">Flutter: Fetch data from the internet</a></li><li><a href="https://docs.flutter.dev/data-and-backend/serialization/json" rel="noopener" target="_blank">Flutter: JSON and serialization</a></li><li><a href="https://api.dart.dev/stable/dart-convert/dart-convert-library.html" rel="noopener" target="_blank">Dart: dart:convert</a></li><li><a href="https://pub.dev/packages/http" rel="noopener" target="_blank">pub.dev: http</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

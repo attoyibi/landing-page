@@ -3,7 +3,7 @@
 // generated files in public/artikel/<slug>/.
 
 import { diagram } from './diagram.mjs';
-import { runPython, runJava, runNode, tracePython } from './runner.mjs';
+import { runPython, runJava, runNode, runDart, tracePython } from './runner.mjs';
 
 export const SITE = 'https://muchson.web.id';
 export const STORE = 'https://cms-online-store-glasses.muhammadmuchson.workers.dev/';
@@ -195,13 +195,13 @@ function renderBlock(b, ctx) {
         const lang = b.lang || '';
         let out = '';
         if (b.run) {
-            if (!['python', 'java', 'javascript', 'jsx'].includes(lang)) throw new Error('run membutuhkan lang python, java, javascript, atau jsx');
+            if (!['python', 'java', 'javascript', 'jsx', 'dart'].includes(lang)) throw new Error('run membutuhkan lang python, java, javascript, jsx, atau dart');
             // cont: true menjalankan blok ini setelah semua blok python sebelumnya (keluarannya disembunyikan)
             let src = b.code;
             if (lang === 'python' && b.cont && ctx.pycode?.length) {
                 src = `import sys as _s, io as _io\n_o = _s.stdout; _s.stdout = _io.StringIO()\nexec(${JSON.stringify(ctx.pycode.join('\n'))})\n_s.stdout = _o\n${b.code}`;
             }
-            const r = (lang === 'python' ? runPython : lang === 'java' ? runJava : (c, o) => runNode(c, { ...o, jsx: lang === 'jsx' }))(src, { input: b.input || '', expectError: !!b.expectError });
+            const r = (lang === 'python' ? runPython : lang === 'java' ? runJava : lang === 'dart' ? runDart : (c, o) => runNode(c, { ...o, jsx: lang === 'jsx' }))(src, { input: b.input || '', expectError: !!b.expectError });
             out = r.out;
         }
         if (lang === 'python' && !b.expectError && !b.input) (ctx.pycode ||= []).push(b.code);

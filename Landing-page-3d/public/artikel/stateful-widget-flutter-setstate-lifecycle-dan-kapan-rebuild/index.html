@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</title>
+<meta name="description" content="Pahami StatefulWidget Flutter: setState dan rebuild, lifecycle initState dan dispose, mengangkat state, serta kesalahan umum setelah dispose.">
+<meta name="keywords" content="StatefulWidget, setState, lifecycle, Flutter state, initState">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/">
+<meta property="og:title" content="StatefulWidget Flutter: setState, Lifecycle, dan Rebuild">
+<meta property="og:description" content="Pahami StatefulWidget Flutter: setState dan rebuild, lifecycle initState dan dispose, mengangkat state, serta kesalahan umum setelah dispose.">
+<meta property="og:image" content="https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="StatefulWidget Flutter: setState, Lifecycle, dan Rebuild">
+<meta name="twitter:description" content="Pahami StatefulWidget Flutter: setState dan rebuild, lifecycle initState dan dispose, mengangkat state, serta kesalahan umum setelah dispose.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"StatefulWidget Flutter: setState, Lifecycle, dan Rebuild","description":"Pahami StatefulWidget Flutter: setState dan rebuild, lifecycle initState dan dispose, mengangkat state, serta kesalahan umum setelah dispose.","image":["https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"StatefulWidget, setState, lifecycle, Flutter state, initState","articleSection":"Flutter & Mobile","wordCount":426,"mainEntityOfPage":"https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"StatefulWidget Flutter: setState, Lifecycle, dan Rebuild","item":"https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah build ulang mahal?","acceptedAnswer":{"@type":"Answer","text":"Tidak terlalu; Flutter membandingkan pohon widget baru dengan elemen yang ada dan hanya memperbarui yang berubah. Hindari pekerjaan berat di build."}},{"@type":"Question","name":"Kapan beralih dari setState ke Provider/Riverpod?","acceptedAnswer":{"@type":"Answer","text":"Saat state dibagi antar banyak layar atau dikirim lewat banyak tingkat widget; untuk state lokal satu widget, setState cukup."}},{"@type":"Question","name":"Apa itu key pada widget?","acceptedAnswer":{"@type":"Answer","text":"Identitas untuk mempertahankan state saat urutan widget dalam daftar berubah, sama tujuannya dengan key di React."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#stateless-vs-stateful">Stateless vs Stateful</a></li><li><a href="#mengintip-mekanismenya">Mengintip mekanismenya</a></li><li><a href="#siklus-hidup-state">Siklus hidup State</a></li><li><a href="#galat-umum-setstate-setelah-dispose">Galat umum: setState setelah dispose</a></li><li><a href="#mengangkat-state">Mengangkat state</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</h1>
+<p class="lead">Widget yang hanya menampilkan data itu statis. Aplikasi menjadi hidup ketika tampilan berubah sebagai tanggapan terhadap sentuhan, ketikan, atau data masuk. Di Flutter, perubahan itu dikelola lewat state, dan setState adalah mekanisme paling dasar yang perlu Anda pahami sebelum mempelajari pustaka manajemen state yang lebih besar.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> widget dan layout Flutter, dasar Dart</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="StatefulWidget Flutter: setState, Lifecycle, dan Rebuild" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan StatelessWidget dan StatefulWidget</li><li>memakai setState dan memahami bahwa ia memicu build ulang</li><li>memahami siklus hidup State: initState, didUpdateWidget, dispose</li><li>melepas sumber daya (controller, langganan) dengan benar di dispose</li><li>mengangkat state ke induk untuk dibagikan antar widget</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="stateless-vs-stateful">Stateless vs Stateful</h2>
+<table><thead><tr><th></th><th>StatelessWidget</th><th>StatefulWidget</th></tr></thead><tbody><tr><td>Data yang berubah</td><td>Tidak ada; hanya dari parameter konstruktor</td><td>Ada: objek State yang hidup lebih lama dari widget</td></tr><tr><td>Kapan build ulang</td><td>Saat induknya mengirim konfigurasi baru</td><td>Saat induk mengirim konfigurasi baru ATAU setState dipanggil</td></tr><tr><td>Contoh</td><td>Teks judul, ikon, kartu produk statis</td><td>Penghitung, kotak centang, formulir, animasi</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="dart"><code>import 'package:flutter/material.dart';
+
+class Penghitung extends StatefulWidget {
+  const Penghitung({super.key, this.awal = 0});
+  final int awal;                                    // konfigurasi dari induk (tidak berubah)
+
+  @override
+  State&lt;Penghitung&gt; createState() =&gt; _PenghitungState();
+}
+
+class _PenghitungState extends State&lt;Penghitung&gt; {
+  late int _jumlah;                                  // state: milik objek State ini
+
+  @override
+  void initState() {
+    super.initState();
+    _jumlah = widget.awal;                           // dijalankan SEKALI saat State dibuat
+  }
+
+  void _tambah() {
+    setState(() {                                    // 1. ubah data di dalam setState
+      _jumlah++;                                     // 2. Flutter menjadwalkan build ulang
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('Klik: $_jumlah', style: Theme.of(context).textTheme.headlineMedium),
+        FilledButton(onPressed: _tambah, child: const Text('Tambah')),
+      ],
+    );
+  }
+}</code></pre><figcaption>Widget (immutable, dibuat ulang sering) dan State (berumur panjang) dipisahkan agar data tidak hilang setiap build. Awalan _ membuat anggota privat pada berkas itu.</figcaption></figure>
+<div class="callout info"><b>setState dan build</b><p>setState hanya memberi tahu Flutter bahwa data berubah dan <b>build()</b> perlu dijalankan ulang. Mengubah variabel tanpa setState tidak memperbarui layar. Dan bangun ulang itu murah: yang dibuat ulang hanyalah deskripsi widget; Flutter hanya memperbarui bagian layar yang benar-benar berbeda.</p></div>
+<h2 id="mengintip-mekanismenya">Mengintip mekanismenya</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// Tiruan dalam Dart murni: State memegang data, setState menjadwalkan build ulang
+class WidgetTiruan {
+  int jumlah = 0;
+  int jumlahBuild = 0;
+
+  void setState(void Function() ubah) {
+    ubah();                         // 1. data diubah
+    build();                        // 2. &quot;framework&quot; membangun ulang
+  }
+
+  void build() {
+    jumlahBuild++;
+    print('build #$jumlahBuild -&gt; tampilkan &quot;Klik: $jumlah&quot;');
+  }
+}
+
+void main() {
+  final w = WidgetTiruan();
+  w.build();                        // build pertama
+  w.setState(() =&gt; w.jumlah++);
+  w.setState(() =&gt; w.jumlah++);
+
+  w.jumlah += 10;                   // diubah TANPA setState
+  print('data sekarang = ${w.jumlah}, tetapi layar masih menampilkan yang lama sampai build berikutnya');
+  w.setState(() {});
+}</code></pre><pre class="runout" data-lang="keluaran"><code>build #1 -&gt; tampilkan &quot;Klik: 0&quot;
+build #2 -&gt; tampilkan &quot;Klik: 1&quot;
+build #3 -&gt; tampilkan &quot;Klik: 2&quot;
+data sekarang = 12, tetapi layar masih menampilkan yang lama sampai build berikutnya
+build #4 -&gt; tampilkan &quot;Klik: 12&quot;</code></pre><figcaption>Kesalahan klasik pemula: mengubah variabel dan heran mengapa layar tidak berubah. setState adalah sinyal yang memicu build.</figcaption></figure>
+<h2 id="siklus-hidup-state">Siklus hidup State</h2>
+<figure class="diagram"><svg viewBox="0 0 542 256" role="img" aria-label="Siklus hidup State" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">createState</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">objek State dibuat</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">initState</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">sekali; siapkan data</tspan><tspan x="271" dy="14">awal, controller</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">build</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">berulang setiap</tspan><tspan x="457" dy="14">perubahan</tspan></text><path d="M457 112 V138 H85 V144" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="164" r="11" fill="#7a3fb4"/><text x="26" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">didUpdateWidget</tspan></text><text x="85" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">bila induk mengirim</tspan><tspan x="85" dy="14">konfigurasi baru</tspan></text><line x1="164" y1="197" x2="192" y2="197" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="164" r="11" fill="#b3261e"/><text x="212" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">dispose</tspan></text><text x="271" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">sekali; lepaskan</tspan><tspan x="271" dy="14">sumber daya</tspan></text></svg></figure>
+<figure class="codebox"><pre data-lang="dart"><code>class _FormPencarianState extends State&lt;FormPencarian&gt; {
+  late final TextEditingController _kontrol;
+  StreamSubscription&lt;int&gt;? _langganan;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _kontrol = TextEditingController();
+    _langganan = widget.aliran.listen((n) =&gt; setState(() =&gt; _terakhir = n));
+    _timer = Timer.periodic(const Duration(seconds: 30), (_) =&gt; _segarkan());
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();                 // WAJIB: tanpa ini timer terus berjalan setelah layar ditutup
+    _langganan?.cancel();
+    _kontrol.dispose();               // controller melepaskan sumber daya
+    super.dispose();                  // super.dispose() DI AKHIR
+  }
+  // ...
+}</code></pre><figcaption>Aturan: apa pun yang Anda buat atau berlangganan di initState (controller, timer, stream, FocusNode, AnimationController) harus dilepas di dispose.</figcaption></figure>
+<h2 id="galat-umum-setstate-setelah-dispose">Galat umum: setState setelah dispose</h2>
+<figure class="codebox"><pre data-lang="dart"><code>Future&lt;void&gt; _muat() async {
+  final data = await api.ambil();      // tunggu jaringan; pengguna mungkin sudah menutup layar
+  if (!mounted) return;                // PERIKSA dulu: State masih terpasang di pohon?
+  setState(() =&gt; _data = data);
+}
+// Tanpa pemeriksaan mounted: &quot;setState() called after dispose()&quot; (galat/peringatan).
+// Untuk BuildContext setelah await: periksa context.mounted (Flutter 3.7+) sebelum memakai context.</code></pre></figure>
+<h2 id="mengangkat-state">Mengangkat state</h2>
+<p>Bila dua widget bersaudara perlu berbagi data (misalnya filter dan daftar), pindahkan state ke <b>induk bersama</b> terdekat dan kirim nilai ke bawah serta callback ke atas, ide yang sama dengan React. Bila pohon sudah dalam, pustaka state management (Provider, Riverpod, Bloc) mencegah mengirim data lewat banyak tingkat.</p>
+<figure class="codebox"><pre data-lang="dart"><code>class Halaman extends StatefulWidget { const Halaman({super.key}); @override State&lt;Halaman&gt; createState() =&gt; _HalamanState(); }
+
+class _HalamanState extends State&lt;Halaman&gt; {
+  String _kategori = 'semua';                        // state diangkat ke induk
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      FilterKategori(terpilih: _kategori, onUbah: (k) =&gt; setState(() =&gt; _kategori = k)),   // data turun, aksi naik
+      Expanded(child: DaftarProduk(kategori: _kategori)),
+    ]);
+  }
+}</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengubah variabel tanpa setState menyebabkan...","options":["Layar tidak diperbarui","Aplikasi crash","Build dua kali"],"answer":0,"why":"setState memberi sinyal build ulang."},{"q":"Tempat melepas controller dan timer?","options":["dispose()","initState()","build()"],"answer":0,"why":"Dijalankan saat State dibuang."},{"q":"Pemeriksaan sebelum setState setelah await?","options":["mounted","initialized","visible"],"answer":0,"why":"Mencegah setState setelah dispose."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat toggle "favorit" yang mengganti ikon hati kosong dan penuh.</summary><div>State bool _favorit; setState(() => _favorit = !_favorit); Icon(_favorit ? Icons.favorite : Icons.favorite_border).</div></details><details><summary>2. Mengapa AnimationController harus di-dispose?</summary><div>Ia memegang Ticker; bila tidak dilepas terjadi kebocoran dan peringatan saat widget dibuang.</div></details><details><summary>3. Dua widget bersaudara perlu berbagi nilai slider. Di mana state ditaruh?</summary><div>Di induk bersama; kirim nilai ke bawah dan callback onChanged ke atas.</div></details><details><summary>4. Apa bedanya initState dan build?</summary><div>initState sekali saat State dibuat (inisialisasi); build berulang kali setiap perlu menggambar ulang dan harus murni.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>StatelessWidget tanpa data berubah; StatefulWidget memiliki objek State berumur panjang.</li><li>setState(() {...}) mengubah data dan memicu build ulang; build harus murni dan cepat.</li><li>Siklus hidup: initState sekali, build berulang, dispose sekali untuk melepas sumber daya.</li><li>Periksa mounted setelah await; angkat state ke induk, dan pertimbangkan state management untuk pohon dalam.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah build ulang mahal?</summary><div>Tidak terlalu; Flutter membandingkan pohon widget baru dengan elemen yang ada dan hanya memperbarui yang berubah. Hindari pekerjaan berat di build.</div></details>
+<details class="faq"><summary>Kapan beralih dari setState ke Provider/Riverpod?</summary><div>Saat state dibagi antar banyak layar atau dikirim lewat banyak tingkat widget; untuk state lokal satu widget, setState cukup.</div></details>
+<details class="faq"><summary>Apa itu key pada widget?</summary><div>Identitas untuk mempertahankan state saat urutan widget dalam daftar berubah, sama tujuannya dengan key di React.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/ui/interactivity" rel="noopener" target="_blank">Flutter: Adding interactivity</a></li><li><a href="https://docs.flutter.dev/data-and-backend/state-mgmt/intro" rel="noopener" target="_blank">Flutter: State management intro</a></li><li><a href="https://api.flutter.dev/flutter/widgets/State-class.html" rel="noopener" target="_blank">API: State class</a></li><li><a href="https://docs.flutter.dev/" rel="noopener" target="_blank">Flutter Documentation</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/"><img src="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Async di Dart: Future, async/await, dan Stream</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

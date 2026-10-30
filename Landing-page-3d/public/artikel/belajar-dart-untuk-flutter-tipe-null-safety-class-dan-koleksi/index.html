@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</title>
+<meta name="description" content="Dasar bahasa Dart untuk pengembang Flutter: tipe data, null safety, fungsi, class dan konstruktor, koleksi, serta fitur modern, dengan contoh yang dijalankan di Dart SDK.">
+<meta name="keywords" content="Dart, null safety, Flutter, belajar Dart, class Dart">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/">
+<meta property="og:title" content="Belajar Dart untuk Flutter: Null Safety, Class, Koleksi">
+<meta property="og:description" content="Dasar bahasa Dart untuk pengembang Flutter: tipe data, null safety, fungsi, class dan konstruktor, koleksi, serta fitur modern, dengan contoh yang dijalankan di Dart SDK.">
+<meta property="og:image" content="https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Belajar Dart untuk Flutter: Null Safety, Class, Koleksi">
+<meta name="twitter:description" content="Dasar bahasa Dart untuk pengembang Flutter: tipe data, null safety, fungsi, class dan konstruktor, koleksi, serta fitur modern, dengan contoh yang dijalankan di Dart SDK.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Belajar Dart untuk Flutter: Null Safety, Class, Koleksi","description":"Dasar bahasa Dart untuk pengembang Flutter: tipe data, null safety, fungsi, class dan konstruktor, koleksi, serta fitur modern, dengan contoh yang dijalankan di Dart SDK.","image":["https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Dart, null safety, Flutter, belajar Dart, class Dart","articleSection":"Flutter & Mobile","wordCount":446,"mainEntityOfPage":"https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Belajar Dart untuk Flutter: Null Safety, Class, Koleksi","item":"https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah harus menguasai Dart dulu sebelum Flutter?","acceptedAnswer":{"@type":"Answer","text":"Dasar saja sudah cukup; Anda akan memperdalam Dart sambil membangun UI. Materi ini cukup untuk mulai."}},{"@type":"Question","name":"Apa bedanya Dart dan JavaScript?","acceptedAnswer":{"@type":"Answer","text":"Dart bertipe statis dengan null safety dan dikompilasi (AOT) menjadi kode native untuk rilis; JavaScript bertipe dinamis."}},{"@type":"Question","name":"Di mana mencoba Dart tanpa memasang apa pun?","acceptedAnswer":{"@type":"Answer","text":"DartPad (dartpad.dev) menjalankan Dart dan Flutter di browser."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#variabel-dan-tipe">Variabel dan tipe</a></li><li><a href="#null-safety-nilai-kosong-harus-dinyatakan">Null safety: nilai kosong harus dinyatakan</a></li><li><a href="#fungsi-parameter-bernama">Fungsi: parameter bernama</a></li><li><a href="#class-dan-konstruktor">Class dan konstruktor</a></li><li><a href="#koleksi">Koleksi</a></li><li><a href="#fitur-modern-dart-3-yang-perlu-diketahui">Fitur modern Dart 3 yang perlu diketahui</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</h1>
+<p class="lead">Flutter memakai bahasa Dart, dan pengalaman menulis aplikasi Flutter terasa jauh lebih ringan setelah Dart dikuasai. Kabar baiknya, bila Anda pernah memakai Java, JavaScript, atau Kotlin, Dart akan terasa akrab. Fitur yang paling penting dipahami sejak awal adalah null safety, yang menghilangkan satu kelas bug terbesar: akses ke nilai kosong.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar pemrograman (variabel, fungsi, perulangan)</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Belajar Dart untuk Flutter: Null Safety, Class, Koleksi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai tipe dasar, var, final, dan const dengan benar</li><li>memahami null safety: tipe nullable, ?, ??, ?., dan !</li><li>menulis fungsi dengan parameter bernama dan opsional</li><li>membuat class dengan konstruktor, getter, dan konstruktor bernama</li><li>memakai List, Map, Set, serta metode map/where/fold</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="variabel-dan-tipe">Variabel dan tipe</h2>
+<figure class="codebox"><pre data-lang="dart"><code>void main() {
+  var nama = 'Ani';              // tipe String disimpulkan
+  int umur = 20;
+  double ipk = 3.75;
+  bool aktif = true;
+
+  final dibuat = DateTime(2026, 10, 30);   // final: diisi sekali saat berjalan
+  const pi2 = 3.14159 * 2;                 // const: konstanta saat kompilasi
+
+  print('$nama ($umur) IPK $ipk aktif=$aktif');       // interpolasi string dengan $
+  print('Tahun depan: ${umur + 1}');                  // ekspresi memakai ${...}
+  print(dibuat.year);
+  print(pi2.toStringAsFixed(2));
+  print(nama.toUpperCase().padLeft(6, '*'));
+
+  // umur = 'dua puluh';   // galat kompilasi: String tidak bisa ke int
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Ani (20) IPK 3.75 aktif=true
+Tahun depan: 21
+2026
+6.28
+***ANI</code></pre><figcaption>Dart bertipe statis: kesalahan tipe ditangkap sebelum aplikasi berjalan. var menyimpulkan tipe dari nilai awal; tipenya tetap setelah itu.</figcaption></figure>
+<h2 id="null-safety-nilai-kosong-harus-dinyatakan">Null safety: nilai kosong harus dinyatakan</h2>
+<p>Pada Dart modern, tipe biasa (<code>String</code>) <b>tidak boleh null</b>. Bila nilai boleh kosong, tipenya diberi tanda tanya (<code>String?</code>) dan kompiler memaksa Anda menangani kasus null sebelum memakainya.</p>
+<figure class="codebox"><pre data-lang="dart"><code>String? cariNama(int id) =&gt; id == 1 ? 'Ani' : null;      // mungkin tidak ditemukan
+
+void main() {
+  String? a = cariNama(1);
+  String? b = cariNama(9);
+
+  // print(b.length);           // galat kompilasi: b bisa null
+  print(b?.length);             // ?.  : bila null, hasilnya null (tidak crash)
+  print(b ?? 'tidak ada');      // ??  : nilai cadangan
+  print(a!.length);             // !   : &quot;saya yakin tidak null&quot; (crash bila ternyata null)
+
+  if (b != null) {
+    print(b.length);            // di dalam if, Dart tahu b pasti tidak null (promosi tipe)
+  } else {
+    print('b kosong');
+  }
+
+  int? skor;
+  skor ??= 0;                   // ??= : isi hanya bila masih null
+  print(skor);
+}</code></pre><pre class="runout" data-lang="keluaran"><code>null
+tidak ada
+3
+b kosong
+0</code></pre><figcaption>Hindari operator ! kecuali Anda benar-benar yakin; lebih baik periksa null dengan if, ?., atau ??. Itulah inti manfaat null safety.</figcaption></figure>
+<h2 id="fungsi-parameter-bernama">Fungsi: parameter bernama</h2>
+<p>Flutter memakai parameter bernama di mana-mana (<code>Text("Halo", style: ...)</code>). Di Dart, parameter bernama ditulis di dalam kurung kurawal dan dapat ditandai <code>required</code>.</p>
+<figure class="codebox"><pre data-lang="dart"><code>// posisi biasa
+int tambah(int a, int b) =&gt; a + b;
+
+// bernama, dengan nilai bawaan dan required
+String sapa({required String nama, String sapaan = 'Halo', bool seru = false}) {
+  return '$sapaan, $nama' + (seru ? '!' : '.');
+}
+
+// posisi opsional dengan []
+String gabung(String a, [String? b]) =&gt; b == null ? a : '$a $b';
+
+void main() {
+  print(tambah(2, 3));
+  print(sapa(nama: 'Ani'));
+  print(sapa(nama: 'Budi', sapaan: 'Selamat pagi', seru: true));
+  print(gabung('Muhammad'));
+  print(gabung('Muhammad', 'Muchson'));
+
+  // fungsi adalah nilai: dapat dikirim sebagai argumen
+  final angka = [1, 2, 3, 4, 5];
+  print(angka.map((x) =&gt; x * x).toList());
+}</code></pre><pre class="runout" data-lang="keluaran"><code>5
+Halo, Ani.
+Selamat pagi, Budi!
+Muhammad
+Muhammad Muchson
+[1, 4, 9, 16, 25]</code></pre></figure>
+<h2 id="class-dan-konstruktor">Class dan konstruktor</h2>
+<figure class="codebox"><pre data-lang="dart"><code>class Produk {
+  final String nama;
+  final int harga;
+  int stok;
+
+  // konstruktor ringkas: this.nama langsung mengisi field
+  Produk({required this.nama, required this.harga, this.stok = 0});
+
+  // konstruktor bernama
+  Produk.dariMap(Map&lt;String, dynamic&gt; m)
+      : nama = m['nama'] as String,
+        harga = m['harga'] as int,
+        stok = (m['stok'] ?? 0) as int;
+
+  // getter: dihitung saat dibaca
+  bool get tersedia =&gt; stok &gt; 0;
+
+  // method
+  int total(int jumlah) =&gt; harga * jumlah;
+
+  @override
+  String toString() =&gt; 'Produk($nama, Rp$harga, stok $stok)';
+}
+
+void main() {
+  final kopi = Produk(nama: 'Kopi Gayo', harga: 65000, stok: 10);
+  final teh = Produk.dariMap({'nama': 'Teh', 'harga': 40000});
+  print(kopi);
+  print(teh);
+  print('kopi tersedia: ${kopi.tersedia}, teh tersedia: ${teh.tersedia}');
+  print('3 kopi = Rp${kopi.total(3)}');
+  kopi.stok -= 3;
+  print(kopi.stok);
+}</code></pre><pre class="runout" data-lang="keluaran"><code>Produk(Kopi Gayo, Rp65000, stok 10)
+Produk(Teh, Rp40000, stok 0)
+kopi tersedia: true, teh tersedia: false
+3 kopi = Rp195000
+7</code></pre><figcaption>Dalam Flutter, semua widget adalah class; konstruktor dengan parameter bernama dan required adalah pola yang akan Anda tulis setiap hari.</figcaption></figure>
+<h2 id="koleksi">Koleksi</h2>
+<figure class="codebox"><pre data-lang="dart"><code>void main() {
+  final tugas = &lt;String&gt;['tulis laporan', 'kirim surel', 'rapat'];
+  tugas.add('belajar Flutter');
+  print(tugas.length);
+  print(tugas.where((t) =&gt; t.contains('r')).toList());
+  print(tugas.map((t) =&gt; t.toUpperCase()).take(2).toList());
+
+  final nilai = &lt;String, int&gt;{'Ani': 90, 'Budi': 72, 'Citra': 85};
+  nilai['Dodi'] = 60;
+  nilai.forEach((k, v) =&gt; print('$k -&gt; $v'));
+
+  final lulus = nilai.entries.where((e) =&gt; e.value &gt;= 75).map((e) =&gt; e.key).toList();
+  print('lulus: $lulus');
+
+  final total = nilai.values.fold&lt;int&gt;(0, (jumlah, n) =&gt; jumlah + n);
+  print('rata-rata: ${(total / nilai.length).toStringAsFixed(1)}');
+
+  final unik = {1, 2, 2, 3, 3, 3};
+  print(unik);
+
+  // collection-if dan collection-for: dipakai sangat sering untuk membangun daftar widget
+  final admin = true;
+  final menu = ['Beranda', if (admin) 'Pengaturan', for (var i = 1; i &lt;= 2; i++) 'Item $i'];
+  print(menu);
+
+  // spread
+  print([...tugas.take(1), ...menu.take(2)]);
+}</code></pre><pre class="runout" data-lang="keluaran"><code>4
+[tulis laporan, kirim surel, rapat, belajar Flutter]
+[TULIS LAPORAN, KIRIM SUREL]
+Ani -&gt; 90
+Budi -&gt; 72
+Citra -&gt; 85
+Dodi -&gt; 60
+lulus: [Ani, Citra]
+rata-rata: 76.8
+{1, 2, 3}
+[Beranda, Pengaturan, Item 1, Item 2]
+[tulis laporan, Beranda, Pengaturan]</code></pre><figcaption>Pola collection-if dan collection-for adalah cara Flutter membangun daftar widget secara kondisional di dalam children: [...].</figcaption></figure>
+<h2 id="fitur-modern-dart-3-yang-perlu-diketahui">Fitur modern Dart 3 yang perlu diketahui</h2>
+<table><thead><tr><th>Fitur</th><th>Contoh</th><th>Kegunaan</th></tr></thead><tbody><tr><td>Records</td><td>(String, int) pasangan = ("Ani", 20);</td><td>Mengembalikan beberapa nilai tanpa membuat class</td></tr><tr><td>Pattern matching</td><td>switch (x) { case int n when n > 0: ... }</td><td>Mendekonstruksi dan mencocokkan bentuk data</td></tr><tr><td>Sealed class</td><td>sealed class Hasil {}</td><td>Hierarki tertutup; switch dicek kelengkapannya</td></tr><tr><td>Enhanced enum</td><td>enum Status { baru("Baru"); final String label; ... }</td><td>Enum dengan data dan method</td></tr><tr><td>Extension methods</td><td>extension on String { bool get kosong => trim().isEmpty; }</td><td>Menambah method ke tipe yang sudah ada</td></tr></tbody></table>
+<div class="callout info"><b>Versi</b><p>Contoh di halaman ini sengaja memakai fitur yang bekerja di Dart 2.12 ke atas agar dapat dijalankan di mana pun. Proyek Flutter terbaru memakai Dart 3, yang menambahkan records, pattern matching, dan sealed class di atas semua yang dibahas di sini.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tipe String? berarti...","options":["String yang boleh null","String wajib terisi","Daftar String"],"answer":0,"why":"Tanda ? menandai nullable."},{"q":"Operator ?? berfungsi...","options":["Memberi nilai cadangan bila null","Memaksa non-null","Membandingkan tipe"],"answer":0,"why":"a ?? b: b dipakai bila a null."},{"q":"Parameter bernama ditulis...","options":["Di dalam { }","Di dalam [ ]","Di luar kurung"],"answer":0,"why":"Dan dapat required atau memiliki nilai bawaan."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis class Mahasiswa dengan nim, nama, ipk (default 0.0) dan getter lulus (ipk >= 2.0).</summary><div><code>class Mahasiswa { final String nim; final String nama; double ipk; Mahasiswa({required this.nim, required this.nama, this.ipk = 0.0}); bool get lulus => ipk >= 2.0; }</code></div></details><details><summary>2. Mengapa operator ! berisiko?</summary><div>Bila nilainya ternyata null, aplikasi melempar galat saat berjalan; lebih baik periksa dengan if atau ?? agar kasus null ditangani.</div></details><details><summary>3. Ubah daftar harga [10000, 25000, 40000] menjadi daftar teks "Rp10000", dst.</summary><div><code>harga.map((h) => "Rp$h").toList()</code></div></details><details><summary>4. Apa beda final dan const?</summary><div>final diisi sekali saat program berjalan; const adalah konstanta yang nilainya sudah diketahui saat kompilasi.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Dart bertipe statis dengan null safety: String vs String?; tangani null dengan ?., ??, ??=, dan if.</li><li>Parameter bernama dan required adalah pola utama di Flutter.</li><li>Class dengan konstruktor ringkas, konstruktor bernama, dan getter.</li><li>List, Map, Set dengan map/where/fold; collection-if dan collection-for untuk membangun UI.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah harus menguasai Dart dulu sebelum Flutter?</summary><div>Dasar saja sudah cukup; Anda akan memperdalam Dart sambil membangun UI. Materi ini cukup untuk mulai.</div></details>
+<details class="faq"><summary>Apa bedanya Dart dan JavaScript?</summary><div>Dart bertipe statis dengan null safety dan dikompilasi (AOT) menjadi kode native untuk rilis; JavaScript bertipe dinamis.</div></details>
+<details class="faq"><summary>Di mana mencoba Dart tanpa memasang apa pun?</summary><div>DartPad (dartpad.dev) menjalankan Dart dan Flutter di browser.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dart.dev/language" rel="noopener" target="_blank">Dart Language Tour</a></li><li><a href="https://dart.dev/null-safety" rel="noopener" target="_blank">Dart: Null safety</a></li><li><a href="https://dartpad.dev/" rel="noopener" target="_blank">DartPad</a></li><li><a href="https://docs.flutter.dev/" rel="noopener" target="_blank">Flutter Documentation</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/"><img src="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Async di Dart: Future, async/await, dan Stream</span></a><a href="/artikel/flutter-atau-react-native-mana-yang-dipelajari/"><img src="/artikel/flutter-atau-react-native-mana-yang-dipelajari/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Flutter atau React Native? Cara Memilih untuk Aplikasi Mobile</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

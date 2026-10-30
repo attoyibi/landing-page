@@ -71,6 +71,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://muchson.web.id/artikel/kategori/flutter-mobile/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://muchson.web.id/artikel/rag-adalah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
@@ -1242,6 +1247,31 @@
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>

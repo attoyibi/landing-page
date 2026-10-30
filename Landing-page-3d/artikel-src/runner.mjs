@@ -65,6 +65,18 @@ export function runNode(code, { input = '', expectError = false, jsx = false } =
     });
 }
 
+// Plain Dart (no Flutter): runs with the installed Dart SDK. Keep samples compatible with Dart 2.19+ (no records or patterns).
+export function runDart(code, { input = '', expectError = false } = {}) {
+    return cached(key('dart', code, input, expectError), () => {
+        const dir = tmp('dart-');
+        writeFileSync(join(dir, 'main.dart'), code);
+        const r = spawnSync('dart', ['main.dart'], { input, encoding: 'utf8', timeout: 90000, cwd: dir, shell: process.platform === 'win32' });
+        rmSync(dir, { recursive: true, force: true });
+        if (r.status !== 0 && !expectError) throw new Error(`Kode Dart gagal:\n${code.slice(0, 400)}\n---\n${r.stderr}${r.stdout}`);
+        return { out: (r.stdout || '') + (r.status !== 0 ? lastLines(r.stderr || '', 2) + '\n' : '') };
+    });
+}
+
 // Line-by-line trace of a Python program: for each step, the line about to run, the call stack with variables, and the output so far.
 const TRACER = `
 import sys, json, io

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Async di Dart: Future, async/await, dan Stream</title>
+<meta name="description" content="Pahami async di Dart: Future, async/await, Future.wait, Stream, StreamBuilder, dan isolate untuk pekerjaan berat, dengan contoh yang dijalankan.">
+<meta name="keywords" content="Dart async, Future, Stream, async await, Flutter">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/">
+<meta property="og:title" content="Async di Dart: Future, async/await, dan Stream">
+<meta property="og:description" content="Pahami async di Dart: Future, async/await, Future.wait, Stream, StreamBuilder, dan isolate untuk pekerjaan berat, dengan contoh yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Async di Dart: Future, async/await, dan Stream">
+<meta name="twitter:description" content="Pahami async di Dart: Future, async/await, Future.wait, Stream, StreamBuilder, dan isolate untuk pekerjaan berat, dengan contoh yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Async di Dart: Future, async/await, dan Stream","description":"Pahami async di Dart: Future, async/await, Future.wait, Stream, StreamBuilder, dan isolate untuk pekerjaan berat, dengan contoh yang dijalankan.","image":["https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Dart async, Future, Stream, async await, Flutter","articleSection":"Flutter & Mobile","wordCount":379,"mainEntityOfPage":"https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Async di Dart: Future, async/await, dan Stream","item":"https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu microtask dan event queue di Dart?","acceptedAnswer":{"@type":"Answer","text":"Dua antrean: microtask diproses sebelum event berikutnya; Future biasanya masuk event queue, sedangkan Future.microtask masuk microtask."}},{"@type":"Question","name":"Apakah ada setara Promise.all?","acceptedAnswer":{"@type":"Answer","text":"Ya: Future.wait. Setara Promise.allSettled bisa dibuat dengan menangani galat di setiap Future."}},{"@type":"Question","name":"Bagaimana menangani batas waktu?","acceptedAnswer":{"@type":"Answer","text":"future.timeout(Duration(seconds: 10), onTimeout: ...) mengembalikan galat TimeoutException atau nilai cadangan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#future-satu-nilai-di-masa-depan">Future: satu nilai di masa depan</a></li><li><a href="#beberapa-future-berurutan-atau-paralel">Beberapa Future: berurutan atau paralel</a></li><li><a href="#stream-banyak-nilai-dari-waktu-ke-waktu">Stream: banyak nilai dari waktu ke waktu</a></li><li><a href="#future-dan-stream-di-antarmuka">Future dan Stream di antarmuka</a></li><li><a href="#pekerjaan-berat-isolate">Pekerjaan berat: isolate</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>Async di Dart: Future, async/await, dan Stream</h1>
+<p class="lead">Aplikasi seluler menunggu hal-hal lambat sepanjang waktu: jaringan, basis data lokal, berkas, sensor. Bila menunggu itu memblokir, layar membeku. Dart menangani ini dengan Future untuk satu hasil di masa depan dan Stream untuk rangkaian hasil, dengan sintaks async/await yang membuat kode asinkron terbaca seperti kode biasa.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Dart, widget Flutter</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Async di Dart: Future, async/await, dan Stream" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan event loop Dart dan mengapa UI tidak membeku saat menunggu</li><li>memakai Future, async/await, dan menangani error dengan try/catch</li><li>menjalankan beberapa Future paralel dengan Future.wait</li><li>memakai Stream dan memahami perbedaannya dengan Future</li><li>mengenali kapan perlu isolate (Isolate.run/compute) untuk pekerjaan CPU berat</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="future-satu-nilai-di-masa-depan">Future: satu nilai di masa depan</h2>
+<figure class="codebox"><pre data-lang="dart"><code>Future&lt;String&gt; ambilNama(int id) async {
+  await Future.delayed(const Duration(milliseconds: 100));      // seolah permintaan jaringan
+  if (id &lt;= 0) throw ArgumentError('id harus positif');
+  return 'Pengguna #$id';
+}
+
+void main() async {
+  print('1. mulai');
+
+  // cara 1: async/await
+  final nama = await ambilNama(7);
+  print('2. $nama');
+
+  // cara 2: then (gaya callback)
+  ambilNama(8).then((n) =&gt; print('3. $n'));
+  print('   (baris ini tercetak SEBELUM hasil nomor 3: then tidak memblokir)');
+  await Future.delayed(const Duration(milliseconds: 150));
+
+  // penanganan error
+  try {
+    await ambilNama(-1);
+  } catch (e) {
+    print('4. galat tertangkap: $e');
+  } finally {
+    print('5. selesai');
+  }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>1. mulai
+2. Pengguna #7
+   (baris ini tercetak SEBELUM hasil nomor 3: then tidak memblokir)
+3. Pengguna #8
+4. galat tertangkap: Invalid argument(s): id harus positif
+5. selesai</code></pre><figcaption>async/await membuat urutan terbaca linear. await menjeda fungsi async itu saja; event loop tetap bebas menangani sentuhan dan animasi.</figcaption></figure>
+<h2 id="beberapa-future-berurutan-atau-paralel">Beberapa Future: berurutan atau paralel</h2>
+<figure class="codebox"><pre data-lang="dart"><code>Future&lt;int&gt; kerja(String nama, int ms) async {
+  await Future.delayed(Duration(milliseconds: ms));
+  return ms;
+}
+
+void main() async {
+  var sw = Stopwatch()..start();
+  await kerja('a', 200);
+  await kerja('b', 200);
+  await kerja('c', 200);
+  print('berurutan : ~${(sw.elapsedMilliseconds / 100).round() * 100} ms');
+
+  sw = Stopwatch()..start();
+  final hasil = await Future.wait([kerja('a', 200), kerja('b', 200), kerja('c', 200)]);
+  print('paralel   : ~${(sw.elapsedMilliseconds / 100).round() * 100} ms $hasil');
+
+  // Future.wait menolak bila salah satu gagal; eagerError: false menunggu semuanya
+  try {
+    await Future.wait([kerja('x', 50), Future&lt;int&gt;.error(StateError('gagal sengaja'))]);
+  } catch (e) {
+    print('galat dari Future.wait: $e');
+  }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>berurutan : ~600 ms
+paralel   : ~200 ms [200, 200, 200]
+galat dari Future.wait: Bad state: gagal sengaja</code></pre><figcaption>Untuk beberapa permintaan yang tidak saling bergantung (profil, pesanan, notifikasi), Future.wait mempercepat pemuatan halaman.</figcaption></figure>
+<h2 id="stream-banyak-nilai-dari-waktu-ke-waktu">Stream: banyak nilai dari waktu ke waktu</h2>
+<table><thead><tr><th></th><th>Future</th><th>Stream</th></tr></thead><tbody><tr><td>Jumlah hasil</td><td>Satu (atau galat)</td><td>Nol sampai banyak, lalu selesai</td></tr><tr><td>Contoh</td><td>Satu respons HTTP, membaca satu berkas</td><td>Ketikan pengguna, lokasi GPS, pesan WebSocket, perubahan basis data (Firebase)</td></tr><tr><td>Menunggu</td><td>await</td><td>await for atau listen</td></tr><tr><td>Di Flutter</td><td>FutureBuilder</td><td>StreamBuilder</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="dart"><code>import 'dart:async';
+
+Stream&lt;int&gt; hitungMundur(int dari) async* {          // async* + yield menghasilkan aliran
+  for (var i = dari; i &gt;= 1; i--) {
+    await Future.delayed(const Duration(milliseconds: 50));
+    yield i;
+  }
+}
+
+void main() async {
+  // await for: proses setiap nilai saat tiba
+  await for (final n in hitungMundur(3)) {
+    print('tick $n');
+  }
+
+  // transformasi aliran
+  final genap = await hitungMundur(8).where((n) =&gt; n % 2 == 0).map((n) =&gt; 'genap $n').toList();
+  print(genap);
+
+  // listen dan pembatalan langganan
+  final langganan = hitungMundur(100).listen((n) =&gt; print('didengar $n'));
+  await Future.delayed(const Duration(milliseconds: 130));
+  await langganan.cancel();
+  print('langganan dibatalkan');
+
+  // StreamController: membuat aliran sendiri
+  final kontrol = StreamController&lt;String&gt;();
+  kontrol.stream.listen((p) =&gt; print('pesan: $p'), onDone: () =&gt; print('aliran selesai'));
+  kontrol..add('halo')..add('dunia');
+  await kontrol.close();
+}</code></pre><pre class="runout" data-lang="keluaran"><code>tick 3
+tick 2
+tick 1
+[genap 8, genap 6, genap 4, genap 2]
+didengar 100
+didengar 99
+langganan dibatalkan
+pesan: halo
+pesan: dunia
+aliran selesai</code></pre><figcaption>Selalu batalkan langganan (cancel) yang Anda buat sendiri, biasanya di dispose pada StatefulWidget. StreamBuilder mengelola langganan itu otomatis.</figcaption></figure>
+<h2 id="future-dan-stream-di-antarmuka">Future dan Stream di antarmuka</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// FutureBuilder: tampilkan status memuat / galat / data
+FutureBuilder&lt;List&lt;Produk&gt;&gt;(
+  future: _janjiProduk,                       // buat Future di initState, BUKAN di dalam build (akan memanggil ulang tiap build)
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (snapshot.hasError) {
+      return Center(child: Text('Gagal memuat: ${snapshot.error}'));
+    }
+    final data = snapshot.data ?? [];
+    if (data.isEmpty) return const Center(child: Text('Belum ada produk.'));
+    return ListView(children: data.map((p) =&gt; ListTile(title: Text(p.nama))).toList());
+  },
+)
+
+// StreamBuilder: sama, untuk aliran
+StreamBuilder&lt;int&gt;(
+  stream: _aliranSensor,
+  builder: (context, snapshot) =&gt; Text(snapshot.hasData ? 'Nilai: ${snapshot.data}' : 'Menunggu...'),
+)</code></pre><figcaption>Tiga keadaan wajib ditangani: memuat, galat, dan data (termasuk kosong). Pengguna yang melihat layar putih tanpa penjelasan adalah pengalaman yang buruk.</figcaption></figure>
+<h2 id="pekerjaan-berat-isolate">Pekerjaan berat: isolate</h2>
+<div class="callout warn"><b>Async bukan paralel</b><p>Dart berjalan pada satu utas dengan event loop; <b>async/await tidak membuat kode CPU-berat menjadi paralel</b>. Mengurai JSON berukuran besar atau memproses gambar di utas utama membuat animasi tersendat. Pindahkan ke isolate: <code>Isolate.run(() => hitungBerat(data))</code> (Dart 2.19+) atau <code>compute()</code> di Flutter. Isolate tidak berbagi memori; data disalin lewat pesan.</p></div>
+<figure class="codebox"><pre data-lang="dart"><code>import 'dart:isolate';
+
+int fibonacci(int n) =&gt; n &lt; 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);   // sengaja mahal
+
+void main() async {
+  final sw = Stopwatch()..start();
+  final hasil = await Isolate.run(() =&gt; fibonacci(32));       // berjalan di isolate terpisah
+  print('fib(32) = $hasil, selesai tanpa memblokir isolate utama');
+  print('isolate utama tetap bebas selama menunggu: ${sw.elapsedMilliseconds &gt;= 0}');
+}</code></pre><pre class="runout" data-lang="keluaran"><code>fib(32) = 2178309, selesai tanpa memblokir isolate utama
+isolate utama tetap bebas selama menunggu: true</code></pre></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"await menjeda...","options":["Fungsi async itu saja","Seluruh aplikasi","Hanya animasi"],"answer":0,"why":"Event loop tetap berjalan."},{"q":"Untuk menjalankan tiga Future independen bersamaan?","options":["Future.wait","await berurutan","for biasa"],"answer":0,"why":"Waktu total mengikuti yang terlama."},{"q":"Mengurai JSON raksasa yang membuat UI tersendat sebaiknya dipindah ke...","options":["Isolate","Future biasa","Stream"],"answer":0,"why":"async tidak memparalelkan CPU."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa Future untuk FutureBuilder dibuat di initState, bukan di build?</summary><div>build dapat dipanggil sering; membuat Future di dalamnya memicu permintaan ulang setiap rebuild.</div></details><details><summary>2. Ubah tiga await berurutan yang independen menjadi paralel.</summary><div>Panggil ketiganya tanpa await ke dalam Future.wait([...]) lalu baca hasilnya.</div></details><details><summary>3. Apa bedanya Stream broadcast dan single-subscription?</summary><div>Single-subscription hanya satu pendengar; broadcast mengizinkan banyak pendengar tetapi tidak menyimpan nilai yang terlewat.</div></details><details><summary>4. Mengapa langganan Stream harus dibatalkan?</summary><div>Agar tidak terjadi kebocoran memori dan callback yang memanggil setState pada widget yang sudah tidak ada.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Future = satu hasil nanti; async/await menuliskannya linear dan try/catch menangani galat.</li><li>Future.wait menjalankan beberapa Future bersamaan; Stream menghasilkan banyak nilai (async*, yield, listen, await for).</li><li>FutureBuilder/StreamBuilder menangani memuat, galat, dan data; buat Future di initState.</li><li>async bukan paralel: pekerjaan CPU berat dipindah ke isolate.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu microtask dan event queue di Dart?</summary><div>Dua antrean: microtask diproses sebelum event berikutnya; Future biasanya masuk event queue, sedangkan Future.microtask masuk microtask.</div></details>
+<details class="faq"><summary>Apakah ada setara Promise.all?</summary><div>Ya: Future.wait. Setara Promise.allSettled bisa dibuat dengan menangani galat di setiap Future.</div></details>
+<details class="faq"><summary>Bagaimana menangani batas waktu?</summary><div>future.timeout(Duration(seconds: 10), onTimeout: ...) mengembalikan galat TimeoutException atau nilai cadangan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dart.dev/libraries/async/async-await" rel="noopener" target="_blank">Dart: Asynchronous programming</a></li><li><a href="https://dart.dev/libraries/async/using-streams" rel="noopener" target="_blank">Dart: Streams</a></li><li><a href="https://docs.flutter.dev/perf/isolates" rel="noopener" target="_blank">Flutter: Concurrency and isolates</a></li><li><a href="https://dart.dev/language/concurrency" rel="noopener" target="_blank">Dart: Isolates</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

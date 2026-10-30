@@ -238,4 +238,9 @@ export const ARTICLES = [
     'deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi',
     'struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code',
     'laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token',
+    'belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi',
+    'widget-flutter-layout-row-column-expanded-dan-stack',
+    'stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild',
+    'async-dart-future-async-await-dan-stream-untuk-flutter',
+    'http-dan-json-di-flutter-model-fromjson-dan-error-handling',
 ];
