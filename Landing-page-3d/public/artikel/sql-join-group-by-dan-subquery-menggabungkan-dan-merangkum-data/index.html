@@ -69,11 +69,11 @@ mata_kuliah [('K1', 'Basis Data', 3), ('K2', 'Pemrograman', 4), ('K3', 'Jaringan
 krs [('A01', 'K1', 90), ('A01', 'K2', 85), ('A02', 'K1', 70), ('A02', 'K3', 80), ('A03', 'K2', 95)]</code></pre><figcaption>Perhatikan: Dewi (A04) belum mengambil mata kuliah apa pun, dan Statistika (K4) belum diambil siapa pun.</figcaption></figure>
 <h2 id="inner-join-vs-left-join">INNER JOIN vs LEFT JOIN</h2>
 <figure class="diagram"><svg viewBox="0 0 600 150" role="img" aria-label="JOIN" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
-<marker id="idleh-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
-<marker id="idleh-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
-<marker id="idleh-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
-<marker id="idleh-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
-<marker id="idleh-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="oc0nu-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="oc0nu-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="oc0nu-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="oc0nu-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="oc0nu-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
 </defs><ellipse cx="130" cy="70" rx="95" ry="45" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="130" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="130" dy="0">Mahasiswa</tspan></text><ellipse cx="330" cy="70" rx="95" ry="45" fill="#fff" stroke="#1e5ab2" stroke-width="2"/><text x="330" y="74" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="330" dy="0">KRS</tspan></text><text x="500" y="50.333333333333336" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="500" dy="0">INNER: hanya irisan.</tspan><tspan x="500" dy="16">LEFT: seluruh tabel</tspan><tspan x="500" dy="16">kiri, NULL bila tak</tspan><tspan x="500" dy="16">ada pasangan.</tspan></text></svg></figure>
 <figure class="codebox"><pre data-lang="python"><code>import sqlite3
 db = sqlite3.connect(&quot;:memory:&quot;)

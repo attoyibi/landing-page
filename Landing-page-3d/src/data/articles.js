@@ -233,4 +233,9 @@ export const ARTICLES = [
     'testing-laravel-phpunit-pest-factory-dan-refreshdatabase',
     'caching-dan-performa-laravel-cache-remember-optimize-dan-index',
     'keamanan-aplikasi-laravel-csrf-xss-sql-injection-dan-mass-assignment',
+    'tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan',
+    'relasi-eloquent-one-to-many-many-to-many-dan-polymorphic',
+    'deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi',
+    'struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code',
+    'laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token',
 ];

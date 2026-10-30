@@ -1220,4 +1220,29 @@
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code</title>
+<meta name="description" content="Tata proyek Laravel agar tetap rapi: controller tipis, kelas Action dan Service, DTO, kapan repository berlebihan, dan prinsip clean code.">
+<meta name="keywords" content="clean code, struktur proyek Laravel, service class, arsitektur, refactoring">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/">
+<meta property="og:title" content="Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code">
+<meta property="og:description" content="Tata proyek Laravel agar tetap rapi: controller tipis, kelas Action dan Service, DTO, kapan repository berlebihan, dan prinsip clean code.">
+<meta property="og:image" content="https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code">
+<meta name="twitter:description" content="Tata proyek Laravel agar tetap rapi: controller tipis, kelas Action dan Service, DTO, kapan repository berlebihan, dan prinsip clean code.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code","description":"Tata proyek Laravel agar tetap rapi: controller tipis, kelas Action dan Service, DTO, kapan repository berlebihan, dan prinsip clean code.","image":["https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"clean code, struktur proyek Laravel, service class, arsitektur, refactoring","articleSection":"Laravel & Backend","wordCount":520,"mainEntityOfPage":"https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code","item":"https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah harus mengikuti Domain-Driven Design?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Untuk aplikasi besar dan kompleks, pemisahan domain membantu, tetapi sebagian besar aplikasi cukup dengan struktur Laravel standar plus Action."}},{"@type":"Question","name":"Di mana menaruh kelas Action?","acceptedAnswer":{"@type":"Answer","text":"Konvensi umum: app/Actions; beberapa tim memakai app/Services atau app/Domain/. Pilih satu dan konsisten."}},{"@type":"Question","name":"Bagaimana memulai merefaktor kode lama?","acceptedAnswer":{"@type":"Answer","text":"Tulis tes karakterisasi untuk perilaku yang ada, lalu ekstrak sedikit demi sedikit dengan tes tetap hijau."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#gejala-controller-gemuk">Gejala: controller gemuk</a></li><li><a href="#tanggung-jawab-tiap-lapisan">Tanggung jawab tiap lapisan</a></li><li><a href="#kelas-action-satu-use-case-satu-kelas">Kelas Action: satu use case, satu kelas</a></li><li><a href="#service-dto-dan-repository-secukupnya">Service, DTO, dan repository: secukupnya</a></li><li><a href="#prinsip-kode-bersih-yang-berlaku-di-mana-pun">Prinsip kode bersih yang berlaku di mana pun</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code</h1>
+<p class="lead">Laravel memudahkan memulai, dan itulah jebakannya: semua logika menumpuk di controller sampai satu method memiliki 200 baris dan tidak ada yang berani menyentuhnya. Struktur yang baik bukan soal pola yang rumit, melainkan menaruh setiap hal di tempat yang masuk akal, dan menambah lapisan hanya ketika rasa sakitnya nyata.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Lanjut</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> CRUD Laravel, Eloquent, dasar PBO dan SOLID</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Struktur Proyek Laravel yang Rapi: Service, Action, Clean Code" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengenali tanda "controller gemuk" dan model gemuk</li><li>memindahkan logika ke kelas Action atau Service yang fokus</li><li>memakai DTO atau array terstruktur untuk membawa data antar lapisan</li><li>memutuskan kapan lapisan tambahan (repository) bermanfaat atau berlebihan</li><li>menerapkan penamaan, ukuran fungsi, dan pengujian yang menjaga kode tetap bersih</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="gejala-controller-gemuk">Gejala: controller gemuk</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// Semua dalam satu method: validasi, stok, pembayaran, email, log, hitungan...
+public function store(Request $request)
+{
+    $request-&gt;validate([...]);
+    $total = 0;
+    foreach ($request-&gt;items as $i) {
+        $p = Produk::find($i['id']);
+        if ($p-&gt;stok &lt; $i['jumlah']) return back()-&gt;withErrors('Stok kurang');
+        $total += $p-&gt;harga * $i['jumlah'];
+        $p-&gt;decrement('stok', $i['jumlah']);
+    }
+    if ($request-&gt;kupon === 'HEMAT10') $total *= 0.9;
+    $pesanan = Pesanan::create(['user_id' =&gt; auth()-&gt;id(), 'total' =&gt; $total]);
+    // ... 80 baris lagi: item, pembayaran, surel, notifikasi, log
+    return redirect('/pesanan/' . $pesanan-&gt;id);
+}</code></pre><figcaption>Sulit diuji (harus lewat HTTP), sulit dipakai ulang (bagaimana bila pesanan dibuat dari API atau perintah artisan?), dan sulit dibaca.</figcaption></figure>
+<h2 id="tanggung-jawab-tiap-lapisan">Tanggung jawab tiap lapisan</h2>
+<table><thead><tr><th>Lapisan</th><th>Tanggung jawab</th><th>Jangan</th></tr></thead><tbody><tr><td>Route</td><td>Memetakan URL ke controller + middleware</td><td>Berisi logika</td></tr><tr><td>Controller</td><td>Menerjemahkan HTTP ke pemanggilan logika dan hasilnya ke respons</td><td>Berisi aturan bisnis atau query rumit</td></tr><tr><td>Form Request</td><td>Validasi dan otorisasi masukan</td><td>Menyimpan data</td></tr><tr><td>Action / Service</td><td>Satu use case bisnis (membuat pesanan)</td><td>Mengetahui tentang HTTP (Request, session)</td></tr><tr><td>Model</td><td>Relasi, scope query, aturan yang melekat pada data</td><td>Menjadi tempat semua logika</td></tr><tr><td>Resource / View</td><td>Format keluaran</td><td>Query ke basis data</td></tr></tbody></table>
+<h2 id="kelas-action-satu-use-case-satu-kelas">Kelas Action: satu use case, satu kelas</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// app/Actions/BuatPesanan.php
+namespace App\Actions;
+
+class BuatPesanan
+{
+    public function __construct(private HitungTotal $hitung) {}
+
+    /** @param array&lt;int, array{produk_id:int, jumlah:int}&gt; $item */
+    public function jalankan(User $user, array $item, ?string $kupon = null): Pesanan
+    {
+        return DB::transaction(function () use ($user, $item, $kupon) {
+            $produk = Produk::whereIn('id', array_column($item, 'produk_id'))-&gt;lockForUpdate()-&gt;get()-&gt;keyBy('id');
+
+            foreach ($item as $i) {
+                if ($produk[$i['produk_id']]-&gt;stok &lt; $i['jumlah']) {
+                    throw new StokTidakCukup($produk[$i['produk_id']]);          // pengecualian domain, bukan respons HTTP
+                }
+            }
+
+            $pesanan = $user-&gt;pesanan()-&gt;create(['total' =&gt; $this-&gt;hitung-&gt;total($produk, $item, $kupon)]);
+            foreach ($item as $i) {
+                $pesanan-&gt;item()-&gt;create($i + ['harga' =&gt; $produk[$i['produk_id']]-&gt;harga]);
+                $produk[$i['produk_id']]-&gt;decrement('stok', $i['jumlah']);
+            }
+            PesananDibuat::dispatch($pesanan);                                   // surel, notifikasi via listener/antrean
+            return $pesanan;
+        });
+    }
+}
+
+// Controller menjadi tipis
+public function store(BuatPesananRequest $request, BuatPesanan $buat)
+{
+    try {
+        $pesanan = $buat-&gt;jalankan($request-&gt;user(), $request-&gt;validated('item'), $request-&gt;validated('kupon'));
+    } catch (StokTidakCukup $e) {
+        return back()-&gt;withErrors(['item' =&gt; $e-&gt;getMessage()]);
+    }
+    return redirect()-&gt;route('pesanan.show', $pesanan);
+}</code></pre><figcaption>Action yang sama dapat dipanggil dari controller web, API, perintah artisan, job antrean, dan tes, tanpa Request. Transaksi dan lockForUpdate menjaga stok tetap benar saat dua pembeli bersamaan.</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Mengapa transaksi dan penguncian penting: dua pembeli terakhir stok bersamaan
+function simulasi(denganKunci) {
+    let stok = 1;
+    const hasil = [];
+    // tanpa kunci: dua permintaan sama-sama membaca stok=1 sebelum ada yang menulis
+    const baca = () =&gt; stok;
+    if (!denganKunci) {
+        const a = baca(), b = baca();                      // dua proses membaca nilai yang sama
+        if (a &gt;= 1) { stok = stok - 1; hasil.push('pembeli A berhasil'); }
+        if (b &gt;= 1) { stok = stok - 1; hasil.push('pembeli B berhasil'); }
+    } else {
+        for (const nama of ['A', 'B']) {                   // dengan kunci: diproses berurutan, pemeriksaan dan pengurangan satu kesatuan
+            if (stok &gt;= 1) { stok -= 1; hasil.push('pembeli ' + nama + ' berhasil'); } else hasil.push('pembeli ' + nama + ' ditolak (stok habis)');
+        }
+    }
+    return { stok, hasil };
+}
+console.log('tanpa kunci  :', JSON.stringify(simulasi(false)), ' &lt;- stok negatif (oversell)');
+console.log('dengan kunci :', JSON.stringify(simulasi(true)));</code></pre><pre class="runout" data-lang="keluaran"><code>tanpa kunci  : {&quot;stok&quot;:-1,&quot;hasil&quot;:[&quot;pembeli A berhasil&quot;,&quot;pembeli B berhasil&quot;]}  &lt;- stok negatif (oversell)
+dengan kunci : {&quot;stok&quot;:0,&quot;hasil&quot;:[&quot;pembeli A berhasil&quot;,&quot;pembeli B ditolak (stok habis)&quot;]}</code></pre></figure>
+<h2 id="service-dto-dan-repository-secukupnya">Service, DTO, dan repository: secukupnya</h2>
+<ul><li><b>Service</b> cocok untuk kumpulan operasi terkait satu domain (PembayaranService dengan beberapa metode) atau pembungkus API eksternal; jangan menjadikannya tempat sampah "PesananService" dengan 40 method.</li><li><b>DTO</b> (data transfer object) berupa kelas readonly kecil menggantikan array tak terstruktur antar lapisan sehingga tipe dan bentuk datanya jelas: <code>final readonly class DataPesanan { public function __construct(public int $userId, public array $item, public ?string $kupon = null) {} }</code></li><li><b>Repository</b> yang hanya membungkus Eloquent ("getAll, find, save") sering berlebihan: Eloquent sudah merupakan abstraksi. Pertimbangkan hanya bila Anda benar-benar butuh mengganti sumber data atau menyembunyikan query rumit di belakang antarmuka.</li><li><b>Scope query</b> di model untuk potongan query yang dipakai ulang: <code>scopeAktif</code>, <code>scopeTerlaris</code>.</li><li><b>Enum</b> PHP untuk status dan jenis, menggantikan string ajaib: <code>enum StatusPesanan: string { case Baru = "baru"; case Dibayar = "dibayar"; }</code></li></ul>
+<div class="callout good"><b>Pragmatis</b><p>Aturan praktis: <b>jangan menambah lapisan karena takut, tambahkan karena sakit</b>. Mulai dengan controller + Form Request + model. Saat sebuah method controller mulai melebihi ~20 baris atau logikanya dibutuhkan di tempat kedua, ekstrak ke Action. Struktur yang diperumit sejak hari pertama sama buruknya dengan yang tidak terstruktur sama sekali.</p></div>
+<h2 id="prinsip-kode-bersih-yang-berlaku-di-mana-pun">Prinsip kode bersih yang berlaku di mana pun</h2>
+<table><thead><tr><th>Prinsip</th><th>Praktik</th></tr></thead><tbody><tr><td>Nama yang menjelaskan maksud</td><td>hitungTotalDenganDiskon() bukan proses(); $jumlahPesananAktif bukan $n</td></tr><tr><td>Fungsi kecil, satu tugas</td><td>Bila butuh kata "dan" untuk menjelaskan fungsi, pecah</td></tr><tr><td>Kembali lebih awal (guard clause)</td><td>Tangani kasus tidak sah di awal, kurangi percabangan bersarang</td></tr><tr><td>Hindari angka dan string ajaib</td><td>Konstanta, enum, atau konfigurasi bernama</td></tr><tr><td>Komentar menjelaskan "mengapa"</td><td>Kode menjelaskan "apa"; komentar untuk alasan yang tidak jelas dari kode</td></tr><tr><td>Tes sebagai jaring pengaman</td><td>Refaktor dengan tes hijau; tes Action murah dan cepat</td></tr><tr><td>Jangan ulang diri sendiri (DRY), tetapi jangan abstraksi dini</td><td>Tunggu pengulangan ketiga sebelum mengabstraksi</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// Sebelum: percabangan bersarang
+function harga(Pesanan $p) {
+    if ($p-&gt;aktif) {
+        if ($p-&gt;user-&gt;anggota) {
+            if ($p-&gt;total &gt; 500000) { return $p-&gt;total * 0.85; }
+            else { return $p-&gt;total * 0.95; }
+        } else { return $p-&gt;total; }
+    } else { return 0; }
+}
+
+// Sesudah: guard clause + enum + nama jelas
+function hargaAkhir(Pesanan $p): int
+{
+    if (! $p-&gt;aktif) return 0;
+    if (! $p-&gt;user-&gt;anggota) return $p-&gt;total;
+
+    $faktor = $p-&gt;total &gt;= self::AMBANG_DISKON_BESAR ? 0.85 : 0.95;
+    return (int) round($p-&gt;total * $faktor);
+}</code></pre></figure>
+<div data-w="checklist"><script type="application/json">{"title":"Tanda struktur proyek sehat","items":["Controller rata-rata kurang dari 10–15 baris per method.","Logika bisnis berada di Action/Service/model, bukan di controller atau Blade.","Use case dapat dipanggil dari web, API, artisan, dan tes tanpa Request.","Operasi yang mengubah beberapa tabel berada dalam transaksi.","Status dan jenis memakai enum, bukan string ajaib.","Ada tes untuk Action dan alur penting.","Penamaan konsisten dan struktur folder dapat dijelaskan dalam satu menit kepada anggota baru."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tanda perlu mengekstrak ke kelas Action?","options":["Method controller panjang atau logikanya dibutuhkan di tempat lain","Controller terlalu pendek","Memakai Blade"],"answer":0,"why":"Memudahkan penggunaan ulang dan pengujian."},{"q":"Mengapa Action sebaiknya tidak menerima Request?","options":["Agar bisa dipakai dari konteks non-HTTP","Request lambat","Dilarang Laravel"],"answer":0,"why":"Memisahkan logika bisnis dari HTTP."},{"q":"Repository yang hanya membungkus Eloquent biasanya...","options":["Berlebihan","Wajib","Lebih cepat"],"answer":0,"why":"Eloquent sudah menjadi abstraksi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ekstrak logika "membatalkan pesanan" menjadi Action: apa masukan dan keluarannya?</summary><div>Masukan: Pesanan dan alasan (mungkin User); keluaran: pesanan yang diperbarui; efek: status, pengembalian stok, event dalam satu transaksi.</div></details><details><summary>2. Mengapa lockForUpdate penting pada pengurangan stok?</summary><div>Mencegah dua transaksi bersamaan membaca stok yang sama dan sama-sama menguranginya (oversell).</div></details><details><summary>3. Refaktor if bersarang dengan guard clause: apa manfaatnya?</summary><div>Alur utama menjadi lurus dan mudah dibaca; kasus gagal ditangani di awal.</div></details><details><summary>4. Kapan memperkenalkan DTO?</summary><div>Saat array asosiatif antar lapisan mulai membingungkan bentuk dan tipenya.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Controller tipis; logika bisnis ke Action/Service/model; Form Request untuk masukan.</li><li>Action satu use case, tanpa HTTP, memakai transaksi dan penguncian bila perlu.</li><li>Tambahkan lapisan hanya saat rasa sakitnya nyata; waspadai repository dan service yang berlebihan.</li><li>Penamaan jelas, fungsi kecil, guard clause, enum, dan tes menjaga kode bersih.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah harus mengikuti Domain-Driven Design?</summary><div>Tidak. Untuk aplikasi besar dan kompleks, pemisahan domain membantu, tetapi sebagian besar aplikasi cukup dengan struktur Laravel standar plus Action.</div></details>
+<details class="faq"><summary>Di mana menaruh kelas Action?</summary><div>Konvensi umum: app/Actions; beberapa tim memakai app/Services atau app/Domain/<Fitur>. Pilih satu dan konsisten.</div></details>
+<details class="faq"><summary>Bagaimana memulai merefaktor kode lama?</summary><div>Tulis tes karakterisasi untuk perilaku yang ada, lalu ekstrak sedikit demi sedikit dengan tes tetap hijau.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/container" rel="noopener" target="_blank">Laravel: Service Container (injeksi dependensi)</a></li><li><a href="https://laravel.com/docs/database#database-transactions" rel="noopener" target="_blank">Laravel: Database Transactions</a></li><li>Robert C. Martin, Clean Code (Prentice Hall, 2008)</li><li><a href="https://martinfowler.com/books/refactoring.html" rel="noopener" target="_blank">Martin Fowler: Refactoring</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/prinsip-solid-java-lima-aturan-desain-class-yang-baik/"><img src="/artikel/prinsip-solid-java-lima-aturan-desain-class-yang-baik/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Prinsip SOLID di Java: Lima Aturan Desain Class</span></a><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

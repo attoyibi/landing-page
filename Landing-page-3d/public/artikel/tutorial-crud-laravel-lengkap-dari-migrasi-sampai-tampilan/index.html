@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan</title>
+<meta name="description" content="Tutorial CRUD Laravel dari nol: migrasi, model, resource controller, Form Request, view Blade, pesan sukses, paginasi, dan pencarian.">
+<meta name="keywords" content="CRUD Laravel, tutorial Laravel, resource controller, Blade, Eloquent">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/">
+<meta property="og:title" content="Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan">
+<meta property="og:description" content="Tutorial CRUD Laravel dari nol: migrasi, model, resource controller, Form Request, view Blade, pesan sukses, paginasi, dan pencarian.">
+<meta property="og:image" content="https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan">
+<meta name="twitter:description" content="Tutorial CRUD Laravel dari nol: migrasi, model, resource controller, Form Request, view Blade, pesan sukses, paginasi, dan pencarian.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan","description":"Tutorial CRUD Laravel dari nol: migrasi, model, resource controller, Form Request, view Blade, pesan sukses, paginasi, dan pencarian.","image":["https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"CRUD Laravel, tutorial Laravel, resource controller, Blade, Eloquent","articleSection":"Laravel & Backend","wordCount":340,"mainEntityOfPage":"https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan","item":"https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah ada alat yang membuat CRUD otomatis?","acceptedAnswer":{"@type":"Answer","text":"Ya: Filament, Laravel Nova, dan Backpack membangun panel admin CRUD dengan cepat. Memahami CRUD manual tetap penting sebagai dasar."}},{"@type":"Question","name":"Bagaimana dengan upload gambar produk?","acceptedAnswer":{"@type":"Answer","text":"Tambahkan input file, validasi image dan ukuran, simpan dengan store(), dan simpan path di kolom; hapus berkas lama saat diganti."}},{"@type":"Question","name":"Kapan memakai soft delete?","acceptedAnswer":{"@type":"Answer","text":"Saat data harus dapat dipulihkan atau dibutuhkan untuk audit; gunakan trait SoftDeletes dan kolom deleted_at."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#gambaran-tujuh-rute-standar">Gambaran: tujuh rute standar</a></li><li><a href="#langkah-1-model-migrasi-dan-factory">Langkah 1: model, migrasi, dan factory</a></li><li><a href="#langkah-2-rute-dan-form-request">Langkah 2: rute dan Form Request</a></li><li><a href="#langkah-3-controller">Langkah 3: controller</a></li><li><a href="#langkah-4-tampilan">Langkah 4: tampilan</a></li><li><a href="#mengapa-urutan-pencarian-seperti-itu-peragaan-paginasi-dan-pencarian">Mengapa urutan pencarian seperti itu: peragaan paginasi dan pencarian</a></li><li><a href="#tes-cepat-untuk-crud">Tes cepat untuk CRUD</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan</h1>
+<p class="lead">CRUD (Create, Read, Update, Delete) adalah tulang punggung hampir semua aplikasi bisnis. Menguasai satu CRUD yang rapi di Laravel berarti Anda sudah dapat membangun sebagian besar halaman administrasi. Tutorial ini membangunnya dari awal dengan praktik yang benar: validasi, pesan, paginasi, pencarian, dan keamanan dasar.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel (routing, controller, Blade), Eloquent dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Tutorial CRUD Laravel Lengkap: Migrasi sampai Tampilan" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membangun CRUD lengkap untuk satu entitas (produk)</li><li>memakai resource controller dan route model binding</li><li>memisahkan validasi dengan Form Request</li><li>menampilkan daftar dengan pencarian dan paginasi</li><li>menerapkan pesan flash, konfirmasi hapus, dan perlindungan CSRF</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="gambaran-tujuh-rute-standar">Gambaran: tujuh rute standar</h2>
+<table><thead><tr><th>Aksi</th><th>Metode & URL</th><th>Method controller</th><th>Nama rute</th></tr></thead><tbody><tr><td>Daftar</td><td>GET /produk</td><td>index</td><td>produk.index</td></tr><tr><td>Form baru</td><td>GET /produk/create</td><td>create</td><td>produk.create</td></tr><tr><td>Simpan</td><td>POST /produk</td><td>store</td><td>produk.store</td></tr><tr><td>Detail</td><td>GET /produk/{produk}</td><td>show</td><td>produk.show</td></tr><tr><td>Form ubah</td><td>GET /produk/{produk}/edit</td><td>edit</td><td>produk.edit</td></tr><tr><td>Perbarui</td><td>PUT/PATCH /produk/{produk}</td><td>update</td><td>produk.update</td></tr><tr><td>Hapus</td><td>DELETE /produk/{produk}</td><td>destroy</td><td>produk.destroy</td></tr></tbody></table>
+<h2 id="langkah-1-model-migrasi-dan-factory">Langkah 1: model, migrasi, dan factory</h2>
+<figure class="codebox"><pre data-lang="bash"><code>php artisan make:model Produk -mfr      # model + migrasi + factory + resource controller
+php artisan make:request ProdukRequest</code></pre></figure>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// database/migrations/xxxx_create_produk_table.php (bagian up)
+Schema::create('produk', function (Blueprint $table) {
+    $table-&gt;id();
+    $table-&gt;string('kode', 20)-&gt;unique();
+    $table-&gt;string('nama');
+    $table-&gt;text('deskripsi')-&gt;nullable();
+    $table-&gt;unsignedInteger('harga');
+    $table-&gt;unsignedInteger('stok')-&gt;default(0);
+    $table-&gt;timestamps();
+    $table-&gt;index('nama');
+});
+
+// app/Models/Produk.php
+class Produk extends Model
+{
+    use HasFactory;
+    protected $table = 'produk';
+    protected $fillable = ['kode', 'nama', 'deskripsi', 'harga', 'stok'];
+}
+
+// database/factories/ProdukFactory.php
+public function definition(): array
+{
+    return [
+        'kode'  =&gt; strtoupper(fake()-&gt;unique()-&gt;bothify('PRD-###??')),
+        'nama'  =&gt; fake()-&gt;words(2, true),
+        'harga' =&gt; fake()-&gt;numberBetween(5, 300) * 1000,
+        'stok'  =&gt; fake()-&gt;numberBetween(0, 100),
+    ];
+}
+
+// database/seeders/DatabaseSeeder.php  -&gt;  Produk::factory()-&gt;count(40)-&gt;create();
+// php artisan migrate --seed</code></pre></figure>
+<h2 id="langkah-2-rute-dan-form-request">Langkah 2: rute dan Form Request</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// routes/web.php
+Route::resource('produk', ProdukController::class);
+
+// app/Http/Requests/ProdukRequest.php (dipakai untuk store DAN update)
+class ProdukRequest extends FormRequest
+{
+    public function authorize(): bool { return true; }
+
+    public function rules(): array
+    {
+        $produk = $this-&gt;route('produk');          // null saat membuat baru
+        return [
+            'kode'      =&gt; ['required', 'string', 'max:20', Rule::unique('produk', 'kode')-&gt;ignore($produk)],
+            'nama'      =&gt; ['required', 'string', 'min:3', 'max:255'],
+            'deskripsi' =&gt; ['nullable', 'string', 'max:2000'],
+            'harga'     =&gt; ['required', 'integer', 'min:0'],
+            'stok'      =&gt; ['required', 'integer', 'min:0'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return ['kode.unique' =&gt; 'Kode produk sudah dipakai.'];
+    }
+}</code></pre></figure>
+<h2 id="langkah-3-controller">Langkah 3: controller</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+class ProdukController extends Controller
+{
+    public function index(Request $request)
+    {
+        $produk = Produk::query()
+            -&gt;when($request-&gt;filled('q'), fn ($q) =&gt; $q-&gt;where(function ($q) use ($request) {
+                $kata = '%' . $request-&gt;string('q') . '%';
+                $q-&gt;where('nama', 'like', $kata)-&gt;orWhere('kode', 'like', $kata);
+            }))
+            -&gt;latest()
+            -&gt;paginate(10)
+            -&gt;withQueryString();                      // pertahankan ?q= saat pindah halaman
+
+        return view('produk.index', compact('produk'));
+    }
+
+    public function create()
+    {
+        return view('produk.form', ['produk' =&gt; new Produk()]);
+    }
+
+    public function store(ProdukRequest $request)
+    {
+        Produk::create($request-&gt;validated());
+        return redirect()-&gt;route('produk.index')-&gt;with('sukses', 'Produk berhasil ditambahkan.');
+    }
+
+    public function show(Produk $produk)
+    {
+        return view('produk.show', compact('produk'));
+    }
+
+    public function edit(Produk $produk)
+    {
+        return view('produk.form', compact('produk'));
+    }
+
+    public function update(ProdukRequest $request, Produk $produk)
+    {
+        $produk-&gt;update($request-&gt;validated());
+        return redirect()-&gt;route('produk.index')-&gt;with('sukses', 'Produk berhasil diperbarui.');
+    }
+
+    public function destroy(Produk $produk)
+    {
+        $produk-&gt;delete();
+        return redirect()-&gt;route('produk.index')-&gt;with('sukses', 'Produk dihapus.');
+    }
+}</code></pre><figcaption>Pola Post/Redirect/Get: setelah menyimpan, selalu redirect. Bila langsung menampilkan view, memuat ulang halaman akan mengirim ulang form dan menggandakan data.</figcaption></figure>
+<h2 id="langkah-4-tampilan">Langkah 4: tampilan</h2>
+<figure class="codebox"><pre data-lang="html"><code>{{-- resources/views/produk/index.blade.php --}}
+@extends('layouts.app')
+@section('isi')
+&lt;h1&gt;Produk&lt;/h1&gt;
+
+@if (session('sukses'))
+    &lt;p role=&quot;status&quot; class=&quot;info&quot;&gt;{{ session('sukses') }}&lt;/p&gt;
+@endif
+
+&lt;form method=&quot;GET&quot; action=&quot;{{ route('produk.index') }}&quot;&gt;
+    &lt;input type=&quot;search&quot; name=&quot;q&quot; value=&quot;{{ request('q') }}&quot; placeholder=&quot;Cari nama atau kode&quot; aria-label=&quot;Cari produk&quot;&gt;
+    &lt;button&gt;Cari&lt;/button&gt;
+    &lt;a href=&quot;{{ route('produk.create') }}&quot;&gt;Tambah produk&lt;/a&gt;
+&lt;/form&gt;
+
+&lt;table&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Kode&lt;/th&gt;&lt;th&gt;Nama&lt;/th&gt;&lt;th&gt;Harga&lt;/th&gt;&lt;th&gt;Stok&lt;/th&gt;&lt;th&gt;Aksi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+    @forelse ($produk as $p)
+        &lt;tr&gt;
+            &lt;td&gt;{{ $p-&gt;kode }}&lt;/td&gt;
+            &lt;td&gt;&lt;a href=&quot;{{ route('produk.show', $p) }}&quot;&gt;{{ $p-&gt;nama }}&lt;/a&gt;&lt;/td&gt;
+            &lt;td&gt;Rp{{ number_format($p-&gt;harga, 0, ',', '.') }}&lt;/td&gt;
+            &lt;td&gt;{{ $p-&gt;stok }}&lt;/td&gt;
+            &lt;td&gt;
+                &lt;a href=&quot;{{ route('produk.edit', $p) }}&quot;&gt;Ubah&lt;/a&gt;
+                &lt;form method=&quot;POST&quot; action=&quot;{{ route('produk.destroy', $p) }}&quot; style=&quot;display:inline&quot;
+                      onsubmit=&quot;return confirm('Hapus {{ $p-&gt;nama }}?')&quot;&gt;
+                    @csrf @method('DELETE')
+                    &lt;button type=&quot;submit&quot;&gt;Hapus&lt;/button&gt;
+                &lt;/form&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    @empty
+        &lt;tr&gt;&lt;td colspan=&quot;5&quot;&gt;Tidak ada produk.&lt;/td&gt;&lt;/tr&gt;
+    @endforelse
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+{{ $produk-&gt;links() }}
+@endsection</code></pre><figcaption>Penghapusan memakai form dengan @method("DELETE") karena browser hanya mengirim GET dan POST. Jangan menghapus lewat tautan GET: perayap atau prefetch dapat tanpa sengaja menghapus data.</figcaption></figure>
+<figure class="codebox"><pre data-lang="html"><code>{{-- resources/views/produk/form.blade.php: dipakai bersama untuk tambah dan ubah --}}
+@extends('layouts.app')
+@section('isi')
+&lt;h1&gt;{{ $produk-&gt;exists ? 'Ubah' : 'Tambah' }} Produk&lt;/h1&gt;
+
+&lt;form method=&quot;POST&quot; action=&quot;{{ $produk-&gt;exists ? route('produk.update', $produk) : route('produk.store') }}&quot;&gt;
+    @csrf
+    @if ($produk-&gt;exists) @method('PUT') @endif
+
+    @foreach (['kode' =&gt; 'Kode', 'nama' =&gt; 'Nama', 'harga' =&gt; 'Harga', 'stok' =&gt; 'Stok'] as $kolom =&gt; $label)
+        &lt;div&gt;
+            &lt;label for=&quot;{{ $kolom }}&quot;&gt;{{ $label }}&lt;/label&gt;
+            &lt;input id=&quot;{{ $kolom }}&quot; name=&quot;{{ $kolom }}&quot; value=&quot;{{ old($kolom, $produk-&gt;$kolom) }}&quot;
+                   @error($kolom) aria-invalid=&quot;true&quot; @enderror&gt;
+            @error($kolom) &lt;p role=&quot;alert&quot;&gt;{{ $message }}&lt;/p&gt; @enderror
+        &lt;/div&gt;
+    @endforeach
+
+    &lt;label for=&quot;deskripsi&quot;&gt;Deskripsi&lt;/label&gt;
+    &lt;textarea id=&quot;deskripsi&quot; name=&quot;deskripsi&quot;&gt;{{ old('deskripsi', $produk-&gt;deskripsi) }}&lt;/textarea&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;Simpan&lt;/button&gt;
+&lt;/form&gt;
+@endsection</code></pre><figcaption>old($kolom, $produk->$kolom): isian lama (setelah gagal validasi) diutamakan, jika tidak ada pakai nilai dari basis data. Satu form melayani dua aksi.</figcaption></figure>
+<h2 id="mengapa-urutan-pencarian-seperti-itu-peragaan-paginasi-dan-pencarian">Mengapa urutan pencarian seperti itu: peragaan paginasi dan pencarian</h2>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE produk (id INTEGER PRIMARY KEY, kode TEXT, nama TEXT)&quot;)
+db.executemany(&quot;INSERT INTO produk (kode, nama) VALUES (?, ?)&quot;,
+               [(f&quot;PRD-{i:03d}&quot;, n) for i, n in enumerate([&quot;Kopi Gayo&quot;, &quot;Kopi Toraja&quot;, &quot;Teh Hijau&quot;, &quot;Teh Hitam&quot;, &quot;Gula Aren&quot;, &quot;Kopi Arabika&quot;] * 8, 1)])
+
+def halaman(q, nomor, per=10):
+    kata = f&quot;%{q}%&quot;
+    total = db.execute(&quot;SELECT COUNT(*) FROM produk WHERE nama LIKE ? OR kode LIKE ?&quot;, (kata, kata)).fetchone()[0]
+    baris = db.execute(&quot;SELECT kode, nama FROM produk WHERE nama LIKE ? OR kode LIKE ? ORDER BY id DESC LIMIT ? OFFSET ?&quot;,
+                       (kata, kata, per, (nomor - 1) * per)).fetchall()
+    return total, baris
+
+for q, n in [(&quot;&quot;, 1), (&quot;Kopi&quot;, 1), (&quot;Kopi&quot;, 3), (&quot;xyz&quot;, 1)]:
+    total, baris = halaman(q, n)
+    print(f&quot;q={q!r:7} halaman {n}: total {total:&gt;2}, tampil {len(baris)} baris&quot;, [b[0] for b in baris[:3]])</code></pre><pre class="runout" data-lang="keluaran"><code>q=''      halaman 1: total 48, tampil 10 baris ['PRD-048', 'PRD-047', 'PRD-046']
+q='Kopi'  halaman 1: total 24, tampil 10 baris ['PRD-048', 'PRD-044', 'PRD-043']
+q='Kopi'  halaman 3: total 24, tampil 4 baris ['PRD-007', 'PRD-006', 'PRD-002']
+q='xyz'   halaman 1: total  0, tampil 0 baris []</code></pre><figcaption>Pencarian dan paginasi di Laravel menghasilkan dua query seperti ini: COUNT untuk total halaman dan SELECT dengan LIMIT/OFFSET untuk halaman aktif. Pengelompokan OR dalam kurung penting agar filter lain tidak bocor.</figcaption></figure>
+<h2 id="tes-cepat-untuk-crud">Tes cepat untuk CRUD</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+public function test_crud_produk(): void
+{
+    $user = User::factory()-&gt;create();
+    $this-&gt;actingAs($user);
+
+    $this-&gt;post('/produk', ['kode' =&gt; 'PRD-1', 'nama' =&gt; 'Kopi', 'harga' =&gt; 20000, 'stok' =&gt; 5])
+         -&gt;assertRedirect('/produk');
+    $this-&gt;assertDatabaseHas('produk', ['kode' =&gt; 'PRD-1']);
+
+    $produk = Produk::first();
+    $this-&gt;put('/produk/' . $produk-&gt;id, ['kode' =&gt; 'PRD-1', 'nama' =&gt; 'Kopi Gayo', 'harga' =&gt; 25000, 'stok' =&gt; 5]);
+    $this-&gt;assertDatabaseHas('produk', ['nama' =&gt; 'Kopi Gayo']);
+
+    $this-&gt;delete('/produk/' . $produk-&gt;id);
+    $this-&gt;assertDatabaseMissing('produk', ['id' =&gt; $produk-&gt;id]);
+}</code></pre></figure>
+<div data-w="checklist"><script type="application/json">{"title":"CRUD yang rapi","items":["Validasi di Form Request; hanya validated() yang disimpan.","Setelah simpan/ubah/hapus selalu redirect (Post/Redirect/Get) dengan pesan flash.","Hapus lewat DELETE dengan @csrf dan @method, bukan tautan GET.","Daftar dipaginasi; pencarian memakai withQueryString.","Hanya pengguna berhak yang boleh mengubah/menghapus (middleware auth, policy).","Kolom pencarian dan filter berindeks bila tabel besar.","Ada tes untuk alur tambah, ubah, hapus, dan kasus validasi gagal."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Mengapa redirect setelah store()?","options":["Mencegah pengiriman ulang form saat halaman dimuat ulang","Agar lebih cepat","Wajib oleh HTTP"],"answer":0,"why":"Pola Post/Redirect/Get."},{"q":"Cara browser mengirim DELETE dari form HTML?","options":["POST dengan @method(\"DELETE\")","Langsung method=\"DELETE\"","Tautan \u003ca>"],"answer":0,"why":"HTML hanya mendukung GET dan POST."},{"q":"Fungsi withQueryString() pada paginasi?","options":["Mempertahankan parameter pencarian di tautan halaman","Menyimpan query ke basis data","Mempercepat query"],"answer":0,"why":"Agar ?q=kopi tidak hilang saat pindah halaman."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan kolom "kategori" ke CRUD dengan pilihan dropdown dari tabel kategori.</summary><div>Migrasi kategori_id (foreignId), relasi belongsTo, aturan exists:kategori,id, dan <select> berisi kategori di form.</div></details><details><summary>2. Mengapa tombol hapus sebaiknya memakai konfirmasi?</summary><div>Hapus tidak dapat dibatalkan; konfirmasi (atau soft delete) mencegah kesalahan klik.</div></details><details><summary>3. Bagaimana menambah urutan berdasarkan harga lewat query string dengan aman?</summary><div>Ambil ?urut hanya bila termasuk daftar kolom yang diizinkan, lalu orderBy kolom itu.</div></details><details><summary>4. Apa gunanya route model binding pada show(Produk $produk)?</summary><div>Laravel mengambil model dari id di URL dan memberi 404 otomatis bila tidak ada.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>CRUD = tujuh rute resource, satu controller, satu Form Request, dan dua view (daftar dan form).</li><li>Gunakan validated(), redirect dengan pesan flash, DELETE dengan @csrf dan @method.</li><li>Paginasi dan pencarian: withQueryString dan pengelompokan kondisi OR.</li><li>Lengkapi dengan otorisasi dan tes.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah ada alat yang membuat CRUD otomatis?</summary><div>Ya: Filament, Laravel Nova, dan Backpack membangun panel admin CRUD dengan cepat. Memahami CRUD manual tetap penting sebagai dasar.</div></details>
+<details class="faq"><summary>Bagaimana dengan upload gambar produk?</summary><div>Tambahkan input file, validasi image dan ukuran, simpan dengan store(), dan simpan path di kolom; hapus berkas lama saat diganti.</div></details>
+<details class="faq"><summary>Kapan memakai soft delete?</summary><div>Saat data harus dapat dipulihkan atau dibutuhkan untuk audit; gunakan trait SoftDeletes dan kolom deleted_at.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/controllers#resource-controllers" rel="noopener" target="_blank">Laravel: Controllers (Resource Controllers)</a></li><li><a href="https://laravel.com/docs/pagination" rel="noopener" target="_blank">Laravel: Pagination</a></li><li><a href="https://laravel.com/docs/validation#form-request-validation" rel="noopener" target="_blank">Laravel: Form Request Validation</a></li><li><a href="https://laravel.com/docs" rel="noopener" target="_blank">Laravel Documentation</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

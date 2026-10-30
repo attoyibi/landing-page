@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laravel sebagai Backend API untuk React dan Flutter</title>
+<meta name="description" content="Laravel sebagai backend React dan Flutter: kontrak API, autentikasi token atau cookie, CORS, penanganan galat, unggah berkas, dan versi API.">
+<meta name="keywords" content="Laravel API, backend React, backend Flutter, CORS, Sanctum">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/">
+<meta property="og:title" content="Laravel sebagai Backend API untuk React dan Flutter">
+<meta property="og:description" content="Laravel sebagai backend React dan Flutter: kontrak API, autentikasi token atau cookie, CORS, penanganan galat, unggah berkas, dan versi API.">
+<meta property="og:image" content="https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Laravel sebagai Backend API untuk React dan Flutter">
+<meta name="twitter:description" content="Laravel sebagai backend React dan Flutter: kontrak API, autentikasi token atau cookie, CORS, penanganan galat, unggah berkas, dan versi API.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Laravel sebagai Backend API untuk React dan Flutter","description":"Laravel sebagai backend React dan Flutter: kontrak API, autentikasi token atau cookie, CORS, penanganan galat, unggah berkas, dan versi API.","image":["https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Laravel API, backend React, backend Flutter, CORS, Sanctum","articleSection":"Laravel & Backend","wordCount":582,"mainEntityOfPage":"https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Laravel sebagai Backend API untuk React dan Flutter","item":"https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana dengan Inertia.js?","acceptedAnswer":{"@type":"Answer","text":"Inertia memungkinkan memakai React/Vue sebagai tampilan Laravel tanpa membangun API terpisah: routing dan controller tetap di Laravel. Cocok bila hanya ada satu klien web."}},{"@type":"Question","name":"Bagaimana push notification untuk Flutter?","acceptedAnswer":{"@type":"Answer","text":"Gunakan Firebase Cloud Messaging; simpan token perangkat di backend dan kirim dari antrean Laravel lewat paket FCM."}},{"@type":"Question","name":"Bagaimana pengujian lintas tim?","acceptedAnswer":{"@type":"Answer","text":"Gunakan kontrak OpenAPI dan server tiruan, serta tes kontrak sehingga perubahan backend yang merusak terdeteksi sebelum merugikan klien."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#arsitektur">Arsitektur</a></li><li><a href="#autentikasi-pilih-sesuai-klien">Autentikasi: pilih sesuai klien</a></li><li><a href="#cors-apa-yang-dilindungi-dan-apa-yang-tidak">CORS: apa yang dilindungi dan apa yang tidak</a></li><li><a href="#kontrak-api-yang-konsisten">Kontrak API yang konsisten</a></li><li><a href="#unggah-berkas-dan-hal-praktis-lain">Unggah berkas dan hal praktis lain</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Laravel sebagai Backend API untuk React dan Flutter</h1>
+<p class="lead">Banyak proyek modern memisahkan front-end dan backend: antarmuka dibangun dengan React atau Flutter, sementara Laravel menyediakan data dan aturan bisnis lewat API. Pemisahan ini memberi fleksibilitas (satu API untuk web dan seluler), tetapi menuntut disiplin pada kontrak API, autentikasi, CORS, dan penanganan galat agar kedua sisi tidak saling menyulitkan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> REST API Laravel, autentikasi Sanctum, dasar React atau Flutter</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Laravel sebagai Backend API untuk React dan Flutter" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>merancang kontrak API yang stabil dan konsisten untuk klien web dan seluler</li><li>memilih autentikasi yang tepat: sesi cookie (SPA) atau token (seluler)</li><li>mengonfigurasi CORS dengan benar dan memahami apa yang sebenarnya dilindungi</li><li>menangani galat, validasi, dan paginasi secara seragam di sisi klien</li><li>mengelola unggah berkas, versi API, dan dokumentasi untuk tim front-end</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="arsitektur">Arsitektur</h2>
+<figure class="diagram"><svg viewBox="0 0 660 230" role="img" aria-label="Satu backend, banyak klien" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="box3u-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="box3u-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="box3u-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="box3u-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="box3u-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="165,67.5 285,99.8" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#box3u-arrow)"/><rect x="187" y="74.65384615384616" width="76" height="17" rx="4" fill="#fff" opacity=".92"/><text x="225" y="87.65384615384616" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">JSON/HTTPS</text><polyline points="165,120 285,120" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#box3u-arrow)"/><rect x="187" y="111" width="76" height="17" rx="4" fill="#fff" opacity=".92"/><text x="225" y="124" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">JSON/HTTPS</text><polyline points="165,172.5 285,140.2" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#box3u-arrow)"/><polyline points="435,120 515,120" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#box3u-arrow)"/><rect x="35" y="28" width="130" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="54.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">React (web)</tspan></text><rect x="35" y="98" width="130" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="116.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">Flutter</tspan><tspan x="100" dy="16">(seluler)</tspan></text><rect x="35" y="168" width="130" height="44" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="100" y="194.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="100" dy="0">Pihak ketiga</tspan></text><rect x="285" y="90" width="150" height="60" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="360" y="116.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="360" dy="0">Laravel API</tspan><tspan x="360" dy="16">(/api/v1)</tspan></text><rect x="515" y="95" width="130" height="50" fill="#f5f8fd" stroke="none"/><line x1="515" y1="95" x2="645" y2="95" stroke="#1e5ab2" stroke-width="2"/><line x1="515" y1="145" x2="645" y2="145" stroke="#1e5ab2" stroke-width="2"/><line x1="537" y1="95" x2="537" y2="145" stroke="#1e5ab2" stroke-width="2"/><text x="590" y="124" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="590" dy="0">Basis data</tspan></text></svg><figcaption>Semua klien memakai kontrak yang sama; aturan bisnis dan keamanan hanya berada di backend.</figcaption></figure>
+<div class="callout warn"><b>Aturan emas</b><p>Prinsip utama: <b>backend tidak pernah mempercayai klien</b>. Semua validasi, otorisasi, dan perhitungan penting (harga, diskon, stok) dilakukan di server. Klien React/Flutter hanyalah tampilan yang dapat dimodifikasi siapa pun.</p></div>
+<h2 id="autentikasi-pilih-sesuai-klien">Autentikasi: pilih sesuai klien</h2>
+<table><thead><tr><th>Klien</th><th>Pilihan</th><th>Catatan</th></tr></thead><tbody><tr><td>React SPA di domain induk yang sama (app.contoh.id dan api.contoh.id)</td><td>Sanctum sesi (cookie)</td><td>Tanpa menyimpan token di JavaScript; perlu CORS dengan credentials dan konfigurasi domain/stateful</td></tr><tr><td>React di domain berbeda, atau aplikasi pihak ketiga</td><td>Token Bearer</td><td>Simpan token dengan hati-hati; pertimbangkan masa berlaku pendek dan refresh</td></tr><tr><td>Flutter / aplikasi seluler</td><td>Token Bearer (Sanctum)</td><td>Simpan di penyimpanan aman (flutter_secure_storage: Keychain/Keystore), bukan SharedPreferences biasa</td></tr><tr><td>Server ke server</td><td>Token dengan kemampuan terbatas atau OAuth client credentials</td><td>Pisahkan dari token pengguna</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// Login mengembalikan token + data pengguna
+Route::post('/v1/masuk', function (LoginRequest $request) {
+    $user = User::where('email', $request-&gt;email)-&gt;first();
+    if (! $user || ! Hash::check($request-&gt;password, $user-&gt;password)) {
+        return response()-&gt;json(['pesan' =&gt; 'Surel atau kata sandi salah.'], 422);
+    }
+    $token = $user-&gt;createToken($request-&gt;input('perangkat', 'klien'), ['*'], now()-&gt;addDays(30))-&gt;plainTextToken;
+    return ['token' =&gt; $token, 'pengguna' =&gt; new PenggunaResource($user)];
+})-&gt;middleware('throttle:5,1');
+
+Route::middleware('auth:sanctum')-&gt;group(function () {
+    Route::get('/v1/saya', fn (Request $r) =&gt; new PenggunaResource($r-&gt;user()));
+    Route::post('/v1/keluar', fn (Request $r) =&gt; tap(response()-&gt;noContent(), fn () =&gt; $r-&gt;user()-&gt;currentAccessToken()-&gt;delete()));
+});</code></pre></figure>
+<h2 id="cors-apa-yang-dilindungi-dan-apa-yang-tidak">CORS: apa yang dilindungi dan apa yang tidak</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// config/cors.php
+return [
+    'paths' =&gt; ['api/*', 'sanctum/csrf-cookie'],
+    'allowed_methods' =&gt; ['*'],
+    'allowed_origins' =&gt; ['https://app.contoh.id', 'http://localhost:5173'],   // asal yang sah; jangan '*' bila memakai credentials
+    'allowed_headers' =&gt; ['*'],
+    'exposed_headers' =&gt; [],
+    'max_age' =&gt; 600,
+    'supports_credentials' =&gt; false,       // true hanya untuk SPA berbasis cookie sesi
+];</code></pre><figcaption>Untuk SPA dengan cookie sesi Sanctum, supports_credentials=true dan origin harus eksplisit.</figcaption></figure>
+<div class="callout info"><b>Salah paham umum</b><p><b>CORS adalah aturan browser, bukan perlindungan server.</b> Ia hanya mencegah <i>halaman web</i> dari asal lain membaca respons API Anda lewat browser pengguna. Ia sama sekali tidak menghentikan aplikasi seluler, curl, atau skrip penyerang. Karena itu otorisasi tetap wajib di server; jangan menganggap CORS sebagai autentikasi. Dan galat CORS di konsol browser tidak muncul di Flutter (bukan browser).</p></div>
+<figure class="codebox"><pre data-lang="javascript"><code>// Peragaan logika pemeriksaan CORS: dilakukan BROWSER berdasarkan header dari server
+function responsServer(asalPermintaan) {
+    const diizinkan = ['https://app.contoh.id', 'http://localhost:5173'];
+    const header = diizinkan.includes(asalPermintaan) ? { 'Access-Control-Allow-Origin': asalPermintaan } : {};
+    return { status: 200, header, badan: '{&quot;data&quot;:&quot;rahasia&quot;}' };
+}
+function browserMembaca(asalHalaman) {
+    const r = responsServer(asalHalaman);
+    const izin = r.header['Access-Control-Allow-Origin'];
+    return izin === asalHalaman ? 'JavaScript halaman BOLEH membaca: ' + r.badan : 'DIBLOKIR browser (server tetap sudah memproses permintaan!)';
+}
+console.log('halaman app.contoh.id   -&gt;', browserMembaca('https://app.contoh.id'));
+console.log('halaman situs-jahat.id  -&gt;', browserMembaca('https://situs-jahat.id'));
+console.log('curl / Flutter          -&gt; tidak ada pemeriksaan CORS: server harus mengandalkan autentikasi dan otorisasi');</code></pre><pre class="runout" data-lang="keluaran"><code>halaman app.contoh.id   -&gt; JavaScript halaman BOLEH membaca: {&quot;data&quot;:&quot;rahasia&quot;}
+halaman situs-jahat.id  -&gt; DIBLOKIR browser (server tetap sudah memproses permintaan!)
+curl / Flutter          -&gt; tidak ada pemeriksaan CORS: server harus mengandalkan autentikasi dan otorisasi</code></pre></figure>
+<h2 id="kontrak-api-yang-konsisten">Kontrak API yang konsisten</h2>
+<figure class="codebox"><pre data-lang="text"><code>Sukses (satu objek)       200   { &quot;data&quot;: { ... } }
+Sukses (daftar)           200   { &quot;data&quot;: [ ... ], &quot;meta&quot;: { &quot;current_page&quot;: 1, &quot;last_page&quot;: 4, &quot;total&quot;: 47 }, &quot;links&quot;: { ... } }
+Dibuat                    201   { &quot;data&quot;: { ... } }
+Tanpa isi                 204
+Validasi gagal            422   { &quot;pesan&quot;: &quot;Data tidak valid.&quot;, &quot;galat&quot;: { &quot;surel&quot;: [&quot;Format surel salah.&quot;] } }
+Belum login               401   { &quot;pesan&quot;: &quot;Tidak terautentikasi.&quot; }
+Dilarang                  403   { &quot;pesan&quot;: &quot;Anda tidak berhak.&quot; }
+Tidak ditemukan           404   { &quot;pesan&quot;: &quot;Data tidak ditemukan.&quot; }
+Terlalu banyak permintaan 429   { &quot;pesan&quot;: &quot;Coba lagi nanti.&quot; }  + header Retry-After
+Galat server              500   { &quot;pesan&quot;: &quot;Terjadi kesalahan.&quot; }  (tanpa detail internal)</code></pre><figcaption>Satu bentuk galat yang seragam membuat klien React dan Flutter cukup menulis satu penangan galat. Di Laravel atur format ini di bootstrap/app.php (withExceptions) agar semua galat API berformat sama.</figcaption></figure>
+<figure class="codebox"><pre data-lang="jsx"><code>// React: pembungkus fetch yang menangani kontrak di atas sekali saja
+export async function api(jalur, { method = 'GET', body, token } = {}) {
+    const r = await fetch(import.meta.env.VITE_API_URL + '/api/v1' + jalur, {
+        method,
+        headers: {
+            Accept: 'application/json',                    // PENTING: tanpa ini Laravel dapat mengalihkan (302) alih-alih JSON
+            ...(body &amp;&amp; { 'Content-Type': 'application/json' }),
+            ...(token &amp;&amp; { Authorization: 'Bearer ' + token }),
+        },
+        body: body &amp;&amp; JSON.stringify(body),
+    });
+    if (r.status === 204) return null;
+    const data = await r.json().catch(() =&gt; ({}));
+    if (!r.ok) throw Object.assign(new Error(data.pesan ?? 'Terjadi kesalahan'), { status: r.status, galat: data.galat });
+    return data;
+}</code></pre><figcaption>Header Accept: application/json penting: tanpa itu Laravel menganggap permintaan sebagai halaman web dan dapat mengalihkan ke halaman login atau mengembalikan HTML saat galat.</figcaption></figure>
+<figure class="codebox"><pre data-lang="dart"><code>import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class ApiException implements Exception {
+  final int status; final String pesan; final Map&lt;String, dynamic&gt;? galat;
+  ApiException(this.status, this.pesan, [this.galat]);
+}
+
+class ApiKlien {
+  ApiKlien(this.dasar, {this.token});
+  final String dasar; String? token;
+
+  Future&lt;dynamic&gt; panggil(String jalur, {String metode = 'GET', Map&lt;String, dynamic&gt;? body}) async {
+    final uri = Uri.parse('$dasar/api/v1$jalur');
+    final header = {
+      'Accept': 'application/json',
+      if (body != null) 'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+    final req = http.Request(metode, uri)..headers.addAll(header);
+    if (body != null) req.body = jsonEncode(body);
+    final r = await http.Response.fromStream(await req.send());
+    if (r.statusCode == 204) return null;
+    final data = r.body.isEmpty ? {} : jsonDecode(r.body);
+    if (r.statusCode &gt;= 400) throw ApiException(r.statusCode, data['pesan'] ?? 'Terjadi kesalahan', data['galat']);
+    return data;
+  }
+}</code></pre><figcaption>Pola yang sama di Dart: satu kelas klien yang menambahkan header dan mengubah status galat menjadi pengecualian bertipe. (Sketsa konsep; sesuaikan dengan versi paket http dan gaya kode proyek Anda.)</figcaption></figure>
+<h2 id="unggah-berkas-dan-hal-praktis-lain">Unggah berkas dan hal praktis lain</h2>
+<ul><li><b>Unggah</b>: kirim sebagai <code>multipart/form-data</code>; validasi <code>image</code>, <code>mimes</code>, dan <code>max</code> di server; simpan di storage dan kembalikan URL (tanda tangan sementara untuk berkas privat).</li><li><b>Versi API</b> di URL (/api/v1) dan kebijakan deprecation: klien seluler lama tetap berjalan di toko aplikasi berbulan-bulan, jadi jangan pernah merusak versi yang masih dipakai.</li><li><b>Paginasi</b> di semua daftar; klien seluler memuat bertahap (infinite scroll) dengan meta/links.</li><li><b>Waktu</b>: kirim dalam ISO 8601 UTC dan biarkan klien memformat sesuai zona waktu pengguna.</li><li><b>Uang</b>: kirim sebagai bilangan bulat satuan terkecil (rupiah penuh atau sen) atau string desimal, jangan float.</li><li><b>Dokumentasi</b>: OpenAPI (Scribe atau Scramble menghasilkannya dari kode) agar tim front-end dan seluler dapat bekerja paralel, bahkan sebelum backend selesai (dengan server tiruan).</li><li><b>Pembatasan laju dan pemantauan</b>: throttle per pengguna dan IP; catat ID permintaan untuk melacak galat dari laporan pengguna.</li></ul>
+<div data-w="checklist"><script type="application/json">{"title":"Backend API siap dipakai klien","items":["Kontrak sukses dan galat seragam; kode status bermakna.","Autentikasi sesuai klien (cookie untuk SPA satu domain, token untuk seluler) dan token dapat dicabut.","CORS hanya mengizinkan asal yang sah; tidak dianggap sebagai keamanan.","Semua endpoint divalidasi dan diotorisasi di server (policy).","Daftar dipaginasi; uang dan waktu dalam format yang tidak ambigu.","Versi API dan dokumentasi OpenAPI tersedia.","HTTPS di mana-mana; throttle dan pemantauan aktif."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"CORS melindungi dari...","options":["Halaman web asal lain membaca respons lewat browser","Semua serangan","Aplikasi seluler"],"answer":0,"why":"Hanya perilaku browser; server tetap harus mengautentikasi."},{"q":"Header yang membuat Laravel selalu membalas JSON untuk galat?","options":["Accept: application/json","Content-Length","Origin"],"answer":0,"why":"Tanpa itu Laravel dapat mengalihkan atau mengembalikan HTML."},{"q":"Tempat aman menyimpan token di Flutter?","options":["flutter_secure_storage","SharedPreferences biasa","Variabel global"],"answer":0,"why":"Memakai Keychain/Keystore."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa aplikasi Flutter tidak mengalami galat CORS padahal React mengalami?</summary><div>CORS hanya diterapkan oleh browser; Flutter (bukan browser) tidak memeriksanya.</div></details><details><summary>2. Apa risiko menyimpan token di localStorage pada SPA?</summary><div>Skrip yang berhasil disuntikkan (XSS) dapat membacanya; pertimbangkan cookie HttpOnly lewat Sanctum sesi, atau token berumur pendek.</div></details><details><summary>3. Mengapa harga tidak boleh dikirim dari klien saat membuat pesanan?</summary><div>Klien dapat dimanipulasi; kirim hanya ID produk dan jumlah, dan hitung harga di server.</div></details><details><summary>4. Mengapa API versi lama tetap dipertahankan untuk aplikasi seluler?</summary><div>Pengguna tidak langsung memperbarui aplikasi; merusak versi lama membuat aplikasi mereka berhenti bekerja.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Satu backend Laravel melayani banyak klien lewat kontrak JSON yang konsisten.</li><li>Autentikasi: cookie Sanctum untuk SPA satu domain, token Bearer untuk seluler dan pihak ketiga.</li><li>CORS = aturan browser; bukan pengganti autentikasi dan otorisasi di server.</li><li>Format galat seragam, header Accept JSON, paginasi, versi API, dokumentasi OpenAPI.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana dengan Inertia.js?</summary><div>Inertia memungkinkan memakai React/Vue sebagai tampilan Laravel tanpa membangun API terpisah: routing dan controller tetap di Laravel. Cocok bila hanya ada satu klien web.</div></details>
+<details class="faq"><summary>Bagaimana push notification untuk Flutter?</summary><div>Gunakan Firebase Cloud Messaging; simpan token perangkat di backend dan kirim dari antrean Laravel lewat paket FCM.</div></details>
+<details class="faq"><summary>Bagaimana pengujian lintas tim?</summary><div>Gunakan kontrak OpenAPI dan server tiruan, serta tes kontrak sehingga perubahan backend yang merusak terdeteksi sebelum merugikan klien.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/sanctum" rel="noopener" target="_blank">Laravel: Sanctum (SPA Authentication dan API Tokens)</a></li><li><a href="https://developer.mozilla.org/docs/Web/HTTP/CORS" rel="noopener" target="_blank">MDN: Cross-Origin Resource Sharing (CORS)</a></li><li><a href="https://laravel.com/docs/routing#cors" rel="noopener" target="_blank">Laravel: Routing (CORS)</a></li><li><a href="https://spec.openapis.org/oas/latest.html" rel="noopener" target="_blank">OpenAPI Specification</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/"><img src="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>REST API Laravel: Resource Controller, API Resource, Paginasi</span></a><a href="/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/"><img src="/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Autentikasi Laravel: Session vs Token, Sanctum, dan Hash</span></a><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

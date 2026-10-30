@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi</title>
+<meta name="description" content="Deploy Laravel ke VPS: Nginx, PHP-FPM, izin berkas, .env produksi, migrasi, HTTPS Certbot, worker antrean, dan alur rilis yang aman.">
+<meta name="keywords" content="deploy Laravel, VPS, Nginx, PHP-FPM, produksi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/">
+<meta property="og:title" content="Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi">
+<meta property="og:description" content="Deploy Laravel ke VPS: Nginx, PHP-FPM, izin berkas, .env produksi, migrasi, HTTPS Certbot, worker antrean, dan alur rilis yang aman.">
+<meta property="og:image" content="https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi">
+<meta name="twitter:description" content="Deploy Laravel ke VPS: Nginx, PHP-FPM, izin berkas, .env produksi, migrasi, HTTPS Certbot, worker antrean, dan alur rilis yang aman.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi","description":"Deploy Laravel ke VPS: Nginx, PHP-FPM, izin berkas, .env produksi, migrasi, HTTPS Certbot, worker antrean, dan alur rilis yang aman.","image":["https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"deploy Laravel, VPS, Nginx, PHP-FPM, produksi","articleSection":"Laravel & Backend","wordCount":426,"mainEntityOfPage":"https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi","item":"https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah wajib memakai Docker?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Docker membantu konsistensi lingkungan, tetapi VPS tradisional tetap sah untuk banyak aplikasi."}},{"@type":"Question","name":"Bagaimana CI/CD sederhana?","acceptedAnswer":{"@type":"Answer","text":"GitHub Actions menjalankan tes lalu masuk SSH ke server untuk menjalankan skrip rilis, atau memakai Deployer/Envoyer."}},{"@type":"Question","name":"Bagaimana dengan Laravel di shared hosting?","acceptedAnswer":{"@type":"Answer","text":"Bisa dengan menaruh isi public/ di public_html dan sisanya di atas akar dokumen, tetapi batasan SSH, versi PHP, dan antrean membuatnya kurang ideal untuk aplikasi serius."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#pilihan-hosting">Pilihan hosting</a></li><li><a href="#langkah-1-siapkan-server-ubuntu-lts">Langkah 1: siapkan server (Ubuntu LTS)</a></li><li><a href="#langkah-2-ambil-kode-dan-siapkan-aplikasi">Langkah 2: ambil kode dan siapkan aplikasi</a></li><li><a href="#langkah-3-nginx">Langkah 3: Nginx</a></li><li><a href="#langkah-4-https">Langkah 4: HTTPS</a></li><li><a href="#langkah-5-worker-scheduler-dan-supervisor">Langkah 5: worker, scheduler, dan Supervisor</a></li><li><a href="#alur-rilis-yang-dapat-diulang">Alur rilis yang dapat diulang</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi</h1>
+<p class="lead">Aplikasi yang berjalan baik di laptop belum tentu selamat di internet. Deploy adalah titik temu antara kode, server, dan keamanan, dan di sanalah banyak proyek tersandung: halaman putih, galat izin, atau lebih buruk, .env yang terbuka. Panduan ini membawa Anda melalui deploy yang benar ke VPS Ubuntu dengan Nginx dan PHP-FPM, plus alur rilis yang dapat diulang.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, command line Linux, Git</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Deploy Laravel ke VPS: Nginx, PHP-FPM, dan Produksi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyiapkan server: PHP, Nginx, basis data, dan pengguna khusus</li><li>mengonfigurasi Nginx yang mengarah ke public/ dengan aman</li><li>mengatur izin berkas dan .env produksi</li><li>menjalankan migrasi, optimasi, worker antrean, dan scheduler</li><li>memasang HTTPS dan menyusun alur rilis yang dapat diulang</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<div class="callout warn"><b>Hati-hati</b><p>Perintah di bawah memodifikasi server nyata. Cobalah dulu di VPS percobaan atau mesin virtual, jangan di server produksi yang sedang dipakai. Nama domain, jalur, dan versi PHP adalah contoh; sesuaikan dengan lingkungan Anda.</p></div>
+<h2 id="pilihan-hosting">Pilihan hosting</h2>
+<table><thead><tr><th>Pilihan</th><th>Kendali</th><th>Upaya</th><th>Cocok untuk</th></tr></thead><tbody><tr><td>Shared hosting (cPanel)</td><td>Rendah</td><td>Rendah</td><td>Proyek kecil; sering terkendala akses SSH, antrean, versi PHP</td></tr><tr><td>VPS (DigitalOcean, Vultr, Hetzner, IDCloudHost, Biznet Gio, dll.)</td><td>Tinggi</td><td>Sedang</td><td>Kebanyakan aplikasi Laravel; Anda mengelola server</td></tr><tr><td>Platform terkelola (Laravel Forge/Cloud, Ploi)</td><td>Tinggi</td><td>Rendah</td><td>Tim yang ingin fokus ke aplikasi; biaya langganan</td></tr><tr><td>Kontainer (Docker, Kubernetes)</td><td>Sangat tinggi</td><td>Tinggi</td><td>Skala besar dan tim dengan DevOps</td></tr></tbody></table>
+<h2 id="langkah-1-siapkan-server-ubuntu-lts">Langkah 1: siapkan server (Ubuntu LTS)</h2>
+<figure class="codebox"><pre data-lang="bash"><code># Masuk sebagai root pertama kali, lalu buat pengguna biasa dan kunci SSH
+adduser deploy &amp;&amp; usermod -aG sudo deploy
+
+# Firewall: hanya SSH, HTTP, HTTPS
+ufw allow OpenSSH &amp;&amp; ufw allow &quot;Nginx Full&quot; &amp;&amp; ufw enable
+
+# Paket yang dibutuhkan (versi PHP sesuai kebutuhan Laravel Anda, mis. 8.3)
+apt update &amp;&amp; apt install -y nginx git unzip \
+  php8.3-fpm php8.3-cli php8.3-mysql php8.3-mbstring php8.3-xml php8.3-curl php8.3-zip php8.3-bcmath php8.3-intl \
+  mysql-server redis-server supervisor
+
+# Composer
+curl -sS https://getcomposer.org/installer | php &amp;&amp; mv composer.phar /usr/local/bin/composer</code></pre><figcaption>Nonaktifkan login SSH dengan kata sandi dan root setelah kunci SSH berfungsi. Perbarui server secara berkala.</figcaption></figure>
+<h2 id="langkah-2-ambil-kode-dan-siapkan-aplikasi">Langkah 2: ambil kode dan siapkan aplikasi</h2>
+<figure class="codebox"><pre data-lang="bash"><code>cd /var/www
+sudo mkdir toko &amp;&amp; sudo chown deploy:deploy toko
+git clone git@github.com:akun/toko.git toko &amp;&amp; cd toko
+
+composer install --no-dev --optimize-autoloader
+cp .env.example .env &amp;&amp; nano .env        # isi nilai produksi (lihat di bawah)
+php artisan key:generate
+php artisan migrate --force             # --force wajib di produksi
+php artisan storage:link
+php artisan optimize                    # cache config, route, view, event
+
+# Izin: web server hanya perlu menulis ke storage dan bootstrap/cache
+sudo chown -R deploy:www-data storage bootstrap/cache
+sudo chmod -R ug+rwX storage bootstrap/cache</code></pre></figure>
+<figure class="codebox"><pre data-lang="bash"><code># .env produksi (contoh)
+APP_NAME=&quot;Toko&quot;
+APP_ENV=production
+APP_DEBUG=false                       # WAJIB false
+APP_URL=https://toko.contoh.id
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=toko
+DB_USERNAME=toko_app                  # akun khusus dengan hak terbatas, bukan root
+DB_PASSWORD=kata-sandi-acak-yang-panjang
+
+CACHE_STORE=redis
+SESSION_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_SECURE_COOKIE=true
+LOG_LEVEL=warning</code></pre></figure>
+<h2 id="langkah-3-nginx">Langkah 3: Nginx</h2>
+<figure class="codebox"><pre data-lang="text"><code>server {
+    listen 80;
+    server_name toko.contoh.id;
+    root /var/www/toko/public;          # PENTING: public/, bukan akar proyek
+
+    add_header X-Content-Type-Options &quot;nosniff&quot;;
+    add_header X-Frame-Options &quot;SAMEORIGIN&quot;;
+    add_header Referrer-Policy &quot;strict-origin-when-cross-origin&quot;;
+
+    index index.php;
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;   # semua rute dilayani Laravel
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {      # blokir berkas tersembunyi (.env, .git)
+        deny all;
+    }
+
+    client_max_body_size 10M;             # batas unggahan
+}
+
+# Aktifkan:
+# sudo ln -s /etc/nginx/sites-available/toko /etc/nginx/sites-enabled/
+# sudo nginx -t &amp;&amp; sudo systemctl reload nginx</code></pre><figcaption>Blok location untuk berkas tersembunyi adalah jaring pengaman tambahan; pertahanan utamanya tetap root yang mengarah ke public/.</figcaption></figure>
+<h2 id="langkah-4-https">Langkah 4: HTTPS</h2>
+<figure class="codebox"><pre data-lang="bash"><code>sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d toko.contoh.id          # sertifikat gratis Let's Encrypt + pembaruan otomatis
+sudo systemctl status certbot.timer             # pastikan pembaruan terjadwal aktif</code></pre></figure>
+<h2 id="langkah-5-worker-scheduler-dan-supervisor">Langkah 5: worker, scheduler, dan Supervisor</h2>
+<figure class="codebox"><pre data-lang="text"><code># /etc/supervisor/conf.d/toko-worker.conf
+[program:toko-worker]
+command=php /var/www/toko/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+user=deploy
+autostart=true
+autorestart=true
+numprocs=2
+process_name=%(program_name)s_%(process_num)02d
+redirect_stderr=true
+stdout_logfile=/var/log/toko-worker.log
+stopwaitsecs=3600
+
+# sudo supervisorctl reread &amp;&amp; sudo supervisorctl update &amp;&amp; sudo supervisorctl start &quot;toko-worker:*&quot;
+
+# crontab -u deploy -e  : scheduler Laravel
+* * * * * cd /var/www/toko &amp;&amp; php artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</code></pre></figure>
+<h2 id="alur-rilis-yang-dapat-diulang">Alur rilis yang dapat diulang</h2>
+<p>Menyalin berkas secara manual atau mengedit di server rawan salah. Tulis langkah rilis sebagai skrip agar setiap rilis identik dan dapat ditinjau.</p>
+<figure class="codebox"><pre data-lang="bash"><code>#!/usr/bin/env bash
+set -euo pipefail
+cd /var/www/toko
+
+php artisan down --retry=60              # mode pemeliharaan sebentar
+git pull --ff-only origin main
+composer install --no-dev --optimize-autoloader --no-interaction
+npm ci &amp;&amp; npm run build                  # bila ada aset front-end (atau bangun di CI dan unggah hasilnya)
+php artisan migrate --force
+php artisan optimize
+php artisan queue:restart                # worker memuat kode baru
+sudo systemctl reload php8.3-fpm         # menyegarkan OPcache
+php artisan up
+echo &quot;Rilis selesai: $(git rev-parse --short HEAD)&quot;</code></pre><figcaption>Untuk nol downtime, gunakan strategi rilis berdampingan (folder releases + symlink "current", seperti Envoyer, Deployer, atau GitHub Actions + rsync) sehingga versi baru disiapkan penuh lalu dialihkan seketika.</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Gagasan rilis atomik: siapkan folder rilis baru, lalu pindahkan tautan &quot;current&quot; dalam satu langkah
+const rilis = ['2026-10-28_a1b2c3', '2026-10-29_d4e5f6'];
+let current = rilis[1];
+console.log('current -&gt;', current);
+
+const baru = '2026-10-30_0789ab';
+rilis.push(baru);                                     // 1. unggah &amp; bangun di folder baru (pengguna tetap memakai versi lama)
+console.log('menyiapkan', baru, '... current tetap -&gt;', current);
+const sebelumnya = current;
+current = baru;                                       // 2. satu operasi atomik: ln -sfn releases/baru current
+console.log('beralih   : current -&gt;', current);
+
+const sehat = false;                                  // 3. bila pemeriksaan kesehatan gagal, kembali dalam sekejap
+if (!sehat) { current = sebelumnya; console.log('rollback  : current -&gt;', current); }
+console.log('simpan hanya beberapa rilis terakhir:', rilis.slice(-3));</code></pre><pre class="runout" data-lang="keluaran"><code>current -&gt; 2026-10-29_d4e5f6
+menyiapkan 2026-10-30_0789ab ... current tetap -&gt; 2026-10-29_d4e5f6
+beralih   : current -&gt; 2026-10-30_0789ab
+rollback  : current -&gt; 2026-10-29_d4e5f6
+simpan hanya beberapa rilis terakhir: [ '2026-10-28_a1b2c3', '2026-10-29_d4e5f6', '2026-10-30_0789ab' ]</code></pre><figcaption>Rollback menjadi ganti tautan, bukan pemulihan darurat. Migrasi basis data tetap perlu dirancang kompatibel mundur (tambah kolom dulu, hapus belakangan).</figcaption></figure>
+<div data-w="checklist"><script type="application/json">{"title":"Daftar periksa deploy","items":["Root Nginx mengarah ke public/; berkas .env dan .git tidak dapat diakses publik (uji lewat browser).","APP_DEBUG=false, APP_ENV=production, APP_KEY terisi, kata sandi basis data kuat dan akun terbatas.","HTTPS aktif dengan pembaruan otomatis; cookie sesi Secure.","Izin: hanya storage dan bootstrap/cache yang dapat ditulis; berkas lain tidak dimiliki www-data.","Migrasi dijalankan dengan --force; cadangan basis data otomatis dan pemulihan diuji.","Worker dijaga Supervisor; scheduler ada di cron; queue:restart pada setiap rilis.","Log dipantau dan diputar (logrotate); pelaporan galat (Sentry) aktif.","Firewall aktif, SSH dengan kunci, pembaruan keamanan otomatis, dan pemantauan ketersediaan."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Akar dokumen Nginx untuk Laravel harus...","options":["Folder public/","Akar proyek","/var/www"],"answer":0,"why":"Menjaga .env dan kode tidak terbuka."},{"q":"Perintah migrasi di produksi memerlukan flag...","options":["--force","--seed","--debug"],"answer":0,"why":"Laravel meminta konfirmasi di produksi."},{"q":"Mengapa php artisan queue:restart dijalankan setelah rilis?","options":["Worker menyimpan kode lama di memori","Menghapus antrean","Mempercepat PHP"],"answer":0,"why":"Worker perlu dimuat ulang untuk memakai kode baru."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Halaman menampilkan 500 dan log menyebut "Permission denied" pada storage/logs. Apa penyebab dan perbaikannya?</summary><div>Pengguna PHP-FPM tidak dapat menulis ke storage; atur kepemilikan/izin (chown deploy:www-data, chmod ug+rwX) pada storage dan bootstrap/cache.</div></details><details><summary>2. Mengapa APP_DEBUG=true di produksi berbahaya?</summary><div>Halaman galat menampilkan kode, variabel lingkungan, dan jalur sehingga membantu penyerang.</div></details><details><summary>3. Apa keuntungan rilis berdampingan dengan symlink?</summary><div>Versi baru disiapkan lengkap dulu lalu dialihkan atomik; rollback cukup mengembalikan tautan.</div></details><details><summary>4. Bagaimana memastikan .env tidak dapat diunduh?</summary><div>Root web ke public/, blokir dotfile di Nginx, dan uji dengan membuka /.env dari luar (harus 403/404).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>VPS + Nginx + PHP-FPM memberi kendali penuh; amankan dengan pengguna khusus, firewall, dan kunci SSH.</li><li>Root web ke public/, .env produksi dengan APP_DEBUG=false, izin minimal, HTTPS via Certbot.</li><li>Migrasi --force, php artisan optimize, Supervisor untuk worker, cron untuk scheduler.</li><li>Skrip rilis yang dapat diulang atau rilis atomik membuat deploy aman dan dapat di-rollback.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah wajib memakai Docker?</summary><div>Tidak. Docker membantu konsistensi lingkungan, tetapi VPS tradisional tetap sah untuk banyak aplikasi.</div></details>
+<details class="faq"><summary>Bagaimana CI/CD sederhana?</summary><div>GitHub Actions menjalankan tes lalu masuk SSH ke server untuk menjalankan skrip rilis, atau memakai Deployer/Envoyer.</div></details>
+<details class="faq"><summary>Bagaimana dengan Laravel di shared hosting?</summary><div>Bisa dengan menaruh isi public/ di public_html dan sisanya di atas akar dokumen, tetapi batasan SSH, versi PHP, dan antrean membuatnya kurang ideal untuk aplikasi serius.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/deployment" rel="noopener" target="_blank">Laravel: Deployment</a></li><li><a href="https://nginx.org/en/docs/beginners_guide.html" rel="noopener" target="_blank">Nginx: Beginner's Guide</a></li><li><a href="https://certbot.eff.org/" rel="noopener" target="_blank">Let's Encrypt / Certbot</a></li><li><a href="https://supervisord.org/" rel="noopener" target="_blank">Supervisor Documentation</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

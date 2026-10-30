@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic</title>
+<meta name="description" content="Pelajari relasi Eloquent: hasMany, belongsToMany dengan pivot, hasManyThrough, dan polymorphic, lengkap dengan skema SQL dan peragaan join.">
+<meta name="keywords" content="relasi Eloquent, many-to-many, polymorphic, pivot, hasManyThrough">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/">
+<meta property="og:title" content="Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic">
+<meta property="og:description" content="Pelajari relasi Eloquent: hasMany, belongsToMany dengan pivot, hasManyThrough, dan polymorphic, lengkap dengan skema SQL dan peragaan join.">
+<meta property="og:image" content="https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic">
+<meta name="twitter:description" content="Pelajari relasi Eloquent: hasMany, belongsToMany dengan pivot, hasManyThrough, dan polymorphic, lengkap dengan skema SQL dan peragaan join.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic","description":"Pelajari relasi Eloquent: hasMany, belongsToMany dengan pivot, hasManyThrough, dan polymorphic, lengkap dengan skema SQL dan peragaan join.","image":["https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"relasi Eloquent, many-to-many, polymorphic, pivot, hasManyThrough","articleSection":"Laravel & Backend","wordCount":368,"mainEntityOfPage":"https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic","item":"https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa nama tabel pivot harus berurut abjad?","acceptedAnswer":{"@type":"Answer","text":"Itu konvensi Laravel (produk_tag); Anda bebas memakai nama lain bila menyebutkannya sebagai argumen kedua belongsToMany."}},{"@type":"Question","name":"Bagaimana menyimpan atribut tambahan pada pivot?","acceptedAnswer":{"@type":"Answer","text":"Tambah kolom di pivot, gunakan withPivot(\"kolom\") di relasi, dan pakai $model->pivot->kolom; atau buat model pivot kustom dengan using()."}},{"@type":"Question","name":"Kapan membuat model untuk pivot?","acceptedAnswer":{"@type":"Answer","text":"Bila pivot punya logika atau relasi sendiri (misalnya ItemPesanan dengan harga dan jumlah); itu sering menunjukkan bahwa pivot sebenarnya entitas tersendiri."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#peta-relasi">Peta relasi</a></li><li><a href="#satu-ke-banyak-dan-satu-ke-satu">Satu-ke-banyak dan satu-ke-satu</a></li><li><a href="#banyak-ke-banyak-dengan-tabel-pivot">Banyak-ke-banyak dengan tabel pivot</a></li><li><a href="#has-many-through-dan-polimorfik">Has-many-through dan polimorfik</a></li><li><a href="#menjaga-performa-relasi">Menjaga performa relasi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic</h1>
+<p class="lead">Data di dunia nyata saling terhubung: pengguna punya pesanan, pesanan punya banyak produk, produk punya banyak tag, komentar bisa milik artikel atau video. Eloquent memetakan hubungan itu menjadi method yang terbaca seperti kalimat. Namun di balik setiap method ada skema tabel dan SQL tertentu; memahaminya membuat Anda merancang basis data dengan benar sejak awal.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> Eloquent dasar, SQL JOIN</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Relasi Eloquent: One-to-Many, Many-to-Many, Polymorphic" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memilih jenis relasi yang tepat dari deskripsi kebutuhan</li><li>merancang skema (kunci asing dan tabel pivot) untuk setiap relasi</li><li>menulis method relasi dan memakainya (termasuk attach/sync pada pivot)</li><li>memahami hasManyThrough dan relasi polimorfik</li><li>menjaga performa dengan eager loading dan withCount</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="peta-relasi">Peta relasi</h2>
+<table><thead><tr><th>Hubungan</th><th>Skema</th><th>Method</th><th>Contoh</th></tr></thead><tbody><tr><td>Satu-ke-satu</td><td>profil.user_id (unik)</td><td>hasOne / belongsTo</td><td>User ↔ Profil</td></tr><tr><td>Satu-ke-banyak</td><td>pesanan.user_id</td><td>hasMany / belongsTo</td><td>User → banyak Pesanan</td></tr><tr><td>Banyak-ke-banyak</td><td>tabel pivot dengan dua kunci asing</td><td>belongsToMany</td><td>Produk ↔ Tag</td></tr><tr><td>Has-many-through</td><td>melalui tabel perantara</td><td>hasManyThrough</td><td>Negara → Pengguna → Pesanan</td></tr><tr><td>Polimorfik</td><td>commentable_id + commentable_type</td><td>morphMany / morphTo</td><td>Komentar → Artikel atau Video</td></tr></tbody></table>
+<h2 id="satu-ke-banyak-dan-satu-ke-satu">Satu-ke-banyak dan satu-ke-satu</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+class User extends Model
+{
+    public function pesanan(): HasMany   { return $this-&gt;hasMany(Pesanan::class); }
+    public function profil(): HasOne     { return $this-&gt;hasOne(Profil::class); }
+}
+class Pesanan extends Model
+{
+    public function user(): BelongsTo    { return $this-&gt;belongsTo(User::class); }
+}
+
+$user-&gt;pesanan;                              // koleksi Pesanan (properti: menjalankan query sekali, lalu di-cache pada objek)
+$user-&gt;pesanan()-&gt;where('status', 'baru')-&gt;get();    // method: kembalikan builder untuk query lanjutan
+$user-&gt;pesanan()-&gt;create(['total' =&gt; 50000]);        // kunci asing diisi otomatis
+User::has('pesanan', '&gt;=', 3)-&gt;get();                // pengguna dengan minimal 3 pesanan
+User::whereDoesntHave('pesanan')-&gt;get();             // pengguna yang belum pernah memesan</code></pre></figure>
+<h2 id="banyak-ke-banyak-dengan-tabel-pivot">Banyak-ke-banyak dengan tabel pivot</h2>
+<p>Satu produk bisa memiliki banyak tag, dan satu tag dipakai banyak produk. Relasi ini tidak bisa dinyatakan dengan satu kunci asing; dibutuhkan tabel perantara (pivot) yang menyimpan pasangan.</p>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// migrasi pivot: konvensi nama = dua nama tabel tunggal berurut abjad: produk_tag
+Schema::create('produk_tag', function (Blueprint $table) {
+    $table-&gt;foreignId('produk_id')-&gt;constrained('produk')-&gt;cascadeOnDelete();
+    $table-&gt;foreignId('tag_id')-&gt;constrained('tag')-&gt;cascadeOnDelete();
+    $table-&gt;primary(['produk_id', 'tag_id']);              // mencegah pasangan ganda
+    $table-&gt;timestamps();                                  // bila pakai -&gt;withTimestamps()
+});
+
+class Produk extends Model
+{
+    public function tag(): BelongsToMany
+    {
+        return $this-&gt;belongsToMany(Tag::class, 'produk_tag')-&gt;withTimestamps();
+    }
+}
+class Tag extends Model
+{
+    public function produk(): BelongsToMany { return $this-&gt;belongsToMany(Produk::class, 'produk_tag'); }
+}
+
+$produk-&gt;tag()-&gt;attach([1, 2]);                // tambah pasangan
+$produk-&gt;tag()-&gt;detach(2);                     // lepas
+$produk-&gt;tag()-&gt;sync([1, 3, 4]);               // jadikan PERSIS sama dengan daftar ini (tambah/hapus seperlunya)
+$produk-&gt;tag()-&gt;toggle([3, 5]);                // balik: ada -&gt; lepas, tidak ada -&gt; tambah
+Produk::whereHas('tag', fn ($q) =&gt; $q-&gt;where('nama', 'organik'))-&gt;get();</code></pre><figcaption>sync() sangat berguna untuk form kotak centang: kirim daftar ID terpilih dan Laravel menghitung selisihnya.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE produk (id INTEGER PRIMARY KEY, nama TEXT);
+CREATE TABLE tag (id INTEGER PRIMARY KEY, nama TEXT);
+CREATE TABLE produk_tag (produk_id INT, tag_id INT, PRIMARY KEY (produk_id, tag_id));
+INSERT INTO produk VALUES (1,'Kopi Gayo'),(2,'Teh Hijau'),(3,'Gula Aren');
+INSERT INTO tag VALUES (1,'organik'),(2,'lokal'),(3,'diskon');
+INSERT INTO produk_tag VALUES (1,1),(1,2),(2,1),(3,2),(3,3);
+&quot;&quot;&quot;)
+q = lambda s, a=(): db.execute(s, a).fetchall()
+
+# $produk-&gt;tag  (belongsToMany): JOIN lewat pivot
+print(&quot;tag milik Kopi Gayo:&quot;, q(&quot;SELECT t.nama FROM tag t JOIN produk_tag pt ON pt.tag_id = t.id WHERE pt.produk_id = 1&quot;))
+# Produk::whereHas('tag', nama = 'organik')
+print(&quot;produk bertag organik:&quot;, q(&quot;SELECT p.nama FROM produk p WHERE EXISTS (SELECT 1 FROM produk_tag pt JOIN tag t ON t.id = pt.tag_id WHERE pt.produk_id = p.id AND t.nama = 'organik')&quot;))
+# withCount('tag')
+print(&quot;jumlah tag per produk:&quot;, q(&quot;SELECT p.nama, (SELECT COUNT(*) FROM produk_tag pt WHERE pt.produk_id = p.id) FROM produk p&quot;))
+
+# sync([1,3]) untuk produk 1: hitung selisih
+ada = {r[0] for r in q(&quot;SELECT tag_id FROM produk_tag WHERE produk_id = 1&quot;)}
+target = {1, 3}
+print(&quot;sync -&gt; hapus:&quot;, sorted(ada - target), &quot;tambah:&quot;, sorted(target - ada))
+
+# kunci primer gabungan mencegah ganda
+try: db.execute(&quot;INSERT INTO produk_tag VALUES (1,1)&quot;)
+except sqlite3.IntegrityError as e: print(&quot;pasangan ganda ditolak:&quot;, e)</code></pre><pre class="runout" data-lang="keluaran"><code>tag milik Kopi Gayo: [('organik',), ('lokal',)]
+produk bertag organik: [('Kopi Gayo',), ('Teh Hijau',)]
+jumlah tag per produk: [('Kopi Gayo', 2), ('Teh Hijau', 1), ('Gula Aren', 2)]
+sync -&gt; hapus: [2] tambah: [3]
+pasangan ganda ditolak: UNIQUE constraint failed: produk_tag.produk_id, produk_tag.tag_id</code></pre><figcaption>Setiap method relasi Eloquent adalah JOIN atau subquery yang sudah Anda kenal. Memahami SQL-nya membantu merancang indeks dan mendeteksi query yang tidak efisien.</figcaption></figure>
+<h2 id="has-many-through-dan-polimorfik">Has-many-through dan polimorfik</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// Negara -&gt; Pengguna -&gt; Pesanan : ambil semua pesanan sebuah negara tanpa join manual
+class Negara extends Model
+{
+    public function pesanan(): HasManyThrough
+    {
+        return $this-&gt;hasManyThrough(Pesanan::class, User::class);   // melalui users.negara_id dan pesanan.user_id
+    }
+}
+
+// Polimorfik: Komentar dapat milik Artikel atau Video
+// migrasi: $table-&gt;morphs('commentable');   -&gt; commentable_id, commentable_type (+ indeks)
+class Komentar extends Model
+{
+    public function commentable(): MorphTo { return $this-&gt;morphTo(); }
+}
+class Artikel extends Model
+{
+    public function komentar(): MorphMany { return $this-&gt;morphMany(Komentar::class, 'commentable'); }
+}
+class Video extends Model
+{
+    public function komentar(): MorphMany { return $this-&gt;morphMany(Komentar::class, 'commentable'); }
+}
+
+$artikel-&gt;komentar()-&gt;create(['isi' =&gt; 'Bagus!']);
+$komentar-&gt;commentable;      // Artikel atau Video, sesuai commentable_type
+
+// Disarankan: pemetaan alias agar kolom tipe tidak berisi nama kelas PHP lengkap
+// Relation::enforceMorphMap(['artikel' =&gt; Artikel::class, 'video' =&gt; Video::class]);</code></pre><figcaption>Polimorfik menghemat tabel tetapi tidak dapat memakai kunci asing sungguhan di basis data (karena tabel tujuan bervariasi); integritas dijaga oleh aplikasi. Bila hanya dua atau tiga tipe, tabel terpisah kadang lebih sederhana.</figcaption></figure>
+<h2 id="menjaga-performa-relasi">Menjaga performa relasi</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// N+1 pada relasi bersarang
+$pesanan = Pesanan::with(['user', 'item.produk'])-&gt;latest()-&gt;paginate(20);   // 4 query, berapa pun jumlah baris
+
+// Hanya hitungan atau agregat, tanpa memuat relasi
+$kategori = Kategori::withCount('produk')-&gt;withSum('produk', 'stok')-&gt;get();
+
+// Muat relasi hanya bila diperlukan, setelah koleksi ada
+$pesanan-&gt;load('user');                          // lazy eager loading
+$produk-&gt;loadMissing('tag');
+
+// Batasi kolom pada relasi: 'user:id,nama' (sertakan kunci yang diperlukan)
+Pesanan::with('user:id,nama')-&gt;get();
+
+// Mencegah N+1 secara otomatis di non-produksi:
+// Model::preventLazyLoading(! app()-&gt;isProduction());</code></pre></figure>
+<div data-w="choose"><script type="application/json">{"title":"Relasi apa yang tepat?","questions":[{"q":"Satu pengguna memiliki banyak alamat; setiap alamat hanya milik satu pengguna.","options":[{"t":"hasMany / belongsTo","add":{"a":3}},{"t":"belongsToMany","add":{"b":3}},{"t":"morphMany","add":{"c":3}}]},{"q":"Satu siswa mengikuti banyak kelas; satu kelas diikuti banyak siswa.","options":[{"t":"hasMany / belongsTo","add":{"a":3}},{"t":"belongsToMany (pivot)","add":{"b":3}},{"t":"morphMany","add":{"c":3}}]},{"q":"Komentar bisa ditulis pada artikel, produk, atau video.","options":[{"t":"hasMany / belongsTo","add":{"a":3}},{"t":"belongsToMany","add":{"b":3}},{"t":"morphTo / morphMany","add":{"c":3}}]}],"results":{"a":{"title":"Condong ke satu-ke-banyak","text":"Jawaban Anda banyak memilih hasMany/belongsTo. Pastikan banyak-ke-banyak memakai pivot, bukan kunci asing tunggal."},"b":{"title":"Condong ke banyak-ke-banyak","text":"Anda sudah terbiasa dengan pivot. Periksa lagi kapan cukup satu-ke-banyak, dan kapan polimorfik lebih ringkas."},"c":{"title":"Condong ke polimorfik","text":"Jawaban Anda banyak memilih relasi polimorfik. Ingat bahwa kasus dua tipe sering lebih sederhana dengan dua tabel terpisah."}}}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Banyak-ke-banyak memerlukan...","options":["Tabel pivot","Satu kunci asing","Kolom JSON"],"answer":0,"why":"Menyimpan pasangan kedua ID."},{"q":"sync([1,3]) pada pivot akan...","options":["Membuat pivot persis berisi 1 dan 3","Menambah 1 dan 3 saja","Menghapus semuanya"],"answer":0,"why":"Menambah dan melepas seperlunya."},{"q":"Kekurangan relasi polimorfik?","options":["Tidak bisa memakai kunci asing basis data sungguhan","Terlalu lambat","Tidak didukung"],"answer":0,"why":"Integritas dijaga aplikasi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Rancang skema untuk "dokter melayani banyak pasien dan pasien dilayani banyak dokter" dengan tanggal kunjungan.</summary><div>Tabel pivot kunjungan (dokter_id, pasien_id, tanggal) dengan belongsToMany dan withPivot("tanggal").</div></details><details><summary>2. Tulis query: produk yang memiliki tag "diskon" dan tag "lokal" sekaligus.</summary><div>whereHas("tag", ...) dua kali berantai, atau whereHas dengan whereIn dan having count; contoh: Produk::whereHas("tag", fn($q)=>$q->where("nama","diskon"))->whereHas("tag", fn($q)=>$q->where("nama","lokal"))</div></details><details><summary>3. Mengapa pivot diberi kunci primer gabungan?</summary><div>Mencegah pasangan yang sama tercatat dua kali dan mempercepat pencarian.</div></details><details><summary>4. Bagaimana menghitung jumlah pesanan setiap pengguna tanpa N+1?</summary><div>User::withCount("pesanan")->get() dan baca $user->pesanan_count.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Pilih relasi dari bentuk datanya: 1-1, 1-N, M-N (pivot), through, polimorfik.</li><li>Setiap relasi punya skema kunci asing yang jelas; pivot butuh dua kunci asing dan kunci primer gabungan.</li><li>attach, detach, sync, toggle mengelola pivot; whereHas dan withCount untuk query relasi.</li><li>Eager loading (with) dan preventLazyLoading menjaga performa.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa nama tabel pivot harus berurut abjad?</summary><div>Itu konvensi Laravel (produk_tag); Anda bebas memakai nama lain bila menyebutkannya sebagai argumen kedua belongsToMany.</div></details>
+<details class="faq"><summary>Bagaimana menyimpan atribut tambahan pada pivot?</summary><div>Tambah kolom di pivot, gunakan withPivot("kolom") di relasi, dan pakai $model->pivot->kolom; atau buat model pivot kustom dengan using().</div></details>
+<details class="faq"><summary>Kapan membuat model untuk pivot?</summary><div>Bila pivot punya logika atau relasi sendiri (misalnya ItemPesanan dengan harga dan jumlah); itu sering menunjukkan bahwa pivot sebenarnya entitas tersendiri.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/eloquent-relationships" rel="noopener" target="_blank">Laravel: Eloquent Relationships</a></li><li><a href="https://laravel.com/docs/eloquent-relationships#polymorphic-relationships" rel="noopener" target="_blank">Laravel: Polymorphic Relationships</a></li><li><a href="https://www.sqlite.org/lang.html" rel="noopener" target="_blank">SQLite: Query Language</a></li><li><a href="https://use-the-index-luke.com/sql/join" rel="noopener" target="_blank">Use The Index, Luke: Joins</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
