@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fetch API JavaScript: Promise, async/await, dan Error</title>
+<meta name="description" content="Pahami fetch API, Promise, dan async/await: status HTTP, penanganan error yang benar, timeout, dan permintaan paralel, dengan contoh yang dijalankan.">
+<meta name="keywords" content="fetch API, async await, Promise, JavaScript, REST API">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/">
+<meta property="og:title" content="Fetch API JavaScript: Promise, async/await, dan Error">
+<meta property="og:description" content="Pahami fetch API, Promise, dan async/await: status HTTP, penanganan error yang benar, timeout, dan permintaan paralel, dengan contoh yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fetch API JavaScript: Promise, async/await, dan Error">
+<meta name="twitter:description" content="Pahami fetch API, Promise, dan async/await: status HTTP, penanganan error yang benar, timeout, dan permintaan paralel, dengan contoh yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fetch API JavaScript: Promise, async/await, dan Error","description":"Pahami fetch API, Promise, dan async/await: status HTTP, penanganan error yang benar, timeout, dan permintaan paralel, dengan contoh yang dijalankan.","image":["https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"fetch API, async await, Promise, JavaScript, REST API","articleSection":"React & Web Modern","wordCount":391,"mainEntityOfPage":"https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Fetch API JavaScript: Promise, async/await, dan Error","item":"https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya fetch dan axios?","acceptedAnswer":{"@type":"Answer","text":"fetch bawaan browser dan Node; axios pustaka tambahan yang otomatis menolak pada status galat, mendukung interceptor, dan pembatalan. Untuk banyak kasus fetch sudah cukup."}},{"@type":"Question","name":"Apa itu CORS dan mengapa fetch gagal di browser?","acceptedAnswer":{"@type":"Answer","text":"Browser memblokir permintaan lintas asal kecuali server mengizinkannya lewat header CORS. Itu pembatasan browser, bukan bug kode Anda."}},{"@type":"Question","name":"Bolehkah memakai await di tingkat atas?","acceptedAnswer":{"@type":"Answer","text":"Ya, di modul ES (type=\"module\" atau .mjs); di skrip biasa bungkus dalam async function."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-asinkron">Mengapa asinkron</a></li><li><a href="#promise-nilai-yang-datang-nanti">Promise: nilai yang datang nanti</a></li><li><a href="#async-await-kode-asinkron-yang-terbaca-seperti-sinkron">async/await: kode asinkron yang terbaca seperti sinkron</a></li><li><a href="#fetch-jebakan-status-http">fetch: jebakan status HTTP</a></li><li><a href="#timeout-dan-pembatalan-dengan-abortcontroller">Timeout dan pembatalan dengan AbortController</a></li><li><a href="#permintaan-paralel">Permintaan paralel</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Fetch API JavaScript: Promise, async/await, dan Error</h1>
+<p class="lead">Hampir semua aplikasi web modern bergantung pada data dari server. Di JavaScript, itu berarti memahami operasi asinkron: pekerjaan yang selesai nanti, sementara program terus berjalan. Promise dan async/await adalah cara menuliskannya agar terbaca, dan fetch adalah pintu menuju API. Kesalahan terbesar pemula: mengira fetch otomatis melempar galat pada status 404.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi JavaScript, JSON dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Fetch API JavaScript: Promise, async/await, dan Error" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan mengapa operasi jaringan bersifat asinkron</li><li>memakai Promise, then/catch, dan async/await</li><li>memanggil fetch, membaca JSON, dan memeriksa response.ok</li><li>menangani galat jaringan, status HTTP, dan JSON rusak</li><li>menjalankan permintaan paralel dan memberi timeout</li></ul></div>
+<h2 id="mengapa-asinkron">Mengapa asinkron</h2>
+<p>JavaScript menjalankan kode Anda pada satu utas. Bila permintaan jaringan menahan program sampai selesai, halaman akan membeku. Karena itu operasi lambat (jaringan, timer, berkas) dimulai lalu dilanjutkan <b>nanti</b>, saat hasilnya siap, melalui event loop.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>console.log('1. mulai');
+setTimeout(() =&gt; console.log('3. dari timer (setelah 0 ms, tetapi tetap NANTI)'), 0);
+Promise.resolve().then(() =&gt; console.log('2b. microtask (Promise) berjalan sebelum timer'));
+console.log('2. selesai kode sinkron');</code></pre><pre class="runout" data-lang="keluaran"><code>1. mulai
+2. selesai kode sinkron
+2b. microtask (Promise) berjalan sebelum timer
+3. dari timer (setelah 0 ms, tetapi tetap NANTI)</code></pre><figcaption>Urutan keluaran: semua kode sinkron dulu, lalu microtask (Promise), baru callback timer. Memahami urutan ini menjelaskan banyak "keanehan" asinkron.</figcaption></figure>
+<h2 id="promise-nilai-yang-datang-nanti">Promise: nilai yang datang nanti</h2>
+<p>Promise memiliki tiga keadaan: <i>pending</i> (menunggu), <i>fulfilled</i> (berhasil dengan nilai), atau <i>rejected</i> (gagal dengan galat).</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const tunggu = (ms, nilai, gagal = false) =&gt;
+    new Promise((ok, tolak) =&gt; setTimeout(() =&gt; (gagal ? tolak(new Error(nilai)) : ok(nilai)), ms));
+
+tunggu(20, 'data pengguna')
+    .then(data =&gt; { console.log('berhasil:', data); return data.toUpperCase(); })
+    .then(besar =&gt; console.log('diubah  :', besar))
+    .catch(galat =&gt; console.log('gagal   :', galat.message))
+    .finally(() =&gt; console.log('selesai (selalu berjalan)'));
+
+tunggu(10, 'server error', true)
+    .then(d =&gt; console.log('tidak sampai sini', d))
+    .catch(g =&gt; console.log('ditangkap:', g.message));</code></pre><pre class="runout" data-lang="keluaran"><code>ditangkap: server error
+berhasil: data pengguna
+diubah  : DATA PENGGUNA
+selesai (selalu berjalan)</code></pre></figure>
+<h2 id="async-await-kode-asinkron-yang-terbaca-seperti-sinkron">async/await: kode asinkron yang terbaca seperti sinkron</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>const tunggu = (ms, nilai, gagal = false) =&gt;
+    new Promise((ok, tolak) =&gt; setTimeout(() =&gt; (gagal ? tolak(new Error(nilai)) : ok(nilai)), ms));
+
+async function ambilProfil(id) {
+    try {
+        const pengguna = await tunggu(15, { id, nama: 'Ani' });      // menunggu tanpa memblokir program lain
+        const pesanan = await tunggu(15, [101, 102]);
+        return { ...pengguna, pesanan };
+    } catch (galat) {
+        console.log('galat tertangkap:', galat.message);
+        throw galat;
+    }
+}
+
+(async () =&gt; {
+    console.log(await ambilProfil(7));
+    try {
+        await tunggu(5, 'koneksi putus', true);
+    } catch (g) { console.log('try/catch bekerja dengan await:', g.message); }
+})();</code></pre><pre class="runout" data-lang="keluaran"><code>{ id: 7, nama: 'Ani', pesanan: [ 101, 102 ] }
+try/catch bekerja dengan await: koneksi putus</code></pre><figcaption>async function selalu mengembalikan Promise. await hanya boleh di dalam async function (atau di tingkat atas modul ES).</figcaption></figure>
+<h2 id="fetch-jebakan-status-http">fetch: jebakan status HTTP</h2>
+<div class="callout warn"><b>Salah kaprah paling umum</b><p>Promise dari <code>fetch</code> <b>hanya ditolak bila jaringan gagal</b> (tidak ada koneksi, DNS gagal). Status 404 atau 500 tetap dianggap "berhasil". Periksa <code>response.ok</code> (true untuk status 200–299) sebelum membaca data.</p></div>
+<figure class="codebox"><pre data-lang="javascript"><code>const http = require('node:http');
+
+// server kecil di komputer ini untuk mendemonstrasikan fetch dengan aman
+const server = http.createServer((req, res) =&gt; {
+    if (req.url === '/ok')       { res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify({ nama: 'Ani', umur: 20 })); }
+    else if (req.url === '/rusak') { res.setHeader('Content-Type', 'application/json'); res.end('{bukan json'); }
+    else if (req.url === '/lambat') { setTimeout(() =&gt; res.end('terlambat'), 500); }
+    else { res.statusCode = 404; res.end('tidak ada'); }
+});
+
+async function ambil(url) {
+    const respons = await fetch(url);
+    if (!respons.ok) throw new Error('HTTP ' + respons.status + ' ' + respons.statusText);   // 4xx/5xx tidak otomatis galat
+    return respons.json();
+}
+
+server.listen(0, async () =&gt; {
+    const dasar = 'http://127.0.0.1:' + server.address().port;
+    for (const jalur of ['/ok', '/tidak-ada', '/rusak']) {
+        try { console.log(jalur.padEnd(11), '-&gt;', JSON.stringify(await ambil(dasar + jalur))); }
+        catch (g) { console.log(jalur.padEnd(11), '-&gt; galat:', g.name + ':', g.message.slice(0, 40)); }
+    }
+    // jaringan gagal total: port tidak ada
+    try { await fetch('http://127.0.0.1:1/'); } catch (g) { console.log('jaringan gagal  -&gt; galat:', g.name); }
+    server.close();
+});</code></pre><pre class="runout" data-lang="keluaran"><code>/ok         -&gt; {&quot;nama&quot;:&quot;Ani&quot;,&quot;umur&quot;:20}
+/tidak-ada  -&gt; galat: Error: HTTP 404 Not Found
+/rusak      -&gt; galat: SyntaxError: Expected property name or '}' in JSON at
+jaringan gagal  -&gt; galat: TypeError</code></pre><figcaption>Tiga jenis kegagalan berbeda: status HTTP (diperiksa dengan response.ok), JSON rusak (galat saat respons.json()), dan jaringan gagal (fetch sendiri ditolak).</figcaption></figure>
+<h2 id="timeout-dan-pembatalan-dengan-abortcontroller">Timeout dan pembatalan dengan AbortController</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>const http = require('node:http');
+const server = http.createServer((req, res) =&gt; setTimeout(() =&gt; res.end('terlambat'), 800));
+
+async function ambilDenganBatas(url, batasMs) {
+    const kontrol = new AbortController();
+    const id = setTimeout(() =&gt; kontrol.abort(), batasMs);
+    try {
+        const r = await fetch(url, { signal: kontrol.signal });
+        return await r.text();
+    } catch (g) {
+        if (g.name === 'AbortError') throw new Error('Permintaan melebihi ' + batasMs + ' ms');
+        throw g;
+    } finally {
+        clearTimeout(id);
+    }
+}
+
+server.listen(0, async () =&gt; {
+    try { console.log(await ambilDenganBatas('http://127.0.0.1:' + server.address().port, 100)); }
+    catch (g) { console.log('galat:', g.message); }
+    server.closeAllConnections?.();
+    server.close();
+});
+
+// Alternatif modern: fetch(url, { signal: AbortSignal.timeout(100) })</code></pre><pre class="runout" data-lang="keluaran"><code>galat: Permintaan melebihi 100 ms</code></pre></figure>
+<h2 id="permintaan-paralel">Permintaan paralel</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>const tunggu = (ms, nilai, gagal = false) =&gt;
+    new Promise((ok, tolak) =&gt; setTimeout(() =&gt; (gagal ? tolak(new Error(nilai)) : ok(nilai)), ms));
+
+(async () =&gt; {
+    // berurutan: total waktu = jumlah
+    let t0 = Date.now();
+    await tunggu(100, 'a'); await tunggu(100, 'b'); await tunggu(100, 'c');
+    console.log('berurutan  :', Math.round((Date.now() - t0) / 100) * 100, 'ms');
+
+    // paralel: total waktu = yang terlama
+    t0 = Date.now();
+    const hasil = await Promise.all([tunggu(100, 'a'), tunggu(100, 'b'), tunggu(100, 'c')]);
+    console.log('paralel    :', Math.round((Date.now() - t0) / 100) * 100, 'ms', hasil);
+
+    // Promise.all gagal bila satu gagal; allSettled melaporkan semuanya
+    const semua = await Promise.allSettled([tunggu(10, 'ok'), tunggu(10, 'gagal', true)]);
+    console.log(semua.map(s =&gt; s.status + ':' + (s.value ?? s.reason.message)));
+})();</code></pre><pre class="runout" data-lang="keluaran"><code>berurutan  : 300 ms
+paralel    : 100 ms [ 'a', 'b', 'c' ]
+[ 'fulfilled:ok', 'rejected:gagal' ]</code></pre><figcaption>Gunakan Promise.all untuk permintaan yang tidak saling bergantung; Promise.allSettled bila ingin hasil sebagian tetap dipakai walau ada yang gagal.</figcaption></figure>
+<div data-w="checklist"><script type="application/json">{"title":"Pemanggilan API yang sehat","items":["Saya memeriksa response.ok (atau status) sebelum membaca isi.","Saya menangani tiga kegagalan: jaringan, status HTTP, dan JSON rusak.","Permintaan yang tidak saling bergantung dijalankan paralel (Promise.all).","Ada timeout atau pembatalan (AbortController) untuk permintaan yang bisa menggantung.","Pengguna melihat status memuat dan pesan galat yang jelas, bukan layar kosong.","Rahasia (kunci API) tidak ditaruh di kode klien."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"fetch menolak Promise bila server membalas 404?","options":["Tidak; periksa response.ok","Ya, selalu","Hanya untuk POST"],"answer":0,"why":"Hanya kegagalan jaringan yang menolak."},{"q":"Urutan: kode sinkron, microtask Promise, lalu...","options":["Callback timer","Kembali ke awal","Tidak ada"],"answer":0,"why":"Event loop memproses antrean tugas sesudah microtask."},{"q":"Untuk tiga permintaan yang independen, gunakan...","options":["Promise.all","await berurutan","setTimeout"],"answer":0,"why":"Waktu total mengikuti yang terlama."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis fungsi ambilJSON(url) yang melempar galat jelas bila status bukan 2xx.</summary><div><code>async function ambilJSON(url) { const r = await fetch(url); if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }</code></div></details><details><summary>2. Mengapa await di dalam for-of berurutan lebih lambat dari Promise.all?</summary><div>Setiap iterasi menunggu yang sebelumnya selesai; Promise.all memulai semuanya sekaligus.</div></details><details><summary>3. Apa bedanya Promise.all dan Promise.allSettled?</summary><div>all menolak segera bila satu ditolak; allSettled menunggu semua dan melaporkan status masing-masing.</div></details><details><summary>4. Apa yang terjadi bila lupa await pada async function?</summary><div>Anda mendapatkan Promise, bukan nilainya; kode berikutnya berjalan sebelum hasil siap.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Operasi jaringan asinkron; event loop menjalankan kode sinkron, microtask, lalu callback.</li><li>Promise: pending, fulfilled, rejected; async/await membuatnya terbaca linear.</li><li>fetch hanya menolak bila jaringan gagal; periksa response.ok untuk status HTTP.</li><li>Tangani JSON rusak, beri timeout dengan AbortController, dan paralelkan dengan Promise.all.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya fetch dan axios?</summary><div>fetch bawaan browser dan Node; axios pustaka tambahan yang otomatis menolak pada status galat, mendukung interceptor, dan pembatalan. Untuk banyak kasus fetch sudah cukup.</div></details>
+<details class="faq"><summary>Apa itu CORS dan mengapa fetch gagal di browser?</summary><div>Browser memblokir permintaan lintas asal kecuali server mengizinkannya lewat header CORS. Itu pembatasan browser, bukan bug kode Anda.</div></details>
+<details class="faq"><summary>Bolehkah memakai await di tingkat atas?</summary><div>Ya, di modul ES (type="module" atau .mjs); di skrip biasa bungkus dalam async function.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch" rel="noopener" target="_blank">MDN: Using the Fetch API</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Guide/Using_promises" rel="noopener" target="_blank">MDN: Using Promises</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/async_function" rel="noopener" target="_blank">MDN: async function</a></li><li><a href="https://javascript.info/async" rel="noopener" target="_blank">javascript.info: Promises, async/await</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

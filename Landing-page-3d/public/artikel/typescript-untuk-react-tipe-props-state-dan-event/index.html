@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TypeScript untuk React: Tipe Props, State, dan Event</title>
+<meta name="description" content="Panduan TypeScript di React: tipe props, state, event handler, children, generics pada komponen dan hook, union untuk status, dan kesalahan umum yang sebaiknya dihindari.">
+<meta name="keywords" content="TypeScript, React TypeScript, tipe props, generics, union type">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/">
+<meta property="og:title" content="TypeScript untuk React: Tipe Props, State, dan Event">
+<meta property="og:description" content="Panduan TypeScript di React: tipe props, state, event handler, children, generics pada komponen dan hook, union untuk status, dan kesalahan umum yang sebaiknya dihindari.">
+<meta property="og:image" content="https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TypeScript untuk React: Tipe Props, State, dan Event">
+<meta name="twitter:description" content="Panduan TypeScript di React: tipe props, state, event handler, children, generics pada komponen dan hook, union untuk status, dan kesalahan umum yang sebaiknya dihindari.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"TypeScript untuk React: Tipe Props, State, dan Event","description":"Panduan TypeScript di React: tipe props, state, event handler, children, generics pada komponen dan hook, union untuk status, dan kesalahan umum yang sebaiknya dihindari.","image":["https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"TypeScript, React TypeScript, tipe props, generics, union type","articleSection":"React & Web Modern","wordCount":393,"mainEntityOfPage":"https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"TypeScript untuk React: Tipe Props, State, dan Event","item":"https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah TypeScript memperlambat pengembangan?","acceptedAnswer":{"@type":"Answer","text":"Awalnya sedikit, lalu mempercepat karena autocompletion, refactoring aman, dan kesalahan tertangkap lebih awal, terutama pada tim dan proyek yang tumbuh."}},{"@type":"Question","name":"Bagaimana memulai proyek React dengan TypeScript?","acceptedAnswer":{"@type":"Answer","text":"Vite menyediakan templat: npm create vite@latest nama -- --template react-ts."}},{"@type":"Question","name":"Apakah wajib mengetik semuanya?","acceptedAnswer":{"@type":"Answer","text":"Tidak; mulai dari props, data dari API, dan fungsi bersama. Aktifkan strict mode agar pemeriksaan bermakna."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#props-dan-children">Props dan children</a></li><li><a href="#state-dan-event">State dan event</a></li><li><a href="#union-untuk-status-buat-keadaan-mustahil-tidak-bisa-ditulis">Union untuk status: buat keadaan mustahil tidak bisa ditulis</a></li><li><a href="#generics-satu-komponen-untuk-berbagai-tipe">Generics: satu komponen untuk berbagai tipe</a></li><li><a href="#interface-atau-type">interface atau type?</a></li><li><a href="#menyempitkan-tipe-narrowing-dengan-aman">Menyempitkan tipe (narrowing) dengan aman</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>TypeScript untuk React: Tipe Props, State, dan Event</h1>
+<p class="lead">TypeScript menangkap kesalahan sebelum kode berjalan: salah ketik nama props, lupa menangani kasus data kosong, mengirim string ke fungsi yang mengharapkan angka. Di proyek React yang tumbuh, ia menjadi dokumentasi hidup sekaligus jaring pengaman refactoring. Tidak perlu menguasai semua fitur; sedikit pola cukup untuk 90% pekerjaan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> React dasar, JavaScript modern</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="TypeScript untuk React: Tipe Props, State, dan Event" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengetik props, state, dan event handler di komponen React</li><li>memakai union type untuk memodelkan status dan varian</li><li>memakai generics pada hook dan komponen daftar</li><li>membedakan interface dan type serta memilih yang tepat</li><li>menghindari any dan memakai penyempitan tipe (narrowing)</li></ul></div>
+<h2 id="props-dan-children">Props dan children</h2>
+<figure class="codebox"><pre data-lang="tsx"><code>import type { ReactNode } from 'react';
+
+type Props = {
+    nama: string;
+    umur?: number;                       // opsional
+    peran: 'admin' | 'editor' | 'tamu';   // hanya tiga nilai yang sah
+    onPilih: (nama: string) =&gt; void;      // fungsi dengan tanda tangan jelas
+    children?: ReactNode;
+};
+
+export function KartuPengguna({ nama, umur, peran, onPilih, children }: Props) {
+    return (
+        &lt;div onClick={() =&gt; onPilih(nama)}&gt;
+            &lt;h3&gt;{nama} {umur !== undefined &amp;&amp; '(' + umur + ')'}&lt;/h3&gt;
+            &lt;small&gt;{peran}&lt;/small&gt;
+            {children}
+        &lt;/div&gt;
+    );
+}
+
+// &lt;KartuPengguna nama=&quot;Ani&quot; peran=&quot;owner&quot; onPilih={() =&gt; {}} /&gt;   // galat kompilasi: &quot;owner&quot; bukan peran yang sah</code></pre><figcaption>Salah ketik atau nilai di luar daftar langsung ditandai editor sebelum Anda menjalankan aplikasi.</figcaption></figure>
+<h2 id="state-dan-event">State dan event</h2>
+<figure class="codebox"><pre data-lang="tsx"><code>import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+
+type Tugas = { id: number; judul: string; selesai: boolean };
+
+export function DaftarTugas() {
+    const [tugas, setTugas] = useState&lt;Tugas[]&gt;([]);            // tanpa generik, [] dianggap never[]
+    const [judul, setJudul] = useState('');                     // string disimpulkan otomatis
+    const [terpilih, setTerpilih] = useState&lt;Tugas | null&gt;(null); // nilai awal null perlu generik
+
+    const ubah = (e: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; setJudul(e.target.value);
+    const kirim = (e: FormEvent&lt;HTMLFormElement&gt;) =&gt; {
+        e.preventDefault();
+        setTugas(t =&gt; [...t, { id: Date.now(), judul, selesai: false }]);
+        setJudul('');
+    };
+
+    return (
+        &lt;form onSubmit={kirim}&gt;
+            &lt;input value={judul} onChange={ubah} /&gt;
+            {terpilih &amp;&amp; &lt;p&gt;{terpilih.judul}&lt;/p&gt;}
+        &lt;/form&gt;
+    );
+}</code></pre><figcaption>Tipe event berasal dari React (ChangeEvent, FormEvent, MouseEvent). Anda juga bisa menulis handler di tempat (inline) dan membiarkan TypeScript menyimpulkan tipenya.</figcaption></figure>
+<h2 id="union-untuk-status-buat-keadaan-mustahil-tidak-bisa-ditulis">Union untuk status: buat keadaan mustahil tidak bisa ditulis</h2>
+<p>Alih-alih beberapa boolean yang dapat bertentangan, pakai <b>discriminated union</b>: setiap bentuk punya penanda (<code>status</code>) yang membuat TypeScript tahu properti apa yang ada.</p>
+<figure class="codebox"><pre data-lang="typescript"><code>type Hasil&lt;T&gt; =
+    | { status: 'memuat' }
+    | { status: 'sukses'; data: T }
+    | { status: 'gagal'; galat: string };
+
+function tampilkan(h: Hasil&lt;string[]&gt;) {
+    switch (h.status) {
+        case 'memuat': return 'Memuat...';
+        case 'sukses': return h.data.join(', ');        // h.data hanya ada pada status &quot;sukses&quot;
+        case 'gagal':  return 'Galat: ' + h.galat;      // h.galat hanya ada pada status &quot;gagal&quot;
+    }
+}</code></pre><figcaption>Bila Anda menambah status baru dan lupa menanganinya di switch, TypeScript dapat memperingatkan (dengan pemeriksaan kelengkapan).</figcaption></figure>
+<h2 id="generics-satu-komponen-untuk-berbagai-tipe">Generics: satu komponen untuk berbagai tipe</h2>
+<figure class="codebox"><pre data-lang="tsx"><code>type DaftarProps&lt;T&gt; = {
+    item: T[];
+    kunci: (i: T) =&gt; string | number;
+    render: (i: T) =&gt; React.ReactNode;
+};
+
+function Daftar&lt;T&gt;({ item, kunci, render }: DaftarProps&lt;T&gt;) {
+    return &lt;ul&gt;{item.map(i =&gt; &lt;li key={kunci(i)}&gt;{render(i)}&lt;/li&gt;)}&lt;/ul&gt;;
+}
+
+// T disimpulkan dari data; render mengetahui bentuk item
+// &lt;Daftar item={[{ id: 1, nama: 'Ani' }]} kunci={p =&gt; p.id} render={p =&gt; p.nama} /&gt;
+
+// generik pada hook
+function useDaftar&lt;T&gt;(awal: T[]) {
+    const [daftar, setDaftar] = useState&lt;T[]&gt;(awal);
+    return { daftar, tambah: (x: T) =&gt; setDaftar(d =&gt; [...d, x]) };
+}</code></pre></figure>
+<h2 id="interface-atau-type">interface atau type?</h2>
+<table><thead><tr><th></th><th>type</th><th>interface</th></tr></thead><tbody><tr><td>Bisa union dan tuple</td><td>Ya</td><td>Tidak</td></tr><tr><td>Bisa diperluas (extends)</td><td>Dengan interseksi (&)</td><td>Ya, dan bisa digabung (declaration merging)</td></tr><tr><td>Cocok untuk</td><td>Union, utilitas, props</td><td>Bentuk objek yang diperluas antar modul</td></tr><tr><td>Pedoman</td><td>Pilih satu dan konsisten dalam proyek</td><td>Banyak tim memakai type untuk props dan state</td></tr></tbody></table>
+<h2 id="menyempitkan-tipe-narrowing-dengan-aman">Menyempitkan tipe (narrowing) dengan aman</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>// Logika penyempitan yang sama dalam JavaScript: periksa dulu sebelum memakai
+function formatNilai(nilai) {
+    if (nilai === null || nilai === undefined) return '(kosong)';       // tangani kasus tak ada
+    if (typeof nilai === 'number') return nilai.toFixed(1);             // sekarang pasti number
+    if (typeof nilai === 'string') return nilai.trim().toUpperCase();   // sekarang pasti string
+    if (Array.isArray(nilai)) return nilai.length + ' item';
+    return JSON.stringify(nilai);
+}
+for (const n of [3.14159, '  halo ', null, undefined, [1, 2, 3], { a: 1 }]) console.log(String(JSON.stringify(n)).padEnd(10), '-&gt;', formatNilai(n));</code></pre><pre class="runout" data-lang="keluaran"><code>3.14159    -&gt; 3.1
+&quot;  halo &quot;  -&gt; HALO
+null       -&gt; (kosong)
+undefined  -&gt; (kosong)
+[1,2,3]    -&gt; 3 item
+{&quot;a&quot;:1}    -&gt; {&quot;a&quot;:1}</code></pre><figcaption>TypeScript memahami pola ini (typeof, null-check, Array.isArray) dan mempersempit tipe di dalam masing-masing cabang. Itu sebabnya kode JavaScript yang defensif tetap relevan.</figcaption></figure>
+<div class="callout warn"><b>any dan data luar</b><p>Hindari <code>any</code>: ia mematikan pemeriksaan tipe. Bila tipe benar-benar tidak diketahui (misalnya hasil JSON dari server), pakai <code>unknown</code> lalu persempit atau validasi dengan pustaka seperti <b>Zod</b>. Tipe TypeScript hilang saat runtime, jadi data dari luar tetap harus divalidasi.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"useState\u003cTugas | null>(null) memakai generik karena...","options":["Nilai awal null tidak cukup memberi tahu tipe sebenarnya","Wajib untuk semua useState","Agar lebih cepat"],"answer":0,"why":"TypeScript menyimpulkan tipe dari nilai awal; null saja kurang informatif."},{"q":"Discriminated union berguna untuk...","options":["Memodelkan status yang saling eksklusif","Mempercepat build","Mengganti CSS"],"answer":0,"why":"Properti penanda menentukan bentuk data."},{"q":"Apa yang lebih aman daripada any untuk data tak dikenal?","options":["unknown + penyempitan/validasi","object","Tidak mengetik"],"answer":0,"why":"unknown memaksa pemeriksaan sebelum dipakai."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ketik props komponen Tombol dengan variant "utama" atau "sekunder" dan onClick opsional.</summary><div><code>type Props = { variant: "utama" | "sekunder"; onClick?: () => void; children: ReactNode }</code></div></details><details><summary>2. Mengapa tipe TypeScript tidak melindungi dari respons API yang salah bentuk?</summary><div>Tipe dihapus saat kompilasi; data runtime dari jaringan harus divalidasi (misalnya dengan Zod) sebelum dipercaya.</div></details><details><summary>3. Buat tipe Hasil untuk operasi yang berhasil dengan data atau gagal dengan pesan.</summary><div><code>type Hasil<T> = { ok: true; data: T } | { ok: false; pesan: string }</code></div></details><details><summary>4. Kapan menulis tipe secara eksplisit dan kapan membiarkannya disimpulkan?</summary><div>Eksplisit pada batas (props, fungsi publik, nilai awal ambigu); biarkan disimpulkan untuk variabel lokal yang jelas.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Ketik props dengan type; gunakan union literal untuk nilai terbatas; children bertipe ReactNode.</li><li>useState<T> bila nilai awal tidak memberi tahu tipe; tipe event berasal dari React.</li><li>Discriminated union dan generics membuat keadaan mustahil tidak dapat ditulis dan komponen dapat dipakai ulang.</li><li>Hindari any; validasi data eksternal karena tipe tidak ada saat runtime.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah TypeScript memperlambat pengembangan?</summary><div>Awalnya sedikit, lalu mempercepat karena autocompletion, refactoring aman, dan kesalahan tertangkap lebih awal, terutama pada tim dan proyek yang tumbuh.</div></details>
+<details class="faq"><summary>Bagaimana memulai proyek React dengan TypeScript?</summary><div>Vite menyediakan templat: npm create vite@latest nama -- --template react-ts.</div></details>
+<details class="faq"><summary>Apakah wajib mengetik semuanya?</summary><div>Tidak; mulai dari props, data dari API, dan fungsi bersama. Aktifkan strict mode agar pemeriksaan bermakna.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/typescript" rel="noopener" target="_blank">React: Using TypeScript</a></li><li><a href="https://www.typescriptlang.org/docs/handbook/intro.html" rel="noopener" target="_blank">TypeScript Handbook</a></li><li><a href="https://react-typescript-cheatsheet.netlify.app/" rel="noopener" target="_blank">React TypeScript Cheatsheet</a></li><li><a href="https://zod.dev/" rel="noopener" target="_blank">Zod: validasi skema TypeScript</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

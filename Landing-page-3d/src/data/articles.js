@@ -213,4 +213,9 @@ export const ARTICLES = [
     'custom-hook-react-cara-membuat-dan-contoh-yang-berguna',
     'optimasi-performa-react-memo-usememo-usecallback-dan-profiling',
     'react-router-routing-halaman-parameter-dan-navigasi',
+    'fetch-api-javascript-async-await-promise-dan-penanganan-error',
+    'tanstack-query-react-fetch-data-cache-dan-mutasi',
+    'typescript-untuk-react-tipe-props-state-dan-event',
+    'tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode',
+    'seo-untuk-aplikasi-react-ssr-prerender-dan-metadata',
 ];

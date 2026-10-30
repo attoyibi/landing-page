@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TanStack Query: Fetch Data, Cache, dan Mutasi di React</title>
+<meta name="description" content="Pelajari mengelola data server di React dengan TanStack Query (React Query): useQuery, cache, staleTime, refetch, mutasi, invalidasi, dan mengapa tidak cukup dengan useEffect.">
+<meta name="keywords" content="TanStack Query, React Query, data fetching, cache, useQuery">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/">
+<meta property="og:title" content="TanStack Query: Fetch Data, Cache, dan Mutasi di React">
+<meta property="og:description" content="Pelajari mengelola data server di React dengan TanStack Query (React Query): useQuery, cache, staleTime, refetch, mutasi, invalidasi, dan mengapa tidak cukup dengan useEffect.">
+<meta property="og:image" content="https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TanStack Query: Fetch Data, Cache, dan Mutasi di React">
+<meta name="twitter:description" content="Pelajari mengelola data server di React dengan TanStack Query (React Query): useQuery, cache, staleTime, refetch, mutasi, invalidasi, dan mengapa tidak cukup dengan useEffect.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"TanStack Query: Fetch Data, Cache, dan Mutasi di React","description":"Pelajari mengelola data server di React dengan TanStack Query (React Query): useQuery, cache, staleTime, refetch, mutasi, invalidasi, dan mengapa tidak cukup dengan useEffect.","image":["https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"TanStack Query, React Query, data fetching, cache, useQuery","articleSection":"React & Web Modern","wordCount":386,"mainEntityOfPage":"https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"TanStack Query: Fetch Data, Cache, dan Mutasi di React","item":"https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya TanStack Query dan SWR?","acceptedAnswer":{"@type":"Answer","text":"Keduanya serupa (stale-while-revalidate). TanStack Query punya fitur lebih lengkap (mutasi, paginasi infinit, devtools); SWR lebih ringkas."}},{"@type":"Question","name":"Apakah tetap butuh Redux?","acceptedAnswer":{"@type":"Answer","text":"Untuk data server tidak lagi; Redux/Zustand tetap berguna bagi state klien kompleks, tetapi banyak aplikasi tidak membutuhkannya."}},{"@type":"Question","name":"Apakah mendukung rendering di server?","acceptedAnswer":{"@type":"Answer","text":"Ya, dengan prefetch dan dehydrate/hydrate sehingga data awal sudah ada saat halaman sampai ke browser."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#dua-jenis-state">Dua jenis state</a></li><li><a href="#masalah-fetch-manual">Masalah fetch manual</a></li><li><a href="#usequery-deklaratif">useQuery: deklaratif</a></li><li><a href="#cara-kerja-cache-fresh-stale-dan-refetch">Cara kerja cache: fresh, stale, dan refetch</a></li><li><a href="#mutasi-dan-invalidasi">Mutasi dan invalidasi</a></li><li><a href="#kapan-tidak-perlu">Kapan tidak perlu</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>TanStack Query: Fetch Data, Cache, dan Mutasi di React</h1>
+<p class="lead">Mengambil data dengan useEffect dan useState tampak mudah, sampai Anda butuh status memuat, galat, pembatalan, cache, pengambilan ulang saat jendela kembali aktif, dan pembaruan setelah mutasi. Kode itu cepat membengkak dan penuh jebakan. TanStack Query memperlakukan data server sebagai kategori tersendiri dan menyelesaikan semuanya.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> useEffect, fetch API dan async/await</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="TanStack Query: Fetch Data, Cache, dan Mutasi di React" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan state klien dan state server</li><li>memakai useQuery dengan queryKey dan queryFn</li><li>memahami cache, staleTime, dan pengambilan ulang otomatis</li><li>melakukan mutasi dan menginvalidasi cache dengan useMutation</li><li>menjelaskan apa yang dihemat dibanding fetch manual</li></ul></div>
+<h2 id="dua-jenis-state">Dua jenis state</h2>
+<table><thead><tr><th></th><th>State klien</th><th>State server</th></tr></thead><tbody><tr><td>Contoh</td><td>Tab aktif, isi kotak ketik, modal terbuka</td><td>Daftar produk, profil pengguna, pesanan</td></tr><tr><td>Pemilik</td><td>Aplikasi Anda</td><td>Server; aplikasi hanya punya salinan</td></tr><tr><td>Masalah khas</td><td>Sinkronisasi antar komponen</td><td>Salinan bisa usang, perlu cache, pengambilan ulang, dan invalidasi</td></tr><tr><td>Alat</td><td>useState, useReducer, Zustand</td><td>TanStack Query, SWR</td></tr></tbody></table>
+<h2 id="masalah-fetch-manual">Masalah fetch manual</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>// Versi manual: tiga state, satu efek, dan masih banyak yang belum ditangani
+function Produk({ id }) {
+    const [data, setData] = useState(null);
+    const [memuat, setMemuat] = useState(true);
+    const [galat, setGalat] = useState(null);
+
+    useEffect(() =&gt; {
+        let batal = false;
+        setMemuat(true);
+        fetch('/api/produk/' + id)
+            .then(r =&gt; { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+            .then(d =&gt; { if (!batal) { setData(d); setMemuat(false); } })
+            .catch(e =&gt; { if (!batal) { setGalat(e); setMemuat(false); } });
+        return () =&gt; { batal = true; };
+    }, [id]);
+    // belum ada: cache, penghapusan duplikat permintaan, retry, refetch saat fokus, pembaruan setelah mutasi...
+}</code></pre></figure>
+<h2 id="usequery-deklaratif">useQuery: deklaratif</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+
+const klien = new QueryClient({
+    defaultOptions: { queries: { staleTime: 60_000, retry: 1 } },
+});
+
+function Produk({ id }) {
+    const { data, isPending, isError, error, isFetching } = useQuery({
+        queryKey: ['produk', id],                          // identitas data: berubah -&gt; ambil lagi
+        queryFn: async () =&gt; {
+            const r = await fetch('/api/produk/' + id);
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        },
+    });
+
+    if (isPending) return &lt;p&gt;Memuat...&lt;/p&gt;;
+    if (isError)   return &lt;p&gt;Gagal: {error.message}&lt;/p&gt;;
+    return &lt;h1&gt;{data.nama} {isFetching &amp;&amp; '(menyegarkan...)'}&lt;/h1&gt;;
+}
+
+export default function App() {
+    return &lt;QueryClientProvider client={klien}&gt;&lt;Produk id={42} /&gt;&lt;/QueryClientProvider&gt;;
+}</code></pre><figcaption>Tiga baris menggantikan tiga state dan satu efek. queryKey menjadi kunci cache: dua komponen yang meminta ["produk", 42] berbagi satu permintaan dan satu hasil.</figcaption></figure>
+<h2 id="cara-kerja-cache-fresh-stale-dan-refetch">Cara kerja cache: fresh, stale, dan refetch</h2>
+<p>Data di cache dianggap <b>fresh</b> selama <code>staleTime</code> (bawaan 0). Setelah itu <b>stale</b>: masih ditampilkan seketika dari cache, sementara di latar belakang diambil ulang (stale-while-revalidate). Pengambilan ulang otomatis terjadi saat komponen baru dipasang, jendela mendapat fokus kembali, atau koneksi pulih.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Simulasi inti cache stale-while-revalidate (konsep, bukan kode pustaka)
+function buatCache(staleMs, ambilServer) {
+    const cache = new Map();
+    let panggilanServer = 0;
+    async function dapatkan(kunci, sekarang) {
+        const ada = cache.get(kunci);
+        if (ada &amp;&amp; sekarang - ada.waktu &lt; staleMs) return { data: ada.data, sumber: 'cache (fresh)' };
+        const hasilServer = async () =&gt; { panggilanServer++; const data = await ambilServer(kunci); cache.set(kunci, { data, waktu: sekarang }); return data; };
+        if (ada) { hasilServer(); return { data: ada.data, sumber: 'cache (stale) + refetch di latar' }; }
+        return { data: await hasilServer(), sumber: 'server' };
+    }
+    return { dapatkan, jumlahPanggilan: () =&gt; panggilanServer };
+}
+
+(async () =&gt; {
+    const c = buatCache(1000, async k =&gt; 'data-' + k + '@server');
+    for (const [waktu, kunci] of [[0, 'produk/1'], [200, 'produk/1'], [900, 'produk/1'], [1500, 'produk/1'], [1600, 'produk/2']]) {
+        const h = await c.dapatkan(kunci, waktu);
+        console.log(('t=' + waktu + 'ms').padEnd(9), kunci.padEnd(9), '-&gt;', h.data.padEnd(18), h.sumber);
+    }
+    console.log('total panggilan ke server:', c.jumlahPanggilan());
+})();</code></pre><pre class="runout" data-lang="keluaran"><code>t=0ms     produk/1  -&gt; data-produk/1@server server
+t=200ms   produk/1  -&gt; data-produk/1@server cache (fresh)
+t=900ms   produk/1  -&gt; data-produk/1@server cache (fresh)
+t=1500ms  produk/1  -&gt; data-produk/1@server cache (stale) + refetch di latar
+t=1600ms  produk/2  -&gt; data-produk/2@server server
+total panggilan ke server: 3</code></pre><figcaption>Pengguna selalu melihat data seketika (dari cache) dan data disegarkan diam-diam bila sudah usang. Lima permintaan komponen hanya menghasilkan tiga panggilan jaringan.</figcaption></figure>
+<table><thead><tr><th>Opsi</th><th>Fungsi</th></tr></thead><tbody><tr><td>staleTime</td><td>Berapa lama data dianggap segar (tidak diambil ulang)</td></tr><tr><td>gcTime</td><td>Berapa lama data tak terpakai disimpan di cache sebelum dibuang</td></tr><tr><td>retry</td><td>Jumlah percobaan ulang bila gagal</td></tr><tr><td>enabled</td><td>Menunda query sampai kondisi terpenuhi (misalnya id tersedia)</td></tr><tr><td>placeholderData / initialData</td><td>Data sementara agar tampilan tidak kosong</td></tr><tr><td>select</td><td>Mengubah atau memilih bagian dari data sebelum sampai ke komponen</td></tr></tbody></table>
+<h2 id="mutasi-dan-invalidasi">Mutasi dan invalidasi</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+function FormTambah() {
+    const klien = useQueryClient();
+    const tambah = useMutation({
+        mutationFn: baru =&gt; fetch('/api/produk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(baru),
+        }).then(r =&gt; { if (!r.ok) throw new Error('Gagal menyimpan'); return r.json(); }),
+        onSuccess: () =&gt; klien.invalidateQueries({ queryKey: ['produk'] }),   // tandai usang -&gt; daftar diambil ulang
+    });
+
+    return (
+        &lt;button disabled={tambah.isPending} onClick={() =&gt; tambah.mutate({ nama: 'Kopi Baru' })}&gt;
+            {tambah.isPending ? 'Menyimpan...' : 'Tambah'}
+        &lt;/button&gt;
+    );
+}</code></pre><figcaption>Setelah mutasi berhasil, invalidasi membuat semua query berawalan ["produk"] diambil ulang sehingga tampilan sinkron dengan server tanpa kode manual.</figcaption></figure>
+<div class="callout info"><b>Terasa instan</b><p><b>Pembaruan optimistis</b>: untuk aksi yang hampir pasti berhasil (menyukai, mencentang), perbarui tampilan seketika dengan <code>onMutate</code> dan kembalikan bila gagal di <code>onError</code>. Terasa instan bagi pengguna, tetapi tangani kegagalan dengan jujur.</p></div>
+<h2 id="kapan-tidak-perlu">Kapan tidak perlu</h2>
+<ul><li>Aplikasi kecil dengan satu atau dua permintaan sederhana: fetch + useEffect (dengan pembatalan) cukup.</li><li>Bila memakai framework dengan pemuatan data bawaan (loader Next.js, Remix, Server Components), sebagian peran ini sudah ditangani framework.</li><li>Data murni klien (state UI) bukan tugas pustaka ini.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"queryKey berfungsi sebagai...","options":["Kunci cache dan pemicu pengambilan ulang bila berubah","Kata sandi","URL API"],"answer":0,"why":"Menentukan identitas data."},{"q":"Data \"stale\" berarti...","options":["Ditampilkan dari cache sambil diambil ulang di latar","Dihapus","Salah"],"answer":0,"why":"Stale-while-revalidate."},{"q":"Setelah mutasi berhasil, cara menyegarkan daftar?","options":["invalidateQueries","Muat ulang halaman","Menghapus cache browser"],"answer":0,"why":"Menandai query usang dan mengambil ulang."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis queryKey untuk daftar produk berfilter kategori dan halaman.</summary><div><code>["produk", { kategori, halaman }]</code>: perubahan filter otomatis membuat entri cache terpisah.</div></details><details><summary>2. Mengapa query dengan id undefined perlu opsi enabled?</summary><div>Agar tidak mengirim permintaan sampai id tersedia: <code>enabled: !!id</code>.</div></details><details><summary>3. Apa keuntungan berbagi queryKey antar komponen?</summary><div>Satu permintaan, satu cache; semua komponen yang memakai kunci itu menerima pembaruan yang sama.</div></details><details><summary>4. Kapan menaikkan staleTime?</summary><div>Bila data jarang berubah (daftar negara, konfigurasi) sehingga pengambilan ulang tidak diperlukan.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Pisahkan state klien dari state server; yang kedua punya masalah cache dan sinkronisasi.</li><li>useQuery: queryKey + queryFn memberi data, status, dan galat; cache dibagi lewat kunci.</li><li>staleTime dan stale-while-revalidate: tampil seketika, segarkan di latar.</li><li>useMutation + invalidateQueries menjaga tampilan sinkron setelah perubahan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya TanStack Query dan SWR?</summary><div>Keduanya serupa (stale-while-revalidate). TanStack Query punya fitur lebih lengkap (mutasi, paginasi infinit, devtools); SWR lebih ringkas.</div></details>
+<details class="faq"><summary>Apakah tetap butuh Redux?</summary><div>Untuk data server tidak lagi; Redux/Zustand tetap berguna bagi state klien kompleks, tetapi banyak aplikasi tidak membutuhkannya.</div></details>
+<details class="faq"><summary>Apakah mendukung rendering di server?</summary><div>Ya, dengan prefetch dan dehydrate/hydrate sehingga data awal sudah ada saat halaman sampai ke browser.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://tanstack.com/query/latest/docs/framework/react/overview" rel="noopener" target="_blank">TanStack Query Documentation</a></li><li><a href="https://tkdodo.eu/blog/practical-react-query" rel="noopener" target="_blank">TkDodo: Practical React Query</a></li><li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults" rel="noopener" target="_blank">TanStack Query: Important Defaults</a></li><li><a href="https://react.dev/learn" rel="noopener" target="_blank">React Documentation (react.dev)</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

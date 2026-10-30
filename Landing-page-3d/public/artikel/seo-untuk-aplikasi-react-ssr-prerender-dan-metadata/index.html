@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO untuk Aplikasi React: SSR, Prerender, dan Metadata</title>
+<meta name="description" content="Mengapa React murni sulit di-SEO dan solusinya: SSR, SSG, prerender, metadata per halaman, sitemap, data terstruktur, dan Core Web Vitals.">
+<meta name="keywords" content="SEO React, SSR, prerender, meta tags, Next.js">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/">
+<meta property="og:title" content="SEO untuk Aplikasi React: SSR, Prerender, dan Metadata">
+<meta property="og:description" content="Mengapa React murni sulit di-SEO dan solusinya: SSR, SSG, prerender, metadata per halaman, sitemap, data terstruktur, dan Core Web Vitals.">
+<meta property="og:image" content="https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SEO untuk Aplikasi React: SSR, Prerender, dan Metadata">
+<meta name="twitter:description" content="Mengapa React murni sulit di-SEO dan solusinya: SSR, SSG, prerender, metadata per halaman, sitemap, data terstruktur, dan Core Web Vitals.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SEO untuk Aplikasi React: SSR, Prerender, dan Metadata","description":"Mengapa React murni sulit di-SEO dan solusinya: SSR, SSG, prerender, metadata per halaman, sitemap, data terstruktur, dan Core Web Vitals.","image":["https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"SEO React, SSR, prerender, meta tags, Next.js","articleSection":"React & Web Modern","wordCount":518,"mainEntityOfPage":"https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"SEO untuk Aplikasi React: SSR, Prerender, dan Metadata","item":"https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Google bisa mengindeks aplikasi React murni?","acceptedAnswer":{"@type":"Answer","text":"Bisa, karena Googlebot menjalankan JavaScript, tetapi prosesnya lebih lambat dan tidak selalu andal; bing dan penjelajah sosial lebih terbatas. HTML sisi server tetap pilihan terbaik."}},{"@type":"Question","name":"Apakah harus pindah ke Next.js?","acceptedAnswer":{"@type":"Answer","text":"Tidak selalu. Situs kecil dengan Vite dapat memprerender halaman publik, atau memakai Astro untuk konten dengan pulau-pulau React."}},{"@type":"Question","name":"Berapa lama hasil SEO terlihat?","acceptedAnswer":{"@type":"Answer","text":"Pengindeksan bisa berhari-hari sampai berminggu-minggu; peringkat bergantung pada kualitas konten, tautan balik, dan kompetisi."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#apa-yang-dilihat-mesin-pencari">Apa yang dilihat mesin pencari</a></li><li><a href="#empat-strategi-rendering">Empat strategi rendering</a></li><li><a href="#metadata-per-halaman">Metadata per halaman</a></li><li><a href="#sitemap-dan-robots-txt">Sitemap dan robots.txt</a></li><li><a href="#data-terstruktur-json-ld">Data terstruktur (JSON-LD)</a></li><li><a href="#seo-teknis-lain-yang-berkaitan-dengan-react">SEO teknis lain yang berkaitan dengan React</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>SEO untuk Aplikasi React: SSR, Prerender, dan Metadata</h1>
+<p class="lead">Anda membangun aplikasi React yang bagus, tetapi tidak muncul di Google. Penyebabnya sering sama: HTML yang dikirim server hanya berisi div kosong, dan isi halaman baru ada setelah JavaScript dijalankan. Mesin pencari modern dapat menjalankan JavaScript, tetapi lebih lambat dan tidak selalu andal. Cara terbaik adalah memastikan HTML sudah berisi konten sejak awal.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> React dasar, React Router, dasar HTML</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="SEO untuk Aplikasi React: SSR, Prerender, dan Metadata" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan perbedaan CSR, SSR, SSG, dan prerender</li><li>mengenali masalah SEO pada SPA murni</li><li>mengatur judul, deskripsi, canonical, dan Open Graph per halaman</li><li>membuat sitemap dan data terstruktur</li><li>memahami hubungan SEO dengan Core Web Vitals dan aksesibilitas</li></ul></div>
+<h2 id="apa-yang-dilihat-mesin-pencari">Apa yang dilihat mesin pencari</h2>
+<p>Penjelajah mengunduh HTML terlebih dahulu. Bila konten sudah ada di sana, ia langsung bisa memahaminya. Bila HTML hanya berisi <code>&lt;div id="root"&gt;&lt;/div&gt;</code>, ia harus menjalankan JavaScript dan menunggu render, antrean tambahan yang menunda indeks dan rawan gagal. Peramban sosial (pratinjau tautan WhatsApp, Facebook, X) bahkan umumnya <b>tidak</b> menjalankan JavaScript.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+const e = React.createElement;
+
+function Artikel({ judul, isi }) {
+    return e('article', null, e('h1', null, judul), e('p', null, isi));
+}
+
+// 1. SPA murni (CSR): server mengirim cangkang kosong
+const csr = '&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Aplikasi&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/app.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;';
+
+// 2. Dirender di server (SSR) / saat build (SSG, prerender): HTML sudah berisi konten
+const html = renderToString(e(Artikel, { judul: 'Belajar React', isi: 'Komponen, props, dan state.' }));
+const ssr = '&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Belajar React&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;root&quot;&gt;' + html + '&lt;/div&gt;&lt;script src=&quot;/app.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;';
+
+const ringkas = s =&gt; s.match(/&lt;body&gt;([\s\S]*)&lt;\/body&gt;/)[1];
+console.log('CSR  -&gt;', ringkas(csr));
+console.log('SSR  -&gt;', ringkas(ssr));
+console.log('teks terbaca sebelum JS jalan? CSR:', /Belajar React/.test(ringkas(csr)), '| SSR:', /Belajar React/.test(ringkas(ssr)));</code></pre><pre class="runout" data-lang="keluaran"><code>CSR  -&gt; &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/app.js&quot;&gt;&lt;/script&gt;
+SSR  -&gt; &lt;div id=&quot;root&quot;&gt;&lt;article&gt;&lt;h1&gt;Belajar React&lt;/h1&gt;&lt;p&gt;Komponen, props, dan state.&lt;/p&gt;&lt;/article&gt;&lt;/div&gt;&lt;script src=&quot;/app.js&quot;&gt;&lt;/script&gt;
+teks terbaca sebelum JS jalan? CSR: false | SSR: true</code></pre><figcaption>Perbedaan mendasar: apa yang ada di HTML pertama. Pada SSR/SSG, komponen yang sama dijalankan di server dan hasilnya dikirim sebagai HTML, lalu browser "menghidupkan" (hydrate) dengan JavaScript.</figcaption></figure>
+<h2 id="empat-strategi-rendering">Empat strategi rendering</h2>
+<table><thead><tr><th>Strategi</th><th>HTML dibuat</th><th>Cocok untuk</th><th>SEO</th></tr></thead><tbody><tr><td>CSR (SPA murni)</td><td>Di browser</td><td>Dasbor di balik login, aplikasi internal</td><td>Lemah untuk halaman publik</td></tr><tr><td>SSR</td><td>Di server pada setiap permintaan</td><td>Halaman dinamis dan personal yang perlu SEO</td><td>Baik; butuh server</td></tr><tr><td>SSG</td><td>Saat build, sekali</td><td>Blog, dokumentasi, landing page, katalog yang jarang berubah</td><td>Sangat baik dan cepat</td></tr><tr><td>ISR / revalidate</td><td>Saat build lalu diperbarui berkala</td><td>Katalog besar yang sesekali berubah</td><td>Sangat baik</td></tr></tbody></table>
+<div class="callout info"><b>Pilih sesuai halaman</b><p>Aplikasi di balik login tidak perlu SEO, jadi CSR sudah cukup. Untuk halaman publik (landing page, artikel, produk), pilih SSG atau SSR. Framework seperti <b>Next.js</b>, <b>Remix/React Router framework mode</b>, atau <b>Astro</b> menyediakannya; atau lakukan <b>prerender</b> pada proyek Vite untuk halaman tertentu.</p></div>
+<h2 id="metadata-per-halaman">Metadata per halaman</h2>
+<table><thead><tr><th>Elemen</th><th>Fungsi</th><th>Panduan</th></tr></thead><tbody><tr><td><title></td><td>Judul di hasil pencarian dan tab</td><td>Unik per halaman, sekitar 50–60 karakter, kata kunci utama di depan</td></tr><tr><td>meta description</td><td>Cuplikan di hasil pencarian</td><td>120–160 karakter, menarik dan informatif</td></tr><tr><td>link rel="canonical"</td><td>Alamat utama halaman</td><td>Mencegah konten ganda dari parameter URL</td></tr><tr><td>Open Graph / Twitter Card</td><td>Pratinjau saat dibagikan</td><td>og:title, og:description, og:image 1200x630</td></tr><tr><td>meta robots</td><td>Mengatur pengindeksan</td><td>noindex untuk halaman yang tidak perlu muncul</td></tr><tr><td>html lang</td><td>Bahasa halaman</td><td>lang="id" untuk konten Bahasa Indonesia</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="jsx"><code>// React 19 mengangkat &lt;title&gt; dan &lt;meta&gt; yang dirender di komponen ke &lt;head&gt; secara otomatis
+function HalamanArtikel({ artikel }) {
+    return (
+        &lt;article&gt;
+            &lt;title&gt;{artikel.judul} | Situs Saya&lt;/title&gt;
+            &lt;meta name=&quot;description&quot; content={artikel.ringkasan} /&gt;
+            &lt;link rel=&quot;canonical&quot; href={'https://situs.id/artikel/' + artikel.slug} /&gt;
+            &lt;meta property=&quot;og:title&quot; content={artikel.judul} /&gt;
+            &lt;meta property=&quot;og:image&quot; content={artikel.gambar} /&gt;
+            &lt;h1&gt;{artikel.judul}&lt;/h1&gt;
+        &lt;/article&gt;
+    );
+}
+// Versi lama: pustaka react-helmet-async; Next.js: objek metadata / generateMetadata.</code></pre><figcaption>Metadata harus berada di HTML yang dikirim (SSR/SSG), bukan hanya diatur oleh JavaScript di browser, agar terbaca oleh penjelajah sosial dan mesin pencari sederhana.</figcaption></figure>
+<h2 id="sitemap-dan-robots-txt">Sitemap dan robots.txt</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>// Membangun sitemap.xml dari daftar halaman (jalankan saat build)
+const halaman = [
+    { jalur: '/', ubah: '2026-10-30', prioritas: 1.0 },
+    { jalur: '/artikel/belajar-react', ubah: '2026-10-28', prioritas: 0.8 },
+    { jalur: '/artikel/seo-react', ubah: '2026-10-30', prioritas: 0.8 },
+];
+const dasar = 'https://situs.id';
+const xml = [
+    '&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;',
+    '&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;',
+    ...halaman.map(h =&gt; '  &lt;url&gt;&lt;loc&gt;' + dasar + h.jalur + '&lt;/loc&gt;&lt;lastmod&gt;' + h.ubah + '&lt;/lastmod&gt;&lt;/url&gt;'),
+    '&lt;/urlset&gt;',
+].join('\n');
+console.log(xml);
+console.log('\n# robots.txt\nUser-agent: *\nAllow: /\nSitemap: ' + dasar + '/sitemap.xml');</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+  &lt;url&gt;&lt;loc&gt;https://situs.id/&lt;/loc&gt;&lt;lastmod&gt;2026-10-30&lt;/lastmod&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://situs.id/artikel/belajar-react&lt;/loc&gt;&lt;lastmod&gt;2026-10-28&lt;/lastmod&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://situs.id/artikel/seo-react&lt;/loc&gt;&lt;lastmod&gt;2026-10-30&lt;/lastmod&gt;&lt;/url&gt;
+&lt;/urlset&gt;
+
+# robots.txt
+User-agent: *
+Allow: /
+Sitemap: https://situs.id/sitemap.xml</code></pre><figcaption>Kirim sitemap di Google Search Console agar penemuan halaman lebih cepat. robots.txt hanya memberi petunjuk; jangan memakainya untuk menyembunyikan data sensitif.</figcaption></figure>
+<h2 id="data-terstruktur-json-ld">Data terstruktur (JSON-LD)</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>const artikel = { judul: 'SEO untuk Aplikasi React', penulis: 'Muhammad Muchson Attoyibi', tanggal: '2026-10-30', url: 'https://situs.id/artikel/seo-react' };
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: artikel.judul,
+    author: { '@type': 'Person', name: artikel.penulis },
+    datePublished: artikel.tanggal,
+    mainEntityOfPage: artikel.url,
+};
+console.log('&lt;script type=&quot;application/ld+json&quot;&gt;' + JSON.stringify(jsonLd, null, 2) + '&lt;/script&gt;');</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;script type=&quot;application/ld+json&quot;&gt;{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;Article&quot;,
+  &quot;headline&quot;: &quot;SEO untuk Aplikasi React&quot;,
+  &quot;author&quot;: {
+    &quot;@type&quot;: &quot;Person&quot;,
+    &quot;name&quot;: &quot;Muhammad Muchson Attoyibi&quot;
+  },
+  &quot;datePublished&quot;: &quot;2026-10-30&quot;,
+  &quot;mainEntityOfPage&quot;: &quot;https://situs.id/artikel/seo-react&quot;
+}&lt;/script&gt;</code></pre><figcaption>Data terstruktur membantu mesin pencari memahami jenis konten (artikel, produk, FAQ, breadcrumb) dan dapat memunculkan hasil yang lebih kaya. Validasi dengan alat uji hasil kaya Google.</figcaption></figure>
+<h2 id="seo-teknis-lain-yang-berkaitan-dengan-react">SEO teknis lain yang berkaitan dengan React</h2>
+<ul><li><b>Tautan sungguhan</b>: pakai <code>&lt;a href&gt;</code> atau Link yang menghasilkan href; tombol dengan onClick tidak bisa dirayapi.</li><li><b>Status HTTP benar</b>: halaman tidak ada harus mengembalikan 404 sungguhan, bukan 200 dengan pesan "tidak ditemukan" (soft 404).</li><li><b>Kecepatan</b>: Core Web Vitals (LCP, INP, CLS) memengaruhi pengalaman dan peringkat; pecah bundel, muat gambar malas, tentukan ukuran gambar.</li><li><b>Konten di HTML</b>: judul, paragraf, dan tautan penting jangan hanya muncul setelah interaksi atau pengambilan data sisi klien.</li><li><b>Aksesibilitas</b>: struktur judul h1–h3 yang logis, teks alternatif gambar, dan landmark membantu pengguna sekaligus mesin pencari.</li><li><b>Konten berkualitas</b>: teknik tidak menggantikan isi yang berguna, jelas, dan dijawab dengan baik.</li></ul>
+<div data-w="checklist"><script type="application/json">{"title":"Periksa SEO halaman React Anda","items":["HTML yang dikirim server sudah memuat konten utama (cek dengan \"View Source\" atau curl).","Setiap halaman punya title, meta description, dan canonical yang unik.","Open Graph dan gambar pratinjau tersedia di HTML awal.","sitemap.xml dibuat otomatis dan dikirim ke Search Console.","Halaman tidak ditemukan mengembalikan status 404 sungguhan.","Tautan internal memakai href yang dapat dirayapi.","Core Web Vitals diukur (Lighthouse, PageSpeed Insights) dan dijaga."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Strategi rendering yang membuat HTML saat build?","options":["SSG","CSR","Tidak ada"],"answer":0,"why":"Static Site Generation."},{"q":"Mengapa pratinjau tautan WhatsApp bisa kosong pada SPA murni?","options":["Peramban sosial umumnya tidak menjalankan JavaScript","WhatsApp rusak","Gambar terlalu besar"],"answer":0,"why":"Meta tag harus ada di HTML awal."},{"q":"Halaman yang tak ada sebaiknya mengembalikan...","options":["Status 404","Status 200 dengan pesan","Status 301 ke beranda"],"answer":0,"why":"Menghindari soft 404."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Cek cepat apakah halaman Anda dirender di server tanpa alat khusus.</summary><div>Buka "View Page Source" (bukan Inspect) atau jalankan curl pada URL dan cari teks konten utama di dalam HTML.</div></details><details><summary>2. Pilih strategi rendering untuk: blog pribadi, dasbor admin, katalog 10.000 produk.</summary><div>Blog: SSG. Dasbor admin: CSR cukup. Katalog: SSG dengan ISR atau SSR.</div></details><details><summary>3. Mengapa canonical penting untuk halaman dengan parameter ?urut=?</summary><div>Menyatakan alamat utama sehingga variasi URL tidak dianggap konten ganda.</div></details><details><summary>4. Apa risiko bergantung hanya pada JavaScript untuk metadata?</summary><div>Penjelajah sosial dan sebagian mesin pencari tidak menjalankannya sehingga pratinjau dan judul bisa salah atau kosong.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>SPA murni mengirim HTML kosong; SSR/SSG/prerender mengirim HTML berisi konten.</li><li>Halaman publik: pilih SSG atau SSR; dasbor di balik login cukup CSR.</li><li>Metadata (title, description, canonical, Open Graph) harus ada di HTML awal.</li><li>Sitemap, JSON-LD, status HTTP benar, tautan sungguhan, dan Core Web Vitals melengkapi SEO teknis.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Google bisa mengindeks aplikasi React murni?</summary><div>Bisa, karena Googlebot menjalankan JavaScript, tetapi prosesnya lebih lambat dan tidak selalu andal; bing dan penjelajah sosial lebih terbatas. HTML sisi server tetap pilihan terbaik.</div></details>
+<details class="faq"><summary>Apakah harus pindah ke Next.js?</summary><div>Tidak selalu. Situs kecil dengan Vite dapat memprerender halaman publik, atau memakai Astro untuk konten dengan pulau-pulau React.</div></details>
+<details class="faq"><summary>Berapa lama hasil SEO terlihat?</summary><div>Pengindeksan bisa berhari-hari sampai berminggu-minggu; peringkat bergantung pada kualitas konten, tautan balik, dan kompetisi.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics" rel="noopener" target="_blank">Google Search Central: JavaScript SEO basics</a></li><li><a href="https://web.dev/articles/rendering-on-the-web" rel="noopener" target="_blank">web.dev: Rendering on the Web</a></li><li><a href="https://react.dev/reference/react-dom/components/title" rel="noopener" target="_blank">React: Document metadata (title, meta, link)</a></li><li><a href="https://schema.org/Article" rel="noopener" target="_blank">Schema.org: Article</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

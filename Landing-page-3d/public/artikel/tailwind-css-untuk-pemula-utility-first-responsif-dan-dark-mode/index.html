@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode</title>
+<meta name="description" content="Pelajari Tailwind CSS: utility-first, spacing dan warna, responsif mobile-first, hover dan dark mode, serta cara membuat komponen yang dapat dipakai ulang.">
+<meta name="keywords" content="Tailwind CSS, utility-first, CSS responsif, dark mode, frontend">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/">
+<meta property="og:title" content="Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode">
+<meta property="og:description" content="Pelajari Tailwind CSS: utility-first, spacing dan warna, responsif mobile-first, hover dan dark mode, serta cara membuat komponen yang dapat dipakai ulang.">
+<meta property="og:image" content="https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode">
+<meta name="twitter:description" content="Pelajari Tailwind CSS: utility-first, spacing dan warna, responsif mobile-first, hover dan dark mode, serta cara membuat komponen yang dapat dipakai ulang.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode","description":"Pelajari Tailwind CSS: utility-first, spacing dan warna, responsif mobile-first, hover dan dark mode, serta cara membuat komponen yang dapat dipakai ulang.","image":["https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Tailwind CSS, utility-first, CSS responsif, dark mode, frontend","articleSection":"React & Web Modern","wordCount":410,"mainEntityOfPage":"https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode","item":"https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Tailwind membuat CSS membengkak?","acceptedAnswer":{"@type":"Answer","text":"Tidak; hanya kelas yang benar-benar dipakai yang dibangkitkan sehingga CSS produksi biasanya kecil."}},{"@type":"Question","name":"Bagaimana memasang Tailwind di Vite?","acceptedAnswer":{"@type":"Answer","text":"Pasang paket tailwindcss dan plugin Vite-nya, impor Tailwind di berkas CSS utama, lalu mulai memakai kelas; ikuti panduan resmi untuk versi terbaru."}},{"@type":"Question","name":"Apakah Tailwind cocok untuk proyek besar?","acceptedAnswer":{"@type":"Answer","text":"Ya, banyak produk besar memakainya; kuncinya komponen yang dapat dipakai ulang dan tema terpusat."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#ide-inti">Ide inti</a></li><li><a href="#sistem-skala-konsistensi-bawaan">Sistem skala: konsistensi bawaan</a></li><li><a href="#responsif-mobile-first-dengan-breakpoint">Responsif: mobile-first dengan breakpoint</a></li><li><a href="#state-fokus-dan-dark-mode">State, fokus, dan dark mode</a></li><li><a href="#menghindari-pengulangan-kelas">Menghindari pengulangan kelas</a></li><li><a href="#kelebihan-dan-kekurangan">Kelebihan dan kekurangan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode</h1>
+<p class="lead">Tailwind CSS mengubah cara menulis gaya: alih-alih menamai kelas dan menulis aturan CSS di berkas terpisah, Anda menyusun kelas utilitas kecil langsung di markup. Awalnya terasa aneh, bahkan "kotor". Setelah beberapa hari banyak orang menyadari kecepatannya: tidak ada lagi bingung menamai, berpindah berkas, atau takut menghapus CSS yang mungkin masih dipakai.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar HTML dan CSS</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Tailwind CSS untuk Pemula: Utility-First, Responsif, Dark Mode" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan pendekatan utility-first dan kelebihan serta kekurangannya</li><li>memakai kelas spacing, tipografi, warna, flex, dan grid</li><li>membuat tampilan responsif dengan breakpoint mobile-first</li><li>memakai varian state (hover, focus) dan dark mode</li><li>membuat komponen yang dapat dipakai ulang tanpa menggandakan kelas</li></ul></div>
+<h2 id="ide-inti">Ide inti</h2>
+<div data-w="compare"><script type="application/json">{"title":"CSS biasa vs utility-first","tabs":[{"label":"CSS biasa","html":"Anda menamai kelas (\u003ccode>.kartu-produk\u003c/code>), menulis aturannya di berkas CSS, lalu menerapkannya. Berpindah berkas, penamaan sulit, CSS cenderung menumpuk dan tak berani dihapus."},{"label":"Tailwind","html":"Anda menerapkan kelas kecil bermakna tunggal (\u003ccode>p-4\u003c/code>, \u003ccode>rounded-lg\u003c/code>, \u003ccode>bg-white\u003c/code>) langsung di elemen. Gaya berada di tempat Anda melihat elemennya; hanya kelas yang dipakai yang masuk ke CSS akhir."}]}</script></div>
+<figure class="codebox"><pre data-lang="html"><code>&lt;!-- Kartu produk dengan Tailwind --&gt;
+&lt;article class=&quot;max-w-sm rounded-xl border border-slate-200 bg-white p-4 shadow-sm&quot;&gt;
+  &lt;h3 class=&quot;text-lg font-semibold text-slate-900&quot;&gt;Kopi Gayo&lt;/h3&gt;
+  &lt;p class=&quot;mt-1 text-sm text-slate-600&quot;&gt;Biji pilihan, sangrai medium.&lt;/p&gt;
+  &lt;div class=&quot;mt-4 flex items-center justify-between&quot;&gt;
+    &lt;span class=&quot;text-base font-bold text-emerald-700&quot;&gt;Rp65.000&lt;/span&gt;
+    &lt;button class=&quot;rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500&quot;&gt;
+      Beli
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</code></pre><figcaption>Setiap kelas melakukan satu hal: p-4 = padding 1rem, mt-4 = margin atas 1rem, text-sm = ukuran huruf kecil, hover:bg-emerald-700 = warna latar saat kursor di atasnya.</figcaption></figure>
+<h2 id="sistem-skala-konsistensi-bawaan">Sistem skala: konsistensi bawaan</h2>
+<table><thead><tr><th>Kelas</th><th>Nilai CSS</th><th>Catatan</th></tr></thead><tbody><tr><td>p-1, p-2, p-4, p-8</td><td>0.25rem, 0.5rem, 1rem, 2rem</td><td>Satu satuan = 0,25rem (4px); angka naik mengikuti skala</td></tr><tr><td>m-4, mx-auto, mt-2</td><td>margin</td><td>x = kiri-kanan, y = atas-bawah, t/r/b/l = satu sisi</td></tr><tr><td>text-sm, text-base, text-xl</td><td>0.875, 1, 1.25 rem</td><td>Ukuran huruf</td></tr><tr><td>font-medium, font-bold</td><td>500, 700</td><td>Ketebalan</td></tr><tr><td>w-full, max-w-md, h-10</td><td>lebar dan tinggi</td><td>Juga w-1/2, min-h-screen</td></tr><tr><td>rounded, rounded-xl, rounded-full</td><td>radius sudut</td><td></td></tr><tr><td>bg-slate-100, text-slate-700</td><td>warna</td><td>Nama warna + tingkat 50 sampai 950</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="javascript"><code>// Skala spacing Tailwind: satu satuan = 0.25rem = 4px (pada ukuran huruf dasar 16px)
+const px = n =&gt; n * 4;
+for (const n of [1, 2, 4, 6, 8, 12, 16]) console.log('p-' + String(n).padEnd(3), '=', (n * 0.25) + 'rem', '=', px(n) + 'px');</code></pre><pre class="runout" data-lang="keluaran"><code>p-1   = 0.25rem = 4px
+p-2   = 0.5rem = 8px
+p-4   = 1rem = 16px
+p-6   = 1.5rem = 24px
+p-8   = 2rem = 32px
+p-12  = 3rem = 48px
+p-16  = 4rem = 64px</code></pre><figcaption>Karena semua jarak memakai skala yang sama, tampilan otomatis konsisten tanpa Anda memilih angka acak seperti 13px atau 17px.</figcaption></figure>
+<h2 id="responsif-mobile-first-dengan-breakpoint">Responsif: mobile-first dengan breakpoint</h2>
+<table><thead><tr><th>Awalan</th><th>Aktif mulai lebar</th><th>Contoh</th></tr></thead><tbody><tr><td>(tanpa)</td><td>semua layar (mobile dulu)</td><td>flex-col</td></tr><tr><td>sm:</td><td>640px ke atas</td><td>sm:flex-row</td></tr><tr><td>md:</td><td>768px</td><td>md:grid-cols-2</td></tr><tr><td>lg:</td><td>1024px</td><td>lg:grid-cols-3</td></tr><tr><td>xl:</td><td>1280px</td><td>xl:max-w-6xl</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="html"><code>&lt;!-- 1 kolom di ponsel, 2 di tablet, 3 di desktop --&gt;
+&lt;ul class=&quot;grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3&quot;&gt;
+  &lt;li class=&quot;rounded-lg bg-white p-4&quot;&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Menumpuk di ponsel, berdampingan mulai tablet --&gt;
+&lt;div class=&quot;flex flex-col gap-4 md:flex-row md:items-center&quot;&gt;
+  &lt;img class=&quot;w-full rounded-lg md:w-48&quot; src=&quot;...&quot; alt=&quot;...&quot;&gt;
+  &lt;p class=&quot;text-base md:text-lg&quot;&gt;Teks&lt;/p&gt;
+&lt;/div&gt;</code></pre><figcaption>Mobile-first: tulis gaya dasar untuk layar kecil, lalu tambahkan perubahan pada layar yang lebih besar dengan awalan breakpoint.</figcaption></figure>
+<h2 id="state-fokus-dan-dark-mode">State, fokus, dan dark mode</h2>
+<figure class="codebox"><pre data-lang="html"><code>&lt;button class=&quot;bg-sky-600 text-white
+               hover:bg-sky-700 active:bg-sky-800
+               focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600
+               disabled:cursor-not-allowed disabled:opacity-50
+               dark:bg-sky-500 dark:hover:bg-sky-400&quot;&gt;
+  Simpan
+&lt;/button&gt;
+
+&lt;!-- Dark mode mengikuti pengaturan sistem (bawaan) atau kelas &quot;dark&quot; di &lt;html&gt; bila dikonfigurasi --&gt;
+&lt;body class=&quot;bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100&quot;&gt;</code></pre><figcaption>Varian (hover:, focus-visible:, disabled:, dark:) dapat digabung dengan breakpoint, misalnya md:hover:bg-sky-700. Jangan menghapus indikator fokus; gunakan gaya fokus yang jelas demi aksesibilitas keyboard.</figcaption></figure>
+<h2 id="menghindari-pengulangan-kelas">Menghindari pengulangan kelas</h2>
+<ul><li><b>Jadikan komponen</b>: di React, bungkus markup berulang dalam komponen (<code>Tombol</code>, <code>Kartu</code>) sehingga kelas ditulis sekali.</li><li><b>Varian lewat props</b>: petakan nama varian ke string kelas (atau pakai pustaka kecil seperti <code>clsx</code> dan <code>tailwind-merge</code>).</li><li><b>@apply</b> bisa dipakai untuk pola yang sangat umum di CSS, tetapi jangan berlebihan: ia mengembalikan Anda ke penamaan kelas yang ingin dihindari.</li><li><b>Tema</b> (warna merek, font) dikonfigurasi di satu tempat sehingga seluruh situs mengikuti.</li></ul>
+<figure class="codebox"><pre data-lang="javascript"><code>// Peta varian -&gt; kelas: komponen Tombol cukup menerima &quot;variant&quot;
+const kelasDasar = 'rounded-lg px-3 py-1.5 text-sm font-medium focus-visible:outline-2';
+const varian = {
+    utama:    'bg-emerald-600 text-white hover:bg-emerald-700',
+    sekunder: 'bg-slate-100 text-slate-800 hover:bg-slate-200',
+    bahaya:   'bg-red-600 text-white hover:bg-red-700',
+};
+const gabung = (...k) =&gt; k.filter(Boolean).join(' ');
+const kelasTombol = (v = 'utama', tambahan) =&gt; gabung(kelasDasar, varian[v] ?? varian.utama, tambahan);
+
+console.log(kelasTombol());
+console.log(kelasTombol('bahaya', 'w-full'));
+console.log(kelasTombol('tidak-ada'));</code></pre><pre class="runout" data-lang="keluaran"><code>rounded-lg px-3 py-1.5 text-sm font-medium focus-visible:outline-2 bg-emerald-600 text-white hover:bg-emerald-700
+rounded-lg px-3 py-1.5 text-sm font-medium focus-visible:outline-2 bg-red-600 text-white hover:bg-red-700 w-full
+rounded-lg px-3 py-1.5 text-sm font-medium focus-visible:outline-2 bg-emerald-600 text-white hover:bg-emerald-700</code></pre></figure>
+<h2 id="kelebihan-dan-kekurangan">Kelebihan dan kekurangan</h2>
+<table><thead><tr><th>Kelebihan</th><th>Kekurangan</th></tr></thead><tbody><tr><td>Cepat membangun; tidak berpindah berkas</td><td>Markup terlihat ramai dengan banyak kelas</td></tr><tr><td>Konsisten berkat skala desain</td><td>Perlu menghafal nama kelas (autocomplete dan dokumentasi membantu)</td></tr><tr><td>CSS akhir kecil: hanya kelas terpakai</td><td>Kurang cocok untuk gaya yang sangat dinamis tanpa kerangka komponen</td></tr><tr><td>Aman dihapus: gaya terikat pada elemen</td><td>Tim perlu sepakat soal konvensi komponen</td></tr></tbody></table>
+<div class="callout info"><b>Tetap pelajari CSS</b><p>Tailwind tidak menggantikan pemahaman CSS: flexbox, grid, specificity, dan model kotak tetap dasarnya. Orang yang paham CSS justru paling produktif dengan Tailwind karena tahu apa yang terjadi di balik kelasnya.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Pada Tailwind, \"md:flex-row\" artinya...","options":["flex-row mulai lebar 768px ke atas","flex-row hanya di ponsel","flex-row saat hover"],"answer":0,"why":"Awalan breakpoint bersifat mobile-first."},{"q":"p-4 setara dengan padding...","options":["1rem","4rem","4px saja"],"answer":0,"why":"4 x 0,25rem."},{"q":"Cara mengurangi pengulangan kelas?","options":["Jadikan komponen yang dipakai ulang","Salin tempel ke semua halaman","Hapus semua kelas"],"answer":0,"why":"Satu komponen, satu tempat gaya."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis kelas untuk tombol biru dengan sudut membulat, padding vertikal 8px dan horizontal 16px.</summary><div><code>bg-blue-600 text-white rounded-lg py-2 px-4</code> (py-2 = 0,5rem = 8px; px-4 = 1rem = 16px)</div></details><details><summary>2. Buat grid 2 kolom di tablet dan 4 kolom di desktop.</summary><div><code>grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4</code></div></details><details><summary>3. Mengapa menghapus outline fokus tanpa pengganti buruk?</summary><div>Pengguna keyboard kehilangan petunjuk elemen yang sedang fokus; gunakan focus-visible dengan ring atau outline yang jelas.</div></details><details><summary>4. Kapan CSS biasa atau CSS Modules lebih cocok dari Tailwind?</summary><div>Untuk animasi kompleks, gaya yang sangat dinamis dari data, atau tim yang sudah punya sistem desain berbasis CSS yang matang.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Utility-first: kelas kecil bermakna tunggal disusun langsung di elemen.</li><li>Skala bawaan (spacing, warna, ukuran) menjaga konsistensi.</li><li>Responsif mobile-first dengan sm:, md:, lg:; varian state seperti hover: dan focus-visible:, plus dark:.</li><li>Hindari pengulangan dengan komponen dan peta varian; tetap kuasai dasar CSS.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Tailwind membuat CSS membengkak?</summary><div>Tidak; hanya kelas yang benar-benar dipakai yang dibangkitkan sehingga CSS produksi biasanya kecil.</div></details>
+<details class="faq"><summary>Bagaimana memasang Tailwind di Vite?</summary><div>Pasang paket tailwindcss dan plugin Vite-nya, impor Tailwind di berkas CSS utama, lalu mulai memakai kelas; ikuti panduan resmi untuk versi terbaru.</div></details>
+<details class="faq"><summary>Apakah Tailwind cocok untuk proyek besar?</summary><div>Ya, banyak produk besar memakainya; kuncinya komponen yang dapat dipakai ulang dan tema terpusat.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://tailwindcss.com/docs" rel="noopener" target="_blank">Tailwind CSS Documentation</a></li><li><a href="https://tailwindcss.com/docs/styling-with-utility-classes" rel="noopener" target="_blank">Tailwind: Utility-First Fundamentals</a></li><li><a href="https://developer.mozilla.org/docs/Web/CSS/CSS_flexible_box_layout" rel="noopener" target="_blank">MDN: CSS Flexible Box Layout</a></li><li><a href="https://web.dev/learn/css" rel="noopener" target="_blank">web.dev: Learn CSS</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
