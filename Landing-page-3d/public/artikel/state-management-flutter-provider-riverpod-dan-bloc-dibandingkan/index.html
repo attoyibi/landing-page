@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>State Management Flutter: Provider, Riverpod, dan Bloc</title>
+<meta name="description" content="Bandingkan state management Flutter: setState, Provider, Riverpod, dan Bloc/Cubit, kapan memakai masing-masing, dengan contoh keranjang belanja yang dijalankan.">
+<meta name="keywords" content="state management, Provider, Riverpod, Bloc, Flutter">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/">
+<meta property="og:title" content="State Management Flutter: Provider, Riverpod, dan Bloc">
+<meta property="og:description" content="Bandingkan state management Flutter: setState, Provider, Riverpod, dan Bloc/Cubit, kapan memakai masing-masing, dengan contoh keranjang belanja yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="State Management Flutter: Provider, Riverpod, dan Bloc">
+<meta name="twitter:description" content="Bandingkan state management Flutter: setState, Provider, Riverpod, dan Bloc/Cubit, kapan memakai masing-masing, dengan contoh keranjang belanja yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"State Management Flutter: Provider, Riverpod, dan Bloc","description":"Bandingkan state management Flutter: setState, Provider, Riverpod, dan Bloc/Cubit, kapan memakai masing-masing, dengan contoh keranjang belanja yang dijalankan.","image":["https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"state management, Provider, Riverpod, Bloc, Flutter","articleSection":"Flutter & Mobile","wordCount":395,"mainEntityOfPage":"https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"State Management Flutter: Provider, Riverpod, dan Bloc","item":"https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah GetX layak dipakai?","acceptedAnswer":{"@type":"Answer","text":"Populer karena ringkas, tetapi memiliki kritik soal pola yang mencampur banyak tanggung jawab dan pemeliharaan; evaluasi dengan hati-hati untuk proyek jangka panjang."}},{"@type":"Question","name":"Bolehkah mencampur beberapa pustaka?","acceptedAnswer":{"@type":"Answer","text":"Bisa, tetapi tambah beban kognitif; lebih baik satu pendekatan utama."}},{"@type":"Question","name":"Bagaimana dengan state yang bertahan saat aplikasi ditutup?","acceptedAnswer":{"@type":"Answer","text":"Simpan ke penyimpanan lokal (shared_preferences, basis data) dan muat saat start; pustaka seperti hydrated_bloc mengotomasinya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#masalahnya">Masalahnya</a></li><li><a href="#gagasan-dasar-pola-observer">Gagasan dasar: pola Observer</a></li><li><a href="#provider-changenotifier">Provider + ChangeNotifier</a></li><li><a href="#riverpod-provider-global-yang-aman">Riverpod: provider global yang aman</a></li><li><a href="#bloc-cubit-aliran-peristiwa-yang-eksplisit">Bloc/Cubit: aliran peristiwa yang eksplisit</a></li><li><a href="#memilih">Memilih</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>State Management Flutter: Provider, Riverpod, dan Bloc</h1>
+<p class="lead">Pertanyaan yang paling sering muncul dari pemula Flutter: "pakai state management apa?" Jawaban jujurnya: tergantung. Semua pustaka menyelesaikan masalah yang sama (membagikan state antar widget dan memisahkannya dari tampilan) dengan filosofi berbeda. Memahami masalahnya lebih dulu membuat pilihan menjadi jelas, dan memindah pustaka kemudian menjadi jauh lebih mudah.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> StatefulWidget dan setState, async Dart</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="State Management Flutter: Provider, Riverpod, dan Bloc" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan masalah yang diselesaikan state management</li><li>membedakan state lokal (ephemeral) dan state aplikasi</li><li>memahami pola ChangeNotifier + Provider, Notifier + Riverpod, dan Cubit/Bloc</li><li>memisahkan logika dari tampilan agar mudah diuji</li><li>memilih pendekatan sesuai ukuran dan tim proyek</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="masalahnya">Masalahnya</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// Dengan setState saja, data keranjang harus dikirim lewat banyak lapisan
+HalamanBeranda(keranjang: keranjang, onTambah: tambah,
+  child: DaftarProduk(keranjang: keranjang, onTambah: tambah,
+    child: KartuProduk(produk: p, onTambah: tambah)))      // ikon keranjang di AppBar juga perlu jumlahnya...</code></pre><figcaption>Mengirim data dan callback lewat setiap tingkat widget ("prop drilling") membuat kode rapuh. State management menempatkan state di luar pohon widget dan memberi akses ke widget mana pun yang membutuhkannya.</figcaption></figure>
+<table><thead><tr><th>Jenis state</th><th>Contoh</th><th>Alat</th></tr></thead><tbody><tr><td>Lokal (ephemeral)</td><td>Tab aktif, isi kotak ketik, animasi</td><td>StatefulWidget + setState</td></tr><tr><td>Aplikasi (dibagi)</td><td>Keranjang, pengguna yang login, tema, pengaturan</td><td>Provider, Riverpod, Bloc, dll.</td></tr><tr><td>Data server</td><td>Daftar produk dari API (cache, memuat, galat)</td><td>Riverpod AsyncNotifier, Bloc, atau pustaka cache</td></tr></tbody></table>
+<h2 id="gagasan-dasar-pola-observer">Gagasan dasar: pola Observer</h2>
+<p>Semua pustaka bertumpu pada satu pola: objek yang menyimpan state, daftar pendengar, dan pemberitahuan saat state berubah. Berikut versi paling sederhananya dalam Dart murni (inilah yang dilakukan <code>ChangeNotifier</code>):</p>
+<figure class="codebox"><pre data-lang="dart"><code>class ChangeNotifierMini {
+  final List&lt;void Function()&gt; _pendengar = [];
+  void tambahPendengar(void Function() f) =&gt; _pendengar.add(f);
+  void notifyListeners() { for (final f in _pendengar) { f(); } }
+}
+
+class ItemKeranjang {
+  ItemKeranjang(this.nama, this.harga, this.jumlah);
+  final String nama; final int harga; int jumlah;
+}
+
+class Keranjang extends ChangeNotifierMini {
+  final Map&lt;String, ItemKeranjang&gt; _item = {};
+
+  List&lt;ItemKeranjang&gt; get item =&gt; List.unmodifiable(_item.values);     // salinan baca-saja
+  int get totalHarga =&gt; _item.values.fold(0, (j, i) =&gt; j + i.harga * i.jumlah);
+  int get jumlahBarang =&gt; _item.values.fold(0, (j, i) =&gt; j + i.jumlah);
+
+  void tambah(String nama, int harga) {
+    _item.update(nama, (i) { i.jumlah++; return i; }, ifAbsent: () =&gt; ItemKeranjang(nama, harga, 1));
+    notifyListeners();                                                   // beri tahu semua widget yang berlangganan
+  }
+
+  void kurang(String nama) {
+    final i = _item[nama];
+    if (i == null) return;
+    if (--i.jumlah &lt;= 0) _item.remove(nama);
+    notifyListeners();
+  }
+}
+
+void main() {
+  final keranjang = Keranjang();
+  // &quot;widget&quot; yang berlangganan: ikon di AppBar dan ringkasan total
+  keranjang.tambahPendengar(() =&gt; print('  [ikon AppBar] badge = ${keranjang.jumlahBarang}'));
+  keranjang.tambahPendengar(() =&gt; print('  [ringkasan]   total = Rp${keranjang.totalHarga}'));
+
+  print('tambah kopi');  keranjang.tambah('Kopi', 20000);
+  print('tambah kopi');  keranjang.tambah('Kopi', 20000);
+  print('tambah teh');   keranjang.tambah('Teh', 15000);
+  print('kurang kopi');  keranjang.kurang('Kopi');
+}</code></pre><pre class="runout" data-lang="keluaran"><code>tambah kopi
+  [ikon AppBar] badge = 1
+  [ringkasan]   total = Rp20000
+tambah kopi
+  [ikon AppBar] badge = 2
+  [ringkasan]   total = Rp40000
+tambah teh
+  [ikon AppBar] badge = 3
+  [ringkasan]   total = Rp55000
+kurang kopi
+  [ikon AppBar] badge = 2
+  [ringkasan]   total = Rp35000</code></pre><figcaption>Logika keranjang berada di satu kelas Dart murni tanpa Flutter: mudah diuji, dan tidak peduli widget mana yang menampilkannya. Provider, Riverpod, dan Bloc pada dasarnya mengatur bagaimana objek seperti ini disediakan ke pohon widget dan bagaimana widget berlangganan.</figcaption></figure>
+<h2 id="provider-changenotifier">Provider + ChangeNotifier</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// pubspec: provider: ^6.x
+class Keranjang extends ChangeNotifier {
+  final Map&lt;String, ItemKeranjang&gt; _item = {};
+  int get totalHarga =&gt; ...;
+
+  void tambah(Produk p) { /* ubah _item */ notifyListeners(); }
+}
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(                     // menyediakan satu instance ke seluruh pohon di bawahnya
+      create: (_) =&gt; Keranjang(),
+      child: const AplikasiSaya(),
+    ),
+  );
+}
+
+// membaca dan membangun ulang bila berubah
+class IkonKeranjang extends StatelessWidget {
+  const IkonKeranjang({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final jumlah = context.watch&lt;Keranjang&gt;().jumlahBarang;        // watch: rebuild saat berubah
+    return Badge(label: Text('$jumlah'), child: const Icon(Icons.shopping_cart));
+  }
+}
+
+// memanggil aksi tanpa ikut rebuild
+FilledButton(
+  onPressed: () =&gt; context.read&lt;Keranjang&gt;().tambah(produk),      // read: sekali, tidak berlangganan
+  child: const Text('Tambah'),
+)
+
+// membangun ulang bagian kecil saja
+Selector&lt;Keranjang, int&gt;(selector: (_, k) =&gt; k.totalHarga, builder: (_, total, __) =&gt; Text('Rp$total'))</code></pre><figcaption>Aturan emas: context.watch di dalam build, context.read di dalam callback (onPressed). Menukar keduanya menyebabkan rebuild berlebihan atau pembaruan yang tidak terjadi.</figcaption></figure>
+<h2 id="riverpod-provider-global-yang-aman">Riverpod: provider global yang aman</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// pubspec: flutter_riverpod
+final keranjangProvider = NotifierProvider&lt;KeranjangNotifier, List&lt;ItemKeranjang&gt;&gt;(KeranjangNotifier.new);
+
+class KeranjangNotifier extends Notifier&lt;List&lt;ItemKeranjang&gt;&gt; {
+  @override
+  List&lt;ItemKeranjang&gt; build() =&gt; [];                      // state awal
+
+  void tambah(Produk p) {
+    final ada = state.any((i) =&gt; i.id == p.id);
+    state = ada
+        ? [for (final i in state) if (i.id == p.id) i.salinDengan(jumlah: i.jumlah + 1) else i]
+        : [...state, ItemKeranjang.dari(p)];               // state immutable: selalu buat daftar BARU
+  }
+}
+
+// provider turunan: dihitung otomatis dan di-cache
+final totalProvider = Provider&lt;int&gt;((ref) =&gt; ref.watch(keranjangProvider).fold(0, (j, i) =&gt; j + i.harga * i.jumlah));
+
+// data asinkron: status memuat/galat/data sudah dikelola
+final produkProvider = FutureProvider&lt;List&lt;Produk&gt;&gt;((ref) =&gt; ref.watch(repositoryProvider).semua());
+
+void main() =&gt; runApp(const ProviderScope(child: AplikasiSaya()));
+
+class Beranda extends ConsumerWidget {
+  const Beranda({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final produk = ref.watch(produkProvider);                                  // AsyncValue
+    return produk.when(
+      loading: () =&gt; const CircularProgressIndicator(),
+      error: (e, _) =&gt; Text('Gagal: $e'),
+      data: (daftar) =&gt; ListView(children: [for (final p in daftar) ListTile(title: Text(p.nama), onTap: () =&gt; ref.read(keranjangProvider.notifier).tambah(p))]),
+    );
+  }
+}</code></pre><figcaption>Keunggulan Riverpod: provider tidak bergantung pada BuildContext (mudah diuji dan ditumpuk), ketergantungan antar provider otomatis, dan dukungan kelas satu untuk data asinkron. Sintaks pasti berubah antar versi mayor; ikuti dokumentasi resmi untuk versi yang Anda pakai.</figcaption></figure>
+<h2 id="bloc-cubit-aliran-peristiwa-yang-eksplisit">Bloc/Cubit: aliran peristiwa yang eksplisit</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// Cubit: kelas dengan emit(state baru)
+class KeranjangState {
+  const KeranjangState({this.item = const []});
+  final List&lt;ItemKeranjang&gt; item;
+}
+
+class KeranjangCubit extends Cubit&lt;KeranjangState&gt; {
+  KeranjangCubit() : super(const KeranjangState());
+  void tambah(Produk p) =&gt; emit(KeranjangState(item: [...state.item, ItemKeranjang.dari(p)]));
+}
+
+BlocProvider(create: (_) =&gt; KeranjangCubit(), child: ...);
+BlocBuilder&lt;KeranjangCubit, KeranjangState&gt;(builder: (context, state) =&gt; Text('${state.item.length} barang'));
+context.read&lt;KeranjangCubit&gt;().tambah(produk);
+
+// Bloc penuh: event masuk, state keluar -&gt; setiap perubahan tercatat sebagai peristiwa bernama
+// on&lt;TambahProduk&gt;((event, emit) =&gt; emit(...));</code></pre><figcaption>Bloc menekankan aliran satu arah dan jejak peristiwa yang dapat diaudit dan diuji dengan tabel (peristiwa masuk → state keluar). Konsekuensinya: lebih banyak berkas dan seremoni, yang berguna di tim besar.</figcaption></figure>
+<h2 id="memilih">Memilih</h2>
+<table><thead><tr><th>Pendekatan</th><th>Kekuatan</th><th>Pertimbangan</th><th>Cocok untuk</th></tr></thead><tbody><tr><td>setState + angkat state</td><td>Tanpa dependensi, sederhana</td><td>Tidak skala ke banyak layar</td><td>Prototipe, state lokal</td></tr><tr><td>Provider (ChangeNotifier)</td><td>Mudah dipelajari, direkomendasikan dokumentasi Flutter untuk pemula</td><td>Bergantung BuildContext; mutable state perlu disiplin</td><td>Aplikasi kecil sampai menengah</td></tr><tr><td>Riverpod</td><td>Aman terhadap waktu kompilasi, tanpa context, async kelas satu, mudah diuji</td><td>Konsep baru (provider, ref) dan pembaruan versi</td><td>Menengah sampai besar; banyak data server</td></tr><tr><td>Bloc/Cubit</td><td>Struktur ketat, peristiwa terlacak, sangat teruji</td><td>Lebih banyak kode</td><td>Tim besar, domain kompleks, aplikasi perusahaan</td></tr></tbody></table>
+<div class="callout good"><b>Pedoman</b><p>Jangan memilih berdasarkan popularitas di media sosial. Pilih yang <b>tim Anda pahami</b> dan konsisten memakainya. Yang terpenting lebih dari pustaka: <b>logika bisnis dipisahkan dari widget</b> sehingga dapat diuji sebagai kelas Dart biasa dan pustaka dapat diganti di kemudian hari.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"context.read vs context.watch pada Provider?","options":["watch berlangganan dan rebuild; read hanya mengambil sekali","Sama saja","read berlangganan"],"answer":0,"why":"Pakai read di callback, watch di build."},{"q":"Mengapa state di Riverpod sebaiknya immutable?","options":["Perubahan terdeteksi dari objek state baru","Lebih cepat dikompilasi","Wajib oleh Dart"],"answer":0,"why":"Pembaruan dengan membuat objek baru."},{"q":"Prinsip yang berlaku apa pun pustakanya?","options":["Pisahkan logika dari widget","Selalu pakai Bloc","Hindari state"],"answer":0,"why":"Memudahkan pengujian dan penggantian."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa logika keranjang di kelas Dart murni mudah diuji?</summary><div>Tidak bergantung widget atau BuildContext; cukup membuat objek, memanggil method, dan memeriksa hasil.</div></details><details><summary>2. Kapan setState sudah cukup?</summary><div>Untuk state lokal satu widget (tab aktif, toggle, isi form sementara) yang tidak dibagi ke widget lain.</div></details><details><summary>3. Apa risiko memakai context.watch di dalam onPressed?</summary><div>watch hanya boleh di build; di callback ia melempar galat. Pakai context.read.</div></details><details><summary>4. Apa gunanya Selector pada Provider?</summary><div>Membangun ulang widget hanya saat bagian state tertentu berubah, mengurangi rebuild.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>State management membagikan state aplikasi tanpa prop drilling dan memisahkan logika dari tampilan.</li><li>Pola dasar: objek state + pendengar + notifikasi (ChangeNotifier).</li><li>Provider sederhana, Riverpod aman dan kuat untuk data asinkron, Bloc ketat dan terlacak.</li><li>Pilih yang dipahami tim; yang utama: logika bisnis terpisah dan teruji.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah GetX layak dipakai?</summary><div>Populer karena ringkas, tetapi memiliki kritik soal pola yang mencampur banyak tanggung jawab dan pemeliharaan; evaluasi dengan hati-hati untuk proyek jangka panjang.</div></details>
+<details class="faq"><summary>Bolehkah mencampur beberapa pustaka?</summary><div>Bisa, tetapi tambah beban kognitif; lebih baik satu pendekatan utama.</div></details>
+<details class="faq"><summary>Bagaimana dengan state yang bertahan saat aplikasi ditutup?</summary><div>Simpan ke penyimpanan lokal (shared_preferences, basis data) dan muat saat start; pustaka seperti hydrated_bloc mengotomasinya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/data-and-backend/state-mgmt/options" rel="noopener" target="_blank">Flutter: State management</a></li><li><a href="https://pub.dev/packages/provider" rel="noopener" target="_blank">Provider package</a></li><li><a href="https://riverpod.dev/" rel="noopener" target="_blank">Riverpod</a></li><li><a href="https://bloclibrary.dev/" rel="noopener" target="_blank">Bloc library</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/"><img src="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Async di Dart: Future, async/await, dan Stream</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

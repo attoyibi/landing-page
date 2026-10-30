@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navigasi Flutter: Navigator, go_router, dan Deep Link</title>
+<meta name="description" content="Pelajari navigasi Flutter: Navigator push dan pop, kirim data antar layar, routing go_router dengan parameter path, redirect login, dan deep link.">
+<meta name="keywords" content="navigasi Flutter, go_router, Navigator, routing, deep link">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/">
+<meta property="og:title" content="Navigasi Flutter: Navigator, go_router, dan Deep Link">
+<meta property="og:description" content="Pelajari navigasi Flutter: Navigator push dan pop, kirim data antar layar, routing go_router dengan parameter path, redirect login, dan deep link.">
+<meta property="og:image" content="https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Navigasi Flutter: Navigator, go_router, dan Deep Link">
+<meta name="twitter:description" content="Pelajari navigasi Flutter: Navigator push dan pop, kirim data antar layar, routing go_router dengan parameter path, redirect login, dan deep link.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Navigasi Flutter: Navigator, go_router, dan Deep Link","description":"Pelajari navigasi Flutter: Navigator push dan pop, kirim data antar layar, routing go_router dengan parameter path, redirect login, dan deep link.","image":["https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"navigasi Flutter, go_router, Navigator, routing, deep link","articleSection":"Flutter & Mobile","wordCount":463,"mainEntityOfPage":"https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Navigasi Flutter: Navigator, go_router, dan Deep Link","item":"https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Navigator klasik sudah usang?","acceptedAnswer":{"@type":"Answer","text":"Tidak; ia tetap valid dan dipakai untuk dialog serta alur sederhana. Untuk aplikasi dengan banyak layar dan deep link, routing deklaratif lebih nyaman."}},{"@type":"Question","name":"Bagaimana mengirim objek besar antar layar?","acceptedAnswer":{"@type":"Answer","text":"Kirim ID lalu muat data di layar tujuan (dari state management atau repository), bukan objek lewat alamat."}},{"@type":"Question","name":"Alternatif go_router?","acceptedAnswer":{"@type":"Answer","text":"auto_route dan Beamer; go_router populer karena dipelihara tim Flutter."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tumpukan-layar">Tumpukan layar</a></li><li><a href="#navigator-dasar">Navigator dasar</a></li><li><a href="#go-router-routing-deklaratif">go_router: routing deklaratif</a></li><li><a href="#cara-kerja-pencocokan-rute-peragaan">Cara kerja pencocokan rute (peragaan)</a></li><li><a href="#redirect-melindungi-layar-yang-butuh-login">Redirect: melindungi layar yang butuh login</a></li><li><a href="#navigasi-bertab-dan-bersarang">Navigasi bertab dan bersarang</a></li><li><a href="#deep-link">Deep link</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>Navigasi Flutter: Navigator, go_router, dan Deep Link</h1>
+<p class="lead">Aplikasi nyata punya banyak layar: daftar, detail, keranjang, profil. Cara berpindah di antaranya memengaruhi tombol kembali, tautan yang dapat dibagikan, dan kemampuan membuka aplikasi langsung ke halaman tertentu dari notifikasi atau browser. Flutter menyediakan Navigator klasik dan, untuk kebutuhan yang lebih besar, routing deklaratif seperti go_router.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> widget Flutter, StatefulWidget</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Navigasi Flutter: Navigator, go_router, dan Deep Link" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai Navigator.push dan pop serta mengirim data antar layar</li><li>memahami tumpukan navigasi (stack) dan hasil dari layar yang ditutup</li><li>mendefinisikan rute dengan go_router, termasuk parameter path dan query</li><li>melindungi rute dengan redirect (login)</li><li>menjelaskan deep link dan cara kerjanya secara umum</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="tumpukan-layar">Tumpukan layar</h2>
+<figure class="diagram"><svg viewBox="0 0 620 190" role="img" aria-label="Tumpukan navigasi" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="9qsye-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="9qsye-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="9qsye-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="9qsye-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="9qsye-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><rect x="35" y="132" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="154.33333333333334" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="110" dy="0">Beranda (dasar)</tspan></text><rect x="35" y="82" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="104.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="110" dy="0">Detail Produk</tspan></text><rect x="35" y="32" width="150" height="36" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="110" y="54.333333333333336" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="110" dy="0">Keranjang (atas)</tspan></text><text x="400" y="56.333333333333336" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="400" dy="0">push menambah layar di</tspan><tspan x="400" dy="16">atas; pop membuang</tspan><tspan x="400" dy="16">layar teratas dan</tspan><tspan x="400" dy="16">kembali ke yang di</tspan><tspan x="400" dy="16">bawahnya. Tombol</tspan><tspan x="400" dy="16">kembali (Android)</tspan><tspan x="400" dy="16">menjalankan pop.</tspan></text></svg></figure>
+<h2 id="navigator-dasar">Navigator dasar</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// pindah ke layar baru
+Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) =&gt; DetailProduk(produk: produk)),     // data lewat konstruktor
+);
+
+// kembali
+Navigator.pop(context);
+
+// kembali SAMBIL membawa hasil
+final hasil = await Navigator.push&lt;bool&gt;(context, MaterialPageRoute(builder: (_) =&gt; const KonfirmasiHapus()));
+if (hasil == true &amp;&amp; context.mounted) { /* hapus item */ }
+// di KonfirmasiHapus:  Navigator.pop(context, true);
+
+// ganti layar tanpa bisa kembali (mis. setelah login)
+Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) =&gt; const Beranda()));
+
+// rute bernama (sederhana)
+MaterialApp(routes: {'/': (_) =&gt; const Beranda(), '/keranjang': (_) =&gt; const Keranjang()});
+Navigator.pushNamed(context, '/keranjang');</code></pre><figcaption>Periksa context.mounted setelah await sebelum memakai context lagi. Navigator klasik mudah dipakai, tetapi tidak menangani alamat (URL) dan deep link dengan baik; di sana go_router unggul.</figcaption></figure>
+<h2 id="go-router-routing-deklaratif">go_router: routing deklaratif</h2>
+<figure class="codebox"><pre data-lang="bash"><code>flutter pub add go_router</code></pre></figure>
+<figure class="codebox"><pre data-lang="dart"><code>import 'package:go_router/go_router.dart';
+
+final router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) =&gt; const Beranda(),
+      routes: [
+        GoRoute(
+          path: 'produk/:id',                                   // /produk/42
+          builder: (context, state) {
+            final id = int.parse(state.pathParameters['id']!);
+            return DetailProduk(id: id);
+          },
+        ),
+        GoRoute(
+          path: 'cari',                                          // /cari?q=kopi
+          builder: (context, state) =&gt; HalamanCari(kata: state.uri.queryParameters['q'] ?? ''),
+        ),
+      ],
+    ),
+    GoRoute(path: '/masuk', builder: (context, state) =&gt; const Masuk()),
+  ],
+  errorBuilder: (context, state) =&gt; const HalamanTidakDitemukan(),
+);
+
+void main() =&gt; runApp(MaterialApp.router(routerConfig: router));
+
+// berpindah
+context.go('/produk/42');        // ganti seluruh tumpukan sesuai alamat (seperti membuka URL)
+context.push('/produk/42');      // tambah di atas tumpukan (dapat kembali)
+context.pop();</code></pre><figcaption>Setiap layar punya alamat. Alamat yang sama menghasilkan layar yang sama, bekerja di web, dan dapat dipakai deep link dan notifikasi. go_router dikelola tim Flutter.</figcaption></figure>
+<h2 id="cara-kerja-pencocokan-rute-peragaan">Cara kerja pencocokan rute (peragaan)</h2>
+<figure class="codebox"><pre data-lang="dart"><code>class Rute {
+  Rute(this.pola);
+  final String pola;
+  Map&lt;String, String&gt;? cocok(String alamat) {
+    final p = pola.split('/').where((s) =&gt; s.isNotEmpty).toList();
+    final a = Uri.parse(alamat).pathSegments.where((s) =&gt; s.isNotEmpty).toList();
+    if (p.length != a.length) return null;
+    final params = &lt;String, String&gt;{};
+    for (var i = 0; i &lt; p.length; i++) {
+      if (p[i].startsWith(':')) { params[p[i].substring(1)] = a[i]; }
+      else if (p[i] != a[i]) { return null; }
+    }
+    return params;
+  }
+}
+
+void main() {
+  final daftar = [Rute('/'), Rute('/produk/:id'), Rute('/pengguna/:nama/pesanan/:no')];
+  for (final alamat in ['/', '/produk/42', '/pengguna/ani/pesanan/7?urut=baru', '/tidak/ada']) {
+    String hasil = '404 (errorBuilder)';
+    for (final r in daftar) {
+      final m = r.cocok(alamat);
+      if (m != null) { hasil = '${r.pola} $m'; break; }
+    }
+    print('${alamat.padRight(34)} -&gt; $hasil');
+  }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>/                                  -&gt; / {}
+/produk/42                         -&gt; /produk/:id {id: 42}
+/pengguna/ani/pesanan/7?urut=baru  -&gt; /pengguna/:nama/pesanan/:no {nama: ani, no: 7}
+/tidak/ada                         -&gt; 404 (errorBuilder)</code></pre><figcaption>Router mencocokkan segmen alamat dengan pola dan mengambil parameter. Query string (?urut=baru) tidak ikut dicocokkan path, tetapi tersedia terpisah.</figcaption></figure>
+<h2 id="redirect-melindungi-layar-yang-butuh-login">Redirect: melindungi layar yang butuh login</h2>
+<figure class="codebox"><pre data-lang="dart"><code>final router = GoRouter(
+  refreshListenable: authNotifier,                         // router memeriksa ulang saat status login berubah
+  redirect: (context, state) {
+    final masuk = authNotifier.sudahMasuk;
+    final menujuLogin = state.matchedLocation == '/masuk';
+
+    if (!masuk &amp;&amp; !menujuLogin) return '/masuk?dari=${Uri.encodeComponent(state.matchedLocation)}';   // belum login -&gt; ke layar masuk
+    if (masuk &amp;&amp; menujuLogin) return '/';                                                            // sudah login -&gt; jangan tampilkan login
+    return null;                                                                                     // null = lanjutkan seperti biasa
+  },
+  routes: [ /* ... */ ],
+);</code></pre><figcaption>Pembatasan di sisi aplikasi hanya pengalaman pengguna. Keamanan sebenarnya tetap di server: setiap API memeriksa token dan hak akses.</figcaption></figure>
+<h2 id="navigasi-bertab-dan-bersarang">Navigasi bertab dan bersarang</h2>
+<p>Aplikasi dengan bilah navigasi bawah (Beranda, Cari, Profil) biasanya mempertahankan tumpukan terpisah untuk setiap tab sehingga berpindah tab tidak menghilangkan posisi pengguna. Di go_router ini dilakukan dengan <code>StatefulShellRoute.indexedStack</code>; Flutter menyediakan <code>NavigationBar</code> (Material 3) untuk tampilannya.</p>
+<h2 id="deep-link">Deep link</h2>
+<ul><li><b>Deep link</b> membuka aplikasi langsung di layar tertentu dari luar: tautan di surel, notifikasi push, atau kode QR.</li><li><b>Android App Links / iOS Universal Links</b> memakai alamat web biasa (https://contoh.id/produk/42) yang ditautkan ke aplikasi lewat berkas verifikasi di server (assetlinks.json, apple-app-site-association). Bila aplikasi terpasang, alamat dibuka di aplikasi; bila tidak, di browser.</li><li>Flutter meneruskan alamat itu ke router; dengan go_router, alamat yang sama dengan rute Anda langsung bekerja.</li><li><b>Notifikasi</b>: sertakan alamat tujuan dalam payload dan arahkan dengan context.go saat diketuk.</li><li><b>Uji</b> dengan perintah adb (adb shell am start -a android.intent.action.VIEW -d "https://contoh.id/produk/42") dan xcrun simctl openurl di simulator iOS.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Perbedaan go dan push di go_router?","options":["go mengganti tumpukan sesuai alamat; push menambah di atas","Sama","push mengganti"],"answer":0,"why":"push dapat kembali dengan pop."},{"q":"Kapan redirect mengembalikan null?","options":["Tidak ada pengalihan; lanjut ke layar tujuan","Menutup aplikasi","Menampilkan galat"],"answer":0,"why":"null berarti tidak mengubah tujuan."},{"q":"Manfaat rute berbasis alamat?","options":["Bisa dipakai deep link, web, dan notifikasi","Lebih kecil","Tanpa kode"],"answer":0,"why":"Setiap layar dapat dituju dari luar."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis rute /pesanan/:no dan baca parameternya.</summary><div>GoRoute(path: "/pesanan/:no", builder: (c, s) => DetailPesanan(no: s.pathParameters["no"]!))</div></details><details><summary>2. Mengapa tidak cukup melindungi layar hanya dengan redirect di aplikasi?</summary><div>Pengguna dapat memodifikasi aplikasi atau memanggil API langsung; server wajib memeriksa autentikasi dan otorisasi.</div></details><details><summary>3. Bagaimana mengirim hasil dari layar pilihan alamat kembali ke layar sebelumnya?</summary><div>Navigator.pop(context, alamatTerpilih) atau context.pop(alamat); layar pemanggil menunggu dengan await push.</div></details><details><summary>4. Mengapa layar bertab perlu tumpukan terpisah?</summary><div>Agar berpindah tab tidak menghapus posisi dan state di tab lain.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Navigator mengelola tumpukan layar: push, pop, pushReplacement, dan hasil lewat pop.</li><li>go_router: rute deklaratif berbasis alamat, parameter path dan query, errorBuilder.</li><li>redirect melindungi rute (UX); keamanan sejati di server.</li><li>Deep link (App Links/Universal Links) bekerja dengan rute berbasis alamat dan perlu verifikasi domain.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Navigator klasik sudah usang?</summary><div>Tidak; ia tetap valid dan dipakai untuk dialog serta alur sederhana. Untuk aplikasi dengan banyak layar dan deep link, routing deklaratif lebih nyaman.</div></details>
+<details class="faq"><summary>Bagaimana mengirim objek besar antar layar?</summary><div>Kirim ID lalu muat data di layar tujuan (dari state management atau repository), bukan objek lewat alamat.</div></details>
+<details class="faq"><summary>Alternatif go_router?</summary><div>auto_route dan Beamer; go_router populer karena dipelihara tim Flutter.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/ui/navigation" rel="noopener" target="_blank">Flutter: Navigation and routing</a></li><li><a href="https://pub.dev/packages/go_router" rel="noopener" target="_blank">go_router package</a></li><li><a href="https://docs.flutter.dev/ui/navigation/deep-linking" rel="noopener" target="_blank">Flutter: Deep linking</a></li><li><a href="https://developer.android.com/training/app-links" rel="noopener" target="_blank">Android: App Links</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

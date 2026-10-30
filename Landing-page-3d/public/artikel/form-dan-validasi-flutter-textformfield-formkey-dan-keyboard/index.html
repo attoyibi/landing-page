@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form dan Validasi Flutter: TextFormField dan FormKey</title>
+<meta name="description" content="Membuat form Flutter yang baik: Form dan GlobalKey, TextFormField, validator, jenis keyboard, fokus, dan controller, dengan logika validasi yang dijalankan.">
+<meta name="keywords" content="form Flutter, validasi, TextFormField, Form key, input">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/">
+<meta property="og:title" content="Form dan Validasi Flutter: TextFormField dan FormKey">
+<meta property="og:description" content="Membuat form Flutter yang baik: Form dan GlobalKey, TextFormField, validator, jenis keyboard, fokus, dan controller, dengan logika validasi yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Form dan Validasi Flutter: TextFormField dan FormKey">
+<meta name="twitter:description" content="Membuat form Flutter yang baik: Form dan GlobalKey, TextFormField, validator, jenis keyboard, fokus, dan controller, dengan logika validasi yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Form dan Validasi Flutter: TextFormField dan FormKey","description":"Membuat form Flutter yang baik: Form dan GlobalKey, TextFormField, validator, jenis keyboard, fokus, dan controller, dengan logika validasi yang dijalankan.","image":["https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"form Flutter, validasi, TextFormField, Form key, input","articleSection":"Flutter & Mobile","wordCount":363,"mainEntityOfPage":"https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Form dan Validasi Flutter: TextFormField dan FormKey","item":"https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah perlu paket form seperti flutter_form_builder?","acceptedAnswer":{"@type":"Answer","text":"Untuk form besar dan dinamis ia mengurangi kode berulang; untuk form kecil, Form bawaan sudah cukup."}},{"@type":"Question","name":"Bagaimana validasi lintas kolom (konfirmasi sandi)?","acceptedAnswer":{"@type":"Answer","text":"Validator kolom kedua membandingkan dengan nilai controller kolom pertama."}},{"@type":"Question","name":"Bagaimana menyimpan draf form saat aplikasi ditutup?","acceptedAnswer":{"@type":"Answer","text":"Simpan nilai controller ke penyimpanan lokal secara berkala dan pulihkan di initState."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#form-dasar">Form dasar</a></li><li><a href="#validator-sebagai-fungsi-murni">Validator sebagai fungsi murni</a></li><li><a href="#keyboard-dan-pengalaman-input">Keyboard dan pengalaman input</a></li><li><a href="#galat-dari-server">Galat dari server</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>Form dan Validasi Flutter: TextFormField dan FormKey</h1>
+<p class="lead">Form adalah titik kontak utama dengan pengguna: pendaftaran, pencarian, pemesanan. Kualitasnya terlihat pada hal kecil: keyboard yang sesuai jenis isian, pesan galat yang membantu, fokus yang berpindah dengan wajar, dan tombol yang tidak menjebak. Flutter menyediakan Form dan TextFormField yang membuat semua itu terkelola.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> StatefulWidget, dasar Dart</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Form dan Validasi Flutter: TextFormField dan FormKey" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membangun form dengan Form, GlobalKey<FormState>, dan TextFormField</li><li>menulis validator sebagai fungsi murni yang mudah diuji</li><li>mengatur jenis keyboard, aksi tombol, fokus, dan obscureText</li><li>mengelola controller dan melepasnya di dispose</li><li>menangani submit, status mengirim, dan galat dari server</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="form-dasar">Form dasar</h2>
+<figure class="codebox"><pre data-lang="dart"><code>class FormDaftar extends StatefulWidget {
+  const FormDaftar({super.key});
+  @override
+  State&lt;FormDaftar&gt; createState() =&gt; _FormDaftarState();
+}
+
+class _FormDaftarState extends State&lt;FormDaftar&gt; {
+  final _kunci = GlobalKey&lt;FormState&gt;();                 // pegangan untuk memvalidasi seluruh form
+  final _nama = TextEditingController();
+  final _surel = TextEditingController();
+  final _sandi = TextEditingController();
+  bool _kirim = false;
+
+  @override
+  void dispose() {
+    _nama.dispose(); _surel.dispose(); _sandi.dispose();  // jangan lupa melepas controller
+    super.dispose();
+  }
+
+  Future&lt;void&gt; _submit() async {
+    if (!_kunci.currentState!.validate()) return;          // jalankan semua validator; berhenti bila ada galat
+    setState(() =&gt; _kirim = true);
+    try {
+      await api.daftar(_nama.text.trim(), _surel.text.trim(), _sandi.text);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pendaftaran berhasil')));
+    } finally {
+      if (mounted) setState(() =&gt; _kirim = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _kunci,
+      autovalidateMode: AutovalidateMode.onUserInteraction,   // validasi setelah pengguna menyentuh kolom
+      child: Column(children: [
+        TextFormField(
+          controller: _nama,
+          decoration: const InputDecoration(labelText: 'Nama lengkap'),
+          textInputAction: TextInputAction.next,               // tombol keyboard &quot;Lanjut&quot; memindahkan fokus
+          textCapitalization: TextCapitalization.words,
+          validator: Validator.nama,
+        ),
+        TextFormField(
+          controller: _surel,
+          decoration: const InputDecoration(labelText: 'Surel'),
+          keyboardType: TextInputType.emailAddress,            // keyboard dengan tombol @
+          textInputAction: TextInputAction.next,
+          autofillHints: const [AutofillHints.email],
+          validator: Validator.surel,
+        ),
+        TextFormField(
+          controller: _sandi,
+          decoration: const InputDecoration(labelText: 'Kata sandi'),
+          obscureText: true,
+          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (_) =&gt; _submit(),
+          validator: Validator.sandi,
+        ),
+        const SizedBox(height: 16),
+        FilledButton(onPressed: _kirim ? null : _submit, child: Text(_kirim ? 'Mengirim...' : 'Daftar')),
+      ]),
+    );
+  }
+}</code></pre><figcaption>Tombol dinonaktifkan selama mengirim untuk mencegah kirim ganda. mounted diperiksa setelah await karena pengguna mungkin telah meninggalkan layar.</figcaption></figure>
+<h2 id="validator-sebagai-fungsi-murni">Validator sebagai fungsi murni</h2>
+<p>Validator Flutter adalah fungsi <code>String? Function(String?)</code>: mengembalikan <b>pesan galat</b> atau <b>null</b> bila valid. Karena murni, ia dapat diuji tanpa Flutter sama sekali.</p>
+<figure class="codebox"><pre data-lang="dart"><code>class Validator {
+  static String? nama(String? v) {
+    final t = v?.trim() ?? '';
+    if (t.isEmpty) return 'Nama wajib diisi.';
+    if (t.length &lt; 3) return 'Nama minimal 3 karakter.';
+    return null;
+  }
+
+  static String? surel(String? v) {
+    final t = v?.trim() ?? '';
+    if (t.isEmpty) return 'Surel wajib diisi.';
+    if (!RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$').hasMatch(t)) return 'Format surel belum benar.';
+    return null;
+  }
+
+  static String? sandi(String? v) {
+    if (v == null || v.isEmpty) return 'Kata sandi wajib diisi.';
+    if (v.length &lt; 8) return 'Minimal 8 karakter.';
+    if (!v.contains(RegExp(r'[0-9]'))) return 'Sertakan setidaknya satu angka.';
+    return null;
+  }
+
+  static String? ponsel(String? v) {
+    final digit = (v ?? '').replaceAll(RegExp(r'[^\d+]'), '');
+    final norm = digit.startsWith('+62') ? '0' + digit.substring(3) : digit.startsWith('62') ? '0' + digit.substring(2) : digit;
+    return RegExp(r'^08\d{8,11}$').hasMatch(norm) ? null : 'Nomor ponsel tidak valid.';
+  }
+}
+
+void main() {
+  int lulus = 0, gagal = 0;
+  void uji(String nama, String? aktual, String? harapan) {
+    final ok = aktual == harapan;
+    ok ? lulus++ : gagal++;
+    print('${ok ? &quot;LULUS&quot; : &quot;GAGAL&quot;}  $nama -&gt; $aktual');
+  }
+
+  uji('nama kosong', Validator.nama(''), 'Nama wajib diisi.');
+  uji('nama pendek', Validator.nama('Al'), 'Nama minimal 3 karakter.');
+  uji('nama valid', Validator.nama(' Ani '), null);
+  uji('surel salah', Validator.surel('ani@x'), 'Format surel belum benar.');
+  uji('surel valid', Validator.surel('ani@contoh.id'), null);
+  uji('sandi tanpa angka', Validator.sandi('abcdefgh'), 'Sertakan setidaknya satu angka.');
+  uji('sandi valid', Validator.sandi('rahasia123'), null);
+  uji('ponsel +62', Validator.ponsel('+62 812-3456-7890'), null);
+  uji('ponsel salah', Validator.ponsel('12345'), 'Nomor ponsel tidak valid.');
+  print('$lulus lulus, $gagal gagal');
+}</code></pre><pre class="runout" data-lang="keluaran"><code>LULUS  nama kosong -&gt; Nama wajib diisi.
+LULUS  nama pendek -&gt; Nama minimal 3 karakter.
+LULUS  nama valid -&gt; null
+LULUS  surel salah -&gt; Format surel belum benar.
+LULUS  surel valid -&gt; null
+LULUS  sandi tanpa angka -&gt; Sertakan setidaknya satu angka.
+LULUS  sandi valid -&gt; null
+LULUS  ponsel +62 -&gt; null
+LULUS  ponsel salah -&gt; Nomor ponsel tidak valid.
+9 lulus, 0 gagal</code></pre><figcaption>Tes ini berjalan tanpa emulator. Memisahkan validator dari widget adalah kebiasaan yang membuat form besar tetap terkendali.</figcaption></figure>
+<h2 id="keyboard-dan-pengalaman-input">Keyboard dan pengalaman input</h2>
+<table><thead><tr><th>Properti</th><th>Fungsi</th><th>Contoh</th></tr></thead><tbody><tr><td>keyboardType</td><td>Jenis keyboard</td><td>emailAddress, phone, number, url, multiline</td></tr><tr><td>textInputAction</td><td>Tombol aksi keyboard</td><td>next (lanjut), done (selesai), search, send</td></tr><tr><td>textCapitalization</td><td>Huruf kapital otomatis</td><td>words (nama), sentences, characters</td></tr><tr><td>inputFormatters</td><td>Menyaring atau memformat ketikan</td><td>FilteringTextInputFormatter.digitsOnly, batas panjang</td></tr><tr><td>autofillHints</td><td>Mengisi otomatis dari pengelola kata sandi/kontak</td><td>email, password, name, telephoneNumber</td></tr><tr><td>obscureText + ikon mata</td><td>Sembunyikan/tampilkan kata sandi</td><td>Toggle di suffixIcon</td></tr><tr><td>autovalidateMode</td><td>Kapan memvalidasi</td><td>onUserInteraction (disarankan), disabled, always</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="dart"><code>// membatasi ketikan hanya angka dan panjang 13
+TextFormField(
+  keyboardType: TextInputType.number,
+  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(13)],
+  decoration: const InputDecoration(labelText: 'Nomor ponsel', prefixText: '+62 '),
+)
+
+// pindah fokus manual
+final _fokusSurel = FocusNode();
+TextFormField(textInputAction: TextInputAction.next, onFieldSubmitted: (_) =&gt; _fokusSurel.requestFocus());
+TextFormField(focusNode: _fokusSurel /* dispose di dispose() */);
+
+// menutup keyboard saat mengetuk di luar
+GestureDetector(onTap: () =&gt; FocusScope.of(context).unfocus(), child: formulir)</code></pre></figure>
+<h2 id="galat-dari-server">Galat dari server</h2>
+<div class="callout info"><b>Dua lapis validasi</b><p>Validasi di aplikasi hanya kenyamanan. Server tetap memvalidasi dan dapat menolak (misalnya "surel sudah terdaftar"). Tampilkan galat server pada kolom yang tepat (dari respons 422) alih-alih satu pesan umum. Simpan galat server di state dan kembalikan dari validator: <code>validator: (v) =&gt; _galatServer["surel"]</code>.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Validator Flutter mengembalikan...","options":["Pesan galat, atau null bila valid","true/false","Selalu string"],"answer":0,"why":"String? Function(String?)."},{"q":"Mengapa TextEditingController perlu dispose?","options":["Melepas sumber daya dan mencegah kebocoran","Agar cepat","Wajib untuk keyboard"],"answer":0,"why":"Controller memegang listener."},{"q":"Mode validasi yang ramah pengguna?","options":["onUserInteraction","always sejak awal","Tidak pernah"],"answer":0,"why":"Tidak menegur sebelum pengguna menyentuh kolom."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis validator untuk "umur" yang menerima bilangan bulat 17 sampai 100.</summary><div>Gunakan int.tryParse; kembalikan pesan bila null atau di luar rentang, selain itu null.</div></details><details><summary>2. Mengapa nonaktifkan tombol saat mengirim?</summary><div>Mencegah kirim ganda dan memberi umpan balik bahwa proses berjalan.</div></details><details><summary>3. Apa fungsi textInputAction.next?</summary><div>Mengubah tombol keyboard menjadi "Lanjut" dan memindahkan fokus ke kolom berikutnya saat ditekan.</div></details><details><summary>4. Bagaimana menampilkan galat 422 dari server pada kolom surel?</summary><div>Simpan pesan per kolom dan kembalikan dari validator kolom itu, lalu panggil validate() ulang.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Form + GlobalKey<FormState> + TextFormField; validate() menjalankan semua validator.</li><li>Validator murni String? Function(String?) mudah diuji tanpa Flutter.</li><li>keyboardType, textInputAction, inputFormatters, autofillHints memperbaiki pengalaman.</li><li>Dispose controller dan FocusNode; cegah kirim ganda; validasi ulang di server.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah perlu paket form seperti flutter_form_builder?</summary><div>Untuk form besar dan dinamis ia mengurangi kode berulang; untuk form kecil, Form bawaan sudah cukup.</div></details>
+<details class="faq"><summary>Bagaimana validasi lintas kolom (konfirmasi sandi)?</summary><div>Validator kolom kedua membandingkan dengan nilai controller kolom pertama.</div></details>
+<details class="faq"><summary>Bagaimana menyimpan draf form saat aplikasi ditutup?</summary><div>Simpan nilai controller ke penyimpanan lokal secara berkala dan pulihkan di initState.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/cookbook/forms" rel="noopener" target="_blank">Flutter: Forms</a></li><li><a href="https://docs.flutter.dev/cookbook/forms/validation" rel="noopener" target="_blank">Flutter: Build a form with validation</a></li><li><a href="https://api.flutter.dev/flutter/material/TextFormField-class.html" rel="noopener" target="_blank">API: TextFormField</a></li><li><a href="https://m3.material.io/components/text-fields/overview" rel="noopener" target="_blank">Material Design: Text fields</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

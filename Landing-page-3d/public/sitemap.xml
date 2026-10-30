@@ -1275,4 +1275,24 @@
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

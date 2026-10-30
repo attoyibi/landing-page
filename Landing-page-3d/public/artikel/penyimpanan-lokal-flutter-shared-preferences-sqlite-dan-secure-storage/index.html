@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage</title>
+<meta name="description" content="Pilih penyimpanan lokal Flutter: shared_preferences, secure storage untuk token, SQLite untuk data terstruktur, migrasi skema, dan pola offline-first.">
+<meta name="keywords" content="penyimpanan lokal, shared_preferences, SQLite, secure storage, offline">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/">
+<meta property="og:title" content="Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage">
+<meta property="og:description" content="Pilih penyimpanan lokal Flutter: shared_preferences, secure storage untuk token, SQLite untuk data terstruktur, migrasi skema, dan pola offline-first.">
+<meta property="og:image" content="https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage">
+<meta name="twitter:description" content="Pilih penyimpanan lokal Flutter: shared_preferences, secure storage untuk token, SQLite untuk data terstruktur, migrasi skema, dan pola offline-first.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage","description":"Pilih penyimpanan lokal Flutter: shared_preferences, secure storage untuk token, SQLite untuk data terstruktur, migrasi skema, dan pola offline-first.","image":["https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"penyimpanan lokal, shared_preferences, SQLite, secure storage, offline","articleSection":"Flutter & Mobile","wordCount":483,"mainEntityOfPage":"https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage","item":"https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hive atau SQLite?","acceptedAnswer":{"@type":"Answer","text":"Hive/Isar cepat dan sederhana untuk objek tanpa relasi rumit; SQLite lebih tepat untuk data relasional, pencarian, dan migrasi yang kuat."}},{"@type":"Question","name":"Di mana data aplikasi tersimpan?","acceptedAnswer":{"@type":"Answer","text":"Di direktori privat aplikasi; data hilang saat aplikasi dihapus (kecuali dicadangkan oleh platform)."}},{"@type":"Question","name":"Apakah data lokal aman dari pengguna?","acceptedAnswer":{"@type":"Answer","text":"Tidak sepenuhnya. Pada perangkat yang di-root atau dengan akses fisik data dapat dibaca; enkripsi menaikkan hambatan tetapi kunci yang ada di perangkat tetap dapat diekstrak oleh penyerang yang gigih."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#memilih-penyimpanan">Memilih penyimpanan</a></li><li><a href="#shared-preferences">shared_preferences</a></li><li><a href="#flutter-secure-storage">flutter_secure_storage</a></li><li><a href="#sqlite-untuk-data-terstruktur">SQLite untuk data terstruktur</a></li><li><a href="#pola-offline-first">Pola offline-first</a></li><li><a href="#hal-praktis">Hal praktis</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage</h1>
+<p class="lead">Aplikasi seluler harus tetap berguna saat sinyal hilang di lift atau terowongan, dan harus mengingat pilihan pengguna antar sesi. Flutter tidak memiliki satu penyimpanan bawaan; Anda memilih sesuai jenis data: pengaturan kecil, rahasia, atau data terstruktur dalam jumlah besar. Salah pilih bisa berarti token tercuri atau aplikasi yang melambat.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> async Dart, JSON dan model Dart</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Penyimpanan Lokal Flutter: Preferences, SQLite, Secure Storage" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memilih penyimpanan yang tepat untuk setiap jenis data</li><li>memakai shared_preferences untuk pengaturan sederhana</li><li>menyimpan token dan rahasia dengan flutter_secure_storage</li><li>memakai SQLite (sqflite/drift) untuk data relasional dan memahami migrasi skema</li><li>merancang pola offline-first sederhana</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="memilih-penyimpanan">Memilih penyimpanan</h2>
+<table><thead><tr><th>Data</th><th>Pilihan</th><th>Alasan</th></tr></thead><tbody><tr><td>Pengaturan sederhana (tema, bahasa, sudah melihat onboarding)</td><td>shared_preferences</td><td>Pasangan kunci-nilai kecil, API mudah</td></tr><tr><td>Token, kata sandi, kunci</td><td>flutter_secure_storage</td><td>Memakai Keychain (iOS) dan Keystore (Android) yang terenkripsi</td></tr><tr><td>Data terstruktur dan relasi, pencarian, banyak baris</td><td>SQLite via sqflite, drift</td><td>Query SQL, indeks, transaksi, migrasi</td></tr><tr><td>Objek dokumen tanpa skema ketat</td><td>Hive, Isar, ObjectBox</td><td>Cepat dan mudah, dengan model data NoSQL</td></tr><tr><td>Berkas (gambar, PDF, ekspor)</td><td>path_provider + dart:io</td><td>Direktori dokumen/cache aplikasi</td></tr><tr><td>Cache respons API</td><td>Basis data lokal atau paket cache (dio_cache_interceptor)</td><td>Mengurangi permintaan dan mendukung offline</td></tr></tbody></table>
+<div class="callout warn"><b>Rahasia</b><p>Jangan menyimpan token atau rahasia di <code>shared_preferences</code>: nilainya tersimpan sebagai teks biasa (XML/plist) yang dapat dibaca pada perangkat yang di-root atau dari cadangan. Gunakan penyimpanan aman untuk apa pun yang sensitif, dan ingat bahwa <b>apa pun yang ada di perangkat pengguna pada akhirnya dapat diakses oleh pengguna itu</b>.</p></div>
+<h2 id="shared-preferences">shared_preferences</h2>
+<figure class="codebox"><pre data-lang="dart"><code>import 'package:shared_preferences/shared_preferences.dart';
+
+Future&lt;void&gt; simpanTema(bool gelap) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('tema_gelap', gelap);
+  await prefs.setString('bahasa', 'id');
+  await prefs.setStringList('pencarian_terakhir', ['kopi', 'teh']);
+}
+
+Future&lt;bool&gt; bacaTema() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool('tema_gelap') ?? false;          // selalu beri nilai bawaan: kunci belum tentu ada
+}
+
+// Versi baru (SharedPreferencesAsync / WithCache) tersedia pada paket terbaru; ikuti dokumentasi paket.</code></pre><figcaption>Cocok untuk data kecil. Jangan menyimpan daftar besar atau JSON berukuran ratusan KB di sini; pakai basis data.</figcaption></figure>
+<h2 id="flutter-secure-storage">flutter_secure_storage</h2>
+<figure class="codebox"><pre data-lang="dart"><code>import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+const _aman = FlutterSecureStorage();
+
+Future&lt;void&gt; simpanToken(String token) =&gt; _aman.write(key: 'token_akses', value: token);
+Future&lt;String?&gt; bacaToken() =&gt; _aman.read(key: 'token_akses');
+Future&lt;void&gt; hapusSemua() =&gt; _aman.deleteAll();            // saat keluar (logout)
+
+// Praktik: baca token saat aplikasi mulai, simpan di state management (memori), hapus saat logout
+// atau saat server menjawab 401. Token berumur pendek + refresh token membatasi dampak kebocoran.</code></pre></figure>
+<h2 id="sqlite-untuk-data-terstruktur">SQLite untuk data terstruktur</h2>
+<figure class="codebox"><pre data-lang="dart"><code>import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+Future&lt;Database&gt; bukaDb() async {
+  final jalur = join(await getDatabasesPath(), 'toko.db');
+  return openDatabase(
+    jalur,
+    version: 2,                                                   // naikkan saat skema berubah
+    onCreate: (db, versi) async {
+      await db.execute('''
+        CREATE TABLE produk (
+          id INTEGER PRIMARY KEY,
+          nama TEXT NOT NULL,
+          harga INTEGER NOT NULL,
+          diperbarui INTEGER NOT NULL
+        )''');
+      await db.execute('CREATE INDEX idx_produk_nama ON produk (nama)');
+    },
+    onUpgrade: (db, lama, baru) async {                           // MIGRASI: ubah skema tanpa kehilangan data pengguna
+      if (lama &lt; 2) await db.execute('ALTER TABLE produk ADD COLUMN stok INTEGER NOT NULL DEFAULT 0');
+    },
+  );
+}
+
+Future&lt;void&gt; simpanBanyak(Database db, List&lt;Produk&gt; daftar) async {
+  await db.transaction((txn) async {                              // semua atau tidak sama sekali; jauh lebih cepat
+    for (final p in daftar) {
+      await txn.insert('produk', p.keMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    }
+  });
+}
+
+Future&lt;List&lt;Produk&gt;&gt; cari(Database db, String kata) async {
+  final baris = await db.query('produk', where: 'nama LIKE ?', whereArgs: ['%$kata%'], orderBy: 'nama', limit: 50);   // selalu pakai whereArgs
+  return baris.map(Produk.dariMap).toList();
+}</code></pre><figcaption>Migrasi (onUpgrade) adalah hal yang paling sering dilupakan: pengguna yang memperbarui aplikasi membawa basis data versi lama. Menghapus dan membuat ulang basis data berarti kehilangan data mereka.</figcaption></figure>
+<div class="callout info"><b>drift</b><p>Alternatif modern: <b>drift</b> (dahulu Moor) memberi query bertipe aman, migrasi terpandu, dan aliran reaktif di atas SQLite, sehingga UI otomatis diperbarui saat data berubah. Untuk skema yang berkembang, drift sering lebih nyaman daripada sqflite mentah.</p></div>
+<h2 id="pola-offline-first">Pola offline-first</h2>
+<figure class="diagram"><svg viewBox="0 0 728 136" role="img" aria-label="Offline-first" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="116" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">UI membaca dari</tspan><tspan x="85" dy="16">basis data lokal</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">selalu cepat, tanpa</tspan><tspan x="85" dy="14">menunggu jaringan</tspan></text><line x1="164" y1="68" x2="192" y2="68" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="116" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Sinkronisasi di</tspan><tspan x="271" dy="16">latar belakang</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">ambil dari server bila</tspan><tspan x="271" dy="14">ada koneksi</tspan></text><line x1="350" y1="68" x2="378" y2="68" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="116" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Simpan hasil ke</tspan><tspan x="457" dy="16">basis data</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">UI otomatis diperbarui</tspan></text><line x1="536" y1="68" x2="564" y2="68" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="116" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Perubahan</tspan><tspan x="643" dy="16">pengguna masuk</tspan><tspan x="643" dy="16">antrean</tspan></text><text x="643" y="102" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">dikirim saat online</tspan></text></svg></figure>
+<figure class="codebox"><pre data-lang="dart"><code>// Inti sinkronisasi: ambil dari server lalu perbarui lokal; baca selalu dari lokal. Peragaan dengan Dart murni.
+class Server {
+  final Map&lt;int, String&gt; data = {1: 'Kopi', 2: 'Teh', 3: 'Gula'};
+  Future&lt;Map&lt;int, String&gt;&gt; ambil() async =&gt; Map.of(data);
+}
+
+class DbLokal {
+  final Map&lt;int, String&gt; data = {};
+  final List&lt;int&gt; antreanHapus = [];
+}
+
+class Repo {
+  Repo(this.server, this.lokal);
+  final Server server; final DbLokal lokal;
+  bool online = true;
+
+  Map&lt;int, String&gt; bacaLokal() =&gt; lokal.data;                          // UI membaca dari sini
+
+  Future&lt;void&gt; sinkron() async {
+    if (!online) { print('  (offline: sinkronisasi ditunda)'); return; }
+    final dariServer = await server.ambil();
+    lokal.data..clear()..addAll(dariServer);                            // upsert; di praktiknya bandingkan versi/waktu pembaruan
+    print('  disinkronkan: ${lokal.data.length} item');
+  }
+}
+
+Future&lt;void&gt; main() async {
+  final repo = Repo(Server(), DbLokal());
+  print('buka aplikasi (data lokal kosong): ${repo.bacaLokal()}');
+  await repo.sinkron();
+  print('tampil: ${repo.bacaLokal()}');
+
+  repo.online = false;                                                   // sinyal hilang
+  print('offline, aplikasi tetap menampilkan: ${repo.bacaLokal()}');
+  await repo.sinkron();
+}</code></pre><pre class="runout" data-lang="keluaran"><code>buka aplikasi (data lokal kosong): {}
+  disinkronkan: 3 item
+tampil: {1: Kopi, 2: Teh, 3: Gula}
+offline, aplikasi tetap menampilkan: {1: Kopi, 2: Teh, 3: Gula}
+  (offline: sinkronisasi ditunda)</code></pre><figcaption>Prinsipnya: sumber kebenaran untuk tampilan adalah basis data lokal. Pengguna tidak pernah melihat layar kosong hanya karena jaringan lambat. Konflik (data diubah di dua tempat) memerlukan aturan: terakhir menang, penggabungan, atau tanya pengguna.</figcaption></figure>
+<h2 id="hal-praktis">Hal praktis</h2>
+<ul><li><b>Versi dan migrasi</b>: rencanakan sejak awal; uji pembaruan dari versi lama.</li><li><b>Jangan menyimpan data pribadi sensitif</b> tanpa alasan; terapkan prinsip minimisasi dan hapus saat logout.</li><li><b>Cadangan platform</b>: Android Auto Backup dapat menyalin data aplikasi; kecualikan berkas sensitif.</li><li><b>Enkripsi basis data</b> (SQLCipher) bila menyimpan data sensitif secara lokal.</li><li><b>Ukuran dan kinerja</b>: indeks, transaksi untuk penyisipan massal, dan jangan membaca ribuan baris ke memori sekaligus (paginasi).</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Tempat menyimpan token akses di Flutter?","options":["flutter_secure_storage","shared_preferences","Variabel global"],"answer":0,"why":"Memakai Keychain/Keystore."},{"q":"Mengapa onUpgrade penting?","options":["Memigrasi skema tanpa menghapus data pengguna","Mempercepat query","Menghapus cache"],"answer":0,"why":"Pengguna membawa basis data versi lama."},{"q":"Pada offline-first, UI membaca dari...","options":["Basis data lokal","Langsung dari server","Memori sementara"],"answer":0,"why":"Cepat dan tahan koneksi putus."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Data apa yang cocok di shared_preferences dan apa yang tidak?</summary><div>Cocok: tema, bahasa, flag onboarding. Tidak: token, daftar besar, data pribadi sensitif.</div></details><details><summary>2. Aplikasi sudah dirilis dengan tabel produk(id, nama). Anda menambah kolom harga. Apa yang dilakukan?</summary><div>Naikkan version dan tambahkan ALTER TABLE di onUpgrade untuk versi lama.</div></details><details><summary>3. Mengapa transaksi mempercepat penyisipan ribuan baris?</summary><div>Satu commit untuk semua baris menghindari biaya sinkronisasi disk per baris.</div></details><details><summary>4. Bagaimana menangani konflik saat dua perangkat mengubah data yang sama?</summary><div>Tentukan aturan: terakhir menang berdasarkan waktu, penggabungan per bidang, atau minta pengguna memilih.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Pilih penyimpanan menurut data: shared_preferences (pengaturan), secure storage (rahasia), SQLite/drift (terstruktur), berkas (path_provider).</li><li>Jangan menyimpan rahasia di preferences; hapus saat logout.</li><li>Migrasi skema (onUpgrade) melindungi data pengguna saat pembaruan.</li><li>Offline-first: UI membaca dari basis data lokal, sinkronisasi di latar belakang, antrean perubahan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Hive atau SQLite?</summary><div>Hive/Isar cepat dan sederhana untuk objek tanpa relasi rumit; SQLite lebih tepat untuk data relasional, pencarian, dan migrasi yang kuat.</div></details>
+<details class="faq"><summary>Di mana data aplikasi tersimpan?</summary><div>Di direktori privat aplikasi; data hilang saat aplikasi dihapus (kecuali dicadangkan oleh platform).</div></details>
+<details class="faq"><summary>Apakah data lokal aman dari pengguna?</summary><div>Tidak sepenuhnya. Pada perangkat yang di-root atau dengan akses fisik data dapat dibaca; enkripsi menaikkan hambatan tetapi kunci yang ada di perangkat tetap dapat diekstrak oleh penyerang yang gigih.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/cookbook/persistence/sqlite" rel="noopener" target="_blank">Flutter: Persist data with SQLite</a></li><li><a href="https://pub.dev/packages/shared_preferences" rel="noopener" target="_blank">shared_preferences</a></li><li><a href="https://pub.dev/packages/flutter_secure_storage" rel="noopener" target="_blank">flutter_secure_storage</a></li><li><a href="https://drift.simonbinder.eu/" rel="noopener" target="_blank">drift</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

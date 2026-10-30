@@ -243,4 +243,8 @@ export const ARTICLES = [
     'stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild',
     'async-dart-future-async-await-dan-stream-untuk-flutter',
     'http-dan-json-di-flutter-model-fromjson-dan-error-handling',
+    'state-management-flutter-provider-riverpod-dan-bloc-dibandingkan',
+    'navigasi-flutter-navigator-go-router-dan-deep-link',
+    'form-dan-validasi-flutter-textformfield-formkey-dan-keyboard',
+    'penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage',
 ];
