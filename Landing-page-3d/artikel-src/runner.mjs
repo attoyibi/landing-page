@@ -7,6 +7,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const CACHE = join(dirname(fileURLToPath(import.meta.url)), '.cache');
 mkdirSync(CACHE, { recursive: true });
@@ -42,6 +43,24 @@ export function runJava(code, { input = '', expectError = false } = {}) {
         const r = spawnSync('java', ['-Dfile.encoding=UTF-8', '-cp', dir, 'Main'], { input, encoding: 'utf8', timeout: 30000, cwd: dir });
         rmSync(dir, { recursive: true, force: true });
         if (r.status !== 0 && !expectError) throw new Error(`Kode Java gagal dijalankan:\n${code.slice(0, 400)}\n---\n${r.stderr}`);
+        return { out: (r.stdout || '') + (r.status !== 0 ? lastLines(r.stderr || '', 2) + '\n' : '') };
+    });
+}
+
+// JavaScript (and JSX/React) samples run with Node. JSX is compiled with esbuild; react and react-dom come from this project's node_modules.
+const ROOT_MODULES = join(dirname(fileURLToPath(import.meta.url)), '..', 'node_modules');
+export function runNode(code, { input = '', expectError = false, jsx = false } = {}) {
+    return cached(key('node', code, input, expectError, jsx), () => {
+        const dir = tmp('node-');
+        let src = code;
+        if (jsx) {
+            const { transformSync } = createRequire(import.meta.url)('esbuild');
+            src = transformSync(code, { loader: 'jsx', format: 'cjs', jsx: 'transform' }).code;
+        }
+        writeFileSync(join(dir, 'main.cjs'), src);
+        const r = spawnSync('node', ['main.cjs'], { input, encoding: 'utf8', timeout: 20000, cwd: dir, env: { ...process.env, NODE_PATH: ROOT_MODULES } });
+        rmSync(dir, { recursive: true, force: true });
+        if (r.status !== 0 && !expectError) throw new Error(`Kode JavaScript gagal:\n${code.slice(0, 400)}\n---\n${r.stderr}`);
         return { out: (r.stdout || '') + (r.status !== 0 ? lastLines(r.stderr || '', 2) + '\n' : '') };
     });
 }

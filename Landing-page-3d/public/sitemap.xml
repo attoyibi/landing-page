@@ -2,62 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://muchson.web.id/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/ai-untuk-semua/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/mata-kacamata/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/coding-algoritma/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/teknologi-sehari-hari/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/belajar-produktivitas/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/karier-freelance/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/algoritma-pemrograman-python/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/pbo-dengan-java/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/sistem-informasi/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/dasar-informatika/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/kategori/react-web-modern/</loc>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -1058,6 +1063,31 @@
   <url>
     <loc>https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/</loc>
     <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/form-react-controlled-component-validasi-dan-submit/</loc>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

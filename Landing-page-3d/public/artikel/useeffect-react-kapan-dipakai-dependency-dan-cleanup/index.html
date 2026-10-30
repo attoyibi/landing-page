@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</title>
+<meta name="description" content="Pahami useEffect: efek samping, array dependency, cleanup, kesalahan klasik (loop tak berujung, state basi), dan kapan sebenarnya tidak perlu useEffect.">
+<meta name="keywords" content="useEffect, React hooks, efek samping, cleanup, dependency array">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/">
+<meta property="og:title" content="useEffect React: Kapan Dipakai, Dependency, dan Cleanup">
+<meta property="og:description" content="Pahami useEffect: efek samping, array dependency, cleanup, kesalahan klasik (loop tak berujung, state basi), dan kapan sebenarnya tidak perlu useEffect.">
+<meta property="og:image" content="https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="useEffect React: Kapan Dipakai, Dependency, dan Cleanup">
+<meta name="twitter:description" content="Pahami useEffect: efek samping, array dependency, cleanup, kesalahan klasik (loop tak berujung, state basi), dan kapan sebenarnya tidak perlu useEffect.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"useEffect React: Kapan Dipakai, Dependency, dan Cleanup","description":"Pahami useEffect: efek samping, array dependency, cleanup, kesalahan klasik (loop tak berujung, state basi), dan kapan sebenarnya tidak perlu useEffect.","image":["https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"useEffect, React hooks, efek samping, cleanup, dependency array","articleSection":"React & Web Modern","wordCount":481,"mainEntityOfPage":"https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"useEffect React: Kapan Dipakai, Dependency, dan Cleanup","item":"https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya useEffect dan useLayoutEffect?","acceptedAnswer":{"@type":"Answer","text":"useLayoutEffect berjalan sebelum browser menggambar, untuk mengukur atau mengubah tata letak tanpa kedipan; useEffect berjalan setelahnya dan lebih cocok untuk hampir semua efek."}},{"@type":"Question","name":"Apakah useEffect berjalan di server?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Efek hanya berjalan di browser; saat rendering di server, efek diabaikan."}},{"@type":"Question","name":"Bagaimana mengambil data tanpa useEffect?","acceptedAnswer":{"@type":"Answer","text":"Dengan pustaka seperti TanStack Query, atau fitur framework (Next.js, React Router loader, Server Components)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#efek-samping-dan-sinkronisasi">Efek samping dan sinkronisasi</a></li><li><a href="#tiga-bentuk-array-dependency">Tiga bentuk array dependency</a></li><li><a href="#cleanup-membereskan-sebelum-efek-berikutnya">Cleanup: membereskan sebelum efek berikutnya</a></li><li><a href="#simulasi-urutan-efek-dan-cleanup">Simulasi urutan efek dan cleanup</a></li><li><a href="#kesalahan-klasik">Kesalahan klasik</a></li><li><a href="#kapan-tidak-memakai-useeffect">Kapan TIDAK memakai useEffect</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</h1>
+<p class="lead">useEffect adalah hook yang paling sering disalahgunakan. Tujuannya sederhana: menyinkronkan komponen dengan sesuatu di luar React, seperti server, timer, atau API browser. Begitu Anda melihatnya sebagai "sinkronisasi" bukan "siklus hidup", kebanyakan kebingungan hilang.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> useState, event handler</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="useEffect React: Kapan Dipakai, Dependency, dan Cleanup" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan apa itu efek samping dan kapan useEffect diperlukan</li><li>memakai array dependency dengan benar</li><li>menulis fungsi cleanup untuk timer, langganan, dan permintaan</li><li>mengenali dan memperbaiki kesalahan umum</li><li>mengenali kasus yang tidak perlu useEffect</li></ul></div>
+<h2 id="efek-samping-dan-sinkronisasi">Efek samping dan sinkronisasi</h2>
+<p>Rendering harus <b>murni</b>: dengan props dan state yang sama menghasilkan JSX yang sama, tanpa mengubah hal di luar komponen. Hal-hal yang menyentuh dunia luar (mengambil data, mengubah judul dokumen, memulai timer, mendengarkan event window) disebut efek samping dan ditempatkan di <code>useEffect</code>, yang dijalankan <i>setelah</i> React menampilkan hasil render.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useState, useEffect } from 'react';
+
+function JudulHalaman({ nama }) {
+    useEffect(() =&gt; {
+        document.title = 'Halo, ' + nama;      // menyinkronkan dokumen dengan props
+    }, [nama]);                                // jalankan ulang hanya bila nama berubah
+
+    return &lt;h1&gt;Halo, {nama}&lt;/h1&gt;;
+}</code></pre></figure>
+<h2 id="tiga-bentuk-array-dependency">Tiga bentuk array dependency</h2>
+<table><thead><tr><th>Bentuk</th><th>Kapan efek berjalan</th><th>Pemakaian</th></tr></thead><tbody><tr><td>useEffect(fn)</td><td>Setelah setiap render</td><td>Jarang diperlukan</td></tr><tr><td>useEffect(fn, [])</td><td>Sekali setelah render pertama (dan cleanup saat dilepas)</td><td>Sinkronisasi yang tidak bergantung pada data komponen</td></tr><tr><td>useEffect(fn, [a, b])</td><td>Setelah render pertama dan setiap kali a atau b berubah</td><td>Paling umum</td></tr></tbody></table>
+<div class="callout warn"><b>Jujurlah pada dependency</b><p>Aturan: <b>semua nilai reaktif (props, state, fungsi) yang dipakai di dalam efek harus masuk ke array dependency</b>. Memaksa array kosong padahal efek memakai state akan menghasilkan nilai basi (stale). Linter eslint-plugin-react-hooks membantu memeriksanya otomatis.</p></div>
+<h2 id="cleanup-membereskan-sebelum-efek-berikutnya">Cleanup: membereskan sebelum efek berikutnya</h2>
+<p>Fungsi yang dikembalikan efek dijalankan <b>sebelum efek dijalankan ulang</b> dan saat komponen dilepas. Pakai untuk menghentikan timer, membatalkan langganan, atau membatalkan permintaan.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useState, useEffect } from 'react';
+
+function Jam() {
+    const [waktu, setWaktu] = useState(() =&gt; new Date());
+
+    useEffect(() =&gt; {
+        const id = setInterval(() =&gt; setWaktu(new Date()), 1000);
+        return () =&gt; clearInterval(id);        // cleanup: tanpa ini timer terus berjalan setelah komponen hilang
+    }, []);
+
+    return &lt;p&gt;{waktu.toLocaleTimeString('id-ID')}&lt;/p&gt;;
+}</code></pre></figure>
+<h2 id="simulasi-urutan-efek-dan-cleanup">Simulasi urutan efek dan cleanup</h2>
+<p>Berikut tiruan sederhana (bukan kode React) yang mencetak urutan kejadian ketika dependency berubah. Urutannya yang penting: <b>cleanup efek lama berjalan sebelum efek baru</b>.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const efekAktif = new Map();
+function jalankanEfek(nama, deps, fn, depsLama) {
+    const berubah = !depsLama || deps.some((d, i) =&gt; d !== depsLama[i]);
+    if (!berubah) return;
+    if (efekAktif.has(nama)) { console.log('  cleanup  -&gt;', nama, 'dengan deps lama', JSON.stringify(depsLama)); efekAktif.get(nama)(); }
+    console.log('  efek     -&gt;', nama, 'dengan deps', JSON.stringify(deps));
+    efekAktif.set(nama, fn() || (() =&gt; {}));
+}
+
+let depsLama;
+for (const idRoom of ['umum', 'umum', 'kerja', 'kerja', 'umum']) {
+    console.log('render dengan idRoom =', idRoom);
+    jalankanEfek('sambung', [idRoom], () =&gt; {
+        console.log('     (terhubung ke', idRoom + ')');
+        return () =&gt; console.log('     (terputus dari', idRoom + ')');
+    }, depsLama);
+    depsLama = [idRoom];
+}</code></pre><pre class="runout" data-lang="keluaran"><code>render dengan idRoom = umum
+  efek     -&gt; sambung dengan deps [&quot;umum&quot;]
+     (terhubung ke umum)
+render dengan idRoom = umum
+render dengan idRoom = kerja
+  cleanup  -&gt; sambung dengan deps lama [&quot;umum&quot;]
+     (terputus dari umum)
+  efek     -&gt; sambung dengan deps [&quot;kerja&quot;]
+     (terhubung ke kerja)
+render dengan idRoom = kerja
+render dengan idRoom = umum
+  cleanup  -&gt; sambung dengan deps lama [&quot;kerja&quot;]
+     (terputus dari kerja)
+  efek     -&gt; sambung dengan deps [&quot;umum&quot;]
+     (terhubung ke umum)</code></pre><figcaption>Render ke-2 dan ke-4 tidak memicu efek karena idRoom tidak berubah. Setiap perubahan menjalankan cleanup lama lalu efek baru.</figcaption></figure>
+<h2 id="kesalahan-klasik">Kesalahan klasik</h2>
+<h3>1. Loop tak berujung</h3>
+<figure class="codebox"><pre data-lang="jsx"><code>function Salah() {
+    const [data, setData] = useState([]);
+    useEffect(() =&gt; {
+        setData([1, 2, 3]);         // mengubah state -&gt; render ulang -&gt; efek berjalan lagi -&gt; ...
+    });                             // tanpa array dependency, efek berjalan setiap render
+    return null;
+}
+// Perbaikan: beri array dependency yang tepat, atau tidak perlu efek bila data bisa dihitung saat render.</code></pre></figure>
+<h3>2. Lupa membatalkan permintaan yang sudah usang</h3>
+<figure class="codebox"><pre data-lang="jsx"><code>useEffect(() =&gt; {
+    const kontrol = new AbortController();
+    fetch('/api/cari?q=' + kata, { signal: kontrol.signal })
+        .then(r =&gt; r.json())
+        .then(setHasil)
+        .catch(e =&gt; { if (e.name !== 'AbortError') setGalat(e); });
+    return () =&gt; kontrol.abort();   // jawaban lama tidak menimpa pencarian terbaru (race condition)
+}, [kata]);</code></pre><figcaption>Tanpa pembatalan, jawaban untuk pencarian "ka" yang lambat bisa tiba setelah pencarian "kar" dan menimpa hasil yang lebih baru.</figcaption></figure>
+<h2 id="kapan-tidak-memakai-useeffect">Kapan TIDAK memakai useEffect</h2>
+<table><thead><tr><th>Keinginan</th><th>Jangan</th><th>Lakukan</th></tr></thead><tbody><tr><td>Hitung nilai dari props/state</td><td>Simpan di state lewat efek</td><td>Hitung langsung saat render</td></tr><tr><td>Menanggapi klik atau input</td><td>Menaruh logika di efek yang mengamati state</td><td>Taruh di event handler</td></tr><tr><td>Mereset state saat prop berubah</td><td>Efek yang memanggil setState</td><td>Beri key pada komponen agar dibuat ulang</td></tr><tr><td>Mengambil data untuk halaman</td><td>useEffect + fetch manual di mana-mana</td><td>Pustaka data (TanStack Query, SWR) atau framework (loader, Server Components)</td></tr><tr><td>Meneruskan data ke induk</td><td>Efek yang memanggil callback</td><td>Panggil callback di event handler yang sama</td></tr></tbody></table>
+<div class="callout good"><b>Pertanyaan penentu</b><p>Cara cepat menilai: tanyakan <b>"mengapa kode ini berjalan?"</b>. Jika jawabannya "karena pengguna melakukan sesuatu", itu event handler. Jika "karena komponen tampil di layar dan harus tersinkron dengan sistem luar", itu efek.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"useEffect(() => {...}, []) berjalan...","options":["Sekali setelah render pertama","Setiap render","Tidak pernah"],"answer":0,"why":"Array dependency kosong."},{"q":"Fungsi yang dikembalikan efek disebut...","options":["Cleanup","Callback","Reducer"],"answer":0,"why":"Dijalankan sebelum efek berikutnya dan saat unmount."},{"q":"Menghitung total harga dari daftar belanja sebaiknya...","options":["Dihitung langsung saat render","Disimpan ke state lewat useEffect","Memakai setInterval"],"answer":0,"why":"Nilai turunan tidak perlu efek."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat efek yang menambah event listener "resize" pada window dan membersihkannya.</summary><div><code>useEffect(() => { const f = () => setLebar(window.innerWidth); window.addEventListener("resize", f); return () => window.removeEventListener("resize", f); }, []);</code></div></details><details><summary>2. Mengapa efek yang memakai state "jumlah" tetapi berdependency [] menghasilkan nilai basi?</summary><div>Efek menangkap potret nilai pada render pertama; ia tidak melihat pembaruan. Tambahkan jumlah ke dependency atau pakai update fungsional.</div></details><details><summary>3. Mengapa React dalam mode pengembangan (StrictMode) menjalankan efek dua kali?</summary><div>Untuk membantu menemukan efek tanpa cleanup yang benar; efek yang baik tahan dijalankan, dibersihkan, lalu dijalankan lagi.</div></details><details><summary>4. Ubah efek yang menyalin props.nama ke state "namaTampil" menjadi cara yang benar.</summary><div>Tidak perlu state atau efek; pakai props.nama langsung (atau hitung saat render).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>useEffect menyinkronkan komponen dengan sistem di luar React, setelah render.</li><li>Dependency harus jujur: semua nilai reaktif yang dipakai efek.</li><li>Cleanup berjalan sebelum efek berikutnya dan saat komponen dilepas.</li><li>Banyak kasus tidak perlu efek: hitung saat render atau pakai event handler.</li><li>Batalkan permintaan usang untuk menghindari race condition.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya useEffect dan useLayoutEffect?</summary><div>useLayoutEffect berjalan sebelum browser menggambar, untuk mengukur atau mengubah tata letak tanpa kedipan; useEffect berjalan setelahnya dan lebih cocok untuk hampir semua efek.</div></details>
+<details class="faq"><summary>Apakah useEffect berjalan di server?</summary><div>Tidak. Efek hanya berjalan di browser; saat rendering di server, efek diabaikan.</div></details>
+<details class="faq"><summary>Bagaimana mengambil data tanpa useEffect?</summary><div>Dengan pustaka seperti TanStack Query, atau fitur framework (Next.js, React Router loader, Server Components).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/synchronizing-with-effects" rel="noopener" target="_blank">React: Synchronizing with Effects</a></li><li><a href="https://react.dev/learn/you-might-not-need-an-effect" rel="noopener" target="_blank">React: You Might Not Need an Effect</a></li><li><a href="https://react.dev/learn/lifecycle-of-reactive-effects" rel="noopener" target="_blank">React: Lifecycle of Reactive Effects</a></li><li><a href="https://react.dev/reference/react/hooks" rel="noopener" target="_blank">React Reference: Hooks</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/render-list-react-map-key-dan-filter-yang-benar/"><img src="/artikel/render-list-react-map-key-dan-filter-yang-benar/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Render List di React: map, key, dan Filter yang Benar</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

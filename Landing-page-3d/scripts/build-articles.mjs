@@ -59,6 +59,12 @@ const INTRO = {
     'Algoritma & Pemrograman Python': 'Materi kuliah Algoritma dan Pemrograman dengan Python: dasar bahasa, percabangan, perulangan, struktur data, rekursi, kompleksitas, pengurutan, graf, greedy, dynamic programming, dan OOP. Kode dijalankan sungguhan.',
     'PBO dengan Java': 'Materi kuliah Pemrograman Berorientasi Objek dengan Java: class, enkapsulasi, pewarisan, polimorfisme, interface, exception, koleksi, generics, stream, concurrency, SOLID, dan pola desain.',
     'Sistem Informasi': 'Materi kuliah Sistem Informasi: konsep dasar, SDLC, analisis kebutuhan, DFD, ERD, normalisasi, SQL, keamanan, tata kelola TI, audit, business intelligence, hukum dan etika.',
+    'React & Web Modern': 'Panduan React dan pengembangan web modern: hooks, state, routing, data fetching, performa, aksesibilitas, SEO, dan deploy, dengan contoh kode yang dijalankan.',
+    'Laravel & Backend': 'Belajar Laravel dan backend PHP: routing, Eloquent, migrasi, validasi, autentikasi, API, antrean, pengujian, keamanan, dan deploy.',
+    'Flutter & Mobile': 'Pengembangan aplikasi mobile dengan Flutter dan Dart: widget, layout, state management, navigasi, API, penyimpanan lokal, dan rilis aplikasi.',
+    'Otomasi & AI Kerja': 'Otomasi kerja dengan n8n dan AI: workflow, webhook, integrasi, agen AI, prompt, Claude, RAG, dan cara memakai AI untuk produktivitas secara aman.',
+    'Desain Pembelajaran': 'Merancang pelatihan dan pembelajaran yang efektif: ADDIE, taksonomi Bloom, Kirkpatrick, RPS dan OBE, asesmen, microlearning, dan evaluasi dampak.',
+    'UX & Green IT': 'UX, aksesibilitas, kecepatan web, SEO teknis, dan Green IT: membangun produk digital yang mudah dipakai, cepat, dan hemat energi.',
     'Dasar Informatika': 'Fondasi ilmu komputer: bilangan biner, logika, arsitektur CPU, sistem operasi, jaringan, kriptografi, kompilator, matematika diskrit, automata, dan machine learning dasar.',
 };
 const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

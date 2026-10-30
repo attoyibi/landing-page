@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Render List di React: map, key, dan Filter yang Benar</title>
+<meta name="description" content="Pelajari menampilkan daftar di React: map, kunci (key) yang benar, filter dan urutkan data, state daftar, dan mengapa key berupa indeks bisa menimbulkan bug.">
+<meta name="keywords" content="React list, key React, map, filter, render daftar">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/">
+<meta property="og:title" content="Render List di React: map, key, dan Filter yang Benar">
+<meta property="og:description" content="Pelajari menampilkan daftar di React: map, kunci (key) yang benar, filter dan urutkan data, state daftar, dan mengapa key berupa indeks bisa menimbulkan bug.">
+<meta property="og:image" content="https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Render List di React: map, key, dan Filter yang Benar">
+<meta name="twitter:description" content="Pelajari menampilkan daftar di React: map, kunci (key) yang benar, filter dan urutkan data, state daftar, dan mengapa key berupa indeks bisa menimbulkan bug.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Render List di React: map, key, dan Filter yang Benar","description":"Pelajari menampilkan daftar di React: map, kunci (key) yang benar, filter dan urutkan data, state daftar, dan mengapa key berupa indeks bisa menimbulkan bug.","image":["https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"React list, key React, map, filter, render daftar","articleSection":"React & Web Modern","wordCount":454,"mainEntityOfPage":"https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Render List di React: map, key, dan Filter yang Benar","item":"https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa React memperingatkan \"Each child in a list should have a unique key\"?","acceptedAnswer":{"@type":"Answer","text":"Karena item daftar tidak punya key; tambahkan key yang stabil pada elemen terluar yang dikembalikan map."}},{"@type":"Question","name":"Bolehkah memakai key yang sama pada daftar berbeda?","acceptedAnswer":{"@type":"Answer","text":"Boleh; key hanya harus unik di antara saudara dalam daftar yang sama."}},{"@type":"Question","name":"Bagaimana membuat id untuk data baru di sisi klien?","acceptedAnswer":{"@type":"Answer","text":"crypto.randomUUID() saat item dibuat (bukan saat render), atau id dari server setelah disimpan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#menampilkan-daftar-dengan-map">Menampilkan daftar dengan map</a></li><li><a href="#mengapa-key-diperlukan">Mengapa key diperlukan</a></li><li><a href="#menyaring-dan-mengurutkan">Menyaring dan mengurutkan</a></li><li><a href="#daftar-di-state-tambah-hapus-ubah">Daftar di state: tambah, hapus, ubah</a></li><li><a href="#daftar-komponen-yang-rapi">Daftar komponen yang rapi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Render List di React: map, key, dan Filter yang Benar</h1>
+<p class="lead">Hampir semua aplikasi menampilkan daftar: produk, pesan, tugas, hasil pencarian. Di React, daftar dibuat dengan map, dan ada satu aturan yang sering dilanggar pemula: setiap item butuh key yang stabil dan unik. Melanggarnya menimbulkan bug halus yang sulit dilacak.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> komponen dan props, useState, array map dan filter</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Render List di React: map, key, dan Filter yang Benar" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menampilkan array sebagai daftar komponen dengan map</li><li>menjelaskan fungsi key dan memilih key yang benar</li><li>menyaring dan mengurutkan data tanpa mengubah array aslinya</li><li>mengelola daftar di state: tambah, hapus, ubah</li><li>menjelaskan mengapa key indeks dapat menyebabkan bug</li></ul></div>
+<h2 id="menampilkan-daftar-dengan-map">Menampilkan daftar dengan map</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+const produk = [
+    { id: 'p1', nama: 'Kopi Gayo', harga: 65000 },
+    { id: 'p2', nama: 'Teh Hijau', harga: 40000 },
+    { id: 'p3', nama: 'Gula Aren', harga: 22000 },
+];
+
+function DaftarProduk({ data }) {
+    return (
+        &lt;ul&gt;
+            {data.map(p =&gt; (
+                &lt;li key={p.id}&gt;{p.nama} - Rp{p.harga.toLocaleString('id-ID')}&lt;/li&gt;
+            ))}
+        &lt;/ul&gt;
+    );
+}
+console.log(renderToString(&lt;DaftarProduk data={produk} /&gt;));
+console.log(renderToString(&lt;DaftarProduk data={[]} /&gt;));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;ul&gt;&lt;li&gt;Kopi Gayo&lt;!-- --&gt; - Rp&lt;!-- --&gt;65.000&lt;/li&gt;&lt;li&gt;Teh Hijau&lt;!-- --&gt; - Rp&lt;!-- --&gt;40.000&lt;/li&gt;&lt;li&gt;Gula Aren&lt;!-- --&gt; - Rp&lt;!-- --&gt;22.000&lt;/li&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;/ul&gt;</code></pre><figcaption>Array kosong menghasilkan daftar kosong; sering Anda ingin menampilkan pesan "Belum ada produk" untuk kasus itu.</figcaption></figure>
+<h2 id="mengapa-key-diperlukan">Mengapa key diperlukan</h2>
+<p>Saat data berubah, React membandingkan daftar lama dan baru untuk memutuskan elemen mana yang ditambah, dihapus, dipindah, atau dipertahankan. <b>Key</b> adalah identitas setiap item untuk perbandingan itu. Tanpa key yang stabil, React hanya bisa mencocokkan berdasarkan posisi.</p>
+<div data-w="compare"><script type="application/json">{"title":"Memilih key","tabs":[{"label":"Key yang baik","html":"\u003cb>Stabil dan unik di antara saudaranya\u003c/b>: id dari basis data, slug, atau id yang dibuat saat data dibuat (crypto.randomUUID())."},{"label":"Key yang buruk","html":"\u003cb>Indeks array\u003c/b> (berubah saat daftar diurutkan atau item disisipkan), \u003cb>Math.random()\u003c/b> pada saat render (berubah setiap render sehingga elemen dibuat ulang terus), atau nilai yang tidak unik."}]}</script></div>
+<h3>Demonstrasi: apa yang terjadi bila key = indeks</h3>
+<p>Misalkan setiap baris memiliki kotak isian (state milik komponen baris). Bila item pertama dihapus dan key adalah indeks, React menganggap baris 0 masih baris 0, sehingga <i>isian milik item yang dihapus tampak bergeser ke item lain</i>. Kode di bawah mensimulasikan pencocokan itu.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Simulasi rekonsiliasi sederhana: React mencocokkan item lama dan baru berdasarkan KEY,
+// dan state setiap baris (misalnya isi kotak catatan) melekat pada key.
+function cocokkan(lama, baru, keyFn) {
+    const stateLama = new Map(lama.map((item, i) =&gt; [keyFn(item, i), item.catatan]));
+    return baru.map((item, i) =&gt; ({ nama: item.nama, catatanYangTampil: stateLama.has(keyFn(item, i)) ? stateLama.get(keyFn(item, i)) : '(kosong)' }));
+}
+
+const lama = [
+    { id: 'a', nama: 'Ani',  catatan: 'catatan Ani' },
+    { id: 'b', nama: 'Budi', catatan: 'catatan Budi' },
+    { id: 'c', nama: 'Citra', catatan: 'catatan Citra' },
+];
+const baru = lama.slice(1);                 // Ani dihapus
+
+console.log('Key = indeks (SALAH):');
+for (const r of cocokkan(lama, baru, (item, i) =&gt; i)) console.log('  ', r.nama.padEnd(6), '-&gt;', r.catatanYangTampil);
+
+console.log('Key = id (BENAR):');
+for (const r of cocokkan(lama, baru, item =&gt; item.id)) console.log('  ', r.nama.padEnd(6), '-&gt;', r.catatanYangTampil);</code></pre><pre class="runout" data-lang="keluaran"><code>Key = indeks (SALAH):
+   Budi   -&gt; catatan Ani
+   Citra  -&gt; catatan Budi
+Key = id (BENAR):
+   Budi   -&gt; catatan Budi
+   Citra  -&gt; catatan Citra</code></pre><figcaption>Dengan key indeks, "Budi" menampilkan catatan Ani dan "Citra" menampilkan catatan Budi. Dengan key id, setiap catatan tetap melekat pada pemiliknya.</figcaption></figure>
+<h2 id="menyaring-dan-mengurutkan">Menyaring dan mengurutkan</h2>
+<div class="callout warn"><b>sort mengubah array</b><p>Jangan memakai <code>sort()</code> langsung pada array props atau state: ia <b>mengubah array aslinya</b>. Salin dulu dengan <code>[...data].sort(...)</code> atau pakai <code>toSorted()</code> (JavaScript modern).</p></div>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+const produk = [
+    { id: 1, nama: 'Kopi Gayo', harga: 65000, kategori: 'minuman' },
+    { id: 2, nama: 'Kerupuk',   harga: 12000, kategori: 'camilan' },
+    { id: 3, nama: 'Teh Hijau', harga: 40000, kategori: 'minuman' },
+    { id: 4, nama: 'Keripik',   harga: 18000, kategori: 'camilan' },
+];
+
+function Katalog({ data, kategori, urut }) {
+    const tampil = data
+        .filter(p =&gt; !kategori || p.kategori === kategori)       // saring
+        .toSorted((a, b) =&gt; urut === 'murah' ? a.harga - b.harga : b.harga - a.harga);   // salinan terurut
+    if (tampil.length === 0) return &lt;p&gt;Tidak ada produk.&lt;/p&gt;;
+    return &lt;ol&gt;{tampil.map(p =&gt; &lt;li key={p.id}&gt;{p.nama} ({p.harga})&lt;/li&gt;)}&lt;/ol&gt;;
+}
+
+console.log(renderToString(&lt;Katalog data={produk} kategori=&quot;minuman&quot; urut=&quot;murah&quot; /&gt;));
+console.log(renderToString(&lt;Katalog data={produk} urut=&quot;mahal&quot; /&gt;));
+console.log(renderToString(&lt;Katalog data={produk} kategori=&quot;mainan&quot; /&gt;));
+console.log('array asli tidak berubah:', produk.map(p =&gt; p.id).join(','));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;ol&gt;&lt;li&gt;Teh Hijau&lt;!-- --&gt; (&lt;!-- --&gt;40000&lt;!-- --&gt;)&lt;/li&gt;&lt;li&gt;Kopi Gayo&lt;!-- --&gt; (&lt;!-- --&gt;65000&lt;!-- --&gt;)&lt;/li&gt;&lt;/ol&gt;
+&lt;ol&gt;&lt;li&gt;Kopi Gayo&lt;!-- --&gt; (&lt;!-- --&gt;65000&lt;!-- --&gt;)&lt;/li&gt;&lt;li&gt;Teh Hijau&lt;!-- --&gt; (&lt;!-- --&gt;40000&lt;!-- --&gt;)&lt;/li&gt;&lt;li&gt;Keripik&lt;!-- --&gt; (&lt;!-- --&gt;18000&lt;!-- --&gt;)&lt;/li&gt;&lt;li&gt;Kerupuk&lt;!-- --&gt; (&lt;!-- --&gt;12000&lt;!-- --&gt;)&lt;/li&gt;&lt;/ol&gt;
+&lt;p&gt;Tidak ada produk.&lt;/p&gt;
+array asli tidak berubah: 1,2,3,4</code></pre></figure>
+<h2 id="daftar-di-state-tambah-hapus-ubah">Daftar di state: tambah, hapus, ubah</h2>
+<table><thead><tr><th>Aksi</th><th>Cara (tanpa mengubah array lama)</th><th>Contoh</th></tr></thead><tbody><tr><td>Tambah</td><td>Sebar dan tambahkan</td><td>setDaftar([...daftar, baru])</td></tr><tr><td>Hapus</td><td>filter</td><td>setDaftar(daftar.filter(x => x.id !== id))</td></tr><tr><td>Ubah satu item</td><td>map dan salin item yang berubah</td><td>setDaftar(daftar.map(x => x.id === id ? { ...x, selesai: true } : x))</td></tr><tr><td>Sisip di posisi</td><td>slice dan sebar</td><td>setDaftar([...daftar.slice(0, i), baru, ...daftar.slice(i)])</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="javascript"><code>// Reducer murni untuk daftar tugas: fungsi yang sama dapat dipakai dengan useReducer
+function tugasReducer(daftar, aksi) {
+    switch (aksi.tipe) {
+        case 'tambah':  return [...daftar, { id: aksi.id, judul: aksi.judul, selesai: false }];
+        case 'hapus':   return daftar.filter(t =&gt; t.id !== aksi.id);
+        case 'ubah':    return daftar.map(t =&gt; t.id === aksi.id ? { ...t, selesai: !t.selesai } : t);
+        default: throw new Error('aksi tidak dikenal: ' + aksi.tipe);
+    }
+}
+
+let s = [];
+const aksi = [
+    { tipe: 'tambah', id: 1, judul: 'Tulis laporan' },
+    { tipe: 'tambah', id: 2, judul: 'Kirim surel' },
+    { tipe: 'ubah', id: 1 },
+    { tipe: 'hapus', id: 2 },
+];
+for (const a of aksi) {
+    const sebelum = s;
+    s = tugasReducer(s, a);
+    console.log(a.tipe.padEnd(6), JSON.stringify(s), '| objek baru?', s !== sebelum);
+}</code></pre><pre class="runout" data-lang="keluaran"><code>tambah [{&quot;id&quot;:1,&quot;judul&quot;:&quot;Tulis laporan&quot;,&quot;selesai&quot;:false}] | objek baru? true
+tambah [{&quot;id&quot;:1,&quot;judul&quot;:&quot;Tulis laporan&quot;,&quot;selesai&quot;:false},{&quot;id&quot;:2,&quot;judul&quot;:&quot;Kirim surel&quot;,&quot;selesai&quot;:false}] | objek baru? true
+ubah   [{&quot;id&quot;:1,&quot;judul&quot;:&quot;Tulis laporan&quot;,&quot;selesai&quot;:true},{&quot;id&quot;:2,&quot;judul&quot;:&quot;Kirim surel&quot;,&quot;selesai&quot;:false}] | objek baru? true
+hapus  [{&quot;id&quot;:1,&quot;judul&quot;:&quot;Tulis laporan&quot;,&quot;selesai&quot;:true}] | objek baru? true</code></pre><figcaption>Setiap aksi menghasilkan array baru. Fungsi murni seperti ini mudah diuji tanpa React sama sekali.</figcaption></figure>
+<h2 id="daftar-komponen-yang-rapi">Daftar komponen yang rapi</h2>
+<ul><li><b>Letakkan key pada elemen terluar</b> yang dikembalikan map (bukan pada elemen di dalam komponen anak).</li><li>Key tidak diteruskan sebagai props; bila anak butuh id, kirim sebagai props terpisah.</li><li>Gunakan <code>&lt;Fragment key=...&gt;</code> bila satu item menghasilkan beberapa elemen.</li><li>Untuk daftar panjang (ribuan), pertimbangkan virtualisasi (react-window, TanStack Virtual) agar hanya yang terlihat yang dirender.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Key yang paling tepat untuk daftar yang bisa diurutkan ulang?","options":["id unik dari data","Indeks array","Math.random()"],"answer":0,"why":"Harus stabil dan unik."},{"q":"Mengurutkan data props dengan data.sort(...) berbahaya karena...","options":["Mengubah array asli","Terlalu lambat","Tidak mendukung angka"],"answer":0,"why":"Salin dulu dengan [...data] atau toSorted."},{"q":"Untuk menghapus item dari state array, gunakan...","options":["filter","splice pada state langsung","delete"],"answer":0,"why":"filter menghasilkan array baru."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tampilkan daftar nama dengan pesan "Belum ada data" bila kosong.</summary><div><code>data.length === 0 ? <p>Belum ada data</p> : <ul>{data.map(n => <li key={n.id}>{n.nama}</li>)}</ul></code></div></details><details><summary>2. Mengapa Math.random() sebagai key buruk?</summary><div>Key berubah setiap render sehingga React membuang dan membuat ulang semua elemen, kehilangan state dan fokus.</div></details><details><summary>3. Tulis ekspresi untuk mengubah harga produk ber-id 3 menjadi 50000 tanpa mengubah array asli.</summary><div><code>produk.map(p => p.id === 3 ? { ...p, harga: 50000 } : p)</code></div></details><details><summary>4. Kapan key indeks masih aman?</summary><div>Bila daftar statis: tidak pernah diurutkan ulang, disisipi, atau dihapus, dan item tidak memiliki state internal.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Tampilkan daftar dengan data.map(item => <Komponen key=... />).</li><li>Key harus stabil dan unik; hindari indeks dan Math.random().</li><li>filter dan toSorted (atau salinan lalu sort) tidak mengubah array asli.</li><li>Perbarui daftar di state dengan array baru: sebar, filter, map.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa React memperingatkan &quot;Each child in a list should have a unique key&quot;?</summary><div>Karena item daftar tidak punya key; tambahkan key yang stabil pada elemen terluar yang dikembalikan map.</div></details>
+<details class="faq"><summary>Bolehkah memakai key yang sama pada daftar berbeda?</summary><div>Boleh; key hanya harus unik di antara saudara dalam daftar yang sama.</div></details>
+<details class="faq"><summary>Bagaimana membuat id untuk data baru di sisi klien?</summary><div>crypto.randomUUID() saat item dibuat (bukan saat render), atau id dari server setelah disimpan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn/rendering-lists" rel="noopener" target="_blank">React: Rendering Lists</a></li><li><a href="https://react.dev/learn/updating-arrays-in-state" rel="noopener" target="_blank">React: Updating Arrays in State</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/toSorted" rel="noopener" target="_blank">MDN: Array.prototype.toSorted()</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript" rel="noopener" target="_blank">MDN Web Docs: JavaScript</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

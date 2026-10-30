@@ -3,7 +3,7 @@
 // generated files in public/artikel/<slug>/.
 
 import { diagram } from './diagram.mjs';
-import { runPython, runJava, tracePython } from './runner.mjs';
+import { runPython, runJava, runNode, tracePython } from './runner.mjs';
 
 export const SITE = 'https://muchson.web.id';
 export const STORE = 'https://cms-online-store-glasses.muhammadmuchson.workers.dev/';
@@ -135,6 +135,12 @@ const PALETTE = {
     'PBO dengan Java': ['#5a1f0f', '#c2501f', 'objects'],
     'Sistem Informasi': ['#14315c', '#2f6fd0', 'network'],
     'Dasar Informatika': ['#1f2a44', '#4b5fa8', 'chip'],
+    'React & Web Modern': ['#0b2f45', '#0e7490', 'atom'],
+    'Laravel & Backend': ['#5c1212', '#c0392b', 'server'],
+    'Flutter & Mobile': ['#0c3b66', '#1d8fd1', 'phone'],
+    'Otomasi & AI Kerja': ['#3b1f6b', '#7c4dcc', 'flow'],
+    'Desain Pembelajaran': ['#6b3a07', '#c97b12', 'target'],
+    'UX & Green IT': ['#14532d', '#2f9e5a', 'leaf'],
     'Mata & Kacamata': ['#0f3d8a', '#1e5ab2', 'eye'],
     'AI untuk Semua': ['#4b2a8a', '#7a3fb4', 'ai'],
     'Coding & Algoritma': ['#0f3d3a', '#0b7285', 'code'],
@@ -152,6 +158,12 @@ const MOTIF = {
     code: '<g stroke="#fff" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M-60 -60L-130 0L-60 60"/><path d="M60 -60L130 0L60 60"/><path d="M18 -75L-18 75"/></g>',
     shield: '<path d="M0 -95L85 -60V10C85 60 40 90 0 105C-40 90 -85 60 -85 10V-60Z" fill="none" stroke="#fff" stroke-width="12"/><path d="M-35 5L-8 32L40 -25" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>',
     book: '<g fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round"><path d="M0 -60C-40 -80 -90 -80 -130 -62V70C-90 52 -40 52 0 72Z"/><path d="M0 -60C40 -80 90 -80 130 -62V70C90 52 40 52 0 72Z"/></g>',
+    atom: '<g fill="none" stroke="#fff" stroke-width="9"><ellipse cx="0" cy="0" rx="120" ry="45"/><ellipse cx="0" cy="0" rx="120" ry="45" transform="rotate(60)"/><ellipse cx="0" cy="0" rx="120" ry="45" transform="rotate(120)"/></g><circle cx="0" cy="0" r="16" fill="#fff"/>',
+    server: '<g fill="none" stroke="#fff" stroke-width="10" stroke-linejoin="round"><rect x="-90" y="-85" width="180" height="46" rx="10"/><rect x="-90" y="-23" width="180" height="46" rx="10"/><rect x="-90" y="39" width="180" height="46" rx="10"/></g><g fill="#fff"><circle cx="-62" cy="-62" r="7"/><circle cx="-62" cy="0" r="7"/><circle cx="-62" cy="62" r="7"/></g>',
+    phone: '<rect x="-55" y="-95" width="110" height="190" rx="20" fill="none" stroke="#fff" stroke-width="11"/><path d="M-18 -72H18" stroke="#fff" stroke-width="9" stroke-linecap="round"/><circle cx="0" cy="68" r="9" fill="#fff"/>',
+    flow: '<g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><rect x="-120" y="-70" width="70" height="50" rx="12"/><rect x="50" y="-70" width="70" height="50" rx="12"/><rect x="-35" y="30" width="70" height="50" rx="12"/><path d="M-50 -45H50M-85 -20V5H0V30M85 -20V5H0"/></g>',
+    target: '<g fill="none" stroke="#fff" stroke-width="10"><circle cx="0" cy="0" r="90"/><circle cx="0" cy="0" r="55"/></g><circle cx="0" cy="0" r="20" fill="#fff"/>',
+    leaf: '<path d="M-80 70C-90 -20 -20 -85 85 -85C85 20 20 90 -70 80Z" fill="none" stroke="#fff" stroke-width="11" stroke-linejoin="round"/><path d="M-80 70C-30 20 10 -10 55 -55" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>',
     coin: '<circle cx="0" cy="0" r="85" fill="none" stroke="#fff" stroke-width="12"/><text x="0" y="28" text-anchor="middle" font-size="86" font-weight="700" fill="#fff" font-family="Arial,sans-serif">Rp</text>',
 };
 export function coverSvg(a) {
@@ -183,13 +195,13 @@ function renderBlock(b, ctx) {
         const lang = b.lang || '';
         let out = '';
         if (b.run) {
-            if (!['python', 'java'].includes(lang)) throw new Error('run membutuhkan lang python atau java');
+            if (!['python', 'java', 'javascript', 'jsx'].includes(lang)) throw new Error('run membutuhkan lang python, java, javascript, atau jsx');
             // cont: true menjalankan blok ini setelah semua blok python sebelumnya (keluarannya disembunyikan)
             let src = b.code;
             if (lang === 'python' && b.cont && ctx.pycode?.length) {
                 src = `import sys as _s, io as _io\n_o = _s.stdout; _s.stdout = _io.StringIO()\nexec(${JSON.stringify(ctx.pycode.join('\n'))})\n_s.stdout = _o\n${b.code}`;
             }
-            const r = (lang === 'python' ? runPython : runJava)(src, { input: b.input || '', expectError: !!b.expectError });
+            const r = (lang === 'python' ? runPython : lang === 'java' ? runJava : (c, o) => runNode(c, { ...o, jsx: lang === 'jsx' }))(src, { input: b.input || '', expectError: !!b.expectError });
             out = r.out;
         }
         if (lang === 'python' && !b.expectError && !b.input) (ctx.pycode ||= []).push(b.code);

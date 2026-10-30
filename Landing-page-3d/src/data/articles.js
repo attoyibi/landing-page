@@ -203,4 +203,9 @@ export const ARTICLES = [
     'automata-hingga-dfa-dan-ekspresi-reguler-mesin-keadaan-berhingga',
     'machine-learning-dasar-regresi-linear-knn-dan-evaluasi-dari-nol',
     'hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing',
+    'belajar-react-dari-nol-komponen-jsx-dan-props',
+    'usestate-react-adalah-state-event-dan-cara-kerjanya',
+    'useeffect-react-kapan-dipakai-dependency-dan-cleanup',
+    'render-list-react-map-key-dan-filter-yang-benar',
+    'form-react-controlled-component-validasi-dan-submit',
 ];

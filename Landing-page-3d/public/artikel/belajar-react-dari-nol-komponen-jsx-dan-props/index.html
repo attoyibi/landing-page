@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belajar React dari Nol: Komponen, JSX, dan Props</title>
+<meta name="description" content="Panduan React untuk pemula: apa itu komponen, JSX, props, komposisi, dan rendering, dengan contoh kode React yang benar-benar dijalankan dan latihan.">
+<meta name="keywords" content="React, JSX, komponen, props, belajar React">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/">
+<meta property="og:title" content="Belajar React dari Nol: Komponen, JSX, dan Props">
+<meta property="og:description" content="Panduan React untuk pemula: apa itu komponen, JSX, props, komposisi, dan rendering, dengan contoh kode React yang benar-benar dijalankan dan latihan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Belajar React dari Nol: Komponen, JSX, dan Props">
+<meta name="twitter:description" content="Panduan React untuk pemula: apa itu komponen, JSX, props, komposisi, dan rendering, dengan contoh kode React yang benar-benar dijalankan dan latihan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Belajar React dari Nol: Komponen, JSX, dan Props","description":"Panduan React untuk pemula: apa itu komponen, JSX, props, komposisi, dan rendering, dengan contoh kode React yang benar-benar dijalankan dan latihan.","image":["https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"React, JSX, komponen, props, belajar React","articleSection":"React & Web Modern","wordCount":508,"mainEntityOfPage":"https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Belajar React dari Nol: Komponen, JSX, dan Props","item":"https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya React dan framework seperti Next.js?","acceptedAnswer":{"@type":"Answer","text":"React adalah pustaka untuk membangun antarmuka. Next.js adalah framework di atasnya yang menambah routing, rendering di server, dan optimasi."}},{"@type":"Question","name":"Apakah harus belajar JavaScript dulu?","acceptedAnswer":{"@type":"Answer","text":"Ya, dasarnya: variabel, fungsi, array dan objek, map/filter, dan destructuring. React hanyalah JavaScript dengan konvensi tertentu."}},{"@type":"Question","name":"Apakah React masih relevan?","acceptedAnswer":{"@type":"Answer","text":"Ya. React termasuk pustaka antarmuka paling banyak dipakai dan menjadi dasar ekosistem seperti Next.js dan React Native."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-react-ada">Mengapa React ada</a></li><li><a href="#komponen-fungsi-yang-mengembalikan-tampilan">Komponen: fungsi yang mengembalikan tampilan</a></li><li><a href="#jsx-bukan-html-tapi-javascript">JSX: bukan HTML, tapi JavaScript</a></li><li><a href="#props-data-masuk-ke-komponen">Props: data masuk ke komponen</a></li><li><a href="#komposisi-komponen-di-dalam-komponen">Komposisi: komponen di dalam komponen</a></li><li><a href="#cara-memecah-antarmuka-menjadi-komponen">Cara memecah antarmuka menjadi komponen</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Belajar React dari Nol: Komponen, JSX, dan Props</h1>
+<p class="lead">React adalah pustaka JavaScript untuk membangun antarmuka dari potongan kecil yang disebut komponen. Satu ide inti menopang semuanya: tampilan adalah fungsi dari data. Berikan data, dapatkan tampilan. Dengan pegangan ini, sisa React terasa jauh lebih masuk akal.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar HTML dan JavaScript (variabel, fungsi, array)</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Belajar React dari Nol: Komponen, JSX, dan Props" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan apa itu komponen dan mengapa antarmuka dipecah menjadi komponen</li><li>menulis JSX dan memahami bahwa ia hanyalah JavaScript</li><li>mengirim data ke komponen lewat props</li><li>menyusun komponen kecil menjadi tampilan yang lebih besar (komposisi)</li><li>melihat HTML yang dihasilkan komponen dengan contoh yang dijalankan</li></ul></div>
+<h2 id="mengapa-react-ada">Mengapa React ada</h2>
+<p>Membangun antarmuka dengan DOM langsung berarti Anda harus mengatur sendiri setiap perubahan: cari elemen, ubah teksnya, tambah atau hapus bagian. Semakin banyak keadaan (state) yang berubah, semakin mudah tampilan tidak sinkron dengan data. React membalik pendekatannya: Anda menyatakan <b>seperti apa tampilan untuk data tertentu</b>, dan React yang menyesuaikan DOM saat data berubah.</p>
+<div data-w="compare"><script type="application/json">{"title":"Dua cara berpikir","tabs":[{"label":"Imperatif (DOM langsung)","html":"\"Cari elemen #total, ubah teksnya, sembunyikan pesan kosong, tambah baris baru...\" Anda mengatur setiap langkah perubahan."},{"label":"Deklaratif (React)","html":"\"Bila keranjang berisi 3 barang, tampilkan 3 baris dan total sekian.\" Anda menjelaskan hasil akhirnya; React menghitung perubahan yang diperlukan."}]}</script></div>
+<h2 id="komponen-fungsi-yang-mengembalikan-tampilan">Komponen: fungsi yang mengembalikan tampilan</h2>
+<p>Komponen React adalah fungsi JavaScript biasa yang namanya diawali <b>huruf besar</b> dan mengembalikan tampilan (JSX). Kita jalankan langsung dengan React 19 dan <code>renderToString</code>, yang menghasilkan HTML dari komponen.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+function Salam() {
+    return &lt;h1&gt;Halo, dunia!&lt;/h1&gt;;
+}
+
+console.log(renderToString(&lt;Salam /&gt;));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;h1&gt;Halo, dunia!&lt;/h1&gt;</code></pre><figcaption>Browser tidak mengerti JSX. Alat build (Vite, esbuild) mengubahnya menjadi pemanggilan fungsi JavaScript biasa sebelum dijalankan.</figcaption></figure>
+<h2 id="jsx-bukan-html-tapi-javascript">JSX: bukan HTML, tapi JavaScript</h2>
+<p>JSX terlihat seperti HTML, tetapi aturannya sedikit berbeda karena sebenarnya ia ekspresi JavaScript. Yang perlu dihafal hanya beberapa hal.</p>
+<table><thead><tr><th>Di HTML</th><th>Di JSX</th><th>Alasan</th></tr></thead><tbody><tr><td>class="kotak"</td><td>className="kotak"</td><td>class adalah kata kunci JavaScript</td></tr><tr><td>for="nama"</td><td>htmlFor="nama"</td><td>for juga kata kunci</td></tr><tr><td>onclick="..."</td><td>onClick={fungsi}</td><td>camelCase dan fungsi, bukan string</td></tr><tr><td>style="color: red"</td><td>style={{ color: "red" }}</td><td>objek JavaScript; kurung kurawal luar untuk ekspresi</td></tr><tr><td><br></td><td><br /></td><td>semua tag harus ditutup</td></tr><tr><td>dua elemen sejajar</td><td>dibungkus <>...</> (fragment)</td><td>komponen mengembalikan satu akar</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+function Kartu() {
+    const nama = 'Ani';
+    const harga = 25000;
+    const diskon = true;
+    return (
+        &lt;div className=&quot;kartu&quot; style={{ padding: 8 }}&gt;
+            &lt;h2&gt;{nama.toUpperCase()}&lt;/h2&gt;
+            &lt;p&gt;Total: Rp{(harga * 2).toLocaleString('id-ID')}&lt;/p&gt;
+            {diskon &amp;&amp; &lt;span&gt;Diskon aktif&lt;/span&gt;}
+            {!diskon &amp;&amp; &lt;span&gt;Tanpa diskon&lt;/span&gt;}
+        &lt;/div&gt;
+    );
+}
+console.log(renderToString(&lt;Kartu /&gt;));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;div class=&quot;kartu&quot; style=&quot;padding:8px&quot;&gt;&lt;h2&gt;ANI&lt;/h2&gt;&lt;p&gt;Total: Rp&lt;!-- --&gt;50.000&lt;/p&gt;&lt;span&gt;Diskon aktif&lt;/span&gt;&lt;/div&gt;</code></pre><figcaption>Apa pun di dalam {} adalah ekspresi JavaScript: pemanggilan metode, aritmetika, bahkan kondisi dengan &&. Atribut class menjadi className, style menjadi objek. Penanda &lt;!-- --&gt; pada keluaran adalah cara React memisahkan teks yang berdampingan saat dirender di server; tidak terlihat di layar.</figcaption></figure>
+<h2 id="props-data-masuk-ke-komponen">Props: data masuk ke komponen</h2>
+<p>Props (properties) adalah argumen komponen. Komponen menerimanya dalam satu objek dan hanya <b>membacanya</b>: props tidak boleh diubah di dalam komponen penerima.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+function KartuProduk({ nama, harga, stok = 0 }) {          // nilai bawaan stok = 0
+    return (
+        &lt;article&gt;
+            &lt;h3&gt;{nama}&lt;/h3&gt;
+            &lt;p&gt;Rp{harga.toLocaleString('id-ID')}&lt;/p&gt;
+            &lt;p&gt;{stok &gt; 0 ? 'Tersedia ' + stok : 'Habis'}&lt;/p&gt;
+        &lt;/article&gt;
+    );
+}
+
+console.log(renderToString(&lt;KartuProduk nama=&quot;Kopi Gayo&quot; harga={65000} stok={12} /&gt;));
+console.log(renderToString(&lt;KartuProduk nama=&quot;Teh Hijau&quot; harga={40000} /&gt;));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;article&gt;&lt;h3&gt;Kopi Gayo&lt;/h3&gt;&lt;p&gt;Rp&lt;!-- --&gt;65.000&lt;/p&gt;&lt;p&gt;Tersedia 12&lt;/p&gt;&lt;/article&gt;
+&lt;article&gt;&lt;h3&gt;Teh Hijau&lt;/h3&gt;&lt;p&gt;Rp&lt;!-- --&gt;40.000&lt;/p&gt;&lt;p&gt;Habis&lt;/p&gt;&lt;/article&gt;</code></pre></figure>
+<div class="callout info"><b>Satu arah</b><p>Aturan emas: <b>props mengalir ke bawah, dari induk ke anak</b> (aliran data satu arah). Anak tidak mengubah props; bila ia perlu memberi tahu induk, induk mengirim fungsi lewat props (callback). Aturan sederhana ini membuat aliran data mudah dilacak.</p></div>
+<h2 id="komposisi-komponen-di-dalam-komponen">Komposisi: komponen di dalam komponen</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+function Tombol({ children }) {
+    return &lt;button type=&quot;button&quot;&gt;{children}&lt;/button&gt;;
+}
+
+function Kartu({ judul, children }) {
+    return (
+        &lt;section&gt;
+            &lt;h2&gt;{judul}&lt;/h2&gt;
+            &lt;div&gt;{children}&lt;/div&gt;
+        &lt;/section&gt;
+    );
+}
+
+function Halaman() {
+    return (
+        &lt;main&gt;
+            &lt;Kartu judul=&quot;Promo&quot;&gt;
+                &lt;p&gt;Diskon akhir pekan.&lt;/p&gt;
+                &lt;Tombol&gt;Lihat promo&lt;/Tombol&gt;
+            &lt;/Kartu&gt;
+            &lt;Kartu judul=&quot;Kontak&quot;&gt;
+                &lt;Tombol&gt;Hubungi kami&lt;/Tombol&gt;
+            &lt;/Kartu&gt;
+        &lt;/main&gt;
+    );
+}
+console.log(renderToString(&lt;Halaman /&gt;));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;main&gt;&lt;section&gt;&lt;h2&gt;Promo&lt;/h2&gt;&lt;div&gt;&lt;p&gt;Diskon akhir pekan.&lt;/p&gt;&lt;button type=&quot;button&quot;&gt;Lihat promo&lt;/button&gt;&lt;/div&gt;&lt;/section&gt;&lt;section&gt;&lt;h2&gt;Kontak&lt;/h2&gt;&lt;div&gt;&lt;button type=&quot;button&quot;&gt;Hubungi kami&lt;/button&gt;&lt;/div&gt;&lt;/section&gt;&lt;/main&gt;</code></pre><figcaption>children adalah props khusus: isi yang ditaruh di antara tag pembuka dan penutup. Ia memungkinkan komponen berperan sebagai "bingkai" yang dapat diisi apa pun.</figcaption></figure>
+<h2 id="cara-memecah-antarmuka-menjadi-komponen">Cara memecah antarmuka menjadi komponen</h2>
+<ol><li>Gambar atau lihat desainnya, lalu <b>lingkari</b> setiap bagian yang berdiri sendiri.</li><li>Beri nama sesuai fungsinya (KartuProduk, DaftarPesanan), bukan sesuai tampilan (KotakBiru).</li><li>Pecah lagi bila suatu bagian dipakai berulang atau terlalu panjang untuk dibaca sekilas.</li><li>Tentukan data apa yang dibutuhkan tiap komponen: itulah props-nya.</li><li>Satu komponen sebaiknya melakukan satu hal (prinsip tanggung jawab tunggal).</li></ol>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Nama komponen React harus diawali...","options":["Huruf besar","Huruf kecil","Garis bawah"],"answer":0,"why":"Huruf kecil dianggap tag HTML biasa."},{"q":"Di JSX, atribut class ditulis...","options":["className","class","cssClass"],"answer":0,"why":"class adalah kata kunci JavaScript."},{"q":"Props yang diterima komponen...","options":["Hanya dibaca, tidak diubah","Boleh diubah bebas","Selalu berupa string"],"answer":0,"why":"Aliran data satu arah."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat komponen Profil dengan props nama dan peran yang menampilkan "Nama (peran)".</summary><div><code>function Profil({ nama, peran }) { return <p>{nama} ({peran})</p>; }</code></div></details><details><summary>2. Mengapa komponen harus mengembalikan satu elemen akar?</summary><div>Fungsi hanya dapat mengembalikan satu nilai; bungkus dengan elemen induk atau fragment <code>&lt;&gt;...&lt;/&gt;</code>.</div></details><details><summary>3. Apa yang terjadi bila nama komponen ditulis huruf kecil, <code>&lt;salam /&gt;</code>?</summary><div>React menganggapnya tag HTML bernama "salam", bukan komponen Anda.</div></details><details><summary>4. Tulis ekspresi JSX yang menampilkan "Lunas" bila lunas bernilai true dan "Belum" bila false.</summary><div><code>{lunas ? "Lunas" : "Belum"}</code></div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Komponen adalah fungsi (huruf besar) yang mengembalikan JSX.</li><li>JSX adalah sintaks JavaScript: {} untuk ekspresi, className, onClick, style objek.</li><li>Props mengalir dari induk ke anak dan hanya dibaca; children memungkinkan komposisi.</li><li>Pecah antarmuka menjadi komponen kecil berdasarkan fungsi dan penggunaan ulang.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya React dan framework seperti Next.js?</summary><div>React adalah pustaka untuk membangun antarmuka. Next.js adalah framework di atasnya yang menambah routing, rendering di server, dan optimasi.</div></details>
+<details class="faq"><summary>Apakah harus belajar JavaScript dulu?</summary><div>Ya, dasarnya: variabel, fungsi, array dan objek, map/filter, dan destructuring. React hanyalah JavaScript dengan konvensi tertentu.</div></details>
+<details class="faq"><summary>Apakah React masih relevan?</summary><div>Ya. React termasuk pustaka antarmuka paling banyak dipakai dan menjadi dasar ekosistem seperti Next.js dan React Native.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/learn" rel="noopener" target="_blank">React Documentation (react.dev)</a></li><li><a href="https://react.dev/learn/your-first-component" rel="noopener" target="_blank">React: Your First Component</a></li><li><a href="https://react.dev/learn/passing-props-to-a-component" rel="noopener" target="_blank">React: Passing Props to a Component</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript" rel="noopener" target="_blank">MDN Web Docs: JavaScript</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/react-untuk-pemula-komponen-props-dan-state/"><img src="/artikel/react-untuk-pemula-komponen-props-dan-state/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>React untuk Pemula: Komponen, Props, dan State dengan Contoh</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
