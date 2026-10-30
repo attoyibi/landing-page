@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apa Itu n8n? Otomasi Alur Kerja untuk Pemula · Muhammad Muchson</title>
+<meta name="description" content="Kenali n8n: platform otomasi alur kerja visual, konsep trigger, node, dan item, perbedaannya dengan Zapier dan Make, serta contoh alur sederhana yang dijalankan.">
+<meta name="keywords" content="n8n, otomasi, workflow, no-code, low-code">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/">
+<meta property="og:title" content="Apa Itu n8n? Otomasi Alur Kerja untuk Pemula">
+<meta property="og:description" content="Kenali n8n: platform otomasi alur kerja visual, konsep trigger, node, dan item, perbedaannya dengan Zapier dan Make, serta contoh alur sederhana yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Otomasi &amp; AI Kerja">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Apa Itu n8n? Otomasi Alur Kerja untuk Pemula">
+<meta name="twitter:description" content="Kenali n8n: platform otomasi alur kerja visual, konsep trigger, node, dan item, perbedaannya dengan Zapier dan Make, serta contoh alur sederhana yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Apa Itu n8n? Otomasi Alur Kerja untuk Pemula","description":"Kenali n8n: platform otomasi alur kerja visual, konsep trigger, node, dan item, perbedaannya dengan Zapier dan Make, serta contoh alur sederhana yang dijalankan.","image":["https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"n8n, otomasi, workflow, no-code, low-code","articleSection":"Otomasi & AI Kerja","wordCount":520,"mainEntityOfPage":"https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Apa Itu n8n? Otomasi Alur Kerja untuk Pemula","item":"https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah n8n gratis?","acceptedAnswer":{"@type":"Answer","text":"Edisi Community dapat dipasang sendiri tanpa biaya lisensi dasar (Anda menanggung server); layanan awan n8n berbayar. Lisensi fair-code punya batasan tertentu untuk penggunaan komersial, baca ketentuannya."}},{"@type":"Question","name":"Perlu bisa coding?","acceptedAnswer":{"@type":"Answer","text":"Tidak untuk alur dasar; sedikit JavaScript berguna untuk transformasi data."}},{"@type":"Question","name":"Apakah aman untuk data pelanggan?","acceptedAnswer":{"@type":"Answer","text":"Aman bila dikonfigurasi benar: HTTPS, akses terbatas, backup, dan pengelolaan credential yang baik."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#apa-itu-n8n">Apa itu n8n</a></li><li><a href="#konsep-inti">Konsep inti</a></li><li><a href="#data-mengalir-sebagai-item">Data mengalir sebagai item</a></li><li><a href="#n8n-zapier-dan-make">n8n, Zapier, dan Make</a></li><li><a href="#apa-yang-cocok-diotomasi">Apa yang cocok diotomasi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a></p>
+<a class="cat" href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a>
+<h1>Apa Itu n8n? Otomasi Alur Kerja untuk Pemula</h1>
+<p class="lead">Banyak pekerjaan kantor berupa pemindahan data yang membosankan: menyalin pesanan dari formulir ke spreadsheet, mengirim pengingat, merangkum surel. n8n (dibaca "en-eight-en") memungkinkan Anda menyambungkan aplikasi dan membuat alur kerja otomatis lewat kanvas visual, dengan opsi menulis kode saat perlu. Artikel ini menjelaskan konsep dasarnya.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> tidak ada; cukup terbiasa memakai aplikasi web</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Apa Itu n8n? Otomasi Alur Kerja untuk Pemula" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan apa itu n8n dan masalah yang diselesaikannya</li><li>memahami trigger, node, koneksi, dan item data</li><li>membedakan n8n dengan Zapier dan Make</li><li>memahami cara kerja alur kerja dari trigger hingga hasil</li><li>mengenali tugas yang cocok dan tidak cocok diotomasi</li></ul></div>
+<div class="callout info"><b>Tentang contoh</b><p>n8n adalah alat visual; alur kerjanya dibuat di editor n8n, bukan di halaman ini. Contoh kode JavaScript di bawah meniru logika node Code dan dijalankan sungguhan dengan Node.js agar hasilnya dapat dibuktikan. Antarmuka dan nama node dapat berubah antar versi, jadi cocokkan dengan dokumentasi n8n.</p></div>
+<h2 id="apa-itu-n8n">Apa itu n8n</h2>
+<p>n8n adalah platform otomasi alur kerja dengan pendekatan <i>fair-code</i>: kode sumbernya terbuka untuk dibaca dan dapat dijalankan sendiri (self-host), dengan lisensi yang membatasi sebagian penggunaan komersial tertentu. Anda dapat memakainya lewat layanan awan n8n atau memasangnya di server sendiri. Setiap alur kerja (workflow) tersusun dari <b>node</b> yang saling terhubung.</p>
+<h2 id="konsep-inti">Konsep inti</h2>
+<table><thead><tr><th>Konsep</th><th>Arti</th><th>Contoh</th></tr></thead><tbody><tr><td>Workflow</td><td>Satu alur otomasi lengkap</td><td>Pesanan masuk → catat → beri tahu</td></tr><tr><td>Trigger</td><td>Pemicu yang memulai alur</td><td>Webhook, jadwal (cron), surel baru, baris baru di sheet</td></tr><tr><td>Node</td><td>Satu langkah/aplikasi</td><td>Google Sheets, HTTP Request, IF, Code, WhatsApp</td></tr><tr><td>Koneksi</td><td>Garis yang meneruskan data antar node</td><td>Keluaran satu node menjadi masukan berikutnya</td></tr><tr><td>Item</td><td>Satu unit data (objek JSON) yang mengalir</td><td>Satu pesanan = satu item; 10 pesanan = 10 item</td></tr><tr><td>Credential</td><td>Kunci/akses ke layanan, disimpan terenkripsi</td><td>Token Google, API key</td></tr><tr><td>Execution</td><td>Satu kali alur berjalan, lengkap dengan log</td><td>Bisa dilihat berhasil/gagal dan datanya</td></tr></tbody></table>
+<figure class="diagram"><svg viewBox="0 0 542 288" role="img" aria-label="Contoh alur kerja" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Trigger: formulir</tspan><tspan x="85" dy="16">terkirim</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">webhook menerima data</tspan><tspan x="85" dy="14">pendaftar</tspan></text><line x1="164" y1="67" x2="192" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Node IF: ponsel</tspan><tspan x="271" dy="16">valid?</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">cabang benar/salah</tspan></text><line x1="350" y1="67" x2="378" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Node Google</tspan><tspan x="457" dy="16">Sheets</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">tambah baris pendaftar</tspan></text><path d="M457 128 V154 H85 V160" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="180" r="11" fill="#7a3fb4"/><text x="26" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Node</tspan><tspan x="85" dy="16">WhatsApp/Surel</tspan></text><text x="85" y="240" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">kirim konfirmasi</tspan></text><line x1="164" y1="221" x2="192" y2="221" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="180" r="11" fill="#b3261e"/><text x="212" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Node error</tspan><tspan x="271" dy="16">(cabang salah)</tspan></text><text x="271" y="240" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">catat untuk ditinjau</tspan></text></svg></figure>
+<h2 id="data-mengalir-sebagai-item">Data mengalir sebagai item</h2>
+<p>Hal yang paling membantu memahami n8n: setiap node menerima <b>daftar item</b>, bekerja pada tiap item, lalu mengirim daftar item baru. Berikut peragaan logika itu dengan JavaScript, persis seperti isi node Code yang mengubah data pesanan (<code>$input.all()</code> mengembalikan item, tiap item punya properti <code>json</code>).</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Peragaan: node Code menerima item dan mengembalikan item baru
+const masukan = [
+  { json: { nama: 'Ani',  produk: 'Kopi', jumlah: 2, harga: 20000, ponsel: '0812-3456-7890' } },
+  { json: { nama: 'Budi', produk: 'Teh',  jumlah: 1, harga: 15000, ponsel: '12345' } },
+  { json: { nama: 'Citra', produk: 'Kopi', jumlah: 3, harga: 20000, ponsel: '+62 813 9999 0000' } },
+];
+
+const keluaran = masukan.map(({ json }) =&gt; ({
+  json: {
+    ...json,
+    total: json.jumlah * json.harga,
+    ponselBersih: json.ponsel.replace(/[^\d+]/g, '').replace(/^\+?62/, '0'),
+  },
+}));
+
+// node IF: pisahkan ponsel valid dan tidak valid
+const valid = keluaran.filter(i =&gt; /^08\d{8,11}$/.test(i.json.ponselBersih));
+const tidak = keluaran.filter(i =&gt; !/^08\d{8,11}$/.test(i.json.ponselBersih));
+
+console.log('cabang BENAR (dikirim ke Sheets/WhatsApp):');
+valid.forEach(i =&gt; console.log(' ', i.json.nama, i.json.total, i.json.ponselBersih));
+console.log('cabang SALAH (dicatat untuk ditinjau):');
+tidak.forEach(i =&gt; console.log(' ', i.json.nama, 'ponsel:', i.json.ponsel));</code></pre><pre class="runout" data-lang="keluaran"><code>cabang BENAR (dikirim ke Sheets/WhatsApp):
+  Ani 40000 081234567890
+  Citra 60000 081399990000
+cabang SALAH (dicatat untuk ditinjau):
+  Budi ponsel: 12345</code></pre><figcaption>Tiga item masuk, dua lolos cabang BENAR dan satu masuk cabang SALAH. Begitu pula alur n8n: data JSON bergerak dari node ke node, bercabang, dan bergabung kembali.</figcaption></figure>
+<h2 id="n8n-zapier-dan-make">n8n, Zapier, dan Make</h2>
+<table><thead><tr><th>Aspek</th><th>n8n</th><th>Zapier</th><th>Make</th></tr></thead><tbody><tr><td>Model</td><td>Self-host atau awan; fair-code</td><td>Layanan awan</td><td>Layanan awan</td></tr><tr><td>Antarmuka</td><td>Kanvas node, bisa kode (JS/Python)</td><td>Daftar langkah linier, sederhana</td><td>Kanvas visual dengan modul</td></tr><tr><td>Fleksibilitas</td><td>Tinggi: percabangan, loop, kode, HTTP bebas</td><td>Sedang; paling mudah dimulai</td><td>Tinggi untuk alur visual kompleks</td></tr><tr><td>Kontrol data</td><td>Dapat di server sendiri</td><td>Data lewat layanan mereka</td><td>Data lewat layanan mereka</td></tr><tr><td>Biaya</td><td>Self-host tanpa biaya lisensi dasar (bayar server); awan berbayar</td><td>Per tugas; bisa mahal saat volume naik</td><td>Per operasi; menengah</td></tr><tr><td>Kurva belajar</td><td>Menengah</td><td>Rendah</td><td>Menengah</td></tr></tbody></table>
+<div class="callout info"><b>Memilih</b><p>Tidak ada yang selalu terbaik. Zapier cocok untuk otomasi cepat tanpa kerepotan teknis; n8n unggul bila Anda butuh kontrol, volume besar, atau data yang harus tetap di server Anda. Harga dan fitur berubah; periksa halaman resmi masing-masing sebelum memutuskan.</p></div>
+<h2 id="apa-yang-cocok-diotomasi">Apa yang cocok diotomasi</h2>
+<ul><li><b>Cocok</b>: tugas berulang dengan aturan jelas, bervolume, dan lintas aplikasi: pencatatan pesanan, notifikasi, laporan berkala, sinkronisasi data, pembersihan data.</li><li><b>Hati-hati</b>: keputusan yang butuh penilaian manusia (tinjau dulu sebelum kirim), tindakan tak dapat dibatalkan (hapus, bayar), dan proses yang belum Anda pahami (otomasi proses buruk hanya mempercepat kekacauan).</li><li><b>Aturan praktis</b>: lakukan manual sampai paham, tulis langkahnya, baru otomasi; selalu sediakan penanganan galat dan pemberitahuan kegagalan.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apa yang memulai workflow n8n?","options":["Trigger","Credential","Execution"],"answer":0,"why":"Trigger adalah pemicu."},{"q":"Satu unit data yang mengalir antar node disebut...","options":["Item","Folder","Skema"],"answer":0,"why":"Daftar item berformat JSON."},{"q":"Keunggulan utama self-host?","options":["Data tetap di server sendiri","Selalu gratis sepenuhnya","Tanpa perawatan"],"answer":0,"why":"Server dan perawatan menjadi tanggung jawab Anda."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Sebutkan tiga pemicu (trigger) yang umum.</summary><div>Webhook, jadwal (cron/interval), dan peristiwa aplikasi (surel baru, baris baru di Google Sheets).</div></details><details><summary>2. Mengapa penting ada cabang untuk data tidak valid?</summary><div>Agar data buruk tidak merusak langkah berikutnya dan dapat ditinjau manusia, bukan hilang diam-diam.</div></details><details><summary>3. Kapan memilih Zapier daripada n8n?</summary><div>Saat butuh otomasi sederhana yang cepat tanpa mengelola server, dengan volume kecil.</div></details><details><summary>4. Proses apa yang sebaiknya tidak diotomasi penuh?</summary><div>Yang berisiko tinggi atau butuh penilaian: pembayaran, penghapusan, keputusan sensitif; setidaknya tambahkan langkah persetujuan manusia.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>n8n merangkai aplikasi lewat workflow: trigger → node → hasil.</li><li>Data mengalir sebagai item JSON; node bekerja per item.</li><li>Self-host memberi kontrol data; Zapier/Make lebih mudah dimulai.</li><li>Otomasi proses yang sudah dipahami, dengan penanganan galat dan persetujuan manusia untuk tindakan berisiko.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah n8n gratis?</summary><div>Edisi Community dapat dipasang sendiri tanpa biaya lisensi dasar (Anda menanggung server); layanan awan n8n berbayar. Lisensi fair-code punya batasan tertentu untuk penggunaan komersial, baca ketentuannya.</div></details>
+<details class="faq"><summary>Perlu bisa coding?</summary><div>Tidak untuk alur dasar; sedikit JavaScript berguna untuk transformasi data.</div></details>
+<details class="faq"><summary>Apakah aman untuk data pelanggan?</summary><div>Aman bila dikonfigurasi benar: HTTPS, akses terbatas, backup, dan pengelolaan credential yang baik.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.n8n.io/" rel="noopener" target="_blank">n8n Documentation</a></li><li><a href="https://docs.n8n.io/workflows/" rel="noopener" target="_blank">n8n: Key concepts</a></li><li><a href="https://docs.n8n.io/sustainable-use-license/" rel="noopener" target="_blank">n8n: Sustainable Use License</a></li><li><a href="https://community.n8n.io/" rel="noopener" target="_blank">n8n Community</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/n8n-otomasi-workflow-untuk-pemula/"><img src="/artikel/n8n-otomasi-workflow-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>n8n untuk Pemula: Otomasi Workflow Tanpa Ribet</span></a><a href="/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/"><img src="/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Webhook n8n: Menerima Data dari Form dan Aplikasi</span></a><a href="/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/"><img src="/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>n8n dan Google Sheets: Pencatatan dan Laporan Otomatis</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

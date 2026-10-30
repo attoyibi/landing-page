@@ -250,4 +250,9 @@ export const ARTICLES = [
     'ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint',
     'testing-flutter-unit-test-widget-test-dan-integration-test',
     'rilis-aplikasi-flutter-build-apk-aab-signing-dan-play-store',
+    'apa-itu-n8n-otomasi-alur-kerja-untuk-pemula',
+    'install-n8n-self-host-docker-compose-dan-reverse-proxy',
+    'webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain',
+    'n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis',
+    'whatsapp-otomatis-dengan-n8n-notifikasi-dan-chatbot-sederhana',
 ];

@@ -76,6 +76,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://muchson.web.id/artikel/kategori/otomasi-ai-kerja/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://muchson.web.id/artikel/rag-adalah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
@@ -1307,6 +1312,31 @@
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/rilis-aplikasi-flutter-build-apk-aab-signing-dan-play-store/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/whatsapp-otomatis-dengan-n8n-notifikasi-dan-chatbot-sederhana/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>

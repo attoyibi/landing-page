@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webhook n8n: Menerima Data dari Form dan Aplikasi</title>
+<meta name="description" content="Belajar webhook n8n: URL uji dan produksi, membaca body, autentikasi, respons, validasi, dan idempotensi, dengan simulasi penerima webhook yang dijalankan.">
+<meta name="keywords" content="n8n, webhook, API, HTTP, otomasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/">
+<meta property="og:title" content="Webhook n8n: Menerima Data dari Form dan Aplikasi">
+<meta property="og:description" content="Belajar webhook n8n: URL uji dan produksi, membaca body, autentikasi, respons, validasi, dan idempotensi, dengan simulasi penerima webhook yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Otomasi &amp; AI Kerja">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Webhook n8n: Menerima Data dari Form dan Aplikasi">
+<meta name="twitter:description" content="Belajar webhook n8n: URL uji dan produksi, membaca body, autentikasi, respons, validasi, dan idempotensi, dengan simulasi penerima webhook yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhook n8n: Menerima Data dari Form dan Aplikasi","description":"Belajar webhook n8n: URL uji dan produksi, membaca body, autentikasi, respons, validasi, dan idempotensi, dengan simulasi penerima webhook yang dijalankan.","image":["https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"n8n, webhook, API, HTTP, otomasi","articleSection":"Otomasi & AI Kerja","wordCount":492,"mainEntityOfPage":"https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Webhook n8n: Menerima Data dari Form dan Aplikasi","item":"https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana menguji webhook dari internet saat n8n di komputer lokal?","acceptedAnswer":{"@type":"Answer","text":"Pakai terowongan (ngrok, Cloudflare Tunnel) atau n8n tunnel untuk pengembangan; jangan untuk produksi."}},{"@type":"Question","name":"Bisakah webhook menerima berkas?","acceptedAnswer":{"@type":"Answer","text":"Bisa (multipart/form-data) dengan opsi binary di node Webhook; batasi ukuran."}},{"@type":"Question","name":"Berapa batas ukuran payload?","acceptedAnswer":{"@type":"Answer","text":"Ada batas bawaan yang dapat diatur lewat variabel lingkungan; cek dokumentasi untuk nilai terkini."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#cara-kerja">Cara kerja</a></li><li><a href="#url-uji-dan-produksi">URL uji dan produksi</a></li><li><a href="#mencoba-dengan-curl">Mencoba dengan curl</a></li><li><a href="#simulasi-penerima-webhook">Simulasi penerima webhook</a></li><li><a href="#rancangan-di-n8n">Rancangan di n8n</a></li><li><a href="#praktik-baik">Praktik baik</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a></p>
+<a class="cat" href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a>
+<h1>Webhook n8n: Menerima Data dari Form dan Aplikasi</h1>
+<p class="lead">Webhook adalah cara aplikasi lain "mengetuk pintu" n8n: begitu ada kejadian (formulir terkirim, pembayaran berhasil, commit baru), aplikasi itu mengirim permintaan HTTP ke alamat n8n dan alur kerja langsung berjalan. Tidak perlu polling berulang. Ini pemicu paling serbaguna, dan paling sering salah diamankan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar n8n, JSON dan HTTP dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Webhook n8n: Menerima Data dari Form dan Aplikasi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat node Webhook dan memahami URL uji vs produksi</li><li>membaca body, query, header, dan parameter dari permintaan</li><li>mengamankan webhook dengan token atau tanda tangan</li><li>mengatur respons ke pengirim</li><li>merancang penerima yang tahan duplikasi (idempotensi)</li></ul></div>
+<div class="callout info"><b>Tentang contoh</b><p>n8n adalah alat visual; alur kerjanya dibuat di editor n8n, bukan di halaman ini. Contoh kode JavaScript di bawah meniru logika node Code dan dijalankan sungguhan dengan Node.js agar hasilnya dapat dibuktikan. Antarmuka dan nama node dapat berubah antar versi, jadi cocokkan dengan dokumentasi n8n.</p></div>
+<h2 id="cara-kerja">Cara kerja</h2>
+<figure class="diagram"><svg viewBox="0 0 542 320" role="img" aria-label="Siklus webhook" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="130" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Kejadian di</tspan><tspan x="85" dy="16">aplikasi pengirim</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">formulir dikirim /</tspan><tspan x="85" dy="14">pembayaran berhasil</tspan></text><line x1="164" y1="75" x2="192" y2="75" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="130" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">HTTP POST ke URL</tspan><tspan x="271" dy="16">webhook n8n</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">berisi JSON</tspan></text><line x1="350" y1="75" x2="378" y2="75" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="130" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Node Webhook</tspan><tspan x="457" dy="16">memicu workflow</tspan></text><text x="457" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">body, headers, query</tspan><tspan x="457" dy="14">tersedia sebagai item</tspan></text><path d="M457 144 V170 H85 V176" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="180" width="150" height="130" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="196" r="11" fill="#7a3fb4"/><text x="26" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="220" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Langkah</tspan><tspan x="85" dy="16">berikutnya</tspan><tspan x="85" dy="16">berjalan</tspan></text><text x="85" y="272" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">validasi, simpan, beri</tspan><tspan x="85" dy="14">tahu</tspan></text><line x1="164" y1="245" x2="192" y2="245" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="180" width="150" height="130" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="196" r="11" fill="#b3261e"/><text x="212" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="220" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Respons dikirim</tspan><tspan x="271" dy="16">balik</tspan></text><text x="271" y="256" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">langsung, atau setelah</tspan><tspan x="271" dy="14">alur selesai</tspan></text></svg></figure>
+<h2 id="url-uji-dan-produksi">URL uji dan produksi</h2>
+<table><thead><tr><th></th><th>Test URL</th><th>Production URL</th></tr></thead><tbody><tr><td>Bentuk</td><td>.../webhook-test/jalur</td><td>.../webhook/jalur</td></tr><tr><td>Kapan aktif</td><td>Hanya saat Anda menekan "Listen for test event"</td><td>Selama workflow diaktifkan (Active)</td></tr><tr><td>Data</td><td>Tampil di editor untuk dirancang</td><td>Tercatat di Executions</td></tr><tr><td>Pakai untuk</td><td>Mengembangkan dan mengamati bentuk data</td><td>Dipasang di aplikasi pengirim</td></tr></tbody></table>
+<div class="callout warn"><b>Jebakan</b><p>Kesalahan klasik: memasang <b>Test URL</b> di aplikasi pengirim lalu heran mengapa webhook tidak masuk setelah workflow aktif. Setelah selesai merancang, ganti ke <b>Production URL</b> dan aktifkan workflow.</p></div>
+<h2 id="mencoba-dengan-curl">Mencoba dengan curl</h2>
+<figure class="codebox"><pre data-lang="bash"><code>curl -X POST &quot;https://n8n.contoh.id/webhook/pendaftaran&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;X-Token: rahasia-panjang&quot; \
+  -d '{&quot;nama&quot;:&quot;Ani&quot;,&quot;surel&quot;:&quot;ani@contoh.id&quot;,&quot;ponsel&quot;:&quot;0812-3456-7890&quot;,&quot;kursus&quot;:&quot;React Dasar&quot;}'</code></pre><figcaption>Di workflow, data tersedia sebagai {{ $json.body.nama }}, header sebagai {{ $json.headers["x-token"] }}, dan query string sebagai {{ $json.query.sumber }}.</figcaption></figure>
+<h2 id="simulasi-penerima-webhook">Simulasi penerima webhook</h2>
+<p>Berikut peniruan logika yang seharusnya ada di workflow: cek token, validasi isi, tolak duplikat, lalu balas dengan kode HTTP yang tepat. Perhatikan urutan pemeriksaannya.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const TOKEN = 'rahasia-panjang';
+const sudahDiproses = new Set();                       // di n8n: simpan di basis data/Data Table/Redis
+
+function validasi(b) {
+  const galat = [];
+  if (!b || typeof b !== 'object') return ['body kosong'];
+  if (!b.nama || b.nama.trim().length &lt; 2) galat.push('nama wajib');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.surel || '')) galat.push('surel tidak valid');
+  if (!b.idPesanan) galat.push('idPesanan wajib (untuk idempotensi)');
+  return galat;
+}
+
+function tangani(req) {
+  if (req.headers['x-token'] !== TOKEN) return { status: 401, body: { galat: 'tidak berwenang' } };
+  const galat = validasi(req.body);
+  if (galat.length) return { status: 422, body: { galat } };
+  if (sudahDiproses.has(req.body.idPesanan)) return { status: 200, body: { pesan: 'duplikat diabaikan' } };
+  sudahDiproses.add(req.body.idPesanan);
+  return { status: 200, body: { pesan: 'diterima', nama: req.body.nama } };
+}
+
+const kasus = [
+  ['tanpa token',        { headers: {}, body: { nama: 'Ani', surel: 'a@x.id', idPesanan: 1 } }],
+  ['body tidak valid',   { headers: { 'x-token': TOKEN }, body: { nama: 'A', surel: 'bukan-surel' } }],
+  ['pertama kali',       { headers: { 'x-token': TOKEN }, body: { nama: 'Ani', surel: 'ani@contoh.id', idPesanan: 101 } }],
+  ['kiriman ulang',      { headers: { 'x-token': TOKEN }, body: { nama: 'Ani', surel: 'ani@contoh.id', idPesanan: 101 } }],
+];
+for (const [nama, req] of kasus) console.log(nama.padEnd(18), JSON.stringify(tangani(req)));</code></pre><pre class="runout" data-lang="keluaran"><code>tanpa token        {&quot;status&quot;:401,&quot;body&quot;:{&quot;galat&quot;:&quot;tidak berwenang&quot;}}
+body tidak valid   {&quot;status&quot;:422,&quot;body&quot;:{&quot;galat&quot;:[&quot;nama wajib&quot;,&quot;surel tidak valid&quot;,&quot;idPesanan wajib (untuk idempotensi)&quot;]}}
+pertama kali       {&quot;status&quot;:200,&quot;body&quot;:{&quot;pesan&quot;:&quot;diterima&quot;,&quot;nama&quot;:&quot;Ani&quot;}}
+kiriman ulang      {&quot;status&quot;:200,&quot;body&quot;:{&quot;pesan&quot;:&quot;duplikat diabaikan&quot;}}</code></pre><figcaption>401 untuk tidak berwenang, 422 untuk data tidak valid, 200 untuk sukses (termasuk duplikat yang diabaikan). Pengirim webhook sering mengirim ulang bila tidak menerima 2xx, sehingga idempotensi (idPesanan) mencegah pemrosesan ganda.</figcaption></figure>
+<h2 id="rancangan-di-n8n">Rancangan di n8n</h2>
+<ol><li>Node <b>Webhook</b>: metode POST, jalur "pendaftaran", autentikasi Header Auth (credential), respons "Using Respond to Webhook Node".</li><li>Node <b>IF</b> / <b>Code</b>: validasi isi; cabang salah menuju Respond 422.</li><li>Node <b>Data Table / basis data</b>: cek apakah idPesanan sudah ada; jika ya, Respond 200 "duplikat".</li><li>Node kerja: tambah ke Google Sheets, kirim konfirmasi, dsb.</li><li>Node <b>Respond to Webhook</b>: balas cepat (JSON ringkas) agar pengirim tidak kehabisan waktu; pekerjaan berat dapat dilanjutkan setelah respons.</li></ol>
+<h2 id="praktik-baik">Praktik baik</h2>
+<ul><li><b>Autentikasi</b>: header token, basic auth, atau verifikasi tanda tangan HMAC (banyak layanan seperti Stripe/GitHub menandatangani isi).</li><li><b>Validasi</b> semua masukan; jangan percaya data dari luar.</li><li><b>Balas cepat</b>: sebagian pengirim menganggap gagal jika respons lebih dari beberapa detik.</li><li><b>Idempotensi</b>: simpan ID kejadian yang sudah diproses.</li><li><b>Jangan menaruh rahasia di URL</b> (tercatat di log); pakai header.</li><li><b>Batasi laju</b> di reverse proxy dan batasi ukuran body.</li><li><b>Pantau</b> eksekusi gagal dan kirim peringatan.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Webhook yang tersambung ke aplikasi sungguhan memakai...","options":["Production URL dan workflow aktif","Test URL","Alamat apa saja"],"answer":0,"why":"Test URL hanya aktif saat mendengarkan di editor."},{"q":"Kode HTTP untuk data tidak valid yang umum?","options":["422 (atau 400)","200","500"],"answer":0,"why":"4xx menandakan kesalahan pengirim."},{"q":"Apa itu idempotensi?","options":["Pemrosesan ulang kejadian yang sama tidak menimbulkan efek ganda","Kecepatan respons","Enkripsi"],"answer":0,"why":"Pengirim sering mencoba ulang."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa token sebaiknya di header, bukan di query?</summary><div>URL tercatat di log proxy dan riwayat; header tidak ikut tercatat secara bawaan.</div></details><details><summary>2. Apa yang terjadi jika webhook tidak membalas 2xx?</summary><div>Banyak pengirim mencoba ulang; tanpa idempotensi pemrosesan bisa ganda.</div></details><details><summary>3. Bagaimana membaca nama dari body di n8n?</summary><div>Ekspresi {{ $json.body.nama }} pada node berikutnya.</div></details><details><summary>4. Kapan memakai Respond to Webhook?</summary><div>Saat ingin mengontrol isi dan kode status respons, misalnya 422 untuk validasi gagal.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Webhook memicu workflow dari kejadian di aplikasi lain.</li><li>Pakai Production URL dengan workflow aktif; Test URL hanya untuk merancang.</li><li>Amankan dengan token/HMAC, validasi isi, balas cepat dengan kode status tepat.</li><li>Idempotensi mencegah pemrosesan ganda saat pengirim mencoba ulang.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana menguji webhook dari internet saat n8n di komputer lokal?</summary><div>Pakai terowongan (ngrok, Cloudflare Tunnel) atau n8n tunnel untuk pengembangan; jangan untuk produksi.</div></details>
+<details class="faq"><summary>Bisakah webhook menerima berkas?</summary><div>Bisa (multipart/form-data) dengan opsi binary di node Webhook; batasi ukuran.</div></details>
+<details class="faq"><summary>Berapa batas ukuran payload?</summary><div>Ada batas bawaan yang dapat diatur lewat variabel lingkungan; cek dokumentasi untuk nilai terkini.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/" rel="noopener" target="_blank">n8n: Webhook node</a></li><li><a href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.respondtowebhook/" rel="noopener" target="_blank">n8n: Respond to Webhook</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" rel="noopener" target="_blank">MDN: HTTP status codes</a></li><li><a href="https://docs.stripe.com/webhooks#verify-events" rel="noopener" target="_blank">Stripe: Webhook signatures</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/"><img src="/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Apa Itu n8n? Otomasi Alur Kerja untuk Pemula</span></a><a href="/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/"><img src="/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>n8n dan Google Sheets: Pencatatan dan Laporan Otomatis</span></a><a href="/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/"><img src="/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Install n8n Self-Host: Docker Compose dan HTTPS</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

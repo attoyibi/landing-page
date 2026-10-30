@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>n8n dan Google Sheets: Pencatatan dan Laporan Otomatis</title>
+<meta name="description" content="Otomasi Google Sheets dengan n8n: tambah dan perbarui baris, deduplikasi, laporan harian terjadwal, dengan logika agregasi yang dijalankan.">
+<meta name="keywords" content="n8n, Google Sheets, laporan otomatis, otomasi, spreadsheet">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/">
+<meta property="og:title" content="n8n dan Google Sheets: Pencatatan dan Laporan Otomatis">
+<meta property="og:description" content="Otomasi Google Sheets dengan n8n: tambah dan perbarui baris, deduplikasi, laporan harian terjadwal, dengan logika agregasi yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Otomasi &amp; AI Kerja">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="n8n dan Google Sheets: Pencatatan dan Laporan Otomatis">
+<meta name="twitter:description" content="Otomasi Google Sheets dengan n8n: tambah dan perbarui baris, deduplikasi, laporan harian terjadwal, dengan logika agregasi yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"n8n dan Google Sheets: Pencatatan dan Laporan Otomatis","description":"Otomasi Google Sheets dengan n8n: tambah dan perbarui baris, deduplikasi, laporan harian terjadwal, dengan logika agregasi yang dijalankan.","image":["https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"n8n, Google Sheets, laporan otomatis, otomasi, spreadsheet","articleSection":"Otomasi & AI Kerja","wordCount":516,"mainEntityOfPage":"https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"n8n dan Google Sheets: Pencatatan dan Laporan Otomatis","item":"https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah bisa memicu workflow saat baris baru muncul?","acceptedAnswer":{"@type":"Answer","text":"Ya: node Google Sheets Trigger (polling) memeriksa baris baru secara berkala."}},{"@type":"Question","name":"Bagaimana bila nama kolom diubah?","acceptedAnswer":{"@type":"Answer","text":"Pemetaan akan rusak; ubah nama kolom hati-hati dan perbarui node, atau gunakan versi sheet terpisah untuk perubahan."}},{"@type":"Question","name":"Alternatif tanpa Google?","acceptedAnswer":{"@type":"Answer","text":"Excel Online, Airtable, NocoDB, atau basis data PostgreSQL/MySQL."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#menyambungkan">Menyambungkan</a></li><li><a href="#operasi-utama">Operasi utama</a></li><li><a href="#pemetaan-kolom-dan-deduplikasi">Pemetaan kolom dan deduplikasi</a></li><li><a href="#laporan-harian-agregasi-data">Laporan harian: agregasi data</a></li><li><a href="#tips-dan-batas">Tips dan batas</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a></p>
+<a class="cat" href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a>
+<h1>n8n dan Google Sheets: Pencatatan dan Laporan Otomatis</h1>
+<p class="lead">Google Sheets adalah "basis data" yang paling akrab bagi banyak usaha kecil: pesanan, stok, absensi, daftar peserta. Menggabungkannya dengan n8n mengubah spreadsheet pasif menjadi sistem yang mencatat sendiri, menghitung sendiri, dan melaporkan sendiri setiap pagi.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar n8n, akun Google</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="n8n dan Google Sheets: Pencatatan dan Laporan Otomatis" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menyambungkan n8n ke Google Sheets dengan credential yang benar</li><li>memakai operasi Append, Get Row(s), Update, dan Append or Update</li><li>memetakan kolom dan menjaga struktur sheet yang rapi</li><li>menghindari duplikat dengan kolom kunci</li><li>membuat laporan ringkasan terjadwal</li></ul></div>
+<div class="callout info"><b>Tentang contoh</b><p>n8n adalah alat visual; alur kerjanya dibuat di editor n8n, bukan di halaman ini. Contoh kode JavaScript di bawah meniru logika node Code dan dijalankan sungguhan dengan Node.js agar hasilnya dapat dibuktikan. Antarmuka dan nama node dapat berubah antar versi, jadi cocokkan dengan dokumentasi n8n.</p></div>
+<h2 id="menyambungkan">Menyambungkan</h2>
+<ul><li>Di n8n tambahkan credential <b>Google Sheets OAuth2</b> (ikuti panduan: buat proyek di Google Cloud, aktifkan Google Sheets API, buat OAuth client, izinkan redirect URL n8n Anda) atau gunakan <b>Service Account</b> dan bagikan sheet ke surel akun layanan itu.</li><li>Beri akses minimum yang diperlukan: bila hanya membaca, pakai akses baca saja.</li><li>Pilih dokumen dan sheet dari daftar; n8n membaca baris header sebagai nama kolom.</li></ul>
+<h2 id="operasi-utama">Operasi utama</h2>
+<table><thead><tr><th>Operasi</th><th>Fungsi</th><th>Contoh pemakaian</th></tr></thead><tbody><tr><td>Append Row</td><td>Menambah baris di akhir</td><td>Mencatat pesanan baru</td></tr><tr><td>Get Row(s)</td><td>Membaca baris, bisa dengan filter</td><td>Mengambil pesanan hari ini</td></tr><tr><td>Update Row</td><td>Mengubah baris berdasarkan kolom pencocok</td><td>Mengubah status menjadi "Dikirim"</td></tr><tr><td>Append or Update</td><td>Perbarui jika kunci ada, tambah jika belum</td><td>Mencegah duplikat peserta</td></tr><tr><td>Delete Rows</td><td>Menghapus baris/kolom</td><td>Hati-hati; sering lebih aman menandai "arsip"</td></tr></tbody></table>
+<div class="callout good"><b>Struktur sheet</b><p>Rancang sheet seperti tabel basis data: <b>satu baris header</b> di baris 1, satu kolom <b>ID unik</b>, tanpa sel digabung, tanpa baris kosong di tengah, dan satu jenis data per kolom. Sheet yang rapi membuat otomasi andal; sheet "cantik" untuk dicetak membuatnya rapuh.</p></div>
+<h2 id="pemetaan-kolom-dan-deduplikasi">Pemetaan kolom dan deduplikasi</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>// Pemetaan di node Google Sheets (mode &quot;Map Each Column Manually&quot;):
+//   Tanggal   &lt;- {{ $now.setZone('Asia/Jakarta').toFormat('yyyy-MM-dd HH:mm') }}
+//   IdPesanan &lt;- {{ $json.body.idPesanan }}
+//   Nama      &lt;- {{ $json.body.nama }}
+//   Total     &lt;- {{ $json.body.jumlah * $json.body.harga }}
+//   Status    &lt;- Baru
+// Operasi &quot;Append or Update Row&quot; dengan kolom pencocok = IdPesanan
+//   -&gt; kiriman ulang pesanan yang sama memperbarui baris, bukan menambah baris baru.</code></pre></figure>
+<h2 id="laporan-harian-agregasi-data">Laporan harian: agregasi data</h2>
+<p>Alur populer: setiap pukul 07.00 baca pesanan kemarin, hitung ringkasan, kirim ke WhatsApp atau surel. Logika agregasinya dapat ditulis di node Code. Berikut peragaan dengan data contoh:</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const baris = [
+  { tanggal: '2026-10-29', idPesanan: 'A1', produk: 'Kopi', jumlah: 2, harga: 20000, status: 'Selesai' },
+  { tanggal: '2026-10-29', idPesanan: 'A2', produk: 'Teh',  jumlah: 1, harga: 15000, status: 'Selesai' },
+  { tanggal: '2026-10-29', idPesanan: 'A3', produk: 'Kopi', jumlah: 3, harga: 20000, status: 'Batal' },
+  { tanggal: '2026-10-29', idPesanan: 'A4', produk: 'Kopi', jumlah: 1, harga: 20000, status: 'Selesai' },
+  { tanggal: '2026-10-28', idPesanan: 'A0', produk: 'Teh',  jumlah: 5, harga: 15000, status: 'Selesai' },
+  { tanggal: '2026-10-29', idPesanan: 'A2', produk: 'Teh',  jumlah: 1, harga: 15000, status: 'Selesai' },   // duplikat
+];
+
+const kemarin = '2026-10-29';
+const unik = [...new Map(baris.map(b =&gt; [b.idPesanan, b])).values()];          // buang duplikat per IdPesanan
+const hariIni = unik.filter(b =&gt; b.tanggal === kemarin &amp;&amp; b.status === 'Selesai');
+
+const perProduk = {};
+for (const b of hariIni) {
+  perProduk[b.produk] ??= { jumlah: 0, omzet: 0 };
+  perProduk[b.produk].jumlah += b.jumlah;
+  perProduk[b.produk].omzet += b.jumlah * b.harga;
+}
+const totalOmzet = Object.values(perProduk).reduce((s, p) =&gt; s + p.omzet, 0);
+const rupiah = n =&gt; 'Rp' + n.toLocaleString('id-ID');
+
+let pesan = `Laporan ${kemarin}\nPesanan selesai: ${hariIni.length}\n`;
+for (const [produk, p] of Object.entries(perProduk)) pesan += `- ${produk}: ${p.jumlah} pcs, ${rupiah(p.omzet)}\n`;
+pesan += `Total omzet: ${rupiah(totalOmzet)}`;
+console.log(pesan);</code></pre><pre class="runout" data-lang="keluaran"><code>Laporan 2026-10-29
+Pesanan selesai: 3
+- Kopi: 3 pcs, Rp60.000
+- Teh: 1 pcs, Rp15.000
+Total omzet: Rp75.000</code></pre><figcaption>Pesanan batal dan duplikat tidak dihitung; hanya tanggal kemarin yang dilaporkan. Teks ini kemudian diteruskan ke node WhatsApp/Surel.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 542 288" role="img" aria-label="Alur laporan harian" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Trigger Jadwal</tspan><tspan x="85" dy="16">07:00</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">zona waktu</tspan><tspan x="85" dy="14">Asia/Jakarta</tspan></text><line x1="164" y1="67" x2="192" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Google Sheets:</tspan><tspan x="271" dy="16">Get Row(s)</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">filter tanggal kemarin</tspan></text><line x1="350" y1="67" x2="378" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Code: agregasi</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">buang duplikat,</tspan><tspan x="457" dy="14">jumlahkan</tspan></text><path d="M457 128 V154 H85 V160" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="180" r="11" fill="#7a3fb4"/><text x="26" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">IF: ada pesanan?</tspan></text><text x="85" y="224" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">jika kosong kirim</tspan><tspan x="85" dy="14">&quot;tidak ada pesanan&quot;</tspan></text><line x1="164" y1="221" x2="192" y2="221" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="180" r="11" fill="#b3261e"/><text x="212" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Kirim ke</tspan><tspan x="271" dy="16">WhatsApp/Surel</tspan></text><text x="271" y="240" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">ringkasan teks</tspan></text></svg></figure>
+<h2 id="tips-dan-batas">Tips dan batas</h2>
+<ul><li><b>Batas API</b>: Google membatasi jumlah permintaan per menit; hindari membaca sheet berulang di loop. Ambil sekali, olah di memori.</li><li><b>Sheet besar</b>: di atas puluhan ribu baris pertimbangkan basis data sungguhan (PostgreSQL, Supabase, Airtable).</li><li><b>Konkurensi</b>: dua eksekusi yang menulis bersamaan dapat berebut; gunakan Append or Update dan ID unik.</li><li><b>Format tanggal</b>: simpan sebagai teks ISO (yyyy-MM-dd) agar perbandingan tidak bergantung pada pengaturan lokal.</li><li><b>Pengaman</b>: jangan memberi otomasi akses ke sheet yang berisi data yang tidak diperlukan; salin data yang perlu ke sheet khusus.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Operasi yang mencegah duplikat peserta?","options":["Append or Update dengan kolom pencocok","Append Row saja","Delete Rows"],"answer":0,"why":"Memperbarui bila kunci sudah ada."},{"q":"Struktur sheet yang disarankan?","options":["Header di baris 1, ID unik, tanpa sel digabung","Sel digabung agar cantik","Banyak tabel dalam satu sheet"],"answer":0,"why":"Rapi seperti tabel basis data."},{"q":"Mengapa agregasi dilakukan di node Code?","options":["Sekali baca lalu olah di memori, hemat permintaan API","Lebih indah","Wajib"],"answer":0,"why":"Menghindari batas API."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tambahkan hitung jumlah pesanan batal ke laporan.</summary><div>Filter status === "Batal" pada tanggal yang sama dan sertakan hitungannya di pesan.</div></details><details><summary>2. Mengapa format tanggal ISO?</summary><div>Urutan dan perbandingan teks sama dengan urutan waktu, bebas dari pengaturan lokal.</div></details><details><summary>3. Bagaimana mengirim laporan bila tidak ada pesanan?</summary><div>Node IF cek panjang data; cabang kosong mengirim "Tidak ada pesanan kemarin" agar pengguna tahu otomasi tetap berjalan.</div></details><details><summary>4. Kapan sebaiknya beralih dari Sheets?</summary><div>Saat data besar, banyak penulis bersamaan, atau butuh relasi dan transaksi.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Sambungkan lewat OAuth2 atau Service Account dengan akses minimum.</li><li>Sheet rapi: header, ID unik, satu jenis data per kolom.</li><li>Append or Update mencegah duplikat; ambil data sekali lalu agregasi di Code.</li><li>Jadwalkan laporan, tangani kasus kosong, dan sadari batas API serta ukuran data.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah bisa memicu workflow saat baris baru muncul?</summary><div>Ya: node Google Sheets Trigger (polling) memeriksa baris baru secara berkala.</div></details>
+<details class="faq"><summary>Bagaimana bila nama kolom diubah?</summary><div>Pemetaan akan rusak; ubah nama kolom hati-hati dan perbarui node, atau gunakan versi sheet terpisah untuk perubahan.</div></details>
+<details class="faq"><summary>Alternatif tanpa Google?</summary><div>Excel Online, Airtable, NocoDB, atau basis data PostgreSQL/MySQL.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.googlesheets/" rel="noopener" target="_blank">n8n: Google Sheets node</a></li><li><a href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.scheduletrigger/" rel="noopener" target="_blank">n8n: Schedule Trigger</a></li><li><a href="https://developers.google.com/sheets/api" rel="noopener" target="_blank">Google Sheets API</a></li><li><a href="https://docs.n8n.io/code/code-node/" rel="noopener" target="_blank">n8n: Code node</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/"><img src="/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Apa Itu n8n? Otomasi Alur Kerja untuk Pemula</span></a><a href="/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/"><img src="/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Webhook n8n: Menerima Data dari Form dan Aplikasi</span></a><a href="/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/"><img src="/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Install n8n Self-Host: Docker Compose dan HTTPS</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

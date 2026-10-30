@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install n8n Self-Host: Docker Compose dan HTTPS</title>
+<meta name="description" content="Pasang n8n di server sendiri dengan Docker Compose: volume data, PostgreSQL, reverse proxy HTTPS, backup, keamanan, dan pemeriksa konfigurasi yang dijalankan.">
+<meta name="keywords" content="n8n, Docker, self-host, reverse proxy, VPS">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/">
+<meta property="og:title" content="Install n8n Self-Host: Docker Compose dan HTTPS">
+<meta property="og:description" content="Pasang n8n di server sendiri dengan Docker Compose: volume data, PostgreSQL, reverse proxy HTTPS, backup, keamanan, dan pemeriksa konfigurasi yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Otomasi &amp; AI Kerja">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Install n8n Self-Host: Docker Compose dan HTTPS">
+<meta name="twitter:description" content="Pasang n8n di server sendiri dengan Docker Compose: volume data, PostgreSQL, reverse proxy HTTPS, backup, keamanan, dan pemeriksa konfigurasi yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Install n8n Self-Host: Docker Compose dan HTTPS","description":"Pasang n8n di server sendiri dengan Docker Compose: volume data, PostgreSQL, reverse proxy HTTPS, backup, keamanan, dan pemeriksa konfigurasi yang dijalankan.","image":["https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"n8n, Docker, self-host, reverse proxy, VPS","articleSection":"Otomasi & AI Kerja","wordCount":505,"mainEntityOfPage":"https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Install n8n Self-Host: Docker Compose dan HTTPS","item":"https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Berapa spesifikasi server minimal?","acceptedAnswer":{"@type":"Answer","text":"Untuk beban ringan, 1-2 vCPU dan 2 GB RAM cukup; tambah sesuai jumlah dan berat workflow."}},{"@type":"Question","name":"SQLite atau PostgreSQL?","acceptedAnswer":{"@type":"Answer","text":"SQLite bawaan cukup untuk uji coba; PostgreSQL disarankan untuk produksi."}},{"@type":"Question","name":"Bagaimana skala untuk volume besar?","acceptedAnswer":{"@type":"Answer","text":"n8n punya mode antrean (queue mode) dengan Redis dan worker terpisah; lihat dokumentasi scaling."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#arsitektur">Arsitektur</a></li><li><a href="#docker-compose-yml">docker-compose.yml</a></li><li><a href="#https-dengan-reverse-proxy">HTTPS dengan reverse proxy</a></li><li><a href="#pemeriksa-konfigurasi-peragaan">Pemeriksa konfigurasi (peragaan)</a></li><li><a href="#backup-dan-pembaruan">Backup dan pembaruan</a></li><li><a href="#keamanan-dasar">Keamanan dasar</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a></p>
+<a class="cat" href="/artikel/kategori/otomasi-ai-kerja/">Otomasi &amp; AI Kerja</a>
+<h1>Install n8n Self-Host: Docker Compose dan HTTPS</h1>
+<p class="lead">Menjalankan n8n sendiri memberi kontrol penuh atas data dan biaya, tetapi juga membuat Anda bertanggung jawab atas pembaruan, backup, dan keamanan. Panduan ini menyusun pemasangan yang rapi dengan Docker Compose, basis data PostgreSQL, dan HTTPS, plus daftar periksa agar tidak ada yang terlewat.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Linux/terminal, Docker dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Install n8n Self-Host: Docker Compose dan HTTPS" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjalankan n8n dengan Docker Compose dan volume persisten</li><li>mengatur variabel lingkungan penting (host, protokol, zona waktu, kunci enkripsi)</li><li>memakai PostgreSQL untuk produksi</li><li>menaruh n8n di belakang reverse proxy dengan HTTPS</li><li>menyusun strategi backup dan pembaruan</li></ul></div>
+<div class="callout info"><b>Tentang contoh</b><p>n8n adalah alat visual; alur kerjanya dibuat di editor n8n, bukan di halaman ini. Contoh kode JavaScript di bawah meniru logika node Code dan dijalankan sungguhan dengan Node.js agar hasilnya dapat dibuktikan. Antarmuka dan nama node dapat berubah antar versi, jadi cocokkan dengan dokumentasi n8n.</p></div>
+<div class="callout warn"><b>Periksa versi</b><p>Nama variabel lingkungan dan versi image dapat berubah. Rujuk dokumentasi resmi "Hosting n8n" untuk versi terbaru dan <b>kunci versi image</b> (jangan memakai tag latest tanpa pengujian) agar pembaruan tidak mengejutkan.</p></div>
+<h2 id="arsitektur">Arsitektur</h2>
+<figure class="diagram"><svg viewBox="0 0 542 288" role="img" aria-label="Susunan layanan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Pengguna /</tspan><tspan x="85" dy="16">webhook eksternal</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">mengakses</tspan><tspan x="85" dy="14">https://n8n.contoh.id</tspan></text><line x1="164" y1="67" x2="192" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Reverse proxy</tspan><tspan x="271" dy="16">(Caddy/Nginx/Traefik)</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">mengakhiri TLS,</tspan><tspan x="271" dy="14">sertifikat otomatis</tspan></text><line x1="350" y1="67" x2="378" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Kontainer n8n</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">editor, webhook,</tspan><tspan x="457" dy="14">eksekutor</tspan></text><path d="M457 128 V154 H85 V160" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="180" r="11" fill="#7a3fb4"/><text x="26" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">PostgreSQL</tspan></text><text x="85" y="224" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">workflow, credential</tspan><tspan x="85" dy="14">terenkripsi, riwayat</tspan><tspan x="85" dy="14">eksekusi</tspan></text><line x1="164" y1="221" x2="192" y2="221" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="164" width="150" height="114" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="180" r="11" fill="#b3261e"/><text x="212" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="204" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Volume + backup</tspan></text><text x="271" y="224" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">dump basis data dan</tspan><tspan x="271" dy="14">folder data</tspan></text></svg></figure>
+<h2 id="docker-compose-yml">docker-compose.yml</h2>
+<figure class="codebox"><pre data-lang="bash"><code>services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: n8n
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: n8n
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [&quot;CMD-SHELL&quot;, &quot;pg_isready -U n8n&quot;]
+      interval: 10s
+      retries: 5
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:1.XX.X     # kunci ke versi tertentu yang sudah Anda uji
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: n8n
+      DB_POSTGRESDB_USER: n8n
+      DB_POSTGRESDB_PASSWORD: ${DB_PASSWORD}
+      N8N_HOST: n8n.contoh.id
+      N8N_PROTOCOL: https
+      WEBHOOK_URL: https://n8n.contoh.id/
+      GENERIC_TIMEZONE: Asia/Jakarta
+      TZ: Asia/Jakarta
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}   # WAJIB dicadangkan: tanpa ini credential tidak bisa didekripsi
+      EXECUTIONS_DATA_PRUNE: &quot;true&quot;
+      EXECUTIONS_DATA_MAX_AGE: &quot;336&quot;               # jam; hapus riwayat lama agar basis data tidak membengkak
+    volumes:
+      - n8n_data:/home/node/.n8n
+    ports:
+      - &quot;127.0.0.1:5678:5678&quot;                      # hanya lokal; akses publik lewat reverse proxy
+
+volumes:
+  db_data:
+  n8n_data:</code></pre><figcaption>Port hanya dibuka ke 127.0.0.1 sehingga publik tidak dapat menjangkau n8n langsung tanpa HTTPS. Rahasia ada di berkas .env yang tidak di-commit.</figcaption></figure>
+<figure class="codebox"><pre data-lang="bash"><code># .env  (izin 600, jangan di-commit)
+DB_PASSWORD=ganti-dengan-sandi-acak-panjang
+N8N_ENCRYPTION_KEY=ganti-dengan-string-acak-32-karakter-atau-lebih
+
+# membuat nilai acak:  openssl rand -hex 32</code></pre></figure>
+<h2 id="https-dengan-reverse-proxy">HTTPS dengan reverse proxy</h2>
+<figure class="codebox"><pre data-lang="bash"><code># Caddyfile (sertifikat Let's Encrypt otomatis)
+n8n.contoh.id {
+    reverse_proxy 127.0.0.1:5678
+}</code></pre><figcaption>Caddy mengurus sertifikat dan pembaruannya otomatis. Dengan Nginx, gunakan certbot dan pastikan header Upgrade/Connection diteruskan agar editor (WebSocket) berfungsi.</figcaption></figure>
+<figure class="codebox"><pre data-lang="bash"><code>docker compose pull
+docker compose up -d
+docker compose logs -f n8n</code></pre></figure>
+<h2 id="pemeriksa-konfigurasi-peragaan">Pemeriksa konfigurasi (peragaan)</h2>
+<p>Kesalahan konfigurasi sering baru ketahuan setelah webhook gagal. Berikut skrip kecil yang memeriksa daftar variabel penting, seperti yang bisa Anda jalankan sebelum <code>docker compose up</code>.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const env = {
+  DB_TYPE: 'postgresdb',
+  N8N_HOST: 'n8n.contoh.id',
+  N8N_PROTOCOL: 'http',                       // salah: webhook akan dibuat dengan http
+  WEBHOOK_URL: 'https://n8n.contoh.id/',
+  GENERIC_TIMEZONE: '',
+  N8N_ENCRYPTION_KEY: 'pendek',               // terlalu pendek
+};
+
+const masalah = [];
+if (env.N8N_PROTOCOL !== 'https') masalah.push('N8N_PROTOCOL sebaiknya https (di belakang reverse proxy HTTPS)');
+if (!env.WEBHOOK_URL || !env.WEBHOOK_URL.startsWith('https://')) masalah.push('WEBHOOK_URL harus berupa URL https publik');
+if (!env.GENERIC_TIMEZONE) masalah.push('GENERIC_TIMEZONE kosong: jadwal (cron) memakai zona waktu yang salah');
+if (!env.N8N_ENCRYPTION_KEY || env.N8N_ENCRYPTION_KEY.length &lt; 24) masalah.push('N8N_ENCRYPTION_KEY kurang kuat (minimal 24 karakter acak) dan harus dicadangkan');
+if (env.DB_TYPE !== 'postgresdb') masalah.push('Produksi sebaiknya PostgreSQL, bukan SQLite bawaan');
+
+console.log(masalah.length ? masalah.map(m =&gt; '- ' + m).join('\n') : 'Konfigurasi tampak baik');</code></pre><pre class="runout" data-lang="keluaran"><code>- N8N_PROTOCOL sebaiknya https (di belakang reverse proxy HTTPS)
+- GENERIC_TIMEZONE kosong: jadwal (cron) memakai zona waktu yang salah
+- N8N_ENCRYPTION_KEY kurang kuat (minimal 24 karakter acak) dan harus dicadangkan</code></pre><figcaption>Pemeriksaan sederhana seperti ini dapat dimasukkan ke skrip penyebaran. Kesalahan WEBHOOK_URL adalah penyebab paling umum webhook memakai alamat lokal yang tidak bisa dijangkau.</figcaption></figure>
+<h2 id="backup-dan-pembaruan">Backup dan pembaruan</h2>
+<ul><li><b>Backup harian</b>: <code>docker compose exec -T postgres pg_dump -U n8n n8n | gzip &gt; backup-$(date +%F).sql.gz</code>, salin ke penyimpanan terpisah (S3/Drive/server lain) dan <b>uji pemulihan</b> secara berkala.</li><li><b>Cadangkan N8N_ENCRYPTION_KEY</b>: tanpanya, backup basis data tidak berguna karena credential tak bisa didekripsi.</li><li><b>Ekspor workflow</b> ke JSON dan simpan di Git untuk riwayat dan peninjauan.</li><li><b>Pembaruan</b>: baca catatan rilis, backup dulu, ubah tag versi, <code>docker compose pull &amp;&amp; docker compose up -d</code>; uji di instans staging untuk alur kritis.</li><li><b>Pantau</b>: kapasitas disk, memori, dan eksekusi gagal; pasang uptime monitor pada /healthz.</li></ul>
+<h2 id="keamanan-dasar">Keamanan dasar</h2>
+<ul><li>Buat akun pemilik dengan sandi kuat dan aktifkan 2FA bila tersedia.</li><li>Batasi akses jaringan: firewall hanya membuka 80/443; SSH dengan kunci.</li><li>Webhook publik: gunakan autentikasi (header token, basic auth) atau tanda tangan, dan validasi isi.</li><li>Gunakan credential n8n, bukan menaruh kunci di dalam node atau kode.</li><li>Perbarui secara berkala; kerentanan ditemukan dari waktu ke waktu pada semua perangkat lunak.</li><li>Pisahkan lingkungan uji dan produksi.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Apa risiko kehilangan N8N_ENCRYPTION_KEY?","options":["Credential tersimpan tidak dapat didekripsi","Port berubah","Alur menjadi lambat"],"answer":0,"why":"Cadangkan kunci bersama basis data."},{"q":"Mengapa port diikat ke 127.0.0.1?","options":["Publik tidak bisa mengakses tanpa melalui HTTPS proxy","Lebih cepat","Wajib oleh Docker"],"answer":0,"why":"Mengurangi permukaan serangan."},{"q":"Fungsi WEBHOOK_URL?","options":["Alamat publik yang dipakai untuk URL webhook","Alamat basis data","Nama pengguna"],"answer":0,"why":"Tanpa itu URL webhook bisa menunjuk alamat internal."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa mengunci versi image lebih baik daripada latest?</summary><div>Pembaruan terjadi atas kendali Anda setelah diuji, bukan tiba-tiba saat pull.</div></details><details><summary>2. Apa saja yang perlu dibackup?</summary><div>Dump PostgreSQL, volume .n8n, berkas .env (terutama kunci enkripsi), dan ekspor workflow.</div></details><details><summary>3. Mengapa pangkas riwayat eksekusi?</summary><div>Riwayat menumpuk dan membesarkan basis data; set EXECUTIONS_DATA_PRUNE dan masa simpan.</div></details><details><summary>4. Bagaimana mengamankan webhook publik?</summary><div>Header token atau basic auth, validasi payload, dan pembatasan laju di reverse proxy.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Docker Compose: n8n + PostgreSQL + volume, rahasia di .env.</li><li>Reverse proxy (Caddy/Nginx) mengakhiri HTTPS; port n8n tidak dibuka publik.</li><li>Set N8N_HOST, N8N_PROTOCOL, WEBHOOK_URL, GENERIC_TIMEZONE, dan kunci enkripsi.</li><li>Backup basis data + kunci, uji pemulihan, kunci versi, pantau, dan amankan webhook.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Berapa spesifikasi server minimal?</summary><div>Untuk beban ringan, 1-2 vCPU dan 2 GB RAM cukup; tambah sesuai jumlah dan berat workflow.</div></details>
+<details class="faq"><summary>SQLite atau PostgreSQL?</summary><div>SQLite bawaan cukup untuk uji coba; PostgreSQL disarankan untuk produksi.</div></details>
+<details class="faq"><summary>Bagaimana skala untuk volume besar?</summary><div>n8n punya mode antrean (queue mode) dengan Redis dan worker terpisah; lihat dokumentasi scaling.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.n8n.io/hosting/installation/server-setups/docker-compose/" rel="noopener" target="_blank">n8n: Docker Compose</a></li><li><a href="https://docs.n8n.io/hosting/configuration/" rel="noopener" target="_blank">n8n: Configuration</a></li><li><a href="https://caddyserver.com/docs/caddyfile/directives/reverse_proxy" rel="noopener" target="_blank">Caddy reverse_proxy</a></li><li><a href="https://docs.docker.com/compose/" rel="noopener" target="_blank">Docker Compose</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/"><img src="/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Apa Itu n8n? Otomasi Alur Kerja untuk Pemula</span></a><a href="/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/"><img src="/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Webhook n8n: Menerima Data dari Form dan Aplikasi</span></a><a href="/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/"><img src="/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>n8n dan Google Sheets: Pencatatan dan Laporan Otomatis</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
