@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI Responsif Flutter: MediaQuery dan LayoutBuilder</title>
+<meta name="description" content="Membuat UI Flutter yang responsif dan adaptif: MediaQuery, LayoutBuilder, breakpoint, Flexible, orientasi, text scale, dan SafeArea, dengan logika breakpoint yang dijalankan.">
+<meta name="keywords" content="responsif, MediaQuery, LayoutBuilder, adaptif, Flutter">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/">
+<meta property="og:title" content="UI Responsif Flutter: MediaQuery dan LayoutBuilder">
+<meta property="og:description" content="Membuat UI Flutter yang responsif dan adaptif: MediaQuery, LayoutBuilder, breakpoint, Flexible, orientasi, text scale, dan SafeArea, dengan logika breakpoint yang dijalankan.">
+<meta property="og:image" content="https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Flutter &amp; Mobile">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UI Responsif Flutter: MediaQuery dan LayoutBuilder">
+<meta name="twitter:description" content="Membuat UI Flutter yang responsif dan adaptif: MediaQuery, LayoutBuilder, breakpoint, Flexible, orientasi, text scale, dan SafeArea, dengan logika breakpoint yang dijalankan.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"UI Responsif Flutter: MediaQuery dan LayoutBuilder","description":"Membuat UI Flutter yang responsif dan adaptif: MediaQuery, LayoutBuilder, breakpoint, Flexible, orientasi, text scale, dan SafeArea, dengan logika breakpoint yang dijalankan.","image":["https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"responsif, MediaQuery, LayoutBuilder, adaptif, Flutter","articleSection":"Flutter & Mobile","wordCount":438,"mainEntityOfPage":"https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"UI Responsif Flutter: MediaQuery dan LayoutBuilder","item":"https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah perlu paket responsif pihak ketiga?","acceptedAnswer":{"@type":"Answer","text":"Tidak wajib; MediaQuery dan LayoutBuilder cukup. Paket seperti flutter_adaptive_scaffold membantu pola umum."}},{"@type":"Question","name":"Bagaimana dengan ukuran font?","acceptedAnswer":{"@type":"Answer","text":"Pakai tema dan skala teks sistem; hindari ukuran absolut yang dihitung dari lebar layar."}},{"@type":"Question","name":"Bagaimana mendukung web dan desktop?","acceptedAnswer":{"@type":"Answer","text":"Tambahkan platform lewat flutter create, perhatikan input mouse/keyboard, dan batasi lebar konten."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mediaquery-vs-layoutbuilder">MediaQuery vs LayoutBuilder</a></li><li><a href="#breakpoint">Breakpoint</a></li><li><a href="#tata-letak-yang-berubah">Tata letak yang berubah</a></li><li><a href="#alat-elastis">Alat elastis</a></li><li><a href="#aksesibilitas-ukuran">Aksesibilitas ukuran</a></li><li><a href="#menguji">Menguji</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
+<a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
+<h1>UI Responsif Flutter: MediaQuery dan LayoutBuilder</h1>
+<p class="lead">Satu aplikasi Flutter kini berjalan di ponsel kecil, tablet, lipat, jendela desktop, dan web. UI yang hanya tampak bagus di satu ukuran layar akan terasa rusak di yang lain. Responsif berarti tata letak menyesuaikan ruang yang tersedia; adaptif berarti perilaku dan komponen menyesuaikan platform dan cara input.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> widget Flutter dasar, Row dan Column</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="UI Responsif Flutter: MediaQuery dan LayoutBuilder" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan MediaQuery (ukuran layar) dan LayoutBuilder (ukuran ruang induk)</li><li>mendefinisikan breakpoint dan memilih tata letak per kelas ukuran</li><li>memakai Flexible, Expanded, Wrap, dan AspectRatio agar elastis</li><li>menghormati SafeArea, text scale, dan orientasi</li><li>menguji berbagai ukuran layar</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x. Logika Dart murni dijalankan sungguhan dengan Dart SDK; kode yang butuh Flutter (widget, uji widget) tidak dijalankan di halaman ini.</p></div>
+<h2 id="mediaquery-vs-layoutbuilder">MediaQuery vs LayoutBuilder</h2>
+<table><thead><tr><th>Alat</th><th>Mengukur</th><th>Pakai ketika</th></tr></thead><tbody><tr><td>MediaQuery.sizeOf(context)</td><td>Ukuran seluruh jendela/layar</td><td>Keputusan global: pilih navigasi bawah atau samping</td></tr><tr><td>LayoutBuilder</td><td>Batas (constraints) yang diberikan induk</td><td>Komponen yang harus menyesuaikan ruangnya sendiri (kartu, grid)</td></tr><tr><td>MediaQuery.paddingOf / viewInsetsOf</td><td>Area aman dan keyboard</td><td>Menghindari notch dan keyboard</td></tr><tr><td>MediaQuery.textScalerOf</td><td>Pengaturan ukuran teks pengguna</td><td>Menjaga tata letak tetap utuh saat teks diperbesar</td></tr></tbody></table>
+<div class="callout good"><b>Prinsip</b><p>Lebih baik memakai <b>LayoutBuilder</b> untuk komponen yang dipakai ulang: ia peduli pada ruang yang <i>benar-benar</i> ia dapat, bukan ukuran layar. Satu kartu di panel samping sempit harus terlihat benar walau layarnya lebar.</p></div>
+<h2 id="breakpoint">Breakpoint</h2>
+<figure class="codebox"><pre data-lang="dart"><code>enum KelasUkuran { ringkas, sedang, luas }
+
+KelasUkuran kelasDariLebar(double lebar) {
+  if (lebar &lt; 600) return KelasUkuran.ringkas;      // ponsel
+  if (lebar &lt; 840) return KelasUkuran.sedang;       // tablet kecil, ponsel lipat terbuka
+  return KelasUkuran.luas;                          // tablet besar, desktop, web
+}
+
+int kolomGrid(double lebar, {double lebarKartu = 220}) {
+  final n = (lebar / lebarKartu).floor();
+  return n &lt; 1 ? 1 : n;
+}
+
+void main() {
+  for (final lebar in [320.0, 411.0, 600.0, 768.0, 840.0, 1280.0, 1920.0]) {
+    print('lebar ${lebar.toStringAsFixed(0).padLeft(4)} -&gt; ${kelasDariLebar(lebar).name.padRight(7)} grid ${kolomGrid(lebar)} kolom');
+  }
+}</code></pre><pre class="runout" data-lang="keluaran"><code>lebar  320 -&gt; ringkas grid 1 kolom
+lebar  411 -&gt; ringkas grid 1 kolom
+lebar  600 -&gt; sedang  grid 2 kolom
+lebar  768 -&gt; sedang  grid 3 kolom
+lebar  840 -&gt; luas    grid 3 kolom
+lebar 1280 -&gt; luas    grid 5 kolom
+lebar 1920 -&gt; luas    grid 8 kolom</code></pre><figcaption>Material 3 menyarankan kelas ukuran jendela (compact < 600, medium 600-839, expanded 840+). Menaruh keputusan ini di satu fungsi menjaga seluruh aplikasi konsisten dan membuatnya mudah diuji.</figcaption></figure>
+<h2 id="tata-letak-yang-berubah">Tata letak yang berubah</h2>
+<figure class="codebox"><pre data-lang="dart"><code>class Beranda extends StatelessWidget {
+  const Beranda({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, batas) {
+      final kelas = kelasDariLebar(batas.maxWidth);
+      switch (kelas) {
+        case KelasUkuran.ringkas:
+          return Scaffold(
+            body: const DaftarArtikel(),
+            bottomNavigationBar: const NavigationBar(destinations: tujuan),   // navigasi di bawah
+          );
+        case KelasUkuran.sedang:
+        case KelasUkuran.luas:
+          return Scaffold(
+            body: Row(children: [
+              NavigationRail(destinations: tujuanRail, selectedIndex: 0, extended: kelas == KelasUkuran.luas),   // navigasi samping
+              const VerticalDivider(width: 1),
+              const Expanded(child: DaftarArtikel()),
+              if (kelas == KelasUkuran.luas) const SizedBox(width: 360, child: PanelDetail()),   // panel detail berdampingan
+            ]),
+          );
+      }
+    });
+  }
+}</code></pre><figcaption>Pola list-detail: di ponsel, daftar dan detail adalah dua layar; di layar lebar keduanya tampil berdampingan.</figcaption></figure>
+<h2 id="alat-elastis">Alat elastis</h2>
+<figure class="codebox"><pre data-lang="dart"><code>// Grid yang jumlah kolomnya menyesuaikan lebar
+GridView.builder(
+  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 220, mainAxisSpacing: 12, crossAxisSpacing: 12),
+  itemBuilder: (_, i) =&gt; KartuProduk(produk: daftar[i]),
+  itemCount: daftar.length,
+)
+
+// Tata letak yang membungkus ke baris berikutnya
+Wrap(spacing: 8, runSpacing: 8, children: [for (final t in tag) Chip(label: Text(t))])
+
+// Batasi lebar konten agar teks tidak terlalu panjang di layar lebar
+Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 720), child: isiArtikel))
+
+// Rasio tetap untuk gambar/video
+AspectRatio(aspectRatio: 16 / 9, child: Image.network(url, fit: BoxFit.cover))
+
+// Area aman: hindari lekukan layar dan bilah sistem
+SafeArea(child: konten)
+
+// Teks yang tidak meluap
+Flexible(child: Text(judul, maxLines: 2, overflow: TextOverflow.ellipsis))</code></pre></figure>
+<h2 id="aksesibilitas-ukuran">Aksesibilitas ukuran</h2>
+<ul><li><b>Text scale</b>: pengguna dapat memperbesar teks hingga 200%+. Hindari tinggi tetap pada wadah berisi teks; pakai constraints minimum atau biarkan wadah tumbuh.</li><li><b>Area sentuh</b>: minimal 48x48 dp untuk tombol dan ikon.</li><li><b>Orientasi</b>: pertimbangkan lanskap; jangan mengunci portrait tanpa alasan.</li><li><b>Keyboard</b>: gunakan <code>resizeToAvoidBottomInset</code> dan <code>SingleChildScrollView</code> agar kolom isian tidak tertutup.</li><li><b>Input</b>: di desktop dan web dukung mouse (hover), keyboard (fokus dan pintasan), dan scroll.</li></ul>
+<h2 id="menguji">Menguji</h2>
+<ul><li>Gunakan <b>Device Preview</b> (paket device_preview) atau jendela yang dapat diubah ukurannya di Chrome/desktop.</li><li>Uji widget dengan ukuran layar tertentu: <code>tester.view.physicalSize = const Size(1200, 800)</code> lalu <code>pumpWidget</code>.</li><li>Cek tiga ukuran minimal: 360x640 (kecil), 768x1024 (tablet), 1280x800 (desktop).</li><li>Aktifkan font terbesar di pengaturan perangkat dan periksa tidak ada overflow (garis kuning-hitam).</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"LayoutBuilder mengukur...","options":["Batas dari widget induk","Ukuran seluruh layar","Ukuran font"],"answer":0,"why":"Cocok untuk komponen yang dipakai ulang."},{"q":"Untuk apa SafeArea?","options":["Menghindari notch dan bilah sistem","Mempercepat render","Menyimpan data"],"answer":0,"why":"Konten tidak tertutup elemen sistem."},{"q":"Mengapa hindari tinggi tetap pada wadah teks?","options":["Teks diperbesar pengguna bisa meluap","Lebih lambat","Tidak diizinkan"],"answer":0,"why":"Biarkan wadah menyesuaikan."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tentukan navigasi untuk lebar 500, 700, dan 1000.</summary><div>Ringkas (500): NavigationBar bawah. Sedang (700): NavigationRail. Luas (1000): rail yang diperluas dan panel detail.</div></details><details><summary>2. Berapa kolom grid untuk lebar 900 dan lebarKartu 220?</summary><div>floor(900/220) = 4 kolom.</div></details><details><summary>3. Mengapa membatasi lebar maksimum teks bacaan?</summary><div>Baris yang terlalu panjang sulit dibaca; sekitar 60-80 karakter per baris nyaman.</div></details><details><summary>4. Apa bedanya responsif dan adaptif?</summary><div>Responsif: tata letak menyesuaikan ruang. Adaptif: komponen dan perilaku menyesuaikan platform dan input (misal dialog gaya iOS vs Android, hover di desktop).</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>MediaQuery untuk keputusan global; LayoutBuilder untuk komponen sesuai ruang induknya.</li><li>Tentukan breakpoint di satu tempat (compact/medium/expanded).</li><li>Gunakan GridView max extent, Wrap, Flexible, ConstrainedBox, AspectRatio.</li><li>Hormati SafeArea, text scale, area sentuh, keyboard; uji tiga ukuran.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah perlu paket responsif pihak ketiga?</summary><div>Tidak wajib; MediaQuery dan LayoutBuilder cukup. Paket seperti flutter_adaptive_scaffold membantu pola umum.</div></details>
+<details class="faq"><summary>Bagaimana dengan ukuran font?</summary><div>Pakai tema dan skala teks sistem; hindari ukuran absolut yang dihitung dari lebar layar.</div></details>
+<details class="faq"><summary>Bagaimana mendukung web dan desktop?</summary><div>Tambahkan platform lewat flutter create, perhatikan input mouse/keyboard, dan batasi lebar konten.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/ui/adaptive-responsive" rel="noopener" target="_blank">Flutter: Adaptive and responsive design</a></li><li><a href="https://m3.material.io/foundations/layout/applying-layout/window-size-classes" rel="noopener" target="_blank">Material 3: Window size classes</a></li><li><a href="https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html" rel="noopener" target="_blank">API: LayoutBuilder</a></li><li><a href="https://docs.flutter.dev/ui/accessibility-and-internationalization/accessibility" rel="noopener" target="_blank">Flutter: Accessibility</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/"><img src="/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Async di Dart: Future, async/await, dan Stream</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
