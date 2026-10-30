@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang</title>
+<meta name="description" content="Pelajari antrean (queue) Laravel: mengapa pekerjaan lambat dipindah ke latar belakang, membuat job, worker, retry dan backoff, job gagal, dan scheduler untuk tugas terjadwal.">
+<meta name="keywords" content="Laravel queue, job, scheduler, cron, background job">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/">
+<meta property="og:title" content="Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang">
+<meta property="og:description" content="Pelajari antrean (queue) Laravel: mengapa pekerjaan lambat dipindah ke latar belakang, membuat job, worker, retry dan backoff, job gagal, dan scheduler untuk tugas terjadwal.">
+<meta property="og:image" content="https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang">
+<meta name="twitter:description" content="Pelajari antrean (queue) Laravel: mengapa pekerjaan lambat dipindah ke latar belakang, membuat job, worker, retry dan backoff, job gagal, dan scheduler untuk tugas terjadwal.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang","description":"Pelajari antrean (queue) Laravel: mengapa pekerjaan lambat dipindah ke latar belakang, membuat job, worker, retry dan backoff, job gagal, dan scheduler untuk tugas terjadwal.","image":["https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Laravel queue, job, scheduler, cron, background job","articleSection":"Laravel & Backend","wordCount":437,"mainEntityOfPage":"https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang","item":"https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Database atau Redis untuk antrean?","acceptedAnswer":{"@type":"Answer","text":"Database cukup untuk beban kecil dan paling sederhana; Redis (dengan Horizon) lebih cepat dan kaya fitur untuk beban besar."}},{"@type":"Question","name":"Bagaimana job berantai?","acceptedAnswer":{"@type":"Answer","text":"Dengan Bus::chain([...]) untuk urutan, atau Bus::batch([...]) untuk kelompok dengan callback selesai."}},{"@type":"Question","name":"Apakah queue bisa dipakai di shared hosting?","acceptedAnswer":{"@type":"Answer","text":"Bisa dengan cron yang menjalankan queue:work --stop-when-empty, tetapi kurang ideal; VPS memberi kendali lebih baik."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-antrean">Mengapa antrean</a></li><li><a href="#membuat-dan-mendispatch-job">Membuat dan mendispatch job</a></li><li><a href="#retry-backoff-dan-job-gagal-peragaan">Retry, backoff, dan job gagal: peragaan</a></li><li><a href="#menulis-job-yang-aman-dijalankan-ulang-idempoten">Menulis job yang aman dijalankan ulang (idempoten)</a></li><li><a href="#scheduler-pengganti-tumpukan-entri-cron">Scheduler: pengganti tumpukan entri cron</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang</h1>
+<p class="lead">Pengguna menekan tombol "Daftar" lalu menunggu sembilan detik karena server mengirim surel sambutan, membuat PDF, dan memanggil layanan pihak ketiga sebelum merespons. Itu bukan pengalaman yang baik, dan satu layanan yang lambat bisa membuat seluruh permintaan gagal. Solusinya: kerjakan yang lambat di latar belakang lewat antrean, dan respons pengguna seketika.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, Eloquent</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Queue, Job, dan Scheduler Laravel: Pekerjaan Latar Belakang" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan manfaat antrean dan kapan memakainya</li><li>membuat job, mendispatch, dan menjalankan worker</li><li>mengatur percobaan ulang, backoff, dan menangani job gagal</li><li>menulis job yang idempoten dan aman dijalankan ulang</li><li>memakai scheduler Laravel menggantikan banyak entri cron</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="mengapa-antrean">Mengapa antrean</h2>
+<figure class="diagram"><svg viewBox="0 0 640 190" role="img" aria-label="Antrean pekerjaan" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs>
+<marker id="2xnuz-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0f1a33"/></marker>
+<marker id="2xnuz-vee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#0f1a33" stroke-width="1.6"/></marker>
+<marker id="2xnuz-open" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0L11 6L0 12z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="2xnuz-dia" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#fff" stroke="#0f1a33" stroke-width="1.5"/></marker>
+<marker id="2xnuz-diaf" viewBox="0 0 14 10" refX="13" refY="5" markerWidth="13" markerHeight="10" orient="auto"><path d="M0 5L7 0L14 5L7 10z" fill="#0f1a33" stroke="#0f1a33" stroke-width="1.5"/></marker>
+</defs><polyline points="135,95 225,95" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#2xnuz-arrow)"/><rect x="132.1" y="86" width="95.8" height="17" rx="4" fill="#fff" opacity=".92"/><text x="180" y="99" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">dispatch(job)</text><polyline points="375,95 475,95" fill="none" stroke="#0f1a33" stroke-width="1.8" marker-end="url(#2xnuz-arrow)"/><rect x="390.3" y="86" width="69.4" height="17" rx="4" fill="#fff" opacity=".92"/><text x="425" y="99" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f1a33">ambil job</text><rect x="25" y="70" width="110" height="50" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="80" y="91.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="80" dy="0">Permintaan</tspan><tspan x="80" dy="16">web</tspan></text><rect x="225" y="70" width="150" height="50" fill="#f5f8fd" stroke="none"/><line x1="225" y1="70" x2="375" y2="70" stroke="#1e5ab2" stroke-width="2"/><line x1="225" y1="120" x2="375" y2="120" stroke="#1e5ab2" stroke-width="2"/><line x1="247" y1="70" x2="247" y2="120" stroke="#1e5ab2" stroke-width="2"/><text x="310" y="99" text-anchor="middle" font-size="12" font-weight="600" fill="#0f1a33"><tspan x="310" dy="0">Antrean (DB/Redis)</tspan></text><rect x="475" y="70" width="110" height="50" rx="8" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="530" y="99.33333333333333" text-anchor="middle" font-size="13" font-weight="600" fill="#0f1a33"><tspan x="530" dy="0">Worker</tspan></text><text x="80" y="169.33333333333334" text-anchor="middle" font-size="13" font-weight="500" fill="#0f1a33"><tspan x="80" dy="0">202/redirect cepat</tspan></text></svg><figcaption>Permintaan web hanya menaruh job ke antrean lalu selesai. Proses worker terpisah mengambil dan mengerjakannya.</figcaption></figure>
+<ul><li><b>Respons cepat</b>: pengguna tidak menunggu pekerjaan lambat (surel, PDF, gambar, impor).</li><li><b>Ketahanan</b>: bila layanan luar gagal, job dicoba ulang tanpa menggagalkan permintaan pengguna.</li><li><b>Pemerataan beban</b>: lonjakan permintaan menumpuk di antrean dan diproses sesuai kapasitas worker.</li><li><b>Skalabilitas</b>: tambah worker untuk mempercepat pemrosesan.</li></ul>
+<h2 id="membuat-dan-mendispatch-job">Membuat dan mendispatch job</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan make:job KirimSurelSambutan
+namespace App\Jobs;
+
+use App\Models\User;
+use App\Mail\SambutanMail;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
+
+class KirimSurelSambutan implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public int $tries = 4;                       // maksimal percobaan
+    public array $backoff = [10, 60, 300];       // jeda antar percobaan (detik): 10 dtk, 1 mnt, 5 mnt
+    public int $timeout = 30;                    // detik
+
+    public function __construct(public User $user) {}    // model diserialisasi hanya sebagai ID
+
+    public function handle(): void
+    {
+        Mail::to($this-&gt;user)-&gt;send(new SambutanMail($this-&gt;user));
+    }
+
+    public function failed(\Throwable $e): void
+    {
+        // dipanggil setelah semua percobaan habis: catat, beri tahu admin, dsb.
+    }
+}
+
+// Di controller: dispatch dan LANGSUNG kembali
+KirimSurelSambutan::dispatch($user);
+KirimSurelSambutan::dispatch($user)-&gt;onQueue('surel')-&gt;delay(now()-&gt;addMinutes(5));
+return redirect('/dasbor')-&gt;with('sukses', 'Selamat datang! Surel sambutan sedang dikirim.');</code></pre></figure>
+<figure class="codebox"><pre data-lang="bash"><code>php artisan queue:table &amp;&amp; php artisan migrate     # antrean berbasis basis data (bawaan Laravel 11)
+php artisan queue:work                              # menjalankan worker
+php artisan queue:work --queue=surel,default        # prioritas antrean
+php artisan queue:failed                            # daftar job gagal
+php artisan queue:retry all                         # coba ulang yang gagal
+php artisan queue:restart                           # muat ulang worker setelah deploy (kode baru)</code></pre><figcaption>Di produksi, worker harus dijaga terus hidup oleh pengawas proses (Supervisor, systemd) atau memakai Laravel Horizon (untuk Redis) yang juga menyediakan dasbor.</figcaption></figure>
+<h2 id="retry-backoff-dan-job-gagal-peragaan">Retry, backoff, dan job gagal: peragaan</h2>
+<p>Berikut simulasi worker dengan percobaan ulang dan backoff eksponensial, agar perilaku antrean yang andal terlihat jelas.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Simulasi worker antrean: retry dengan backoff dan tabel job gagal
+async function pekerjaanTakStabil(job, percobaanKe) {
+    // layanan surel &quot;mati&quot; pada dua percobaan pertama untuk job #2, dan selalu mati untuk job #3
+    if (job.id === 2 &amp;&amp; percobaanKe &lt;= 2) throw new Error('layanan surel timeout');
+    if (job.id === 3) throw new Error('alamat surel tidak valid');
+    return 'terkirim ke ' + job.penerima;
+}
+
+const antrean = [{ id: 1, penerima: 'ani@contoh.id' }, { id: 2, penerima: 'budi@contoh.id' }, { id: 3, penerima: 'salah@' }];
+const backoff = [10, 60, 300];                     // detik (disimulasikan, tidak benar-benar menunggu)
+const gagal = [];
+
+(async () =&gt; {
+    for (const job of antrean) {
+        let berhasil = false;
+        for (let k = 1; k &lt;= 4 &amp;&amp; !berhasil; k++) {
+            try {
+                const hasil = await pekerjaanTakStabil(job, k);
+                console.log('job #' + job.id, 'percobaan', k, '-&gt; OK:', hasil);
+                berhasil = true;
+            } catch (e) {
+                const jeda = backoff[k - 1];
+                console.log('job #' + job.id, 'percobaan', k, '-&gt; GAGAL:', e.message + (k &lt; 4 ? ' (coba lagi dalam ' + jeda + ' dtk)' : ''));
+            }
+        }
+        if (!berhasil) gagal.push({ id: job.id, alasan: 'melebihi 4 percobaan' });
+    }
+    console.log('tabel failed_jobs:', JSON.stringify(gagal));
+})();</code></pre><pre class="runout" data-lang="keluaran"><code>job #1 percobaan 1 -&gt; OK: terkirim ke ani@contoh.id
+job #2 percobaan 1 -&gt; GAGAL: layanan surel timeout (coba lagi dalam 10 dtk)
+job #2 percobaan 2 -&gt; GAGAL: layanan surel timeout (coba lagi dalam 60 dtk)
+job #2 percobaan 3 -&gt; OK: terkirim ke budi@contoh.id
+job #3 percobaan 1 -&gt; GAGAL: alamat surel tidak valid (coba lagi dalam 10 dtk)
+job #3 percobaan 2 -&gt; GAGAL: alamat surel tidak valid (coba lagi dalam 60 dtk)
+job #3 percobaan 3 -&gt; GAGAL: alamat surel tidak valid (coba lagi dalam 300 dtk)
+job #3 percobaan 4 -&gt; GAGAL: alamat surel tidak valid
+tabel failed_jobs: [{&quot;id&quot;:3,&quot;alasan&quot;:&quot;melebihi 4 percobaan&quot;}]</code></pre><figcaption>Job yang gagal sementara pulih sendiri; yang gagal permanen masuk tabel failed_jobs untuk diperiksa manusia. Pengguna tidak pernah menunggu satu pun dari ini.</figcaption></figure>
+<h2 id="menulis-job-yang-aman-dijalankan-ulang-idempoten">Menulis job yang aman dijalankan ulang (idempoten)</h2>
+<div class="callout warn"><b>Perhatian</b><p>Antrean menjamin job dijalankan <b>setidaknya sekali</b>, bukan tepat sekali. Job bisa berjalan dua kali (worker mati di tengah, percobaan ulang, timeout). Job yang mengirim surel atau menagih pembayaran harus <b>idempoten</b>: menjalankannya dua kali tidak menimbulkan efek ganda.</p></div>
+<figure class="codebox"><pre data-lang="javascript"><code>// Idempoten: periksa &quot;sudah dikerjakan?&quot; sebelum melakukan efek samping
+const sudahDikirim = new Set();              // di Laravel: kolom di basis data atau kunci unik
+let surelTerkirim = 0;
+
+function kirimSambutan(userId) {
+    if (sudahDikirim.has(userId)) return 'dilewati (sudah pernah)';
+    surelTerkirim++;                         // efek samping
+    sudahDikirim.add(userId);                // tandai SETELAH berhasil (di nyata: dalam transaksi yang sama bila memungkinkan)
+    return 'terkirim';
+}
+console.log(kirimSambutan(7), '|', kirimSambutan(7), '|', kirimSambutan(8));
+console.log('total surel:', surelTerkirim, '(bukan 3)');</code></pre><pre class="runout" data-lang="keluaran"><code>terkirim | dilewati (sudah pernah) | terkirim
+total surel: 2 (bukan 3)</code></pre></figure>
+<h2 id="scheduler-pengganti-tumpukan-entri-cron">Scheduler: pengganti tumpukan entri cron</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// routes/console.php  (Laravel 11+)
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('laporan:harian')-&gt;dailyAt('01:30')-&gt;timezone('Asia/Jakarta');
+Schedule::job(new BersihkanFileSementara)-&gt;hourly();
+Schedule::call(fn () =&gt; DB::table('sesi')-&gt;where('kedaluwarsa', '&lt;', now())-&gt;delete())-&gt;everyFiveMinutes();
+Schedule::command('cadangan:jalankan')-&gt;weeklyOn(0, '02:00')-&gt;onOneServer()-&gt;withoutOverlapping();</code></pre></figure>
+<figure class="codebox"><pre data-lang="bash"><code># Satu-satunya entri cron yang dibutuhkan (di server):
+* * * * * cd /var/www/toko &amp;&amp; php artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1
+
+php artisan schedule:list      # melihat jadwal yang terdaftar</code></pre><figcaption>Cron memanggil Laravel setiap menit; Laravel yang memutuskan tugas mana yang jatuh tempo. withoutOverlapping mencegah dua eksekusi bertumpuk; onOneServer mencegah eksekusi ganda pada beberapa server.</figcaption></figure>
+<div data-w="checklist"><script type="application/json">{"title":"Antrean siap produksi","items":["Worker dijaga hidup oleh Supervisor/systemd atau Horizon.","queue:restart dijalankan pada setiap deploy.","Job idempoten dan memiliki tries, backoff, dan timeout yang masuk akal.","Job gagal dipantau dan ada pemberitahuan (failed_jobs, Horizon, atau Sentry).","Driver antrean sesuai beban (database untuk kecil, Redis/SQS untuk besar).","Data besar tidak dimasukkan ke payload job; cukup ID, ambil ulang saat dikerjakan.","Scheduler hanya memakai satu entri cron; tugas panjang dijalankan sebagai job."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Manfaat utama antrean?","options":["Respons cepat dan pekerjaan berat di latar belakang","Menghemat basis data","Mengganti HTML"],"answer":0,"why":"Pengguna tidak menunggu pekerjaan lambat."},{"q":"Job antrean dijamin berjalan...","options":["Setidaknya sekali","Tepat sekali","Paling banyak sekali"],"answer":0,"why":"Karena itu job harus idempoten."},{"q":"Perintah setelah deploy agar worker memakai kode baru?","options":["php artisan queue:restart","php artisan migrate","composer update"],"answer":0,"why":"Worker menyimpan kode di memori."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Job mana yang cocok dipindah ke antrean: simpan data ke basis data, kirim surel, membuat thumbnail, validasi form?</summary><div>Kirim surel dan membuat thumbnail (lambat/eksternal); simpan data dan validasi tetap sinkron karena hasilnya dibutuhkan segera.</div></details><details><summary>2. Mengapa mengirim model utuh sebagai payload job berisiko?</summary><div>Data bisa basi saat job berjalan; Laravel menyimpan hanya ID (SerializesModels) lalu mengambil ulang model.</div></details><details><summary>3. Apa fungsi withoutOverlapping pada tugas terjadwal?</summary><div>Mencegah eksekusi baru dimulai bila eksekusi sebelumnya masih berjalan.</div></details><details><summary>4. Rancang job idempoten untuk "menagih pelanggan bulanan".</summary><div>Gunakan kunci unik per (pelanggan, periode); periksa sebelum menagih dan simpan hasilnya dalam transaksi; kirim kunci idempotensi ke penyedia pembayaran.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Antrean memindahkan pekerjaan lambat ke latar belakang; respons web tetap cepat.</li><li>Job: tries, backoff, timeout, failed(); worker dijaga hidup dan di-restart saat deploy.</li><li>Job dijalankan setidaknya sekali: rancang agar idempoten.</li><li>Scheduler: satu entri cron, banyak tugas terjadwal dengan penjaga overlap dan satu-server.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Database atau Redis untuk antrean?</summary><div>Database cukup untuk beban kecil dan paling sederhana; Redis (dengan Horizon) lebih cepat dan kaya fitur untuk beban besar.</div></details>
+<details class="faq"><summary>Bagaimana job berantai?</summary><div>Dengan Bus::chain([...]) untuk urutan, atau Bus::batch([...]) untuk kelompok dengan callback selesai.</div></details>
+<details class="faq"><summary>Apakah queue bisa dipakai di shared hosting?</summary><div>Bisa dengan cron yang menjalankan queue:work --stop-when-empty, tetapi kurang ideal; VPS memberi kendali lebih baik.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/queues" rel="noopener" target="_blank">Laravel: Queues</a></li><li><a href="https://laravel.com/docs/scheduling" rel="noopener" target="_blank">Laravel: Task Scheduling</a></li><li><a href="https://laravel.com/docs/horizon" rel="noopener" target="_blank">Laravel Horizon</a></li><li><a href="https://docs.stripe.com/api/idempotent_requests" rel="noopener" target="_blank">Stripe: Idempotent requests</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

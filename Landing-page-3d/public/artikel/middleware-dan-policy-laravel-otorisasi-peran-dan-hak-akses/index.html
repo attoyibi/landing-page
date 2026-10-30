@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Middleware dan Policy Laravel: Otorisasi dan Hak Akses</title>
+<meta name="description" content="Pahami middleware sebagai penyaring permintaan dan policy sebagai aturan otorisasi per model di Laravel, termasuk RBAC dan pencegahan IDOR.">
+<meta name="keywords" content="middleware Laravel, policy, otorisasi, RBAC, Gate">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/">
+<meta property="og:title" content="Middleware dan Policy Laravel: Otorisasi dan Hak Akses">
+<meta property="og:description" content="Pahami middleware sebagai penyaring permintaan dan policy sebagai aturan otorisasi per model di Laravel, termasuk RBAC dan pencegahan IDOR.">
+<meta property="og:image" content="https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Middleware dan Policy Laravel: Otorisasi dan Hak Akses">
+<meta name="twitter:description" content="Pahami middleware sebagai penyaring permintaan dan policy sebagai aturan otorisasi per model di Laravel, termasuk RBAC dan pencegahan IDOR.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Middleware dan Policy Laravel: Otorisasi dan Hak Akses","description":"Pahami middleware sebagai penyaring permintaan dan policy sebagai aturan otorisasi per model di Laravel, termasuk RBAC dan pencegahan IDOR.","image":["https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"middleware Laravel, policy, otorisasi, RBAC, Gate","articleSection":"Laravel & Backend","wordCount":381,"mainEntityOfPage":"https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Middleware dan Policy Laravel: Otorisasi dan Hak Akses","item":"https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya Gate dan Policy?","acceptedAnswer":{"@type":"Answer","text":"Gate adalah closure otorisasi sederhana; Policy mengelompokkan aturan per model. Keduanya memakai mekanisme yang sama (can, authorize)."}},{"@type":"Question","name":"Di mana mendaftarkan middleware di Laravel 11+?","acceptedAnswer":{"@type":"Answer","text":"Di bootstrap/app.php melalui withMiddleware; tidak ada lagi Http/Kernel.php."}},{"@type":"Question","name":"Apakah perlu paket peran-izin?","acceptedAnswer":{"@type":"Answer","text":"Untuk peran dan izin dinamis yang disimpan di basis data, spatie/laravel-permission sangat populer; untuk aturan sederhana, policy cukup."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#middleware-pipa-yang-dilalui-setiap-permintaan">Middleware: pipa yang dilalui setiap permintaan</a></li><li><a href="#middleware-kustom-di-laravel">Middleware kustom di Laravel</a></li><li><a href="#otorisasi-per-objek-policy">Otorisasi per objek: Policy</a></li><li><a href="#bahaya-idor-dan-cara-mengujinya">Bahaya IDOR dan cara mengujinya</a></li><li><a href="#peran-dan-izin-rbac">Peran dan izin (RBAC)</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Middleware dan Policy Laravel: Otorisasi dan Hak Akses</h1>
+<p class="lead">Autentikasi memastikan siapa penggunanya; otorisasi memutuskan apa yang boleh ia lakukan. Kebocoran data paling sering terjadi bukan karena login jebol, melainkan karena pengguna A bisa membuka data pengguna B hanya dengan mengganti angka di URL. Middleware dan policy di Laravel adalah alat untuk menutup celah itu secara sistematis.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, autentikasi</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Middleware dan Policy Laravel: Otorisasi dan Hak Akses" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan middleware sebagai pipa penyaring permintaan</li><li>membuat dan memasang middleware kustom</li><li>menulis policy dan memakainya di controller dan Blade</li><li>membedakan otorisasi berbasis peran dan berbasis kepemilikan</li><li>mengenali dan mencegah IDOR (akses objek tanpa pemeriksaan)</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="middleware-pipa-yang-dilalui-setiap-permintaan">Middleware: pipa yang dilalui setiap permintaan</h2>
+<figure class="diagram"><svg viewBox="0 0 542 256" role="img" aria-label="Pipa middleware" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Permintaan</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">dari browser atau</tspan><tspan x="85" dy="14">klien API</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Middleware 1</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">mis. throttle (batas</tspan><tspan x="271" dy="14">laju)</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Middleware 2</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">auth: sudah login?</tspan></text><path d="M457 112 V138 H85 V144" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="164" r="11" fill="#7a3fb4"/><text x="26" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Middleware 3</tspan></text><text x="85" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">peran: boleh masuk?</tspan></text><line x1="164" y1="197" x2="192" y2="197" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="164" r="11" fill="#b3261e"/><text x="212" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Controller</tspan></text><text x="271" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">logika aplikasi</tspan></text></svg><figcaption>Setiap middleware dapat meneruskan permintaan ke tahap berikutnya atau menghentikannya dengan respons (misalnya 401 atau 403). Respons kembali melewati pipa yang sama.</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Gagasan inti middleware: rangkaian fungsi, masing-masing memanggil next() atau menghentikan
+function jalankan(middleware, penangan, req) {
+    let i = 0;
+    const next = () =&gt; (i &lt; middleware.length ? middleware[i++](req, next) : penangan(req));
+    return next();
+}
+
+const catat   = (req, next) =&gt; { console.log('  [log] ' + req.metode + ' ' + req.url); return next(); };
+const auth    = (req, next) =&gt; req.pengguna ? next() : '401 Belum login';
+const hanyaAdmin = (req, next) =&gt; req.pengguna.peran === 'admin' ? next() : '403 Dilarang';
+const penangan = req =&gt; '200 Panel admin untuk ' + req.pengguna.nama;
+
+for (const req of [
+    { metode: 'GET', url: '/admin', pengguna: null },
+    { metode: 'GET', url: '/admin', pengguna: { nama: 'Budi', peran: 'tamu' } },
+    { metode: 'GET', url: '/admin', pengguna: { nama: 'Ani', peran: 'admin' } },
+]) console.log(jalankan([catat, auth, hanyaAdmin], penangan, req));</code></pre><pre class="runout" data-lang="keluaran"><code>  [log] GET /admin
+401 Belum login
+  [log] GET /admin
+403 Dilarang
+  [log] GET /admin
+200 Panel admin untuk Ani</code></pre><figcaption>Urutan middleware penting: auth harus sebelum pemeriksaan peran, karena yang kedua memakai pengguna yang diperiksa oleh yang pertama.</figcaption></figure>
+<h2 id="middleware-kustom-di-laravel">Middleware kustom di Laravel</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan make:middleware EnsureUserIsAdmin
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class EnsureUserIsAdmin
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if (! $request-&gt;user()?-&gt;isAdmin()) {
+            abort(403, 'Hanya admin yang boleh mengakses halaman ini.');
+        }
+        return $next($request);
+    }
+}
+
+// bootstrap/app.php  (Laravel 11+): daftarkan alias
+-&gt;withMiddleware(function (Middleware $middleware) {
+    $middleware-&gt;alias(['admin' =&gt; \App\Http\Middleware\EnsureUserIsAdmin::class]);
+})
+
+// routes/web.php: pakai
+Route::middleware(['auth', 'admin'])-&gt;prefix('admin')-&gt;group(function () {
+    Route::get('/', [AdminController::class, 'index']);
+});
+
+// middleware dengan parameter: -&gt;middleware('peran:editor,admin')   (parameter diterima setelah $next)</code></pre><figcaption>Bawaan Laravel yang sering dipakai: auth, guest, verified, throttle, signed, can (otorisasi).</figcaption></figure>
+<h2 id="otorisasi-per-objek-policy">Otorisasi per objek: Policy</h2>
+<p>Middleware cocok untuk aturan kasar ("hanya admin masuk ke /admin"). Untuk aturan per objek ("pengguna hanya boleh mengubah pesanan <i>miliknya</i>"), gunakan <b>policy</b>: satu kelas per model yang berisi method untuk tiap aksi.</p>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan make:policy PesananPolicy --model=Pesanan
+namespace App\Policies;
+
+use App\Models\Pesanan;
+use App\Models\User;
+
+class PesananPolicy
+{
+    public function before(User $user, string $aksi): ?bool
+    {
+        if ($user-&gt;isAdmin()) return true;      // admin lolos semua; null = lanjut ke pemeriksaan biasa
+        return null;
+    }
+
+    public function view(User $user, Pesanan $pesanan): bool
+    {
+        return $pesanan-&gt;user_id === $user-&gt;id;
+    }
+
+    public function update(User $user, Pesanan $pesanan): bool
+    {
+        return $pesanan-&gt;user_id === $user-&gt;id &amp;&amp; $pesanan-&gt;status === 'baru';   // hanya selama masih baru
+    }
+
+    public function delete(User $user, Pesanan $pesanan): bool
+    {
+        return false;                           // pesanan tak boleh dihapus pengguna biasa
+    }
+}
+
+// Controller
+public function update(Request $request, Pesanan $pesanan)
+{
+    $this-&gt;authorize('update', $pesanan);       // 403 otomatis bila policy menolak
+    $pesanan-&gt;update($request-&gt;validated());
+    return back();
+}
+
+// Blade
+// @can('update', $pesanan) &lt;a href=&quot;...&quot;&gt;Ubah&lt;/a&gt; @endcan
+
+// Atau di rute: Route::put('/pesanan/{pesanan}', ...)-&gt;can('update', 'pesanan');</code></pre><figcaption>Laravel menemukan PesananPolicy otomatis untuk model Pesanan. Selalu otorisasi di sisi server; menyembunyikan tombol di tampilan saja bukan keamanan.</figcaption></figure>
+<h2 id="bahaya-idor-dan-cara-mengujinya">Bahaya IDOR dan cara mengujinya</h2>
+<div class="callout warn"><b>Kerentanan nomor satu</b><p><b>IDOR (Insecure Direct Object Reference)</b>: aplikasi mengambil objek berdasarkan ID dari URL (<code>/pesanan/105</code>) tanpa memeriksa bahwa ID itu milik pengguna yang sedang login. Penyerang cukup mengganti 105 menjadi 106. Ini salah satu kerentanan paling umum, dan peringkat teratas di daftar OWASP (Broken Access Control).</p></div>
+<figure class="codebox"><pre data-lang="javascript"><code>// Peragaan IDOR: tanpa pemeriksaan kepemilikan vs dengan policy
+const pesanan = [
+    { id: 105, user_id: 1, isi: 'Kopi x2 (milik Ani)' },
+    { id: 106, user_id: 2, isi: 'Teh x1 (milik Budi)' },
+];
+const cari = id =&gt; pesanan.find(p =&gt; p.id === id);
+
+const rentan = (pengguna, id) =&gt; cari(id)?.isi ?? '404';                                   // TIDAK memeriksa pemilik
+const aman = (pengguna, id) =&gt; {
+    const p = cari(id);
+    if (!p) return '404';
+    return (p.user_id === pengguna.id || pengguna.peran === 'admin') ? p.isi : '403 Dilarang';   // policy: pemilik atau admin
+};
+
+const ani = { id: 1, peran: 'pengguna' };
+console.log('rentan, Ani membuka #106 :', rentan(ani, 106), ' &lt;- KEBOCORAN DATA');
+console.log('aman,   Ani membuka #106 :', aman(ani, 106));
+console.log('aman,   Ani membuka #105 :', aman(ani, 105));
+console.log('aman,   admin membuka #106:', aman({ id: 9, peran: 'admin' }, 106));</code></pre><pre class="runout" data-lang="keluaran"><code>rentan, Ani membuka #106 : Teh x1 (milik Budi)  &lt;- KEBOCORAN DATA
+aman,   Ani membuka #106 : 403 Dilarang
+aman,   Ani membuka #105 : Kopi x2 (milik Ani)
+aman,   admin membuka #106: Teh x1 (milik Budi)</code></pre><figcaption>Tindakan sederhana yang mencegahnya: setiap pengambilan objek berdasarkan input pengguna harus melewati pemeriksaan kepemilikan atau policy. Cara praktis lain: batasi query ke milik pengguna ($user->pesanan()->findOrFail($id)) sehingga objek orang lain memang tidak ditemukan.</figcaption></figure>
+<h2 id="peran-dan-izin-rbac">Peran dan izin (RBAC)</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>// RBAC: pengguna -&gt; peran -&gt; izin. Pemeriksaan selalu ke IZIN, bukan ke nama peran.
+const peranIzin = {
+    admin:  ['produk.lihat', 'produk.ubah', 'produk.hapus', 'pengguna.kelola'],
+    editor: ['produk.lihat', 'produk.ubah'],
+    tamu:   ['produk.lihat'],
+};
+const bisa = (pengguna, izin) =&gt; pengguna.peran.some(p =&gt; peranIzin[p]?.includes(izin));
+
+const ani = { nama: 'Ani', peran: ['editor'] };
+const budi = { nama: 'Budi', peran: ['tamu'] };
+const citra = { nama: 'Citra', peran: ['editor', 'admin'] };      // beberapa peran digabung
+for (const u of [ani, budi, citra])
+    console.log(u.nama.padEnd(6), ['produk.ubah', 'produk.hapus', 'pengguna.kelola'].map(i =&gt; i + '=' + (bisa(u, i) ? 'ya' : 'tidak')).join('  '));</code></pre><pre class="runout" data-lang="keluaran"><code>Ani    produk.ubah=ya  produk.hapus=tidak  pengguna.kelola=tidak
+Budi   produk.ubah=tidak  produk.hapus=tidak  pengguna.kelola=tidak
+Citra  produk.ubah=ya  produk.hapus=ya  pengguna.kelola=ya</code></pre><figcaption>Memeriksa izin ("boleh menghapus produk?") alih-alih peran ("apakah admin?") membuat aturan mudah diubah tanpa menyisir seluruh kode. Paket seperti spatie/laravel-permission menyediakan ini siap pakai.</figcaption></figure>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Policy di Laravel dipakai untuk...","options":["Otorisasi per objek/model","Mengatur rute","Membuat tabel"],"answer":0,"why":"Aturan siapa boleh melakukan aksi pada objek tertentu."},{"q":"Mengapa menyembunyikan tombol saja tidak cukup?","options":["Penyerang dapat memanggil endpoint langsung","Tombol lambat","Blade melarangnya"],"answer":0,"why":"Otorisasi harus di server."},{"q":"IDOR terjadi bila...","options":["Objek diambil dari ID tanpa memeriksa pemilik","Server mati","Kata sandi lemah"],"answer":0,"why":"Mengganti ID memberi data orang lain."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Buat middleware yang hanya mengizinkan pengguna ber-peran editor atau admin.</summary><div>Middleware dengan parameter: periksa in_array($user->peran, $peran) dan abort(403) bila tidak.</div></details><details><summary>2. Tulis aturan policy: komentar hanya dapat dihapus oleh pembuatnya atau admin.</summary><div><code>return $user->id === $komentar->user_id || $user->isAdmin();</code></div></details><details><summary>3. Bagaimana mencegah IDOR dengan query yang dibatasi?</summary><div><code>$request->user()->pesanan()->findOrFail($id)</code>: hanya mencari di pesanan milik pengguna.</div></details><details><summary>4. Apa beda 401 dan 403?</summary><div>401: belum terautentikasi (belum login); 403: sudah login tetapi tidak berhak.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Middleware adalah pipa penyaring permintaan: auth, throttle, peran.</li><li>Policy mengatur otorisasi per objek; $this->authorize() dan @can memakainya.</li><li>IDOR/Broken Access Control: selalu periksa kepemilikan atau hak, jangan percaya ID dari klien.</li><li>RBAC: periksa izin, bukan nama peran; otorisasi selalu di sisi server.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya Gate dan Policy?</summary><div>Gate adalah closure otorisasi sederhana; Policy mengelompokkan aturan per model. Keduanya memakai mekanisme yang sama (can, authorize).</div></details>
+<details class="faq"><summary>Di mana mendaftarkan middleware di Laravel 11+?</summary><div>Di bootstrap/app.php melalui withMiddleware; tidak ada lagi Http/Kernel.php.</div></details>
+<details class="faq"><summary>Apakah perlu paket peran-izin?</summary><div>Untuk peran dan izin dinamis yang disimpan di basis data, spatie/laravel-permission sangat populer; untuk aturan sederhana, policy cukup.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/middleware" rel="noopener" target="_blank">Laravel: Middleware</a></li><li><a href="https://laravel.com/docs/authorization" rel="noopener" target="_blank">Laravel: Authorization</a></li><li><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" rel="noopener" target="_blank">OWASP Top 10: A01 Broken Access Control</a></li><li><a href="https://spatie.be/docs/laravel-permission" rel="noopener" target="_blank">spatie/laravel-permission</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

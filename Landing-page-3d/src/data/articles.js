@@ -228,4 +228,9 @@ export const ARTICLES = [
     'validasi-form-laravel-form-request-aturan-dan-pesan-error',
     'rest-api-laravel-resource-controller-api-resource-dan-paginasi',
     'autentikasi-laravel-sanctum-session-vs-token-dan-hash-password',
+    'middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses',
+    'queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang',
+    'testing-laravel-phpunit-pest-factory-dan-refreshdatabase',
+    'caching-dan-performa-laravel-cache-remember-optimize-dan-index',
+    'keamanan-aplikasi-laravel-csrf-xss-sql-injection-dan-mass-assignment',
 ];

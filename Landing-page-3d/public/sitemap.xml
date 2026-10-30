@@ -1195,4 +1195,29 @@
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/keamanan-aplikasi-laravel-csrf-xss-sql-injection-dan-mass-assignment/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

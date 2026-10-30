@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase</title>
+<meta name="description" content="Panduan menguji aplikasi Laravel: tes fitur dan unit, PHPUnit dan Pest, factory untuk data uji, RefreshDatabase, menguji API dan validasi, mock, serta cara berpikir TDD.">
+<meta name="keywords" content="testing Laravel, PHPUnit, Pest, factory, TDD">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/">
+<meta property="og:title" content="Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase">
+<meta property="og:description" content="Panduan menguji aplikasi Laravel: tes fitur dan unit, PHPUnit dan Pest, factory untuk data uji, RefreshDatabase, menguji API dan validasi, mock, serta cara berpikir TDD.">
+<meta property="og:image" content="https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase">
+<meta name="twitter:description" content="Panduan menguji aplikasi Laravel: tes fitur dan unit, PHPUnit dan Pest, factory untuk data uji, RefreshDatabase, menguji API dan validasi, mock, serta cara berpikir TDD.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase","description":"Panduan menguji aplikasi Laravel: tes fitur dan unit, PHPUnit dan Pest, factory untuk data uji, RefreshDatabase, menguji API dan validasi, mock, serta cara berpikir TDD.","image":["https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"testing Laravel, PHPUnit, Pest, factory, TDD","articleSection":"Laravel & Backend","wordCount":340,"mainEntityOfPage":"https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase","item":"https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Pest atau PHPUnit?","acceptedAnswer":{"@type":"Answer","text":"Pest dibangun di atas PHPUnit dengan sintaks ringkas dan fitur modern; pilih sesuai selera tim, keduanya bisa dicampur."}},{"@type":"Question","name":"Bagaimana menguji tampilan Blade?","acceptedAnswer":{"@type":"Answer","text":"Dengan $this->get(...)->assertSee(\"teks\"); untuk interaksi JavaScript gunakan Laravel Dusk atau Playwright."}},{"@type":"Question","name":"Berapa cakupan yang wajar?","acceptedAnswer":{"@type":"Answer","text":"Fokus pada jalur kritis dan logika bisnis; angka cakupan tinggi tanpa asersi bermakna tidak menjamin kualitas."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tes-unit-vs-tes-fitur">Tes unit vs tes fitur</a></li><li><a href="#menyiapkan-lingkungan-uji">Menyiapkan lingkungan uji</a></li><li><a href="#tes-fitur-pertama">Tes fitur pertama</a></li><li><a href="#factory-data-uji-yang-realistis">Factory: data uji yang realistis</a></li><li><a href="#menguji-api">Menguji API</a></li><li><a href="#mock-sedikit-dan-hanya-di-perbatasan">Mock: sedikit dan hanya di perbatasan</a></li><li><a href="#tdd-merah-hijau-rapikan">TDD: merah, hijau, rapikan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase</h1>
+<p class="lead">Aplikasi yang tumbuh tanpa tes menjadi aplikasi yang ditakuti: setiap perubahan terasa berisiko. Laravel dibangun dengan pengujian sebagai warga kelas satu: ada basis data uji, factory data palsu, dan helper untuk memanggil rute seolah browser. Dengan sedikit pola, menulis tes menjadi cepat dan menyenangkan.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, Eloquent, REST API</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Testing Laravel: PHPUnit, Pest, Factory, RefreshDatabase" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan tes unit dan tes fitur serta kapan memakai masing-masing</li><li>menulis tes dengan PHPUnit dan Pest</li><li>memakai factory dan RefreshDatabase untuk data uji yang bersih</li><li>menguji halaman, form, validasi, API, dan otorisasi</li><li>menerapkan siklus TDD dan mengelola mock dengan hemat</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="tes-unit-vs-tes-fitur">Tes unit vs tes fitur</h2>
+<table><thead><tr><th></th><th>Tes unit (tests/Unit)</th><th>Tes fitur (tests/Feature)</th></tr></thead><tbody><tr><td>Cakupan</td><td>Satu kelas atau fungsi terpisah</td><td>Alur lengkap: permintaan HTTP sampai basis data</td></tr><tr><td>Basis data</td><td>Biasanya tidak</td><td>Ya (basis data uji)</td></tr><tr><td>Kecepatan</td><td>Sangat cepat</td><td>Lebih lambat tetapi lebih meyakinkan</td></tr><tr><td>Contoh</td><td>Menghitung diskon, memformat harga</td><td>Login, mendaftar, membuat pesanan, endpoint API</td></tr><tr><td>Saran</td><td>Untuk logika murni</td><td>Mayoritas tes aplikasi Laravel</td></tr></tbody></table>
+<h2 id="menyiapkan-lingkungan-uji">Menyiapkan lingkungan uji</h2>
+<figure class="codebox"><pre data-lang="bash"><code># phpunit.xml: gunakan basis data khusus pengujian
+&lt;env name=&quot;APP_ENV&quot; value=&quot;testing&quot;/&gt;
+&lt;env name=&quot;DB_CONNECTION&quot; value=&quot;sqlite&quot;/&gt;
+&lt;env name=&quot;DB_DATABASE&quot; value=&quot;:memory:&quot;/&gt;      &lt;!-- SQLite di memori: cepat dan terisolasi --&gt;
+
+php artisan test                 # menjalankan semua tes (ringkas dan berwarna)
+php artisan test --filter=Pesanan
+php artisan test --parallel      # paralel untuk suite besar</code></pre><figcaption>Jangan pernah menjalankan tes terhadap basis data pengembangan atau produksi; trait RefreshDatabase akan mengosongkannya.</figcaption></figure>
+<h2 id="tes-fitur-pertama">Tes fitur pertama</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// tests/Feature/PesananTest.php  (gaya PHPUnit)
+namespace Tests\Feature;
+
+use App\Models\Produk;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class PesananTest extends TestCase
+{
+    use RefreshDatabase;                    // skema dimigrasi ulang dan dibersihkan antar tes
+
+    public function test_pengguna_dapat_membuat_pesanan(): void
+    {
+        // Arrange: siapkan data
+        $user = User::factory()-&gt;create();
+        $produk = Produk::factory()-&gt;create(['harga' =&gt; 20000, 'stok' =&gt; 10]);
+
+        // Act: panggil rute sebagai pengguna yang login
+        $respons = $this-&gt;actingAs($user)-&gt;post('/pesanan', [
+            'produk_id' =&gt; $produk-&gt;id,
+            'jumlah'    =&gt; 3,
+        ]);
+
+        // Assert: periksa hasil
+        $respons-&gt;assertRedirect('/pesanan');
+        $this-&gt;assertDatabaseHas('pesanan', ['user_id' =&gt; $user-&gt;id, 'total' =&gt; 60000]);
+        $this-&gt;assertSame(7, $produk-&gt;fresh()-&gt;stok);
+    }
+
+    public function test_jumlah_melebihi_stok_ditolak(): void
+    {
+        $user = User::factory()-&gt;create();
+        $produk = Produk::factory()-&gt;create(['stok' =&gt; 2]);
+
+        $this-&gt;actingAs($user)
+            -&gt;post('/pesanan', ['produk_id' =&gt; $produk-&gt;id, 'jumlah' =&gt; 5])
+            -&gt;assertSessionHasErrors('jumlah');
+
+        $this-&gt;assertDatabaseCount('pesanan', 0);
+    }
+
+    public function test_tamu_diarahkan_ke_login(): void
+    {
+        $this-&gt;post('/pesanan', [])-&gt;assertRedirect('/login');
+    }
+}</code></pre><figcaption>Pola Arrange-Act-Assert: siapkan, jalankan, periksa. Nama tes menjelaskan perilaku dalam kalimat biasa sehingga laporan kegagalan terbaca seperti spesifikasi.</figcaption></figure>
+<h3>Gaya Pest: lebih ringkas</h3>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// tests/Feature/PesananTest.php  (Pest)
+use App\Models\{Produk, User};
+
+uses(Illuminate\Foundation\Testing\RefreshDatabase::class);
+
+it('membuat pesanan dan mengurangi stok', function () {
+    $user = User::factory()-&gt;create();
+    $produk = Produk::factory()-&gt;create(['harga' =&gt; 20000, 'stok' =&gt; 10]);
+
+    $this-&gt;actingAs($user)
+        -&gt;post('/pesanan', ['produk_id' =&gt; $produk-&gt;id, 'jumlah' =&gt; 3])
+        -&gt;assertRedirect('/pesanan');
+
+    expect($produk-&gt;fresh()-&gt;stok)-&gt;toBe(7);
+    $this-&gt;assertDatabaseHas('pesanan', ['total' =&gt; 60000]);
+});
+
+it('menolak jumlah yang melebihi stok', function () {
+    $produk = Produk::factory()-&gt;create(['stok' =&gt; 2]);
+    $this-&gt;actingAs(User::factory()-&gt;create())
+        -&gt;post('/pesanan', ['produk_id' =&gt; $produk-&gt;id, 'jumlah' =&gt; 5])
+        -&gt;assertSessionHasErrors('jumlah');
+});
+
+// tes bertabel: satu logika, banyak data
+it('memvalidasi surel', function (string $surel, bool $valid) {
+    $r = $this-&gt;post('/daftar', ['nama' =&gt; 'Ani', 'surel' =&gt; $surel, 'sandi' =&gt; 'rahasia123', 'sandi_confirmation' =&gt; 'rahasia123']);
+    $valid ? $r-&gt;assertSessionDoesntHaveErrors('surel') : $r-&gt;assertSessionHasErrors('surel');
+})-&gt;with([['ani@contoh.id', true], ['bukan-surel', false], ['', false]]);</code></pre><figcaption>Pest dan PHPUnit sama-sama dijalankan oleh php artisan test dan dapat hidup berdampingan. Pilih yang lebih nyaman bagi tim.</figcaption></figure>
+<h2 id="factory-data-uji-yang-realistis">Factory: data uji yang realistis</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// database/factories/ProdukFactory.php
+class ProdukFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'kategori_id' =&gt; Kategori::factory(),            // buat kategori otomatis bila tidak diberikan
+            'nama'        =&gt; fake()-&gt;words(2, true),
+            'harga'       =&gt; fake()-&gt;numberBetween(5, 200) * 1000,
+            'stok'        =&gt; fake()-&gt;numberBetween(0, 100),
+        ];
+    }
+
+    public function habis(): static                              // &quot;state&quot;: variasi bernama
+    {
+        return $this-&gt;state(fn () =&gt; ['stok' =&gt; 0]);
+    }
+}
+
+Produk::factory()-&gt;count(20)-&gt;create();
+Produk::factory()-&gt;habis()-&gt;create();
+User::factory()-&gt;has(Pesanan::factory()-&gt;count(3))-&gt;create();   // pengguna dengan 3 pesanan</code></pre></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Gagasan factory: data yang valid secara bawaan + kemampuan menimpa hanya yang relevan untuk tes
+let seq = 0;
+const fabrikProduk = (timpa = {}) =&gt; ({ id: ++seq, nama: 'Produk ' + seq, harga: 20000, stok: 10, ...timpa });
+
+const biasa = fabrikProduk();
+const habis = fabrikProduk({ stok: 0 });
+console.log(biasa, habis);
+
+// Tes yang fokus: hanya mengatur data yang penting bagi skenario
+function bisaDibeli(produk, jumlah) { return produk.stok &gt;= jumlah &amp;&amp; jumlah &gt; 0; }
+console.log('stok cukup  -&gt;', bisaDibeli(fabrikProduk({ stok: 5 }), 3));
+console.log('stok kurang -&gt;', bisaDibeli(fabrikProduk({ stok: 2 }), 3));
+console.log('jumlah nol  -&gt;', bisaDibeli(fabrikProduk(), 0));</code></pre><pre class="runout" data-lang="keluaran"><code>{ id: 1, nama: 'Produk 1', harga: 20000, stok: 10 } { id: 2, nama: 'Produk 2', harga: 20000, stok: 0 }
+stok cukup  -&gt; true
+stok kurang -&gt; false
+jumlah nol  -&gt; false</code></pre><figcaption>Tes yang baik menunjukkan sekilas data mana yang penting: yang tidak disebut berarti tidak relevan, dan dibiarkan bernilai bawaan factory.</figcaption></figure>
+<h2 id="menguji-api">Menguji API</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+public function test_daftar_produk_terpaginasi(): void
+{
+    Produk::factory()-&gt;count(30)-&gt;create();
+
+    $this-&gt;getJson('/api/v1/produk')
+        -&gt;assertOk()
+        -&gt;assertJsonCount(15, 'data')
+        -&gt;assertJsonStructure(['data' =&gt; [['id', 'nama', 'harga']], 'meta' =&gt; ['total'], 'links']);
+}
+
+public function test_hanya_pemilik_boleh_mengubah_pesanan(): void
+{
+    $pesanan = Pesanan::factory()-&gt;create();
+    $lain = User::factory()-&gt;create();
+
+    $this-&gt;actingAs($lain, 'sanctum')
+        -&gt;putJson('/api/v1/pesanan/' . $pesanan-&gt;id, ['catatan' =&gt; 'x'])
+        -&gt;assertForbidden();                                    // 403
+}</code></pre></figure>
+<h2 id="mock-sedikit-dan-hanya-di-perbatasan">Mock: sedikit dan hanya di perbatasan</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+use Illuminate\Support\Facades\{Mail, Queue, Http};
+use App\Jobs\KirimSurelSambutan;
+
+public function test_pendaftaran_mendispatch_job_sambutan(): void
+{
+    Queue::fake();                                    // tidak benar-benar mengantre, hanya mencatat
+    $this-&gt;post('/daftar', [...]);
+    Queue::assertPushed(KirimSurelSambutan::class);
+}
+
+public function test_klien_cuaca_menangani_kegagalan_layanan(): void
+{
+    Http::fake(['api.cuaca.id/*' =&gt; Http::response([], 500)]);   // layanan luar tidak dipanggil sungguhan
+    $this-&gt;assertNull(app(LayananCuaca::class)-&gt;suhu('Madiun'));
+}</code></pre><figcaption>Fake untuk Mail, Queue, Http, Storage, dan Event adalah bawaan Laravel. Tiru hanya sistem di luar kendali Anda; jangan menirukan kode Anda sendiri sampai tes tidak menguji apa-apa.</figcaption></figure>
+<h2 id="tdd-merah-hijau-rapikan">TDD: merah, hijau, rapikan</h2>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="Siklus TDD" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M287.27980021920985 102.25 Q324.51889258194063 122.75 325.4715205261036 168.39999999999998" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M296.3730669589464 212.5 Q260 234.5 219.98962634515894 212.50000000000003" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M196.34713282184376 165.25000000000003 Q195.4811074180593 122.75 234.53885312873751 99.10000000000001" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="84" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Merah: tulis</tspan><tspan x="260" dy="15">tes untuk</tspan><tspan x="260" dy="15">perilaku baru</tspan><tspan x="260" dy="15">(gagal)</tspan></text><rect x="288.93266739736606" y="190.5" width="124" height="84" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="350.93266739736606" y="208.5" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="350.93266739736606" dy="0">Hijau: tulis</tspan><tspan x="350.93266739736606" dy="15">kode paling</tspan><tspan x="350.93266739736606" dy="15">sederhana agar</tspan><tspan x="350.93266739736606" dy="15">lulus</tspan></text><rect x="107.06733260263394" y="190.50000000000003" width="124" height="84" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="169.06733260263394" y="208.50000000000003" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="169.06733260263394" dy="0">Rapikan:</tspan><tspan x="169.06733260263394" dy="15">refaktor</tspan><tspan x="169.06733260263394" dy="15">dengan tes</tspan><tspan x="169.06733260263394" dy="15">tetap hijau</tspan></text></svg><figcaption>Mulai dengan tes untuk bug yang dilaporkan: tulis tes yang mereproduksinya, perbaiki, dan Anda mendapat pencegah regresi gratis.</figcaption></figure>
+<div data-w="checklist"><script type="application/json">{"title":"Tes yang sehat di proyek Laravel","items":["Tes memakai basis data terpisah (SQLite memori atau basis uji) dengan RefreshDatabase.","Data dibuat dengan factory; tes hanya menyebut data yang relevan.","Alur penting diuji: autentikasi, otorisasi, validasi, pembayaran/pemesanan.","Layanan eksternal (surel, HTTP, antrean) di-fake, bukan dipanggil sungguhan.","Tes berjalan otomatis di CI pada setiap permintaan tarik.","Setiap bug yang diperbaiki mendapat satu tes regresi."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Trait yang membersihkan basis data antar tes?","options":["RefreshDatabase","WithoutMiddleware","Queueable"],"answer":0,"why":"Memigrasi ulang dan mengisolasi tiap tes."},{"q":"Kegunaan factory?","options":["Membuat data uji yang realistis dengan cepat","Membuat rute","Mengirim surel"],"answer":0,"why":"Dengan nilai bawaan yang valid dan dapat ditimpa."},{"q":"Mock sebaiknya dipakai untuk...","options":["Sistem di luar kendali (HTTP luar, surel)","Semua kelas sendiri","Tidak pernah"],"answer":0,"why":"Menghindari tes yang rapuh dan tidak bermakna."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis tes: pengguna yang belum login tidak bisa membuka /dasbor.</summary><div><code>$this->get("/dasbor")->assertRedirect("/login");</code></div></details><details><summary>2. Mengapa tes sebaiknya tidak bergantung pada urutan eksekusi?</summary><div>Tes yang saling bergantung gagal acak dan sulit dilacak; RefreshDatabase dan factory membuat tiap tes mandiri.</div></details><details><summary>3. Kapan memilih tes unit dibanding tes fitur?</summary><div>Untuk logika murni tanpa kerangka kerja (perhitungan, pemformatan); tes fitur untuk alur yang melibatkan HTTP dan basis data.</div></details><details><summary>4. Bagaimana mereproduksi bug "pesanan dengan jumlah 0 lolos" dalam tes?</summary><div>Tulis tes yang mengirim jumlah 0 dan mengharapkan galat validasi; ia gagal dulu (merah), lalu perbaiki validasi.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Tes fitur menguji alur lengkap; tes unit untuk logika murni; Laravel menyediakan basis data uji dan helper HTTP.</li><li>PHPUnit dan Pest berjalan lewat php artisan test.</li><li>Factory dan RefreshDatabase memberi data bersih dan terisolasi; pola Arrange-Act-Assert.</li><li>Fake hanya untuk layanan eksternal; TDD dan tes regresi menjaga kualitas seiring waktu.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Pest atau PHPUnit?</summary><div>Pest dibangun di atas PHPUnit dengan sintaks ringkas dan fitur modern; pilih sesuai selera tim, keduanya bisa dicampur.</div></details>
+<details class="faq"><summary>Bagaimana menguji tampilan Blade?</summary><div>Dengan $this->get(...)->assertSee("teks"); untuk interaksi JavaScript gunakan Laravel Dusk atau Playwright.</div></details>
+<details class="faq"><summary>Berapa cakupan yang wajar?</summary><div>Fokus pada jalur kritis dan logika bisnis; angka cakupan tinggi tanpa asersi bermakna tidak menjamin kualitas.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/testing" rel="noopener" target="_blank">Laravel: Testing</a></li><li><a href="https://laravel.com/docs/http-tests" rel="noopener" target="_blank">Laravel: HTTP Tests</a></li><li><a href="https://pestphp.com/docs/" rel="noopener" target="_blank">Pest PHP</a></li><li><a href="https://laravel.com/docs/database-testing" rel="noopener" target="_blank">Laravel: Database Testing</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

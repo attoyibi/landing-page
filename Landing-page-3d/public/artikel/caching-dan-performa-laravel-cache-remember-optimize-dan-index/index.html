@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caching dan Performa Laravel: Cache, Optimize, dan Index</title>
+<meta name="description" content="Percepat Laravel: ukur dulu, perbaiki N+1 dan indeks, pakai Cache::remember dengan invalidasi, dan optimasi produksi (optimize, opcache).">
+<meta name="keywords" content="cache Laravel, performa, optimize, indeks database, Redis">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/">
+<meta property="og:title" content="Caching dan Performa Laravel: Cache, Optimize, dan Index">
+<meta property="og:description" content="Percepat Laravel: ukur dulu, perbaiki N+1 dan indeks, pakai Cache::remember dengan invalidasi, dan optimasi produksi (optimize, opcache).">
+<meta property="og:image" content="https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Caching dan Performa Laravel: Cache, Optimize, dan Index">
+<meta name="twitter:description" content="Percepat Laravel: ukur dulu, perbaiki N+1 dan indeks, pakai Cache::remember dengan invalidasi, dan optimasi produksi (optimize, opcache).">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Caching dan Performa Laravel: Cache, Optimize, dan Index","description":"Percepat Laravel: ukur dulu, perbaiki N+1 dan indeks, pakai Cache::remember dengan invalidasi, dan optimasi produksi (optimize, opcache).","image":["https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"cache Laravel, performa, optimize, indeks database, Redis","articleSection":"Laravel & Backend","wordCount":466,"mainEntityOfPage":"https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Caching dan Performa Laravel: Cache, Optimize, dan Index","item":"https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa itu Octane?","acceptedAnswer":{"@type":"Answer","text":"Laravel Octane menjalankan aplikasi di server berkinerja tinggi (FrankenPHP, Swoole, RoadRunner) yang menyimpan aplikasi di memori antar permintaan sehingga jauh lebih cepat, dengan kehati-hatian soal keadaan global."}},{"@type":"Question","name":"Redis wajib?","acceptedAnswer":{"@type":"Answer","text":"Tidak untuk aplikasi kecil; cache file atau database cukup. Redis menjadi pilihan saat butuh kecepatan, tag cache, antrean, dan sesi bersama."}},{"@type":"Question","name":"Bagaimana menemukan query paling lambat?","acceptedAnswer":{"@type":"Answer","text":"Aktifkan slow query log di basis data, gunakan Telescope atau APM, dan periksa EXPLAIN pada query tersebut."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#urutan-optimasi">Urutan optimasi</a></li><li><a href="#indeks-perbedaan-antara-milidetik-dan-detik">Indeks: perbedaan antara milidetik dan detik</a></li><li><a href="#cache-aside-dengan-cache-remember">Cache-aside dengan Cache::remember</a></li><li><a href="#optimasi-produksi-bawaan-laravel">Optimasi produksi bawaan Laravel</a></li><li><a href="#daftar-periksa-performa">Daftar periksa performa</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Caching dan Performa Laravel: Cache, Optimize, dan Index</h1>
+<p class="lead">Aplikasi lambat jarang disebabkan PHP itu sendiri. Hampir selalu penyebabnya adalah terlalu banyak query, query tanpa indeks, atau pekerjaan berulang yang tidak perlu diulang. Urutan kerjanya: ukur, perbaiki query dan indeks, baru kemudian gunakan cache untuk hal yang benar-benar mahal. Cache yang ditambahkan terlalu dini hanya menyembunyikan masalah dan menambah bug basi.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> Eloquent, N+1 query</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Caching dan Performa Laravel: Cache, Optimize, dan Index" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mengukur sebelum mengoptimasi (query, waktu respons)</li><li>memperbaiki N+1 dan menambah indeks yang tepat</li><li>memakai pola cache-aside dengan Cache::remember dan TTL</li><li>merancang invalidasi cache agar data tidak basi</li><li>memakai optimasi produksi: config, route, view cache, dan opcache</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="urutan-optimasi">Urutan optimasi</h2>
+<ol><li><b>Ukur</b>: waktu respons, jumlah query per halaman, query paling lambat (Debugbar, Telescope, log query, APM seperti Sentry atau New Relic).</li><li><b>Kurangi query</b>: perbaiki N+1 dengan eager loading, ambil kolom seperlunya, paginasi.</li><li><b>Percepat query</b>: tambah indeks pada kolom where, join, order by.</li><li><b>Cache</b> hasil yang mahal dan jarang berubah.</li><li><b>Pindahkan pekerjaan berat ke antrean</b>.</li><li><b>Optimasi server</b>: opcache, cache konfigurasi, PHP-FPM yang disetel, CDN untuk aset.</li></ol>
+<h2 id="indeks-perbedaan-antara-milidetik-dan-detik">Indeks: perbedaan antara milidetik dan detik</h2>
+<p>Tanpa indeks, basis data memindai <b>seluruh tabel</b> untuk menemukan baris. Dengan indeks (pohon B), ia melompat langsung. Peragaan dengan SQLite:</p>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3, time, random
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE pesanan (id INTEGER PRIMARY KEY, user_id INTEGER, status TEXT, total INTEGER)&quot;)
+rng = random.Random(1)
+db.executemany(&quot;INSERT INTO pesanan (user_id, status, total) VALUES (?, ?, ?)&quot;,
+               [(rng.randint(1, 50_000), rng.choice([&quot;baru&quot;, &quot;bayar&quot;, &quot;kirim&quot;, &quot;selesai&quot;]), rng.randint(10, 500) * 1000) for _ in range(300_000)])
+
+def ukur(sql, args=(), ulang=30):
+    t0 = time.perf_counter()
+    for _ in range(ulang): db.execute(sql, args).fetchall()
+    return (time.perf_counter() - t0) / ulang * 1000
+
+sql = &quot;SELECT id, total FROM pesanan WHERE user_id = ?&quot;
+print(&quot;rencana sebelum indeks :&quot;, db.execute(&quot;EXPLAIN QUERY PLAN &quot; + sql, (777,)).fetchall()[0][3])
+sebelum = ukur(sql, (777,))
+
+db.execute(&quot;CREATE INDEX idx_pesanan_user ON pesanan (user_id)&quot;)
+print(&quot;rencana sesudah indeks :&quot;, db.execute(&quot;EXPLAIN QUERY PLAN &quot; + sql, (777,)).fetchall()[0][3])
+sesudah = ukur(sql, (777,))
+
+print(f&quot;tanpa indeks: {sebelum:8.3f} ms per query&quot;)
+print(f&quot;dengan indeks: {sesudah:7.3f} ms per query  ({sebelum / sesudah:,.0f}x lebih cepat)&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>rencana sebelum indeks : SCAN pesanan
+rencana sesudah indeks : SEARCH pesanan USING INDEX idx_pesanan_user (user_id=?)
+tanpa indeks:    8.537 ms per query
+dengan indeks:   0.007 ms per query  (1,257x lebih cepat)</code></pre><figcaption>SCAN artinya memeriksa semua baris; SEARCH ... USING INDEX artinya melompat langsung. Gunakan EXPLAIN (MySQL/PostgreSQL) untuk memeriksa query lambat Anda.</figcaption></figure>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// Migrasi: indeks tunggal, gabungan, dan unik
+$table-&gt;index('user_id');
+$table-&gt;index(['status', 'created_at']);       // urutan kolom penting: untuk where status = ? order by created_at
+$table-&gt;unique('kode');
+
+// Aturan praktis:
+//  - kunci asing (user_id, kategori_id) hampir selalu perlu indeks
+//  - kolom di where/order by yang sering dipakai pada tabel besar
+//  - jangan indeks semuanya: tiap indeks memperlambat penulisan dan memakai ruang</code></pre></figure>
+<h2 id="cache-aside-dengan-cache-remember">Cache-aside dengan Cache::remember</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+use Illuminate\Support\Facades\Cache;
+
+// Ambil dari cache; bila tidak ada, jalankan closure, simpan 10 menit, lalu kembalikan
+$kategori = Cache::remember('kategori:semua', now()-&gt;addMinutes(10), function () {
+    return Kategori::withCount('produk')-&gt;orderBy('nama')-&gt;get();
+});
+
+// Kunci yang memuat parameter agar tidak bercampur
+$halaman = $request-&gt;integer('page', 1);
+$produk = Cache::remember(&quot;produk:terlaris:halaman:{$halaman}&quot;, 300, fn () =&gt; Produk::terlaris()-&gt;paginate(12));
+
+// Invalidasi: hapus saat data berubah (di model observer atau event)
+Cache::forget('kategori:semua');
+
+// Tag (driver Redis/Memcached): hapus sekelompok kunci sekaligus
+Cache::tags(['produk'])-&gt;remember('produk:terlaris', 300, fn () =&gt; ...);
+Cache::tags(['produk'])-&gt;flush();</code></pre><figcaption>Driver cache: file/database (sederhana), Redis atau Memcached (cepat dan mendukung tag). Atur CACHE_STORE di .env.</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Pola cache-aside dengan TTL dan invalidasi: peragaan berapa banyak panggilan &quot;mahal&quot; yang dihemat
+function buatCache() {
+    const simpan = new Map();
+    let sekarang = 0, panggilanMahal = 0, hit = 0, miss = 0;
+    return {
+        maju: ms =&gt; { sekarang += ms; },
+        remember(kunci, ttl, fn) {
+            const e = simpan.get(kunci);
+            if (e &amp;&amp; e.kedaluwarsa &gt; sekarang) { hit++; return e.nilai; }
+            miss++; panggilanMahal++;
+            const nilai = fn();
+            simpan.set(kunci, { nilai, kedaluwarsa: sekarang + ttl });
+            return nilai;
+        },
+        forget: k =&gt; simpan.delete(k),
+        statistik: () =&gt; ({ hit, miss, panggilanMahal }),
+    };
+}
+
+const c = buatCache();
+let dbKategori = ['Kopi', 'Teh'];
+const mahal = () =&gt; [...dbKategori];                       // seolah query yang lambat
+
+for (let t = 0; t &lt; 8; t++) { c.remember('kategori', 5000, mahal); c.maju(1000); }    // 8 permintaan, 1 detik apart, TTL 5 detik
+console.log('tanpa perubahan data  :', JSON.stringify(c.statistik()), '(8 permintaan -&gt; 2 query, bukan 8)');
+
+dbKategori.push('Gula');                                   // data berubah!
+console.log('setelah data berubah  :', JSON.stringify(c.remember('kategori', 5000, mahal)), '&lt;- BASI sampai TTL habis');
+c.forget('kategori');                                      // invalidasi eksplisit saat menyimpan data
+console.log('setelah invalidasi    :', JSON.stringify(c.remember('kategori', 5000, mahal)));</code></pre><pre class="runout" data-lang="keluaran"><code>tanpa perubahan data  : {&quot;hit&quot;:6,&quot;miss&quot;:2,&quot;panggilanMahal&quot;:2} (8 permintaan -&gt; 2 query, bukan 8)
+setelah data berubah  : [&quot;Kopi&quot;,&quot;Teh&quot;] &lt;- BASI sampai TTL habis
+setelah invalidasi    : [&quot;Kopi&quot;,&quot;Teh&quot;,&quot;Gula&quot;]</code></pre><figcaption>Dua cara menjaga cache tidak basi: TTL pendek (toleransi data lama) dan invalidasi eksplisit saat data berubah. Seperti kata pepatah klasik: hal tersulit dalam ilmu komputer adalah penamaan dan invalidasi cache.</figcaption></figure>
+<div class="callout warn"><b>Kebocoran lewat cache</b><p><b>Jangan menyimpan data khusus pengguna dalam kunci cache umum</b>: misalnya <code>Cache::remember("keranjang", ...)</code> tanpa ID pengguna akan menampilkan keranjang orang lain. Sertakan semua variabel yang memengaruhi hasil (pengguna, bahasa, halaman, filter) di kunci.</p></div>
+<h2 id="optimasi-produksi-bawaan-laravel">Optimasi produksi bawaan Laravel</h2>
+<figure class="codebox"><pre data-lang="bash"><code>php artisan optimize          # menyimpan cache config, route, event, dan view sekaligus
+# yang dilakukan: config:cache, route:cache, view:cache, event:cache
+php artisan optimize:clear    # membersihkan semuanya (saat debugging)
+
+composer install --no-dev --optimize-autoloader     # tanpa dependensi pengembangan, autoloader dioptimasi
+
+# .env produksi
+APP_ENV=production
+APP_DEBUG=false
+LOG_LEVEL=warning</code></pre><figcaption>Setelah php artisan config:cache, fungsi env() di luar berkas config tidak lagi membaca .env: gunakan config("...") di kode aplikasi. Aktifkan juga OPcache di PHP dan simpan sesi/cache di Redis untuk beban tinggi.</figcaption></figure>
+<h2 id="daftar-periksa-performa">Daftar periksa performa</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Sebelum mengatakan \"aplikasi ini lambat\"","items":["Saya sudah mengukur jumlah dan waktu query per halaman (Debugbar/Telescope).","Tidak ada N+1 (eager loading atau preventLazyLoading aktif).","Kolom yang sering dipakai where/join/order by sudah berindeks.","Daftar besar dipaginasi; hanya kolom yang diperlukan yang diambil.","Hasil mahal yang jarang berubah di-cache dengan kunci lengkap dan invalidasi.","Pekerjaan berat dipindah ke antrean.","optimize, opcache, dan autoloader teroptimasi dijalankan di produksi.","Aset statis disajikan lewat CDN dan dikompresi."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Langkah pertama optimasi performa?","options":["Mengukur","Menambah cache","Mengganti server"],"answer":0,"why":"Tanpa data, optimasi menebak."},{"q":"Indeks mempercepat query karena...","options":["Menghindari pemindaian seluruh tabel","Mengompres data","Menambah RAM"],"answer":0,"why":"Struktur pohon memungkinkan pencarian cepat."},{"q":"Risiko utama cache adalah...","options":["Data basi dan kebocoran antar pengguna","Terlalu cepat","Menambah query"],"answer":0,"why":"Karena itu perlu TTL, invalidasi, dan kunci yang lengkap."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Halaman beranda menampilkan 12 produk dan nama kategori masing-masing; berapa query jika N+1? Berapa dengan eager loading?</summary><div>N+1: 1 + 12 = 13 query. Eager loading: 2 query.</div></details><details><summary>2. Query WHERE status = ? ORDER BY created_at lambat; indeks seperti apa?</summary><div>Indeks gabungan (status, created_at): kolom filter lebih dulu, lalu kolom pengurutan.</div></details><details><summary>3. Mengapa env() jangan dipakai di luar berkas config setelah config:cache?</summary><div>Saat config di-cache, .env tidak dibaca lagi sehingga env() mengembalikan null; baca lewat config().</div></details><details><summary>4. Kapan TTL pendek cukup tanpa invalidasi eksplisit?</summary><div>Bila data boleh sedikit basi (statistik, daftar terlaris) dan lebih penting kesederhanaan.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Ukur dulu; perbaiki N+1 dan indeks sebelum menambah cache.</li><li>Cache::remember (cache-aside) dengan TTL dan invalidasi; kunci memuat semua variabel penentu hasil.</li><li>php artisan optimize, opcache, dan autoloader teroptimasi di produksi; APP_DEBUG=false.</li><li>Pindahkan pekerjaan berat ke antrean; gunakan Redis dan CDN untuk skala.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa itu Octane?</summary><div>Laravel Octane menjalankan aplikasi di server berkinerja tinggi (FrankenPHP, Swoole, RoadRunner) yang menyimpan aplikasi di memori antar permintaan sehingga jauh lebih cepat, dengan kehati-hatian soal keadaan global.</div></details>
+<details class="faq"><summary>Redis wajib?</summary><div>Tidak untuk aplikasi kecil; cache file atau database cukup. Redis menjadi pilihan saat butuh kecepatan, tag cache, antrean, dan sesi bersama.</div></details>
+<details class="faq"><summary>Bagaimana menemukan query paling lambat?</summary><div>Aktifkan slow query log di basis data, gunakan Telescope atau APM, dan periksa EXPLAIN pada query tersebut.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/cache" rel="noopener" target="_blank">Laravel: Cache</a></li><li><a href="https://laravel.com/docs/deployment#optimization" rel="noopener" target="_blank">Laravel: Deployment (Optimization)</a></li><li><a href="https://use-the-index-luke.com/" rel="noopener" target="_blank">Use The Index, Luke</a></li><li><a href="https://laravel.com/docs/octane" rel="noopener" target="_blank">Laravel Octane</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
