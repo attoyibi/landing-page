@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autentikasi Laravel: Session vs Token, Sanctum, dan Hash</title>
+<meta name="description" content="Pahami autentikasi di Laravel: perbedaan session dan token, Laravel Sanctum untuk SPA dan API, hashing kata sandi dengan bcrypt atau Argon2, login, logout, dan praktik aman.">
+<meta name="keywords" content="autentikasi Laravel, Sanctum, hash password, session, token API">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/">
+<meta property="og:title" content="Autentikasi Laravel: Session vs Token, Sanctum, dan Hash">
+<meta property="og:description" content="Pahami autentikasi di Laravel: perbedaan session dan token, Laravel Sanctum untuk SPA dan API, hashing kata sandi dengan bcrypt atau Argon2, login, logout, dan praktik aman.">
+<meta property="og:image" content="https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Autentikasi Laravel: Session vs Token, Sanctum, dan Hash">
+<meta name="twitter:description" content="Pahami autentikasi di Laravel: perbedaan session dan token, Laravel Sanctum untuk SPA dan API, hashing kata sandi dengan bcrypt atau Argon2, login, logout, dan praktik aman.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Autentikasi Laravel: Session vs Token, Sanctum, dan Hash","description":"Pahami autentikasi di Laravel: perbedaan session dan token, Laravel Sanctum untuk SPA dan API, hashing kata sandi dengan bcrypt atau Argon2, login, logout, dan praktik aman.","image":["https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"autentikasi Laravel, Sanctum, hash password, session, token API","articleSection":"Laravel & Backend","wordCount":412,"mainEntityOfPage":"https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Autentikasi Laravel: Session vs Token, Sanctum, dan Hash","item":"https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya Sanctum dan Passport?","acceptedAnswer":{"@type":"Answer","text":"Sanctum ringan untuk SPA dan token pribadi; Passport mengimplementasikan OAuth2 penuh untuk skenario pihak ketiga yang kompleks."}},{"@type":"Question","name":"Bagaimana login dengan Google?","acceptedAnswer":{"@type":"Answer","text":"Laravel Socialite menyediakan OAuth untuk Google, GitHub, dan lainnya."}},{"@type":"Question","name":"Bagaimana menambah verifikasi surel?","acceptedAnswer":{"@type":"Answer","text":"Implementasikan MustVerifyEmail pada model User dan pakai middleware verified."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#sesi-atau-token">Sesi atau token</a></li><li><a href="#hash-kata-sandi-aturan-yang-tidak-boleh-dilanggar">Hash kata sandi: aturan yang tidak boleh dilanggar</a></li><li><a href="#memulai-cepat-starter-kit">Memulai cepat: starter kit</a></li><li><a href="#sanctum-untuk-api">Sanctum untuk API</a></li><li><a href="#praktik-yang-aman">Praktik yang aman</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Autentikasi Laravel: Session vs Token, Sanctum, dan Hash</h1>
+<p class="lead">Autentikasi menjawab "siapa Anda?" dan otorisasi menjawab "apa yang boleh Anda lakukan?". Di Laravel keduanya sudah tersedia dengan baik, tetapi Anda tetap perlu memahami pilihan di baliknya: sesi atau token, bagaimana kata sandi disimpan, dan apa yang terjadi saat seseorang login. Kesalahan di sini adalah kesalahan paling mahal.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, REST API, validasi</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Autentikasi Laravel: Session vs Token, Sanctum, dan Hash" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membedakan autentikasi dan otorisasi</li><li>membedakan autentikasi berbasis sesi dan token serta kapan memakainya</li><li>memakai Sanctum untuk SPA dan API token</li><li>memahami hashing kata sandi dan mengapa bcrypt/Argon2 dipakai</li><li>menerapkan praktik aman: pembatasan percobaan, MFA, dan penyimpanan token</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini ditampilkan sebagai contoh yang mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="sesi-atau-token">Sesi atau token</h2>
+<table><thead><tr><th></th><th>Sesi (cookie)</th><th>Token (Bearer)</th></tr></thead><tbody><tr><td>Cara kerja</td><td>Server menyimpan sesi; browser menyimpan cookie berisi ID sesi</td><td>Klien menyimpan token dan mengirimnya di header Authorization</td></tr><tr><td>Cocok untuk</td><td>Aplikasi web biasa (Blade) dan SPA di domain yang sama</td><td>Aplikasi seluler, layanan lain, klien pihak ketiga</td></tr><tr><td>Pencabutan</td><td>Hapus sesi di server</td><td>Hapus token di server (bila disimpan) atau tunggu kedaluwarsa</td></tr><tr><td>Ancaman utama</td><td>CSRF (dicegah token CSRF dan SameSite)</td><td>Token bocor; XSS bila disimpan di tempat yang dapat dibaca JavaScript</td></tr><tr><td>Di Laravel</td><td>Guard web (bawaan)</td><td>Sanctum token atau Passport (OAuth2)</td></tr></tbody></table>
+<h2 id="hash-kata-sandi-aturan-yang-tidak-boleh-dilanggar">Hash kata sandi: aturan yang tidak boleh dilanggar</h2>
+<div class="callout warn"><b>Wajib</b><p>Kata sandi <b>tidak boleh</b> disimpan sebagai teks biasa, dienkripsi (yang dapat dibalik), atau di-hash dengan MD5/SHA-1/SHA-256 polos. Gunakan fungsi hash kata sandi yang lambat dan bergaram: <b>bcrypt</b> atau <b>Argon2</b>. Laravel melakukannya lewat <code>Hash::make()</code> dan <code>Hash::check()</code>.</p></div>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+use Illuminate\Support\Facades\Hash;
+
+$hash = Hash::make('rahasia-saya');                  // bcrypt bawaan; garam acak otomatis tertanam di hasil
+// $2y$12$kQ...  (algoritma, biaya, garam, hash)
+
+Hash::check('rahasia-saya', $hash);                  // true
+Hash::check('salah', $hash);                         // false
+Hash::needsRehash($hash);                            // true bila biaya/algoritma di konfigurasi sudah dinaikkan
+
+// config/hashing.php atau .env: BCRYPT_ROUNDS=12 ; atau driver 'argon2id'
+// Model User sudah memakai cast 'password' =&gt; 'hashed' sehingga nilai otomatis di-hash saat diisi.</code></pre></figure>
+<figure class="codebox"><pre data-lang="python"><code>import hashlib, hmac, os, time
+
+# Mengapa hash harus LAMBAT: penyerang yang memiliki basis data bocor mencoba tebakan massal.
+def hash_cepat(sandi):                                           # buruk: SHA-256 polos
+    return hashlib.sha256(sandi.encode()).hexdigest()
+
+def hash_lambat(sandi, garam, putaran=200_000):                  # baik: PBKDF2 (konsep sama dengan bcrypt/Argon2)
+    return hashlib.pbkdf2_hmac(&quot;sha256&quot;, sandi.encode(), garam, putaran).hex()
+
+garam = os.urandom(16)
+t0 = time.perf_counter()
+for i in range(20_000): hash_cepat(&quot;tebakan&quot; + str(i))
+cepat = (time.perf_counter() - t0) / 20_000
+t0 = time.perf_counter()
+for i in range(5): hash_lambat(&quot;tebakan&quot; + str(i), garam)
+lambat = (time.perf_counter() - t0) / 5
+
+print(f&quot;SHA-256 polos : {cepat * 1e6:8.2f} mikrodetik per tebakan  -&gt; {1 / cepat:&gt;12,.0f} tebakan/detik per inti&quot;)
+print(f&quot;PBKDF2 lambat : {lambat * 1e6:8.0f} mikrodetik per tebakan  -&gt; {1 / lambat:&gt;12,.0f} tebakan/detik per inti&quot;)
+print(f&quot;penyerang {lambat / cepat:,.0f}x lebih lambat dengan hash yang tepat&quot;)
+
+# garam membuat sandi yang sama menghasilkan hash berbeda
+print(hash_lambat(&quot;password1&quot;, os.urandom(16), 1000) == hash_lambat(&quot;password1&quot;, os.urandom(16), 1000))</code></pre><pre class="runout" data-lang="keluaran"><code>SHA-256 polos :     0.81 mikrodetik per tebakan  -&gt;    1,232,582 tebakan/detik per inti
+PBKDF2 lambat :    74919 mikrodetik per tebakan  -&gt;           13 tebakan/detik per inti
+penyerang 92,343x lebih lambat dengan hash yang tepat
+False</code></pre><figcaption>Perbedaan ribuan kali lipat itulah yang membuat serangan tebak massal pada basis data bocor menjadi tidak praktis. Bcrypt dan Argon2 bekerja dengan prinsip serupa dan dapat dinaikkan biayanya seiring perangkat keras bertambah cepat.</figcaption></figure>
+<h2 id="memulai-cepat-starter-kit">Memulai cepat: starter kit</h2>
+<figure class="codebox"><pre data-lang="bash"><code># Laravel 12: pilih starter kit saat laravel new (React, Vue, atau Livewire) untuk login, daftar, reset kata sandi
+laravel new toko
+
+# Laravel 11 / proyek yang sudah ada: Breeze
+composer require laravel/breeze --dev
+php artisan breeze:install
+php artisan migrate</code></pre><figcaption>Pakai starter kit alih-alih menulis autentikasi sendiri: ia sudah mencakup hash, throttle login, verifikasi surel, reset kata sandi, dan perlindungan CSRF yang teruji.</figcaption></figure>
+<h2 id="sanctum-untuk-api">Sanctum untuk API</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan install:api  (memasang Sanctum). Model User memakai trait HasApiTokens.
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+// POST /api/login  -&gt; menerbitkan token
+Route::post('/login', function (Request $request) {
+    $data = $request-&gt;validate(['surel' =&gt; 'required|email', 'sandi' =&gt; 'required']);
+
+    $user = User::where('email', $data['surel'])-&gt;first();
+    if (! $user || ! Hash::check($data['sandi'], $user-&gt;password)) {
+        return response()-&gt;json(['pesan' =&gt; 'Surel atau kata sandi salah.'], 422);   // pesan sama untuk dua kasus
+    }
+
+    $token = $user-&gt;createToken('aplikasi-seluler', ['produk:baca'])-&gt;plainTextToken;
+    return ['token' =&gt; $token];                  // tampilkan SEKALI; di basis data hanya hash-nya yang tersimpan
+})-&gt;middleware('throttle:5,1');                  // maksimal 5 percobaan per menit
+
+// Rute terlindungi
+Route::middleware('auth:sanctum')-&gt;group(function () {
+    Route::get('/saya', fn (Request $r) =&gt; $r-&gt;user());
+    Route::post('/logout', function (Request $r) {
+        $r-&gt;user()-&gt;currentAccessToken()-&gt;delete();       // cabut token ini
+        return response()-&gt;noContent();
+    });
+});
+
+// klien: Authorization: Bearer 12|abcdef...</code></pre><figcaption>Pesan galat yang sama untuk "surel tidak ada" dan "sandi salah" mencegah penyerang memeriksa surel mana yang terdaftar. Token memiliki kemampuan (abilities) agar hak akses dapat dibatasi.</figcaption></figure>
+<h3>SPA di domain yang sama</h3>
+<p>Untuk SPA React/Vue yang satu domain induk dengan API, Sanctum menyediakan autentikasi sesi berbasis cookie (tanpa token yang disimpan di JavaScript): panggil <code>/sanctum/csrf-cookie</code>, lalu kirim kredensial ke endpoint login. Pendekatan ini lebih aman terhadap pencurian token lewat XSS.</p>
+<h2 id="praktik-yang-aman">Praktik yang aman</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Autentikasi yang aman","items":["Kata sandi di-hash dengan bcrypt atau Argon2 (Hash::make), tidak pernah disimpan atau dicatat dalam teks biasa.","Login dibatasi lajunya (throttle) untuk menghambat tebak massal.","Pesan galat login tidak membedakan \"surel tidak ada\" dan \"sandi salah\".","Sesi diregenerasi setelah login (session()->regenerate()) untuk mencegah session fixation.","Cookie sesi bersifat Secure, HttpOnly, dan SameSite; situs berjalan di HTTPS.","Token memiliki kedaluwarsa dan kemampuan terbatas; dicabut saat logout atau dicurigai bocor.","Tersedia autentikasi dua langkah (2FA) untuk akun penting.","Reset kata sandi memakai tautan bertoken sekali pakai dengan masa berlaku singkat."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Fungsi yang tepat menyimpan kata sandi di Laravel?","options":["Hash::make()","md5()","encrypt()"],"answer":0,"why":"Hash lambat bergaram, tidak dapat dibalik."},{"q":"Untuk aplikasi seluler yang memanggil API, umumnya dipakai...","options":["Token (Sanctum)","Cookie sesi browser","Tanpa autentikasi"],"answer":0,"why":"Klien non-browser membawa token di header."},{"q":"Mengapa pesan galat login dibuat sama untuk dua kasus?","options":["Mencegah enumerasi akun","Agar singkat","Aturan HTTP"],"answer":0,"why":"Penyerang tak dapat mengetahui surel mana yang terdaftar."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa kata sandi dienkripsi bukan pilihan yang baik dibanding di-hash?</summary><div>Enkripsi dapat dibalik bila kunci bocor; hash satu arah sehingga sandi asli tidak dapat dipulihkan.</div></details><details><summary>2. Apa itu session fixation dan bagaimana mencegahnya?</summary><div>Penyerang memaksakan ID sesi yang ia ketahui; cegah dengan meregenerasi ID sesi setelah login.</div></details><details><summary>3. Kapan memilih Sanctum token dibanding sesi untuk SPA?</summary><div>Bila SPA berada di domain berbeda atau klien non-browser; untuk domain yang sama, sesi berbasis cookie lebih aman.</div></details><details><summary>4. Apa fungsi abilities pada token?</summary><div>Membatasi apa yang dapat dilakukan token (misalnya hanya baca), menerapkan prinsip hak akses minimum.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Autentikasi: siapa Anda; otorisasi: apa yang boleh Anda lakukan.</li><li>Sesi cocok untuk web dan SPA satu domain; token (Sanctum) untuk seluler dan klien lain.</li><li>Hash kata sandi dengan bcrypt/Argon2 (lambat dan bergaram); jangan SHA polos atau enkripsi.</li><li>Gunakan starter kit, batasi laju login, regenerasi sesi, cookie aman, token berkemampuan terbatas, dan 2FA.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya Sanctum dan Passport?</summary><div>Sanctum ringan untuk SPA dan token pribadi; Passport mengimplementasikan OAuth2 penuh untuk skenario pihak ketiga yang kompleks.</div></details>
+<details class="faq"><summary>Bagaimana login dengan Google?</summary><div>Laravel Socialite menyediakan OAuth untuk Google, GitHub, dan lainnya.</div></details>
+<details class="faq"><summary>Bagaimana menambah verifikasi surel?</summary><div>Implementasikan MustVerifyEmail pada model User dan pakai middleware verified.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/authentication" rel="noopener" target="_blank">Laravel: Authentication</a></li><li><a href="https://laravel.com/docs/sanctum" rel="noopener" target="_blank">Laravel: Sanctum</a></li><li><a href="https://laravel.com/docs/hashing" rel="noopener" target="_blank">Laravel: Hashing</a></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html" rel="noopener" target="_blank">OWASP: Password Storage Cheat Sheet</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

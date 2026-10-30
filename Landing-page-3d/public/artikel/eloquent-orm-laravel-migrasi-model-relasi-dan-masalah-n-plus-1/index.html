@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</title>
+<meta name="description" content="Pelajari Eloquent: migrasi skema, model, query builder, relasi hasMany dan belongsTo, eager loading, dan masalah N+1 query yang diperagakan dengan SQL nyata.">
+<meta name="keywords" content="Eloquent, migrasi, relasi, N+1 query, eager loading">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/">
+<meta property="og:title" content="Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1">
+<meta property="og:description" content="Pelajari Eloquent: migrasi skema, model, query builder, relasi hasMany dan belongsTo, eager loading, dan masalah N+1 query yang diperagakan dengan SQL nyata.">
+<meta property="og:image" content="https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1">
+<meta name="twitter:description" content="Pelajari Eloquent: migrasi skema, model, query builder, relasi hasMany dan belongsTo, eager loading, dan masalah N+1 query yang diperagakan dengan SQL nyata.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1","description":"Pelajari Eloquent: migrasi skema, model, query builder, relasi hasMany dan belongsTo, eager loading, dan masalah N+1 query yang diperagakan dengan SQL nyata.","image":["https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Eloquent, migrasi, relasi, N+1 query, eager loading","articleSection":"Laravel & Backend","wordCount":466,"mainEntityOfPage":"https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1","item":"https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah Eloquent lambat dibanding SQL mentah?","acceptedAnswer":{"@type":"Answer","text":"Ada overhead kecil membuat objek, tetapi masalah nyata hampir selalu query yang berlebihan (N+1) atau tanpa indeks, bukan ORM itu sendiri. Untuk laporan berat, query builder atau SQL mentah dengan binding tetap boleh dipakai."}},{"@type":"Question","name":"Apa itu soft delete?","acceptedAnswer":{"@type":"Answer","text":"Menandai baris dihapus (kolom deleted_at) tanpa menghapusnya secara fisik, memakai trait SoftDeletes."}},{"@type":"Question","name":"Apa itu seeder dan factory?","acceptedAnswer":{"@type":"Answer","text":"Seeder mengisi data awal; factory membuat data palsu untuk pengembangan dan pengujian."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#migrasi-skema-basis-data-sebagai-kode">Migrasi: skema basis data sebagai kode</a></li><li><a href="#model-dan-query">Model dan query</a></li><li><a href="#relasi">Relasi</a></li><li><a href="#masalah-n-1-diperagakan">Masalah N+1: diperagakan</a></li><li><a href="#praktik-query-yang-sehat">Praktik query yang sehat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</h1>
+<p class="lead">Eloquent adalah ORM Laravel: setiap tabel punya model, dan setiap baris menjadi objek. Anda menulis kode PHP yang ekspresif alih-alih SQL mentah. Kemudahan itu menyimpan satu jebakan yang paling sering menyebabkan aplikasi Laravel lambat: masalah N+1 query. Memahaminya adalah pembeda antara aplikasi yang cepat dan yang merayap.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, SQL dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat tabel dengan migrasi dan memahami manfaat migrasi</li><li>membuat model dan menulis query dengan Eloquent</li><li>mendefinisikan relasi satu-ke-banyak dan belongsTo</li><li>mengenali masalah N+1 dan memperbaikinya dengan eager loading</li><li>memahami mass assignment dan $fillable</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini ditampilkan sebagai contoh yang mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="migrasi-skema-basis-data-sebagai-kode">Migrasi: skema basis data sebagai kode</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan make:model Produk -m   (membuat model + migrasi)
+// database/migrations/xxxx_create_produk_table.php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('produk', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;foreignId('kategori_id')-&gt;constrained('kategori')-&gt;cascadeOnDelete();
+            $table-&gt;string('nama');
+            $table-&gt;text('deskripsi')-&gt;nullable();
+            $table-&gt;unsignedInteger('harga');
+            $table-&gt;unsignedInteger('stok')-&gt;default(0);
+            $table-&gt;timestamps();                       // created_at dan updated_at
+
+            $table-&gt;index('nama');                      // mempercepat pencarian
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('produk');
+    }
+};</code></pre><figcaption>php artisan migrate menjalankan migrasi yang belum dijalankan; php artisan migrate:rollback membatalkan batch terakhir. Skema ikut tersimpan di Git sehingga seluruh tim dan server memiliki struktur yang sama.</figcaption></figure>
+<h2 id="model-dan-query">Model dan query</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Produk extends Model
+{
+    protected $table = 'produk';                         // nama tabel (Laravel menebak &quot;produks&quot; bila tidak diisi)
+    protected $fillable = ['kategori_id', 'nama', 'deskripsi', 'harga', 'stok'];   // yang boleh diisi massal
+
+    public function kategori(): BelongsTo
+    {
+        return $this-&gt;belongsTo(Kategori::class);
+    }
+}
+
+// pemakaian
+$semua   = Produk::all();
+$murah   = Produk::where('harga', '&lt;', 50000)-&gt;orderBy('harga')-&gt;get();
+$satu    = Produk::findOrFail(5);                         // 404 bila tidak ada
+$baru    = Produk::create(['nama' =&gt; 'Kopi', 'harga' =&gt; 65000, 'kategori_id' =&gt; 1, 'stok' =&gt; 10]);
+$satu-&gt;update(['stok' =&gt; 8]);
+$satu-&gt;delete();</code></pre></figure>
+<div class="callout warn"><b>Keamanan</b><p><b>Mass assignment</b>: <code>Produk::create($request->all())</code> tanpa batasan memungkinkan penyerang menyisipkan kolom yang tidak Anda duga (misalnya <code>is_admin</code>). <code>$fillable</code> mendaftar kolom yang boleh diisi massal. Lebih aman lagi, gunakan <code>$request->validated()</code> yang hanya berisi kolom yang lolos validasi.</p></div>
+<h2 id="relasi">Relasi</h2>
+<table><thead><tr><th>Relasi</th><th>Di model</th><th>Contoh</th></tr></thead><tbody><tr><td>Satu-ke-banyak</td><td>hasMany / belongsTo</td><td>Kategori punya banyak Produk; Produk milik satu Kategori</td></tr><tr><td>Satu-ke-satu</td><td>hasOne / belongsTo</td><td>Pengguna punya satu Profil</td></tr><tr><td>Banyak-ke-banyak</td><td>belongsToMany (tabel pivot)</td><td>Produk punya banyak Tag; Tag punya banyak Produk</td></tr><tr><td>Polimorfik</td><td>morphMany / morphTo</td><td>Komentar milik Artikel atau Video</td></tr></tbody></table>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+class Kategori extends Model
+{
+    public function produk(): HasMany
+    {
+        return $this-&gt;hasMany(Produk::class);
+    }
+}
+
+$kategori = Kategori::find(1);
+foreach ($kategori-&gt;produk as $p) {          // properti dinamis: menjalankan query saat pertama diakses
+    echo $p-&gt;nama;
+}
+$jumlah = $kategori-&gt;produk()-&gt;where('stok', '&gt;', 0)-&gt;count();   // method: membangun query lebih lanjut</code></pre></figure>
+<h2 id="masalah-n-1-diperagakan">Masalah N+1: diperagakan</h2>
+<p>Misalkan halaman menampilkan 100 produk beserta nama kategorinya. Bila kategori diambil <b>satu per satu di dalam perulangan</b>, Anda menjalankan 1 query untuk daftar produk ditambah 100 query untuk kategori: total 101. Berikut peragaan dengan SQL sungguhan (SQLite) yang menghitung jumlah query, setara dengan yang dilakukan Eloquent.</p>
+<figure class="codebox"><pre data-lang="python"><code>import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE kategori (id INTEGER PRIMARY KEY, nama TEXT);
+CREATE TABLE produk (id INTEGER PRIMARY KEY, kategori_id INTEGER, nama TEXT);
+&quot;&quot;&quot;)
+db.executemany(&quot;INSERT INTO kategori VALUES (?, ?)&quot;, [(i, f&quot;Kategori {i}&quot;) for i in range(1, 11)])
+db.executemany(&quot;INSERT INTO produk VALUES (?, ?, ?)&quot;, [(i, (i % 10) + 1, f&quot;Produk {i}&quot;) for i in range(1, 101)])
+
+jumlah_query = 0
+def q(sql, args=()):
+    global jumlah_query
+    jumlah_query += 1
+    return db.execute(sql, args).fetchall()
+
+# --- N+1: Produk::all() lalu $p-&gt;kategori-&gt;nama di dalam foreach ---
+jumlah_query = 0
+produk = q(&quot;SELECT id, kategori_id, nama FROM produk&quot;)
+for pid, kid, nama in produk:
+    kategori = q(&quot;SELECT nama FROM kategori WHERE id = ?&quot;, (kid,))[0][0]        # satu query PER produk!
+print(&quot;N+1 (lazy loading) :&quot;, jumlah_query, &quot;query untuk&quot;, len(produk), &quot;produk&quot;)
+
+# --- Eager loading: Produk::with('kategori')-&gt;get() ---
+jumlah_query = 0
+produk = q(&quot;SELECT id, kategori_id, nama FROM produk&quot;)
+ids = sorted({kid for _, kid, _ in produk})
+kat = dict(q(f&quot;SELECT id, nama FROM kategori WHERE id IN ({','.join('?' * len(ids))})&quot;, ids))   # satu query untuk semua kategori
+for pid, kid, nama in produk:
+    kategori = kat[kid]
+print(&quot;Eager loading      :&quot;, jumlah_query, &quot;query untuk&quot;, len(produk), &quot;produk&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>N+1 (lazy loading) : 101 query untuk 100 produk
+Eager loading      : 2 query untuk 100 produk</code></pre><figcaption>Tanpa disadari, kode yang tampak bersih di Eloquent bisa menghasilkan ratusan query. Dengan 10.000 produk, N+1 berarti 10.001 query untuk satu halaman.</figcaption></figure>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// Lazy loading (N+1) - HINDARI di perulangan
+$produk = Produk::all();
+foreach ($produk as $p) {
+    echo $p-&gt;kategori-&gt;nama;              // query baru untuk setiap produk
+}
+
+// Eager loading - 2 query saja
+$produk = Produk::with('kategori')-&gt;get();
+foreach ($produk as $p) {
+    echo $p-&gt;kategori-&gt;nama;              // sudah dimuat, tidak ada query tambahan
+}
+
+// Mencegah N+1 secara otomatis saat pengembangan (di AppServiceProvider::boot):
+// Model::preventLazyLoading(! app()-&gt;isProduction());   // melempar galat bila lazy loading terjadi
+
+// Hanya jumlah relasi: withCount menghitung di SQL, bukan memuat semua baris
+$kategori = Kategori::withCount('produk')-&gt;get();   // $k-&gt;produk_count</code></pre><figcaption>Alat bantu: Laravel Debugbar atau Telescope menampilkan jumlah query per halaman; preventLazyLoading membuat N+1 terdeteksi sejak pengembangan.</figcaption></figure>
+<h2 id="praktik-query-yang-sehat">Praktik query yang sehat</h2>
+<ul><li><b>Ambil hanya yang diperlukan</b>: <code>select("id", "nama")</code> dan paginasi (<code>paginate()</code>) alih-alih <code>all()</code> pada tabel besar.</li><li><b>Indeks</b> pada kolom yang sering dipakai di where, order by, dan kunci asing.</li><li><b>Pemrosesan besar</b>: <code>chunk()</code> atau <code>lazy()</code> agar tidak memuat jutaan baris ke memori.</li><li><b>Transaksi</b>: <code>DB::transaction(fn () => ...)</code> untuk beberapa perubahan yang harus berhasil atau gagal bersama.</li><li><b>Jangan menyisipkan input pengguna ke SQL mentah</b>; gunakan binding parameter (query builder dan Eloquent sudah melakukannya).</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Masalah N+1 berarti...","options":["1 query daftar + N query tambahan per item","N kali N query","Hanya 1 query"],"answer":0,"why":"Lazy loading relasi di dalam perulangan."},{"q":"Solusi standar N+1 di Eloquent?","options":["Eager loading dengan with()","Menambah RAM","Menghapus relasi"],"answer":0,"why":"Memuat relasi sekaligus."},{"q":"Fungsi $fillable?","options":["Membatasi kolom yang boleh diisi massal","Menentukan tipe kolom","Membuat indeks"],"answer":0,"why":"Mencegah mass assignment berbahaya."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis query Eloquent untuk 20 produk termahal beserta kategorinya tanpa N+1.</summary><div><code>Produk::with("kategori")->orderByDesc("harga")->limit(20)->get();</code></div></details><details><summary>2. Mengapa migrasi lebih baik daripada mengubah tabel manual di phpMyAdmin?</summary><div>Perubahan skema tercatat di Git, dapat diulang, dan sama di semua lingkungan (lokal, staging, produksi).</div></details><details><summary>3. Kapan memakai withCount?</summary><div>Saat hanya butuh jumlah relasi; SQL menghitungnya sehingga relasi tidak dimuat ke memori.</div></details><details><summary>4. Bagaimana mendeteksi N+1 sejak dini?</summary><div>Aktifkan Model::preventLazyLoading di lingkungan non-produksi dan pantau jumlah query dengan Debugbar atau Telescope.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Migrasi menjaga skema basis data tetap terversi; model Eloquent memetakan tabel ke objek.</li><li>Relasi: hasMany, belongsTo, belongsToMany, polimorfik.</li><li>N+1: 1 + N query akibat lazy loading; atasi dengan with() (eager loading).</li><li>Batasi mass assignment, gunakan indeks, paginasi, dan transaksi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah Eloquent lambat dibanding SQL mentah?</summary><div>Ada overhead kecil membuat objek, tetapi masalah nyata hampir selalu query yang berlebihan (N+1) atau tanpa indeks, bukan ORM itu sendiri. Untuk laporan berat, query builder atau SQL mentah dengan binding tetap boleh dipakai.</div></details>
+<details class="faq"><summary>Apa itu soft delete?</summary><div>Menandai baris dihapus (kolom deleted_at) tanpa menghapusnya secara fisik, memakai trait SoftDeletes.</div></details>
+<details class="faq"><summary>Apa itu seeder dan factory?</summary><div>Seeder mengisi data awal; factory membuat data palsu untuk pengembangan dan pengujian.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/eloquent" rel="noopener" target="_blank">Laravel: Eloquent ORM</a></li><li><a href="https://laravel.com/docs/eloquent-relationships" rel="noopener" target="_blank">Laravel: Eloquent Relationships (termasuk eager loading)</a></li><li><a href="https://laravel.com/docs/migrations" rel="noopener" target="_blank">Laravel: Migrations</a></li><li><a href="https://use-the-index-luke.com/" rel="noopener" target="_blank">Use The Index, Luke</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a><a href="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/"><img src="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>REST API Laravel: Resource Controller, API Resource, Paginasi</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

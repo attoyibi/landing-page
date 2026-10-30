@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REST API Laravel: Resource Controller, API Resource, Paginasi</title>
+<meta name="description" content="Bangun REST API dengan Laravel: resource controller, API Resource untuk JSON, kode status HTTP, paginasi, versi API, dan prinsip desain endpoint.">
+<meta name="keywords" content="REST API, Laravel API, API Resource, JSON, paginasi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/">
+<meta property="og:title" content="REST API Laravel: Resource Controller, API Resource, Paginasi">
+<meta property="og:description" content="Bangun REST API dengan Laravel: resource controller, API Resource untuk JSON, kode status HTTP, paginasi, versi API, dan prinsip desain endpoint.">
+<meta property="og:image" content="https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="REST API Laravel: Resource Controller, API Resource, Paginasi">
+<meta name="twitter:description" content="Bangun REST API dengan Laravel: resource controller, API Resource untuk JSON, kode status HTTP, paginasi, versi API, dan prinsip desain endpoint.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"REST API Laravel: Resource Controller, API Resource, Paginasi","description":"Bangun REST API dengan Laravel: resource controller, API Resource untuk JSON, kode status HTTP, paginasi, versi API, dan prinsip desain endpoint.","image":["https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"REST API, Laravel API, API Resource, JSON, paginasi","articleSection":"Laravel & Backend","wordCount":497,"mainEntityOfPage":"https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"REST API Laravel: Resource Controller, API Resource, Paginasi","item":"https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya PUT dan PATCH?","acceptedAnswer":{"@type":"Answer","text":"PUT mengganti seluruh sumber daya; PATCH mengubah sebagian. Banyak API memakai PATCH untuk pembaruan sebagian."}},{"@type":"Question","name":"Haruskah memakai GraphQL?","acceptedAnswer":{"@type":"Answer","text":"REST cukup untuk sebagian besar kasus; GraphQL berguna saat klien sangat beragam dan membutuhkan bentuk data fleksibel, dengan biaya kompleksitas tambahan."}},{"@type":"Question","name":"Bagaimana menguji API?","acceptedAnswer":{"@type":"Answer","text":"Tes fitur Laravel dengan getJson/postJson dan asersi assertStatus dan assertJsonStructure; secara manual dengan Postman, Insomnia, atau curl."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#prinsip-rest-yang-praktis">Prinsip REST yang praktis</a></li><li><a href="#menyiapkan-api-di-laravel">Menyiapkan API di Laravel</a></li><li><a href="#api-resource-bentuk-json-yang-anda-kendalikan">API Resource: bentuk JSON yang Anda kendalikan</a></li><li><a href="#bentuk-respons-paginasi">Bentuk respons paginasi</a></li><li><a href="#format-galat-yang-konsisten">Format galat yang konsisten</a></li><li><a href="#pembuatan-versi-dan-keamanan-api">Pembuatan versi dan keamanan API</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>REST API Laravel: Resource Controller, API Resource, Paginasi</h1>
+<p class="lead">API adalah cara aplikasi berbicara dengan aplikasi lain: aplikasi seluler Flutter, front-end React, atau layanan pihak ketiga. API yang baik konsisten, dapat ditebak, dan jujur lewat kode status. Laravel menyediakan semua komponennya; yang perlu Anda kuasai adalah merancangnya dengan baik.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, Eloquent, validasi</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="REST API Laravel: Resource Controller, API Resource, Paginasi" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>mendefinisikan rute dan resource controller untuk API</li><li>memakai API Resource untuk mengontrol bentuk JSON</li><li>memakai kode status HTTP dan format galat yang konsisten</li><li>menerapkan paginasi, penyaringan, dan pengurutan</li><li>menerapkan prinsip desain REST dan pembuatan versi</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini ditampilkan sebagai contoh yang mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="prinsip-rest-yang-praktis">Prinsip REST yang praktis</h2>
+<table><thead><tr><th>Aksi</th><th>Metode & URL</th><th>Status sukses</th></tr></thead><tbody><tr><td>Daftar produk</td><td>GET /api/v1/produk</td><td>200</td></tr><tr><td>Detail produk</td><td>GET /api/v1/produk/5</td><td>200</td></tr><tr><td>Buat produk</td><td>POST /api/v1/produk</td><td>201 Created</td></tr><tr><td>Ubah penuh / sebagian</td><td>PUT atau PATCH /api/v1/produk/5</td><td>200</td></tr><tr><td>Hapus</td><td>DELETE /api/v1/produk/5</td><td>204 No Content</td></tr></tbody></table>
+<ul><li><b>URL adalah kata benda jamak</b> (produk), metode HTTP adalah kata kerjanya; hindari /ambilProduk atau /hapusProduk.</li><li><b>Status code berarti</b>: 200/201/204 sukses, 400 permintaan buruk, 401 belum login, 403 dilarang, 404 tidak ada, 422 validasi gagal, 429 terlalu banyak permintaan, 500 galat server.</li><li><b>Stateless</b>: setiap permintaan membawa semua yang dibutuhkan (token), server tidak menyimpan sesi per klien.</li><li><b>JSON konsisten</b>: bentuk respons dan galat seragam di seluruh endpoint.</li></ul>
+<h2 id="menyiapkan-api-di-laravel">Menyiapkan API di Laravel</h2>
+<figure class="codebox"><pre data-lang="bash"><code>php artisan install:api          # membuat routes/api.php dan memasang Laravel Sanctum
+php artisan make:model Produk -mfc --api
+php artisan make:resource ProdukResource
+php artisan make:request SimpanProdukRequest</code></pre><figcaption>Semua rute di routes/api.php otomatis berawalan /api dan tidak memakai sesi/CSRF (cocok untuk klien token).</figcaption></figure>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// routes/api.php
+use App\Http\Controllers\Api\ProdukController;
+
+Route::prefix('v1')-&gt;group(function () {
+    Route::get('produk', [ProdukController::class, 'index']);            // publik
+    Route::get('produk/{produk}', [ProdukController::class, 'show']);
+
+    Route::middleware('auth:sanctum')-&gt;group(function () {              // butuh token
+        Route::post('produk', [ProdukController::class, 'store']);
+        Route::put('produk/{produk}', [ProdukController::class, 'update']);
+        Route::delete('produk/{produk}', [ProdukController::class, 'destroy']);
+    });
+});
+// atau: Route::apiResource('produk', ProdukController::class);  (lima rute tanpa create/edit)</code></pre></figure>
+<h2 id="api-resource-bentuk-json-yang-anda-kendalikan">API Resource: bentuk JSON yang Anda kendalikan</h2>
+<p>Mengembalikan model langsung (<code>return $produk;</code>) membocorkan setiap kolom basis data dan mengikat klien pada struktur tabel. API Resource adalah lapisan transformasi yang menentukan persis apa yang keluar.</p>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// app/Http/Resources/ProdukResource.php
+class ProdukResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id'        =&gt; $this-&gt;id,
+            'nama'      =&gt; $this-&gt;nama,
+            'harga'     =&gt; $this-&gt;harga,
+            'tersedia'  =&gt; $this-&gt;stok &gt; 0,                                  // nilai turunan
+            'kategori'  =&gt; new KategoriResource($this-&gt;whenLoaded('kategori')),   // hanya bila sudah dimuat (hindari N+1)
+            'dibuat'    =&gt; $this-&gt;created_at-&gt;toIso8601String(),
+        ];
+    }
+}
+
+// Controller
+public function index(Request $request)
+{
+    $produk = Produk::query()
+        -&gt;with('kategori')
+        -&gt;when($request-&gt;filled('kategori'), fn ($q) =&gt; $q-&gt;where('kategori_id', $request-&gt;integer('kategori')))
+        -&gt;when($request-&gt;filled('q'), fn ($q) =&gt; $q-&gt;where('nama', 'like', '%' . $request-&gt;string('q') . '%'))
+        -&gt;orderBy($request-&gt;string('urut', 'nama')-&gt;toString())
+        -&gt;paginate(15);
+
+    return ProdukResource::collection($produk);              // sertakan meta paginasi otomatis
+}
+
+public function store(SimpanProdukRequest $request)
+{
+    $produk = Produk::create($request-&gt;validated());
+    return (new ProdukResource($produk))-&gt;response()-&gt;setStatusCode(201);
+}
+
+public function destroy(Produk $produk)
+{
+    $produk-&gt;delete();
+    return response()-&gt;noContent();                           // 204
+}</code></pre><figcaption>Perhatikan: urutan dari input pengguna sebaiknya dibatasi ke daftar kolom yang diizinkan (whitelist) agar tidak dapat dipakai untuk memeriksa kolom atau menyebabkan galat SQL.</figcaption></figure>
+<h2 id="bentuk-respons-paginasi">Bentuk respons paginasi</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>// Meniru perhitungan paginasi yang dilakukan paginate(): total, halaman, offset
+function paginasi(total, perHalaman, halaman) {
+    const terakhir = Math.max(1, Math.ceil(total / perHalaman));
+    const sekarang = Math.min(Math.max(1, halaman), terakhir);
+    const offset = (sekarang - 1) * perHalaman;
+    return {
+        data: '(baris ' + (total ? offset + 1 : 0) + ' sampai ' + Math.min(offset + perHalaman, total) + ')',
+        meta: { current_page: sekarang, last_page: terakhir, per_page: perHalaman, total },
+        links: { prev: sekarang &gt; 1 ? '/api/v1/produk?page=' + (sekarang - 1) : null, next: sekarang &lt; terakhir ? '/api/v1/produk?page=' + (sekarang + 1) : null },
+    };
+}
+console.log(JSON.stringify(paginasi(47, 15, 1)));
+console.log(JSON.stringify(paginasi(47, 15, 4)));
+console.log(JSON.stringify(paginasi(47, 15, 99)));      // halaman di luar rentang dijepit ke halaman terakhir
+console.log(JSON.stringify(paginasi(0, 15, 1)));</code></pre><pre class="runout" data-lang="keluaran"><code>{&quot;data&quot;:&quot;(baris 1 sampai 15)&quot;,&quot;meta&quot;:{&quot;current_page&quot;:1,&quot;last_page&quot;:4,&quot;per_page&quot;:15,&quot;total&quot;:47},&quot;links&quot;:{&quot;prev&quot;:null,&quot;next&quot;:&quot;/api/v1/produk?page=2&quot;}}
+{&quot;data&quot;:&quot;(baris 46 sampai 47)&quot;,&quot;meta&quot;:{&quot;current_page&quot;:4,&quot;last_page&quot;:4,&quot;per_page&quot;:15,&quot;total&quot;:47},&quot;links&quot;:{&quot;prev&quot;:&quot;/api/v1/produk?page=3&quot;,&quot;next&quot;:null}}
+{&quot;data&quot;:&quot;(baris 46 sampai 47)&quot;,&quot;meta&quot;:{&quot;current_page&quot;:4,&quot;last_page&quot;:4,&quot;per_page&quot;:15,&quot;total&quot;:47},&quot;links&quot;:{&quot;prev&quot;:&quot;/api/v1/produk?page=3&quot;,&quot;next&quot;:null}}
+{&quot;data&quot;:&quot;(baris 0 sampai 0)&quot;,&quot;meta&quot;:{&quot;current_page&quot;:1,&quot;last_page&quot;:1,&quot;per_page&quot;:15,&quot;total&quot;:0},&quot;links&quot;:{&quot;prev&quot;:null,&quot;next&quot;:null}}</code></pre><figcaption>Klien (aplikasi Flutter/React) memakai meta dan links untuk memuat halaman berikutnya. Untuk data yang sangat besar atau cepat berubah, paginasi berbasis kursor (cursorPaginate) lebih stabil dan efisien daripada offset.</figcaption></figure>
+<h2 id="format-galat-yang-konsisten">Format galat yang konsisten</h2>
+<figure class="codebox"><pre data-lang="javascript"><code>const http = require('node:http');
+
+// Server kecil yang mencontohkan kode status dan bentuk galat yang konsisten
+const produk = new Map([[1, { id: 1, nama: 'Kopi', harga: 65000 }]]);
+const kirim = (res, status, badan) =&gt; { res.writeHead(status, { 'Content-Type': 'application/json' }); res.end(badan === undefined ? '' : JSON.stringify(badan)); };
+
+const server = http.createServer((req, res) =&gt; {
+    const m = req.url.match(/^\/api\/v1\/produk(?:\/(\d+))?$/);
+    if (!m) return kirim(res, 404, { pesan: 'Rute tidak ditemukan' });
+    const id = m[1] &amp;&amp; Number(m[1]);
+    if (req.method === 'GET' &amp;&amp; !id) return kirim(res, 200, { data: [...produk.values()] });
+    if (req.method === 'GET') return produk.has(id) ? kirim(res, 200, { data: produk.get(id) }) : kirim(res, 404, { pesan: 'Produk tidak ditemukan' });
+    if (req.method === 'DELETE') return produk.delete(id) ? kirim(res, 204) : kirim(res, 404, { pesan: 'Produk tidak ditemukan' });
+    return kirim(res, 405, { pesan: 'Metode tidak diizinkan' });
+});
+
+server.listen(0, async () =&gt; {
+    const dasar = 'http://127.0.0.1:' + server.address().port + '/api/v1/produk';
+    for (const [metode, jalur] of [['GET', ''], ['GET', '/1'], ['GET', '/9'], ['DELETE', '/1'], ['DELETE', '/1'], ['PATCH', '/1']]) {
+        const r = await fetch(dasar + jalur, { method: metode });
+        const teks = await r.text();
+        console.log((metode + ' /produk' + jalur).padEnd(18), r.status, teks.slice(0, 60));
+    }
+    server.close();
+});</code></pre><pre class="runout" data-lang="keluaran"><code>GET /produk        200 {&quot;data&quot;:[{&quot;id&quot;:1,&quot;nama&quot;:&quot;Kopi&quot;,&quot;harga&quot;:65000}]}
+GET /produk/1      200 {&quot;data&quot;:{&quot;id&quot;:1,&quot;nama&quot;:&quot;Kopi&quot;,&quot;harga&quot;:65000}}
+GET /produk/9      404 {&quot;pesan&quot;:&quot;Produk tidak ditemukan&quot;}
+DELETE /produk/1   204 
+DELETE /produk/1   404 {&quot;pesan&quot;:&quot;Produk tidak ditemukan&quot;}
+PATCH /produk/1    405 {&quot;pesan&quot;:&quot;Metode tidak diizinkan&quot;}</code></pre><figcaption>404 untuk sumber daya yang tak ada, 204 tanpa isi untuk hapus yang berhasil, 405 untuk metode yang tak didukung. Klien dapat bergantung pada kode status, bukan menebak dari teks pesan.</figcaption></figure>
+<h2 id="pembuatan-versi-dan-keamanan-api">Pembuatan versi dan keamanan API</h2>
+<ul><li><b>Versi di URL</b> (/api/v1/...) agar perubahan yang merusak dapat dirilis sebagai v2 tanpa memutus klien lama.</li><li><b>Autentikasi token</b> (Sanctum atau OAuth lewat Passport), dan <b>otorisasi</b> per sumber daya (policy).</li><li><b>Pembatasan laju</b> (rate limiting) dengan middleware <code>throttle</code> untuk mencegah penyalahgunaan: respons 429.</li><li><b>HTTPS saja</b>, dan jangan menaruh token di URL.</li><li><b>Dokumentasi</b>: OpenAPI/Swagger (misalnya Scribe atau Scramble) agar tim front-end tahu kontraknya.</li><li><b>CORS</b> dikonfigurasi di config/cors.php untuk asal klien yang sah saja.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Status yang tepat setelah membuat sumber daya baru?","options":["201 Created","200 OK","204 No Content"],"answer":0,"why":"POST yang berhasil membuat sumber daya."},{"q":"Fungsi API Resource?","options":["Mengontrol bentuk JSON yang keluar","Membuat tabel","Mengamankan server"],"answer":0,"why":"Memisahkan struktur basis data dari kontrak API."},{"q":"Status 422 berarti...","options":["Validasi gagal","Tidak ditemukan","Galat server"],"answer":0,"why":"Entitas tidak dapat diproses."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Rancang endpoint untuk mengelola komentar pada produk.</summary><div>GET/POST /api/v1/produk/{id}/komentar, DELETE /api/v1/komentar/{id}; rute bersarang untuk koleksi milik induk.</div></details><details><summary>2. Mengapa mengembalikan model langsung dari controller berisiko?</summary><div>Setiap kolom (termasuk yang sensitif) ikut keluar dan klien terikat pada struktur tabel; gunakan API Resource.</div></details><details><summary>3. Apa gunanya whenLoaded pada Resource?</summary><div>Menyertakan relasi hanya bila sudah dimuat, sehingga tidak memicu N+1 diam-diam.</div></details><details><summary>4. Kapan paginasi kursor lebih baik daripada offset?</summary><div>Untuk daftar sangat besar atau yang sering berubah: offset besar lambat dan dapat melewatkan atau menggandakan baris saat data berubah.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>REST: URL kata benda jamak, metode HTTP sebagai aksi, stateless, status code bermakna.</li><li>apiResource dan API Resource menghasilkan rute CRUD dan JSON yang dikontrol; whenLoaded menghindari N+1.</li><li>Paginasi, filter, dan urutan dibatasi daftar yang diizinkan; format galat konsisten.</li><li>Versi API, token (Sanctum), rate limiting, HTTPS, CORS, dan dokumentasi OpenAPI.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya PUT dan PATCH?</summary><div>PUT mengganti seluruh sumber daya; PATCH mengubah sebagian. Banyak API memakai PATCH untuk pembaruan sebagian.</div></details>
+<details class="faq"><summary>Haruskah memakai GraphQL?</summary><div>REST cukup untuk sebagian besar kasus; GraphQL berguna saat klien sangat beragam dan membutuhkan bentuk data fleksibel, dengan biaya kompleksitas tambahan.</div></details>
+<details class="faq"><summary>Bagaimana menguji API?</summary><div>Tes fitur Laravel dengan getJson/postJson dan asersi assertStatus dan assertJsonStructure; secara manual dengan Postman, Insomnia, atau curl.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/eloquent-resources" rel="noopener" target="_blank">Laravel: Eloquent API Resources</a></li><li><a href="https://laravel.com/docs/controllers#api-resource-routes" rel="noopener" target="_blank">Laravel: Routing (apiResource)</a></li><li><a href="https://developer.mozilla.org/docs/Web/HTTP/Reference/Status" rel="noopener" target="_blank">MDN: HTTP response status codes</a></li><li><a href="https://learn.microsoft.com/azure/architecture/best-practices/api-design" rel="noopener" target="_blank">Microsoft: RESTful web API design</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

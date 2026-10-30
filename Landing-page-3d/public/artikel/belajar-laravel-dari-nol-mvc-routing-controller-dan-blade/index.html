@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</title>
+<meta name="description" content="Panduan Laravel untuk pemula: instalasi, struktur proyek, pola MVC, routing, controller, view Blade, dan alur satu permintaan dari browser sampai respons.">
+<meta name="keywords" content="Laravel, MVC, routing, Blade, belajar Laravel">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/">
+<meta property="og:title" content="Belajar Laravel dari Nol: MVC, Routing, Controller, Blade">
+<meta property="og:description" content="Panduan Laravel untuk pemula: instalasi, struktur proyek, pola MVC, routing, controller, view Blade, dan alur satu permintaan dari browser sampai respons.">
+<meta property="og:image" content="https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Belajar Laravel dari Nol: MVC, Routing, Controller, Blade">
+<meta name="twitter:description" content="Panduan Laravel untuk pemula: instalasi, struktur proyek, pola MVC, routing, controller, view Blade, dan alur satu permintaan dari browser sampai respons.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Belajar Laravel dari Nol: MVC, Routing, Controller, Blade","description":"Panduan Laravel untuk pemula: instalasi, struktur proyek, pola MVC, routing, controller, view Blade, dan alur satu permintaan dari browser sampai respons.","image":["https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Laravel, MVC, routing, Blade, belajar Laravel","articleSection":"Laravel & Backend","wordCount":427,"mainEntityOfPage":"https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Belajar Laravel dari Nol: MVC, Routing, Controller, Blade","item":"https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mengapa memilih Laravel?","acceptedAnswer":{"@type":"Answer","text":"Ekosistem besar, dokumentasi sangat baik, banyak bawaan (autentikasi, antrean, tes), dan komunitas aktif, termasuk di Indonesia."}},{"@type":"Question","name":"Apakah masih perlu PHP murni?","acceptedAnswer":{"@type":"Answer","text":"Memahami PHP dasar penting; Laravel hanya mengatur cara memakainya dengan rapi."}},{"@type":"Question","name":"Apa itu starter kit?","acceptedAnswer":{"@type":"Answer","text":"Kerangka awal dengan autentikasi dan tampilan siap pakai (misalnya Breeze, atau starter kit React/Vue/Livewire pada installer baru)."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mvc-tiga-peran-yang-dipisahkan">MVC: tiga peran yang dipisahkan</a></li><li><a href="#memasang-laravel">Memasang Laravel</a></li><li><a href="#routing">Routing</a></li><li><a href="#controller">Controller</a></li><li><a href="#view-dengan-blade">View dengan Blade</a></li><li><a href="#ringkasan-alur-satu-permintaan">Ringkasan alur satu permintaan</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</h1>
+<p class="lead">Laravel adalah kerangka kerja PHP yang paling populer untuk membangun aplikasi web. Daya tariknya sederhana: ia menyediakan jawaban yang rapi untuk hal-hal yang selalu Anda butuhkan (routing, basis data, autentikasi, validasi, antrean) sehingga Anda dapat fokus pada logika bisnis. Materi ini membangun gambaran besar: bagaimana satu permintaan bergerak melalui aplikasi Laravel.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar PHP (variabel, fungsi, array, class), dasar HTML</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Belajar Laravel dari Nol: MVC, Routing, Controller, Blade" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan pola MVC dan perannya di Laravel</li><li>memasang Laravel dan memahami struktur folder utama</li><li>mendefinisikan rute dan menghubungkannya ke controller</li><li>membuat view dengan Blade (escaping, kondisi, perulangan, layout)</li><li>menelusuri alur satu permintaan dari browser sampai respons</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini ditampilkan sebagai contoh yang mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="mvc-tiga-peran-yang-dipisahkan">MVC: tiga peran yang dipisahkan</h2>
+<figure class="diagram"><svg viewBox="0 0 542 256" role="img" aria-label="Alur permintaan di Laravel" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Browser</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">GET /produk/5</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Route</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">mencocokkan URL ke</tspan><tspan x="271" dy="14">controller</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Controller</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">mengatur logika,</tspan><tspan x="457" dy="14">memanggil model</tspan></text><path d="M457 112 V138 H85 V144" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="164" r="11" fill="#7a3fb4"/><text x="26" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Model</tspan></text><text x="85" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">berbicara dengan basis</tspan><tspan x="85" dy="14">data</tspan></text><line x1="164" y1="197" x2="192" y2="197" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="164" r="11" fill="#b3261e"/><text x="212" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">View (Blade)</tspan></text><text x="271" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">membentuk HTML respons</tspan></text></svg></figure>
+<table><thead><tr><th>Peran</th><th>Tugas</th><th>Di Laravel</th></tr></thead><tbody><tr><td>Model</td><td>Data dan aturan bisnis; berhubungan dengan basis data</td><td>app/Models/Produk.php (Eloquent)</td></tr><tr><td>View</td><td>Tampilan yang dilihat pengguna</td><td>resources/views/*.blade.php</td></tr><tr><td>Controller</td><td>Menerima permintaan, mengatur alur, memilih view atau respons</td><td>app/Http/Controllers/ProdukController.php</td></tr></tbody></table>
+<h2 id="memasang-laravel">Memasang Laravel</h2>
+<figure class="codebox"><pre data-lang="bash"><code># Prasyarat: PHP 8.2+, Composer, dan Node.js (untuk aset front-end)
+composer create-project laravel/laravel toko
+cd toko
+php artisan serve          # server pengembangan di http://127.0.0.1:8000
+
+# atau memakai installer Laravel (menawarkan starter kit)
+composer global require laravel/installer
+laravel new toko</code></pre><figcaption>Artisan adalah alat baris perintah Laravel: php artisan list menampilkan semua perintah; php artisan make:... membuat kerangka kode.</figcaption></figure>
+<figure class="codebox"><pre data-lang="text"><code>toko/
+├── app/
+│   ├── Http/Controllers/     # controller
+│   └── Models/               # model Eloquent
+├── bootstrap/app.php         # konfigurasi aplikasi (routing, middleware)
+├── config/                   # konfigurasi
+├── database/
+│   ├── migrations/           # skema basis data bertahap
+│   ├── factories/ seeders/   # data uji dan data awal
+├── public/index.php          # TITIK MASUK semua permintaan (arahkan server web ke sini)
+├── resources/views/          # templat Blade
+├── routes/web.php            # rute halaman
+├── routes/api.php            # rute API (setelah php artisan install:api)
+├── storage/                  # log, cache, unggahan
+├── tests/                    # tes
+└── .env                      # pengaturan lingkungan (JANGAN dikomit)</code></pre></figure>
+<div class="callout warn"><b>Keamanan dasar</b><p>Server web harus diarahkan ke folder <code>public/</code>, bukan ke akar proyek. Bila akar proyek terbuka ke publik, berkas <code>.env</code> (berisi kata sandi basis data dan kunci) bisa diunduh siapa pun. Ini salah satu kesalahan deploy yang paling berbahaya.</p></div>
+<h2 id="routing">Routing</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// routes/web.php
+use App\Http\Controllers\ProdukController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', fn () =&gt; view('beranda'));                         // rute sederhana dengan closure
+
+Route::get('/produk', [ProdukController::class, 'index']);          // daftar
+Route::get('/produk/{produk}', [ProdukController::class, 'show']);  // detail; {produk} adalah parameter
+
+// nama rute memudahkan membuat URL tanpa menulis alamat manual
+Route::get('/tentang', fn () =&gt; view('tentang'))-&gt;name('tentang');
+// di view:  &lt;a href=&quot;{{ route('tentang') }}&quot;&gt;Tentang&lt;/a&gt;
+
+// satu baris untuk tujuh rute CRUD standar
+Route::resource('kategori', KategoriController::class);</code></pre><figcaption>Lihat semua rute dengan php artisan route:list.</figcaption></figure>
+<h3>Bagaimana pencocokan rute bekerja</h3>
+<p>Router mencocokkan metode HTTP dan pola path, mengambil parameter dalam kurung kurawal, dan memanggil penangan yang sesuai. Berikut implementasi mini konsepnya (JavaScript) yang dapat dijalankan:</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const rute = [];
+const daftar = (metode, pola, penangan) =&gt; rute.push({ metode, pola: pola.split('/').filter(Boolean), penangan });
+
+daftar('GET', '/', () =&gt; 'beranda');
+daftar('GET', '/produk', () =&gt; 'daftar produk');
+daftar('GET', '/produk/{id}', ({ id }) =&gt; 'detail produk ' + id);
+daftar('POST', '/produk', () =&gt; 'simpan produk baru');
+
+function kirim(metode, url) {
+    const bagian = url.split('/').filter(Boolean);
+    for (const r of rute) {
+        if (r.metode !== metode || r.pola.length !== bagian.length) continue;
+        const params = {};
+        const cocok = r.pola.every((p, i) =&gt; p.startsWith('{') ? (params[p.slice(1, -1)] = bagian[i], true) : p === bagian[i]);
+        if (cocok) return '200 ' + r.penangan(params);
+    }
+    return rute.some(r =&gt; r.pola.join('/') === bagian.join('/')) ? '405 Method Not Allowed' : '404 Not Found';
+}
+for (const [m, u] of [['GET', '/'], ['GET', '/produk/5'], ['POST', '/produk'], ['DELETE', '/produk'], ['GET', '/tidak-ada']]) console.log((m + ' ' + u).padEnd(18), '-&gt;', kirim(m, u));</code></pre><pre class="runout" data-lang="keluaran"><code>GET /              -&gt; 200 beranda
+GET /produk/5      -&gt; 200 detail produk 5
+POST /produk       -&gt; 200 simpan produk baru
+DELETE /produk     -&gt; 405 Method Not Allowed
+GET /tidak-ada     -&gt; 404 Not Found</code></pre><figcaption>Laravel melakukan hal serupa dengan lebih banyak fitur: pembatasan parameter (where), grup, middleware, dan binding model otomatis.</figcaption></figure>
+<h2 id="controller">Controller</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan make:controller ProdukController
+namespace App\Http\Controllers;
+
+use App\Models\Produk;
+
+class ProdukController extends Controller
+{
+    public function index()
+    {
+        $produk = Produk::orderBy('nama')-&gt;paginate(12);        // ambil dari basis data
+        return view('produk.index', ['produk' =&gt; $produk]);     // kirim data ke view
+    }
+
+    public function show(Produk $produk)                         // route model binding: {produk} otomatis menjadi objek Produk
+    {
+        return view('produk.show', compact('produk'));           // bila id tidak ada, otomatis 404
+    }
+}</code></pre><figcaption>Controller tipis adalah tujuan: ia menerima permintaan, memanggil logika, dan memilih respons. Logika bisnis yang rumit sebaiknya berada di model atau kelas layanan.</figcaption></figure>
+<h2 id="view-dengan-blade">View dengan Blade</h2>
+<figure class="codebox"><pre data-lang="html"><code>{{-- resources/views/layouts/app.blade.php --}}
+&lt;!doctype html&gt;
+&lt;html lang=&quot;id&quot;&gt;
+&lt;head&gt;&lt;title&gt;@yield('judul') | Toko&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav&gt;...&lt;/nav&gt;
+    &lt;main&gt;@yield('isi')&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+{{-- resources/views/produk/index.blade.php --}}
+@extends('layouts.app')
+
+@section('judul', 'Daftar Produk')
+
+@section('isi')
+    &lt;h1&gt;Produk&lt;/h1&gt;
+
+    @forelse ($produk as $p)
+        &lt;article&gt;
+            &lt;h2&gt;&lt;a href=&quot;{{ route('produk.show', $p) }}&quot;&gt;{{ $p-&gt;nama }}&lt;/a&gt;&lt;/h2&gt;
+            &lt;p&gt;Rp{{ number_format($p-&gt;harga, 0, ',', '.') }}&lt;/p&gt;
+            @if ($p-&gt;stok &lt; 1) &lt;span&gt;Habis&lt;/span&gt; @endif
+        &lt;/article&gt;
+    @empty
+        &lt;p&gt;Belum ada produk.&lt;/p&gt;
+    @endforelse
+
+    {{ $produk-&gt;links() }}   {{-- navigasi halaman otomatis --}}
+@endsection</code></pre><figcaption>{{ }} otomatis meloloskan (escape) HTML sehingga aman dari XSS. {!! !!} mencetak mentah dan hanya boleh dipakai untuk konten yang sepenuhnya Anda percayai.</figcaption></figure>
+<figure class="codebox"><pre data-lang="python"><code>import html
+
+# Mengapa {{ }} aman: karakter berbahaya diubah menjadi entitas HTML
+masukan_pengguna = '&lt;script&gt;alert(&quot;curi cookie&quot;)&lt;/script&gt;'
+print(&quot;{{ }}   :&quot;, html.escape(masukan_pengguna))
+print(&quot;{!! !!} :&quot;, masukan_pengguna, &quot; &lt;- browser akan MENJALANKAN skrip ini&quot;)</code></pre><pre class="runout" data-lang="keluaran"><code>{{ }}   : &amp;lt;script&amp;gt;alert(&amp;quot;curi cookie&amp;quot;)&amp;lt;/script&amp;gt;
+{!! !!} : &lt;script&gt;alert(&quot;curi cookie&quot;)&lt;/script&gt;  &lt;- browser akan MENJALANKAN skrip ini</code></pre></figure>
+<h2 id="ringkasan-alur-satu-permintaan">Ringkasan alur satu permintaan</h2>
+<ol><li>Server web mengirim semua permintaan ke <code>public/index.php</code>.</li><li>Laravel memulai aplikasi, memuat konfigurasi, dan menjalankan <b>middleware</b> global (sesi, CSRF, dan lainnya).</li><li>Router mencocokkan URL dan metode ke rute, lalu memanggil controller.</li><li>Controller memakai model untuk membaca atau menulis basis data, lalu mengembalikan view atau respons JSON.</li><li>Respons kembali melewati middleware dan dikirim ke browser.</li></ol>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Folder yang harus menjadi akar dokumen server web?","options":["public/","app/","Akar proyek"],"answer":0,"why":"Menjaga .env dan kode tidak terbuka ke publik."},{"q":"Blade {{ $nama }} akan...","options":["Meloloskan HTML otomatis","Mencetak mentah","Menjalankan kode PHP bebas"],"answer":0,"why":"Aman dari XSS secara bawaan."},{"q":"php artisan route:list digunakan untuk...","options":["Melihat semua rute terdaftar","Membuat rute baru","Menghapus rute"],"answer":0,"why":"Membantu debugging routing."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis rute GET /kategori/{slug} ke method show pada KategoriController.</summary><div><code>Route::get("/kategori/{slug}", [KategoriController::class, "show"]);</code></div></details><details><summary>2. Mengapa controller sebaiknya tipis?</summary><div>Agar mudah dibaca dan diuji; logika bisnis dipindah ke model atau kelas layanan yang dapat dipakai ulang.</div></details><details><summary>3. Apa gunanya route model binding?</summary><div>Parameter {produk} otomatis diubah menjadi objek Produk dari basis data dan memberi 404 bila tidak ada.</div></details><details><summary>4. Mengapa .env tidak boleh dikomit ke Git?</summary><div>Berisi kata sandi dan kunci rahasia; gunakan .env.example sebagai templat tanpa rahasia.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>MVC: model (data), view (tampilan), controller (alur).</li><li>Semua permintaan masuk lewat public/index.php; router memilih controller.</li><li>Blade memberi templat dengan escaping otomatis, layout, kondisi, dan perulangan.</li><li>Artisan mempercepat pekerjaan; arahkan server web ke public/ dan jaga .env tetap rahasia.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Mengapa memilih Laravel?</summary><div>Ekosistem besar, dokumentasi sangat baik, banyak bawaan (autentikasi, antrean, tes), dan komunitas aktif, termasuk di Indonesia.</div></details>
+<details class="faq"><summary>Apakah masih perlu PHP murni?</summary><div>Memahami PHP dasar penting; Laravel hanya mengatur cara memakainya dengan rapi.</div></details>
+<details class="faq"><summary>Apa itu starter kit?</summary><div>Kerangka awal dengan autentikasi dan tampilan siap pakai (misalnya Breeze, atau starter kit React/Vue/Livewire pada installer baru).</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs" rel="noopener" target="_blank">Laravel Documentation</a></li><li><a href="https://laravel.com/docs/routing" rel="noopener" target="_blank">Laravel: Routing</a></li><li><a href="https://laravel.com/docs/blade" rel="noopener" target="_blank">Laravel: Blade Templates</a></li><li><a href="https://www.php.net/manual/en/" rel="noopener" target="_blank">PHP Manual</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"><img src="/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Validasi Form Laravel: Form Request, Aturan, Pesan Error</span></a><a href="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/"><img src="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>REST API Laravel: Resource Controller, API Resource, Paginasi</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

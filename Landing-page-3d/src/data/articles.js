@@ -223,4 +223,9 @@ export const ARTICLES = [
     'aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard',
     'suspense-lazy-dan-error-boundary-react-loading-dan-galat',
     'fitur-baru-react-19-actions-use-dan-form-lebih-ringkas',
+    'belajar-laravel-dari-nol-mvc-routing-controller-dan-blade',
+    'eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1',
+    'validasi-form-laravel-form-request-aturan-dan-pesan-error',
+    'rest-api-laravel-resource-controller-api-resource-dan-paginasi',
+    'autentikasi-laravel-sanctum-session-vs-token-dan-hash-password',
 ];

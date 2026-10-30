@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validasi Form Laravel: Form Request, Aturan, Pesan Error</title>
+<meta name="description" content="Pelajari validasi di Laravel: aturan bawaan, validate() di controller, Form Request, pesan kustom berbahasa Indonesia, validasi unik, dan tampilan error di Blade.">
+<meta name="keywords" content="validasi Laravel, Form Request, validate, Blade error, keamanan form">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/">
+<meta property="og:title" content="Validasi Form Laravel: Form Request, Aturan, Pesan Error">
+<meta property="og:description" content="Pelajari validasi di Laravel: aturan bawaan, validate() di controller, Form Request, pesan kustom berbahasa Indonesia, validasi unik, dan tampilan error di Blade.">
+<meta property="og:image" content="https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="Laravel &amp; Backend">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Validasi Form Laravel: Form Request, Aturan, Pesan Error">
+<meta name="twitter:description" content="Pelajari validasi di Laravel: aturan bawaan, validate() di controller, Form Request, pesan kustom berbahasa Indonesia, validasi unik, dan tampilan error di Blade.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Validasi Form Laravel: Form Request, Aturan, Pesan Error","description":"Pelajari validasi di Laravel: aturan bawaan, validate() di controller, Form Request, pesan kustom berbahasa Indonesia, validasi unik, dan tampilan error di Blade.","image":["https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"validasi Laravel, Form Request, validate, Blade error, keamanan form","articleSection":"Laravel & Backend","wordCount":394,"mainEntityOfPage":"https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Validasi Form Laravel: Form Request, Aturan, Pesan Error","item":"https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Bagaimana validasi untuk API (JSON)?","acceptedAnswer":{"@type":"Answer","text":"Sama; bila gagal, Laravel mengembalikan respons 422 dengan JSON berisi daftar galat per kolom secara otomatis."}},{"@type":"Question","name":"Bagaimana membuat aturan kustom?","acceptedAnswer":{"@type":"Answer","text":"php artisan make:rule untuk kelas aturan, atau gunakan closure pada array aturan."}},{"@type":"Question","name":"Apakah ada validasi bersyarat?","acceptedAnswer":{"@type":"Answer","text":"Ya: required_if, sometimes, dan Rule::requiredIf untuk kolom yang wajib hanya dalam kondisi tertentu."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#validasi-di-controller">Validasi di controller</a></li><li><a href="#menampilkan-galat-di-blade">Menampilkan galat di Blade</a></li><li><a href="#form-request-aturan-di-kelas-sendiri">Form Request: aturan di kelas sendiri</a></li><li><a href="#bahasa-indonesia">Bahasa Indonesia</a></li><li><a href="#cara-kerja-di-balik-layar">Cara kerja di balik layar</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a></p>
+<a class="cat" href="/artikel/kategori/laravel-backend/">Laravel &amp; Backend</a>
+<h1>Validasi Form Laravel: Form Request, Aturan, Pesan Error</h1>
+<p class="lead">Setiap data dari pengguna harus dianggap tidak dapat dipercaya: bisa salah ketik, bisa kosong, bisa juga sengaja dirancang untuk merusak. Validasi adalah gerbang pertama. Laravel memberi sistem validasi yang ekspresif: satu baris aturan per kolom, pesan galat otomatis, dan pengembalian ke form dengan isian lama.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Laravel, controller dan routing</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Validasi Form Laravel: Form Request, Aturan, Pesan Error" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menulis validasi dengan $request->validate dan aturan umum</li><li>memindahkan aturan ke Form Request</li><li>menampilkan galat dan mempertahankan isian lama di Blade</li><li>menyesuaikan pesan, nama atribut, dan bahasa Indonesia</li><li>memahami validasi unik, kondisional, dan validasi sisi server sebagai kewajiban</li></ul></div>
+<div class="callout info"><b>Tentang contoh kode</b><p>Kode PHP/Laravel di artikel ini ditampilkan sebagai contoh yang mengikuti dokumentasi Laravel (versi 11 dan seterusnya, PHP 8.2 atau lebih baru). Bagian "cara kerja di balik layar" dijalankan sungguhan dengan Python atau JavaScript agar konsepnya dapat dibuktikan.</p></div>
+<h2 id="validasi-di-controller">Validasi di controller</h2>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+public function store(Request $request)
+{
+    $data = $request-&gt;validate([
+        'nama'        =&gt; ['required', 'string', 'min:3', 'max:100'],
+        'surel'       =&gt; ['required', 'email', 'unique:pengguna,surel'],     // belum dipakai di tabel pengguna
+        'umur'        =&gt; ['required', 'integer', 'between:17,100'],
+        'kota'        =&gt; ['nullable', 'string', 'max:50'],
+        'setuju'      =&gt; ['accepted'],                                        // harus dicentang
+        'foto'        =&gt; ['nullable', 'image', 'mimes:jpg,png,webp', 'max:2048'],   // KB
+    ]);
+
+    Pengguna::create($data);            // $data hanya berisi kolom yang lolos validasi
+    return redirect()-&gt;route('pengguna.index')-&gt;with('sukses', 'Data tersimpan.');
+}</code></pre><figcaption>Bila validasi gagal, Laravel otomatis mengalihkan kembali ke halaman sebelumnya dengan galat dan isian lama (untuk permintaan JSON, ia mengembalikan respons 422 dengan daftar galat).</figcaption></figure>
+<table><thead><tr><th>Aturan</th><th>Arti</th></tr></thead><tbody><tr><td>required / nullable</td><td>Wajib diisi / boleh kosong</td></tr><tr><td>string, integer, numeric, boolean, array</td><td>Tipe data</td></tr><tr><td>min:n, max:n, between:a,b</td><td>Panjang (string), nilai (angka), ukuran (berkas KB), jumlah (array)</td></tr><tr><td>email, url, date, uuid</td><td>Format</td></tr><tr><td>unique:tabel,kolom</td><td>Belum ada di basis data</td></tr><tr><td>exists:tabel,kolom</td><td>Harus ada di basis data (misalnya kunci asing)</td></tr><tr><td>confirmed</td><td>Harus ada kolom {nama}_confirmation yang sama (kata sandi)</td></tr><tr><td>in:a,b,c / Rule::enum()</td><td>Salah satu nilai tertentu</td></tr><tr><td>regex:/pola/</td><td>Cocok dengan ekspresi reguler</td></tr></tbody></table>
+<h2 id="menampilkan-galat-di-blade">Menampilkan galat di Blade</h2>
+<figure class="codebox"><pre data-lang="html"><code>&lt;form method=&quot;POST&quot; action=&quot;{{ route('pengguna.store') }}&quot; novalidate&gt;
+    @csrf                                   {{-- token CSRF wajib untuk form POST --}}
+
+    &lt;label for=&quot;nama&quot;&gt;Nama&lt;/label&gt;
+    &lt;input id=&quot;nama&quot; name=&quot;nama&quot; value=&quot;{{ old('nama') }}&quot;   {{-- isian lama saat validasi gagal --}}
+           aria-invalid=&quot;{{ $errors-&gt;has('nama') ? 'true' : 'false' }}&quot;&gt;
+    @error('nama')
+        &lt;p role=&quot;alert&quot; class=&quot;galat&quot;&gt;{{ $message }}&lt;/p&gt;
+    @enderror
+
+    &lt;label for=&quot;surel&quot;&gt;Surel&lt;/label&gt;
+    &lt;input id=&quot;surel&quot; type=&quot;email&quot; name=&quot;surel&quot; value=&quot;{{ old('surel') }}&quot;&gt;
+    @error('surel') &lt;p role=&quot;alert&quot; class=&quot;galat&quot;&gt;{{ $message }}&lt;/p&gt; @enderror
+
+    &lt;button type=&quot;submit&quot;&gt;Daftar&lt;/button&gt;
+&lt;/form&gt;</code></pre><figcaption>@csrf menambahkan token yang diperiksa middleware; tanpa itu form POST ditolak dengan galat 419. old() mengembalikan isian sebelumnya agar pengguna tidak mengetik ulang semuanya.</figcaption></figure>
+<h2 id="form-request-aturan-di-kelas-sendiri">Form Request: aturan di kelas sendiri</h2>
+<p>Untuk form besar atau aturan yang dipakai ulang, pindahkan validasi ke kelas khusus agar controller tetap tipis.</p>
+<figure class="codebox"><pre data-lang="php"><code>&lt;?php
+// php artisan make:request SimpanPenggunaRequest
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class SimpanPenggunaRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;                          // atau periksa hak akses, mis. $this-&gt;user()-&gt;can('buat-pengguna')
+    }
+
+    public function rules(): array
+    {
+        $pengguna = $this-&gt;route('pengguna'); // null saat membuat baru, objek saat mengubah
+        return [
+            'nama'  =&gt; ['required', 'string', 'min:3', 'max:100'],
+            'surel' =&gt; ['required', 'email', Rule::unique('pengguna', 'surel')-&gt;ignore($pengguna?-&gt;id)],
+            'peran' =&gt; ['required', Rule::in(['admin', 'editor', 'tamu'])],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nama.required'  =&gt; 'Nama wajib diisi.',
+            'surel.unique'   =&gt; 'Surel ini sudah terdaftar.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return ['surel' =&gt; 'alamat surel'];   // dipakai pada pesan bawaan: &quot;alamat surel wajib diisi&quot;
+    }
+}
+
+// di controller: validasi berjalan otomatis sebelum method dipanggil
+public function store(SimpanPenggunaRequest $request)
+{
+    Pengguna::create($request-&gt;validated());
+    return back()-&gt;with('sukses', 'Tersimpan.');
+}</code></pre><figcaption>Rule::unique(...)->ignore($id) penting saat mengubah data: tanpa ignore, surel milik pengguna itu sendiri dianggap bentrok.</figcaption></figure>
+<h2 id="bahasa-indonesia">Bahasa Indonesia</h2>
+<figure class="codebox"><pre data-lang="bash"><code>php artisan lang:publish                 # menerbitkan berkas bahasa ke folder lang/
+# unduh terjemahan komunitas (mis. paket laravel-lang) ke lang/id, lalu di .env:
+# APP_LOCALE=id
+# APP_FALLBACK_LOCALE=en</code></pre><figcaption>Pesan galat bawaan Laravel berbahasa Inggris; terjemahan komunitas atau berkas lang/id/validation.php membuatnya berbahasa Indonesia tanpa mengubah aturan.</figcaption></figure>
+<h2 id="cara-kerja-di-balik-layar">Cara kerja di balik layar</h2>
+<p>Sistem validasi pada dasarnya mengurai string aturan (<code>"between:17,100"</code>), menjalankan fungsi pemeriksa per kolom, dan mengumpulkan galat. Mini versinya (JavaScript):</p>
+<figure class="codebox"><pre data-lang="javascript"><code>const aturan = {
+    required: v =&gt; (v === undefined || v === null || String(v).trim() === '') ? 'wajib diisi' : null,
+    email:    v =&gt; /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? null : 'format tidak valid',
+    integer:  v =&gt; Number.isInteger(Number(v)) &amp;&amp; String(v).trim() !== '' ? null : 'harus bilangan bulat',
+    min:      (v, n) =&gt; String(v).length &gt;= Number(n) ? null : 'minimal ' + n + ' karakter',
+    between:  (v, a, b) =&gt; Number(v) &gt;= Number(a) &amp;&amp; Number(v) &lt;= Number(b) ? null : 'harus antara ' + a + ' dan ' + b,
+};
+
+function validasi(data, skema) {
+    const galat = {};
+    for (const [kolom, daftar] of Object.entries(skema)) {
+        for (const teks of daftar.split('|')) {
+            const [nama, params] = teks.split(':');
+            const pesan = aturan[nama](data[kolom], ...(params ? params.split(',') : []));
+            if (pesan) { (galat[kolom] ??= []).push(kolom + ' ' + pesan); break; }    // berhenti di galat pertama per kolom
+        }
+    }
+    return galat;
+}
+
+const skema = { nama: 'required|min:3', surel: 'required|email', umur: 'required|integer|between:17,100' };
+console.log(validasi({ nama: 'Al', surel: 'al@x', umur: '15' }, skema));
+console.log(validasi({ nama: 'Ani', surel: 'ani@contoh.id', umur: '20' }, skema));</code></pre><pre class="runout" data-lang="keluaran"><code>{
+  nama: [ 'nama minimal 3 karakter' ],
+  surel: [ 'surel format tidak valid' ],
+  umur: [ 'umur harus antara 17 dan 100' ]
+}
+{}</code></pre></figure>
+<div class="callout warn"><b>Dua hal berbeda</b><p>Validasi di browser (atribut HTML, JavaScript) hanya untuk kenyamanan. <b>Validasi server wajib</b>, karena penyerang dapat mengirim permintaan langsung tanpa melewati form Anda. Dan ingat: validasi bukan pengganti <i>pemeriksaan hak akses</i> (otorisasi): "data ini valid" berbeda dari "pengguna ini boleh melakukannya".</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Direktif Blade untuk menampilkan isian lama?","options":["old(\"nama\")","$request->nama","@old"],"answer":0,"why":"Mengambil input dari permintaan sebelumnya."},{"q":"Mengapa Rule::unique perlu ignore() saat edit?","options":["Agar data milik sendiri tidak dianggap duplikat","Agar lebih cepat","Wajib oleh PHP"],"answer":0,"why":"Surel milik pengguna yang sedang diedit sudah ada di tabel."},{"q":"Siapa yang wajib memvalidasi data?","options":["Server","Hanya browser","Tidak ada"],"answer":0,"why":"Klien bisa dilewati."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Tulis aturan untuk kolom kata sandi: wajib, minimal 8 karakter, dan harus dikonfirmasi.</summary><div><code>"sandi" => ["required", "min:8", "confirmed"]</code> dengan input sandi_confirmation.</div></details><details><summary>2. Ubah pesan galat unik surel menjadi bahasa Indonesia.</summary><div>Tambahkan <code>"surel.unique" => "Surel ini sudah terdaftar."</code> di method messages() Form Request.</div></details><details><summary>3. Apa bedanya validate() dan validated()?</summary><div>validate() menjalankan validasi di controller dan mengembalikan data lolos; validated() pada Form Request mengembalikan hanya data yang telah divalidasi.</div></details><details><summary>4. Mengapa galat 419 muncul saat mengirim form POST?</summary><div>Token CSRF tidak ada atau kedaluwarsa; tambahkan @csrf di form.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>$request->validate([...]) atau Form Request memvalidasi dan mengembalikan hanya data yang lolos.</li><li>Aturan umum: required, string, email, unique, exists, between, confirmed, image.</li><li>Blade: @error, $message, old(); sertakan @csrf pada form POST.</li><li>Pesan dan atribut dapat disesuaikan; validasi server wajib dan berbeda dari otorisasi.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Bagaimana validasi untuk API (JSON)?</summary><div>Sama; bila gagal, Laravel mengembalikan respons 422 dengan JSON berisi daftar galat per kolom secara otomatis.</div></details>
+<details class="faq"><summary>Bagaimana membuat aturan kustom?</summary><div>php artisan make:rule untuk kelas aturan, atau gunakan closure pada array aturan.</div></details>
+<details class="faq"><summary>Apakah ada validasi bersyarat?</summary><div>Ya: required_if, sometimes, dan Rule::requiredIf untuk kolom yang wajib hanya dalam kondisi tertentu.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://laravel.com/docs/validation" rel="noopener" target="_blank">Laravel: Validation</a></li><li><a href="https://laravel.com/docs/validation#available-validation-rules" rel="noopener" target="_blank">Laravel: Available Validation Rules</a></li><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" rel="noopener" target="_blank">OWASP: Input Validation Cheat Sheet</a></li><li><a href="https://laravel.com/docs" rel="noopener" target="_blank">Laravel Documentation</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/"><img src="/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Laravel dari Nol: MVC, Routing, Controller, Blade</span></a><a href="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/"><img src="/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Eloquent ORM Laravel: Migrasi, Model, Relasi, dan N+1</span></a><a href="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/"><img src="/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>REST API Laravel: Resource Controller, API Resource, Paginasi</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

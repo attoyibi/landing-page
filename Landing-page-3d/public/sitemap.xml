@@ -66,6 +66,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://muchson.web.id/artikel/kategori/laravel-backend/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://muchson.web.id/artikel/rag-adalah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
@@ -1162,6 +1167,31 @@
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
   </url>
