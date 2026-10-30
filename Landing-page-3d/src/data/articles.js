@@ -218,4 +218,9 @@ export const ARTICLES = [
     'typescript-untuk-react-tipe-props-state-dan-event',
     'tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode',
     'seo-untuk-aplikasi-react-ssr-prerender-dan-metadata',
+    'vite-react-setup-proyek-struktur-folder-dan-environment',
+    'testing-react-vitest-testing-library-dan-tes-logika-murni',
+    'aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard',
+    'suspense-lazy-dan-error-boundary-react-loading-dan-galat',
+    'fitur-baru-react-19-actions-use-dan-form-lebih-ringkas',
 ];

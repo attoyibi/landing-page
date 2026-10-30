@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard</title>
+<meta name="description" content="Panduan aksesibilitas (a11y) untuk React: HTML semantik, label form, ARIA yang benar, navigasi keyboard, manajemen fokus pada modal, kontras warna, dan cara mengujinya.">
+<meta name="keywords" content="aksesibilitas, a11y, ARIA, WCAG, keyboard navigation">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/">
+<meta property="og:title" content="Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard">
+<meta property="og:description" content="Panduan aksesibilitas (a11y) untuk React: HTML semantik, label form, ARIA yang benar, navigasi keyboard, manajemen fokus pada modal, kontras warna, dan cara mengujinya.">
+<meta property="og:image" content="https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard">
+<meta name="twitter:description" content="Panduan aksesibilitas (a11y) untuk React: HTML semantik, label form, ARIA yang benar, navigasi keyboard, manajemen fokus pada modal, kontras warna, dan cara mengujinya.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard","description":"Panduan aksesibilitas (a11y) untuk React: HTML semantik, label form, ARIA yang benar, navigasi keyboard, manajemen fokus pada modal, kontras warna, dan cara mengujinya.","image":["https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"aksesibilitas, a11y, ARIA, WCAG, keyboard navigation","articleSection":"React & Web Modern","wordCount":561,"mainEntityOfPage":"https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard","item":"https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah aksesibilitas wajib secara hukum?","acceptedAnswer":{"@type":"Answer","text":"Di banyak negara ada regulasi (misalnya ADA, EAA di Uni Eropa) dan pedoman pemerintah; di Indonesia ada ketentuan tentang kesetaraan akses layanan publik. Terlepas dari itu, aksesibilitas memperluas jangkauan pengguna."}},{"@type":"Question","name":"Apa itu WCAG?","acceptedAnswer":{"@type":"Answer","text":"Web Content Accessibility Guidelines dari W3C; tingkat A, AA, dan AAA. AA adalah target umum."}},{"@type":"Question","name":"Apakah aksesibilitas memperlambat pengembangan?","acceptedAnswer":{"@type":"Answer","text":"Jauh lebih murah bila dibangun sejak awal daripada diperbaiki belakangan."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#aturan-pertama-pakai-elemen-yang-tepat">Aturan pertama: pakai elemen yang tepat</a></li><li><a href="#form-label-bukan-opsional">Form: label bukan opsional</a></li><li><a href="#aria-gunakan-sedikit-dan-dengan-benar">ARIA: gunakan sedikit dan dengan benar</a></li><li><a href="#keyboard-dan-fokus">Keyboard dan fokus</a></li><li><a href="#warna-dan-kontras">Warna dan kontras</a></li><li><a href="#menguji-aksesibilitas">Menguji aksesibilitas</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard</h1>
+<p class="lead">Aksesibilitas bukan fitur tambahan untuk segelintir pengguna. Sekitar satu dari enam orang di dunia hidup dengan disabilitas, dan banyak lagi memakai keyboard, layar kecil di bawah matahari, atau koneksi lambat. Kabar baiknya: sebagian besar aksesibilitas berasal dari menulis HTML yang benar, dan React tidak menghalangi itu.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> React dasar, HTML dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Aksesibilitas di React: Semantik, ARIA, Fokus, Keyboard" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai elemen HTML semantik alih-alih div serba guna</li><li>memberi label pada form dan kontrol dengan benar</li><li>memakai ARIA hanya bila diperlukan dan dengan benar</li><li>memastikan seluruh fungsi dapat dipakai dengan keyboard dan mengelola fokus</li><li>memeriksa kontras warna dan menguji aksesibilitas</li></ul></div>
+<h2 id="aturan-pertama-pakai-elemen-yang-tepat">Aturan pertama: pakai elemen yang tepat</h2>
+<p>Elemen HTML semantik membawa perilaku aksesibilitas gratis: <code>button</code> bisa difokuskan, aktif dengan Enter dan Spasi, dan diumumkan sebagai "tombol". <code>div onClick</code> tidak punya satu pun dari itu.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>const React = require('react');
+const { renderToString } = require('react-dom/server');
+
+// BURUK: div yang meniru tombol
+const Buruk = () =&gt; &lt;div className=&quot;tombol&quot; onClick={() =&gt; {}}&gt;Simpan&lt;/div&gt;;
+
+// BAIK: elemen yang tepat
+const Baik = () =&gt; &lt;button type=&quot;button&quot; onClick={() =&gt; {}}&gt;Simpan&lt;/button&gt;;
+
+// Struktur halaman semantik: landmark membantu pembaca layar melompat antar bagian
+const Halaman = () =&gt; (
+    &lt;&gt;
+        &lt;header&gt;&lt;nav aria-label=&quot;Utama&quot;&gt;&lt;a href=&quot;/&quot;&gt;Beranda&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+        &lt;main&gt;
+            &lt;h1&gt;Judul halaman&lt;/h1&gt;
+            &lt;section aria-labelledby=&quot;judul-promo&quot;&gt;&lt;h2 id=&quot;judul-promo&quot;&gt;Promo&lt;/h2&gt;&lt;/section&gt;
+        &lt;/main&gt;
+        &lt;footer&gt;Hak cipta&lt;/footer&gt;
+    &lt;/&gt;
+);
+
+console.log(renderToString(&lt;Buruk /&gt;));
+console.log(renderToString(&lt;Baik /&gt;));
+console.log(renderToString(&lt;Halaman /&gt;));</code></pre><pre class="runout" data-lang="keluaran"><code>&lt;div class=&quot;tombol&quot;&gt;Simpan&lt;/div&gt;
+&lt;button type=&quot;button&quot;&gt;Simpan&lt;/button&gt;
+&lt;header&gt;&lt;nav aria-label=&quot;Utama&quot;&gt;&lt;a href=&quot;/&quot;&gt;Beranda&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;&lt;main&gt;&lt;h1&gt;Judul halaman&lt;/h1&gt;&lt;section aria-labelledby=&quot;judul-promo&quot;&gt;&lt;h2 id=&quot;judul-promo&quot;&gt;Promo&lt;/h2&gt;&lt;/section&gt;&lt;/main&gt;&lt;footer&gt;Hak cipta&lt;/footer&gt;</code></pre><figcaption>Hasil HTML sekilas mirip, tetapi button dapat difokuskan dan dioperasikan keyboard tanpa kode tambahan; div tidak.</figcaption></figure>
+<table><thead><tr><th>Tujuan</th><th>Elemen</th><th>Jangan</th></tr></thead><tbody><tr><td>Aksi di halaman</td><td><button></td><td><div onClick></td></tr><tr><td>Berpindah ke halaman lain</td><td><a href></td><td><span onClick> atau <a> tanpa href</td></tr><tr><td>Judul bagian</td><td><h1>–<h6> berurutan</td><td>Memilih tingkat karena ukuran huruf</td></tr><tr><td>Daftar</td><td><ul>, <ol></td><td>Serangkaian div</td></tr><tr><td>Data tabular</td><td><table> dengan <th></td><td>Tata letak memakai tabel</td></tr><tr><td>Wilayah halaman</td><td>header, nav, main, footer, aside</td><td>Semua div</td></tr></tbody></table>
+<h2 id="form-label-bukan-opsional">Form: label bukan opsional</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>// Setiap input butuh label yang terhubung
+&lt;label htmlFor=&quot;surel&quot;&gt;Surel&lt;/label&gt;
+&lt;input id=&quot;surel&quot; type=&quot;email&quot; autoComplete=&quot;email&quot; required aria-describedby=&quot;surel-bantuan&quot; /&gt;
+&lt;p id=&quot;surel-bantuan&quot;&gt;Kami tidak membagikan surel Anda.&lt;/p&gt;
+
+// Galat: umumkan ke teknologi bantu
+&lt;input id=&quot;sandi&quot; aria-invalid={!!galat} aria-describedby={galat ? 'sandi-galat' : undefined} /&gt;
+{galat &amp;&amp; &lt;p id=&quot;sandi-galat&quot; role=&quot;alert&quot;&gt;{galat}&lt;/p&gt;}
+
+// Placeholder BUKAN pengganti label (hilang saat mengetik, kontras rendah, tidak selalu diumumkan)</code></pre></figure>
+<h2 id="aria-gunakan-sedikit-dan-dengan-benar">ARIA: gunakan sedikit dan dengan benar</h2>
+<div class="callout warn"><b>ARIA bukan pewarna ajaib</b><p><b>Aturan pertama ARIA: jangan memakai ARIA bila elemen HTML native bisa melakukannya.</b> ARIA hanya mengubah apa yang diumumkan teknologi bantu; ia tidak menambah perilaku keyboard. <code>role="button"</code> pada div tidak membuatnya bisa ditekan dengan Enter. ARIA yang salah lebih buruk daripada tanpa ARIA.</p></div>
+<table><thead><tr><th>Atribut</th><th>Fungsi</th><th>Contoh</th></tr></thead><tbody><tr><td>aria-label</td><td>Nama untuk elemen tanpa teks terlihat</td><td>Tombol ikon: <button aria-label="Tutup"></td></tr><tr><td>aria-labelledby</td><td>Mengacu elemen lain sebagai nama</td><td>Bagian dengan judulnya</td></tr><tr><td>aria-describedby</td><td>Deskripsi tambahan</td><td>Teks bantuan atau pesan galat</td></tr><tr><td>aria-expanded</td><td>Status buka/tutup</td><td>Tombol akordeon dan menu</td></tr><tr><td>aria-live / role="alert"</td><td>Mengumumkan perubahan dinamis</td><td>Pesan sukses atau galat</td></tr><tr><td>aria-hidden="true"</td><td>Menyembunyikan dari teknologi bantu</td><td>Ikon dekoratif (jangan pada elemen yang bisa difokuskan)</td></tr></tbody></table>
+<h2 id="keyboard-dan-fokus">Keyboard dan fokus</h2>
+<ul><li>Semua yang bisa diklik harus bisa dicapai dan dioperasikan dengan <b>Tab</b>, <b>Enter</b>, <b>Spasi</b>, dan <b>Esc</b> (untuk menutup).</li><li><b>Urutan fokus</b> mengikuti urutan visual dan logis; jangan memakai tabindex positif.</li><li><b>Indikator fokus harus terlihat</b>; jangan <code>outline: none</code> tanpa pengganti.</li><li><b>Modal</b>: pindahkan fokus ke dalam saat dibuka, kurung fokus di dalamnya, tutup dengan Esc, dan kembalikan fokus ke pemicu saat ditutup. Elemen bawaan <code>&lt;dialog&gt;</code> menangani sebagian besar ini.</li><li><b>Pindah halaman di SPA</b>: pindahkan fokus ke judul halaman baru dan umumkan perubahan agar pengguna pembaca layar tahu.</li></ul>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useEffect, useRef } from 'react';
+
+function Modal({ buka, onTutup, judul, children }) {
+    const dialogRef = useRef(null);
+
+    useEffect(() =&gt; {
+        const d = dialogRef.current;
+        if (buka &amp;&amp; !d.open) d.showModal();          // &lt;dialog&gt;: kurung fokus, Esc, latar tak aktif
+        if (!buka &amp;&amp; d.open) d.close();
+    }, [buka]);
+
+    return (
+        &lt;dialog ref={dialogRef} onClose={onTutup} aria-labelledby=&quot;judul-modal&quot;&gt;
+            &lt;h2 id=&quot;judul-modal&quot;&gt;{judul}&lt;/h2&gt;
+            {children}
+            &lt;button type=&quot;button&quot; onClick={onTutup}&gt;Tutup&lt;/button&gt;
+        &lt;/dialog&gt;
+    );
+}</code></pre><figcaption>Dengan elemen dialog native, perilaku fokus yang sulit (kurungan fokus, Esc, mengembalikan fokus) sudah ditangani browser.</figcaption></figure>
+<h2 id="warna-dan-kontras">Warna dan kontras</h2>
+<p>WCAG mensyaratkan rasio kontras minimal <b>4,5:1</b> untuk teks biasa dan <b>3:1</b> untuk teks besar dan komponen UI (tingkat AA). Jangan menyampaikan informasi hanya lewat warna (misalnya galat hanya berwarna merah); tambahkan ikon atau teks.</p>
+<figure class="codebox"><pre data-lang="javascript"><code>// Menghitung rasio kontras WCAG 2.x antara dua warna heksa
+function luminans(hex) {
+    const [r, g, b] = [1, 3, 5].map(i =&gt; parseInt(hex.slice(i, i + 2), 16) / 255)
+        .map(v =&gt; (v &lt;= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function kontras(a, b) {
+    const [l1, l2] = [luminans(a), luminans(b)].sort((x, y) =&gt; y - x);
+    return (l1 + 0.05) / (l2 + 0.05);
+}
+const kasus = [['#767676', '#ffffff'], ['#777777', '#ffffff'], ['#0f1a33', '#ffffff'], ['#1e5ab2', '#e8f1ff'], ['#9aa5b8', '#ffffff']];
+for (const [fg, bg] of kasus) {
+    const r = kontras(fg, bg);
+    console.log(fg, 'di atas', bg, '-&gt;', r.toFixed(2) + ':1', r &gt;= 7 ? 'AAA' : r &gt;= 4.5 ? 'AA (teks biasa)' : r &gt;= 3 ? 'hanya teks besar/komponen' : 'GAGAL');
+}</code></pre><pre class="runout" data-lang="keluaran"><code>#767676 di atas #ffffff -&gt; 4.54:1 AA (teks biasa)
+#777777 di atas #ffffff -&gt; 4.48:1 hanya teks besar/komponen
+#0f1a33 di atas #ffffff -&gt; 17.27:1 AAA
+#1e5ab2 di atas #e8f1ff -&gt; 5.84:1 AA (teks biasa)
+#9aa5b8 di atas #ffffff -&gt; 2.49:1 GAGAL</code></pre><figcaption>#767676 di atas putih adalah abu-abu paling terang yang masih lolos AA untuk teks biasa (rasio 4,54:1); #777777 sedikit di bawah batas.</figcaption></figure>
+<div data-w="contrast"><script type="application/json">{"title":"Periksa kontras warna","desc":"Pilih warna teks dan latar untuk melihat rasio dan kelulusan WCAG."}</script></div>
+<h2 id="menguji-aksesibilitas">Menguji aksesibilitas</h2>
+<ol><li><b>Otomatis</b>: eslint-plugin-jsx-a11y saat menulis, axe DevTools atau Lighthouse di browser, dan jest-axe/vitest-axe di tes. Alat otomatis hanya menangkap sebagian masalah (sekitar sepertiga).</li><li><b>Keyboard</b>: cabut mouse. Bisakah Anda mencapai dan memakai semuanya dengan Tab, Enter, Spasi, Esc? Apakah fokus selalu terlihat?</li><li><b>Pembaca layar</b>: coba NVDA (Windows, gratis), VoiceOver (macOS/iOS), atau TalkBack (Android) pada alur utama.</li><li><b>Zoom dan teks besar</b>: perbesar 200%, ubah ukuran huruf; pastikan tata letak tidak pecah.</li><li><b>Pengguna nyata</b> dengan kebutuhan beragam memberi wawasan yang tak tergantikan.</li></ol>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Untuk aksi di halaman, gunakan...","options":["\u003cbutton>","\u003cdiv onClick>","\u003cspan>"],"answer":0,"why":"Native: fokus dan keyboard gratis."},{"q":"Rasio kontras minimal AA untuk teks biasa?","options":["4,5:1","2:1","10:1"],"answer":0,"why":"WCAG 2.x AA."},{"q":"Placeholder sebagai pengganti label...","options":["Tidak cukup","Cukup","Lebih baik"],"answer":0,"why":"Hilang saat mengetik dan tidak andal diumumkan."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ubah <div onClick={hapus}>Hapus</div> menjadi aksesibel.</summary><div><code>&lt;button type="button" onClick={hapus}&gt;Hapus&lt;/button&gt;</code></div></details><details><summary>2. Beri nama aksesibel pada tombol ikon silang.</summary><div><code>&lt;button aria-label="Tutup"&gt;&lt;svg aria-hidden="true" ...&gt;&lt;/svg&gt;&lt;/button&gt;</code></div></details><details><summary>3. Mengapa outline: none berbahaya?</summary><div>Pengguna keyboard kehilangan petunjuk letak fokus; sediakan gaya fokus pengganti yang jelas.</div></details><details><summary>4. Mengapa jangan menyampaikan galat hanya dengan warna merah?</summary><div>Pengguna buta warna atau pembaca layar tidak menangkapnya; tambahkan teks atau ikon dan role="alert".</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>HTML semantik memberi aksesibilitas gratis: button, a, heading, landmark, label.</li><li>ARIA hanya bila perlu dan dengan benar; ia mengubah pengumuman, bukan perilaku.</li><li>Semua fungsi harus bisa dipakai dengan keyboard; kelola fokus pada modal dan perpindahan halaman.</li><li>Kontras minimal 4,5:1 (AA) dan jangan hanya mengandalkan warna.</li><li>Uji dengan alat otomatis, keyboard, dan pembaca layar.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah aksesibilitas wajib secara hukum?</summary><div>Di banyak negara ada regulasi (misalnya ADA, EAA di Uni Eropa) dan pedoman pemerintah; di Indonesia ada ketentuan tentang kesetaraan akses layanan publik. Terlepas dari itu, aksesibilitas memperluas jangkauan pengguna.</div></details>
+<details class="faq"><summary>Apa itu WCAG?</summary><div>Web Content Accessibility Guidelines dari W3C; tingkat A, AA, dan AAA. AA adalah target umum.</div></details>
+<details class="faq"><summary>Apakah aksesibilitas memperlambat pengembangan?</summary><div>Jauh lebih murah bila dibangun sejak awal daripada diperbaiki belakangan.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://www.w3.org/TR/WCAG22/" rel="noopener" target="_blank">W3C: Web Content Accessibility Guidelines (WCAG) 2.2</a></li><li><a href="https://legacy.reactjs.org/docs/accessibility.html" rel="noopener" target="_blank">React: Accessibility</a></li><li><a href="https://developer.mozilla.org/docs/Web/Accessibility" rel="noopener" target="_blank">MDN: Accessibility</a></li><li><a href="https://www.w3.org/WAI/ARIA/apg/" rel="noopener" target="_blank">WAI-ARIA Authoring Practices Guide</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/desain-aksesibel-untuk-pembelajaran-digital-wcag/"><img src="/artikel/desain-aksesibel-untuk-pembelajaran-digital-wcag/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Desain Aksesibel untuk Pembelajaran Digital: Panduan WCAG</span></a><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

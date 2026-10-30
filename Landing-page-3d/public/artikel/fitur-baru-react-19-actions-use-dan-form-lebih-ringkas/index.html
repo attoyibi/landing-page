@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas</title>
+<meta name="description" content="Ringkasan fitur React 19: Actions, useActionState, useOptimistic, hook use, ref sebagai props, metadata dokumen, dan perubahan pada kode lama.">
+<meta name="keywords" content="React 19, Actions, useActionState, useOptimistic, fitur baru React">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/">
+<meta property="og:title" content="Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas">
+<meta property="og:description" content="Ringkasan fitur React 19: Actions, useActionState, useOptimistic, hook use, ref sebagai props, metadata dokumen, dan perubahan pada kode lama.">
+<meta property="og:image" content="https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas">
+<meta name="twitter:description" content="Ringkasan fitur React 19: Actions, useActionState, useOptimistic, hook use, ref sebagai props, metadata dokumen, dan perubahan pada kode lama.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas","description":"Ringkasan fitur React 19: Actions, useActionState, useOptimistic, hook use, ref sebagai props, metadata dokumen, dan perubahan pada kode lama.","image":["https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"React 19, Actions, useActionState, useOptimistic, fitur baru React","articleSection":"React & Web Modern","wordCount":442,"mainEntityOfPage":"https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas","item":"https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apakah kode React 18 saya otomatis rusak?","acceptedAnswer":{"@type":"Answer","text":"Sebagian besar berjalan, tetapi ada API yang dihapus (misalnya propTypes dan defaultProps pada fungsi); ikuti panduan peningkatan dan codemod."}},{"@type":"Question","name":"Apa itu Server Actions?","acceptedAnswer":{"@type":"Answer","text":"Fungsi yang berjalan di server dan dipanggil dari komponen (didukung framework seperti Next.js); aman karena logika dan rahasia tidak dikirim ke klien."}},{"@type":"Question","name":"Apakah wajib memakai fitur baru?","acceptedAnswer":{"@type":"Answer","text":"Tidak. Kode lama tetap valid; adopsi bertahap pada form dan alur asinkron yang paling banyak boilerplate-nya."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#actions-fungsi-asinkron-untuk-perubahan-data">Actions: fungsi asinkron untuk perubahan data</a></li><li><a href="#useactionstate-status-galat-dan-hasil">useActionState: status, galat, dan hasil</a></li><li><a href="#useformstatus-tombol-yang-tahu-form-nya-sedang-mengirim">useFormStatus: tombol yang tahu form-nya sedang mengirim</a></li><li><a href="#useoptimistic-tampil-instan-kembalikan-bila-gagal">useOptimistic: tampil instan, kembalikan bila gagal</a></li><li><a href="#hook-use-membaca-promise-dan-context-saat-render">Hook use: membaca Promise dan Context saat render</a></li><li><a href="#perbaikan-kecil-yang-terasa">Perbaikan kecil yang terasa</a></li><li><a href="#hal-yang-perlu-diperhatikan-saat-meningkatkan-versi">Hal yang perlu diperhatikan saat meningkatkan versi</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas</h1>
+<p class="lead">React 19 membawa perubahan terbesar pada cara menangani form dan operasi asinkron sejak hooks diperkenalkan. Banyak kode boilerplate untuk status "mengirim", galat, dan pembaruan optimistis berubah menjadi beberapa baris. Materi ini merangkum fitur utama, dengan fokus pada apa yang berubah dalam pekerjaan sehari-hari.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> React hooks, form React, async/await</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Fitur Baru React 19: Actions, use, dan Form Lebih Ringkas" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan konsep Actions dan transisi asinkron</li><li>memakai useActionState untuk form dengan status pending dan galat</li><li>memakai useOptimistic untuk pembaruan instan</li><li>memahami hook use, ref sebagai props, dan metadata dokumen</li><li>mengenali perubahan yang dapat memengaruhi kode lama</li></ul></div>
+<div class="callout info"><b>Catatan ruang lingkup</b><p>Fitur di bawah ini tersedia di React 19 (proyek ini sendiri memakai React 19). Beberapa bagian yang bergantung pada server (Server Actions, Server Components) memerlukan framework yang mendukungnya, seperti Next.js; bagian lain berjalan di aplikasi klien biasa.</p></div>
+<h2 id="actions-fungsi-asinkron-untuk-perubahan-data">Actions: fungsi asinkron untuk perubahan data</h2>
+<p><b>Action</b> adalah fungsi (sering asinkron) yang dijalankan di dalam <i>transisi</i> sehingga React mengelola status pending, galat, dan urutan pembaruan untuk Anda. Pada <code>&lt;form&gt;</code>, atribut <code>action</code> kini dapat menerima fungsi.</p>
+<figure class="codebox"><pre data-lang="jsx"><code>// React 18: banyak state manual
+function Lama() {
+    const [nama, setNama] = useState('');
+    const [kirim, setKirim] = useState(false);
+    const [galat, setGalat] = useState(null);
+    async function onSubmit(e) {
+        e.preventDefault(); setKirim(true); setGalat(null);
+        try { await simpanNama(nama); } catch (x) { setGalat(x.message); }
+        setKirim(false);
+    }
+    return &lt;form onSubmit={onSubmit}&gt;...&lt;/form&gt;;
+}
+
+// React 19: action pada form; data form diterima sebagai FormData
+function Baru() {
+    async function simpan(formData) {
+        await simpanNama(formData.get('nama'));
+    }
+    return (
+        &lt;form action={simpan}&gt;
+            &lt;input name=&quot;nama&quot; /&gt;
+            &lt;button type=&quot;submit&quot;&gt;Simpan&lt;/button&gt;
+        &lt;/form&gt;
+    );
+}   // setelah action sukses, form tak terkendali direset otomatis</code></pre><figcaption>Form tak terkendali dengan FormData kembali menjadi cara yang sederhana dan cukup untuk banyak kasus.</figcaption></figure>
+<h2 id="useactionstate-status-galat-dan-hasil">useActionState: status, galat, dan hasil</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useActionState } from 'react';
+
+async function daftarAksi(stateSebelumnya, formData) {
+    const surel = formData.get('surel');
+    if (!surel.includes('@')) return { galat: 'Surel tidak valid', sukses: false };
+    await kirimKeServer(surel);
+    return { galat: null, sukses: true };
+}
+
+function FormDaftar() {
+    const [hasil, aksi, sedangKirim] = useActionState(daftarAksi, { galat: null, sukses: false });
+
+    return (
+        &lt;form action={aksi}&gt;
+            &lt;input name=&quot;surel&quot; type=&quot;email&quot; aria-invalid={!!hasil.galat} /&gt;
+            &lt;button disabled={sedangKirim}&gt;{sedangKirim ? 'Mengirim...' : 'Daftar'}&lt;/button&gt;
+            {hasil.galat &amp;&amp; &lt;p role=&quot;alert&quot;&gt;{hasil.galat}&lt;/p&gt;}
+            {hasil.sukses &amp;&amp; &lt;p&gt;Terima kasih sudah mendaftar!&lt;/p&gt;}
+        &lt;/form&gt;
+    );
+}</code></pre><figcaption>useActionState mengembalikan [state terbaru, fungsi aksi untuk form, status sedang berjalan]. Fungsi aksi menerima state sebelumnya dan FormData, dan nilai kembaliannya menjadi state berikutnya.</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Gagasan useActionState: reducer asinkron (stateSebelumnya, input) -&gt; state baru
+async function jalankan(aksi, state, input) {
+    const mulai = Date.now();
+    const hasil = await aksi(state, input);
+    return { hasil, pending: false };
+}
+async function daftarAksi(sebelumnya, data) {
+    if (!data.surel.includes('@')) return { galat: 'Surel tidak valid', sukses: false };
+    await new Promise(r =&gt; setTimeout(r, 10));            // seolah menyimpan ke server
+    return { galat: null, sukses: true };
+}
+(async () =&gt; {
+    let state = { galat: null, sukses: false };
+    for (const surel of ['salah', 'ani@contoh.id']) {
+        const r = await jalankan(daftarAksi, state, { surel });
+        state = r.hasil;
+        console.log(surel.padEnd(14), '-&gt;', JSON.stringify(state));
+    }
+})();</code></pre><pre class="runout" data-lang="keluaran"><code>salah          -&gt; {&quot;galat&quot;:&quot;Surel tidak valid&quot;,&quot;sukses&quot;:false}
+ani@contoh.id  -&gt; {&quot;galat&quot;:null,&quot;sukses&quot;:true}</code></pre></figure>
+<h2 id="useformstatus-tombol-yang-tahu-form-nya-sedang-mengirim">useFormStatus: tombol yang tahu form-nya sedang mengirim</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useFormStatus } from 'react-dom';
+
+function TombolKirim({ children }) {
+    const { pending } = useFormStatus();           // membaca status form induk terdekat; tanpa props
+    return &lt;button type=&quot;submit&quot; disabled={pending}&gt;{pending ? 'Mengirim...' : children}&lt;/button&gt;;
+}
+
+// &lt;form action={aksi}&gt;&lt;input name=&quot;x&quot; /&gt;&lt;TombolKirim&gt;Simpan&lt;/TombolKirim&gt;&lt;/form&gt;</code></pre><figcaption>Komponen tombol dapat dipakai di form mana pun tanpa menerima props status.</figcaption></figure>
+<h2 id="useoptimistic-tampil-instan-kembalikan-bila-gagal">useOptimistic: tampil instan, kembalikan bila gagal</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { useOptimistic, useState } from 'react';
+
+function DaftarKomentar({ komentar, kirimKomentar }) {
+    const [terlihat, tambahSementara] = useOptimistic(
+        komentar,
+        (sekarang, baru) =&gt; [...sekarang, { ...baru, mengirim: true }],     // tampilan sementara
+    );
+
+    async function aksi(formData) {
+        const baru = { id: crypto.randomUUID(), teks: formData.get('teks') };
+        tambahSementara(baru);                       // langsung muncul di layar
+        await kirimKeServer(baru);                    // bila gagal, tampilan kembali ke &quot;komentar&quot; asli
+        kirimKomentar(baru);
+    }
+
+    return (
+        &lt;&gt;
+            &lt;ul&gt;{terlihat.map(k =&gt; &lt;li key={k.id} style={{ opacity: k.mengirim ? 0.5 : 1 }}&gt;{k.teks}&lt;/li&gt;)}&lt;/ul&gt;
+            &lt;form action={aksi}&gt;&lt;input name=&quot;teks&quot; /&gt;&lt;button&gt;Kirim&lt;/button&gt;&lt;/form&gt;
+        &lt;/&gt;
+    );
+}</code></pre><figcaption>Pengguna melihat komentarnya muncul seketika (dengan penanda "mengirim"). Bila permintaan gagal, nilai optimistis otomatis dibuang dan tampilan kembali sesuai data sebenarnya.</figcaption></figure>
+<h2 id="hook-use-membaca-promise-dan-context-saat-render">Hook use: membaca Promise dan Context saat render</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>import { use, Suspense } from 'react';
+
+function Profil({ janjiPengguna }) {
+    const pengguna = use(janjiPengguna);            // menangguhkan komponen sampai Promise selesai
+    return &lt;h1&gt;{pengguna.nama}&lt;/h1&gt;;
+}
+
+function Halaman({ janjiPengguna }) {
+    return (
+        &lt;Suspense fallback={&lt;p&gt;Memuat profil...&lt;/p&gt;}&gt;
+            &lt;Profil janjiPengguna={janjiPengguna} /&gt;
+        &lt;/Suspense&gt;
+    );
+}
+// use() juga bisa dipakai di dalam kondisi/perulangan (tidak seperti hook lain) dan membaca Context: use(TemaContext)</code></pre><figcaption>Promise yang diberikan harus stabil antar render (dibuat di luar render atau di-cache), bukan dibuat baru di dalam komponen yang memanggil use.</figcaption></figure>
+<h2 id="perbaikan-kecil-yang-terasa">Perbaikan kecil yang terasa</h2>
+<table><thead><tr><th>Perubahan</th><th>Sebelum</th><th>React 19</th></tr></thead><tbody><tr><td>ref sebagai props</td><td>forwardRef untuk meneruskan ref</td><td>ref langsung menjadi props biasa pada komponen fungsi</td></tr><tr><td>Provider Context</td><td><Konteks.Provider value></td><td><Konteks value> (Provider boleh ditulis langsung sebagai konteks)</td></tr><tr><td>Metadata dokumen</td><td>react-helmet atau efek manual</td><td><title>, <meta>, <link> di komponen otomatis diangkat ke <head></td></tr><tr><td>Cleanup ref</td><td>ref callback tak punya cleanup</td><td>ref callback boleh mengembalikan fungsi cleanup</td></tr><tr><td>Pesan galat hidrasi</td><td>Sulit dibaca</td><td>Satu pesan dengan selisih yang jelas</td></tr><tr><td>Custom Elements</td><td>Dukungan parsial</td><td>Dukungan penuh (props dan atribut)</td></tr></tbody></table>
+<h2 id="hal-yang-perlu-diperhatikan-saat-meningkatkan-versi">Hal yang perlu diperhatikan saat meningkatkan versi</h2>
+<ul><li><b>API yang dihapus</b>: propTypes dan defaultProps untuk komponen fungsi, string refs, ReactDOM.render (gunakan createRoot), dan test-utils lama.</li><li><b>Jalankan codemod</b> resmi dan baca panduan peningkatan sebelum mengganti versi.</li><li><b>Periksa dependensi</b>: pustaka pihak ketiga mungkin perlu versi yang kompatibel dengan React 19.</li><li><b>Perubahan perilaku</b> pada StrictMode dan penanganan galat; jalankan tes dan periksa konsol.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Atribut action pada \u003cform> di React 19 dapat menerima...","options":["Fungsi","Hanya URL","Hanya string"],"answer":0,"why":"Fungsi action dijalankan dengan FormData."},{"q":"Hook yang mengembalikan [state, aksi, sedangKirim]?","options":["useActionState","useState","useReducer"],"answer":0,"why":"Mengelola hasil dan pending action."},{"q":"useOptimistic berguna untuk...","options":["Menampilkan perubahan seketika sebelum server menjawab","Mempercepat server","Mengurangi bundel"],"answer":0,"why":"Dibatalkan otomatis bila gagal."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Ubah form login dengan tiga state manual menjadi memakai useActionState.</summary><div>Pindahkan logika submit ke fungsi aksi (state, formData) yang mengembalikan {galat}; pakai [hasil, aksi, pending] dan form action={aksi}.</div></details><details><summary>2. Mengapa Promise untuk use() tidak boleh dibuat di dalam komponen yang memanggilnya?</summary><div>Setiap render membuat Promise baru sehingga komponen menangguhkan terus; buat di luar atau di-cache.</div></details><details><summary>3. Apa pengganti forwardRef di React 19?</summary><div>Cukup menerima ref sebagai props biasa di komponen fungsi.</div></details><details><summary>4. Kapan useOptimistic kurang tepat?</summary><div>Untuk aksi berisiko tinggi atau sering gagal (pembayaran) yang membuat pengguna salah mengira sudah berhasil.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Actions: fungsi asinkron pada form; React mengelola pending, galat, dan urutan.</li><li>useActionState, useFormStatus, dan useOptimistic memangkas boilerplate form.</li><li>use() membaca Promise dan Context saat render dengan Suspense.</li><li>ref sebagai props, metadata dokumen, dan peningkatan lain; periksa API yang dihapus saat meningkatkan.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apakah kode React 18 saya otomatis rusak?</summary><div>Sebagian besar berjalan, tetapi ada API yang dihapus (misalnya propTypes dan defaultProps pada fungsi); ikuti panduan peningkatan dan codemod.</div></details>
+<details class="faq"><summary>Apa itu Server Actions?</summary><div>Fungsi yang berjalan di server dan dipanggil dari komponen (didukung framework seperti Next.js); aman karena logika dan rahasia tidak dikirim ke klien.</div></details>
+<details class="faq"><summary>Apakah wajib memakai fitur baru?</summary><div>Tidak. Kode lama tetap valid; adopsi bertahap pada form dan alur asinkron yang paling banyak boilerplate-nya.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/blog/2024/12/05/react-19" rel="noopener" target="_blank">React 19 Blog Post</a></li><li><a href="https://react.dev/reference/react/useActionState" rel="noopener" target="_blank">React: useActionState</a></li><li><a href="https://react.dev/reference/react/useOptimistic" rel="noopener" target="_blank">React: useOptimistic</a></li><li><a href="https://react.dev/blog/2024/04/25/react-19-upgrade-guide" rel="noopener" target="_blank">React 19 Upgrade Guide</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

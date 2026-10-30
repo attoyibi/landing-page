@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vite + React: Setup Proyek, Struktur Folder, dan Env</title>
+<meta name="description" content="Panduan memulai proyek React dengan Vite: perintah pembuatan, struktur folder yang rapi, variabel environment, alias impor, build produksi, dan kesalahan setup yang umum.">
+<meta name="keywords" content="Vite, setup React, struktur folder, environment variable, build produksi">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/">
+<meta property="og:title" content="Vite + React: Setup Proyek, Struktur Folder, dan Env">
+<meta property="og:description" content="Panduan memulai proyek React dengan Vite: perintah pembuatan, struktur folder yang rapi, variabel environment, alias impor, build produksi, dan kesalahan setup yang umum.">
+<meta property="og:image" content="https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:section" content="React &amp; Web Modern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vite + React: Setup Proyek, Struktur Folder, dan Env">
+<meta name="twitter:description" content="Panduan memulai proyek React dengan Vite: perintah pembuatan, struktur folder yang rapi, variabel environment, alias impor, build produksi, dan kesalahan setup yang umum.">
+<meta name="twitter:image" content="https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Vite + React: Setup Proyek, Struktur Folder, dan Env","description":"Panduan memulai proyek React dengan Vite: perintah pembuatan, struktur folder yang rapi, variabel environment, alias impor, build produksi, dan kesalahan setup yang umum.","image":["https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/cover.png"],"datePublished":"2026-10-30","dateModified":"2026-10-30","inLanguage":"id","keywords":"Vite, setup React, struktur folder, environment variable, build produksi","articleSection":"React & Web Modern","wordCount":500,"mainEntityOfPage":"https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Beranda","item":"https://muchson.web.id/"},{"@type":"ListItem","position":2,"name":"Artikel","item":"https://muchson.web.id/artikel/"},{"@type":"ListItem","position":3,"name":"Vite + React: Setup Proyek, Struktur Folder, dan Env","item":"https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Apa bedanya Vite dan Next.js?","acceptedAnswer":{"@type":"Answer","text":"Vite adalah alat build/dev untuk SPA (atau pustaka lain); Next.js adalah framework penuh dengan routing, SSR, dan optimasi bawaan."}},{"@type":"Question","name":"Apakah masih ada Create React App?","acceptedAnswer":{"@type":"Answer","text":"Sudah tidak dipelihara aktif dan tidak lagi direkomendasikan; React docs menyarankan framework atau Vite."}},{"@type":"Question","name":"Bagaimana menambah ESLint dan Prettier?","acceptedAnswer":{"@type":"Answer","text":"Templat Vite menyertakan ESLint; tambahkan Prettier dan skrip lint/format, lalu jalankan otomatis dengan hook Git (husky) atau CI."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<div class="wrap">
+<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-vite">Mengapa Vite</a></li><li><a href="#membuat-proyek">Membuat proyek</a></li><li><a href="#struktur-folder-yang-tumbuh-dengan-sehat">Struktur folder yang tumbuh dengan sehat</a></li><li><a href="#variabel-environment">Variabel environment</a></li><li><a href="#konfigurasi-dasar-dan-alias-impor">Konfigurasi dasar dan alias impor</a></li><li><a href="#build-produksi-dan-mengujinya">Build produksi dan mengujinya</a></li><li><a href="#deploy-yang-perlu-diingat">Deploy: yang perlu diingat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
+<article id="isi">
+<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
+<a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
+<h1>Vite + React: Setup Proyek, Struktur Folder, dan Env</h1>
+<p class="lead">Create React App sudah tidak lagi direkomendasikan. Vite menjadi pilihan standar untuk proyek React baru karena server pengembangan hampir instan dan build produksi yang efisien. Materi ini membawa Anda dari nol sampai proyek yang rapi, siap dikembangkan dan dideploy.</p>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<p class="prereq"><b>Sebaiknya sudah paham:</b> Node.js terpasang, JavaScript dasar</p>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Vite + React: Setup Proyek, Struktur Folder, dan Env" fetchpriority="high"></figure>
+<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat proyek React dengan Vite dan memahami berkas yang dihasilkan</li><li>mengatur struktur folder yang terukur untuk proyek berkembang</li><li>memakai variabel environment dengan benar dan aman</li><li>mengatur alias impor dan variabel konfigurasi dasar</li><li>membangun dan menguji hasil produksi secara lokal</li></ul></div>
+<h2 id="mengapa-vite">Mengapa Vite</h2>
+<p>Vite memakai modul ES native di browser selama pengembangan, jadi tidak perlu membundel seluruh aplikasi sebelum bisa dibuka; hanya berkas yang diminta yang diproses (dengan esbuild yang sangat cepat). Hasilnya: server dev menyala hampir seketika dan pembaruan modul panas (HMR) terasa instan. Untuk produksi, Vite membundel dengan Rollup.</p>
+<h2 id="membuat-proyek">Membuat proyek</h2>
+<figure class="codebox"><pre data-lang="bash"><code>npm create vite@latest aplikasi-saya -- --template react
+cd aplikasi-saya
+npm install
+npm run dev        # server pengembangan, biasanya di http://localhost:5173
+npm run build      # hasil produksi ke folder dist/
+npm run preview    # menjalankan hasil build secara lokal untuk diuji</code></pre><figcaption>Untuk TypeScript pakai --template react-ts. Pastikan Node.js versi LTS terbaru terpasang.</figcaption></figure>
+<figure class="codebox"><pre data-lang="text"><code>aplikasi-saya/
+├── index.html            # titik masuk (Vite memakai HTML sebagai pintu masuk)
+├── package.json          # dependensi dan skrip
+├── vite.config.js        # konfigurasi Vite
+├── public/               # berkas statis yang disalin apa adanya (favicon, robots.txt)
+└── src/
+    ├── main.jsx          # memasang komponen akar ke #root
+    ├── App.jsx
+    └── assets/           # gambar dan font yang diimpor dari kode</code></pre></figure>
+<table><thead><tr><th>Folder</th><th>Isi</th><th>Aturan</th></tr></thead><tbody><tr><td>public/</td><td>Berkas yang diakses langsung lewat alamat tetap (/robots.txt, /favicon.svg)</td><td>Tidak diproses atau diberi hash</td></tr><tr><td>src/assets/</td><td>Gambar, font, dan berkas yang diimpor di kode</td><td>Diproses, diberi hash nama (cache-busting), dioptimalkan</td></tr><tr><td>index.html</td><td>Berada di akar, bukan di public/</td><td>Tempat title, meta, dan script modul</td></tr></tbody></table>
+<h2 id="struktur-folder-yang-tumbuh-dengan-sehat">Struktur folder yang tumbuh dengan sehat</h2>
+<p>Tidak ada struktur tunggal yang benar, tetapi satu pedoman bertahan baik: <b>kelompokkan menurut fitur, bukan menurut jenis berkas</b>. Mengelompokkan semua komponen di satu folder dan semua hook di folder lain membuat Anda berlari-lari antar folder untuk satu fitur.</p>
+<figure class="codebox"><pre data-lang="text"><code>src/
+├── app/                  # inisialisasi aplikasi: router, provider, tata letak global
+│   ├── App.jsx
+│   └── router.jsx
+├── fitur/                # satu folder per fitur
+│   ├── keranjang/
+│   │   ├── KeranjangPanel.jsx
+│   │   ├── useKeranjang.js
+│   │   ├── keranjangReducer.js
+│   │   └── keranjang.test.js
+│   └── produk/
+│       ├── DaftarProduk.jsx
+│       ├── api.js
+│       └── ...
+├── komponen/             # komponen UI generik yang dipakai lintas fitur (Tombol, Modal)
+├── lib/                  # fungsi bantu murni (format, validasi), klien API
+└── main.jsx</code></pre><figcaption>Aturan sederhana: kode yang dipakai hanya oleh satu fitur tinggal di folder fitur itu; naikkan ke komponen/ atau lib/ hanya bila benar-benar dipakai bersama.</figcaption></figure>
+<h2 id="variabel-environment">Variabel environment</h2>
+<p>Vite hanya mengekspos variabel berawalan <code>VITE_</code> ke kode klien, lewat <code>import.meta.env</code>. Variabel tanpa awalan itu tetap rahasia di mesin build.</p>
+<figure class="codebox"><pre data-lang="bash"><code># .env                 (dikomit: nilai bawaan yang tidak rahasia)
+VITE_API_URL=https://api.contoh.id
+
+# .env.local           (TIDAK dikomit: nilai khusus mesin Anda)
+VITE_API_URL=http://localhost:8000
+
+# .env.production      (dipakai saat npm run build)
+VITE_API_URL=https://api.contoh.id</code></pre></figure>
+<figure class="codebox"><pre data-lang="jsx"><code>// src/lib/api.js
+const dasar = import.meta.env.VITE_API_URL;            // diganti dengan nilainya saat build
+export const ambilProduk = () =&gt; fetch(dasar + '/produk').then(r =&gt; r.json());
+
+console.log(import.meta.env.MODE);                      // 'development' atau 'production'
+console.log(import.meta.env.DEV, import.meta.env.PROD); // boolean</code></pre></figure>
+<div class="callout warn"><b>Bukan tempat rahasia</b><p><b>Semua yang berawalan VITE_ akan terlihat oleh siapa pun</b> yang membuka aplikasi Anda (ia disisipkan ke JavaScript klien). Jangan pernah menaruh kunci rahasia (kunci API privat, kata sandi basis data) di variabel VITE_. Rahasia harus berada di server. Tambahkan <code>.env.local</code> ke <code>.gitignore</code>.</p></div>
+<h2 id="konfigurasi-dasar-dan-alias-impor">Konfigurasi dasar dan alias impor</h2>
+<figure class="codebox"><pre data-lang="jsx"><code>// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
+
+export default defineConfig({
+    plugins: [react()],
+    resolve: {
+        alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },   // import '@/lib/api' bukan '../../../lib/api'
+    },
+    server: {
+        port: 5173,
+        proxy: { '/api': 'http://localhost:8000' },                          // hindari CORS saat pengembangan
+    },
+    build: { sourcemap: true },
+});</code></pre><figcaption>Proxy pengembangan meneruskan permintaan /api ke server backend sehingga browser menganggapnya satu asal dan tidak memicu masalah CORS.</figcaption></figure>
+<h2 id="build-produksi-dan-mengujinya">Build produksi dan mengujinya</h2>
+<figure class="codebox"><pre data-lang="bash"><code>npm run build        # hasil di dist/: HTML, JS, CSS dengan nama berhash
+npm run preview      # menyajikan dist/ secara lokal, mendekati produksi
+
+dist/
+├── index.html
+└── assets/
+    ├── index-Dk3fA9xQ.js     # hash berubah bila isi berubah -&gt; cache browser aman
+    └── index-B1x2yZ0a.css</code></pre><figcaption>Nama berhash membuat berkas dapat di-cache selamanya oleh browser dan CDN; saat isi berubah, nama berubah sehingga pengguna otomatis mendapat versi baru.</figcaption></figure>
+<figure class="codebox"><pre data-lang="javascript"><code>// Mengapa nama berkas diberi hash isi: perubahan isi -&gt; nama berubah -&gt; cache aman
+const crypto = require('node:crypto');
+const hash = isi =&gt; crypto.createHash('sha256').update(isi).digest('base64url').slice(0, 8);
+const versi1 = 'console.log(&quot;halo&quot;)';
+const versi2 = 'console.log(&quot;halo dunia&quot;)';
+console.log('index-' + hash(versi1) + '.js');
+console.log('index-' + hash(versi1) + '.js  (isi sama -&gt; nama sama, cache dipakai)');
+console.log('index-' + hash(versi2) + '.js  (isi berubah -&gt; nama baru, unduh ulang)');</code></pre><pre class="runout" data-lang="keluaran"><code>index-EjisYhh2.js
+index-EjisYhh2.js  (isi sama -&gt; nama sama, cache dipakai)
+index-Qt5D56fr.js  (isi berubah -&gt; nama baru, unduh ulang)</code></pre></figure>
+<h2 id="deploy-yang-perlu-diingat">Deploy: yang perlu diingat</h2>
+<ul><li><b>SPA fallback</b>: bila memakai routing sisi klien, host harus mengembalikan index.html untuk alamat yang tidak ditemukan (Cloudflare Pages/Workers, Vercel, dan Netlify memiliki pengaturannya).</li><li><b>Variabel environment</b> produksi diatur di dashboard host sebelum build, karena nilainya disisipkan saat build.</li><li><b>base</b>: bila aplikasi ditaruh di subfolder (misalnya GitHub Pages), atur <code>base</code> di vite.config.</li><li><b>Periksa ukuran bundel</b> dengan plugin visualisasi sebelum merilis.</li></ul>
+<div data-w="checklist"><script type="application/json">{"title":"Setelah membuat proyek","items":[".gitignore memuat node_modules, dist, dan .env.local.","README menjelaskan cara menjalankan (npm install, npm run dev).","Struktur fitur disepakati sebelum kode bertambah banyak.","Tidak ada rahasia di variabel VITE_.","npm run build dan npm run preview berjalan bersih.","Linter (ESLint) dan pemformat (Prettier) terpasang dan dijalankan otomatis."]}</script></div>
+<div data-w="quiz"><script type="application/json">{"title":"Kuis singkat","questions":[{"q":"Variabel environment yang terbaca di kode klien Vite harus berawalan...","options":["VITE_","REACT_APP_","PUBLIC_"],"answer":0,"why":"Hanya itu yang diekspos ke klien."},{"q":"Mengapa nama berkas hasil build berhash?","options":["Agar cache aman: isi berubah, nama berubah","Agar rahasia","Agar kecil"],"answer":0,"why":"Memungkinkan cache jangka panjang."},{"q":"Perintah untuk menguji hasil build lokal?","options":["npm run preview","npm run dev","npm start"],"answer":0,"why":"Menyajikan dist/ seperti di produksi."}]}</script></div>
+<div class="exercise"><b>Latihan mandiri</b><details><summary>1. Mengapa .env.local tidak boleh dikomit?</summary><div>Berisi nilai khusus mesin atau rahasia pribadi; tambahkan ke .gitignore.</div></details><details><summary>2. Kapan berkas ditaruh di public/ dan kapan di src/assets/?</summary><div>public/ untuk berkas dengan alamat tetap (robots.txt, favicon); src/assets/ untuk berkas yang diimpor dan perlu hash serta optimasi.</div></details><details><summary>3. Apa gunanya proxy di server dev?</summary><div>Meneruskan /api ke backend sehingga tidak ada masalah CORS saat pengembangan.</div></details><details><summary>4. Mengapa struktur berdasarkan fitur lebih mudah dirawat?</summary><div>Semua file satu fitur berdekatan; mengubah atau menghapus fitur cukup menyentuh satu folder.</div></details><small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>
+<div class="callout good"><b>Ringkasan</b><ul><li>Vite: server dev cepat, build produksi dengan Rollup; buat dengan npm create vite.</li><li>Struktur folder berdasarkan fitur; komponen generik di komponen/, fungsi bantu di lib/.</li><li>Variabel VITE_ terlihat publik: tidak untuk rahasia.</li><li>Uji hasil build dengan preview; siapkan SPA fallback dan variabel environment di host.</li></ul></div>
+<h2 id="tanya-jawab">Tanya jawab</h2>
+<details class="faq"><summary>Apa bedanya Vite dan Next.js?</summary><div>Vite adalah alat build/dev untuk SPA (atau pustaka lain); Next.js adalah framework penuh dengan routing, SSR, dan optimasi bawaan.</div></details>
+<details class="faq"><summary>Apakah masih ada Create React App?</summary><div>Sudah tidak dipelihara aktif dan tidak lagi direkomendasikan; React docs menyarankan framework atau Vite.</div></details>
+<details class="faq"><summary>Bagaimana menambah ESLint dan Prettier?</summary><div>Templat Vite menyertakan ESLint; tambahkan Prettier dan skrip lint/format, lalu jalankan otomatis dengan hook Git (husky) atau CI.</div></details>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://vite.dev/guide/" rel="noopener" target="_blank">Vite: Getting Started</a></li><li><a href="https://vite.dev/guide/env-and-mode" rel="noopener" target="_blank">Vite: Env Variables and Modes</a></li><li><a href="https://react.dev/learn/build-a-react-app-from-scratch" rel="noopener" target="_blank">React: Build a React app from scratch / Start a new project</a></li><li><a href="https://nodejs.org/en/about/previous-releases" rel="noopener" target="_blank">Node.js: Releases</a></li></ul>
+<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
+<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
+<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+</article>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
