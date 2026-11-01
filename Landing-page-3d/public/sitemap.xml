@@ -177,16 +177,22 @@
     <loc>https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/blue-light-glasses-effective-or-myth/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-plus-dan-presbiopi-kacamata-baca/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-plus-dan-presbiopi-kacamata-baca/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/farsightedness-and-presbyopia-reading-glasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-lelah-akibat-layar-cara-mengatasi/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-lelah-akibat-layar-cara-mengatasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/screen-eye-strain-causes-and-9-fixes/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/posisi-layar-dan-ergonomi-mata/</loc>
@@ -206,6 +212,8 @@
     <loc>https://muchson.web.id/artikel/minus-anak-bertambah-cepat-cara-memperlambat/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/minus-anak-bertambah-cepat-cara-memperlambat/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/childs-myopia-increasing-fast-how-to-slow-it/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/memilih-frame-kacamata-sesuai-bentuk-wajah/</loc>
@@ -281,6 +289,8 @@
     <loc>https://muchson.web.id/artikel/mitos-dan-fakta-seputar-mata-minus/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mitos-dan-fakta-seputar-mata-minus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-myths-and-facts/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kacamata-hitam-uv400-penting-untuk-mata/</loc>
@@ -321,11 +331,15 @@
     <loc>https://muchson.web.id/artikel/lasik-syarat-risiko-dan-alternatifnya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lasik-syarat-risiko-dan-alternatifnya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lasik-requirements-risks-and-alternatives/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/tanda-bahaya-mata-yang-tidak-boleh-ditunda/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/tanda-bahaya-mata-yang-tidak-boleh-ditunda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/eye-warning-signs-you-must-not-delay/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/nutrisi-untuk-kesehatan-mata-yang-masuk-akal/</loc>
@@ -2248,5 +2262,54 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/freelance-pertama-cara-mendapat-klien-dan-menentukan-harga/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/first-freelance-finding-clients-and-setting-prices/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/blue-light-glasses-effective-or-myth/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/blue-light-glasses-effective-or-myth/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/farsightedness-and-presbyopia-reading-glasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-plus-dan-presbiopi-kacamata-baca/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/farsightedness-and-presbyopia-reading-glasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/screen-eye-strain-causes-and-9-fixes/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-lelah-akibat-layar-cara-mengatasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/screen-eye-strain-causes-and-9-fixes/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/childs-myopia-increasing-fast-how-to-slow-it/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/minus-anak-bertambah-cepat-cara-memperlambat/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/childs-myopia-increasing-fast-how-to-slow-it/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/myopia-myths-and-facts/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mitos-dan-fakta-seputar-mata-minus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-myths-and-facts/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/lasik-requirements-risks-and-alternatives/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lasik-syarat-risiko-dan-alternatifnya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lasik-requirements-risks-and-alternatives/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/eye-warning-signs-you-must-not-delay/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/tanda-bahaya-mata-yang-tidak-boleh-ditunda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/eye-warning-signs-you-must-not-delay/"/>
   </url>
 </urlset>

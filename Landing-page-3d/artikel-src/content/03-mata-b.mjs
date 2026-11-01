@@ -164,6 +164,12 @@ export default [
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Apa yang membuat minus pada anak sering naik?', options: ['Memakai kacamata', 'Bola mata yang bertumbuh', 'Makan terlalu sedikit wortel'], answer: 1, why: 'Pertumbuhan bola mata memengaruhi ukuran minus.' }, { q: 'Latihan mata ajaib, apakah terbukti menyembuhkan minus?', options: ['Ya, setelah rutin 3 bulan', 'Tidak ada bukti yang kuat', 'Hanya untuk anak'], answer: 1, why: 'Belum ada bukti kuat bahwa latihan mengubah bentuk bola mata.' }, { q: 'Apakah memakai kacamata membuat mata bergantung?', options: ['Ya', 'Tidak', 'Hanya pada orang dewasa'], answer: 1, why: 'Kacamata hanya mengoreksi, tidak membuat mata lebih buruk.' }] },
             { callout: 'Informasi ini bersifat umum dan edukatif. Untuk keputusan tentang perawatan, termasuk LASIK dan terapi anak, konsultasikan dengan dokter spesialis mata.', kind: 'info', title: 'Catatan' },
         ],
+        takeaways: [
+            'Wortel, latihan mata, dan duduk dekat televisi tidak menyembuhkan atau menyebabkan minus, dan kacamata tidak membuat minus naik.',
+            'Membaca di tempat gelap hanya melelahkan mata sementara; tidak ada bukti merusak permanen.',
+            'Minus sebagian diwariskan, dan faktor yang bisa diubah (waktu di luar ruangan, kebiasaan jarak dekat) layak menjadi fokus.',
+            'LASIK mengoreksi kelengkungan kornea; ia tidak mencegah penuaan mata atau penyakit mata lain, dan tidak cocok untuk semua orang.',
+        ],
         faq: [['Makanan apa yang baik untuk mata?', 'Pola makan seimbang dengan sayur berwarna, buah, ikan, dan telur mendukung kesehatan mata secara umum. Tidak ada makanan tunggal yang menyembuhkan minus.'], ['Apakah mata minus bisa membaik sendiri?', 'Pada umumnya tidak. Minus cenderung stabil atau bertambah. Penurunan minus pada usia lanjut biasanya berkaitan dengan perubahan lensa atau kondisi mata lain, dan perlu diperiksa.'], ['Apakah anak perlu dilarang membaca?', 'Tidak. Cukup beri jeda, cahaya yang baik, jarak wajar, dan waktu di luar ruangan setiap hari.']],
     },
 

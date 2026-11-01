@@ -94,4 +94,11 @@ export const ARTICLES_EN = [
     'ats-friendly-cv-pass-the-first-screening',
     'developer-job-interview-preparation',
     'first-freelance-finding-clients-and-setting-prices',
+    'blue-light-glasses-effective-or-myth',
+    'farsightedness-and-presbyopia-reading-glasses',
+    'screen-eye-strain-causes-and-9-fixes',
+    'childs-myopia-increasing-fast-how-to-slow-it',
+    'myopia-myths-and-facts',
+    'lasik-requirements-risks-and-alternatives',
+    'eye-warning-signs-you-must-not-delay',
 ];
