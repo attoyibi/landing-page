@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Async di Dart: Future, async/await, dan Stream">
 <meta property="article:published_time" content="2026-10-30">
 <meta property="article:section" content="Flutter &amp; Mobile">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,17 +38,19 @@
 <div class="bar" aria-hidden="true"><i></i></div>
 <header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#future-satu-nilai-di-masa-depan">Future: satu nilai di masa depan</a></li><li><a href="#beberapa-future-berurutan-atau-paralel">Beberapa Future: berurutan atau paralel</a></li><li><a href="#stream-banyak-nilai-dari-waktu-ke-waktu">Stream: banyak nilai dari waktu ke waktu</a></li><li><a href="#future-dan-stream-di-antarmuka">Future dan Stream di antarmuka</a></li><li><a href="#pekerjaan-berat-isolate">Pekerjaan berat: isolate</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
-<article id="isi">
+<nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#future-satu-nilai-di-masa-depan">Future: satu nilai di masa depan</a></li><li><a href="#beberapa-future-berurutan-atau-paralel">Beberapa Future: berurutan atau paralel</a></li><li><a href="#stream-banyak-nilai-dari-waktu-ke-waktu">Stream: banyak nilai dari waktu ke waktu</a></li><li><a href="#future-dan-stream-di-antarmuka">Future dan Stream di antarmuka</a></li><li><a href="#pekerjaan-berat-isolate">Pekerjaan berat: isolate</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
 <a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
 <h1>Async di Dart: Future, async/await, dan Stream</h1>
 <p class="lead">Aplikasi seluler menunggu hal-hal lambat sepanjang waktu: jaringan, basis data lokal, berkas, sensor. Bila menunggu itu memblokir, layar membeku. Dart menangani ini dengan Future untuk satu hasil di masa depan dan Stream untuk rangkaian hasil, dengan sintaks async/await yang membuat kode asinkron terbaca seperti kode biasa.</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-30">30 Oktober 2026</time><span aria-hidden="true">·</span><span>2 menit baca</span><span aria-hidden="true">·</span><span class="level">Tingkat: Menengah</span></div>
 <p class="prereq"><b>Sebaiknya sudah paham:</b> dasar Dart, widget Flutter</p>
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Async di Dart: Future, async/await, dan Stream" fetchpriority="high"></figure>
+
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan event loop Dart dan mengapa UI tidak membeku saat menunggu</li><li>memakai Future, async/await, dan menangani error dengan try/catch</li><li>menjalankan beberapa Future paralel dengan Future.wait</li><li>memakai Stream dan memahami perbedaannya dengan Future</li><li>mengenali kapan perlu isolate (Isolate.run/compute) untuk pekerjaan CPU berat</li></ul></div>
-<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<div class="callout info" role="note"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
 <h2 id="future-satu-nilai-di-masa-depan">Future: satu nilai di masa depan</h2>
 <figure class="codebox"><pre data-lang="dart"><code>Future&lt;String&gt; ambilNama(int id) async {
   await Future.delayed(const Duration(milliseconds: 100));      // seolah permintaan jaringan
@@ -108,7 +111,7 @@ void main() async {
 paralel   : ~200 ms [200, 200, 200]
 galat dari Future.wait: Bad state: gagal sengaja</code></pre><figcaption>Untuk beberapa permintaan yang tidak saling bergantung (profil, pesanan, notifikasi), Future.wait mempercepat pemuatan halaman.</figcaption></figure>
 <h2 id="stream-banyak-nilai-dari-waktu-ke-waktu">Stream: banyak nilai dari waktu ke waktu</h2>
-<table><thead><tr><th></th><th>Future</th><th>Stream</th></tr></thead><tbody><tr><td>Jumlah hasil</td><td>Satu (atau galat)</td><td>Nol sampai banyak, lalu selesai</td></tr><tr><td>Contoh</td><td>Satu respons HTTP, membaca satu berkas</td><td>Ketikan pengguna, lokasi GPS, pesan WebSocket, perubahan basis data (Firebase)</td></tr><tr><td>Menunggu</td><td>await</td><td>await for atau listen</td></tr><tr><td>Di Flutter</td><td>FutureBuilder</td><td>StreamBuilder</td></tr></tbody></table>
+<div class="table-wrap"><table><caption class="sr-only">Tabel 1: Stream: banyak nilai dari waktu ke waktu</caption><thead><tr><th scope="col"></th><th scope="col">Future</th><th scope="col">Stream</th></tr></thead><tbody><tr><td>Jumlah hasil</td><td>Satu (atau galat)</td><td>Nol sampai banyak, lalu selesai</td></tr><tr><td>Contoh</td><td>Satu respons HTTP, membaca satu berkas</td><td>Ketikan pengguna, lokasi GPS, pesan WebSocket, perubahan basis data (Firebase)</td></tr><tr><td>Menunggu</td><td>await</td><td>await for atau listen</td></tr><tr><td>Di Flutter</td><td>FutureBuilder</td><td>StreamBuilder</td></tr></tbody></table></div>
 <figure class="codebox"><pre data-lang="dart"><code>import 'dart:async';
 
 Stream&lt;int&gt; hitungMundur(int dari) async* {          // async* + yield menghasilkan aliran
@@ -172,7 +175,7 @@ StreamBuilder&lt;int&gt;(
   builder: (context, snapshot) =&gt; Text(snapshot.hasData ? 'Nilai: ${snapshot.data}' : 'Menunggu...'),
 )</code></pre><figcaption>Tiga keadaan wajib ditangani: memuat, galat, dan data (termasuk kosong). Pengguna yang melihat layar putih tanpa penjelasan adalah pengalaman yang buruk.</figcaption></figure>
 <h2 id="pekerjaan-berat-isolate">Pekerjaan berat: isolate</h2>
-<div class="callout warn"><b>Async bukan paralel</b><p>Dart berjalan pada satu utas dengan event loop; <b>async/await tidak membuat kode CPU-berat menjadi paralel</b>. Mengurai JSON berukuran besar atau memproses gambar di utas utama membuat animasi tersendat. Pindahkan ke isolate: <code>Isolate.run(() => hitungBerat(data))</code> (Dart 2.19+) atau <code>compute()</code> di Flutter. Isolate tidak berbagi memori; data disalin lewat pesan.</p></div>
+<div class="callout warn" role="note"><b>Async bukan paralel</b><p>Dart berjalan pada satu utas dengan event loop; <b>async/await tidak membuat kode CPU-berat menjadi paralel</b>. Mengurai JSON berukuran besar atau memproses gambar di utas utama membuat animasi tersendat. Pindahkan ke isolate: <code>Isolate.run(() => hitungBerat(data))</code> (Dart 2.19+) atau <code>compute()</code> di Flutter. Isolate tidak berbagi memori; data disalin lewat pesan.</p></div>
 <figure class="codebox"><pre data-lang="dart"><code>import 'dart:isolate';
 
 int fibonacci(int n) =&gt; n &lt; 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);   // sengaja mahal
@@ -191,12 +194,13 @@ isolate utama tetap bebas selama menunggu: true</code></pre></figure>
 <details class="faq"><summary>Apa itu microtask dan event queue di Dart?</summary><div>Dua antrean: microtask diproses sebelum event berikutnya; Future biasanya masuk event queue, sedangkan Future.microtask masuk microtask.</div></details>
 <details class="faq"><summary>Apakah ada setara Promise.all?</summary><div>Ya: Future.wait. Setara Promise.allSettled bisa dibuat dengan menangani galat di setiap Future.</div></details>
 <details class="faq"><summary>Bagaimana menangani batas waktu?</summary><div>future.timeout(Duration(seconds: 10), onTimeout: ...) mengembalikan galat TimeoutException atau nilai cadangan.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dart.dev/libraries/async/async-await" rel="noopener" target="_blank">Dart: Asynchronous programming</a></li><li><a href="https://dart.dev/libraries/async/using-streams" rel="noopener" target="_blank">Dart: Streams</a></li><li><a href="https://docs.flutter.dev/perf/isolates" rel="noopener" target="_blank">Flutter: Concurrency and isolates</a></li><li><a href="https://dart.dev/language/concurrency" rel="noopener" target="_blank">Dart: Isolates</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://dart.dev/libraries/async/async-await" rel="noopener noreferrer" target="_blank">Dart: Asynchronous programming<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://dart.dev/libraries/async/using-streams" rel="noopener noreferrer" target="_blank">Dart: Streams<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://docs.flutter.dev/perf/isolates" rel="noopener noreferrer" target="_blank">Flutter: Concurrency and isolates<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://dart.dev/language/concurrency" rel="noopener noreferrer" target="_blank">Dart: Isolates<span class="sr-only"> (membuka tab baru)</span></a></li></ul>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/"><img src="/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>State Management Flutter: Provider, Riverpod, dan Bloc</span></a></div></section>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/"><img src="/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>State Management Flutter: Provider, Riverpod, dan Bloc</span></a></div></section>
 </article>
+</main>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
 <script src="/artikel/_shared/article.js" defer></script>

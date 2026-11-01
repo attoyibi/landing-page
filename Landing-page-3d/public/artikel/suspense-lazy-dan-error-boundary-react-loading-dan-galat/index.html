@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://muchson.web.id/artikel/suspense-lazy-dan-error-boundary-react-loading-dan-galat/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Suspense, lazy, dan Error Boundary di React">
 <meta property="article:published_time" content="2026-10-30">
 <meta property="article:section" content="React &amp; Web Modern">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,15 +38,17 @@
 <div class="bar" aria-hidden="true"><i></i></div>
 <header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#code-splitting-dengan-lazy">Code splitting dengan lazy</a></li><li><a href="#suspense-di-mana-menaruhnya">Suspense: di mana menaruhnya</a></li><li><a href="#error-boundary-jaring-pengaman-render">Error boundary: jaring pengaman render</a></li><li><a href="#menggabungkan-keduanya">Menggabungkan keduanya</a></li><li><a href="#suspense-untuk-data-dan-hook-use">Suspense untuk data dan hook use</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
-<article id="isi">
+<nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#code-splitting-dengan-lazy">Code splitting dengan lazy</a></li><li><a href="#suspense-di-mana-menaruhnya">Suspense: di mana menaruhnya</a></li><li><a href="#error-boundary-jaring-pengaman-render">Error boundary: jaring pengaman render</a></li><li><a href="#menggabungkan-keduanya">Menggabungkan keduanya</a></li><li><a href="#suspense-untuk-data-dan-hook-use">Suspense untuk data dan hook use</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
 <a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
 <h1>Suspense, lazy, dan Error Boundary di React</h1>
 <p class="lead">Setiap aplikasi punya dua kejadian yang harus ditangani: sesuatu belum siap (memuat) dan sesuatu rusak (galat). Tanpa pola yang baik, kode penuh pemeriksaan if (memuat) dan if (galat) di setiap komponen. React menyediakan Suspense untuk yang pertama dan error boundary untuk yang kedua, keduanya sebagai pembungkus deklaratif.</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-30">30 Oktober 2026</time><span aria-hidden="true">·</span><span>3 menit baca</span><span aria-hidden="true">·</span><span class="level">Tingkat: Menengah</span></div>
 <p class="prereq"><b>Sebaiknya sudah paham:</b> komponen React, async/await, useEffect</p>
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Suspense, lazy, dan Error Boundary di React" fetchpriority="high"></figure>
+
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memakai React.lazy dan Suspense untuk memecah bundel (code splitting)</li><li>menempatkan batas Suspense dengan fallback yang masuk akal</li><li>membuat error boundary dan memahami apa yang tidak ditangkapnya</li><li>menggabungkan keduanya untuk pengalaman memuat dan gagal yang rapi</li><li>memahami Suspense untuk data dan hook use pada React 19</li></ul></div>
 <h2 id="code-splitting-dengan-lazy">Code splitting dengan lazy</h2>
 <p>Secara bawaan, semua komponen masuk ke satu bundel JavaScript. Halaman yang jarang dibuka (pengaturan, laporan) membuat pengguna mengunduh kode yang mungkin tak pernah dipakai. <code>React.lazy</code> memuat komponen saat pertama kali dibutuhkan, memakai <code>import()</code> dinamis.</p>
@@ -81,7 +84,7 @@ pembukaan kedua   -&gt; komponen Laporan | unduhan: 1 (dari cache)</code></pre><
 <h2 id="suspense-di-mana-menaruhnya">Suspense: di mana menaruhnya</h2>
 <ul><li><b>Satu batas besar</b> di sekitar halaman: sederhana, tetapi seluruh halaman diganti fallback saat satu bagian menunggu.</li><li><b>Beberapa batas kecil</b> di sekitar bagian independen (sidebar, daftar, panel): bagian lain tetap tampil, pengalaman lebih halus.</li><li>Fallback yang baik menyerupai bentuk akhir (kerangka/skeleton) agar tata letak tidak melompat (CLS rendah).</li><li>Suspense bersarang: fallback terdekat di atas komponen yang menunggu yang dipakai.</li></ul>
 <h2 id="error-boundary-jaring-pengaman-render">Error boundary: jaring pengaman render</h2>
-<div class="callout warn"><b>Layar putih</b><p>Tanpa error boundary, galat saat render di satu komponen kecil akan <b>membuat seluruh aplikasi menjadi layar kosong</b>. Error boundary menangkap galat di pohon di bawahnya dan menampilkan UI cadangan. Hingga kini error boundary harus berupa <i>class component</i>; pustaka <code>react-error-boundary</code> menyediakan versi siap pakai dengan API fungsional.</p></div>
+<div class="callout warn" role="note"><b>Layar putih</b><p>Tanpa error boundary, galat saat render di satu komponen kecil akan <b>membuat seluruh aplikasi menjadi layar kosong</b>. Error boundary menangkap galat di pohon di bawahnya dan menampilkan UI cadangan. Hingga kini error boundary harus berupa <i>class component</i>; pustaka <code>react-error-boundary</code> menyediakan versi siap pakai dengan API fungsional.</p></div>
 <figure class="codebox"><pre data-lang="jsx"><code>import { Component } from 'react';
 
 class BatasGalat extends Component {
@@ -99,7 +102,7 @@ class BatasGalat extends Component {
     &lt;GrafikPenjualan /&gt;
 &lt;/BatasGalat&gt;</code></pre></figure>
 <h3>Yang TIDAK ditangkap error boundary</h3>
-<table><thead><tr><th>Tidak ditangkap</th><th>Tangani dengan</th></tr></thead><tbody><tr><td>Galat di event handler (onClick)</td><td>try/catch di handler</td></tr><tr><td>Kode asinkron (setTimeout, fetch, promise)</td><td>try/catch atau .catch; simpan galat di state</td></tr><tr><td>Galat saat rendering di server</td><td>Mekanisme galat framework</td></tr><tr><td>Galat di error boundary itu sendiri</td><td>Boundary di tingkat lebih atas</td></tr></tbody></table>
+<div class="table-wrap"><table><caption class="sr-only">Tabel 1: Yang TIDAK ditangkap error boundary</caption><thead><tr><th scope="col">Tidak ditangkap</th><th scope="col">Tangani dengan</th></tr></thead><tbody><tr><td>Galat di event handler (onClick)</td><td>try/catch di handler</td></tr><tr><td>Kode asinkron (setTimeout, fetch, promise)</td><td>try/catch atau .catch; simpan galat di state</td></tr><tr><td>Galat saat rendering di server</td><td>Mekanisme galat framework</td></tr><tr><td>Galat di error boundary itu sendiri</td><td>Boundary di tingkat lebih atas</td></tr></tbody></table></div>
 <figure class="codebox"><pre data-lang="javascript"><code>// Pola &quot;galat sebagai nilai&quot;: fungsi asinkron yang tidak melempar, mengembalikan hasil terstruktur
 async function aman(janji) {
     try { return { ok: true, data: await janji }; }
@@ -133,12 +136,13 @@ tampilkan pesan: Server tidak menjawab</code></pre><figcaption>Karena error boun
 <details class="faq"><summary>Apakah lazy bekerja dengan SSR?</summary><div>Ya, melalui framework yang mendukung streaming SSR dan Suspense (Next.js, React Router framework); konfigurasi sendiri lebih rumit.</div></details>
 <details class="faq"><summary>Bagaimana melaporkan galat produksi?</summary><div>Kirim dari componentDidCatch atau onError ke layanan seperti Sentry agar Anda tahu kegagalan yang dialami pengguna.</div></details>
 <details class="faq"><summary>Apakah Suspense menggantikan status loading manual?</summary><div>Untuk data yang mendukungnya, ya; Anda tidak perlu isLoading di setiap komponen karena fallback ditangani di batas di atasnya.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/reference/react/Suspense" rel="noopener" target="_blank">React: Suspense</a></li><li><a href="https://react.dev/reference/react/lazy" rel="noopener" target="_blank">React: lazy</a></li><li><a href="https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" rel="noopener" target="_blank">React: Catching rendering errors with an error boundary</a></li><li><a href="https://github.com/bvaughn/react-error-boundary" rel="noopener" target="_blank">react-error-boundary</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://react.dev/reference/react/Suspense" rel="noopener noreferrer" target="_blank">React: Suspense<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://react.dev/reference/react/lazy" rel="noopener noreferrer" target="_blank">React: lazy<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" rel="noopener noreferrer" target="_blank">React: Catching rendering errors with an error boundary<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://github.com/bvaughn/react-error-boundary" rel="noopener noreferrer" target="_blank">react-error-boundary<span class="sr-only"> (membuka tab baru)</span></a></li></ul>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
 </article>
+</main>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
 <script src="/artikel/_shared/article.js" defer></script>

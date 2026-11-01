@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HTTP dan JSON di Flutter: Model, fromJson, Error Handling">
 <meta property="article:published_time" content="2026-10-30">
 <meta property="article:section" content="Flutter &amp; Mobile">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,17 +38,19 @@
 <div class="bar" aria-hidden="true"><i></i></div>
 <header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#memanggil-api">Memanggil API</a></li><li><a href="#model-dengan-fromjson-dan-tojson">Model dengan fromJson dan toJson</a></li><li><a href="#bila-json-tidak-sesuai-harapan">Bila JSON tidak sesuai harapan</a></li><li><a href="#lapisan-repository-dengan-galat-bertipe">Lapisan repository dengan galat bertipe</a></li><li><a href="#praktik-penting-lain">Praktik penting lain</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
-<article id="isi">
+<nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#memanggil-api">Memanggil API</a></li><li><a href="#model-dengan-fromjson-dan-tojson">Model dengan fromJson dan toJson</a></li><li><a href="#bila-json-tidak-sesuai-harapan">Bila JSON tidak sesuai harapan</a></li><li><a href="#lapisan-repository-dengan-galat-bertipe">Lapisan repository dengan galat bertipe</a></li><li><a href="#praktik-penting-lain">Praktik penting lain</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a></p>
 <a class="cat" href="/artikel/kategori/flutter-mobile/">Flutter &amp; Mobile</a>
 <h1>HTTP dan JSON di Flutter: Model, fromJson, Error Handling</h1>
 <p class="lead">Hampir setiap aplikasi seluler berbicara dengan server. Tugasnya tampak sederhana: panggil URL, dapatkan JSON, tampilkan. Namun yang membedakan aplikasi yang andal dari yang sering crash adalah cara Anda memodelkan data, menangani respons yang tidak diharapkan, dan memisahkan kode jaringan dari tampilan.</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Menengah</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-30">30 Oktober 2026</time><span aria-hidden="true">·</span><span>2 menit baca</span><span aria-hidden="true">·</span><span class="level">Tingkat: Menengah</span></div>
 <p class="prereq"><b>Sebaiknya sudah paham:</b> async Dart, class Dart</p>
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="HTTP dan JSON di Flutter: Model, fromJson, Error Handling" fetchpriority="high"></figure>
+
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>memanggil API dengan paket http dan membaca status serta isi</li><li>memodelkan JSON menjadi class Dart dengan fromJson dan toJson</li><li>menangani data yang hilang, bertipe salah, atau bernilai null dengan aman</li><li>membuat lapisan repository dengan galat bertipe</li><li>menguji parsing JSON tanpa jaringan</li></ul></div>
-<div class="callout info"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
+<div class="callout info" role="note"><b>Tentang contoh kode</b><p>Contoh Flutter ditampilkan sebagai kode yang mengikuti dokumentasi Flutter 3.x (Material 3, Dart 3). Bagian logika Dart murni dijalankan sungguhan dengan Dart SDK agar keluarannya dapat dibuktikan; kode yang butuh Flutter (widget) tidak dijalankan di halaman ini.</p></div>
 <h2 id="memanggil-api">Memanggil API</h2>
 <figure class="codebox"><pre data-lang="bash"><code>flutter pub add http</code></pre></figure>
 <figure class="codebox"><pre data-lang="dart"><code>import 'dart:convert';
@@ -127,7 +130,7 @@ Produk(2, Teh Hijau, Rp40000, tag: [])
 {&quot;id&quot;:1,&quot;nama&quot;:&quot;Kopi Gayo&quot;,&quot;harga&quot;:65000,&quot;deskripsi&quot;:null,&quot;dibuat&quot;:&quot;2026-10-30T08:00:00.000Z&quot;,&quot;tag&quot;:[&quot;organik&quot;,&quot;lokal&quot;]}
 tahun dibuat: 2026</code></pre><figcaption>Perhatikan harga 40000.0 dan "deskripsi" yang tidak ada pada data kedua: model menangani keduanya (num.toInt dan String?). Ini jenis variasi data yang sering terjadi pada API nyata.</figcaption></figure>
 <h2 id="bila-json-tidak-sesuai-harapan">Bila JSON tidak sesuai harapan</h2>
-<div class="callout warn"><b>Data luar tidak dapat dipercaya</b><p>Cast <code>as int</code> pada nilai yang ternyata <code>String</code> melempar <code>TypeError</code> saat berjalan dan membuat layar crash. API nyata berubah, mengirim null, atau mengirim bentuk berbeda. Putuskan sejak awal: <b>gagal keras dengan galat yang jelas</b> (dan dilaporkan) atau <b>toleran</b> dengan nilai bawaan, tetapi jangan membiarkannya crash tanpa penjelasan.</p></div>
+<div class="callout warn" role="note"><b>Data luar tidak dapat dipercaya</b><p>Cast <code>as int</code> pada nilai yang ternyata <code>String</code> melempar <code>TypeError</code> saat berjalan dan membuat layar crash. API nyata berubah, mengirim null, atau mengirim bentuk berbeda. Putuskan sejak awal: <b>gagal keras dengan galat yang jelas</b> (dan dilaporkan) atau <b>toleran</b> dengan nilai bawaan, tetapi jangan membiarkannya crash tanpa penjelasan.</p></div>
 <figure class="codebox"><pre data-lang="dart"><code>class FormatTidakValid implements Exception {
   final String pesan;
   FormatTidakValid(this.pesan);
@@ -201,12 +204,13 @@ class ProdukRepository {
 <details class="faq"><summary>Apakah perlu json_serializable?</summary><div>Untuk model banyak dan kompleks, ya: ia menghasilkan fromJson/toJson dan mengurangi kesalahan ketik; untuk beberapa model sederhana, kode manual cukup.</div></details>
 <details class="faq"><summary>Bagaimana mengunggah berkas?</summary><div>Dengan http.MultipartRequest atau Dio FormData; sertakan progres bagi pengguna.</div></details>
 <details class="faq"><summary>Bagaimana dengan GraphQL atau gRPC?</summary><div>Ada paket (graphql_flutter, grpc), tetapi REST JSON tetap paling umum untuk kebanyakan aplikasi.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/cookbook/networking/fetch-data" rel="noopener" target="_blank">Flutter: Fetch data from the internet</a></li><li><a href="https://docs.flutter.dev/data-and-backend/serialization/json" rel="noopener" target="_blank">Flutter: JSON and serialization</a></li><li><a href="https://api.dart.dev/stable/dart-convert/dart-convert-library.html" rel="noopener" target="_blank">Dart: dart:convert</a></li><li><a href="https://pub.dev/packages/http" rel="noopener" target="_blank">pub.dev: http</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://docs.flutter.dev/cookbook/networking/fetch-data" rel="noopener noreferrer" target="_blank">Flutter: Fetch data from the internet<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://docs.flutter.dev/data-and-backend/serialization/json" rel="noopener noreferrer" target="_blank">Flutter: JSON and serialization<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://api.dart.dev/stable/dart-convert/dart-convert-library.html" rel="noopener noreferrer" target="_blank">Dart: dart:convert<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://pub.dev/packages/http" rel="noopener noreferrer" target="_blank">pub.dev: http<span class="sr-only"> (membuka tab baru)</span></a></li></ul>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/"><img src="/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar Dart untuk Flutter: Null Safety, Class, Koleksi</span></a><a href="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/"><img src="/artikel/widget-flutter-layout-row-column-expanded-dan-stack/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Widget Flutter: Layout Row, Column, Expanded, dan Stack</span></a><a href="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/"><img src="/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>StatefulWidget Flutter: setState, Lifecycle, dan Rebuild</span></a></div></section>
 </article>
+</main>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
 <script src="/artikel/_shared/article.js" defer></script>

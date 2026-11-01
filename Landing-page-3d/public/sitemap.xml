@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://muchson.web.id/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/ai-untuk-semua/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/ai-untuk-semua/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/ai-for-everyone/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/mata-kacamata/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/mata-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/eyes-eyeglasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/coding-algoritma/</loc>
@@ -34,6 +56,8 @@
     <loc>https://muchson.web.id/artikel/kategori/belajar-produktivitas/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/belajar-produktivitas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/learning-productivity/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/karier-freelance/</loc>
@@ -81,14 +105,39 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://muchson.web.id/en/articles/category/ai-for-everyone/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/ai-untuk-semua/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/ai-for-everyone/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/eyes-eyeglasses/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/mata-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/eyes-eyeglasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/learning-productivity/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/belajar-produktivitas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/learning-productivity/"/>
+  </url>
+  <url>
     <loc>https://muchson.web.id/artikel/rag-adalah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rag-adalah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-rag/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-minus-vs-silinder/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-minus-vs-silinder/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-vs-astigmatism/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/</loc>
@@ -529,6 +578,8 @@
     <loc>https://muchson.web.id/artikel/active-recall-teknik-belajar-paling-efektif/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/active-recall-teknik-belajar-paling-efektif/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/active-recall-study-technique/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/matriks-eisenhower-cara-menentukan-prioritas/</loc>
@@ -1339,5 +1390,26 @@
     <loc>https://muchson.web.id/artikel/whatsapp-otomatis-dengan-n8n-notifikasi-dan-chatbot-sederhana/</loc>
     <lastmod>2026-10-30</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-is-rag/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rag-adalah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-rag/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/myopia-vs-astigmatism/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-minus-vs-silinder/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-vs-astigmatism/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/active-recall-study-technique/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/active-recall-teknik-belajar-paling-efektif/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/active-recall-study-technique/"/>
   </url>
 </urlset>

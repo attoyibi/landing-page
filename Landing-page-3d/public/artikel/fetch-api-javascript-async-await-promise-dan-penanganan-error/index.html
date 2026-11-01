@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Fetch API JavaScript: Promise, async/await, dan Error">
 <meta property="article:published_time" content="2026-10-30">
 <meta property="article:section" content="React &amp; Web Modern">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,15 +38,17 @@
 <div class="bar" aria-hidden="true"><i></i></div>
 <header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-asinkron">Mengapa asinkron</a></li><li><a href="#promise-nilai-yang-datang-nanti">Promise: nilai yang datang nanti</a></li><li><a href="#async-await-kode-asinkron-yang-terbaca-seperti-sinkron">async/await: kode asinkron yang terbaca seperti sinkron</a></li><li><a href="#fetch-jebakan-status-http">fetch: jebakan status HTTP</a></li><li><a href="#timeout-dan-pembatalan-dengan-abortcontroller">Timeout dan pembatalan dengan AbortController</a></li><li><a href="#permintaan-paralel">Permintaan paralel</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
-<article id="isi">
+<nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-asinkron">Mengapa asinkron</a></li><li><a href="#promise-nilai-yang-datang-nanti">Promise: nilai yang datang nanti</a></li><li><a href="#async-await-kode-asinkron-yang-terbaca-seperti-sinkron">async/await: kode asinkron yang terbaca seperti sinkron</a></li><li><a href="#fetch-jebakan-status-http">fetch: jebakan status HTTP</a></li><li><a href="#timeout-dan-pembatalan-dengan-abortcontroller">Timeout dan pembatalan dengan AbortController</a></li><li><a href="#permintaan-paralel">Permintaan paralel</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
 <a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
 <h1>Fetch API JavaScript: Promise, async/await, dan Error</h1>
 <p class="lead">Hampir semua aplikasi web modern bergantung pada data dari server. Di JavaScript, itu berarti memahami operasi asinkron: pekerjaan yang selesai nanti, sementara program terus berjalan. Promise dan async/await adalah cara menuliskannya agar terbaca, dan fetch adalah pintu menuju API. Kesalahan terbesar pemula: mengira fetch otomatis melempar galat pada status 404.</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>2 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-30">30 Oktober 2026</time><span aria-hidden="true">·</span><span>2 menit baca</span><span aria-hidden="true">·</span><span class="level">Tingkat: Pemula</span></div>
 <p class="prereq"><b>Sebaiknya sudah paham:</b> fungsi JavaScript, JSON dasar</p>
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Fetch API JavaScript: Promise, async/await, dan Error" fetchpriority="high"></figure>
+
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>menjelaskan mengapa operasi jaringan bersifat asinkron</li><li>memakai Promise, then/catch, dan async/await</li><li>memanggil fetch, membaca JSON, dan memeriksa response.ok</li><li>menangani galat jaringan, status HTTP, dan JSON rusak</li><li>menjalankan permintaan paralel dan memberi timeout</li></ul></div>
 <h2 id="mengapa-asinkron">Mengapa asinkron</h2>
 <p>JavaScript menjalankan kode Anda pada satu utas. Bila permintaan jaringan menahan program sampai selesai, halaman akan membeku. Karena itu operasi lambat (jaringan, timer, berkas) dimulai lalu dilanjutkan <b>nanti</b>, saat hasilnya siap, melalui event loop.</p>
@@ -96,7 +99,7 @@ async function ambilProfil(id) {
 })();</code></pre><pre class="runout" data-lang="keluaran"><code>{ id: 7, nama: 'Ani', pesanan: [ 101, 102 ] }
 try/catch bekerja dengan await: koneksi putus</code></pre><figcaption>async function selalu mengembalikan Promise. await hanya boleh di dalam async function (atau di tingkat atas modul ES).</figcaption></figure>
 <h2 id="fetch-jebakan-status-http">fetch: jebakan status HTTP</h2>
-<div class="callout warn"><b>Salah kaprah paling umum</b><p>Promise dari <code>fetch</code> <b>hanya ditolak bila jaringan gagal</b> (tidak ada koneksi, DNS gagal). Status 404 atau 500 tetap dianggap "berhasil". Periksa <code>response.ok</code> (true untuk status 200–299) sebelum membaca data.</p></div>
+<div class="callout warn" role="note"><b>Salah kaprah paling umum</b><p>Promise dari <code>fetch</code> <b>hanya ditolak bila jaringan gagal</b> (tidak ada koneksi, DNS gagal). Status 404 atau 500 tetap dianggap "berhasil". Periksa <code>response.ok</code> (true untuk status 200–299) sebelum membaca data.</p></div>
 <figure class="codebox"><pre data-lang="javascript"><code>const http = require('node:http');
 
 // server kecil di komputer ini untuk mendemonstrasikan fetch dengan aman
@@ -181,12 +184,13 @@ paralel    : 100 ms [ 'a', 'b', 'c' ]
 <details class="faq"><summary>Apa bedanya fetch dan axios?</summary><div>fetch bawaan browser dan Node; axios pustaka tambahan yang otomatis menolak pada status galat, mendukung interceptor, dan pembatalan. Untuk banyak kasus fetch sudah cukup.</div></details>
 <details class="faq"><summary>Apa itu CORS dan mengapa fetch gagal di browser?</summary><div>Browser memblokir permintaan lintas asal kecuali server mengizinkannya lewat header CORS. Itu pembatasan browser, bukan bug kode Anda.</div></details>
 <details class="faq"><summary>Bolehkah memakai await di tingkat atas?</summary><div>Ya, di modul ES (type="module" atau .mjs); di skrip biasa bungkus dalam async function.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch" rel="noopener" target="_blank">MDN: Using the Fetch API</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Guide/Using_promises" rel="noopener" target="_blank">MDN: Using Promises</a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/async_function" rel="noopener" target="_blank">MDN: async function</a></li><li><a href="https://javascript.info/async" rel="noopener" target="_blank">javascript.info: Promises, async/await</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch" rel="noopener noreferrer" target="_blank">MDN: Using the Fetch API<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Guide/Using_promises" rel="noopener noreferrer" target="_blank">MDN: Using Promises<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/async_function" rel="noopener noreferrer" target="_blank">MDN: async function<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://javascript.info/async" rel="noopener noreferrer" target="_blank">javascript.info: Promises, async/await<span class="sr-only"> (membuka tab baru)</span></a></li></ul>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
 </article>
+</main>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
 <script src="/artikel/_shared/article.js" defer></script>

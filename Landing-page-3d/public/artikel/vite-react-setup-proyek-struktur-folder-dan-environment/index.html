@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vite + React: Setup Proyek, Struktur Folder, dan Env">
 <meta property="article:published_time" content="2026-10-30">
 <meta property="article:section" content="React &amp; Web Modern">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,15 +38,17 @@
 <div class="bar" aria-hidden="true"><i></i></div>
 <header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-vite">Mengapa Vite</a></li><li><a href="#membuat-proyek">Membuat proyek</a></li><li><a href="#struktur-folder-yang-tumbuh-dengan-sehat">Struktur folder yang tumbuh dengan sehat</a></li><li><a href="#variabel-environment">Variabel environment</a></li><li><a href="#konfigurasi-dasar-dan-alias-impor">Konfigurasi dasar dan alias impor</a></li><li><a href="#build-produksi-dan-mengujinya">Build produksi dan mengujinya</a></li><li><a href="#deploy-yang-perlu-diingat">Deploy: yang perlu diingat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
-<article id="isi">
+<nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#mengapa-vite">Mengapa Vite</a></li><li><a href="#membuat-proyek">Membuat proyek</a></li><li><a href="#struktur-folder-yang-tumbuh-dengan-sehat">Struktur folder yang tumbuh dengan sehat</a></li><li><a href="#variabel-environment">Variabel environment</a></li><li><a href="#konfigurasi-dasar-dan-alias-impor">Konfigurasi dasar dan alias impor</a></li><li><a href="#build-produksi-dan-mengujinya">Build produksi dan mengujinya</a></li><li><a href="#deploy-yang-perlu-diingat">Deploy: yang perlu diingat</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a></p>
 <a class="cat" href="/artikel/kategori/react-web-modern/">React &amp; Web Modern</a>
 <h1>Vite + React: Setup Proyek, Struktur Folder, dan Env</h1>
 <p class="lead">Create React App sudah tidak lagi direkomendasikan. Vite menjadi pilihan standar untuk proyek React baru karena server pengembangan hampir instan dan build produksi yang efisien. Materi ini membawa Anda dari nol sampai proyek yang rapi, siap dikembangkan dan dideploy.</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-30">30 Oktober 2026</time><span>·</span><span>3 menit baca</span><span>·</span><span class="level">Tingkat: Pemula</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-30">30 Oktober 2026</time><span aria-hidden="true">·</span><span>3 menit baca</span><span aria-hidden="true">·</span><span class="level">Tingkat: Pemula</span></div>
 <p class="prereq"><b>Sebaiknya sudah paham:</b> Node.js terpasang, JavaScript dasar</p>
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="Vite + React: Setup Proyek, Struktur Folder, dan Env" fetchpriority="high"></figure>
+
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul><li>membuat proyek React dengan Vite dan memahami berkas yang dihasilkan</li><li>mengatur struktur folder yang terukur untuk proyek berkembang</li><li>memakai variabel environment dengan benar dan aman</li><li>mengatur alias impor dan variabel konfigurasi dasar</li><li>membangun dan menguji hasil produksi secara lokal</li></ul></div>
 <h2 id="mengapa-vite">Mengapa Vite</h2>
 <p>Vite memakai modul ES native di browser selama pengembangan, jadi tidak perlu membundel seluruh aplikasi sebelum bisa dibuka; hanya berkas yang diminta yang diproses (dengan esbuild yang sangat cepat). Hasilnya: server dev menyala hampir seketika dan pembaruan modul panas (HMR) terasa instan. Untuk produksi, Vite membundel dengan Rollup.</p>
@@ -65,7 +68,7 @@ npm run preview    # menjalankan hasil build secara lokal untuk diuji</code></pr
     ├── main.jsx          # memasang komponen akar ke #root
     ├── App.jsx
     └── assets/           # gambar dan font yang diimpor dari kode</code></pre></figure>
-<table><thead><tr><th>Folder</th><th>Isi</th><th>Aturan</th></tr></thead><tbody><tr><td>public/</td><td>Berkas yang diakses langsung lewat alamat tetap (/robots.txt, /favicon.svg)</td><td>Tidak diproses atau diberi hash</td></tr><tr><td>src/assets/</td><td>Gambar, font, dan berkas yang diimpor di kode</td><td>Diproses, diberi hash nama (cache-busting), dioptimalkan</td></tr><tr><td>index.html</td><td>Berada di akar, bukan di public/</td><td>Tempat title, meta, dan script modul</td></tr></tbody></table>
+<div class="table-wrap"><table><caption class="sr-only">Tabel 1: Membuat proyek</caption><thead><tr><th scope="col">Folder</th><th scope="col">Isi</th><th scope="col">Aturan</th></tr></thead><tbody><tr><td>public/</td><td>Berkas yang diakses langsung lewat alamat tetap (/robots.txt, /favicon.svg)</td><td>Tidak diproses atau diberi hash</td></tr><tr><td>src/assets/</td><td>Gambar, font, dan berkas yang diimpor di kode</td><td>Diproses, diberi hash nama (cache-busting), dioptimalkan</td></tr><tr><td>index.html</td><td>Berada di akar, bukan di public/</td><td>Tempat title, meta, dan script modul</td></tr></tbody></table></div>
 <h2 id="struktur-folder-yang-tumbuh-dengan-sehat">Struktur folder yang tumbuh dengan sehat</h2>
 <p>Tidak ada struktur tunggal yang benar, tetapi satu pedoman bertahan baik: <b>kelompokkan menurut fitur, bukan menurut jenis berkas</b>. Mengelompokkan semua komponen di satu folder dan semua hook di folder lain membuat Anda berlari-lari antar folder untuk satu fitur.</p>
 <figure class="codebox"><pre data-lang="text"><code>src/
@@ -101,7 +104,7 @@ export const ambilProduk = () =&gt; fetch(dasar + '/produk').then(r =&gt; r.json
 
 console.log(import.meta.env.MODE);                      // 'development' atau 'production'
 console.log(import.meta.env.DEV, import.meta.env.PROD); // boolean</code></pre></figure>
-<div class="callout warn"><b>Bukan tempat rahasia</b><p><b>Semua yang berawalan VITE_ akan terlihat oleh siapa pun</b> yang membuka aplikasi Anda (ia disisipkan ke JavaScript klien). Jangan pernah menaruh kunci rahasia (kunci API privat, kata sandi basis data) di variabel VITE_. Rahasia harus berada di server. Tambahkan <code>.env.local</code> ke <code>.gitignore</code>.</p></div>
+<div class="callout warn" role="note"><b>Bukan tempat rahasia</b><p><b>Semua yang berawalan VITE_ akan terlihat oleh siapa pun</b> yang membuka aplikasi Anda (ia disisipkan ke JavaScript klien). Jangan pernah menaruh kunci rahasia (kunci API privat, kata sandi basis data) di variabel VITE_. Rahasia harus berada di server. Tambahkan <code>.env.local</code> ke <code>.gitignore</code>.</p></div>
 <h2 id="konfigurasi-dasar-dan-alias-impor">Konfigurasi dasar dan alias impor</h2>
 <figure class="codebox"><pre data-lang="jsx"><code>// vite.config.js
 import { defineConfig } from 'vite';
@@ -148,12 +151,13 @@ index-Qt5D56fr.js  (isi berubah -&gt; nama baru, unduh ulang)</code></pre></figu
 <details class="faq"><summary>Apa bedanya Vite dan Next.js?</summary><div>Vite adalah alat build/dev untuk SPA (atau pustaka lain); Next.js adalah framework penuh dengan routing, SSR, dan optimasi bawaan.</div></details>
 <details class="faq"><summary>Apakah masih ada Create React App?</summary><div>Sudah tidak dipelihara aktif dan tidak lagi direkomendasikan; React docs menyarankan framework atau Vite.</div></details>
 <details class="faq"><summary>Bagaimana menambah ESLint dan Prettier?</summary><div>Templat Vite menyertakan ESLint; tambahkan Prettier dan skrip lint/format, lalu jalankan otomatis dengan hook Git (husky) atau CI.</div></details>
-<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://vite.dev/guide/" rel="noopener" target="_blank">Vite: Getting Started</a></li><li><a href="https://vite.dev/guide/env-and-mode" rel="noopener" target="_blank">Vite: Env Variables and Modes</a></li><li><a href="https://react.dev/learn/build-a-react-app-from-scratch" rel="noopener" target="_blank">React: Build a React app from scratch / Start a new project</a></li><li><a href="https://nodejs.org/en/about/previous-releases" rel="noopener" target="_blank">Node.js: Releases</a></li></ul>
+<h2 id="sumber">Referensi</h2><ul class="sources"><li><a href="https://vite.dev/guide/" rel="noopener noreferrer" target="_blank">Vite: Getting Started<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://vite.dev/guide/env-and-mode" rel="noopener noreferrer" target="_blank">Vite: Env Variables and Modes<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://react.dev/learn/build-a-react-app-from-scratch" rel="noopener noreferrer" target="_blank">React: Build a React app from scratch / Start a new project<span class="sr-only"> (membuka tab baru)</span></a></li><li><a href="https://nodejs.org/en/about/previous-releases" rel="noopener noreferrer" target="_blank">Node.js: Releases<span class="sr-only"> (membuka tab baru)</span></a></li></ul>
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/"><img src="/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useState React: Apa Itu State dan Bagaimana Cara Kerjanya</span></a><a href="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/"><img src="/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>useEffect React: Kapan Dipakai, Dependency, dan Cleanup</span></a></div></section>
 </article>
+</main>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
 <script src="/artikel/_shared/article.js" defer></script>

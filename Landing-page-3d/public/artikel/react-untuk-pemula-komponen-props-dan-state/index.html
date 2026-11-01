@@ -20,6 +20,7 @@
 <meta property="og:image" content="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="React untuk Pemula: Komponen, Props, dan State dengan Contoh">
 <meta property="article:published_time" content="2026-10-23">
 <meta property="article:section" content="Coding &amp; Algoritma">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,17 +38,19 @@
 <div class="bar" aria-hidden="true"><i></i></div>
 <header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tiga-konsep-inti">Tiga konsep inti</a></li><li><a href="#contoh-paling-kecil">Contoh paling kecil</a></li><li><a href="#kesalahan-umum-pemula">Kesalahan umum pemula</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></aside>
-<article id="isi">
+<nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tiga-konsep-inti">Tiga konsep inti</a></li><li><a href="#contoh-paling-kecil">Contoh paling kecil</a></li><li><a href="#kesalahan-umum-pemula">Kesalahan umum pemula</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
 <p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/coding-algoritma/">Coding &amp; Algoritma</a></p>
 <a class="cat" href="/artikel/kategori/coding-algoritma/">Coding &amp; Algoritma</a>
 <h1>React untuk Pemula: Komponen, Props, dan State dengan Contoh</h1>
 <p class="lead">React membangun antarmuka dari potongan kecil yang bisa dipakai ulang. Bila Anda menguasai tiga ide, komponen, props, dan state, sebagian besar kode React akan terbaca masuk akal. Sisanya adalah variasi.</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="2026-10-23">23 Oktober 2026</time><span>·</span><span>1 menit baca</span></div>
+<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">23 Oktober 2026</time><span aria-hidden="true">·</span><span>1 menit baca</span></div>
 
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="React untuk Pemula: Komponen, Props, dan State dengan Contoh" fetchpriority="high"></figure>
+
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <h2 id="tiga-konsep-inti">Tiga konsep inti</h2>
-<figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Tiga konsep inti React" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Komponen</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Potongan UI yang bisa dipakai ulang (tombol, kartu, formulir)</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Props</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Data yang dikirim dari induk ke komponen anak (hanya baca)</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">State</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Data milik komponen yang bisa berubah dan memicu tampilan ulang</text></svg><figcaption>Komponen adalah fungsi: menerima props, menyimpan state, dan mengembalikan tampilan.</figcaption></figure>
+<figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Tiga konsep inti React" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Komponen</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Potongan UI yang bisa dipakai ulang (tombol, kartu, formulir)</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Props</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Data yang dikirim dari induk ke komponen anak (hanya baca)</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">State</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Data milik komponen yang bisa berubah dan memicu tampilan ulang</text></svg><figcaption><b>Gambar 1.</b> Komponen adalah fungsi: menerima props, menyimpan state, dan mengembalikan tampilan.</figcaption><details class="textalt"><summary>Deskripsi teks diagram</summary><ol><li>Komponen: Potongan UI yang bisa dipakai ulang (tombol, kartu, formulir)</li><li>Props: Data yang dikirim dari induk ke komponen anak (hanya baca)</li><li>State: Data milik komponen yang bisa berubah dan memicu tampilan ulang</li></ol></details></figure>
 <h2 id="contoh-paling-kecil">Contoh paling kecil</h2>
 <figure class="codebox"><pre><code>function Salam({ nama }) {            // props: nama
   return &lt;h2&gt;Halo, {nama}!&lt;/h2&gt;;
@@ -77,8 +80,9 @@ function Penghitung() {
 <aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>
 <div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
 <div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/html-css-javascript-peran-masing-masing/"><img src="/artikel/html-css-javascript-peran-masing-masing/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>HTML, CSS, dan JavaScript: Peran Masing-Masing</span></a><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a></div></section>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Baca juga</h2><div class="rel"><a href="/artikel/html-css-javascript-peran-masing-masing/"><img src="/artikel/html-css-javascript-peran-masing-masing/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>HTML, CSS, dan JavaScript: Peran Masing-Masing</span></a><a href="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/"><img src="/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Belajar React dari Nol: Komponen, JSX, dan Props</span></a><a href="/artikel/bubble-sort-dijelaskan-visual/"><img src="/artikel/bubble-sort-dijelaskan-visual/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Dijelaskan Visual: Cara Kerja dan Kode Python</span></a></div></section>
 </article>
+</main>
 </div>
 <footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
 <script src="/artikel/_shared/article.js" defer></script>
