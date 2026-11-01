@@ -68,6 +68,12 @@ export default [
             { h2: 'Daftar periksa meja kerja' },
             { w: 'checklist', title: 'Atur meja Anda', items: ['Bagian atas layar sejajar atau sedikit di bawah garis mata.', 'Jarak layar sekitar satu lengan.', 'Tidak ada jendela atau lampu yang memantul di layar.', 'Layar tidak jauh lebih terang daripada ruangan.', 'Ukuran huruf cukup besar tanpa menyipit.', 'Kaki menapak lantai, punggung bersandar.', 'Ada pewaktu atau kebiasaan istirahat setiap 20-30 menit.'] },
         ],
+        takeaways: [
+            'Letakkan layar sejauh satu lengan (50-70 cm), sejajar atau sedikit di bawah mata.',
+            'Cahaya sebaiknya datang dari samping, bukan dari belakang atau depan layar, dan layar tidak jauh lebih terang daripada ruangan.',
+            'Layar yang terlalu tinggi membuat mata terbuka lebih lebar sehingga lebih cepat kering.',
+            'Gunakan ukuran dan kontras teks yang nyaman, telapak kaki rata di lantai, dan istirahat singkat tiap 20-30 menit.',
+        ],
         faq: [['Berapa jarak ideal mata ke layar?', 'Sekitar 50 sampai 70 cm (satu lengan) untuk komputer. Ponsel biasanya dipegang lebih dekat, jadi jeda lebih penting.'], ['Bolehkah layar sedikit lebih tinggi dari mata?', 'Sebaiknya jangan. Layar yang terlalu tinggi membuat mata terbuka lebar sehingga cepat kering. Sejajar atau sedikit di bawah lebih nyaman.'], ['Apakah layar matte lebih baik?', 'Permukaan anti-silau mengurangi pantulan lampu dan jendela, sehingga bisa lebih nyaman di ruangan terang.']],
     },
 
@@ -89,6 +95,12 @@ export default [
             { ol: ['Berkedip penuh dan sering, terutama saat menatap layar.', 'Aturan 20-20-20 untuk memberi jeda.', 'Arahkan hembusan AC atau kipas menjauh dari wajah.', 'Gunakan air mata buatan bebas pengawet sesuai anjuran apoteker atau dokter.', 'Kompres hangat pada kelopak selama beberapa menit untuk membantu kelenjar minyak.', 'Minum cukup air dan tidur cukup.', 'Lepas lensa kontak bila mata terasa tidak nyaman, dan jangan memakainya semalaman.'] },
             { callout: 'Jangan memakai obat tetes mata merah atau tetes mata yang mengandung steroid tanpa resep. Tetes yang "menghilangkan merah" bisa memperburuk keluhan bila dipakai terus-menerus.', kind: 'warn', title: 'Hati-hati dengan obat tetes' },
             { callout: 'Segera periksa jika mata sangat nyeri, sensitif terhadap cahaya, penglihatan menurun, ada kotoran kental, atau keluhan tidak membaik dalam beberapa hari.', kind: 'bad', title: 'Kapan harus ke dokter' },
+        ],
+        takeaways: [
+            'Lapisan air mata punya tiga lapis (minyak, air, lendir); gangguan di salah satunya bisa membuat mata terasa kering.',
+            'Mata kering bisa membuat mata berair, karena permukaan yang teriritasi memicu banjir air mata berkualitas rendah.',
+            'Yang membantu: berkedip penuh dan sering, aturan 20-20-20, jauhkan AC dari wajah, air mata buatan tanpa pengawet, dan kompres hangat.',
+            'Temui dokter bila ada nyeri hebat, sensitif cahaya, penglihatan menurun, kotoran kental, atau tidak membaik dalam beberapa hari.',
         ],
         faq: [['Apakah mata kering bisa sembuh?', 'Sebagian kasus ringan membaik dengan perubahan kebiasaan dan lingkungan. Kasus kronis biasanya perlu penanganan berkelanjutan dari dokter mata.'], ['Kenapa mata saya berair padahal katanya kering?', 'Permukaan mata yang kering mengiritasi, sehingga tubuh menghasilkan air mata refleks dalam jumlah banyak. Air mata itu kurang berkualitas dan tidak melembapkan dengan baik.'], ['Apakah boleh memakai tetes air mata buatan setiap hari?', 'Banyak jenis yang dirancang untuk pemakaian sering, terutama yang bebas pengawet. Ikuti petunjuk kemasan dan konsultasikan bila perlu dipakai terus-menerus.']],
         sources: [['American Academy of Ophthalmology: What is dry eye?', 'https://www.aao.org/eye-health/diseases/what-is-dry-eye']],
@@ -132,6 +144,12 @@ export default [
             { ul: ['<b>Ukuran:</b> frame tidak lebih lebar dari wajah dan alis tidak tertutup seluruhnya.', '<b>Jembatan hidung:</b> frame tidak boleh meninggalkan bekas atau melorot saat menunduk.', '<b>Warna:</b> warna hangat (cokelat, emas) cocok kulit hangat; hitam, abu, dan biru cocok kulit cerah dan dingin. Coba bila ragu.', '<b>Berat dan bahan:</b> bila dipakai seharian, ringan lebih penting daripada tampilan.', '<b>Ketinggian lensa:</b> lensa progresif membutuhkan tinggi lensa yang cukup. Tanyakan ke optik.'] },
             { callout: 'Cara termudah menghindari salah pilih: coba langsung di toko, atau beli online dari toko yang menyediakan konsultasi dan ukuran lengkap (lebar lensa, jembatan, tangkai).', kind: 'good', title: 'Tips praktis' },
         ],
+        takeaways: [
+            'Bentuk frame yang kontras dengan bentuk wajah biasanya terlihat seimbang: frame bersudut untuk wajah bulat, bulat atau oval untuk wajah kotak.',
+            'Bentuk wajah hanya titik awal; ukuran, proporsi, dan selera pribadi sama pentingnya.',
+            'Frame tidak boleh lebih lebar dari wajah, tidak meninggalkan bekas di hidung, dan tidak melorot.',
+            'Coba langsung di toko, atau beli daring dari toko yang memberi saran dan ukuran lengkap.',
+        ],
         faq: [['Apakah bentuk wajah benar-benar menentukan?', 'Hanya sebagai panduan awal. Ukuran, proporsi, dan selera pribadi sama pentingnya. Coba beberapa model dan pilih yang membuat Anda nyaman.'], ['Frame mana yang paling aman bagi pemula?', 'Persegi panjang atau bulat sedang dengan ukuran sedang, warna netral seperti hitam, cokelat tua, atau transparan.'], ['Bagaimana bila minus saya besar?', 'Pilih frame yang lebih kecil dan bentuk bulat atau oval, lalu pertimbangkan lensa yang lebih tipis agar tidak tebal di tepi.']],
     },
 
@@ -151,6 +169,12 @@ export default [
             { table: { head: ['Gejala', 'Kemungkinan penyebab', 'Tindakan'], rows: [['Frame melorot saat menunduk', 'Jembatan terlalu lebar atau tangkai longgar', 'Atur bantalan hidung atau pilih ukuran lebih kecil'], ['Bekas merah di sisi hidung', 'Jembatan terlalu sempit atau bantalan keras', 'Atur bantalan, ganti ukuran'], ['Sakit di belakang telinga', 'Tangkai terlalu pendek atau terlalu kencang', 'Atur kelengkungan tangkai di optik'], ['Bulu mata menyentuh lensa', 'Frame terlalu dekat ke mata', 'Atur bantalan hidung agar menjauh']] } },
             { callout: 'Banyak masalah ukuran bisa diperbaiki dengan penyesuaian kecil: menekuk bantalan hidung dan menghangatkan tangkai. Toko optik biasanya melakukannya tanpa biaya untuk pelanggan.', kind: 'good', title: 'Sebelum menyerah pada frame' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Pada kode 50-20-145, angka 20 adalah...', options: ['Lebar lensa', 'Lebar jembatan hidung', 'Panjang tangkai'], answer: 1, why: 'Angka kedua adalah lebar jembatan hidung dalam milimeter.' }, { q: 'Lebar total frame dihitung dengan...', options: ['Lebar lensa + tangkai', '2 x lebar lensa + jembatan', 'Jembatan x tangkai'], answer: 1, why: 'Dua lensa ditambah jembatan di tengahnya.' }] },
+        ],
+        takeaways: [
+            'Tiga angka itu adalah lebar lensa, lebar jembatan hidung, dan panjang tangkai, semuanya dalam milimeter.',
+            'Mulailah dari kacamata yang sudah nyaman dan cari frame dengan angka mirip.',
+            'Lebar total frame adalah 2 x lebar lensa + jembatan, dan ujung tangkai harus pas di belakang telinga tanpa menekan.',
+            'Masalah pas yang kecil sering bisa diperbaiki dengan menyetel bantalan hidung dan tangkai di optik.',
         ],
         faq: [['Apakah ukuran sama berarti pasti pas?', 'Tidak selalu, karena bentuk dan desain berbeda tiap model. Ukuran hanya titik awal yang baik.'], ['Bagaimana bila membeli online dan tidak pas?', 'Pilih toko yang menyediakan konsultasi dan kebijakan jelas soal penyesuaian atau penukaran, dan kirim ukuran frame lama sebagai acuan.'], ['Apakah ukuran frame memengaruhi ketebalan lensa?', 'Ya. Frame yang lebih besar membuat tepi lensa lebih tebal untuk resep minus tinggi. Pilih frame lebih kecil bila minus besar.']],
     },
@@ -172,6 +196,12 @@ export default [
             { h2: 'Tips agar lensa tampak lebih tipis' },
             { ul: ['Pilih frame kecil hingga sedang, dan hindari frame oversize untuk minus besar.', 'Pilih frame tebal atau berwarna yang menyamarkan tepi lensa.', 'Pastikan pusat lensa (PD) tepat di depan pupil, karena ketidaktepatan membuat tepi satu sisi lebih tebal.', 'Lapisan anti-pantul mengurangi kilau tepi lensa dan membuatnya tampak lebih bersih.'] },
         ],
+        takeaways: [
+            'Indeks lensa yang lebih tinggi membelokkan cahaya lebih kuat, sehingga lensa bisa lebih tipis dan ringan untuk ukuran yang sama.',
+            'Indeks umum adalah 1,50 (standar), 1,56, 1,60, 1,67, dan 1,74; makin tinggi biasanya makin tipis dan mahal.',
+            'Sampai sekitar minus 2,00 lensa standar biasanya cukup; di atas minus 6,00 pertimbangkan 1,67 sampai 1,74.',
+            'Frame kecil dan bulat, frame tebal berwarna, serta PD yang tepat membuat lensa tampak lebih tipis.',
+        ],
         faq: [['Apakah lensa indeks tinggi lebih berkualitas?', 'Lebih tipis dan ringan, bukan otomatis lebih bening. Mutu optik dan lapisan juga penting. Lensa indeks sangat tinggi bisa sedikit memantulkan warna di tepi.'], ['Apakah plus juga perlu indeks tinggi?', 'Pada lensa plus, bagian tengah paling tebal. Indeks tinggi membuatnya lebih tipis dan ringan, tetapi pengaruh estetikanya biasanya lebih kecil.'], ['Apa bedanya kalkulator ini dengan hasil sebenarnya?', 'Kalkulator memakai rumus kelengkungan sederhana dengan ketebalan tengah 1,5 mm. Hasil sebenarnya bergantung pada bahan, desain lensa, dan pemotongan.']],
     },
 
@@ -190,6 +220,12 @@ export default [
             { h2: 'Mana yang sebaiknya Anda pilih?' },
             { w: 'choose', title: 'Rekomendasi singkat', questions: [{ q: 'Aktivitas utama Anda?', options: [{ t: 'Banyak berpindah jauh-dekat (mengemudi, kerja kantor, layar)', add: { prog: 3 } }, { t: 'Terutama membaca atau menjahit, jarang melihat jauh', add: { baca: 3 } }, { t: 'Cukup sederhana, ingin murah', add: { bif: 3 } }] }, { q: 'Bagaimana dengan adaptasi?', options: [{ t: 'Saya sabar menunggu beberapa hari', add: { prog: 2 } }, { t: 'Saya ingin langsung terbiasa', add: { bif: 2, baca: 1 } }] }, { q: 'Anggaran?', options: [{ t: 'Fleksibel', add: { prog: 2 } }, { t: 'Terbatas', add: { bif: 2, baca: 2 } }] }], results: { prog: { title: 'Progresif', text: 'Cocok untuk aktivitas yang berpindah jarak pandang. Pastikan pengukuran PD dan tinggi lensa dilakukan teliti.' }, bif: { title: 'Bifokal', text: 'Lebih sederhana dan lebih murah. Garis pemisah mungkin terlihat, tetapi perpindahan fokusnya jelas.' }, baca: { title: 'Kacamata baca terpisah', text: 'Bila Anda terutama membaca dekat, kacamata baca terpisah sering cukup dan paling murah.' } } },
             { callout: 'Progresif butuh pengukuran yang teliti: jarak pupil, tinggi lensa, dan kecocokan frame. Memilih toko yang berpengalaman dan menyediakan konsultasi membuat perbedaan besar pada kenyamanan.', kind: 'warn', title: 'Kuncinya di pengukuran' },
+        ],
+        takeaways: [
+            'Bifokal punya dua zona dengan garis terlihat; progresif berubah halus tanpa garis dan menambah zona jarak menengah.',
+            'Progresif butuh beberapa hari sampai dua minggu untuk terbiasa; tengok dengan memutar kepala, bukan hanya mata.',
+            'Progresif memerlukan PD dan tinggi lensa yang akurat, jadi pilih toko yang mengukur dengan teliti.',
+            'Bila kebanyakan membaca dekat, kacamata baca terpisah sering sudah cukup dan paling murah.',
         ],
         faq: [['Apakah progresif lebih baik dari bifokal?', 'Bukan soal lebih baik. Progresif lebih halus dan tidak ada garis, tetapi butuh adaptasi dan lebih mahal. Bifokal lebih sederhana.'], ['Bolehkah mengemudi dengan lensa progresif?', 'Boleh setelah terbiasa. Beberapa hari pertama, hindari mengemudi jauh sampai Anda nyaman.'], ['Apakah semua frame cocok untuk progresif?', 'Tidak. Frame perlu memiliki tinggi lensa cukup agar zona dekat tersedia. Tanyakan ke optik sebelum memilih.']],
     },

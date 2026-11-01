@@ -16,6 +16,12 @@ export default [
             { w: 'choose', title: 'Bahan apa yang cocok untuk Anda?', questions: [{ q: 'Berapa lama kacamata dipakai tiap hari?', options: [{ t: 'Seharian penuh', add: { titanium: 2, tr90: 2 } }, { t: 'Beberapa jam saja', add: { asetat: 1, logam: 1 } }] }, { q: 'Kulit Anda mudah alergi pada logam?', options: [{ t: 'Ya', add: { titanium: 3, tr90: 2, asetat: 1 } }, { t: 'Tidak', add: { logam: 1, asetat: 1 } }] }, { q: 'Aktivitas Anda?', options: [{ t: 'Aktif, olahraga, atau anak-anak', add: { tr90: 3 } }, { t: 'Kantor dan sehari-hari', add: { titanium: 1, asetat: 1, logam: 1 } }] }, { q: 'Anggaran?', options: [{ t: 'Cukup fleksibel', add: { titanium: 2 } }, { t: 'Terbatas', add: { logam: 2, tr90: 1 } }] }], results: { titanium: { title: 'Titanium', text: 'Ringan, tahan lama, aman untuk kulit sensitif. Investasi yang terasa bila dipakai seharian.' }, asetat: { title: 'Asetat', text: 'Pilihan bagus bila Anda mengutamakan gaya dan warna. Cukup kokoh untuk pemakaian harian.' }, tr90: { title: 'TR90', text: 'Lentur dan tahan benturan, ideal untuk anak dan aktivitas aktif.' }, logam: { title: 'Logam standar', text: 'Praktis dan terjangkau. Pastikan lapisannya baik dan tidak memicu alergi.' } } },
             { callout: 'Jika kulit di sekitar hidung dan telinga memerah atau gatal setelah memakai kacamata, bahan frame bisa menjadi penyebabnya. Coba bahan hipoalergenik seperti titanium atau plastik medis.', kind: 'warn', title: 'Alergi bahan' },
         ],
+        takeaways: [
+            'Titanium sangat ringan, kuat, dan tahan karat, tetapi lebih mahal dan sulit diperbaiki.',
+            'Asetat kaya warna dan kokoh, tetapi lebih berat.',
+            'TR90 ringan, lentur, dan tahan benturan, ideal untuk anak dan olahraga.',
+            'Bila kulit di sekitar hidung atau telinga memerah atau gatal, bahan frame bisa jadi penyebab; coba bahan hipoalergenik.',
+        ],
         faq: [['Apakah titanium selalu lebih baik?', 'Ia unggul dalam bobot dan ketahanan karat, tetapi tidak selalu paling cocok. Untuk anak atau pemakaian kasar, bahan lentur seperti TR90 sering lebih praktis.'], ['Apa bedanya asetat dan plastik biasa?', 'Asetat adalah plastik berbahan dasar selulosa yang dipoles dan lebih kokoh serta lebih kaya warna dibanding plastik cetak murah.'], ['Bisakah frame yang patah diperbaiki?', 'Tergantung bahan dan lokasi patah. Titanium sulit dilas, asetat kadang bisa dilem atau diganti engselnya, dan logam biasa bisa disolder. Tanyakan ke optik.']],
     },
 
@@ -35,6 +41,12 @@ export default [
             { callout: 'Pengukuran sendiri bisa meleset 1 sampai 3 mm. Untuk resep kecil dan lensa single vision, biasanya masih bisa ditoleransi. Untuk resep besar, silinder, dan terutama <b>lensa progresif</b>, ukur di optik.', kind: 'warn', title: 'Batas ketelitian' },
             { w: 'checklist', title: 'Sebelum memesan online', items: ['Saya punya resep terbaru yang lengkap (SPH, CYL, AXIS).', 'Saya sudah mengukur PD tiga kali dan hasilnya konsisten.', 'Saya mengetahui ukuran frame yang nyaman (misalnya 52-18-140).', 'Saya tahu kebijakan penukaran atau penyetelan toko.', 'Untuk progresif, saya akan mengukur di optik, bukan sendiri.'] },
         ],
+        takeaways: [
+            'PD adalah jarak antara pusat kedua pupil dalam milimeter, dan pusat lensa harus tepat di depan pupil.',
+            'Ukur dengan penggaris dan cermin sambil menatap lurus, tiga kali, lalu rata-ratakan.',
+            'Pengukuran sendiri bisa meleset 1 sampai 3 mm: cukup untuk resep kecil, tidak untuk resep besar atau progresif.',
+            'Untuk lensa progresif, selalu ukur PD di optik.',
+        ],
         faq: [['Berapa PD normal?', 'Untuk dewasa umumnya sekitar 54 sampai 74 mm, dengan rata-rata di kisaran 60-an. Anak-anak lebih kecil.'], ['Apakah PD untuk melihat jauh dan dekat sama?', 'Tidak. Untuk membaca, pupil bergerak sedikit ke dalam sehingga PD dekat lebih kecil beberapa milimeter. Resep progresif memakai PD jauh.'], ['Apakah PD tertulis di resep?', 'Sering iya. Bila tidak, minta ke optik. Pengukuran ulang biasanya cepat dan gratis.']],
     },
 
@@ -53,6 +65,12 @@ export default [
             { ol: ['Periksa frame: tidak bengkok, tidak ada goresan, engsel lancar.', 'Periksa lensa: bersih, tidak bergelombang, sesuai pesanan.', 'Pakai dan nilai: apakah nyaman, tidak melorot, pandangan jernih.', 'Bila ada keluhan, foto dan hubungi toko secepatnya.'] },
             { callout: 'Resep yang sudah lama atau tidak lengkap adalah penyebab terbesar kacamata online tidak nyaman. Bila lebih dari satu sampai dua tahun, periksakan mata dulu.', kind: 'warn', title: 'Ingat' },
             { w: 'compare', title: 'Online atau datang ke toko?', tabs: [{ label: 'Online', html: '<b>Kelebihan:</b> praktis, pilihan luas, bisa kirim ke luar kota.<br><b>Kekurangan:</b> tidak bisa mencoba, mengandalkan data yang Anda isi.' }, { label: 'Datang ke toko', html: '<b>Kelebihan:</b> bisa mencoba, diukur langsung, dibantu penyetelan.<br><b>Kekurangan:</b> butuh waktu dan jarak.' }, { label: 'Gabungan', html: 'Konsultasi lewat chat, ukur PD dan coba frame di toko, lalu pesan lensa. Cocok bila toko menyediakan keduanya.' }] },
+        ],
+        takeaways: [
+            'Siapkan tiga hal sebelum memesan: resep terbaru, PD, dan ukuran frame yang sudah terbukti nyaman.',
+            'Periksa toko: kontak yang dibalas, informasi lensa yang jelas, dan kebijakan penyetelan atau penukaran tertulis.',
+            'Saat paket tiba, periksa frame dan lensa, lalu foto setiap masalah segera.',
+            'Lensa progresif membutuhkan PD dan tinggi lensa yang akurat, jadi ukurlah di optik.',
         ],
         faq: [['Aman membeli kacamata progresif online?', 'Lebih berisiko karena membutuhkan pengukuran tinggi lensa dan PD yang akurat. Sebaiknya pengukuran dilakukan di optik.'], ['Bolehkah membeli frame saja lalu memasang lensa di tempat lain?', 'Bisa, tetapi pastikan frame cocok untuk resep Anda dan optik bersedia memasangnya. Tanyakan dulu sebelum membeli.'], ['Apa yang dilakukan bila kacamata tidak pas?', 'Hubungi toko dan manfaatkan kebijakan penyetelan atau penukaran. Siapkan foto dan data ukuran.']],
     },
@@ -115,6 +133,12 @@ export default [
             { w: 'cards', title: 'Klaim populer, ketuk untuk melihat catatannya', items: [{ tag: 'Klaim', front: 'Wortel menghilangkan minus.', backTag: 'Catatan', back: 'Wortel baik untuk kesehatan mata, tetapi tidak mengubah bentuk bola mata.' }, { tag: 'Klaim', front: 'Suplemen mata mencegah semua penyakit mata.', backTag: 'Catatan', back: 'Formulasi tertentu terbukti bermanfaat pada kondisi spesifik (misalnya degenerasi makula tahap tertentu) atas anjuran dokter, bukan untuk semua orang.' }, { tag: 'Klaim', front: 'Semakin banyak vitamin A semakin baik.', backTag: 'Catatan', back: 'Berlebihan justru dapat berbahaya. Hindari dosis tinggi tanpa saran tenaga kesehatan.' }, { tag: 'Klaim', front: 'Minum air membantu mata kering.', backTag: 'Catatan', back: 'Dehidrasi dapat memperburuk, tetapi kecukupan air bukan satu-satunya faktor mata kering.' }] },
             { callout: 'Bila Anda memiliki kondisi mata tertentu, diabetes, atau sedang hamil, bicarakan dengan dokter sebelum mengonsumsi suplemen.', kind: 'warn', title: 'Sebelum membeli suplemen' },
             { w: 'checklist', title: 'Pola makan ramah mata', items: ['Saya makan sayur hijau atau berwarna hampir setiap hari.', 'Saya makan ikan beberapa kali dalam seminggu.', 'Saya mengonsumsi buah setiap hari.', 'Saya cukup minum air putih.', 'Saya tidak merokok (merokok meningkatkan risiko beberapa penyakit mata).', 'Saya memeriksakan mata secara berkala.'] },
+        ],
+        takeaways: [
+            'Makanan yang beragam mendukung kesehatan mata: sayur berwarna, ikan, buah, kacang, dan air putih cukup.',
+            'Vitamin A, lutein dan zeaxanthin, omega-3, vitamin C dan E, serta seng berperan, tetapi tidak ada yang menyembuhkan minus.',
+            'Lebih banyak tidak selalu lebih baik: vitamin A dosis sangat tinggi bisa berbahaya.',
+            'Bicarakan dengan dokter sebelum mengonsumsi suplemen jika punya penyakit mata, diabetes, atau sedang hamil.',
         ],
         faq: [['Apakah suplemen lutein perlu?', 'Bila pola makan sudah beragam, biasanya tidak perlu. Pada kondisi tertentu dokter dapat menyarankan formulasi khusus.'], ['Apakah merokok memengaruhi mata?', 'Ya. Merokok dikaitkan dengan peningkatan risiko katarak dan degenerasi makula.'], ['Apakah gizi mempengaruhi mata minus anak?', 'Gizi seimbang penting untuk tumbuh kembang, tetapi tidak menyembuhkan minus. Waktu di luar ruangan dan pemeriksaan rutin lebih relevan.']],
         sources: [['American Academy of Ophthalmology: Eye health and nutrition', 'https://www.aao.org/eye-health/tips-prevention/diet-nutrition']],

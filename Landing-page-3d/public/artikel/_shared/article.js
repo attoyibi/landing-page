@@ -5,15 +5,18 @@
 (function () {
     'use strict';
 
+    // numbers follow the language of the page: 1.000.000 in Indonesian, 1,000,000 in English
+    const LOCALE = document.documentElement.lang === 'en' ? 'en-US' : 'id-ID';
+
     const $ = (s, r) => (r || document).querySelector(s);
     const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
     const fmt = {
-        rp: v => 'Rp' + Math.round(v).toLocaleString('id-ID'),
-        num: v => (Math.round(v * 100) / 100).toLocaleString('id-ID'),
-        int: v => Math.round(v).toLocaleString('id-ID'),
-        pct: v => (Math.round(v * 10) / 10).toLocaleString('id-ID') + '%',
+        rp: v => 'Rp' + Math.round(v).toLocaleString(LOCALE),
+        num: v => (Math.round(v * 100) / 100).toLocaleString(LOCALE),
+        int: v => Math.round(v).toLocaleString(LOCALE),
+        pct: v => (Math.round(v * 10) / 10).toLocaleString(LOCALE) + '%',
         text: v => String(v),
     };
 
@@ -131,7 +134,7 @@
             const id = 'c' + Math.random().toString(36).slice(2, 8);
             const lab = el('label', { for: id }, `${esc(inp.label)}: <span class="mono" data-v>${inp.value}</span> ${esc(inp.unit || '')}`);
             const r = el('input', { id, type: 'range', min: inp.min, max: inp.max, step: inp.step || 1, value: inp.value });
-            r.oninput = () => { vals[inp.id] = Number(r.value); $('[data-v]', lab).textContent = Number(r.value).toLocaleString('id-ID'); run(); };
+            r.oninput = () => { vals[inp.id] = Number(r.value); $('[data-v]', lab).textContent = Number(r.value).toLocaleString(LOCALE); run(); };
             body.append(lab, r);
         });
         body.append(outBox);
@@ -386,11 +389,11 @@
         const human = s => (s < 1 ? '< 1 detik' : s < 60 ? Math.round(s) + ' detik' : s < 3600 ? Math.round(s / 60) + ' menit' : s < 86400 ? Math.round(s / 3600) + ' jam' : s < 3.15e7 ? Math.round(s / 86400) + ' hari' : s < 3.15e11 ? Math.round(s / 3.15e7) + ' tahun' : 'lebih lama dari umur peradaban');
         const draw = () => {
             const n = Math.round(Math.pow(10, Number(r.value) / 4));
-            lab.innerHTML = `Jumlah data (n): <b class="mono">${n.toLocaleString('id-ID')}</b>`;
+            lab.innerHTML = `Jumlah data (n): <b class="mono">${n.toLocaleString(LOCALE)}</b>`;
             const max = Math.log10(rows[4][2](n) + 1) || 1;
             out.innerHTML = '<small>Anggap satu operasi butuh 1 mikrodetik (sekitar kecepatan program sederhana).</small>' + rows.map(([name, nm, f]) => {
                 const ops = f(n), w = Math.max(2, (Math.log10(ops + 1) / Math.max(max, Math.log10(ops + 1))) * 100);
-                return `<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:14px"><b>${name}</b> <span class="mono">${ops > 1e15 ? '> 10¹⁵' : Math.round(ops).toLocaleString('id-ID')} operasi ≈ ${human(ops / 1e6)}</span></div><div class="prog"><i style="width:${Math.min(100, w)}%;background:${w > 85 ? 'var(--bad)' : 'var(--brand)'}"></i></div></div>`;
+                return `<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:14px"><b>${name}</b> <span class="mono">${ops > 1e15 ? '> 10¹⁵' : Math.round(ops).toLocaleString(LOCALE)} operasi ≈ ${human(ops / 1e6)}</span></div><div class="prog"><i style="width:${Math.min(100, w)}%;background:${w > 85 ? 'var(--bad)' : 'var(--brand)'}"></i></div></div>`;
             }).join('');
         };
         r.oninput = draw;
@@ -432,8 +435,8 @@
         const draw = () => {
             const n = Number(r.value);
             const naive = n <= 30 ? calls(n) : 0;
-            out.innerHTML = `<div>fib(<b>${n}</b>) = <b>${fib(Math.min(n, 30)).toLocaleString('id-ID')}</b></div>
-              <div style="margin-top:8px">Rekursi biasa: <b>${naive.toLocaleString('id-ID')}</b> pemanggilan fungsi</div>
+            out.innerHTML = `<div>fib(<b>${n}</b>) = <b>${fib(Math.min(n, 30)).toLocaleString(LOCALE)}</b></div>
+              <div style="margin-top:8px">Rekursi biasa: <b>${naive.toLocaleString(LOCALE)}</b> pemanggilan fungsi</div>
               <div>Dengan menyimpan hasil (memoization): <b>${n + 1}</b> perhitungan</div>
               <small>Tarik slider ke kanan: rekursi biasa meledak, memoization hampir tidak berubah.</small>`;
         };
@@ -1091,7 +1094,7 @@
             const a = ((+m[1] << 24) | (+m[2] << 16) | (+m[3] << 8) | +m[4]) >>> 0;
             const mask = p === 0 ? 0 : (0xFFFFFFFF << (32 - p)) >>> 0, net = (a & mask) >>> 0, bc = (net | (~mask >>> 0)) >>> 0;
             const hosts = p >= 31 ? (p === 31 ? 2 : 1) : Math.pow(2, 32 - p) - 2;
-            out.innerHTML = `Alamat      ${esc(toS(a))}\nBiner       ${bin(a)}\nMask        ${toS(mask)}  (/${p})\nBiner mask  ${bin(mask)}\nJaringan    ${toS(net)}\nBroadcast   ${toS(bc)}\nHost pertama ${p >= 31 ? '-' : toS(net + 1)}\nHost terakhir ${p >= 31 ? '-' : toS(bc - 1)}\nJumlah host ${hosts.toLocaleString('id-ID')}`;
+            out.innerHTML = `Alamat      ${esc(toS(a))}\nBiner       ${bin(a)}\nMask        ${toS(mask)}  (/${p})\nBiner mask  ${bin(mask)}\nJaringan    ${toS(net)}\nBroadcast   ${toS(bc)}\nHost pertama ${p >= 31 ? '-' : toS(net + 1)}\nHost terakhir ${p >= 31 ? '-' : toS(bc - 1)}\nJumlah host ${hosts.toLocaleString(LOCALE)}`;
         };
         ip.oninput = pre.oninput = draw;
         const r = el('div', { class: 'row', style: 'align-items:center;margin-bottom:10px;gap:10px' });

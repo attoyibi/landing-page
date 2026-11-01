@@ -68,7 +68,7 @@ let done = 0;
 
 // ---- run inside the page (English check)
 const scanFn = () => {
-    const ID = /\b(yang|dan|untuk|dengan|adalah|atau|tidak|pada|ini|itu|lebih|anda|saya|kami|dalam|akan|bisa|sudah|belum|karena|jika|agar|juga|sebuah|oleh|dari|ke|di|kata|potongan|pencarian|dokumen|pertanyaan|skor|diambil|ulangi|berikutnya|selesai|salin|coba|sendiri|lihat|hasil|benar|tepat)\b/i;
+    const ID = /\b(yang|dan|untuk|dengan|adalah|atau|tidak|pada|ini|itu|lebih|anda|saya|kami|dalam|akan|bisa|sudah|belum|karena|jika|agar|juga|sebuah|oleh|dari|ke|di|kata|potongan|pencarian|dokumen|pertanyaan|skor|diambil|ulangi|berikutnya|selesai|salin|coba|sendiri|lihat|hasil|benar|tepat|langkah|mulai|jeda|lanjut|maju|mundur|acak|tambah|ambil|hapus|simpan|nilai|urutkan|jumlah|kotak|laci|pohon|angka|baris|kolom|tahun|detik|menit|hari|kosong|selesai|dijelajahi|bagian|bandingkan|tukar|pilih|ketuk|ketik|sisip|kiri|kanan|depan|belakang)\b/i;
     const skip = el => el.closest('pre, code, script, style, [lang="id"], [data-a11y-demo]');
     const found = [];
     const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);

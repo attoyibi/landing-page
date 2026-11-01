@@ -17,7 +17,6 @@ window.ARTIKEL_I18N = {
         ['Salin tautan', 'Copy link'],
         ['Putar otomatis', 'Auto-play'],
         ['Jeda', 'Pause'],
-        ['Ulangi', 'Repeat'],
         ['Ulang', 'Reset'],
 
         // quiz

@@ -405,7 +405,7 @@ ${cta(a, lang)}
 </main>
 </div>
 <footer class="foot">© ${new Date().getFullYear()} Muhammad Muchson Attoyibi · <a href="${home}">${L.home}</a> · <a href="${listPath(lang)}">${L.articles}</a></footer>
-${lang === 'en' ? '<script src="/artikel/_shared/i18n-en.js" defer></script>\n' : ''}<script src="/artikel/_shared/article.js" defer></script>
+${lang === 'en' ? '<script src="/artikel/_shared/i18n-en.js" defer></script>\n<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>\n' : ''}<script src="/artikel/_shared/article.js" defer></script>
 </body>
 </html>
 `;
