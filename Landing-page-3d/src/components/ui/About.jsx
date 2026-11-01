@@ -49,6 +49,9 @@ const About = () => {
                         <Card key={feature.icon} title={tx(feature.title)} description={tx(feature.description)} icon={feature.icon} index={index} />
                     ))}
                 </div>
+                <p className="mt-8">
+                    <a className="text-brand-600 font-semibold underline underline-offset-4" href={t('about.profilePath')}>{t('about.profile')} →</a>
+                </p>
             </div>
         </section>
     );

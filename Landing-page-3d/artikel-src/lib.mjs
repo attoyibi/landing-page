@@ -335,7 +335,8 @@ export function page(a, all, lang = 'id', alt = null) {
     const updated = a.updated && a.updated > a.date ? a.updated : '';
     const related = all.filter(x => x.slug !== a.slug).map(x => ({ x, s: (x.category === a.category ? 2 : 0) + x.tags.filter(t => a.tags.includes(t)).length })).sort((p, q) => q.s - p.s).slice(0, 3).map(r => r.x);
     const listUrl = `${SITE}${listPath(lang)}`, homeUrl = lang === 'en' ? `${SITE}/en/` : `${SITE}/`;
-    const author = { '@type': 'Person', name: 'Muhammad Muchson Attoyibi', url: homeUrl };
+    const aboutUrl = `${SITE}${lang === 'en' ? '/en/about/' : '/tentang/'}`;
+    const author = { '@type': 'Person', '@id': `${SITE}/#person`, name: 'Muhammad Muchson Attoyibi', url: aboutUrl };
     const ld = [
         { '@context': 'https://schema.org', '@type': 'Article', headline: a.title, description: a.description, image: [img], datePublished: a.date, dateModified: updated || a.date, inLanguage: lang, keywords: a.tags.join(', '), articleSection: a.category, wordCount: textOf(a).split(/\s+/).length, mainEntityOfPage: url, author, publisher: author },
         { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: L.home, item: homeUrl }, { '@type': 'ListItem', position: 2, name: L.articles, item: listUrl }, { '@type': 'ListItem', position: 3, name: a.title, item: url }] },
@@ -399,7 +400,7 @@ ${faq.length ? `<h2 id="tanya-jawab">${L.faq}</h2>\n${faq.map(([q, an]) => `<det
 ${a.sources && a.sources.length ? `<h2 id="sumber">${L.sources}</h2><ul class="sources">${a.sources.map(([l, u]) => `<li>${u ? `<a href="${u}" rel="noopener noreferrer" target="_blank">${esc(l)}<span class="sr-only"> (${L.newTab})</span></a>` : esc(l)}</li>`).join('')}</ul>` : ''}
 ${cta(a, lang)}
 <div class="share"><b>${L.share}:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">${L.copyLink}</button></div>
-<div class="author"><div><b>Muhammad Muchson Attoyibi</b>${L.authorBio} <a href="${home}">${L.aboutMe}</a></div></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>${L.authorBio} <a href="${aboutUrl}">${L.aboutMe}</a></div></div>
 <section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">${L.related}</h2><div class="rel">${related.map(r => `<a href="${articlePath(r.slug, lang)}"><img src="${articlePath(r.slug, lang)}cover.svg" width="1200" height="630" alt="" loading="lazy"><span>${esc(r.title)}</span></a>`).join('')}</div></section>
 </article>
 </main>

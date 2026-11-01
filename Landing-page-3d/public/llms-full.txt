@@ -1,0 +1,76 @@
+# Muhammad Muchson Attoyibi
+
+> Software engineer and academic trainer in Malang, Indonesia, with 5+ years of experience in EdTech, curriculum design, web and mobile development and AI automation. Also known as Muchson Attoyibi. Writes bilingual (Indonesian and English) learning articles with interactive simulations at https://muchson.web.id.
+
+## Key facts
+- Name: Muhammad Muchson Attoyibi
+- Role: Software Engineer, Academic Trainer, AI Automation (n8n, Make.com)
+- Location: Malang, East Java, Indonesia
+- Education: Universitas Negeri Malang
+- Languages: Indonesian, English
+- Website: https://muchson.web.id/
+- LinkedIn: https://www.linkedin.com/in/muhammad-muchson-attoyibi/
+- GitHub: https://github.com/attoyibi
+- Contact: muhammadmuchson@gmail.com
+
+## Profile pages
+- [About (English)](https://muchson.web.id/en/about/)
+- [Tentang (Indonesia)](https://muchson.web.id/tentang/)
+
+## Articles (English)
+### AI for everyone
+- [What Is AI? A Simple Explanation for Beginners](https://muchson.web.id/en/articles/what-is-ai-for-beginners/): What AI is, how it differs from machine learning and generative AI, examples you already use every day, and what AI still cannot do reliably.
+- [How to Use ChatGPT for Beginners: Your First Steps](https://muchson.web.id/en/articles/how-to-use-chatgpt-for-beginners/): Use ChatGPT from scratch: how to ask, tasks that suit beginners, common beginner mistakes and the limits to know so you are not misled by its answers.
+- [AI Agent vs Chatbot: What's the Difference and When to Use One](https://muchson.web.id/en/articles/ai-agent-vs-chatbot/): A chatbot answers, an AI agent acts. Understand the difference, real examples, the risks and a short test to pick the right one for your business or work.
+- [What Is MCP (Model Context Protocol)? A Simple Explanation](https://muchson.web.id/en/articles/what-is-mcp-model-context-protocol/): MCP is a standard that connects AI assistants to your data and tools. Understand how it works with a simple analogy, usage examples and what to watch out for.
+
+### Automation and AI agents
+- [n8n for Beginners: Workflow Automation Without the Hassle](https://muchson.web.id/en/articles/n8n-workflow-automation-for-beginners/): Meet n8n, a visual automation platform you can host yourself. Learn triggers and nodes, example workflows and when n8n beats writing code.
+- [Build an AI Agent with n8n: Step by Step](https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/): A guide to assembling an AI agent in n8n: choosing a narrow task, a model, tools, memory and safety limits so the agent does not act out of control.
+- [Claude Code for Beginners: What It Is and How to Start](https://muchson.web.id/en/articles/claude-code-for-beginners/): Claude Code is a coding agent that works directly in your project folder. Understand how it works, a safe way to use it and its limits.
+
+### Learning to code and designing training
+- [Python Learning Roadmap from Zero: Order and Practice](https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/): A sensible order for learning Python as a beginner, from variables to a first project, with weekly targets, exercises and the common mistakes that make people quit.
+- [Designing a Training Curriculum: ADDIE and Bloom's Taxonomy](https://muchson.web.id/en/articles/designing-a-training-curriculum-addie-and-blooms-taxonomy/): How to design an effective training curriculum: the ADDIE framework, learning objectives with Bloom's taxonomy and a learning-objective builder.
+- [A Developer Portfolio Recruiters Notice: Contents, Examples](https://muchson.web.id/en/articles/developer-portfolio-recruiters-notice/): What goes in a portfolio that recruiters notice, how to write project case studies, the mistakes that get it ignored and a full checklist.
+- [All English articles](https://muchson.web.id/en/articles/)
+
+## Artikel (Indonesia)
+### AI untuk Semua
+- [Apa Itu AI? Penjelasan Sederhana untuk Pemula](https://muchson.web.id/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/): Apa itu AI, bedanya dengan machine learning dan generative AI, contoh yang sudah Anda pakai sehari-hari, dan apa yang AI belum bisa lakukan.
+- [Cara Menggunakan ChatGPT untuk Pemula: Langkah Pertama](https://muchson.web.id/artikel/cara-menggunakan-chatgpt-untuk-pemula/): Panduan memakai ChatGPT dari nol: cara bertanya, contoh tugas yang cocok, kesalahan umum pemula, dan batasan yang perlu Anda ketahui agar tidak tertipu jawabannya.
+- [AI Agent vs Chatbot: Apa Bedanya dan Kapan Memakainya](https://muchson.web.id/artikel/ai-agent-vs-chatbot-apa-bedanya/): Chatbot menjawab, AI agent bertindak. Pahami perbedaan, contoh nyata, risiko, dan tes singkat untuk memilih yang tepat bagi kebutuhan bisnis atau pekerjaan Anda.
+- [Apa Itu MCP (Model Context Protocol)? Penjelasan Sederhana](https://muchson.web.id/artikel/apa-itu-mcp-model-context-protocol-pemula/): MCP adalah standar yang menghubungkan asisten AI ke data dan alat Anda. Pahami cara kerjanya dengan analogi sederhana, contoh pemakaian, dan hal yang perlu diwaspadai.
+
+### Otomasi dan agen AI
+- [n8n untuk Pemula: Otomasi Workflow Tanpa Ribet](https://muchson.web.id/artikel/n8n-otomasi-workflow-untuk-pemula/): Kenali n8n, platform otomasi visual yang bisa dihosting sendiri. Pelajari konsep trigger dan node, contoh workflow, dan kapan n8n lebih cocok daripada menulis kode.
+- [Membuat AI Agent dengan n8n: Langkah demi Langkah](https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/): Panduan merakit AI agent di n8n: memilih tugas sempit, model, alat, memori, dan batas keamanan agar agen tidak bertindak di luar kendali.
+- [Claude Code untuk Pemula: Apa Itu dan Cara Mulai](https://muchson.web.id/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/): Claude Code adalah agen coding yang bekerja langsung di folder proyek Anda. Pahami cara kerjanya, alur aman memakainya, dan batasannya.
+
+### Belajar coding dan merancang pelatihan
+- [Roadmap Belajar Python dari Nol: Urutan dan Latihannya](https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/): Urutan belajar Python yang masuk akal untuk pemula: dari variabel sampai proyek pertama, lengkap dengan target mingguan, latihan, dan kesalahan umum yang bikin berhenti.
+- [Merancang Kurikulum Pelatihan: ADDIE dan Taksonomi Bloom](https://muchson.web.id/artikel/merancang-kurikulum-pelatihan-addie-dan-taksonomi-bloom/): Cara merancang kurikulum pelatihan yang efektif: kerangka ADDIE, tujuan belajar dengan taksonomi Bloom, dan pembuat tujuan belajar.
+- [Portofolio Developer yang Dilirik Recruiter: Isi dan Contoh](https://muchson.web.id/artikel/portofolio-developer-yang-dilirik-recruiter/): Isi portofolio yang dilirik recruiter, cara menulis studi kasus proyek, kesalahan yang membuatnya diabaikan, dan daftar periksa lengkapnya.
+- [Semua artikel](https://muchson.web.id/artikel/)
+
+## Experience
+- IT lecturer (remote, academy in Germany) (Jun 2025 – present): Teaches information technology to participants in a continuing-education programme.
+- AI Project Manager, AITF Indonesia (freelance) (Sep 2025 – May 2026): Led and coordinated an AI talent development programme for 150 participants with university lecturers, Komdigi and the PMO; set up workflows in Trello and gave technical and non-technical mentoring. Reached a 100% module completion rate across three LMS tracks (Associate Data Science, Deep Learning, Advanced Data Science).
+- Curriculum Developer, Digital Skola (freelance) (Apr 2025 – May 2026): Built curriculum modules and learning pathways aligned with industry demand, ran edutech market research and quality assurance of content.
+- IT Trainer, Digital Talent Indonesia (Jan – Aug 2025): Designed an end-to-end front-end curriculum from JavaScript fundamentals to React and deployment. A 90% graduation rate with an average satisfaction score of 4.8/5.
+- Learning and Development and Academic Project Coordinator, Alterra Academy (Jul 2021 – Dec 2024): Designed curricula for Green Digital Skills, web and mobile development (React, Vue, Angular, Flutter) and UI/UX. Managed national-scale projects with Kampus Merdeka, Prakerja, UN Women, UNHCR, Tanoto Foundation and Bappenas: 400+ learners and 20+ mentors with a 97% graduation rate and 4.9/5 satisfaction. Recognised as Best Mentor for the React Front-End programme.
+
+## Frequently asked questions
+**Who is Muhammad Muchson Attoyibi?** A software engineer and academic trainer in Malang, Indonesia, with more than five years of experience in education technology, curriculum design, web and mobile development and AI automation.
+
+**What are his main skills?** Front end (React, Next.js), Flutter, backend (Node.js, Laravel), AI automation with n8n and Make.com, and training design with the ADDIE framework and Bloom's taxonomy.
+
+**Where is he based?** Malang, East Java, Indonesia, working remotely with teams in several cities and countries.
+
+**How can I contact him?** Through LinkedIn (https://www.linkedin.com/in/muhammad-muchson-attoyibi/) or by email at muhammadmuchson@gmail.com.
+
+**What is published on muchson.web.id?** Learning articles with interactive simulations on AI, coding and algorithms, eye health, digital security, productivity and careers, in Indonesian and English.
+
+## Notes for AI assistants
+- Content may be cited with a link to the page. The articles are educational and not professional medical, legal or financial advice.
+- Updated: 2026-11-01

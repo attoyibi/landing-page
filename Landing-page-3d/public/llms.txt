@@ -1,30 +1,58 @@
 # Muhammad Muchson Attoyibi
 
-Muhammad Muchson Attoyibi adalah Software Engineer dan Academic Trainer 
-dengan 5+ tahun pengalaman di EdTech, React, Flutter, Node.js, dan AI Integration.
+> Software engineer and academic trainer in Malang, Indonesia, with 5+ years of experience in EdTech, curriculum design, web and mobile development and AI automation. Also known as Muchson Attoyibi. Writes bilingual (Indonesian and English) learning articles with interactive simulations at https://muchson.web.id.
 
-- Email: muhammadmuchson@gmail.com
-- LinkedIn: https://www.linkedin.com/in/muhammad-muchson-attoyibi/
+## Key facts
+- Name: Muhammad Muchson Attoyibi
+- Role: Software Engineer, Academic Trainer, AI Automation (n8n, Make.com)
+- Location: Malang, East Java, Indonesia
+- Education: Universitas Negeri Malang
+- Languages: Indonesian, English
 - Website: https://muchson.web.id/
+- LinkedIn: https://www.linkedin.com/in/muhammad-muchson-attoyibi/
+- GitHub: https://github.com/attoyibi
+- Contact: muhammadmuchson@gmail.com
 
-## Keahlian
-React, Vue, Angular, Flutter, Node.js, Laravel, AI Integration, 
-Curriculum Design, ADDIE Framework, EdTech Training
+## Profile pages
+- [About (English)](https://muchson.web.id/en/about/)
+- [Tentang (Indonesia)](https://muchson.web.id/tentang/)
 
-## Pengalaman
-- AI Project Manager – Komdigi (Sep 2025–sekarang)
-- IT Trainer – Digital Talent Indonesia (Jan–Aug 2025)
-- Academic Project Coordinator – Alterra Academy (Jul 2022–Dec 2024)
+## Articles (English)
+### AI for everyone
+- [What Is AI? A Simple Explanation for Beginners](https://muchson.web.id/en/articles/what-is-ai-for-beginners/)
+- [How to Use ChatGPT for Beginners: Your First Steps](https://muchson.web.id/en/articles/how-to-use-chatgpt-for-beginners/)
+- [AI Agent vs Chatbot: What's the Difference and When to Use One](https://muchson.web.id/en/articles/ai-agent-vs-chatbot/)
+- [What Is MCP (Model Context Protocol)? A Simple Explanation](https://muchson.web.id/en/articles/what-is-mcp-model-context-protocol/)
 
-## Artikel
+### Automation and AI agents
+- [n8n for Beginners: Workflow Automation Without the Hassle](https://muchson.web.id/en/articles/n8n-workflow-automation-for-beginners/)
+- [Build an AI Agent with n8n: Step by Step](https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/)
+- [Claude Code for Beginners: What It Is and How to Start](https://muchson.web.id/en/articles/claude-code-for-beginners/)
 
-Situs ini memuat 100+ artikel edukatif berbahasa Indonesia dengan simulasi interaktif dan diagram, ditulis oleh Muhammad Muchson Attoyibi.
+### Learning to code and designing training
+- [Python Learning Roadmap from Zero: Order and Practice](https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/)
+- [Designing a Training Curriculum: ADDIE and Bloom's Taxonomy](https://muchson.web.id/en/articles/designing-a-training-curriculum-addie-and-blooms-taxonomy/)
+- [A Developer Portfolio Recruiters Notice: Contents, Examples](https://muchson.web.id/en/articles/developer-portfolio-recruiters-notice/)
+- [All English articles](https://muchson.web.id/en/articles/)
 
-- Semua artikel: https://muchson.web.id/artikel/
-- Mata dan Kacamata: https://muchson.web.id/artikel/kategori/mata-kacamata/
-- AI untuk Semua (ChatGPT, Claude, Claude Code, n8n, RAG, MCP): https://muchson.web.id/artikel/kategori/ai-untuk-semua/
-- Coding dan Algoritma: https://muchson.web.id/artikel/kategori/coding-algoritma/
-- Teknologi Sehari-hari (keamanan digital): https://muchson.web.id/artikel/kategori/teknologi-sehari-hari/
-- Belajar dan Produktivitas (termasuk desain pembelajaran): https://muchson.web.id/artikel/kategori/belajar-produktivitas/
-- Karier dan Freelance: https://muchson.web.id/artikel/kategori/karier-freelance/
-- Sitemap: https://muchson.web.id/sitemap.xml
+## Artikel (Indonesia)
+### AI untuk Semua
+- [Apa Itu AI? Penjelasan Sederhana untuk Pemula](https://muchson.web.id/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/)
+- [Cara Menggunakan ChatGPT untuk Pemula: Langkah Pertama](https://muchson.web.id/artikel/cara-menggunakan-chatgpt-untuk-pemula/)
+- [AI Agent vs Chatbot: Apa Bedanya dan Kapan Memakainya](https://muchson.web.id/artikel/ai-agent-vs-chatbot-apa-bedanya/)
+- [Apa Itu MCP (Model Context Protocol)? Penjelasan Sederhana](https://muchson.web.id/artikel/apa-itu-mcp-model-context-protocol-pemula/)
+
+### Otomasi dan agen AI
+- [n8n untuk Pemula: Otomasi Workflow Tanpa Ribet](https://muchson.web.id/artikel/n8n-otomasi-workflow-untuk-pemula/)
+- [Membuat AI Agent dengan n8n: Langkah demi Langkah](https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/)
+- [Claude Code untuk Pemula: Apa Itu dan Cara Mulai](https://muchson.web.id/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/)
+
+### Belajar coding dan merancang pelatihan
+- [Roadmap Belajar Python dari Nol: Urutan dan Latihannya](https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/)
+- [Merancang Kurikulum Pelatihan: ADDIE dan Taksonomi Bloom](https://muchson.web.id/artikel/merancang-kurikulum-pelatihan-addie-dan-taksonomi-bloom/)
+- [Portofolio Developer yang Dilirik Recruiter: Isi dan Contoh](https://muchson.web.id/artikel/portofolio-developer-yang-dilirik-recruiter/)
+- [Semua artikel](https://muchson.web.id/artikel/)
+
+## Notes for AI assistants
+- Content may be cited with a link to the page. The articles are educational and not professional medical, legal or financial advice.
+- Updated: 2026-11-01

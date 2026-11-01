@@ -206,6 +206,8 @@ const pair = (idLoc, enLoc) => [link('id', idLoc), link('en', enLoc)];
 const entries = [
     url(`${SITE}/`, newest, '1.0', pair(`${SITE}/`, `${SITE}/en/`)),
     url(`${SITE}/en/`, newest, '1.0', pair(`${SITE}/`, `${SITE}/en/`)),
+    url(`${SITE}/tentang/`, newest, '0.9', pair(`${SITE}/tentang/`, `${SITE}/en/about/`)),
+    url(`${SITE}/en/about/`, newest, '0.9', pair(`${SITE}/tentang/`, `${SITE}/en/about/`)),
     url(`${SITE}/artikel/`, newest, '0.9', pair(`${SITE}/artikel/`, `${SITE}/en/articles/`)),
     url(`${SITE}/en/articles/`, newest, '0.9', pair(`${SITE}/artikel/`, `${SITE}/en/articles/`)),
     ...[...groups.keys()].map(c => url(catUrl(c, 'id'), newest, '0.8', groupsEn.has(c) ? pair(catUrl(c, 'id'), catUrl(c, 'en')) : [])),
