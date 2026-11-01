@@ -20,6 +20,12 @@ export default [
             { ul: ['Agen bisa salah memahami maksud atau membuat perubahan di luar permintaan. Tinjau semuanya.', 'Hasilnya sebaik konteks dan tes yang tersedia. Proyek tanpa tes lebih berisiko.', 'Keamanan tetap tanggung jawab Anda: validasi input, kelola rahasia, tinjau dependensi.', 'Fitur dan perintah berubah. Rujuk dokumentasi resmi Anthropic untuk instalasi dan penggunaan terbaru.'] },
             { callout: 'Mulailah di proyek kecil yang tidak kritis. Biasakan membaca diff dan menjalankan tes sebelum memercayai agen pada pekerjaan yang lebih penting.', kind: 'good', title: 'Saran memulai' },
         ],
+        takeaways: [
+            'Agen coding bekerja di folder proyek: membaca banyak file, mengubahnya, menjalankan tes dan perintah, lalu melapor dan menunggu arahan.',
+            'Karena bisa mengubah dan menjalankan sesuatu, izin dan pengawasan menjadi penting.',
+            'Siklus aman: tugas kecil, agen mengubah kode, Anda meninjau diff, jalankan tes, lalu commit.',
+            'Taruh proyek di Git, beri tugas spesifik dengan kriteria selesai, baca diff, dan batasi izin.',
+        ],
         faq: [['Apakah Claude Code gratis?', 'Ketersediaan dan biaya bergantung pada paket dan penggunaan. Periksa halaman resmi Anthropic untuk informasi terbaru.'], ['Apakah saya perlu bisa coding?', 'Pemahaman dasar sangat membantu untuk menilai hasil. Tanpa itu, risiko menerima kode yang salah atau tidak aman meningkat.'], ['Apakah aman memberi agen akses ke proyek saya?', 'Aman bila izinnya dibatasi, ada Git, dan Anda meninjau perubahan. Jangan menyimpan rahasia di tempat yang tidak perlu dapat dibaca.']],
     },
 
@@ -39,6 +45,12 @@ export default [
             { h2: 'Kesalahan umum' },
             { w: 'cards', title: 'Ketuk kartu untuk melihat perbaikannya', items: [{ tag: 'Kesalahan', front: 'File terlalu panjang dan berisi segalanya.', backTag: 'Perbaikan', back: 'Singkat dan padat. Pindahkan panduan panjang ke dokumen terpisah dan rujuk saja.' }, { tag: 'Kesalahan', front: 'Isinya kebijakan umum, bukan fakta proyek.', backTag: 'Perbaikan', back: 'Tulis hal yang agen tidak bisa tebak: perintah spesifik, aturan unik.' }, { tag: 'Kesalahan', front: 'Tidak pernah diperbarui.', backTag: 'Perbaikan', back: 'Tambahkan setiap kali agen salah berulang. Itu tanda ada aturan yang belum tertulis.' }, { tag: 'Kesalahan', front: 'Menaruh kunci rahasia di dalamnya.', backTag: 'Perbaikan', back: 'Jangan. Berkas ini ikut tersimpan di repositori.' }] },
             { w: 'checklist', title: 'Periksa CLAUDE.md Anda', items: ['Ada perintah menjalankan dan menguji proyek.', 'Struktur folder utama dijelaskan singkat.', 'Aturan yang sering dilanggar sudah tertulis.', 'Tidak ada rahasia atau data pribadi.', 'Panjangnya masuk akal: mudah dibaca dalam semenit.'] },
+        ],
+        takeaways: [
+            'CLAUDE.md adalah berkas teks (biasanya Markdown) yang dibaca agen di awal sesi, sehingga Anda tidak mengulang instruksi yang sama.',
+            'Isi yang berguna: cara menjalankan dan menguji, struktur folder, gaya kode, aturan keras, dan catatan penting.',
+            'Buat singkat dan khusus proyek; tulis hal yang tidak bisa ditebak agen, bukan kebijakan umum.',
+            'Perbarui setiap kali agen mengulang kesalahan, dan jangan menaruh rahasia di dalamnya karena ikut tersimpan di repositori.',
         ],
         faq: [['Apakah wajib memakai CLAUDE.md?', 'Tidak wajib, tetapi sangat membantu konsistensi, terutama pada proyek yang berjalan lama atau dikerjakan beberapa orang.'], ['Apakah file ini hanya untuk Claude Code?', 'Namanya khusus untuk alat itu, tetapi prinsipnya berlaku untuk agen coding lain yang membaca berkas panduan proyek.'], ['Bagaimana bila agen mengabaikan isinya?', 'Periksa apakah instruksi jelas dan tidak bertentangan. Aturan yang benar-benar wajib sebaiknya didukung tes atau mekanisme otomatis.']],
     },
@@ -60,6 +72,12 @@ export default [
             { callout: 'Fitur-fitur ini berkembang cepat dan detailnya berubah. Gunakan artikel ini untuk memahami perannya, lalu rujuk dokumentasi resmi untuk cara pemasangan dan sintaks terbaru.', kind: 'info', title: 'Catatan' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Yang menjamin sebuah tindakan SELALU berjalan pada peristiwa tertentu?', options: ['Skill', 'Hook', 'Prompt yang panjang'], answer: 1, why: 'Hook dijalankan secara otomatis pada peristiwa, tidak bergantung pada keputusan model.' }, { q: 'Yang paling tepat untuk menghubungkan agen ke database eksternal?', options: ['MCP', 'Hook', 'CLAUDE.md'], answer: 0, why: 'MCP adalah standar penghubung ke alat dan data luar.' }] },
         ],
+        takeaways: [
+            'Skills adalah paket instruksi yang dimuat saat dibutuhkan; subagents adalah agen terpisah dengan konteks sendiri; MCP menghubungkan ke alat dan data luar; hooks berjalan otomatis pada peristiwa.',
+            'Pakai hook bila sesuatu wajib selalu terjadi, karena hook tidak bergantung pada model yang mengingatnya.',
+            'Pakai subagent untuk riset yang berisik agar percakapan utama tetap bersih, dan skill untuk prosedur yang berulang Anda jelaskan.',
+            'Tambahkan berurutan: CLAUDE.md singkat, lalu skills, lalu MCP hanya untuk alat yang benar-benar dipakai, lalu hooks dan subagents bila perlu.',
+        ],
         faq: [['Apakah saya perlu keempatnya?', 'Tidak. Mulailah sederhana. Tambahkan fitur hanya ketika ada masalah nyata yang diselesaikannya.'], ['Apakah skill sama dengan prompt tersimpan?', 'Mirip, tetapi skill dapat memuat instruksi, skrip, dan sumber daya yang dimuat bila relevan, sehingga lebih terstruktur.'], ['Apakah aman memasang server MCP dari pihak lain?', 'Berisiko bila tidak dikenal. Periksa sumber dan izinnya, dan batasi akses seminimal mungkin.']],
     },
 
@@ -80,6 +98,12 @@ export default [
             { h2: 'Tips awal' },
             { w: 'checklist', title: 'Kebiasaan baik sejak awal', items: ['Mulai dari satu alur kecil dengan manfaat nyata.', 'Beri nama node yang jelas agar mudah dipahami bulan depan.', 'Aktifkan penanganan error dan notifikasi kegagalan.', 'Simpan kredensial dengan benar, jangan menempelnya ke node.', 'Uji dengan data contoh sebelum mengaktifkan.', 'Catat apa yang dilakukan alur dalam deskripsi.'] },
         ],
+        takeaways: [
+            'Workflow dimulai dari trigger, melewati node (tiap node satu langkah), bisa bercabang menurut kondisi, dan berakhir pada hasil.',
+            'Kredensial disimpan terpisah dari alur, dan catatan eksekusi membantu mencari penyebab kegagalan.',
+            'Cocok untuk menyambungkan banyak layanan dengan alur yang bisa digambar; logika khusus yang berat lebih baik ditulis sebagai kode.',
+            'Mulai dari satu alur kecil, beri nama node yang jelas, aktifkan notifikasi error, dan uji dengan data contoh sebelum diaktifkan.',
+        ],
         faq: [['Apakah n8n gratis?', 'Tersedia opsi hosting sendiri dan layanan cloud berbayar. Ketentuan lisensi dan harga bisa berubah, periksa situs resminya.'], ['Apakah perlu bisa coding?', 'Untuk alur sederhana tidak perlu. Untuk logika khusus, kemampuan menulis sedikit kode sangat membantu.'], ['Apa bedanya n8n dengan Zapier atau Make?', 'Ketiganya platform otomasi. Perbedaannya pada model harga, opsi hosting sendiri, fleksibilitas, dan ekosistem integrasi. Pilih berdasarkan kebutuhan dan anggaran.']],
     },
 
@@ -98,6 +122,12 @@ export default [
             { h2: 'Menjaga agen tetap aman' },
             { w: 'checklist', title: 'Aturan keamanan', items: ['Mulai dengan alat yang hanya membaca.', 'Tindakan seperti kirim email atau ubah data lewat langkah persetujuan manusia.', 'Batasi data yang bisa diakses ke satu sheet atau folder.', 'Simpan log setiap eksekusi dan tinjau berkala.', 'Jangan menaruh kunci rahasia di instruksi sistem.', 'Uji dengan percobaan penyalahgunaan: pertanyaan di luar topik, permintaan berbahaya.'] },
             { callout: 'Jika langkahnya selalu sama, alur biasa tanpa agen lebih murah, lebih cepat, dan lebih mudah diprediksi. Gunakan agen hanya untuk bagian yang memerlukan penilaian.', kind: 'warn', title: 'Jangan berlebihan' },
+        ],
+        takeaways: [
+            'Alur agen terdiri dari trigger, agen (model bahasa), alat, memori, dan keluaran.',
+            'Tentukan satu tugas sempit, beri hanya alat yang dibutuhkan, dan tulis instruksi sistem berisi peran, batasan, dan apa yang dilakukan bila tidak tahu.',
+            'Jaga keamanan: alat yang hanya membaca dulu, persetujuan manusia untuk tindakan seperti kirim email atau ubah data, akses data terbatas, dan log.',
+            'Bila langkahnya selalu sama, alur biasa tanpa agen lebih murah dan mudah diprediksi; pakai agen hanya untuk bagian yang butuh penilaian.',
         ],
         faq: [['Model apa yang cocok untuk agen?', 'Pilih sesuai tugas, biaya, dan privasi. Uji beberapa model pada pertanyaan nyata Anda sebelum memutuskan.'], ['Bagaimana mengurangi jawaban mengarang?', 'Batasi sumber ke data Anda, wajibkan jawaban "tidak tahu" bila tidak ada, dan uji dengan pertanyaan jebakan.'], ['Apakah agen bisa berjalan tanpa pengawasan?', 'Untuk tugas berisiko rendah, ya. Untuk tindakan penting tetap sertakan persetujuan manusia dan pantau log.']],
     },
@@ -118,6 +148,12 @@ export default [
             { w: 'compare', title: 'Kata kunci vs semantik', tabs: [{ label: 'Kata kunci', html: '<b>Mencari:</b> kata yang sama persis.<br><b>Kelebihan:</b> cepat, tepat untuk nama, kode, dan istilah khusus.<br><b>Kelemahan:</b> "mobil" tidak menemukan "kendaraan".' }, { label: 'Semantik', html: '<b>Mencari:</b> makna yang mirip.<br><b>Kelebihan:</b> memahami sinonim dan parafrase.<br><b>Kelemahan:</b> kadang kurang tepat untuk kode produk atau nama diri.' }, { label: 'Gabungan (hybrid)', html: 'Menggabungkan keduanya sering menghasilkan hasil terbaik: kata kunci untuk ketepatan, semantik untuk cakupan makna.' }] },
             { w: 'minirag', title: 'Coba pencarian dokumen kecil', desc: 'Demo ini memakai pencocokan kata penting agar bisa berjalan di browser. Prinsip alurnya sama dengan pencarian semantik: pertanyaan dibandingkan dengan potongan dokumen, dan yang paling cocok dipilih.', example: 'Bagaimana cara mengatur ulang sandi?', examples: ['Bagaimana cara mengatur ulang sandi?', 'Berapa lama pengiriman barang?', 'Bisakah saya mengembalikan barang?'], docs: [{ title: 'Reset sandi', text: 'Untuk mengatur ulang sandi, pilih menu lupa sandi di halaman masuk lalu ikuti tautan yang dikirim ke email Anda.' }, { title: 'Pengiriman', text: 'Pengiriman barang memakan waktu dua sampai lima hari kerja tergantung kota tujuan.' }, { title: 'Pengembalian', text: 'Barang dapat dikembalikan dalam tujuh hari setelah diterima bila kemasan masih utuh.' }, { title: 'Pembayaran', text: 'Pembayaran dapat dilakukan melalui transfer bank, dompet digital, dan kartu.' }] },
             { callout: 'Embedding yang sama dipakai oleh pencarian dokumen, rekomendasi, pengelompokan topik, dan deteksi duplikat. Cara kerjanya sama: makna menjadi jarak.', kind: 'info', title: 'Bukan hanya untuk pencarian' },
+        ],
+        takeaways: [
+            'Embedding adalah daftar angka (vektor) yang bekerja seperti koordinat makna: makna yang mirip berdekatan.',
+            'Pencarian semantik mengubah dokumen dan pertanyaan menjadi embedding, mencari yang terdekat menurut kemiripan, lalu menampilkannya berurutan.',
+            'Pencarian kata kunci tepat dan cepat, pencarian semantik memahami sinonim, dan gabungan keduanya (hybrid) sering memberi hasil terbaik.',
+            'Gagasan yang sama dipakai untuk pencarian dokumen, rekomendasi, pengelompokan topik, dan deteksi duplikat.',
         ],
         faq: [['Apa itu database vektor?', 'Database yang dirancang menyimpan embedding dan mencari yang terdekat dengan cepat. Untuk dokumen sedikit, penyimpanan biasa sudah cukup.'], ['Apakah embedding sama dengan token?', 'Bukan. Token adalah potongan teks yang diproses model. Embedding adalah representasi angka dari makna teks.'], ['Apakah embedding bisa dipakai untuk bahasa Indonesia?', 'Bisa. Pilih model embedding yang mendukung bahasa Indonesia dan uji dengan data Anda.']],
     },

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build an AI Agent with n8n: Step by Step · Muhammad Muchson</title>
+<meta name="description" content="A guide to assembling an AI agent in n8n: choosing a narrow task, a model, tools, memory and safety limits so the agent does not act out of control.">
+<meta name="keywords" content="n8n, AI agent, LLM, automation, workflow">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/">
+<meta property="og:title" content="Build an AI Agent with n8n: Step by Step">
+<meta property="og:description" content="A guide to assembling an AI agent in n8n: choosing a narrow task, a model, tools, memory and safety limits so the agent does not act out of control.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Build an AI Agent with n8n: Step by Step">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="AI for Everyone">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build an AI Agent with n8n: Step by Step">
+<meta name="twitter:description" content="A guide to assembling an AI agent in n8n: choosing a narrow task, a model, tools, memory and safety limits so the agent does not act out of control.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Build an AI Agent with n8n: Step by Step","description":"A guide to assembling an AI agent in n8n: choosing a narrow task, a model, tools, memory and safety limits so the agent does not act out of control.","image":["https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"n8n, AI agent, LLM, automation, workflow","articleSection":"AI for Everyone","wordCount":251,"mainEntityOfPage":"https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Build an AI Agent with n8n: Step by Step","item":"https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which model suits an agent?","acceptedAnswer":{"@type":"Answer","text":"Choose by task, cost and privacy. Test several models on your real questions before deciding."}},{"@type":"Question","name":"How do I reduce made-up answers?","acceptedAnswer":{"@type":"Answer","text":"Limit the sources to your data, require an \"I don't know\" answer when there is none and test with trick questions."}},{"@type":"Question","name":"Can an agent run unsupervised?","acceptedAnswer":{"@type":"Answer","text":"For low-risk tasks, yes. For important actions still include human approval and watch the logs."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#the-components-of-an-agent">The components of an agent</a></li><li><a href="#steps-to-build-it">Steps to build it</a></li><li><a href="#keeping-the-agent-safe">Keeping the agent safe</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/ai-untuk-semua/">AI for Everyone</a></p>
+<a class="cat" href="/en/articles/category/ai-untuk-semua/">AI for Everyone</a>
+<h1>Build an AI Agent with n8n: Step by Step</h1>
+<p class="lead">n8n has dedicated nodes for AI agents that link a language model, tools and memory on the same canvas as an ordinary automation flow. The best results come from a narrow task and clear limits, not an all-purpose agent.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>An agent flow has a trigger, the agent (a language model), tools, memory and an output.</li><li>Define one narrow task, give only the tools it needs and write a system prompt with role, limits and what to do when it does not know.</li><li>Keep it safe: read-only tools first, human approval for actions like sending email or changing data, limited data access and logs.</li><li>If the steps are always the same, an ordinary flow without an agent is cheaper and more predictable; use an agent only where judgement is needed.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="the-components-of-an-agent">The components of an agent</h2>
+<figure class="diagram"><svg viewBox="0 0 542 256" role="img" aria-label="Components of an AI agent in a workflow" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Trigger</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">a message, schedule or</tspan><tspan x="85" dy="14">webhook</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Agent</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">the brain: a language</tspan><tspan x="271" dy="14">model</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Tools</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">read sheet, search,</tspan><tspan x="457" dy="14">send</tspan></text><path d="M457 112 V138 H85 V144" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="10" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="26" cy="164" r="11" fill="#7a3fb4"/><text x="26" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="85" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Memory</tspan></text><text x="85" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">conversation context</tspan></text><line x1="164" y1="197" x2="192" y2="197" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="148" width="150" height="98" rx="12" fill="#fff" stroke="#b3261e" stroke-width="2.5"/><circle cx="212" cy="164" r="11" fill="#b3261e"/><text x="212" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text><text x="271" y="188" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Output</tspan></text><text x="271" y="208" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">an answer or an action</tspan></text></svg><figcaption><b>Figure 1.</b> The agent decides which tool to use based on the goal and instructions.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Trigger: a message, schedule or webhook</li><li>Agent: the brain: a language model</li><li>Tools: read sheet, search, send</li><li>Memory: conversation context</li><li>Output: an answer or an action</li></ol></details></figure>
+<h2 id="steps-to-build-it">Steps to build it</h2>
+<ol><li>Define <b>one narrow task</b>, for example "answer questions about the class timetable from a spreadsheet".</li><li>Pick a trigger: a chat message, a webhook or a schedule.</li><li>Add the agent node and connect it to the language model of your choice.</li><li>Give <b>only the tools it needs</b>: read sheet, search documents, send email.</li><li>Write the system prompt: role, limits, answer format and what to do when it does not know.</li><li>Add memory if it needs to remember the conversation context.</li><li>Test with real questions, including ones that are deliberately confusing.</li></ol>
+<div data-w="builder"><script type="application/json">{"title":"Draft the agent's system prompt","desc":"Paste the result into the system-prompt section of the agent node, then adjust it.","fields":[{"id":"peran","label":"Agent role","placeholder":"e.g. a class timetable assistant for school X","long":false},{"id":"sumber","label":"Source of information","placeholder":"e.g. the timetable spreadsheet (read-sheet tool)"},{"id":"tugas","label":"Main task","placeholder":"e.g. answer questions about schedules and rooms","long":true},{"id":"batas","label":"Things it must not do","placeholder":"e.g. change the timetable, give out teachers' personal data","long":true}],"template":"You are {peran}.\nSource of information: {sumber}.\nYour task: {tugas}\n\nRules:\n- Answer only from the source of information. If the answer is not there, say \"I could not find that information\" and suggest contacting the staff.\n- Never do the following: {batas}\n- Answer briefly in English."}</script></div>
+<h2 id="keeping-the-agent-safe">Keeping the agent safe</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Safety rules","items":["Start with tools that only read.","Actions like sending email or changing data go through a human approval step.","Limit the data it can reach to one sheet or folder.","Keep a log of each execution and review it periodically.","Do not put secret keys in the system prompt.","Test for misuse: off-topic questions, dangerous requests."]}</script></div>
+<div class="callout warn" role="note"><b>Don't overdo it</b><p>If the steps are always the same, an ordinary flow without an agent is cheaper, faster and more predictable. Use an agent only for the parts that need judgement.</p></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Which model suits an agent?</summary><div>Choose by task, cost and privacy. Test several models on your real questions before deciding.</div></details>
+<details class="faq"><summary>How do I reduce made-up answers?</summary><div>Limit the sources to your data, require an "I don't know" answer when there is none and test with trick questions.</div></details>
+<details class="faq"><summary>Can an agent run unsupervised?</summary><div>For low-risk tasks, yes. For important actions still include human approval and watch the logs.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/ai-agent-vs-chatbot/"><img src="/en/articles/ai-agent-vs-chatbot/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>AI Agent vs Chatbot: What's the Difference and When to Use One</span></a><a href="/en/articles/n8n-workflow-automation-for-beginners/"><img src="/en/articles/n8n-workflow-automation-for-beginners/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>n8n for Beginners: Workflow Automation Without the Hassle</span></a><a href="/en/articles/what-is-rag/"><img src="/en/articles/what-is-rag/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>What Is RAG? How AI Answers From Your Documents (Demo)</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -20,6 +20,12 @@ export default [
             { w: 'checklist', title: 'Sebelum memakai hasil AI', items: ['Angka, tanggal, dan nama sudah dicek ke sumber asli.', 'Nada dan isi sesuai dengan niat Anda dan pembacanya.', 'Tidak ada informasi rahasia yang ikut tertulis atau terbagikan.', 'Klaim yang terdengar terlalu pasti sudah diverifikasi.', 'Untuk topik hukum, kesehatan, dan keuangan, sudah diperiksa ahlinya.'] },
             { callout: 'Hindari memasukkan data pribadi atau rahasia perusahaan ke asisten AI kecuali Anda memahami kebijakan data layanan itu dan diizinkan oleh organisasi Anda.', kind: 'warn', title: 'Privasi' },
         ],
+        takeaways: [
+            'Sepuluh pemakaian: merangkum, menulis draf, menjelaskan konsep, brainstorming, merapikan tulisan, menganalisis data kecil, menyusun rencana, template, membantu coding, dan latihan.',
+            'Kualitas bergantung pada permintaan yang jelas: tujuan, pembaca, format, dan contoh; dua atau tiga putaran umpan balik lebih baik daripada satu permintaan.',
+            'Selalu periksa angka, tanggal, dan nama, dan minta ahli memeriksa topik hukum, kesehatan, dan keuangan.',
+            'Hindari memasukkan data pribadi atau rahasia perusahaan kecuali Anda memahami kebijakan data layanan dan organisasi Anda mengizinkan.',
+        ],
         faq: [['Apakah Claude gratis?', 'Umumnya tersedia akses gratis dengan batasan dan paket berbayar dengan batas lebih tinggi. Ketentuannya dapat berubah, jadi periksa situs resminya.'], ['Apa bedanya Claude dengan ChatGPT?', 'Keduanya asisten AI percakapan. Perbedaannya pada model, fitur, gaya jawaban, dan kebijakan produk, yang terus berubah. Coba keduanya pada tugas nyata Anda.'], ['Apakah Claude bisa membaca dokumen saya?', 'Banyak layanan mendukung unggah dokumen. Pastikan Anda boleh mengunggahnya dan periksa pengaturan privasi.']],
     },
 
@@ -38,6 +44,12 @@ export default [
             { w: 'cards', title: 'Ketuk kartu untuk melihat penanganannya', items: [{ tag: 'Masalah', front: 'AI menyebut tugas untuk orang yang salah.', backTag: 'Cara', back: 'Minta tuliskan "belum disebutkan" bila tidak jelas, dan konfirmasikan sebelum mengirim.' }, { tag: 'Masalah', front: 'Keputusan yang sebenarnya belum disepakati tertulis sebagai keputusan.', backTag: 'Cara', back: 'Pisahkan "keputusan" dan "usulan" pada instruksi.' }, { tag: 'Masalah', front: 'Nama istilah internal salah tulis.', backTag: 'Cara', back: 'Beri daftar istilah dan nama di awal.' }, { tag: 'Masalah', front: 'Ringkasan terlalu panjang.', backTag: 'Cara', back: 'Batasi: "maksimal 150 kata, satu halaman".' }] },
             { callout: 'Merekam rapat membutuhkan persetujuan peserta dan harus sesuai kebijakan organisasi serta hukum yang berlaku. Beri tahu peserta bahwa rapat direkam dan akan diringkas oleh alat bantu, terutama bila membahas hal sensitif.', kind: 'warn', title: 'Etika perekaman' },
             { w: 'checklist', title: 'Rapat yang mudah diringkas', items: ['Ada agenda dan tujuan tertulis di awal.', 'Setiap tugas disebut dengan nama dan tenggat.', 'Keputusan diucapkan jelas ("kita putuskan...").', 'Ada orang yang meringkas lisan di akhir rapat.', 'Notulen dikirim dalam satu hari.'] },
+        ],
+        takeaways: [
+            'Alurnya: catat atau rekam dengan izin, ambil transkrip, minta ringkasan terstruktur, lalu periksa dan kirim.',
+            'Minta struktur tetap: ringkasan, keputusan, daftar tindak lanjut dengan penanggung jawab dan tenggat, serta pertanyaan terbuka.',
+            'Suruh AI menulis "belum disebutkan" bila tidak jelas dan tidak menambah informasi yang tidak ada di catatan.',
+            'Merekam rapat membutuhkan persetujuan peserta dan harus sesuai kebijakan organisasi serta hukum yang berlaku.',
         ],
         faq: [['Apakah AI bisa menggantikan notulis?', 'Bisa membuat draf cepat. Peran manusia tetap diperlukan untuk memeriksa ketepatan dan menjaga nuansa.'], ['Bagaimana bila rapat memakai bahasa campuran?', 'Banyak model menangani bahasa campuran dengan baik, tetapi nama dan istilah teknis perlu diperiksa.'], ['Apakah aman mengunggah transkrip rapat?', 'Tergantung kebijakan layanan dan sensitivitas isi. Untuk rapat rahasia, gunakan layanan yang disetujui organisasi.']],
     },
@@ -59,6 +71,12 @@ export default [
             { ul: ['Beri contoh email lama Anda dan minta meniru gayanya.', 'Hapus kalimat pembuka yang terlalu berbunga.', 'Gunakan nama dan detail spesifik, bukan kalimat umum.', 'Baca keras-keras. Bila terdengar aneh, ubah.'] },
             { callout: 'Jangan mengirim email sensitif (keuangan, hukum, personal) tanpa memeriksa setiap kalimat. AI bisa menambahkan janji atau fakta yang tidak Anda maksudkan.', kind: 'warn', title: 'Hati-hati' },
         ],
+        takeaways: [
+            'Permintaan yang kuat menyebut penerima, poin yang harus ada, nada, dan panjang, serta meminta satu baris subjek yang jelas.',
+            'Hasil mentah AI terdengar generik; tambahkan nama dan detail spesifik dan ganti kalimat basa-basi dengan gaya Anda.',
+            'Beri contoh email lama Anda sebagai acuan gaya dan minta AI menirunya.',
+            'Periksa nama, tanggal, angka, dan janji sebelum mengirim, dan jangan kirim email sensitif tanpa membaca setiap kalimat.',
+        ],
         faq: [['Apakah penerima tahu email dibuat AI?', 'Bisa terasa bila terlalu generik. Personalisasi dan penyuntingan membuatnya wajar. Bila diminta, bersikaplah jujur soal penggunaan alat bantu.'], ['Apakah aman memasukkan isi email ke AI?', 'Tergantung kebijakan layanan dan isinya. Hindari data sensitif; samarkan nama dan angka bila perlu.'], ['Bagaimana membalas email panjang?', 'Tempel emailnya (tanpa data sensitif), lalu minta ringkasan poin yang perlu dijawab dan draf balasan untuk tiap poin.']],
     },
 
@@ -78,6 +96,12 @@ export default [
             { h2: 'Batasan dokumen panjang' },
             `Asisten AI hanya dapat memproses sejumlah teks tertentu dalam satu percakapan (disebut jendela konteks). Dokumen yang sangat panjang bisa terpotong atau sebagian terlupakan. Pecah dokumen menjadi bagian dan tanya per bagian, atau gunakan sistem pencarian dokumen (RAG) bila dokumennya banyak.`,
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Mengapa meminta kutipan dan halaman penting?', options: ['Agar jawaban lebih panjang', 'Agar bisa memverifikasi ke dokumen asli', 'Agar AI lebih cepat'], answer: 1, why: 'Kutipan memungkinkan pemeriksaan langsung.' }, { q: 'Dokumen 300 halaman sebaiknya...', options: ['Ditempel semua sekaligus tanpa berpikir', 'Dipecah dan ditanyakan per bagian', 'Dihindari sepenuhnya'], answer: 1, why: 'Memecah mengurangi risiko terpotong dan meningkatkan ketepatan.' }] },
+        ],
+        takeaways: [
+            'Kerjakan dari gambaran besar ke bawah: minta daftar isi dan poin utama dulu, lalu pertanyaan spesifik per bagian.',
+            'Minta kutipan beserta halaman atau bagian agar bisa diperiksa ke dokumen asli.',
+            'Suruh AI menjawab hanya dari dokumen dan mengatakan bila tidak ditemukan, untuk mengurangi halusinasi.',
+            'Dokumen sangat panjang bisa terpotong; pecah per bagian, atau pakai sistem pencarian dokumen (RAG) bila jumlahnya banyak.',
         ],
         faq: [['Apakah AI bisa membaca PDF hasil scan?', 'Tergantung apakah layanan mengenali teks (OCR). Hasilnya lebih baik pada scan yang jelas. Periksa hasilnya.'], ['Apakah aman mengunggah dokumen internal?', 'Ikuti kebijakan organisasi dan layanan. Dokumen rahasia sebaiknya hanya diproses di layanan yang disetujui.'], ['Bagaimana bila AI menjawab sesuatu yang tidak ada di dokumen?', 'Itu halusinasi. Minta ia hanya menjawab dari dokumen dan mengatakan tidak ada bila tidak ditemukan.']],
     },
@@ -99,6 +123,12 @@ export default [
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Rumus apa yang menjumlah hanya baris dengan kategori tertentu?', options: ['SUM', 'SUMIF', 'AVERAGE'], answer: 1, why: 'SUMIF menjumlah dengan syarat.' }, { q: 'Mengapa perlu menguji rumus AI pada baris contoh?', options: ['Rumus AI selalu benar', 'Rumus bisa terlihat benar tetapi salah pada kasus tertentu', 'Agar file lebih besar'], answer: 1, why: 'Uji pada contoh yang diketahui hasilnya.' }] },
             { callout: 'Jangan mengunggah spreadsheet berisi data pelanggan atau gaji ke layanan yang tidak disetujui. Cukup jelaskan struktur kolomnya, atau ganti dengan data contoh.', kind: 'warn', title: 'Privasi data' },
         ],
+        takeaways: [
+            'Sebutkan empat hal: struktur data, tujuan, aplikasi (Excel atau Google Sheets), dan satu contoh baris beserta hasil yang benar.',
+            'SUM, IF, SUMIF, dan VLOOKUP atau XLOOKUP mencakup sebagian besar kebutuhan awal.',
+            'Uji rumus AI pada 2-3 baris yang jawabannya Anda tahu, dan pada kasus tepi seperti sel kosong, nol, dan teks di kolom angka.',
+            'Jangan mengunggah spreadsheet berisi data pelanggan atau gaji ke layanan yang tidak disetujui; jelaskan kolomnya atau pakai data contoh.',
+        ],
         faq: [['Apakah AI bisa membaca file Excel langsung?', 'Banyak layanan mendukung unggah file dan menganalisisnya. Perhatikan privasi, dan tetap periksa hasilnya.'], ['Mengapa rumus dari AI gagal di Excel saya?', 'Perbedaan versi, pemisah rumus (koma atau titik koma), atau fungsi yang tidak tersedia. Sebutkan aplikasi dan versinya.'], ['Rumus apa yang sebaiknya saya pelajari dulu?', 'SUM, IF, SUMIF, dan VLOOKUP atau XLOOKUP mencakup sebagian besar kebutuhan awal.']],
     },
 
@@ -119,6 +149,12 @@ export default [
             { w: 'checklist', title: 'Sebelum tampil', items: ['Pesan inti bisa saya ucapkan dalam satu kalimat.', 'Setiap slide punya satu ide.', 'Angka yang saya tampilkan sudah diperiksa.', 'Saya sudah berlatih mengucapkannya dengan keras.', 'Saya sudah menyiapkan jawaban untuk tiga pertanyaan tersulit.', 'Teks terbaca dari belakang ruangan.'] },
             { callout: 'AI sering menghasilkan slide yang penuh poin generik. Ganti dengan contoh nyata dan data Anda sendiri. Itu yang membuat presentasi berkesan.', kind: 'info', title: 'Tips' },
         ],
+        takeaways: [
+            'Mulai dari satu kalimat pesan inti, lalu kerangka, lalu satu ide per slide, lalu latihan.',
+            'Tulis judul slide sebagai kalimat utuh yang menyatakan pesan, dan jaga teks tetap sedikit dan besar.',
+            'Minta AI berperan sebagai audiens skeptis dan mengajukan pertanyaan sulit, lalu latih jawaban 30 detik untuk tiap pertanyaan.',
+            'Slide dari AI sering penuh poin generik; ganti dengan contoh nyata dan data Anda sendiri.',
+        ],
         faq: [['Apakah AI bisa membuat file PowerPoint?', 'Beberapa alat bisa membuat slide otomatis. Hasilnya perlu Anda rapikan dan periksa isinya.'], ['Berapa jumlah slide ideal?', 'Tidak ada angka pasti. Acuan kasar: sekitar satu slide per satu sampai dua menit bicara, tetapi pesan dan ritme lebih penting.'], ['Bagaimana mengatasi gugup?', 'Berlatih berulang, kenali materi dengan baik, dan siapkan awal presentasi yang kuat. Artikel tentang berbicara di depan umum membahas lebih lanjut.']],
     },
 
@@ -137,6 +173,12 @@ export default [
             { w: 'calc', title: 'Perkiraan token untuk teks Anda', desc: 'Perkiraan kasar: bahasa Indonesia sekitar 1,5 token per kata. Hasil sebenarnya bergantung pada model.', inputs: [{ id: 'hal', label: 'Jumlah halaman (satu halaman sekitar 400 kata)', value: 20, min: 1, max: 500, step: 1, unit: 'halaman' }, { id: 'batas', label: 'Context window model', value: 200000, min: 8000, max: 1000000, step: 8000, unit: 'token' }, { id: 'harga', label: 'Harga per 1 juta token masukan (contoh, isi sendiri)', value: 3, min: 0, max: 30, step: 0.5, unit: 'USD' }], outputs: [{ label: 'Perkiraan jumlah token', expr: 'hal * 400 * 1.5', fmt: 'int', unit: 'token', big: true }, { label: 'Persentase dari context window', expr: 'min(100, hal * 400 * 1.5 / batas * 100)', fmt: 'pct' }, { label: 'Perkiraan biaya masukan sekali kirim', expr: 'hal * 400 * 1.5 / 1000000 * harga', fmt: 'num', unit: 'USD', note: 'Harga hanyalah contoh untuk perhitungan. Cek daftar harga resmi penyedia layanan.' }] },
             { h2: 'Tips praktis' },
             { w: 'cards', title: 'Ketuk kartu', items: [{ tag: 'Masalah', front: 'Percakapan panjang, AI mulai melupakan instruksi awal.', backTag: 'Solusi', back: 'Ulangi instruksi penting, atau mulai percakapan baru dengan ringkasan.' }, { tag: 'Masalah', front: 'Dokumen terlalu panjang untuk ditempel.', backTag: 'Solusi', back: 'Pecah per bagian, atau gunakan pencarian dokumen (RAG).' }, { tag: 'Masalah', front: 'Biaya API membengkak.', backTag: 'Solusi', back: 'Kirim hanya konteks yang relevan, ringkas riwayat, dan pilih model sesuai kebutuhan.' }, { tag: 'Masalah', front: 'Jawaban terpotong di tengah.', backTag: 'Solusi', back: 'Ada batas panjang keluaran. Minta lanjutkan atau pecah tugas.' }] },
+        ],
+        takeaways: [
+            'Token adalah potongan teks yang dihitung model: kata pendek, sebagian kata, atau tanda baca.',
+            'Context window adalah batas token yang bisa dilihat model sekaligus: instruksi, riwayat, dokumen yang ditempel, dan jawabannya sendiri.',
+            'Bila melewati batas, bagian awal bisa terpotong atau diringkas sehingga model "lupa" hal yang disampaikan di awal.',
+            'Ulangi instruksi penting, pecah dokumen panjang, kirim konteks yang relevan saja, dan ingat token masukan dan keluaran dihargai terpisah.',
         ],
         faq: [['Apakah semakin besar context window semakin baik?', 'Tidak selalu. Konteks sangat panjang bisa membuat model kurang fokus pada detail tertentu dan lebih mahal. Kirim yang relevan saja.'], ['Apa bedanya token masukan dan keluaran?', 'Masukan adalah teks yang Anda kirim, keluaran adalah teks yang dihasilkan. Banyak layanan menetapkan harga berbeda untuk keduanya.'], ['Bagaimana menghitung token dengan tepat?', 'Gunakan alat penghitung token dari penyedia model yang Anda pakai. Perkiraan di artikel ini hanya kasar.']],
     },

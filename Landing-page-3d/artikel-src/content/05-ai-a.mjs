@@ -20,6 +20,12 @@ export default [
             { w: 'compare', title: 'Kemampuan AI saat ini', tabs: [{ label: 'Cukup bagus', html: '<b>Merangkum, menerjemahkan, membuat draf, mengklasifikasi, mengenali pola pada data besar, menjelaskan konsep, membantu membuat kode.</b>' }, { label: 'Belum bisa diandalkan', html: '<b>Menjamin kebenaran fakta, memahami konteks pribadi yang tidak Anda ceritakan, bertanggung jawab atas keputusan penting, menggantikan penilaian manusia pada kasus berisiko tinggi.</b>' }, { label: 'Hati-hati', html: '<b>Bisa salah dengan percaya diri, mewarisi bias dari data pelatihan, dan bergantung pada kualitas data serta pertanyaan Anda.</b>' }] },
             { w: 'quiz', title: 'Uji pemahaman', questions: [{ q: 'ChatGPT dan pembuat gambar termasuk kategori...', options: ['Generative AI', 'Mesin pencari', 'Program aturan manual'], answer: 0, why: 'Mereka membuat konten baru (teks atau gambar), ciri generative AI.' }, { q: 'Machine learning belajar dengan cara...', options: ['Diprogram aturan satu per satu', 'Mencari pola dari contoh data', 'Membaca pikiran pengguna'], answer: 1, why: 'Model dilatih dari contoh data untuk menemukan pola.' }, { q: 'Hal yang paling perlu diwaspadai dari AI generatif?', options: ['Bisa menjawab salah dengan percaya diri', 'Selalu menolak pertanyaan', 'Tidak bisa dipakai tanpa internet'], answer: 0, why: 'Itu disebut halusinasi; selalu periksa informasi penting.' }] },
         ],
+        takeaways: [
+            'AI adalah perangkat lunak yang belajar pola dari data untuk mengerjakan tugas yang biasanya butuh kecerdasan manusia; ia tidak berpikir atau punya kesadaran.',
+            'AI memuat machine learning, yang memuat deep learning, yang memuat generative AI seperti chatbot dan pembuat gambar.',
+            'Anda sudah memakai AI pada rekomendasi, pembuka kunci wajah, terjemahan, filter spam, dan peta.',
+            'AI bisa salah dengan percaya diri, mewarisi bias dari datanya, dan tidak bisa bertanggung jawab atas keputusan penting, jadi periksa hal yang penting.',
+        ],
         faq: [['Apakah AI akan menggantikan manusia?', 'AI menggantikan sebagian tugas, bukan seluruh pekerjaan. Pekerjaan berubah: kemampuan memakai AI dengan baik menjadi nilai tambah.'], ['Apakah AI itu sama dengan robot?', 'Tidak. AI adalah perangkat lunak. Robot adalah mesin fisik yang bisa memakai AI sebagai otaknya.'], ['Apakah AI selalu benar?', 'Tidak. AI bisa salah, mengarang, atau bias. Untuk hal penting, periksa dengan sumber tepercaya.']],
     },
 
@@ -38,6 +44,12 @@ export default [
             { w: 'cards', title: 'Ketuk untuk melihat cara memperbaikinya', items: [{ tag: 'Kesalahan', front: 'Bertanya terlalu singkat: "buat artikel".', backTag: 'Perbaikan', back: 'Tambahkan topik, pembaca, panjang, gaya bahasa, dan tujuan.' }, { tag: 'Kesalahan', front: 'Menyalin jawaban tanpa membaca.', backTag: 'Perbaikan', back: 'Baca, periksa fakta penting, dan sesuaikan dengan gaya Anda.' }, { tag: 'Kesalahan', front: 'Memasukkan data pribadi atau rahasia.', backTag: 'Perbaikan', back: 'Jangan masukkan kata sandi, data kartu, atau dokumen rahasia. Samarkan nama dan angka sensitif.' }, { tag: 'Kesalahan', front: 'Menganggap jawabannya selalu benar.', backTag: 'Perbaikan', back: 'Minta sumber, lalu cek sendiri. AI bisa mengarang dengan percaya diri.' }, { tag: 'Kesalahan', front: 'Menyerah setelah satu jawaban kurang bagus.', backTag: 'Perbaikan', back: 'Beri umpan balik: "lebih singkat", "lebih formal", "tambahkan contoh".' }] },
             { callout: 'Jangan memasukkan kata sandi, nomor kartu, data kesehatan pribadi, atau dokumen rahasia perusahaan ke chatbot publik. Anggap apa yang Anda ketik bisa tersimpan atau diproses pihak lain, kecuali kebijakan layanan menyatakan sebaliknya.', kind: 'warn', title: 'Privasi' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Cara terbaik memulai percakapan?', options: ['Menulis satu kata kunci', 'Menjelaskan tujuan dan konteks', 'Menyalin pertanyaan orang lain'], answer: 1, why: 'Tujuan dan konteks membuat jawaban lebih relevan.' }, { q: 'Jawaban AI berisi angka statistik. Langkah tepat?', options: ['Langsung dikutip', 'Diperiksa ke sumber resmi', 'Diabaikan semua'], answer: 1, why: 'AI bisa salah pada angka; verifikasi ke sumber.' }, { q: 'Apakah aman memasukkan kata sandi ke chatbot?', options: ['Aman', 'Tidak boleh', 'Aman bila ditulis kecil'], answer: 1, why: 'Jangan memasukkan data rahasia.' }] },
+        ],
+        takeaways: [
+            'Mulailah dengan menyebut tujuan dan memberi konteks: untuk siapa, level, dan batasannya.',
+            'Tugas yang cocok untuk pemula: menjelaskan konsep, merangkum, membuat draf, brainstorming, dan menguji diri.',
+            'Baca jawaban secara kritis, periksa fakta penting, dan minta revisi, jangan menyerah setelah satu jawaban.',
+            'Jangan memasukkan kata sandi, nomor kartu, data kesehatan pribadi, atau dokumen rahasia ke chatbot publik.',
         ],
         faq: [['Apakah ChatGPT gratis?', 'Ada layanan gratis dengan batasan dan ada paket berbayar dengan fitur tambahan. Ketersediaan dan batasannya berubah dari waktu ke waktu, periksa di situs resminya.'], ['Apakah ChatGPT selalu tahu berita terbaru?', 'Tidak selalu. Pengetahuannya terbatas pada data pelatihan, kecuali fitur pencarian aktif. Selalu periksa sumber untuk informasi terbaru.'], ['Bisakah ChatGPT mengerjakan tugas sekolah saya?', 'Bisa membantu belajar, tetapi menyerahkan hasilnya sebagai karya sendiri melanggar aturan banyak sekolah. Pakai untuk memahami, bukan menggantikan.']],
     },
@@ -60,6 +72,12 @@ export default [
             { callout: 'Prompt yang bagus tidak menjamin jawaban benar. Selalu periksa fakta, angka, kutipan, dan nama. Anggap AI sebagai asisten yang cepat tetapi perlu diawasi.', kind: 'warn', title: 'Ingat' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Bagian mana yang menentukan bentuk jawaban (tabel, poin, email)?', options: ['Peran', 'Format', 'Konteks'], answer: 1, why: 'Format mengatur bentuk output.' }, { q: 'Mengapa konteks penting?', options: ['Agar jawaban sesuai situasi dan pembaca', 'Agar prompt lebih panjang', 'Agar AI lebih cepat'], answer: 0, why: 'Tanpa konteks, AI menebak.' }] },
         ],
+        takeaways: [
+            'Prompt yang baik punya hingga lima bagian: peran, konteks, tugas, format, dan batasan.',
+            'Konteks mencegah AI menebak; format menentukan apakah Anda mendapat tabel, poin, atau email.',
+            'Minta contoh, kerjakan bertahap, beri contoh gaya, biarkan AI bertanya balik, dan minta ia memeriksa dirinya.',
+            'Prompt bagus tidak menjamin jawaban benar, jadi periksa selalu fakta, angka, kutipan, dan nama.',
+        ],
         faq: [['Apakah prompt panjang selalu lebih baik?', 'Tidak. Yang penting jelas dan relevan. Prompt panjang yang berantakan bisa membingungkan.'], ['Perlukah memakai bahasa Inggris?', 'Tidak wajib. Model modern memahami bahasa Indonesia dengan baik. Gunakan bahasa yang paling jelas bagi Anda.'], ['Apa itu prompt engineering?', 'Seni menyusun instruksi agar AI memberi hasil terbaik. Pada dasarnya komunikasi yang jelas.']],
     },
 
@@ -80,6 +98,12 @@ export default [
             { callout: 'Selalu periksa ketentuan penggunaan alat yang Anda pakai: siapa pemilik hak atas hasilnya, apakah boleh dipakai untuk keperluan komersial, dan bagaimana data unggahan Anda diperlakukan.', kind: 'warn', title: 'Periksa syarat penggunaan' },
             { h2: 'Cara menandai gambar buatan AI' },
             { ul: ['Tulis "dibuat dengan AI" pada keterangan gambar atau postingan.', 'Jangan memakai gambar AI sebagai bukti peristiwa nyata.', 'Untuk berita atau materi edukasi, jelaskan bahwa gambar hanya ilustrasi.'] },
+        ],
+        takeaways: [
+            'Pembuat gambar AI tidak mengambil foto yang ada; ia menggambar gambar baru dari pola yang dipelajarinya berdasarkan deskripsi Anda.',
+            'Deskripsi yang baik memuat objek, aksi atau suasana, gaya, cahaya dan warna, serta sudut pandang.',
+            'Jangan menyajikan gambar AI orang nyata sebagai peristiwa nyata, dan jangan memakai wajah orang tanpa izin.',
+            'Periksa ketentuan alat soal kepemilikan dan penggunaan komersial, dan nyatakan jujur bahwa gambar dibuat dengan AI.',
         ],
         faq: [['Apakah gambar AI bisa dipakai untuk jualan?', 'Bisa dalam banyak layanan, tetapi syaratnya berbeda-beda. Baca ketentuan lisensinya dan jangan menyesatkan konsumen.'], ['Mengapa tangan sering tampak aneh di gambar AI?', 'Model kadang kesulitan dengan detail kompleks seperti jari dan teks. Perbaiki dengan deskripsi lebih jelas atau mengedit bagian itu.'], ['Apakah gambar AI bisa dikenali?', 'Kadang bisa, lewat detail janggal atau alat deteksi, tetapi tidak selalu. Karena itu pelabelan jujur penting.']],
     },
@@ -150,6 +174,12 @@ export default [
             { h2: 'Mulai dari yang kecil' },
             { w: 'checklist', title: 'Rencana satu minggu', items: ['Pilih satu tugas berulang yang paling menyita waktu.', 'Tulis contoh hasil yang baik sebagai acuan.', 'Minta AI membuat draf, bandingkan dengan acuan.', 'Catat waktu sebelum dan sesudah.', 'Putuskan: lanjutkan, ubah, atau berhenti.'] },
         ],
+        takeaways: [
+            'Yang paling cocok: caption dan ide konten, draf balasan pelanggan, deskripsi produk, ringkasan, brainstorming, dan template dokumen.',
+            'Gunakan AI untuk membuat draf, lalu Anda memeriksa fakta, harga, dan nada sebelum dikirim.',
+            'Jangan memasukkan nama, alamat, nomor telepon pelanggan, atau data keuangan rahasia ke chatbot publik.',
+            'Mulai dari satu tugas berulang, catat waktunya sebelum dan sesudah, lalu putuskan untuk lanjut atau tidak.',
+        ],
         faq: [['Apakah AI menggantikan karyawan?', 'Pada UMKM, AI lebih sering mengurangi beban administratif sehingga tim fokus pada pelanggan dan produk. Keputusan dan hubungan pelanggan tetap manusiawi.'], ['Apakah perlu berlangganan berbayar?', 'Mulailah dengan versi gratis untuk menguji. Berlangganan bila manfaatnya jelas dan Anda memakainya rutin.'], ['Bagaimana dengan balasan otomatis ke pelanggan?', 'Otomasi penuh berisiko bila AI salah menjawab harga atau stok. Mulailah dengan draf yang Anda setujui, baru pertimbangkan otomasi terbatas.']],
     },
 
@@ -169,6 +199,12 @@ export default [
             { callout: 'Alat pendeteksi tulisan AI tidak sepenuhnya dapat diandalkan dan bisa salah menuduh. Jangan bergantung padanya, baik sebagai mahasiswa maupun dosen. Yang paling aman adalah transparan dan bisa menjelaskan karya Anda sendiri.', kind: 'info', title: 'Soal pendeteksi AI' },
             { h2: 'Cara bertanya kepada dosen' },
             `Sampaikan dengan jelas: "Apakah saya boleh memakai AI untuk memeriksa tata bahasa dan menjelaskan konsep, tetapi bukan untuk menulis isi tugas? Bagaimana cara mencantumkannya?" Pertanyaan seperti ini menunjukkan niat baik dan menghindari kesalahpahaman.`,
+        ],
+        takeaways: [
+            'Penggunaan yang wajar: menjelaskan konsep sulit, membuat soal latihan, umpan balik tata bahasa, serta menjelaskan kode dan error.',
+            'Penggunaan bermasalah: menyerahkan hasil AI sebagai karya sendiri, mengarang kutipan, mengerjakan ujian dengan AI, dan memakainya saat dilarang.',
+            'Periksa setiap kutipan dan referensi ke sumber aslinya, karena AI bisa mengarangnya.',
+            'Ketahui kebijakan mata kuliah, bersikap transparan soal bantuan AI, dan tanyakan dosen dengan jelas bila ragu.',
         ],
         faq: [['Apakah memakai AI otomatis dianggap plagiarisme?', 'Tidak otomatis. Masalah muncul bila hasilnya diserahkan sebagai karya sendiri tanpa izin atau pengungkapan, atau berisi kutipan palsu.'], ['Apakah perlu mencantumkan penggunaan AI?', 'Bila kebijakan mata kuliah mengharuskan, ya. Mencantumkan bantuan AI secara jujur biasanya lebih aman.'], ['Bagaimana belajar tetap efektif dengan AI?', 'Coba dulu sendiri, lalu minta AI memeriksa atau menjelaskan. Menjelaskan ulang dengan kata sendiri membuat belajar lebih melekat.']],
     },

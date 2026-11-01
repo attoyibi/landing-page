@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Are Tokens and Context Windows in AI? (Calculator)</title>
+<meta name="description" content="Tokens and the context window decide how much text an AI can read and what it costs. Understand the idea and estimate the tokens in your own text.">
+<meta name="keywords" content="tokens, context window, LLM, AI cost, prompt">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-token-dan-context-window-pada-ai/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/apa-itu-token-dan-context-window-pada-ai/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/">
+<meta property="og:title" content="What Are Tokens and Context Windows in AI? (Calculator)">
+<meta property="og:description" content="Tokens and the context window decide how much text an AI can read and what it costs. Understand the idea and estimate the tokens in your own text.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="What Are Tokens and Context Windows in AI? (Calculator)">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="AI for Everyone">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What Are Tokens and Context Windows in AI? (Calculator)">
+<meta name="twitter:description" content="Tokens and the context window decide how much text an AI can read and what it costs. Understand the idea and estimate the tokens in your own text.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What Are Tokens and Context Windows in AI? (Calculator)","description":"Tokens and the context window decide how much text an AI can read and what it costs. Understand the idea and estimate the tokens in your own text.","image":["https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"tokens, context window, LLM, AI cost, prompt","articleSection":"AI for Everyone","wordCount":276,"mainEntityOfPage":"https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"What Are Tokens and Context Windows in AI? (Calculator)","item":"https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is a bigger context window always better?","acceptedAnswer":{"@type":"Answer","text":"Not always. A very long context can make the model less focused on particular details and costs more. Send only what is relevant."}},{"@type":"Question","name":"What is the difference between input and output tokens?","acceptedAnswer":{"@type":"Answer","text":"Input is the text you send, output is the text it generates. Many services price the two differently."}},{"@type":"Question","name":"How do I count tokens exactly?","acceptedAnswer":{"@type":"Answer","text":"Use the token counter from the provider of the model you use. The estimate in this article is only rough."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/apa-itu-token-dan-context-window-pada-ai/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#tokens-the-pieces-of-text-a-model-counts">Tokens: the pieces of text a model counts</a></li><li><a href="#context-window-how-much-can-be-remembered">Context window: how much can be &quot;remembered&quot;</a></li><li><a href="#practical-tips">Practical tips</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/ai-untuk-semua/">AI for Everyone</a></p>
+<a class="cat" href="/en/articles/category/ai-untuk-semua/">AI for Everyone</a>
+<h1>What Are Tokens and Context Windows in AI? (Calculator)</h1>
+<p class="lead">You may have seen the terms "token limit" or "context window" when using an AI assistant. Both decide how long a conversation or document can be processed, and they often affect the cost of using it through an API.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>A token is a piece of text the model counts: a short word, part of a word or punctuation.</li><li>The context window is the limit on tokens the model can see at once: your instructions, history, pasted documents and its own reply.</li><li>Past the limit, the early part can be cut or summarised, so the model "forgets" what was said at the start.</li><li>Repeat key instructions, split long documents, send only relevant context and remember that input and output tokens are priced separately.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="tokens-the-pieces-of-text-a-model-counts">Tokens: the pieces of text a model counts</h2>
+<p>A language model does not read letter by letter or word by word, but in pieces called <b>tokens</b>. A token can be a short word, part of a word or a punctuation mark. Common English words often become a single token, while long or rare words can be split into several. For many other languages, the number of tokens per word is usually higher.</p>
+<figure class="diagram"><svg viewBox="0 0 728 118" role="img" aria-label="An example of splitting a sentence into tokens" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Sentence</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">&quot;I am learning</tspan><tspan x="85" dy="14">programming&quot;</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Split</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">I | am | learn | ing |</tspan><tspan x="271" dy="14">program | ming</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Numbered</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">each piece becomes a</tspan><tspan x="457" dy="14">number</tspan></text><line x1="536" y1="59" x2="564" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Processed</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">the model works with</tspan><tspan x="643" dy="14">numbers</tspan></text></svg><figcaption><b>Figure 1.</b> The real split depends on each model's tokenizer, so this example is only an illustration.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Sentence: &quot;I am learning programming&quot;</li><li>Split: I | am | learn | ing | program | ming</li><li>Numbered: each piece becomes a number</li><li>Processed: the model works with numbers</li></ol></details></figure>
+<h2 id="context-window-how-much-can-be-remembered">Context window: how much can be "remembered"</h2>
+<p>The context window is the limit on how many tokens the model can see at one time: your instructions, the conversation history, pasted documents and the answer it is writing. If a conversation goes over the limit, the early part may be cut or summarised, so the model "forgets" what was said at the start.</p>
+<div data-w="calc"><script type="application/json">{"title":"Estimate tokens for your text","desc":"A rough estimate: about 1.5 tokens per word. The real figure depends on the model and the language.","inputs":[{"id":"hal","label":"Number of pages (about 400 words per page)","value":20,"min":1,"max":500,"step":1,"unit":"pages"},{"id":"batas","label":"Model context window","value":200000,"min":8000,"max":1000000,"step":8000,"unit":"tokens"},{"id":"harga","label":"Price per 1 million input tokens (an example, enter your own)","value":3,"min":0,"max":30,"step":0.5,"unit":"USD"}],"outputs":[{"label":"Estimated number of tokens","expr":"hal * 400 * 1.5","fmt":"int","unit":"tokens","big":true},{"label":"Percentage of the context window","expr":"min(100, hal * 400 * 1.5 / batas * 100)","fmt":"pct"},{"label":"Estimated input cost for one send","expr":"hal * 400 * 1.5 / 1000000 * harga","fmt":"num","unit":"USD","note":"The price is only an example for the calculation. Check the provider's official price list."}]}</script></div>
+<h2 id="practical-tips">Practical tips</h2>
+<div data-w="cards"><script type="application/json">{"title":"Tap a card","items":[{"tag":"Problem","front":"In a long conversation the AI starts forgetting the early instructions.","backTag":"Fix","back":"Repeat the important instructions, or start a new conversation with a summary."},{"tag":"Problem","front":"The document is too long to paste.","backTag":"Fix","back":"Split it into sections, or use document search (RAG)."},{"tag":"Problem","front":"API costs balloon.","backTag":"Fix","back":"Send only the relevant context, summarise the history and choose a model to suit the need."},{"tag":"Problem","front":"The answer is cut off midway.","backTag":"Fix","back":"There is a limit on output length. Ask it to continue or split the task."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Is a bigger context window always better?</summary><div>Not always. A very long context can make the model less focused on particular details and costs more. Send only what is relevant.</div></details>
+<details class="faq"><summary>What is the difference between input and output tokens?</summary><div>Input is the text you send, output is the text it generates. Many services price the two differently.</div></details>
+<details class="faq"><summary>How do I count tokens exactly?</summary><div>Use the token counter from the provider of the model you use. The estimate in this article is only rough.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/how-chatgpt-works-next-word-prediction/"><img src="/en/articles/how-chatgpt-works-next-word-prediction/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>How ChatGPT Works: Guessing the Next Word (Try It)</span></a><a href="/en/articles/what-is-rag/"><img src="/en/articles/what-is-rag/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>What Is RAG? How AI Answers From Your Documents (Demo)</span></a><a href="/en/articles/how-to-use-chatgpt-for-beginners/"><img src="/en/articles/how-to-use-chatgpt-for-beginners/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>How to Use ChatGPT for Beginners: Your First Steps</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>
