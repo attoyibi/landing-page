@@ -40,6 +40,12 @@ export default [
             { w: 'checklist', title: 'Pengaturan yang perlu Anda cek', items: ['Apakah percakapan dipakai untuk melatih model? Matikan bila ada opsinya.', 'Apakah ada fitur riwayat yang bisa dimatikan atau dihapus?', 'Apakah akun dilindungi verifikasi dua langkah?', 'Apakah Anda memakai akun pribadi untuk urusan kerja? Pisahkan.', 'Apakah ada kebijakan perusahaan atau sekolah soal chatbot AI?', 'Apakah Anda sudah membaca ringkasan kebijakan privasi layanan?'] },
             { callout: 'Hukum perlindungan data pribadi di Indonesia mengatur pengelolaan data pribadi. Bila Anda mengelola data orang lain (pelanggan, siswa, pasien), Anda punya tanggung jawab menjaganya. Konsultasikan kebutuhan hukumnya bila usaha Anda mengolah banyak data.', kind: 'info', title: 'Tanggung jawab' },
         ],
+        takeaways: [
+            'Semua yang Anda ketik dikirim ke server penyedia dan mungkin disimpan, tergantung kebijakan dan pengaturan.',
+            'Jangan masukkan kata sandi, PIN, atau kode OTP, dan hindari nomor identitas, data rekening, serta data kesehatan yang detail.',
+            'Samarkan nama, alamat, dan angka asli sebelum mengetik, misalnya "Klien A" dan "sebuah kota".',
+            'Periksa pengaturan akun: pemakaian untuk pelatihan, riwayat, verifikasi dua langkah, dan kebijakan perusahaan.',
+        ],
         faq: [['Apakah mode "incognito" atau "chat sementara" benar-benar aman?', 'Fitur seperti itu biasanya mengurangi penyimpanan riwayat, tetapi tidak berarti data tidak pernah diproses. Baca penjelasan masing-masing layanan.'], ['Apakah aman memakai chatbot di jaringan Wi-Fi umum?', 'Koneksi terenkripsi relatif aman, tetapi hindari memasukkan data sensitif di jaringan yang tidak Anda percaya.'], ['Bagaimana cara menghapus riwayat percakapan?', 'Biasanya ada menu pengaturan akun untuk menghapus riwayat. Periksa pengaturan layanan yang Anda pakai.']],
     },
 
@@ -59,6 +65,12 @@ export default [
             { h2: 'Rencana belajar yang masuk akal' },
             { ol: ['Cobalah alat AI untuk tugas berulang Anda dalam dua minggu ke depan.', 'Pelajari cara bertanya yang baik dan cara memeriksa hasilnya.', 'Perkuat keterampilan yang sulit digantikan: komunikasi, analisis, penilaian.', 'Pahami bidang Anda lebih dalam, karena memeriksa AI membutuhkan pengetahuan.', 'Ikuti perkembangan, tetapi hindari panik karena judul berita.'] },
             { callout: 'Orang yang menguasai AI cenderung lebih kompetitif daripada yang menolaknya sepenuhnya, dan itu berlaku lintas profesi. Anggap AI sebagai alat baru, seperti spreadsheet dahulu.', kind: 'good', title: 'Sikap yang membantu' },
+        ],
+        takeaways: [
+            'Pekerjaan terdiri dari tugas; AI biasanya mengambil sebagian tugas, bukan seluruh pekerjaan.',
+            'Tugas berulang, berbasis teks, dan berpola paling cepat berubah; penilaian, empati, negosiasi, dan tanggung jawab tetap bernilai.',
+            'Cek profil tugas Anda dengan dua daftar periksa di bawah.',
+            'Orang yang belajar bekerja bersama AI cenderung lebih kompetitif daripada yang menghindarinya.',
         ],
         faq: [['Pekerjaan apa yang paling aman?', 'Tidak ada yang mutlak. Pekerjaan yang butuh keterampilan fisik bervariasi, empati, dan tanggung jawab langsung relatif lebih sulit digantikan.'], ['Apakah belajar coding masih perlu?', 'Ya, tetapi fokusnya bergeser pada merumuskan masalah, merancang, dan memeriksa kode yang dibantu AI.'], ['Bagaimana bila perusahaan saya mulai memakai AI?', 'Jadilah orang yang memahaminya. Tawarkan diri menguji dan mengawasi hasilnya, karena itu keterampilan yang dibutuhkan.']],
     },

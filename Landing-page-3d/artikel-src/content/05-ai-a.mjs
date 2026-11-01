@@ -101,6 +101,12 @@ export default [
             { w: 'cards', title: 'Tanda jawaban perlu dicurigai', items: [{ tag: 'Tanda', front: 'Memberikan angka sangat spesifik tanpa sumber.', backTag: 'Tindakan', back: 'Minta sumber dan cek sendiri.' }, { tag: 'Tanda', front: 'Menyebut dokumen atau buku dengan judul yang terdengar sempurna.', backTag: 'Tindakan', back: 'Cari judulnya di katalog atau situs penerbit.' }, { tag: 'Tanda', front: 'Menjawab pertanyaan tentang peristiwa yang sangat baru.', backTag: 'Tindakan', back: 'Periksa berita terbaru; pengetahuan model bisa tertinggal.' }, { tag: 'Tanda', front: 'Berubah jawaban ketika Anda menekan "yakin?".', backTag: 'Tindakan', back: 'Itu tanda tidak stabil. Verifikasi dari sumber lain.' }] },
             { callout: 'Cara menurunkan risiko: minta AI menjawab hanya dari dokumen yang Anda berikan dan mengatakan "tidak tahu" jika tidak ada. Teknik ini dipakai pada sistem berbasis dokumen (RAG). Tetap periksa hasilnya.', kind: 'good', title: 'Mengurangi risiko' },
         ],
+        takeaways: [
+            'Model bahasa dilatih untuk menghasilkan teks yang lancar, bukan memeriksa kebenaran, sehingga bisa salah dengan percaya diri.',
+            'Halusinasi umum: kutipan fiktif, tautan mati, statistik karangan, dan kode yang memanggil fungsi yang tidak ada.',
+            'Minta sumber, buka sendiri, dan bandingkan jawaban dari rumusan pertanyaan berbeda.',
+            'Risiko turun bila AI diminta menjawab hanya dari dokumen yang Anda berikan, tetapi hasilnya tetap perlu diperiksa.',
+        ],
         faq: [['Apakah semua AI berhalusinasi?', 'Hampir semua model bahasa bisa. Tingkatnya bervariasi, dan pengembang terus mengurangi masalahnya, tetapi belum hilang.'], ['Apakah fitur pencarian membuat AI selalu benar?', 'Membantu, karena jawaban merujuk sumber, tetapi AI tetap bisa salah membaca atau merangkum sumber. Buka sumbernya.'], ['Apakah halusinasi sama dengan berbohong?', 'Tidak. Model tidak berniat menipu. Ia menghasilkan teks yang tampak wajar tanpa mengetahui kebenarannya.']],
     },
 
@@ -118,6 +124,12 @@ export default [
             { w: 'quiz', title: 'Skenario', questions: [{ q: 'Anda menerima pesan suara yang terdengar seperti atasan Anda, meminta transfer uang segera. Langkah terbaik?', options: ['Langsung transfer', 'Hubungi atasan lewat jalur lain untuk memastikan', 'Balas dan tanya rekening lagi'], answer: 1, why: 'Suara bisa ditiru. Konfirmasi lewat jalur lain sebelum bertindak.' }, { q: 'Foto viral menunjukkan peristiwa besar tanpa sumber jelas. Apa yang pertama dilakukan?', options: ['Membagikan ke grup agar semua waspada', 'Mencari sumber asli dan berita dari media tepercaya', 'Menunggu orang lain memeriksa'], answer: 1, why: 'Verifikasi dulu, bagikan kemudian.' }, { q: 'Video tampak sangat nyata. Apakah itu berarti asli?', options: ['Ya', 'Tidak selalu, kualitas tinggi bukan bukti', 'Hanya bila ada musik'], answer: 1, why: 'Konten sintetis bisa sangat realistis.' }] },
             { h2: 'Melindungi diri dan keluarga' },
             { w: 'checklist', title: 'Kebiasaan perlindungan', items: ['Sepakati kata sandi keluarga untuk memastikan identitas saat ada permintaan uang mendesak.', 'Batasi foto dan suara pribadi yang dibagikan terbuka.', 'Aktifkan verifikasi dua langkah di akun penting.', 'Beri tahu orang tua dan kerabat tentang modus suara palsu.', 'Laporkan konten palsu ke platform dan, bila merugikan, ke pihak berwenang.'] },
+        ],
+        takeaways: [
+            'Periksa sumber, konteks, detail aneh, gerak dan suara, serta apakah konten berusaha membuat Anda panik atau marah.',
+            'Cari ulang gambar dan cari konfirmasi dari media tepercaya.',
+            'Untuk permintaan uang yang mendesak, pastikan dulu ke orangnya lewat jalur lain.',
+            'Jeda 30 detik sebelum membagikan sudah memutus banyak hoaks.',
         ],
         faq: [['Apakah alat pendeteksi deepfake bisa diandalkan?', 'Membantu, tetapi tidak sempurna dan terus berlomba dengan teknologi pembuatnya. Gabungkan dengan verifikasi sumber.'], ['Apakah semua gambar AI itu hoaks?', 'Tidak. Banyak yang dibuat untuk seni dan hiburan. Hoaks muncul ketika gambar dipakai untuk menipu atau menyesatkan.'], ['Apa yang harus dilakukan jika wajah saya dipakai tanpa izin?', 'Simpan bukti, laporkan ke platform, dan bila perlu ke pihak berwenang. Kunjungi layanan pelaporan resmi.']],
     },

@@ -61,6 +61,12 @@ export default [
             { callout: 'API key dan token adalah rahasia. Simpan di variabel lingkungan atau layanan penyimpanan rahasia, bukan di dalam kode yang diunggah ke GitHub.', kind: 'warn', title: 'Keamanan' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Status code 404 artinya...', options: ['Berhasil', 'Data tidak ditemukan', 'Server rusak'], answer: 1, why: '404 = Not Found.' }, { q: 'Format data yang paling umum pada API web?', options: ['JSON', 'PDF', 'MP3'], answer: 0, why: 'JSON ringan dan mudah diproses.' }] },
         ],
+        takeaways: [
+            'API adalah pintu terkontrol: Anda mengirim request dan menerima response tanpa melihat isi sistem lain.',
+            'Pada web, request dikirim ke sebuah URL dan data biasanya kembali dalam format JSON.',
+            'Status code menunjukkan hasilnya: 200 berhasil, 404 tidak ditemukan, 500 kesalahan di server.',
+            'Rahasiakan API key; jangan taruh di kode yang diunggah ke GitHub.',
+        ],
         faq: [['Apa bedanya API dan database?', 'Database menyimpan data. API adalah pintu terkontrol untuk meminta atau mengubah data itu.'], ['Apa itu REST?', 'Gaya perancangan API web yang memakai URL sebagai sumber daya dan metode HTTP (GET, POST, dll.) sebagai tindakan.'], ['Apakah semua API gratis?', 'Banyak yang gratis dengan batas pemakaian, banyak yang berbayar. Periksa syarat dan batasnya.']],
     },
 

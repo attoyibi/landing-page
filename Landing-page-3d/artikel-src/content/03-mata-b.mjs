@@ -93,6 +93,12 @@ export default [
             { ul: ['Bawa kacamata lama dan resep sebelumnya.', 'Catat keluhan: kapan terjadi, di jarak berapa, saat melakukan apa.', 'Beritahu riwayat penyakit, obat yang dikonsumsi, dan riwayat keluarga.', 'Hindari memakai lensa kontak beberapa jam sebelum pemeriksaan bila diminta.'] },
             { callout: 'Mata lelah dan pusing yang tetap ada walau ukuran sudah tepat bisa punya penyebab lain. Itu alasan lain untuk memeriksakan diri, bukan hanya mengganti kacamata.', kind: 'info', title: 'Catatan' },
         ],
+        takeaways: [
+            'Menyipitkan mata, sakit kepala, atau tulisan jauh yang kembali buram adalah tanda ukuran mungkin berubah.',
+            'Dua tanda atau lebih dari daftar periksa adalah alasan kuat untuk memeriksakan mata.',
+            'Ganti lensa saja bila frame masih bagus, ganti frame saja bila bengkok atau tidak nyaman.',
+            'Anak perlu kontrol tiap 6-12 bulan, dewasa sekitar 1-2 tahun, usia 40 ke atas sekitar setahun sekali.',
+        ],
         faq: [['Apakah kacamata lama berbahaya bagi mata?', 'Tidak menyebabkan kerusakan permanen, tetapi bisa membuat mata lelah dan sakit kepala. Penglihatan yang tidak optimal juga memengaruhi keselamatan, misalnya saat mengemudi.'], ['Berapa lama kacamata bisa dipakai?', 'Tidak ada batas pasti. Selama resep masih sesuai dan lensa serta frame dalam kondisi baik, bisa dipakai bertahun-tahun.'], ['Apakah ukuran bisa berbeda antar optik?', 'Bisa sedikit berbeda karena alat dan metode. Karena itu, hasil pemeriksaan oleh dokter atau optometris yang sama lebih konsisten.']],
     },
 
@@ -111,6 +117,12 @@ export default [
             { h2: 'Cara mempercepat adaptasi' },
             { ol: ['Pakailah kacamata baru terus-menerus, jangan bergantian dengan yang lama.', 'Jalan di tempat datar dahulu sebelum menaiki tangga.', 'Hindari mengemudi jauh di hari-hari pertama bila masih pusing.', 'Pastikan frame pas dan tidak melorot.', 'Bersihkan lensa; kotoran memperburuk kenyamanan.', 'Bila lebih dari dua minggu belum nyaman, kembali ke optik.'] },
             { callout: 'Jangan "memaksa" memakai kacamata yang tetap membuat pusing berhari-hari. Kembali ke optik, bawa kacamata dan resep. Pengecekan ulang pemasangan, jarak pupil, dan ukuran sering menyelesaikan masalah.', kind: 'warn', title: 'Kapan harus kembali' },
+        ],
+        takeaways: [
+            'Pusing ringan atau lantai terasa melengkung itu wajar pada satu sampai dua minggu pertama.',
+            'Perubahan silinder, sumbu, atau lensa progresif paling lama beradaptasi.',
+            'Mual hebat atau satu mata jauh lebih buram bukan hal normal: hentikan pemakaian dan periksa.',
+            'Bila setelah dua minggu masih tidak nyaman, kembali ke optik membawa kacamata dan resep.',
         ],
         faq: [['Berapa lama adaptasi kacamata baru?', 'Umumnya beberapa hari sampai dua minggu. Lensa progresif atau perubahan silinder yang besar bisa lebih lama.'], ['Apakah resep bisa salah?', 'Bisa, baik karena pemeriksaan, pencatatan, atau pembuatan lensa. Itu sebabnya perlu kembali bila keluhan berlanjut.'], ['Apakah pusing berarti minus saya terlalu besar atau kecil?', 'Tidak selalu. Pemasangan, jarak pupil, dan sumbu silinder juga berpengaruh. Periksa semua aspek bersama optik.']],
     },

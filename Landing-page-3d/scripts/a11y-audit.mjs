@@ -66,9 +66,48 @@ const byRule = new Map();
 const failedPages = new Set();
 let done = 0;
 
+// ---- run inside the page (English check)
+const scanFn = () => {
+    const ID = /\b(yang|dan|untuk|dengan|adalah|atau|tidak|pada|ini|itu|lebih|anda|saya|kami|dalam|akan|bisa|sudah|belum|karena|jika|agar|juga|sebuah|oleh|dari|ke|di|kata|potongan|pencarian|dokumen|pertanyaan|skor|diambil|ulangi|berikutnya|selesai|salin|coba|sendiri|lihat|hasil|benar|tepat)\b/i;
+    const skip = el => el.closest('pre, code, script, style, [lang="id"], [data-a11y-demo]');
+    const found = [];
+    const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+        const t = n.nodeValue.trim();
+        if (t.length > 2 && ID.test(t) && !skip(n.parentElement)) found.push(t.slice(0, 110));
+    }
+    document.querySelectorAll('[aria-label],[placeholder],[title],[alt]').forEach(el => {
+        if (skip(el)) return;
+        for (const a of ['aria-label', 'placeholder', 'title', 'alt']) { const v = el.getAttribute(a); if (v && ID.test(v)) found.push(`${a}="${v.slice(0, 90)}"`); }
+    });
+    return found;
+};
+const interactFn = async () => {
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    for (const w of document.querySelectorAll('.widget')) {
+        w.querySelectorAll('input[type=range]').forEach(r => { r.value = String((Number(r.min) + Number(r.max)) / 2); r.dispatchEvent(new Event('input', { bubbles: true })); });
+        const boxes = [...w.querySelectorAll('input[type=checkbox]')];
+        for (const c of boxes.slice(0, 3)) { c.click(); await sleep(10); }
+        // quizzes: answer every question, then press whatever comes next (next question, result, retake once)
+        for (let guard = 0; guard < 14; guard++) {
+            const option = w.querySelector('.opt:not(:disabled)');
+            if (option) { option.click(); await sleep(25); continue; }
+            const next = [...w.querySelectorAll('button.btn')].find(b => !b.disabled);
+            if (!next || guard > 10) break;
+            next.click(); await sleep(25);
+        }
+        const tiles = [...w.querySelectorAll('button.chip, button.card')];
+        for (const t of tiles.slice(0, 4)) { t.click(); await sleep(10); }
+    }
+    await sleep(300);
+};
+
 async function audit(slug) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 900 });
+    // a script error on the page (for example in a widget) is a defect too
+    const pageErrors = [];
+    page.on('pageerror', e => pageErrors.push(String(e.message).slice(0, 160)));
     try {
         await page.goto(`${base}/${section}/${slug}/`, { waitUntil: 'networkidle0', timeout: 45000 });
         await page.evaluate(axeSource);
@@ -83,21 +122,9 @@ async function audit(slug) {
         }
         // English pages must not show Indonesian text (WCAG 3.1.1/3.1.2 and plain quality). Widgets build text at runtime, so check the live page.
         if (lang === 'en') {
-            const leaks = await page.evaluate(() => {
-                const ID = /\b(yang|dan|untuk|dengan|adalah|atau|tidak|pada|ini|itu|lebih|anda|saya|kami|dalam|akan|bisa|sudah|belum|karena|jika|agar|juga|sebuah|oleh|dari|ke|di|kata|potongan|pencarian|dokumen|pertanyaan|skor|diambil|ulangi|berikutnya|selesai|salin|coba|sendiri|lihat|hasil|benar|tepat)\b/i;
-                const skip = el => el.closest('pre, code, script, style, [lang="id"], [data-a11y-demo]');
-                const found = [];
-                const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-                for (let n = tw.nextNode(); n; n = tw.nextNode()) {
-                    const t = n.nodeValue.trim();
-                    if (t.length > 2 && ID.test(t) && !skip(n.parentElement)) found.push(t.slice(0, 110));
-                }
-                document.querySelectorAll('[aria-label],[placeholder],[title],[alt]').forEach(el => {
-                    if (skip(el)) return;
-                    for (const a of ['aria-label', 'placeholder', 'title', 'alt']) { const v = el.getAttribute(a); if (v && ID.test(v)) found.push(`${a}="${v.slice(0, 90)}"`); }
-                });
-                return found;
-            });
+            // scan the page as loaded, then use every widget (slide, tick, answer, flip) and scan again: text that only appears after
+            // interaction (results, messages) is where untranslated strings hide
+            const leaks = [...new Set([...(await page.evaluate(scanFn)), ...(await page.evaluate(interactFn).then(() => page.evaluate(scanFn)))])];
             if (leaks.length) {
                 const e = byRule.get('language-leak') || { id: 'language-leak', impact: 'moderate', help: 'Indonesian text on an English page (translate it in content-en/ or in _shared/i18n-en.js)', nodes: 0, pages: new Set(), samples: [] };
                 e.nodes += leaks.length;
@@ -106,6 +133,14 @@ async function audit(slug) {
                 byRule.set('language-leak', e);
                 failedPages.add(slug);
             }
+        }
+        if (pageErrors.length) {
+            const e = byRule.get('script-error') || { id: 'script-error', impact: 'serious', help: 'JavaScript error on the page (a widget may be broken)', nodes: 0, pages: new Set(), samples: [] };
+            e.nodes += pageErrors.length;
+            e.pages.add(slug);
+            if (e.samples.length < 5) e.samples.push({ slug, html: pageErrors.slice(0, 2).join('  |  ') });
+            byRule.set('script-error', e);
+            failedPages.add(slug);
         }
     } catch (e) {
         const x = byRule.get('load-error') || { id: 'load-error', impact: 'critical', help: 'page failed to load or audit', nodes: 0, pages: new Set(), samples: [] };

@@ -40,6 +40,12 @@ export default [
             { w: 'checklist', title: 'Langkah cepat', desc: 'Lakukan sesegera mungkin.', items: ['Putuskan koneksi atau tutup halaman, jangan masukkan data lagi.', 'Ganti kata sandi akun yang terdampak dari perangkat yang aman.', 'Aktifkan atau perbarui verifikasi dua langkah.', 'Hubungi bank atau penyedia layanan lewat nomor resmi bila data keuangan terlibat.', 'Periksa aktivitas mencurigakan di akun dan blokir kartu bila perlu.', 'Laporkan kepada penyedia layanan dan pihak berwenang yang relevan.', 'Beri tahu kontak Anda bila akun mereka bisa ikut dimanfaatkan.'] },
             { callout: 'Tidak ada organisasi resmi yang meminta kata sandi, PIN, atau OTP lewat pesan atau telepon. Bila ada yang meminta, itu penipuan.', kind: 'bad', title: 'Aturan emas' },
         ],
+        takeaways: [
+            'Phishing menciptakan rasa mendesak atau tergiur, lalu mengarahkan Anda ke tautan palsu atau meminta rahasia.',
+            'Tidak ada organisasi resmi yang meminta kata sandi, PIN, atau OTP lewat pesan atau telepon.',
+            'Jangan klik: ketik sendiri alamat resmi atau buka lewat aplikasi resmi.',
+            'Bila terlanjur klik atau memasukkan data, ganti kata sandi, hubungi bank lewat nomor resmi, dan laporkan.',
+        ],
         faq: [['Apa itu smishing dan vishing?', 'Smishing adalah phishing lewat SMS atau pesan, vishing lewat panggilan telepon. Polanya sama dengan phishing email.'], ['Bagaimana memastikan tautan aman?', 'Jangan klik. Ketik sendiri alamat resmi situs di browser, atau buka lewat aplikasi resminya.'], ['Apakah gembok HTTPS berarti situs aman?', 'Tidak. Gembok hanya menunjukkan koneksi terenkripsi. Situs penipuan pun bisa memakainya.']],
     },
 

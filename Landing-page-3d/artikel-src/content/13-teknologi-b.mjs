@@ -59,6 +59,12 @@ export default [
             { callout: 'Sinkronisasi bukan cadangan penuh. Bila file terhapus di satu perangkat, ia bisa ikut terhapus di semua perangkat. Gunakan riwayat versi dan simpan satu salinan di tempat lain untuk data penting.', kind: 'warn', title: 'Ingat' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Pengaturan berbagi yang paling aman untuk file sensitif?', options: ['Siapa saja dengan tautan', 'Hanya orang tertentu', 'Publik di internet'], answer: 1, why: 'Batasi ke akun yang diizinkan.' }, { q: 'Apa risiko terbesar akun awan bila sandi lemah?', options: ['Semua file bisa diakses penyerang', 'Ukuran file bertambah', 'Tidak ada'], answer: 0, why: 'Akun yang bocor membuka semua file.' }] },
         ],
+        takeaways: [
+            'Penyimpanan awan menaruh file di server penyedia dan menyinkronkannya ke perangkat Anda.',
+            'Bandingkan kapasitas gratis dan harga, ekosistem, kolaborasi, keamanan, privasi, dan kemudahan pindah.',
+            'Aktifkan verifikasi dua langkah, pakai kata sandi kuat dan unik, dan bagikan tautan hanya ke orang tertentu.',
+            'Sinkronisasi bukan cadangan penuh: simpan riwayat versi dan satu salinan di tempat lain.',
+        ],
         faq: [['Apakah file di awan dienkripsi?', 'Umumnya terenkripsi saat dikirim dan disimpan, tetapi penyedia biasanya memegang kunci. Untuk data sangat sensitif, enkripsi sendiri sebelum mengunggah.'], ['Apa yang terjadi bila akun saya ditutup?', 'Anda bisa kehilangan akses ke file. Itu alasan menyimpan salinan di tempat lain dan menjaga akun.'], ['Perlukah membayar langganan?', 'Bila kapasitas gratis tidak cukup dan Anda memakainya rutin sebagai cadangan, paket berbayar masuk akal.']],
     },
 

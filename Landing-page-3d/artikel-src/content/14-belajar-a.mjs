@@ -84,6 +84,12 @@ export default [
             { w: 'checklist', title: 'Rutinitas lima menit', items: ['Tulis semua tugas yang ada di kepala.', 'Beri label tiap tugas: penting atau tidak, mendesak atau tidak.', 'Kerjakan kuadran penting dan mendesak lebih dulu.', 'Jadwalkan waktu khusus untuk kuadran penting tetapi tidak mendesak.', 'Delegasikan, tolak, atau batasi kuadran mendesak tetapi tidak penting.', 'Hapus yang tidak penting dan tidak mendesak dari daftar.'] },
             { callout: 'Bila Anda terus-menerus memadamkan "kebakaran", mungkin banyak tugas penting yang tidak dijadwalkan sehingga berubah menjadi mendesak. Memberi waktu pada yang penting mencegah krisis.', kind: 'info', title: 'Mengapa penting' },
         ],
+        takeaways: [
+            'Pilah setiap tugas dengan dua pertanyaan: penting atau tidak, mendesak atau tidak.',
+            'Kerjakan yang penting dan mendesak, jadwalkan yang penting tetapi tidak mendesak, delegasikan atau batasi yang mendesak tetapi tidak penting, hapus sisanya.',
+            'Kuadran penting tetapi tidak mendesak adalah tempat hasil jangka panjang dibuat, dan paling mudah terlupakan.',
+            'Terus memadamkan kebakaran biasanya tanda tugas penting tidak pernah dijadwalkan.',
+        ],
         faq: [['Siapa penemu matriks ini?', 'Dikaitkan dengan Dwight D. Eisenhower, yang dikenal membedakan hal mendesak dan penting. Bentuk matriksnya dipopulerkan kemudian oleh penulis manajemen.'], ['Apa yang dilakukan bila semuanya terasa penting?', 'Tanyakan: apa akibatnya bila tidak dikerjakan, dan oleh siapa? Itu membantu memilah prioritas yang sebenarnya.'], ['Bagaimana bila atasan menetapkan semua sebagai mendesak?', 'Diskusikan prioritas secara terbuka. Tunjukkan konsekuensi bila semuanya dikerjakan bersamaan.']],
     },
 

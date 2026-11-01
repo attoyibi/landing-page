@@ -137,6 +137,12 @@ export default [
             { table: { head: ['Hal', 'Anjuran'], rows: [['Pemeriksaan mata', 'Setiap 6-12 bulan atau sesuai saran dokter'], ['Penyetelan frame', 'Rutin, terutama saat anak bertumbuh'], ['Kacamata cadangan', 'Pertimbangkan bila minus tinggi atau anak sangat aktif'], ['Membersihkan', 'Ajarkan membersihkan dengan lap microfiber, jangan baju']] } },
             { callout: 'Kacamata yang tidak pas bisa tergelincir sehingga anak melihat melalui bagian lensa yang salah, atau melepasnya karena tidak nyaman. Penyetelan rutin di optik sering menyelesaikan masalah ini.', kind: 'info', title: 'Perhatikan' },
         ],
+        takeaways: [
+            'Pas dan nyaman paling penting, lalu bahan lentur dan ringan, lensa tahan benturan, dan gaya yang disukai anak.',
+            'Pastikan frame tidak menekan hidung atau telinga dan mata anak berada di tengah lensa.',
+            'Libatkan anak memilih, dan jelaskan kacamata sebagai alat melihat papan tulis, bukan hukuman.',
+            'Jadwalkan pemeriksaan tiap 6-12 bulan dan setel frame secara rutin selama anak bertumbuh.',
+        ],
         faq: [['Apakah anak perlu lensa blue light?', 'Manfaat lensa blue light belum terbukti kuat. Untuk anak, kebiasaan layar yang sehat dan waktu di luar ruangan lebih penting.'], ['Kapan kacamata anak perlu diganti?', 'Saat ukuran berubah, frame tidak pas karena pertumbuhan, atau lensa rusak. Kontrol berkala membantu menentukan.'], ['Apakah anak boleh bermain olahraga dengan kacamata?', 'Gunakan frame lentur dan tali pengikat, dan pertimbangkan pelindung mata khusus untuk olahraga kontak.']],
     },
 
@@ -155,6 +161,12 @@ export default [
             { h2: 'Tanda untuk segera ke dokter' },
             { w: 'checklist', title: 'Periksa gejala yang menyertai', desc: 'Jika salah satu tercentang, segera periksakan.', items: ['Nyeri mata sedang sampai berat.', 'Penglihatan menurun atau berbayang.', 'Sangat sensitif terhadap cahaya.', 'Ada riwayat cedera mata atau terkena bahan kimia.', 'Pemakai lensa kontak dengan mata merah nyeri.', 'Kotoran sangat banyak atau berlangsung lebih dari beberapa hari tanpa membaik.', 'Demam atau bengkak di sekitar mata.'] },
             { callout: 'Mata merah disertai nyeri hebat, penglihatan menurun, atau silau berat bukan hal ringan. Segera cari pertolongan medis.', kind: 'bad', title: 'Jangan tunda' },
+        ],
+        takeaways: [
+            'Sebagian besar mata merah ringan (kering, alergi, infeksi virus), tetapi sebagian tidak.',
+            'Pertolongan awal: cuci tangan, jangan mengucek, lepas lensa kontak, pakai air mata buatan bila kering.',
+            'Jangan memakai obat tetes sisa atau milik orang lain, dan hindari tetes steroid tanpa resep.',
+            'Nyeri berat, penglihatan menurun, atau silau berat berarti segera ke dokter.',
         ],
         faq: [['Apakah mata merah selalu menular?', 'Tidak. Mata merah akibat alergi atau mata kering tidak menular. Konjungtivitis akibat virus atau bakteri bisa menular.'], ['Bolehkah bekerja atau sekolah saat mata merah?', 'Bila diduga infeksi menular, sebaiknya istirahat dan menjaga kebersihan. Ikuti saran tenaga kesehatan.'], ['Berapa lama mata merah ringan sembuh?', 'Iritasi ringan sering membaik dalam satu dua hari. Bila tidak membaik atau memburuk, periksakan.']],
         sources: [['American Academy of Ophthalmology: Pink eye (conjunctivitis)', 'https://www.aao.org/eye-health/diseases/pink-eye-conjunctivitis']],

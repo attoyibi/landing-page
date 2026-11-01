@@ -56,7 +56,7 @@
         return out;
     };
     function translateTree(root) {
-        if (!I18N) return;
+        if (!I18N || !root) return;
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
         const nodes = [];
         for (let n = walker.nextNode(); n; n = walker.nextNode()) if (!n.parentElement.closest('pre, code, .tr-code, script, style')) nodes.push(n);
@@ -71,7 +71,7 @@
             for (const m of ms) {
                 if (m.type === 'characterData') { const t = T(m.target.nodeValue); if (t !== m.target.nodeValue) m.target.nodeValue = t; }
                 else if (m.type === 'attributes') { const v = m.target.getAttribute(m.attributeName); const t = T(v); if (v && t !== v) m.target.setAttribute(m.attributeName, t); }
-                else m.addedNodes.forEach(n => { if (n.nodeType === 1 || n.nodeType === 3) translateTree(n.nodeType === 3 ? n.parentElement : n); });
+                else m.addedNodes.forEach(n => { if (n.nodeType === 3) { const t = T(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t; } else if (n.nodeType === 1) translateTree(n); });
             }
         }).observe(root, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['aria-label', 'placeholder', 'title'] });
     }
@@ -749,7 +749,7 @@
             body.append(el('label', { for: id }, esc(f.label)), input);
         });
         const copy = el('button', { class: 'btn ghost', type: 'button', style: 'margin-top:10px' }, 'Salin teks');
-        copy.onclick = () => { if (navigator.clipboard) navigator.clipboard.writeText(out.textContent).then(() => { copy.textContent = 'Tersalin ✓'; setTimeout(() => (copy.textContent = 'Salin teks'), 1600); }); };
+        copy.onclick = () => { if (navigator.clipboard) navigator.clipboard.writeText(out.textContent).then(() => { copy.textContent = 'Tersalin ✓'; setTimeout(() => (copy.textContent = 'Salin teks'), 1600); }).catch(() => {}); };
         body.append(out, copy);
         draw();
     };
@@ -1119,7 +1119,7 @@
                 const say = m => { let r = $('#live'); if (!r) { r = el('div', { id: 'live', class: 'sr-only', role: 'status', 'aria-live': 'polite' }); document.body.append(r); } r.textContent = m; };
                 if (b.dataset.share === 'wa') window.open('https://wa.me/?text=' + encodeURIComponent(t + ' ' + u), '_blank', 'noopener');
                 else if (b.dataset.share === 'x') window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(t) + '&url=' + encodeURIComponent(u), '_blank', 'noopener');
-                else if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { const label = b.textContent; say(T('Tautan disalin')); b.textContent = 'Tautan disalin ✓'; setTimeout(() => (b.textContent = label), 1800); });
+                else if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { const label = b.textContent; say(T('Tautan disalin')); b.textContent = 'Tautan disalin ✓'; setTimeout(() => (b.textContent = label), 1800); }).catch(() => {});
             };
         });
 
