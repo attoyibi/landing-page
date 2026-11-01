@@ -20,6 +20,12 @@ export default [
             { w: 'checklist', title: 'Periksa portofolio Anda', desc: 'Centang yang sudah terpenuhi. Progres tersimpan di browser ini.', items: ['Ada satu kalimat yang menjelaskan siapa Anda dan apa keahlian Anda.', 'Memuat 3-6 proyek terbaik, masing-masing dengan studi kasus.', 'Setiap proyek punya demo atau bukti yang bisa dibuka.', 'Kode bersih dan README jelas di repositori.', 'Kontak mudah ditemukan.', 'Situs cepat dan nyaman di ponsel.', 'Judul dan deskripsi halaman bagus untuk mesin pencari.', 'Semua tautan sudah diperiksa.'] },
             { callout: 'Menulis artikel tentang hal yang Anda pelajari memperlihatkan cara berpikir Anda dan membuat Anda lebih mudah ditemukan di mesin pencari.', kind: 'good', title: 'Tambahan yang berharga' },
         ],
+        takeaways: [
+            'Halaman depan perlu satu kalimat pernyataan, 3-6 proyek pilihan, bukti hidup (demo dan kode yang bisa dibaca), dan cara menghubungi yang mudah.',
+            'Tulis tiap proyek sebagai studi kasus: masalah dan pengguna, peran Anda, keputusan penting, hasil, dan pelajaran.',
+            'Sedikit proyek yang kuat lebih baik daripada banyak yang lemah; tautan mati dan demo rusak lebih merugikan daripada tidak ada.',
+            'Buat situs cepat dan nyaman di ponsel, dan tulis artikel tentang yang Anda pelajari untuk menunjukkan cara berpikir.',
+        ],
         faq: [['Berapa proyek yang ideal?', 'Tiga sampai enam yang terbaik. Kualitas dan penjelasannya lebih penting daripada jumlah.'], ['Apakah GitHub cukup sebagai portofolio?', 'GitHub bagus untuk kode, tetapi recruiter yang sibuk lebih suka halaman ringkas yang menceritakan hasilnya dengan tautan ke kode.'], ['Bagaimana bila belum punya proyek kerja?', 'Buat proyek yang menyelesaikan masalah nyata, misalnya alat untuk komunitas atau usaha kecil, dan jelaskan keputusan Anda.']],
     },
 
@@ -39,6 +45,12 @@ export default [
             { w: 'builder', title: 'Rumus poin pengalaman', desc: 'Satu poin pengalaman yang kuat: kata kerja + apa yang dilakukan + hasil.', fields: [{ id: 'kerja', label: 'Kata kerja', placeholder: 'mis. membangun, merancang, menurunkan' }, { id: 'apa', label: 'Apa yang dikerjakan', placeholder: 'mis. fitur pencarian untuk situs belajar', long: true }, { id: 'hasil', label: 'Hasil atau dampak', placeholder: 'mis. mempercepat pencarian materi 3x', long: true }], template: '- {kerja} {apa}, sehingga {hasil}.' },
             { w: 'checklist', title: 'Periksa CV Anda', desc: 'Centang yang sudah terpenuhi. Progres tersimpan di browser ini.', items: ['Format sederhana, satu kolom, font umum.', 'Kontak jelas di bagian atas.', 'Ringkasan singkat sesuai posisi yang dilamar.', 'Setiap poin pengalaman menyebut hasil atau dampak.', 'Kata kunci dari lowongan muncul secara alami dan jujur.', 'Tidak ada kesalahan ketik atau tata bahasa.', 'Panjang satu sampai dua halaman.', 'Dikirim dalam format yang diminta.'] },
             { callout: 'Mengisi CV dengan kata kunci tanpa substansi mudah terlihat oleh recruiter. Sistem hanya langkah awal; yang menentukan adalah apakah Anda terlihat cocok untuk pekerjaannya.', kind: 'warn', title: 'Jangan berlebihan' },
+        ],
+        takeaways: [
+            'Pakai format sederhana satu kolom dengan judul bagian standar (Pengalaman, Pendidikan, Keahlian), font umum, dan teks asli, bukan gambar.',
+            'Sesuaikan dengan lowongan memakai istilahnya sendiri, tetapi hanya untuk keahlian yang benar-benar Anda punya.',
+            'Tunjukkan hasil ("mengurangi waktu muat 40%") dan mulai kalimat dengan kata kerja; jaga satu sampai dua halaman.',
+            'Kata kunci tanpa substansi mudah terlihat oleh recruiter; sistem hanya langkah pertama.',
         ],
         faq: [['Apakah semua perusahaan memakai ATS?', 'Banyak perusahaan menengah dan besar memakainya, perusahaan kecil sering tidak. Format sederhana tetap aman untuk keduanya.'], ['Perlukah foto di CV?', 'Bergantung pada kebiasaan dan permintaan perusahaan. Banyak sistem tidak membutuhkannya, dan sebagian perusahaan justru menyarankan tanpa foto.'], ['Bolehkah memakai AI untuk menulis CV?', 'Boleh untuk merapikan dan memberi ide, tetapi isi harus akurat dan sesuai kenyataan. Anda harus bisa menjelaskan setiap poin saat wawancara.']],
     },
@@ -61,6 +73,12 @@ export default [
             { w: 'checklist', title: 'Sehari sebelum wawancara', desc: 'Centang yang sudah dilakukan. Progres tersimpan di browser ini.', items: ['Mempelajari perusahaan, produk, dan lowongannya.', 'Menyiapkan tiga cerita STAR (keberhasilan, kegagalan, kerja sama).', 'Menyiapkan jawaban singkat untuk "ceritakan tentang diri Anda".', 'Menyegarkan dasar teknis yang relevan dengan lowongan.', 'Menyiapkan pertanyaan untuk pewawancara.', 'Menguji koneksi, kamera, dan lingkungan bila daring.', 'Menyiapkan CV, portofolio, dan catatan.', 'Tidur cukup.'] },
             { callout: 'Pertanyaan yang Anda ajukan menunjukkan kualitas Anda. Tanyakan tentang cara tim bekerja, tantangan terbesar, dan bagaimana keberhasilan diukur pada peran ini.', kind: 'good', title: 'Tips' },
         ],
+        takeaways: [
+            'Siapkan empat jenis pertanyaan: pengantar, perilaku, teknis, dan studi kasus, dengan proporsi sesuai posisi.',
+            'Jawab pertanyaan perilaku dengan STAR: Situation, Task, Action, Result (dan pelajaran).',
+            'Untuk pertanyaan teknis, ulangi pertanyaan, berpikir keras, mulai dari yang sederhana, bahas kasus tepi, dan bertanya bila buntu.',
+            'Siapkan tiga cerita STAR, jawaban singkat "ceritakan tentang diri Anda", dan pertanyaan Anda sendiri untuk pewawancara.',
+        ],
         faq: [['Bagaimana menjawab pertanyaan gaji?', 'Riset kisaran pasar, tentukan angka yang masuk akal bagi Anda, dan sampaikan dengan percaya diri serta terbuka untuk berdiskusi.'], ['Bagaimana bila saya gugup?', 'Berlatih dengan suara keras, bersama teman, atau rekam diri. Tarik napas, bicara pelan, dan terima bahwa sedikit gugup itu wajar.'], ['Perlukah menyiapkan algoritma?', 'Bergantung perusahaan. Dasar struktur data dan kompleksitas sering ditanyakan. Cek tahapan seleksi yang dijelaskan perusahaan.']],
     },
 
@@ -80,6 +98,12 @@ export default [
             { w: 'checklist', title: 'Penawaran yang melindungi kedua pihak', desc: 'Centang yang sudah masuk dalam penawaran Anda. Progres tersimpan di browser ini.', items: ['Ruang lingkup pekerjaan yang spesifik dan apa yang tidak termasuk.', 'Hasil akhir yang diserahkan dan format-nya.', 'Jadwal dan tahapan.', 'Harga, termin pembayaran, dan uang muka.', 'Jumlah revisi yang termasuk dan biaya revisi tambahan.', 'Kewajiban klien (materi, umpan balik tepat waktu).', 'Hak kekayaan intelektual dan kerahasiaan.', 'Cara menghentikan atau mengubah proyek.'] },
             { w: 'cards', title: 'Kesalahan awal yang sering terjadi, ketuk untuk solusinya', items: [{ tag: 'Kesalahan', front: 'Mematok harga terlalu rendah agar dapat klien.', backTag: 'Solusi', back: 'Hitung tarif dari kebutuhan Anda. Harga terlalu rendah menarik klien yang menuntut banyak.' }, { tag: 'Kesalahan', front: 'Mulai bekerja tanpa kesepakatan tertulis.', backTag: 'Solusi', back: 'Selalu ada penawaran atau perjanjian sederhana sebelum mulai.' }, { tag: 'Kesalahan', front: 'Ruang lingkup melebar tanpa biaya tambahan.', backTag: 'Solusi', back: 'Tetapkan batas revisi dan mekanisme perubahan permintaan.' }, { tag: 'Kesalahan', front: 'Menerima pembayaran seluruhnya di akhir.', backTag: 'Solusi', back: 'Minta uang muka dan bagi pembayaran per tahap.' }] },
             { callout: 'Untuk kontrak besar atau pekerjaan berisiko hukum, konsultasikan dengan ahli hukum. Artikel ini edukatif dan bukan nasihat hukum atau keuangan.', kind: 'warn', title: 'Catatan' },
+        ],
+        takeaways: [
+            'Mulailah dari layanan yang spesifik dengan hasil yang jelas, misalnya "landing page cepat untuk usaha kecil".',
+            'Klien pertama biasanya datang dari orang yang sudah mengenal Anda: teman, komunitas, usaha lokal, dan alumni.',
+            'Hitung tarif dari target penghasilan dan porsi jam yang benar-benar bisa ditagih, lalu tambahkan cadangan (misalnya 20%) untuk revisi dan risiko.',
+            'Jangan mulai tanpa kesepakatan tertulis: ruang lingkup, hasil, jadwal, harga dan termin, jumlah revisi, serta cara menghentikan atau mengubah proyek.',
         ],
         faq: [['Di mana mencari klien pertama?', 'Mulai dari jaringan dekat: teman, komunitas, usaha lokal, dan alumni. Lalu platform freelance dan media profesional.'], ['Apakah perlu platform freelance?', 'Berguna untuk memulai dan membangun reputasi, tetapi biasanya ada biaya dan persaingan. Gabungkan dengan jaringan langsung.'], ['Bagaimana menghadapi klien yang terus meminta revisi?', 'Kembali ke perjanjian: jumlah revisi yang termasuk, dan tawarkan biaya tambahan di luar itu dengan sopan.']],
     },

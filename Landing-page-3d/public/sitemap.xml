@@ -1,564 +1,856 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://muchson.web.id/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/ai-untuk-semua/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/ai-untuk-semua/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/ai-for-everyone/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/mata-kacamata/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/mata-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/eyes-eyeglasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/coding-algoritma/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/coding-algoritma/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/coding-algorithms/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/teknologi-sehari-hari/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/teknologi-sehari-hari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/everyday-technology/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/belajar-produktivitas/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/belajar-produktivitas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/learning-productivity/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/karier-freelance/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/karier-freelance/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/career-freelance/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/algoritma-pemrograman-python/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/pbo-dengan-java/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/sistem-informasi/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kategori/dasar-informatika/</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/kategori/react-web-modern/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/kategori/laravel-backend/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/kategori/flutter-mobile/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/kategori/otomasi-ai-kerja/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/ai-for-everyone/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/ai-untuk-semua/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/ai-for-everyone/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/eyes-eyeglasses/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/mata-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/eyes-eyeglasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/learning-productivity/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/belajar-produktivitas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/learning-productivity/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/coding-algorithms/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/coding-algoritma/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/coding-algorithms/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/everyday-technology/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/teknologi-sehari-hari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/everyday-technology/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/category/career-freelance/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kategori/karier-freelance/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/category/career-freelance/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/rag-adalah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rag-adalah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-rag/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-minus-vs-silinder/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-minus-vs-silinder/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-vs-astigmatism/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bubble-sort-explained-visually/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/blue-light-glasses-effective-or-myth/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-plus-dan-presbiopi-kacamata-baca/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-plus-dan-presbiopi-kacamata-baca/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/farsightedness-and-presbyopia-reading-glasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-lelah-akibat-layar-cara-mengatasi/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-lelah-akibat-layar-cara-mengatasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/screen-eye-strain-causes-and-9-fixes/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/posisi-layar-dan-ergonomi-mata/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/posisi-layar-dan-ergonomi-mata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/screen-position-and-lighting/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-kering-penyebab-dan-cara-mengatasi/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-kering-penyebab-dan-cara-mengatasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/dry-eye-causes-and-what-helps/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/minus-anak-bertambah-cepat-cara-memperlambat/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/minus-anak-bertambah-cepat-cara-memperlambat/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/childs-myopia-increasing-fast-how-to-slow-it/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/memilih-frame-kacamata-sesuai-bentuk-wajah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/memilih-frame-kacamata-sesuai-bentuk-wajah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/choosing-frames-for-your-face-shape/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-membaca-ukuran-frame-kacamata-52-18-140/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-membaca-ukuran-frame-kacamata-52-18-140/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-read-glasses-frame-size/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/indeks-lensa-kacamata-1-56-1-60-1-67-1-74/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/indeks-lensa-kacamata-1-56-1-60-1-67-1-74/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lens-index-1-56-to-1-74/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/lensa-progresif-vs-bifokal/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lensa-progresif-vs-bifokal/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/progressive-vs-bifocal-lenses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/lensa-photochromic-berubah-warna-apakah-worth-it/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lensa-photochromic-berubah-warna-apakah-worth-it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/photochromic-lenses-worth-it/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/coating-lensa-anti-gores-anti-glare-hydrophobic/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/coating-lensa-anti-gores-anti-glare-hydrophobic/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lens-coatings-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kacamata-atau-lensa-kontak-mana-yang-lebih-baik/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-atau-lensa-kontak-mana-yang-lebih-baik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/glasses-or-contact-lenses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-membersihkan-dan-merawat-kacamata/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-membersihkan-dan-merawat-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-clean-and-care-for-glasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kapan-harus-ganti-kacamata/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kapan-harus-ganti-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/when-to-change-your-glasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/pusing-saat-pakai-kacamata-baru-adaptasi/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/pusing-saat-pakai-kacamata-baru-adaptasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/dizzy-with-new-glasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mitos-dan-fakta-seputar-mata-minus/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mitos-dan-fakta-seputar-mata-minus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-myths-and-facts/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kacamata-hitam-uv400-penting-untuk-mata/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-hitam-uv400-penting-untuk-mata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/uv400-sunglasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kacamata-untuk-menyetir-malam-silau-lampu/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-untuk-menyetir-malam-silau-lampu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/night-driving-glare/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bahan-frame-kacamata-titanium-asetat-tr90/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bahan-frame-kacamata-titanium-asetat-tr90/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/glasses-frame-materials/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-mengukur-pd-kacamata-sendiri/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-mengukur-pd-kacamata-sendiri/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-measure-your-pd-at-home/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/tips-beli-kacamata-online-agar-tidak-salah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/tips-beli-kacamata-online-agar-tidak-salah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/tips-for-buying-glasses-online/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/lasik-syarat-risiko-dan-alternatifnya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lasik-syarat-risiko-dan-alternatifnya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lasik-requirements-risks-and-alternatives/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/tanda-bahaya-mata-yang-tidak-boleh-ditunda/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/tanda-bahaya-mata-yang-tidak-boleh-ditunda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/eye-warning-signs-you-must-not-delay/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/nutrisi-untuk-kesehatan-mata-yang-masuk-akal/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/nutrisi-untuk-kesehatan-mata-yang-masuk-akal/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/nutrition-for-eye-health/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/memilih-kacamata-anak-yang-aman-dan-nyaman/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/memilih-kacamata-anak-yang-aman-dan-nyaman/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/choosing-childrens-glasses/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/mata-merah-penyebab-umum-dan-penanganan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-merah-penyebab-umum-dan-penanganan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/red-eye-causes-and-when-to-see-a-doctor/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-ai-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-menggunakan-chatgpt-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-menggunakan-chatgpt-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-use-chatgpt-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/prompt-engineering-dasar-cara-menulis-prompt-yang-baik/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/prompt-engineering-dasar-cara-menulis-prompt-yang-baik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-write-a-good-prompt/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-membuat-foto-ai-dan-etika-penggunaannya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-membuat-foto-ai-dan-etika-penggunaannya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-make-ai-images-and-the-ethics/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/halusinasi-ai-kenapa-ai-mengarang-jawaban/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/halusinasi-ai-kenapa-ai-mengarang-jawaban/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-hallucinations/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/deepfake-dan-hoaks-ai-cara-mengenali/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/deepfake-dan-hoaks-ai-cara-mengenali/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/deepfakes-and-ai-hoaxes/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-untuk-umkm-6-pekerjaan-yang-bisa-dihemat/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-umkm-6-pekerjaan-yang-bisa-dihemat/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-small-business-6-tasks/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/memakai-ai-untuk-tugas-kuliah-secara-etis/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/memakai-ai-untuk-tugas-kuliah-secara-etis/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/using-ai-for-university-work-ethically/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-kerja-chatgpt-prediksi-kata-berikutnya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-kerja-chatgpt-prediksi-kata-berikutnya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-chatgpt-works-next-word-prediction/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/privasi-data-saat-memakai-chatbot-ai/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/privasi-data-saat-memakai-chatbot-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-chatbot-data-privacy/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apakah-ai-akan-menggantikan-pekerjaan-saya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apakah-ai-akan-menggantikan-pekerjaan-saya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/will-ai-replace-my-job/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/chatgpt-gemini-claude-cara-memilih-chatbot-ai/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/chatgpt-gemini-claude-cara-memilih-chatbot-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/chatgpt-gemini-claude-choosing-an-ai-chatbot/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-agent-vs-chatbot-apa-bedanya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-agent-vs-chatbot-apa-bedanya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-agent-vs-chatbot/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apa-itu-mcp-model-context-protocol-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-mcp-model-context-protocol-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-mcp-model-context-protocol/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/vibe-coding-adalah-cara-aman-ngoding-dengan-ai/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/vibe-coding-adalah-cara-aman-ngoding-dengan-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-vibe-coding-safe-ai-coding/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/claude-untuk-produktivitas-10-cara-memakainya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/claude-untuk-produktivitas-10-cara-memakainya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/claude-for-productivity-10-ways/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-untuk-rapat-ringkasan-dan-tindak-lanjut/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-rapat-ringkasan-dan-tindak-lanjut/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-meetings-minutes-and-follow-up/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-untuk-email-dan-surat-kerja/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-email-dan-surat-kerja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-work-emails-and-letters/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-untuk-riset-dan-membaca-dokumen-panjang/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-riset-dan-membaca-dokumen-panjang/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-research-and-reading-long-documents/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-untuk-excel-dan-google-sheets-rumus/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-excel-dan-google-sheets-rumus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-excel-and-google-sheets-formulas/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/ai-untuk-presentasi-dari-ide-ke-slide/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-presentasi-dari-ide-ke-slide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-presentations-from-idea-to-slides/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apa-itu-token-dan-context-window-pada-ai/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-token-dan-context-window-pada-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/claude-code-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/claude-md-memori-proyek-agar-ai-tidak-lupa/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/claude-md-memori-proyek-agar-ai-tidak-lupa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/claude-md-project-memory-for-ai/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/skills-subagents-mcp-hooks-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/n8n-otomasi-workflow-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/n8n-otomasi-workflow-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/n8n-workflow-automation-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apa-itu-embedding-dan-pencarian-semantik/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-embedding-dan-pencarian-semantik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-are-embeddings-and-semantic-search/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/binary-search-dijelaskan-visual/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-search-explained-visually/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/big-o-notation-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/selection-sort-and-insertion-sort-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/stack-and-queue-data-structures-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/recursion-explained-with-fibonacci/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/git-dan-github-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/git-and-github-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apa-itu-api-penjelasan-sederhana/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-api-penjelasan-sederhana/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-an-api/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/html-css-javascript-peran-masing-masing/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/html-css-javascript-peran-masing-masing/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/html-css-javascript-what-each-does/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/sql-basics-select-where-order-by/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-kerja-internet-dns-http-saat-membuka-website/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-kerja-internet-dns-http-saat-membuka-website/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-the-internet-works-when-you-open-a-website/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/react-for-beginners-components-props-state/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/flutter-atau-react-native-mana-yang-dipelajari/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/flutter-atau-react-native-mana-yang-dipelajari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/flutter-or-react-native-which-to-learn/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/password-kuat-dan-password-manager-cara-memakainya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/password-kuat-dan-password-manager-cara-memakainya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/strong-passwords-and-password-managers/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/phishing-cara-mengenali-penipuan-online-dan-link-palsu/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/phishing-cara-mengenali-penipuan-online-dan-link-palsu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/phishing-spot-online-scams/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/verifikasi-dua-langkah-2fa-passkey-cara-mengaktifkan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/verifikasi-dua-langkah-2fa-passkey-cara-mengaktifkan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/two-step-verification-2fa-and-passkeys/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-backup-foto-dan-data-aturan-3-2-1/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-backup-foto-dan-data-aturan-3-2-1/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-back-up-photos-and-data-3-2-1-rule/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/wifi-lambat-penyebab-dan-cara-memperbaikinya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/wifi-lambat-penyebab-dan-cara-memperbaikinya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/slow-wifi-causes-and-fixes/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/penipuan-file-apk-di-whatsapp-modus-dan-pencegahan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/penipuan-file-apk-di-whatsapp-modus-dan-pencegahan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/whatsapp-apk-file-scams-how-they-work/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apakah-vpn-perlu-dipakai-mitos-dan-faktanya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apakah-vpn-perlu-dipakai-mitos-dan-faktanya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/do-you-need-a-vpn-myths-and-facts/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cloud-storage-pilihan-dan-cara-mengamankannya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cloud-storage-pilihan-dan-cara-mengamankannya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/cloud-storage-choose-and-secure/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/checklist-keamanan-ponsel-15-pengaturan-penting/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/checklist-keamanan-ponsel-15-pengaturan-penting/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/phone-security-checklist-15-settings/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-hemat-kuota-internet-di-ponsel/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-hemat-kuota-internet-di-ponsel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-save-mobile-data-10-steps/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/teknik-pomodoro-cara-fokus-dan-pewaktunya/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/teknik-pomodoro-cara-fokus-dan-pewaktunya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/pomodoro-technique-focus-timer/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/spaced-repetition-cara-belajar-tahan-lama/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/spaced-repetition-cara-belajar-tahan-lama/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/spaced-repetition-how-to-stop-forgetting/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/active-recall-teknik-belajar-paling-efektif/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/active-recall-teknik-belajar-paling-efektif/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/active-recall-study-technique/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/matriks-eisenhower-cara-menentukan-prioritas/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/matriks-eisenhower-cara-menentukan-prioritas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/eisenhower-matrix/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/membangun-kebiasaan-kecil-yang-bertahan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/membangun-kebiasaan-kecil-yang-bertahan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/building-small-habits-that-last/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/merancang-kurikulum-pelatihan-addie-dan-taksonomi-bloom/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/merancang-kurikulum-pelatihan-addie-dan-taksonomi-bloom/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/designing-a-training-curriculum-addie-and-blooms-taxonomy/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/gamifikasi-pembelajaran-cara-membuatnya-efektif/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/gamifikasi-pembelajaran-cara-membuatnya-efektif/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/gamification-in-learning-making-it-effective/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/microlearning-belajar-dalam-potongan-kecil/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/microlearning-belajar-dalam-potongan-kecil/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/microlearning-effective-bite-sized-learning/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/desain-aksesibel-untuk-pembelajaran-digital-wcag/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/desain-aksesibel-untuk-pembelajaran-digital-wcag/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/accessible-design-for-digital-learning-wcag/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/portofolio-developer-yang-dilirik-recruiter/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/portofolio-developer-yang-dilirik-recruiter/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/developer-portfolio-recruiters-notice/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cv-ramah-ats-cara-membuat-cv-yang-lolos-seleksi-awal/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cv-ramah-ats-cara-membuat-cv-yang-lolos-seleksi-awal/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ats-friendly-cv-pass-the-first-screening/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/persiapan-wawancara-kerja-developer-pertanyaan-umum/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/persiapan-wawancara-kerja-developer-pertanyaan-umum/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/developer-job-interview-preparation/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/freelance-pertama-cara-mendapat-klien-dan-menentukan-harga/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/freelance-pertama-cara-mendapat-klien-dan-menentukan-harga/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/first-freelance-finding-clients-and-setting-prices/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/algoritma-dan-pemrograman-pengantar-dari-masalah-ke-program/</loc>
@@ -1059,5 +1351,965 @@
     <loc>https://muchson.web.id/artikel/hash-table-dari-nol-fungsi-hash-tabrakan-dan-rehashing/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/belajar-react-dari-nol-komponen-jsx-dan-props/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/usestate-react-adalah-state-event-dan-cara-kerjanya/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/useeffect-react-kapan-dipakai-dependency-dan-cleanup/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/render-list-react-map-key-dan-filter-yang-benar/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/form-react-controlled-component-validasi-dan-submit/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/usereducer-react-kelola-state-kompleks-dengan-reducer/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/context-api-react-berbagi-data-tanpa-prop-drilling/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/custom-hook-react-cara-membuat-dan-contoh-yang-berguna/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/optimasi-performa-react-memo-usememo-usecallback-dan-profiling/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/react-router-routing-halaman-parameter-dan-navigasi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/fetch-api-javascript-async-await-promise-dan-penanganan-error/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/tanstack-query-react-fetch-data-cache-dan-mutasi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/typescript-untuk-react-tipe-props-state-dan-event/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/tailwind-css-untuk-pemula-utility-first-responsif-dan-dark-mode/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/seo-untuk-aplikasi-react-ssr-prerender-dan-metadata/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/vite-react-setup-proyek-struktur-folder-dan-environment/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/testing-react-vitest-testing-library-dan-tes-logika-murni/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/aksesibilitas-react-semantik-html-aria-fokus-dan-keyboard/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/suspense-lazy-dan-error-boundary-react-loading-dan-galat/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/fitur-baru-react-19-actions-use-dan-form-lebih-ringkas/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/belajar-laravel-dari-nol-mvc-routing-controller-dan-blade/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/eloquent-orm-laravel-migrasi-model-relasi-dan-masalah-n-plus-1/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/validasi-form-laravel-form-request-aturan-dan-pesan-error/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/rest-api-laravel-resource-controller-api-resource-dan-paginasi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/autentikasi-laravel-sanctum-session-vs-token-dan-hash-password/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/middleware-dan-policy-laravel-otorisasi-peran-dan-hak-akses/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/queue-job-dan-scheduler-laravel-pekerjaan-latar-belakang/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/testing-laravel-phpunit-pest-factory-dan-refreshdatabase/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/caching-dan-performa-laravel-cache-remember-optimize-dan-index/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/keamanan-aplikasi-laravel-csrf-xss-sql-injection-dan-mass-assignment/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/tutorial-crud-laravel-lengkap-dari-migrasi-sampai-tampilan/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/relasi-eloquent-one-to-many-many-to-many-dan-polymorphic/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/deploy-laravel-ke-vps-nginx-php-fpm-dan-konfigurasi-produksi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/struktur-proyek-laravel-yang-rapi-service-action-dan-clean-code/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/laravel-sebagai-backend-api-untuk-react-flutter-cors-dan-token/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/belajar-dart-untuk-flutter-tipe-null-safety-class-dan-koleksi/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/widget-flutter-layout-row-column-expanded-dan-stack/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/stateful-widget-flutter-setstate-lifecycle-dan-kapan-rebuild/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/async-dart-future-async-await-dan-stream-untuk-flutter/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/http-dan-json-di-flutter-model-fromjson-dan-error-handling/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/state-management-flutter-provider-riverpod-dan-bloc-dibandingkan/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/navigasi-flutter-navigator-go-router-dan-deep-link/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/form-dan-validasi-flutter-textformfield-formkey-dan-keyboard/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/penyimpanan-lokal-flutter-shared-preferences-sqlite-dan-secure-storage/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/ui-responsif-flutter-mediaquery-layoutbuilder-dan-breakpoint/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/testing-flutter-unit-test-widget-test-dan-integration-test/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/rilis-aplikasi-flutter-build-apk-aab-signing-dan-play-store/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/apa-itu-n8n-otomasi-alur-kerja-untuk-pemula/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/install-n8n-self-host-docker-compose-dan-reverse-proxy/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/artikel/whatsapp-otomatis-dengan-n8n-notifikasi-dan-chatbot-sederhana/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-is-rag/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rag-adalah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-rag/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/myopia-vs-astigmatism/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-minus-vs-silinder/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-vs-astigmatism/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/active-recall-study-technique/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/active-recall-teknik-belajar-paling-efektif/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/active-recall-study-technique/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/dizzy-with-new-glasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/pusing-saat-pakai-kacamata-baru-adaptasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/dizzy-with-new-glasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/choosing-childrens-glasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/memilih-kacamata-anak-yang-aman-dan-nyaman/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/choosing-childrens-glasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/when-to-change-your-glasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kapan-harus-ganti-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/when-to-change-your-glasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-is-an-api/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-api-penjelasan-sederhana/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-an-api/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/red-eye-causes-and-when-to-see-a-doctor/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-merah-penyebab-umum-dan-penanganan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/red-eye-causes-and-when-to-see-a-doctor/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/eisenhower-matrix/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/matriks-eisenhower-cara-menentukan-prioritas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/eisenhower-matrix/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/cloud-storage-choose-and-secure/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cloud-storage-pilihan-dan-cara-mengamankannya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/cloud-storage-choose-and-secure/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/will-ai-replace-my-job/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apakah-ai-akan-menggantikan-pekerjaan-saya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/will-ai-replace-my-job/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-chatbot-data-privacy/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/privasi-data-saat-memakai-chatbot-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-chatbot-data-privacy/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/deepfakes-and-ai-hoaxes/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/deepfake-dan-hoaks-ai-cara-mengenali/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/deepfakes-and-ai-hoaxes/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-hallucinations/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/halusinasi-ai-kenapa-ai-mengarang-jawaban/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-hallucinations/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/phishing-spot-online-scams/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/phishing-cara-mengenali-penipuan-online-dan-link-palsu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/phishing-spot-online-scams/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/tips-for-buying-glasses-online/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/tips-beli-kacamata-online-agar-tidak-salah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/tips-for-buying-glasses-online/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/night-driving-glare/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-untuk-menyetir-malam-silau-lampu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/night-driving-glare/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-read-glasses-frame-size/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-membaca-ukuran-frame-kacamata-52-18-140/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-read-glasses-frame-size/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/glasses-or-contact-lenses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-atau-lensa-kontak-mana-yang-lebih-baik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/glasses-or-contact-lenses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/lens-coatings-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/coating-lensa-anti-gores-anti-glare-hydrophobic/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lens-coatings-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/uv400-sunglasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-hitam-uv400-penting-untuk-mata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/uv400-sunglasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-measure-your-pd-at-home/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-mengukur-pd-kacamata-sendiri/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-measure-your-pd-at-home/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/glasses-frame-materials/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bahan-frame-kacamata-titanium-asetat-tr90/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/glasses-frame-materials/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-clean-and-care-for-glasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-membersihkan-dan-merawat-kacamata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-clean-and-care-for-glasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/screen-position-and-lighting/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/posisi-layar-dan-ergonomi-mata/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/screen-position-and-lighting/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/nutrition-for-eye-health/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/nutrisi-untuk-kesehatan-mata-yang-masuk-akal/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/nutrition-for-eye-health/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/dry-eye-causes-and-what-helps/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-kering-penyebab-dan-cara-mengatasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/dry-eye-causes-and-what-helps/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/progressive-vs-bifocal-lenses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lensa-progresif-vs-bifokal/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/progressive-vs-bifocal-lenses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/choosing-frames-for-your-face-shape/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/memilih-frame-kacamata-sesuai-bentuk-wajah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/choosing-frames-for-your-face-shape/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/lens-index-1-56-to-1-74/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/indeks-lensa-kacamata-1-56-1-60-1-67-1-74/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lens-index-1-56-to-1-74/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/photochromic-lenses-worth-it/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lensa-photochromic-berubah-warna-apakah-worth-it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/photochromic-lenses-worth-it/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-is-ai-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-ai-kecerdasan-buatan-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-ai-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-use-chatgpt-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-menggunakan-chatgpt-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-use-chatgpt-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-write-a-good-prompt/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/prompt-engineering-dasar-cara-menulis-prompt-yang-baik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-write-a-good-prompt/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-make-ai-images-and-the-ethics/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-membuat-foto-ai-dan-etika-penggunaannya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-make-ai-images-and-the-ethics/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-for-small-business-6-tasks/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-umkm-6-pekerjaan-yang-bisa-dihemat/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-small-business-6-tasks/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/using-ai-for-university-work-ethically/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/memakai-ai-untuk-tugas-kuliah-secara-etis/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/using-ai-for-university-work-ethically/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-chatgpt-works-next-word-prediction/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-kerja-chatgpt-prediksi-kata-berikutnya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-chatgpt-works-next-word-prediction/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/chatgpt-gemini-claude-choosing-an-ai-chatbot/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/chatgpt-gemini-claude-cara-memilih-chatbot-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/chatgpt-gemini-claude-choosing-an-ai-chatbot/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-agent-vs-chatbot/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-agent-vs-chatbot-apa-bedanya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-agent-vs-chatbot/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-is-mcp-model-context-protocol/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-mcp-model-context-protocol-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-mcp-model-context-protocol/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-is-vibe-coding-safe-ai-coding/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/vibe-coding-adalah-cara-aman-ngoding-dengan-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-is-vibe-coding-safe-ai-coding/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/claude-for-productivity-10-ways/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/claude-untuk-produktivitas-10-cara-memakainya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/claude-for-productivity-10-ways/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-for-meetings-minutes-and-follow-up/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-rapat-ringkasan-dan-tindak-lanjut/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-meetings-minutes-and-follow-up/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-for-work-emails-and-letters/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-email-dan-surat-kerja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-work-emails-and-letters/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-for-research-and-reading-long-documents/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-riset-dan-membaca-dokumen-panjang/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-research-and-reading-long-documents/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-for-excel-and-google-sheets-formulas/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-excel-dan-google-sheets-rumus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-excel-and-google-sheets-formulas/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ai-for-presentations-from-idea-to-slides/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/ai-untuk-presentasi-dari-ide-ke-slide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ai-for-presentations-from-idea-to-slides/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-token-dan-context-window-pada-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-are-tokens-and-context-windows/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/claude-code-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/claude-code-untuk-pemula-apa-itu-dan-cara-mulai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/claude-code-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/claude-md-project-memory-for-ai/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/claude-md-memori-proyek-agar-ai-tidak-lupa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/claude-md-project-memory-for-ai/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/skills-subagents-mcp-hooks-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/skills-subagents-mcp-hooks-claude-code-bedanya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/skills-subagents-mcp-hooks-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/n8n-workflow-automation-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/n8n-otomasi-workflow-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/n8n-workflow-automation-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/membuat-ai-agent-dengan-n8n-langkah-demi-langkah/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/build-an-ai-agent-with-n8n/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/what-are-embeddings-and-semantic-search/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-embedding-dan-pencarian-semantik/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-are-embeddings-and-semantic-search/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/bubble-sort-explained-visually/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bubble-sort-explained-visually/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/binary-search-explained-visually/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-search-explained-visually/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/big-o-notation-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/selection-sort-and-insertion-sort-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/selection-sort-and-insertion-sort-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/stack-and-queue-data-structures-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/stack-and-queue-data-structures-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/recursion-explained-with-fibonacci/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/recursion-explained-with-fibonacci/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/binary-numbers-how-computers-count/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/git-and-github-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/git-and-github-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/html-css-javascript-what-each-does/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/html-css-javascript-peran-masing-masing/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/html-css-javascript-what-each-does/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/sql-basics-select-where-order-by/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/sql-basics-select-where-order-by/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-the-internet-works-when-you-open-a-website/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-kerja-internet-dns-http-saat-membuka-website/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-the-internet-works-when-you-open-a-website/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/react-for-beginners-components-props-state/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/react-for-beginners-components-props-state/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/flutter-or-react-native-which-to-learn/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/flutter-atau-react-native-mana-yang-dipelajari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/flutter-or-react-native-which-to-learn/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/strong-passwords-and-password-managers/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/password-kuat-dan-password-manager-cara-memakainya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/strong-passwords-and-password-managers/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/two-step-verification-2fa-and-passkeys/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/verifikasi-dua-langkah-2fa-passkey-cara-mengaktifkan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/two-step-verification-2fa-and-passkeys/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-back-up-photos-and-data-3-2-1-rule/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-backup-foto-dan-data-aturan-3-2-1/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-back-up-photos-and-data-3-2-1-rule/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/slow-wifi-causes-and-fixes/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/wifi-lambat-penyebab-dan-cara-memperbaikinya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/slow-wifi-causes-and-fixes/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/whatsapp-apk-file-scams-how-they-work/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/penipuan-file-apk-di-whatsapp-modus-dan-pencegahan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/whatsapp-apk-file-scams-how-they-work/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/do-you-need-a-vpn-myths-and-facts/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apakah-vpn-perlu-dipakai-mitos-dan-faktanya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/do-you-need-a-vpn-myths-and-facts/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/phone-security-checklist-15-settings/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/checklist-keamanan-ponsel-15-pengaturan-penting/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/phone-security-checklist-15-settings/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-to-save-mobile-data-10-steps/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-hemat-kuota-internet-di-ponsel/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-to-save-mobile-data-10-steps/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/pomodoro-technique-focus-timer/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/teknik-pomodoro-cara-fokus-dan-pewaktunya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/pomodoro-technique-focus-timer/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/spaced-repetition-how-to-stop-forgetting/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/spaced-repetition-cara-belajar-tahan-lama/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/spaced-repetition-how-to-stop-forgetting/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/building-small-habits-that-last/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/membangun-kebiasaan-kecil-yang-bertahan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/building-small-habits-that-last/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/designing-a-training-curriculum-addie-and-blooms-taxonomy/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/merancang-kurikulum-pelatihan-addie-dan-taksonomi-bloom/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/designing-a-training-curriculum-addie-and-blooms-taxonomy/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/gamification-in-learning-making-it-effective/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/gamifikasi-pembelajaran-cara-membuatnya-efektif/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/gamification-in-learning-making-it-effective/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/microlearning-effective-bite-sized-learning/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/microlearning-belajar-dalam-potongan-kecil/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/microlearning-effective-bite-sized-learning/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/accessible-design-for-digital-learning-wcag/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/desain-aksesibel-untuk-pembelajaran-digital-wcag/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/accessible-design-for-digital-learning-wcag/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/developer-portfolio-recruiters-notice/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/portofolio-developer-yang-dilirik-recruiter/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/developer-portfolio-recruiters-notice/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/ats-friendly-cv-pass-the-first-screening/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cv-ramah-ats-cara-membuat-cv-yang-lolos-seleksi-awal/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/ats-friendly-cv-pass-the-first-screening/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/developer-job-interview-preparation/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/persiapan-wawancara-kerja-developer-pertanyaan-umum/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/developer-job-interview-preparation/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/first-freelance-finding-clients-and-setting-prices/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/freelance-pertama-cara-mendapat-klien-dan-menentukan-harga/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/first-freelance-finding-clients-and-setting-prices/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/blue-light-glasses-effective-or-myth/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/blue-light-glasses-effective-or-myth/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/farsightedness-and-presbyopia-reading-glasses/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-plus-dan-presbiopi-kacamata-baca/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/farsightedness-and-presbyopia-reading-glasses/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/screen-eye-strain-causes-and-9-fixes/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mata-lelah-akibat-layar-cara-mengatasi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/screen-eye-strain-causes-and-9-fixes/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/childs-myopia-increasing-fast-how-to-slow-it/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/minus-anak-bertambah-cepat-cara-memperlambat/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/childs-myopia-increasing-fast-how-to-slow-it/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/myopia-myths-and-facts/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/mitos-dan-fakta-seputar-mata-minus/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/myopia-myths-and-facts/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/lasik-requirements-risks-and-alternatives/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/lasik-syarat-risiko-dan-alternatifnya/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/lasik-requirements-risks-and-alternatives/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/eye-warning-signs-you-must-not-delay/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/tanda-bahaya-mata-yang-tidak-boleh-ditunda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/eye-warning-signs-you-must-not-delay/"/>
   </url>
 </urlset>

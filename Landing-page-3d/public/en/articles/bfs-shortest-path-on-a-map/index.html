@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BFS: The Shortest-Path Algorithm (Interactive Demo)</title>
+<meta name="description" content="Breadth-first search explores a graph layer by layer and finds the shortest path. Draw your own walls on the map and watch BFS work step by step.">
+<meta name="keywords" content="BFS, graph, shortest path, algorithm, queue">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/">
+<meta property="og:title" content="BFS: The Shortest-Path Algorithm (Interactive Demo)">
+<meta property="og:description" content="Breadth-first search explores a graph layer by layer and finds the shortest path. Draw your own walls on the map and watch BFS work step by step.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BFS: The Shortest-Path Algorithm (Interactive Demo)">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BFS: The Shortest-Path Algorithm (Interactive Demo)">
+<meta name="twitter:description" content="Breadth-first search explores a graph layer by layer and finds the shortest path. Draw your own walls on the map and watch BFS work step by step.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"BFS: The Shortest-Path Algorithm (Interactive Demo)","description":"Breadth-first search explores a graph layer by layer and finds the shortest path. Draw your own walls on the map and watch BFS work step by step.","image":["https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"BFS, graph, shortest path, algorithm, queue","articleSection":"Coding & Algorithms","wordCount":204,"mainEntityOfPage":"https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"BFS: The Shortest-Path Algorithm (Interactive Demo)","item":"https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between BFS and DFS?","acceptedAnswer":{"@type":"Answer","text":"BFS explores layer by layer using a queue, DFS dives as deep as it can using a stack or recursion."}},{"@type":"Question","name":"Can BFS be used for a real road map?","acceptedAnswer":{"@type":"Answer","text":"For distances with different weights, Dijkstra or A* is used. BFS fits when every step costs the same."}},{"@type":"Question","name":"What is a graph?","acceptedAnswer":{"@type":"Answer","text":"A set of points (nodes) joined by lines (edges). Maps, friendship networks and computer networks are examples."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/bfs-pencarian-jalur-terpendek-di-peta/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#see-bfs-at-work">See BFS at work</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#python-code">Python code</a></li><li><a href="#bfs-and-other-algorithms">BFS and other algorithms</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>BFS: The Shortest-Path Algorithm (Interactive Demo)</h1>
+<p class="lead">How does a map app, a game or a robot find its way out of a maze? One of the most basic ways is BFS. It explores like ripples in water: every square 1 step away first, then 2 steps, and so on.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>BFS puts the start in a queue, takes the front square, adds its unvisited neighbours and repeats until it reaches the goal.</li><li>Because it spreads evenly like a ripple, the first time it reaches the goal the path is the shortest (on a map without weights).</li><li>The queue is the key: what goes in first is explored first.</li><li>For maps with different step costs, use Dijkstra or A*; DFS dives deep using a stack or recursion.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="see-bfs-at-work">See BFS at work</h2>
+<div data-w="bfs"><script type="application/json">{"title":"A maze and BFS","desc":"Press \"Step\" to watch the exploration spread. Tap a square to add or remove a wall, then try again."}</script></div>
+<p>Notice that BFS spreads evenly in every direction, like a ripple. So the first time it reaches the goal, the path it finds is certainly the <b>shortest</b> (on a map without weights).</p>
+<h2 id="how-it-works">How it works</h2>
+<figure class="diagram"><svg viewBox="0 0 728 120" role="img" aria-label="Steps of BFS" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Start</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">put the starting point</tspan><tspan x="85" dy="14">in the queue</tspan></text><line x1="164" y1="60" x2="192" y2="60" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Take from the</tspan><tspan x="271" dy="16">queue</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">visit the front square</tspan></text><line x1="350" y1="60" x2="378" y2="60" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Add neighbours</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">the ones not yet</tspan><tspan x="457" dy="14">visited</tspan></text><line x1="536" y1="60" x2="564" y2="60" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Repeat</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">until the goal is</tspan><tspan x="643" dy="14">found</tspan></text></svg><figcaption><b>Figure 1.</b> The key to BFS is the queue. What goes in first is explored first.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Start: put the starting point in the queue</li><li>Take from the queue: visit the front square</li><li>Add neighbours: the ones not yet visited</li><li>Repeat: until the goal is found</li></ol></details></figure>
+<h2 id="python-code">Python code</h2>
+<figure class="codebox"><pre><code>from collections import deque
+
+def bfs(grid, start, goal):
+    q = deque([start])
+    came_from = {start: None}
+    while q:
+        r, c = q.popleft()
+        if (r, c) == goal:
+            break
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            nr, nc = r + dr, c + dc
+            if (0 &lt;= nr &lt; len(grid) and 0 &lt;= nc &lt; len(grid[0])
+                    and grid[nr][nc] == 0 and (nr, nc) not in came_from):
+                came_from[(nr, nc)] = (r, c)
+                q.append((nr, nc))
+    # build the path from the goal back to the start
+    path, cur = [], goal if goal in came_from else None
+    while cur:
+        path.append(cur)
+        cur = came_from[cur]
+    return path[::-1]</code></pre></figure>
+<h2 id="bfs-and-other-algorithms">BFS and other algorithms</h2>
+<div data-w="compare"><script type="application/json">{"title":"When to use which?","tabs":[{"label":"BFS","html":"The shortest path on an unweighted graph, exploring level by level. Uses a queue."},{"label":"DFS","html":"Dives as deep as possible first. Good for checking connectivity and finding all possibilities. Uses a stack or recursion."},{"label":"Dijkstra / A*","html":"For graphs with weights (distance, cost). A* uses an estimate of the direction of the goal to be faster, and is used in games and navigation."}]}</script></div>
+<div class="callout info" role="note"><b>In practice</b><p>Modern map apps use algorithms far more advanced than BFS, but the principle of exploring a graph is still the foundation.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"The data structure BFS uses?","options":["Stack","Queue","Hash table only"],"answer":1,"why":"A queue keeps the layer-by-layer order of exploration."},{"q":"Why does BFS find the shortest path on an unweighted map?","options":["Because it explores from the nearest distance first","Because it is random","Because it uses recursion"],"answer":0,"why":"Squares are found in order of the number of steps."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>What is the difference between BFS and DFS?</summary><div>BFS explores layer by layer using a queue, DFS dives as deep as it can using a stack or recursion.</div></details>
+<details class="faq"><summary>Can BFS be used for a real road map?</summary><div>For distances with different weights, Dijkstra or A* is used. BFS fits when every step costs the same.</div></details>
+<details class="faq"><summary>What is a graph?</summary><div>A set of points (nodes) joined by lines (edges). Maps, friendship networks and computer networks are examples.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/big-o-notation-for-beginners/"><img src="/en/articles/big-o-notation-for-beginners/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Big O Notation for Beginners: Measuring Algorithm Speed</span></a><a href="/en/articles/stack-and-queue-data-structures-explained/"><img src="/en/articles/stack-and-queue-data-structures-explained/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Stack and Queue: Piles and Lines in Programming</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regex for Beginners: Finding Text Patterns (Live Tester)</title>
+<meta name="description" content="Regex is a pattern language for finding and validating text. Learn the basic symbols with an interactive tester and examples such as dates and email.">
+<meta name="keywords" content="regex, regular expression, validation, text, JavaScript">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/">
+<meta property="og:title" content="Regex for Beginners: Finding Text Patterns (Live Tester)">
+<meta property="og:description" content="Regex is a pattern language for finding and validating text. Learn the basic symbols with an interactive tester and examples such as dates and email.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Regex for Beginners: Finding Text Patterns (Live Tester)">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Regex for Beginners: Finding Text Patterns (Live Tester)">
+<meta name="twitter:description" content="Regex is a pattern language for finding and validating text. Learn the basic symbols with an interactive tester and examples such as dates and email.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Regex for Beginners: Finding Text Patterns (Live Tester)","description":"Regex is a pattern language for finding and validating text. Learn the basic symbols with an interactive tester and examples such as dates and email.","image":["https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"regex, regular expression, validation, text, JavaScript","articleSection":"Coding & Algorithms","wordCount":200,"mainEntityOfPage":"https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Regex for Beginners: Finding Text Patterns (Live Tester)","item":"https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is regex the same in every language?","acceptedAnswer":{"@type":"Answer","text":"The basics are similar. There are small differences between languages and libraries in advanced features."}},{"@type":"Question","name":"When should I not use regex?","acceptedAnswer":{"@type":"Answer","text":"For parsing nested formats such as HTML or JSON, use a parser library, not regex."}},{"@type":"Question","name":"How do I memorise the symbols?","acceptedAnswer":{"@type":"Answer","text":"You do not need to. Keep a short list and practise on real tasks."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#try-it-live">Try it live</a></li><li><a href="#basic-symbols">Basic symbols</a></li><li><a href="#useful-examples">Useful examples</a></li><li><a href="#tips-to-avoid-frustration">Tips to avoid frustration</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Regex for Beginners: Finding Text Patterns (Live Tester)</h1>
+<p class="lead">Regex looks like a strange cipher, but it is only a set of symbols with fixed meanings. With just ten symbols you can already solve many tasks: finding numbers, checking a format or cleaning text.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>Core symbols: \d (digit), \w (word character), \s (whitespace), . (any character), + (one or more), * (zero or more), ? (optional), {n} (exactly n times).</li><li>Build the pattern bit by bit and test each addition in a tester so you see the result straight away.</li><li>A simple pattern is fine for a first check on email; real validation means sending a confirmation email.</li><li>Do not use regex to parse nested formats like HTML or JSON; use a parser library.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="try-it-live">Try it live</h2>
+<div data-w="regex"><script type="application/json">{"title":"Regex tester","desc":"Change the pattern and see the matching parts of the text highlighted in yellow.","pattern":"\\d{4}-\\d{2}-\\d{2}","flags":"g","text":"Meeting 2026-10-23 and deadline 2026-11-05. Ticket number: A-123."}</script></div>
+<h2 id="basic-symbols">Basic symbols</h2>
+<div class="table-wrap"><table><caption class="sr-only">Table 1: Basic symbols</caption><thead><tr><th scope="col">Symbol</th><th scope="col">Meaning</th><th scope="col">Example</th></tr></thead><tbody><tr><td>\d</td><td>One digit (0-9)</td><td>\d\d = two digits</td></tr><tr><td>\w</td><td>A letter, digit or underscore</td><td>\w+ = one word</td></tr><tr><td>\s</td><td>A space or tab</td><td>a\sb</td></tr><tr><td>.</td><td>Any character</td><td>a.c matches "abc"</td></tr><tr><td>+</td><td>One or more</td><td>\d+ = one or more digits</td></tr><tr><td>*</td><td>Zero or more</td><td>ab*</td></tr><tr><td>?</td><td>Zero or one (optional)</td><td>https?</td></tr><tr><td>{n}</td><td>Exactly n times</td><td>\d{4}</td></tr><tr><td>[abc]</td><td>One of the characters inside</td><td>[aeiou]</td></tr><tr><td>^ and $</td><td>Start and end of the text</td><td>^Hello</td></tr><tr><td>( )</td><td>Grouping</td><td>(ab)+</td></tr></tbody></table></div>
+<h2 id="useful-examples">Useful examples</h2>
+<div data-w="cards"><script type="application/json">{"title":"Tap a card to see the pattern","items":[{"tag":"Task","front":"Find dates in the format 2026-10-23.","backTag":"Pattern","back":"\\d{4}-\\d{2}-\\d{2}"},{"tag":"Task","front":"Find words that start with a capital letter.","backTag":"Pattern","back":"\\b[A-Z]\\w*"},{"tag":"Task","front":"Find a simple email address.","backTag":"Pattern","back":"[\\w.+-]+@[\\w-]+\\.[\\w.-]+"},{"tag":"Task","front":"Indonesian mobile numbers that start with 08.","backTag":"Pattern","back":"08\\d{8,11}"}]}</script></div>
+<div class="callout info" role="note"><b>Note</b><p>A regex that validates email completely is very complicated. A simple pattern is enough for a first check. The real validation is sending a confirmation email.</p></div>
+<h2 id="tips-to-avoid-frustration">Tips to avoid frustration</h2>
+<ul><li>Build the pattern bit by bit and test each addition.</li><li>Use a tester (like the one above) so you see the result straight away.</li><li>A pattern that is too complicated is better split up or replaced with ordinary code.</li><li>Beware of patterns that can make matching very slow on long text.</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"The pattern for two digits in a row?","options":["\\d{2}","\\w{2}",".{2}"],"answer":0,"why":"\\d means a digit, {2} means twice."},{"q":"The ? sign in a pattern means...","options":["Optional (zero or one)","One or more","Start of the text"],"answer":0,"why":"The question mark makes the preceding part optional."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Is regex the same in every language?</summary><div>The basics are similar. There are small differences between languages and libraries in advanced features.</div></details>
+<details class="faq"><summary>When should I not use regex?</summary><div>For parsing nested formats such as HTML or JSON, use a parser library, not regex.</div></details>
+<details class="faq"><summary>How do I memorise the symbols?</summary><div>You do not need to. Keep a short list and practise on real tasks.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/html-css-javascript-what-each-does/"><img src="/en/articles/html-css-javascript-what-each-does/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>HTML, CSS and JavaScript: What Each One Does</span></a><a href="/en/articles/what-is-an-api/"><img src="/en/articles/what-is-an-api/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>What Is an API? A Simple Restaurant Analogy</span></a><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker for Beginners: What a Container Is and Why Use One</title>
+<meta name="description" content="Docker packs an app together with its environment so it runs the same anywhere. Understand images, containers and the Dockerfile with a simple analogy.">
+<meta name="keywords" content="Docker, container, Dockerfile, deployment, DevOps">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/">
+<meta property="og:title" content="Docker for Beginners: What a Container Is and Why Use One">
+<meta property="og:description" content="Docker packs an app together with its environment so it runs the same anywhere. Understand images, containers and the Dockerfile with a simple analogy.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Docker for Beginners: What a Container Is and Why Use One">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Docker for Beginners: What a Container Is and Why Use One">
+<meta name="twitter:description" content="Docker packs an app together with its environment so it runs the same anywhere. Understand images, containers and the Dockerfile with a simple analogy.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Docker for Beginners: What a Container Is and Why Use One","description":"Docker packs an app together with its environment so it runs the same anywhere. Understand images, containers and the Dockerfile with a simple analogy.","image":["https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"Docker, container, Dockerfile, deployment, DevOps","articleSection":"Coding & Algorithms","wordCount":249,"mainEntityOfPage":"https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Docker for Beginners: What a Container Is and Why Use One","item":"https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Docker the same as a virtual machine?","acceptedAnswer":{"@type":"Answer","text":"The purpose is similar (isolation), the way it works is different. Containers are lighter because they share the operating system kernel."}},{"@type":"Question","name":"Do beginners need to learn Docker?","acceptedAnswer":{"@type":"Answer","text":"Not at the very start. It becomes useful once you build an app that has to run elsewhere or you work in a team."}},{"@type":"Question","name":"What is Docker Compose?","acceptedAnswer":{"@type":"Answer","text":"A tool for defining and running several containers at once, for example an app and a database, through one configuration file."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/docker-untuk-pemula-container-dijelaskan/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#the-shipping-container-analogy">The shipping container analogy</a></li><li><a href="#three-main-terms">Three main terms</a></li><li><a href="#a-simple-dockerfile-example">A simple Dockerfile example</a></li><li><a href="#when-is-docker-useful">When is Docker useful?</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Docker for Beginners: What a Container Is and Why Use One</h1>
+<p class="lead">"It works on my machine." The sentence developers say most often, and the cause of many headaches. Docker solves it by wrapping the app together with everything it needs into one package that runs the same wherever it goes.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>An image is an unchanging blueprint, a container is a running instance of an image, and a Dockerfile is the recipe that builds an image.</li><li>Containers are lighter than virtual machines because they share the host operating system's kernel.</li><li>Docker helps with a shared team environment, running a database without manual installs, predictable deploys and isolating apps.</li><li>Never put secret keys in an image or Dockerfile; pass them through environment variables or a secrets manager at run time.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="the-shipping-container-analogy">The shipping container analogy</h2>
+<p>Modern ports use standard containers: whatever is inside, the container can be carried by ship, truck or train without unpacking. Docker does the same for software. The app, its libraries and its configuration are packed up, and can then run on a laptop, a server or the cloud with the same behaviour.</p>
+<figure class="diagram"><svg viewBox="0 0 560 240" role="img" aria-label="Containers compared with virtual machines" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Your app + libraries (inside a container)</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Isolated, light, quick to start</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Docker Engine</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Runs and manages containers</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Host operating system</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Containers share the host's kernel</text><rect x="62" y="176" width="436" height="48" rx="10" fill="#ebe2fd" stroke="#7a3fb4" stroke-width="2"/><text x="280" y="197" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Hardware</text><text x="280" y="215" text-anchor="middle" font-size="12" fill="#4a5568">A laptop or a server</text></svg><figcaption><b>Figure 1.</b> Unlike a virtual machine, which carries a full operating system, containers share the kernel and so are lighter.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Your app + libraries (inside a container): Isolated, light, quick to start</li><li>Docker Engine: Runs and manages containers</li><li>Host operating system: Containers share the host's kernel</li><li>Hardware: A laptop or a server</li></ol></details></figure>
+<h2 id="three-main-terms">Three main terms</h2>
+<div data-w="cards"><script type="application/json">{"title":"Tap a card for the meaning","items":[{"tag":"Term","front":"Image","backTag":"Meaning","back":"A blueprint holding the app and its environment. It does not change."},{"tag":"Term","front":"Container","backTag":"Meaning","back":"A running instance of an image."},{"tag":"Term","front":"Dockerfile","backTag":"Meaning","back":"A recipe file for building an image."},{"tag":"Term","front":"Registry (Docker Hub)","backTag":"Meaning","back":"A place to store and share images."}]}</script></div>
+<h2 id="a-simple-dockerfile-example">A simple Dockerfile example</h2>
+<figure class="codebox"><pre><code>FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD [&quot;python&quot;, &quot;app.py&quot;]</code></pre></figure>
+<figure class="codebox"><pre><code># build the image and run it
+docker build -t my-app .
+docker run -p 8000:8000 my-app</code></pre></figure>
+<h2 id="when-is-docker-useful">When is Docker useful?</h2>
+<ul><li>The same development environment for the whole team.</li><li>Running a database or supporting service without installing it by hand.</li><li>Deploying to a server or the cloud with predictable behaviour.</li><li>Isolating several apps on one machine.</li></ul>
+<div class="callout warn" role="note"><b>Security</b><p>Never put secret keys inside an image or a Dockerfile. Pass them through environment variables or a secrets manager when the container is run.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"Image and container: which one is running?","options":["Image","Container","Dockerfile"],"answer":1,"why":"A container is a running instance of an image."},{"q":"Which problem does Docker help with most?","options":["\"It works on my machine\" but fails elsewhere","Writing code faster","Reducing the size of a database"],"answer":0,"why":"Docker makes environments the same."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Is Docker the same as a virtual machine?</summary><div>The purpose is similar (isolation), the way it works is different. Containers are lighter because they share the operating system kernel.</div></details>
+<details class="faq"><summary>Do beginners need to learn Docker?</summary><div>Not at the very start. It becomes useful once you build an app that has to run elsewhere or you work in a team.</div></details>
+<details class="faq"><summary>What is Docker Compose?</summary><div>A tool for defining and running several containers at once, for example an app and a database, through one configuration file.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/what-is-an-api/"><img src="/en/articles/what-is-an-api/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>What Is an API? A Simple Restaurant Analogy</span></a><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/binary-search-explained-visually/"><img src="/en/articles/binary-search-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Explained Visually: Search by Halving</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

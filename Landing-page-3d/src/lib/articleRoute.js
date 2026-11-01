@@ -1,8 +1,11 @@
-// The list of articles lives at a real address, /artikel/, so search engines can index it.
-// Each article itself is a static page (public/artikel/<slug>/index.html) that the host serves directly.
-export const isArticleList = pathname => pathname.split('/').filter(Boolean)[0] === 'artikel';
+// The list of articles lives at a real address (/artikel/ in Indonesian, /en/articles/ in English), so search engines can index it.
+// Each article itself is a static page (public/artikel/<slug>/index.html, public/en/articles/<slug>/index.html) served directly by the host.
+export const isArticleList = pathname => {
+    const parts = pathname.split('/').filter(Boolean);
+    return parts[0] === 'artikel' || (parts[0] === 'en' && parts[1] === 'articles');
+};
 
-export const formatDate = iso =>
-    new Date(`${iso}T00:00:00`).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+export const formatDate = (iso, locale = 'id-ID') =>
+    new Date(`${iso}T00:00:00`).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
 
 export const categorySlug = c => c.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

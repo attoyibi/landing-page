@@ -2,12 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 import { PERSONAL_INFO, SKILLS_LIST } from '../../constants';
+import { useI18n } from '../../i18n';
 
 // Tilt (deg) and tint per chip: the keywords "drop" in and settle in a loose pile.
 const TILTS = [-6, 4, -3, 7, -5, 3, -7, 5, -4, 6, -2, 4, -6, 3, -5, 7];
 const TINTS = ['', '', 'chip-lavender', '', '', 'chip-lime', '', '', 'chip-lavender', '', '', '', 'chip-lime', '', '', ''];
 
 const Hero = () => {
+    const { t, tx } = useI18n();
     return (
         <section id="top" className="section dot-grid bg-surface-000 overflow-hidden">
             <div className="container-page text-center">
@@ -17,7 +19,7 @@ const Hero = () => {
                     transition={{ duration: 0.4 }}
                     className="chip border border-line bg-surface-000 mb-6"
                 >
-                    {PERSONAL_INFO.role}
+                    {tx(PERSONAL_INFO.role)}
                 </motion.p>
 
                 <motion.h1
@@ -26,7 +28,7 @@ const Hero = () => {
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="display text-ink max-w-[44rem] mx-auto mb-6"
                 >
-                    Hi, I'm <span className="text-brand-600">{PERSONAL_INFO.name}</span>
+                    {t('hero.greeting')} <span className="text-brand-600">{PERSONAL_INFO.name}</span>
                 </motion.h1>
 
                 <motion.p
@@ -35,7 +37,7 @@ const Hero = () => {
                     transition={{ delay: 0.25, duration: 0.6 }}
                     className="body-lg text-ink-muted max-w-[34rem] mx-auto mb-8"
                 >
-                    {PERSONAL_INFO.tagline}
+                    {tx(PERSONAL_INFO.tagline)}
                 </motion.p>
 
                 <motion.div
@@ -44,12 +46,12 @@ const Hero = () => {
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="flex flex-wrap justify-center gap-4"
                 >
-                    <a href="#projects" className="btn btn-secondary">View work</a>
-                    <a href="#contact" className="btn btn-primary">Let's collaborate</a>
+                    <a href="#projects" className="btn btn-secondary">{t('hero.viewWork')}</a>
+                    <a href="#contact" className="btn btn-primary">{t('hero.collaborate')}</a>
                 </motion.div>
 
                 <ul
-                    aria-label="Skills"
+                    aria-label={t('hero.skills')}
                     className="list-none m-0 mt-12 md:mt-16 p-0 mx-auto max-w-[56rem] flex flex-wrap justify-center gap-x-3 gap-y-4"
                 >
                     {SKILLS_LIST.map((skill, i) => (

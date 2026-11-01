@@ -3,13 +3,10 @@ import { motion } from 'framer-motion';
 import { BookOpen, Code, Brain } from 'lucide-react';
 
 import { PERSONAL_INFO, ABOUT_CONTENT } from '../../constants';
+import { useI18n, Emph } from '../../i18n';
 
 // Outline icons only, one color (design system)
-const ICONS = {
-    BookOpen: BookOpen,
-    Code: Code,
-    Brain: Brain,
-};
+const ICONS = { BookOpen, Code, Brain };
 
 const Card = ({ title, description, icon, index }) => {
     const Icon = ICONS[icon] ?? BookOpen;
@@ -32,6 +29,7 @@ const Card = ({ title, description, icon, index }) => {
 };
 
 const About = () => {
+    const { t, tx } = useI18n();
     return (
         <section id="about" className="section bg-surface-100">
             <div className="container-page">
@@ -41,16 +39,14 @@ const About = () => {
                     viewport={{ once: true }}
                     className="mb-8 max-w-[44rem]"
                 >
-                    <p className="overline text-brand-600 mb-2">About</p>
-                    <h2 className="h1 text-ink mb-4">
-                        About <span className="text-brand-600">me</span>
-                    </h2>
-                    <p className="body-lg text-ink-muted">{PERSONAL_INFO.summary}</p>
+                    <p className="overline text-brand-600 mb-2">{t('about.eyebrow')}</p>
+                    <h2 className="h1 text-ink mb-4"><Emph text={t('about.title')} /></h2>
+                    <p className="body-lg text-ink-muted">{tx(PERSONAL_INFO.summary)}</p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {ABOUT_CONTENT.map((feature, index) => (
-                        <Card key={feature.title} {...feature} index={index} />
+                        <Card key={feature.icon} title={tx(feature.title)} description={tx(feature.description)} icon={feature.icon} index={index} />
                     ))}
                 </div>
             </div>

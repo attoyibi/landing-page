@@ -19,6 +19,12 @@ export default [
             { callout: 'AI bisa menjadi tutor yang sabar jika dipakai benar: minta petunjuk, bukan jawaban penuh, lalu jelaskan kode itu dengan kata Anda sendiri. Bila tidak bisa menjelaskan, Anda belum benar-benar paham.', kind: 'good', title: 'Memakai AI untuk belajar' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Cara belajar yang paling efektif?', options: ['Menonton banyak video', 'Mengetik dan memodifikasi kode sendiri', 'Menghafal sintaks'], answer: 1, why: 'Berlatih aktif membuat konsep melekat.' }, { q: 'Apa langkah pertama saat muncul error?', options: ['Menyerah', 'Membaca pesan errornya', 'Menghapus semua kode'], answer: 1, why: 'Pesan error biasanya menunjuk penyebabnya.' }] },
         ],
+        takeaways: [
+            'Jalur delapan minggu: dasar, percabangan dan perulangan, fungsi, kumpulan data, file dan error, modul, proyek kecil, lalu merapikan dan membagikan.',
+            'Ketik semua kode sendiri, buat versi Anda dari tiap konsep, dan berlatih setiap hari, meski hanya 30 menit.',
+            'Baca pesan error: biasanya menunjuk baris dan jenis masalahnya.',
+            'Pakai AI sebagai tutor yang sabar dengan meminta petunjuk, bukan jawaban penuh, lalu jelaskan kodenya dengan kata Anda sendiri.',
+        ],
         faq: [['Apakah perlu matematika untuk belajar Python?', 'Dasar-dasar cukup. Matematika lebih dibutuhkan pada bidang tertentu seperti data science dan machine learning.'], ['Berapa lama sampai bisa bekerja sebagai programmer?', 'Sangat bervariasi. Konsistensi, proyek nyata, dan portofolio lebih menentukan daripada lamanya kursus.'], ['Python atau JavaScript dulu?', 'Python cocok untuk mempelajari logika, data, dan otomasi. JavaScript cocok bila tujuan Anda membuat situs web. Pilih sesuai tujuan.']],
     },
 
@@ -39,6 +45,12 @@ export default [
             { callout: 'Jangan pernah meng-commit kunci rahasia, kata sandi, atau file .env. Bila terlanjur, anggap rahasianya bocor, ganti, dan hapus dari riwayat. Gunakan file .gitignore untuk mengecualikan file sensitif.', kind: 'bad', title: 'Peringatan penting' },
             { w: 'checklist', title: 'Kebiasaan commit yang baik', items: ['Commit kecil dan fokus pada satu hal.', 'Pesan commit menjelaskan apa dan mengapa.', 'Menjalankan tes sebelum commit.', 'Bekerja di branch terpisah untuk fitur baru.', 'Tidak meng-commit file rahasia atau hasil build.', 'Menarik perubahan terbaru sebelum mulai bekerja.'] },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Perintah untuk menyimpan perubahan yang sudah disiapkan?', options: ['git push', 'git commit', 'git status'], answer: 1, why: 'Commit menyimpan titik riwayat; push mengirim ke remote.' }, { q: 'Fungsi branch?', options: ['Mengerjakan sesuatu terpisah dari versi utama', 'Menghapus riwayat', 'Menyembunyikan file'], answer: 0, why: 'Cabang memungkinkan eksperimen aman.' }] },
+        ],
+        takeaways: [
+            'Git berjalan di komputer Anda dan mencatat riwayat perubahan; GitHub adalah layanan web untuk menyimpan dan membagikan repositori Git.',
+            'Konsep inti: repository, commit (titik simpan), branch (cabang kerja terpisah), merge, dan pull request.',
+            'Alur harian: ubah file, git add, git commit, git push; ulangi dalam potongan kecil dan sering.',
+            'Jangan pernah meng-commit kunci rahasia, kata sandi, atau file .env; pakai .gitignore untuk mengecualikan file sensitif.',
         ],
         faq: [['Apakah saya perlu GitHub untuk memakai Git?', 'Tidak. Git berjalan di komputer sendiri. GitHub berguna untuk cadangan, berbagi, dan kerja tim.'], ['Bagaimana membatalkan commit terakhir?', 'Ada beberapa cara tergantung situasi (revert atau reset). Pelajari perbedaannya sebelum memakai perintah yang menghapus riwayat.'], ['Apa itu conflict?', 'Terjadi ketika dua perubahan menyentuh bagian yang sama dan Git tidak bisa memutuskan. Anda memilih hasil akhirnya secara manual.']],
     },
@@ -61,6 +73,12 @@ export default [
             { callout: 'API key dan token adalah rahasia. Simpan di variabel lingkungan atau layanan penyimpanan rahasia, bukan di dalam kode yang diunggah ke GitHub.', kind: 'warn', title: 'Keamanan' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Status code 404 artinya...', options: ['Berhasil', 'Data tidak ditemukan', 'Server rusak'], answer: 1, why: '404 = Not Found.' }, { q: 'Format data yang paling umum pada API web?', options: ['JSON', 'PDF', 'MP3'], answer: 0, why: 'JSON ringan dan mudah diproses.' }] },
         ],
+        takeaways: [
+            'API adalah pintu terkontrol: Anda mengirim request dan menerima response tanpa melihat isi sistem lain.',
+            'Pada web, request dikirim ke sebuah URL dan data biasanya kembali dalam format JSON.',
+            'Status code menunjukkan hasilnya: 200 berhasil, 404 tidak ditemukan, 500 kesalahan di server.',
+            'Rahasiakan API key; jangan taruh di kode yang diunggah ke GitHub.',
+        ],
         faq: [['Apa bedanya API dan database?', 'Database menyimpan data. API adalah pintu terkontrol untuk meminta atau mengubah data itu.'], ['Apa itu REST?', 'Gaya perancangan API web yang memakai URL sebagai sumber daya dan metode HTTP (GET, POST, dll.) sebagai tindakan.'], ['Apakah semua API gratis?', 'Banyak yang gratis dengan batas pemakaian, banyak yang berbayar. Periksa syarat dan batasnya.']],
     },
 
@@ -81,6 +99,12 @@ export default [
             { w: 'checklist', title: 'Proyek pertama: halaman profil', items: ['Membuat struktur dengan HTML semantik (header, main, footer).', 'Menata dengan CSS agar tampil baik di ponsel.', 'Menambah satu interaksi dengan JavaScript.', 'Memeriksa kontras warna dan keterbacaan.', 'Mengunggahnya ke layanan hosting statis.'] },
             { callout: 'HTML semantik (memakai elemen seperti header, nav, article) membuat halaman lebih mudah dipahami oleh mesin pencari dan pembaca layar. Itu bagian dari SEO dan aksesibilitas.', kind: 'info', title: 'Tips' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Bahasa yang mengatur warna dan tata letak?', options: ['HTML', 'CSS', 'JavaScript'], answer: 1, why: 'CSS mengatur tampilan.' }, { q: 'Bahasa yang membuat tombol bisa merespons klik?', options: ['JavaScript', 'HTML saja', 'CSS saja'], answer: 0, why: 'JavaScript menambahkan perilaku.' }] },
+        ],
+        takeaways: [
+            'HTML adalah struktur dan isi, CSS adalah tampilan dan tata letak, JavaScript adalah perilaku.',
+            'Tanpa CSS isi tetap terbaca tetapi polos; tanpa JavaScript halaman tampil tetapi tidak interaktif; tanpa HTML tidak ada halaman.',
+            'Belajar berurutan: HTML, lalu CSS, lalu JavaScript dasar, lalu Git dan deploy, lalu framework.',
+            'HTML semantik (header, nav, article) membantu mesin pencari dan pembaca layar, bagian dari SEO dan aksesibilitas.',
         ],
         faq: [['Apakah HTML termasuk bahasa pemrograman?', 'Bukan. HTML adalah bahasa markup untuk menandai struktur isi. JavaScript adalah bahasa pemrograman.'], ['Apakah perlu framework?', 'Tidak di awal. Kuasai dasar lebih dulu agar memahami apa yang dilakukan framework.'], ['Bagaimana membuat web responsif?', 'Gunakan tata letak fleksibel (flexbox, grid), satuan relatif, dan media query untuk menyesuaikan layar.']],
     },
@@ -103,6 +127,12 @@ export default [
             { callout: 'Perintah UPDATE dan DELETE tanpa WHERE mengubah atau menghapus seluruh baris. Selalu uji dengan SELECT lebih dulu pada kondisi yang sama.', kind: 'bad', title: 'Hati-hati' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Kata kunci untuk menyaring baris?', options: ['ORDER BY', 'WHERE', 'FROM'], answer: 1, why: 'WHERE menyaring baris.' }, { q: 'Mengurutkan dari nilai tertinggi ke terendah?', options: ['ORDER BY nilai ASC', 'ORDER BY nilai DESC', 'WHERE nilai DESC'], answer: 1, why: 'DESC berarti menurun.' }] },
         ],
+        takeaways: [
+            'Database relasional menyimpan data dalam tabel: tiap baris adalah satu catatan dan tiap kolom adalah satu atribut.',
+            'Empat kata kunci mencakup dasarnya: SELECT (memilih kolom), FROM (tabel), WHERE (menyaring baris), ORDER BY (mengurutkan).',
+            'Langkah berikutnya: COUNT, SUM, AVG; GROUP BY; JOIN; serta INSERT, UPDATE, dan DELETE.',
+            'UPDATE dan DELETE tanpa WHERE mengubah atau menghapus semua baris, jadi uji dulu dengan SELECT pada kondisi yang sama.',
+        ],
         faq: [['SQL atau NoSQL?', 'SQL (relasional) cocok untuk data terstruktur dengan relasi. NoSQL cocok untuk data fleksibel atau skala tertentu. Banyak aplikasi memakai SQL, dan PostgreSQL termasuk yang paling populer di kalangan developer.'], ['Apakah SQL sama di semua database?', 'Dasarnya sama. Ada perbedaan dialek pada fitur lanjutan antar database seperti MySQL, PostgreSQL, dan SQLite.'], ['Bagaimana cara berlatih tanpa database?', 'Gunakan SQLite atau layanan latihan SQL di browser, atau demo seperti di artikel ini.']],
     },
 
@@ -123,6 +153,12 @@ export default [
             { h2: 'Tips agar tidak frustrasi' },
             { ul: ['Bangun pola sedikit demi sedikit dan uji setiap tambahan.', 'Gunakan penguji (seperti di atas) agar hasilnya langsung terlihat.', 'Pola yang terlalu rumit lebih baik dipecah atau diganti kode biasa.', 'Hati-hati dengan pola yang bisa membuat pencocokan sangat lambat pada teks panjang.'] },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Pola untuk dua angka berturut-turut?', options: ['\\d{2}', '\\w{2}', '.{2}'], answer: 0, why: '\\d berarti angka, {2} berarti dua kali.' }, { q: 'Tanda ? pada pola berarti...', options: ['Opsional (nol atau satu)', 'Satu atau lebih', 'Awal teks'], answer: 0, why: 'Tanda tanya menjadikan bagian sebelumnya opsional.' }] },
+        ],
+        takeaways: [
+            'Simbol inti: \d (angka), \w (huruf, angka, garis bawah), \s (spasi), . (karakter apa pun), + (satu atau lebih), * (nol atau lebih), ? (opsional), {n} (tepat n kali).',
+            'Bangun pola sedikit demi sedikit dan uji setiap tambahan di penguji agar hasilnya langsung terlihat.',
+            'Pola sederhana cukup untuk pemeriksaan awal email; validasi sebenarnya adalah mengirim email konfirmasi.',
+            'Jangan memakai regex untuk mengurai format bersarang seperti HTML atau JSON; pakai pustaka parser.',
         ],
         faq: [['Apakah regex sama di semua bahasa?', 'Dasarnya mirip. Ada perbedaan kecil antar bahasa dan pustaka pada fitur lanjutan.'], ['Kapan sebaiknya tidak memakai regex?', 'Untuk mengurai format bersarang seperti HTML atau JSON, gunakan pustaka parser, bukan regex.'], ['Bagaimana cara menghafal simbolnya?', 'Tidak perlu. Simpan daftar ringkas, dan latih pada tugas nyata.']],
     },

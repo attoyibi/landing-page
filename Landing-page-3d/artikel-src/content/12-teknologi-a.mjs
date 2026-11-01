@@ -21,6 +21,12 @@ export default [
             { w: 'checklist', title: 'Mulai dalam satu sore', items: ['Pilih password manager yang bereputasi baik (ada yang bawaan browser atau sistem).', 'Buat satu kata sandi utama yang panjang dan unik, dan jangan dipakai di tempat lain.', 'Aktifkan verifikasi dua langkah pada akun password manager.', 'Ganti sandi akun terpenting dulu: email, perbankan, media sosial.', 'Simpan kode pemulihan di tempat aman, di luar perangkat.', 'Ganti sandi lama yang dipakai berulang secara bertahap.'] },
             { callout: 'Email adalah kunci utama: lewat fitur "lupa sandi", siapa pun yang menguasai email Anda bisa mengambil alih akun lain. Lindungi email Anda dengan sandi unik yang kuat dan verifikasi dua langkah.', kind: 'warn', title: 'Prioritas pertama' },
         ],
+        takeaways: [
+            'Panjang yang membuat kata sandi kuat: frasa panjang dari empat atau lima kata acak lebih baik daripada kata pendek penuh simbol.',
+            'Jangan pernah memakai ulang kata sandi: satu kebocoran membuka semua akun yang berbagi sandi itu (credential stuffing).',
+            'Password manager menyimpan sandi panjang yang unik di brankas terenkripsi dengan satu kata sandi utama, dan tidak akan mengisinya di situs palsu.',
+            'Lindungi email Anda lebih dulu, karena "lupa sandi" membuat pemilik email bisa mengambil alih akun lain, dan aktifkan verifikasi dua langkah.',
+        ],
         faq: [['Apakah password manager aman?', 'Bila dipakai dengan kata sandi utama yang kuat dan verifikasi dua langkah, risikonya jauh lebih kecil daripada memakai sandi lemah atau berulang. Pilih layanan yang bereputasi baik.'], ['Bagaimana jika saya lupa kata sandi utama?', 'Banyak layanan tidak bisa memulihkannya demi keamanan. Simpan kode pemulihan dengan aman.'], ['Perlukah mengganti sandi secara berkala?', 'Tidak perlu bila sandi kuat dan unik, kecuali ada tanda kebocoran. Ganti segera bila akun diduga disusupi.']],
     },
 
@@ -39,6 +45,12 @@ export default [
             { h2: 'Jika terlanjur klik atau memasukkan data' },
             { w: 'checklist', title: 'Langkah cepat', desc: 'Lakukan sesegera mungkin.', items: ['Putuskan koneksi atau tutup halaman, jangan masukkan data lagi.', 'Ganti kata sandi akun yang terdampak dari perangkat yang aman.', 'Aktifkan atau perbarui verifikasi dua langkah.', 'Hubungi bank atau penyedia layanan lewat nomor resmi bila data keuangan terlibat.', 'Periksa aktivitas mencurigakan di akun dan blokir kartu bila perlu.', 'Laporkan kepada penyedia layanan dan pihak berwenang yang relevan.', 'Beri tahu kontak Anda bila akun mereka bisa ikut dimanfaatkan.'] },
             { callout: 'Tidak ada organisasi resmi yang meminta kata sandi, PIN, atau OTP lewat pesan atau telepon. Bila ada yang meminta, itu penipuan.', kind: 'bad', title: 'Aturan emas' },
+        ],
+        takeaways: [
+            'Phishing menciptakan rasa mendesak atau tergiur, lalu mengarahkan Anda ke tautan palsu atau meminta rahasia.',
+            'Tidak ada organisasi resmi yang meminta kata sandi, PIN, atau OTP lewat pesan atau telepon.',
+            'Jangan klik: ketik sendiri alamat resmi atau buka lewat aplikasi resmi.',
+            'Bila terlanjur klik atau memasukkan data, ganti kata sandi, hubungi bank lewat nomor resmi, dan laporkan.',
         ],
         faq: [['Apa itu smishing dan vishing?', 'Smishing adalah phishing lewat SMS atau pesan, vishing lewat panggilan telepon. Polanya sama dengan phishing email.'], ['Bagaimana memastikan tautan aman?', 'Jangan klik. Ketik sendiri alamat resmi situs di browser, atau buka lewat aplikasi resminya.'], ['Apakah gembok HTTPS berarti situs aman?', 'Tidak. Gembok hanya menunjukkan koneksi terenkripsi. Situs penipuan pun bisa memakainya.']],
     },
@@ -60,6 +72,12 @@ export default [
             { callout: 'Jangan pernah membagikan kode verifikasi kepada siapa pun, termasuk yang mengaku petugas. Penipu sering meminta kode itu untuk masuk ke akun Anda.', kind: 'bad', title: 'Jangan bagikan kode' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Faktor kedua yang paling tahan phishing?', options: ['Passkey atau kunci keamanan', 'Kode lewat SMS', 'Pertanyaan keamanan'], answer: 0, why: 'Passkey dan kunci keamanan terikat ke situs asli.' }, { q: 'Anda menerima kode verifikasi yang tidak Anda minta. Artinya?', options: ['Aman diabaikan atau ada yang mencoba masuk ke akun Anda', 'Hadiah', 'Ganti operator'], answer: 0, why: 'Seseorang mungkin mencoba masuk. Ganti sandi akun itu.' }] },
         ],
+        takeaways: [
+            'Verifikasi dua langkah meminta sesuatu yang Anda tahu (kata sandi) dan sesuatu yang Anda miliki (ponsel, kunci, aplikasi).',
+            'Dari yang terlemah ke terkuat: kode SMS, aplikasi autentikator, passkey, dan kunci keamanan fisik; passkey dan kunci tahan phishing karena terikat ke situs asli.',
+            'Aktifkan lebih dulu di email utama, lalu perbankan, media sosial dan WhatsApp, awan dan akun Apple/Google, serta akun kerja.',
+            'Simpan kode pemulihan di tempat aman terpisah dari ponsel, dan jangan pernah membagikan kode verifikasi kepada siapa pun.',
+        ],
         faq: [['Apakah 2FA bisa dibobol?', 'Tidak ada yang mutlak, tetapi ia menghentikan sebagian besar serangan massal. Waspadai penipuan yang membuat Anda menyerahkan kode.'], ['Bagaimana bila ganti ponsel?', 'Pindahkan autentikator sesuai petunjuk aplikasinya sebelum menjual atau mereset ponsel lama, dan siapkan kode pemulihan.'], ['Apa itu passkey?', 'Pengganti kata sandi berbasis kriptografi yang disimpan di perangkat atau pengelola kata sandi, dibuka dengan biometrik atau PIN.']],
     },
 
@@ -79,6 +97,12 @@ export default [
             { callout: 'Sinkronisasi bukan cadangan. Bila file terhapus atau terenkripsi oleh virus di satu perangkat, sinkronisasi bisa ikut menghapusnya di semua perangkat. Cadangan sejati menyimpan versi lama.', kind: 'warn', title: 'Bedakan sinkronisasi dan cadangan' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Dalam aturan 3-2-1, angka 1 menunjukkan...', options: ['Satu salinan di lokasi berbeda', 'Satu hard disk saja', 'Satu kali backup seumur hidup'], answer: 0, why: 'Satu salinan disimpan di lokasi lain.' }, { q: 'Apakah sinkronisasi otomatis sama dengan cadangan?', options: ['Ya', 'Tidak, bisa ikut menghapus bila file terhapus', 'Hanya untuk foto'], answer: 1, why: 'Sinkronisasi menyalin perubahan, termasuk penghapusan.' }] },
         ],
+        takeaways: [
+            'Aturan 3-2-1: 3 salinan data, di 2 jenis penyimpanan berbeda, dengan 1 salinan di tempat lain.',
+            'Prinsipnya: satu kejadian buruk tidak boleh bisa menghapus semua salinan.',
+            'Aktifkan cadangan foto otomatis, siapkan disk eksternal untuk salinan berkala, dan uji memulihkan satu file untuk membuktikan cadangan berfungsi.',
+            'Sinkronisasi bukan cadangan: penghapusan atau virus bisa ikut tersinkron ke semua perangkat, sedangkan cadangan sejati menyimpan versi lama.',
+        ],
         faq: [['Apakah cukup memakai layanan awan saja?', 'Lebih baik daripada tanpa cadangan, tetapi sebaiknya tetap ada satu salinan lain di tempat berbeda. Akun awan juga bisa terkunci atau diretas.'], ['Berapa sering sebaiknya backup?', 'Foto dan dokumen aktif sebaiknya otomatis. Salinan ke disk eksternal sebulan sekali sudah baik bagi kebanyakan orang.'], ['Bagaimana mengamankan cadangan?', 'Enkripsi cadangan sensitif dan lindungi akun awan dengan sandi kuat serta verifikasi dua langkah.']],
     },
 
@@ -95,6 +119,12 @@ export default [
             { h2: 'Langkah perbaikan yang sering berhasil' },
             { w: 'checklist', title: 'Coba satu per satu', items: ['Mulai ulang modem dan router (cabut listrik semenit).', 'Letakkan router di tengah rumah, tinggi, dan terbuka.', 'Jauhkan dari microwave, speaker, dan dinding tebal.', 'Gunakan pita 5 GHz untuk perangkat yang dekat, 2,4 GHz untuk jarak jauh.', 'Ganti kata sandi Wi-Fi bila ada tetangga yang mungkin menumpang.', 'Perbarui firmware router.', 'Uji kecepatan dengan kabel ke router untuk membedakan masalah Wi-Fi dan paket.', 'Gunakan kabel LAN untuk perangkat yang tidak berpindah (TV, PC).'] },
             { callout: 'Kecepatan yang tertera pada paket adalah kecepatan maksimum dari penyedia ke rumah. Kecepatan di perangkat Anda dapat lebih rendah karena Wi-Fi, jarak, dan beban jaringan.', kind: 'info', title: 'Perlu diingat' },
+        ],
+        takeaways: [
+            'Tentukan dulu letak masalahnya: lambat di semua perangkat menunjuk modem, router, atau penyedia; lambat di satu perangkat menunjuk perangkat itu atau jaraknya.',
+            'Letakkan router di tengah rumah, tinggi, dan terbuka, jauh dari microwave, speaker, dan dinding tebal.',
+            'Pakai 5 GHz untuk perangkat dekat dan 2,4 GHz untuk jarak jauh, dan kabel LAN untuk perangkat yang tidak berpindah.',
+            'Uji kecepatan dengan kabel ke router untuk membedakan masalah Wi-Fi dan paket; kecepatan pada paket adalah batas maksimum.',
         ],
         faq: [['Apa bedanya 2,4 GHz dan 5 GHz?', '2,4 GHz menjangkau lebih jauh tetapi lebih lambat dan lebih padat gangguan. 5 GHz lebih cepat tetapi jangkauannya lebih pendek.'], ['Apakah penguat sinyal (repeater) membantu?', 'Bisa memperluas jangkauan, tetapi kadang menurunkan kecepatan. Sistem mesh biasanya lebih baik untuk rumah luas.'], ['Kapan perlu ganti router?', 'Bila sudah sangat tua, tidak mendukung standar Wi-Fi baru, atau sering mati dan tidak stabil setelah pengaturan ulang.']],
     },
