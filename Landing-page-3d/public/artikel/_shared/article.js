@@ -38,6 +38,44 @@
         return body;
     }
 
+    /* ---------- English pages ----------
+       Widgets build their interface text in Indonesian. On /en/articles/ pages i18n-en.js provides the English table and this
+       translates widget text (text nodes and aria-label / placeholder / title) as it appears, including after every redraw. */
+    const I18N = document.documentElement.lang === 'en' ? window.ARTIKEL_I18N : null;
+    const WORD = '(?<![\\p{L}\\p{N}])';
+    const WORD_END = '(?![\\p{L}\\p{N}])';
+    const PAIRS = I18N
+        ? [...I18N.pairs].sort((a, b) => b[0].length - a[0].length).map(([id, en]) => [new RegExp(WORD + id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + WORD_END, 'gu'), en])
+        : [];
+    const PATTERNS = I18N ? I18N.patterns.map(([src, rep]) => [new RegExp(src, 'g'), rep]) : [];
+    const T = s => {
+        if (!I18N || !s) return s;
+        let out = s;
+        for (const [re, en] of PATTERNS) out = out.replace(re, en);
+        for (const [re, en] of PAIRS) out = out.replace(re, () => en);
+        return out;
+    };
+    function translateTree(root) {
+        if (!I18N) return;
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        for (let n = walker.nextNode(); n; n = walker.nextNode()) if (!n.parentElement.closest('pre, code, .tr-code, script, style')) nodes.push(n);
+        nodes.forEach(n => { const t = T(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t; });
+        const els = root.nodeType === 1 ? [root, ...root.querySelectorAll('[aria-label],[placeholder],[title]')] : [...root.querySelectorAll('[aria-label],[placeholder],[title]')];
+        els.forEach(e => ['aria-label', 'placeholder', 'title'].forEach(a => { const v = e.getAttribute && e.getAttribute(a); if (v) { const t = T(v); if (t !== v) e.setAttribute(a, t); } }));
+    }
+    function watchTranslation(root) {
+        if (!I18N) return;
+        translateTree(root);
+        new MutationObserver(ms => {
+            for (const m of ms) {
+                if (m.type === 'characterData') { const t = T(m.target.nodeValue); if (t !== m.target.nodeValue) m.target.nodeValue = t; }
+                else if (m.type === 'attributes') { const v = m.target.getAttribute(m.attributeName); const t = T(v); if (v && t !== v) m.target.setAttribute(m.attributeName, t); }
+                else m.addedNodes.forEach(n => { if (n.nodeType === 1 || n.nodeType === 3) translateTree(n.nodeType === 3 ? n.parentElement : n); });
+            }
+        }).observe(root, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['aria-label', 'placeholder', 'title'] });
+    }
+
     const W = {};
 
     /* ---------- quiz ---------- */
@@ -192,10 +230,10 @@
 
     /* ---------- compare (tabs) ---------- */
     W.compare = (body, cfg) => {
-        const chips = el('div', { class: 'chips', role: 'tablist' });
+        const chips = el('div', { class: 'chips', role: 'group' });
         const pane = el('div', { class: 'out' });
         const show = k => { $$('.chip', chips).forEach((c, j) => c.setAttribute('aria-pressed', j === k)); pane.innerHTML = cfg.tabs[k].html; };
-        cfg.tabs.forEach((t, k) => { const c = el('button', { class: 'chip', type: 'button', role: 'tab' }, esc(t.label)); c.onclick = () => show(k); chips.append(c); });
+        cfg.tabs.forEach((t, k) => { const c = el('button', { class: 'chip', type: 'button', 'aria-pressed': 'false' }, esc(t.label)); c.onclick = () => show(k); chips.append(c); });
         body.append(chips, pane);
         show(0);
     };
@@ -498,7 +536,7 @@
         const draw = () => {
             const a = lum(fg.value), b = lum(bg.value), r = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
             const ok = (t, lbl) => `<span class="chip ${r >= t ? 'on' : ''}" style="min-height:0;padding:2px 10px">${r >= t ? '✓' : '✗'} ${lbl}</span>`;
-            out.innerHTML = `<div style="padding:16px;border-radius:10px;background:${bg.value};color:${fg.value}"><b style="font-size:22px">Contoh teks besar</b><br>Contoh teks biasa untuk dibaca.</div>
+            out.innerHTML = `<div data-a11y-demo style="padding:16px;border-radius:10px;background:${bg.value};color:${fg.value}"><b style="font-size:22px">Contoh teks besar</b><br>Contoh teks biasa untuk dibaca.</div>
               <div class="big" style="margin-top:10px">${r.toFixed(2)} : 1</div><div class="chips">${ok(4.5, 'Teks biasa (AA 4,5)')}${ok(3, 'Teks besar (AA 3)')}${ok(7, 'AAA 7')}</div>`;
         };
         fg.oninput = bg.oninput = draw;
@@ -548,7 +586,7 @@
 
     /* ---------- minirag (retrieval demo) ---------- */
     W.minirag = (body, cfg) => {
-        const stop = new Set('yang dan di ke dari untuk dengan atau apa itu ini adalah pada dalam akan bisa saya anda kami kita agar tidak ada juga sebuah oleh karena'.split(' '));
+        const stop = new Set('yang dan di ke dari untuk dengan atau apa itu ini adalah pada dalam akan bisa saya anda kami kita agar tidak ada juga sebuah oleh karena the a an of to in is are do does did i my me we you your for on at by and or with be it this that what when how can there if should must from as'.split(' '));
         const tok = s => s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w && !stop.has(w));
         const docs = cfg.docs.map(d => ({ ...d, t: tok(d.title + ' ' + d.text) }));
         const df = {}; docs.forEach(d => new Set(d.t).forEach(w => (df[w] = (df[w] || 0) + 1)));
@@ -564,7 +602,7 @@
             const ranked = docs.map(d => ({ d, s: qt.reduce((a, w) => a + (d.t.includes(w) ? Math.log(1 + docs.length / (df[w] || 1)) : 0), 0) })).sort((a, b) => b.s - a.s);
             const top = ranked.slice(0, k).filter(x => x.s > 0), mx = ranked[0].s || 1;
             out.innerHTML = '<p class="wd" style="margin:10px 0 4px"><b>1. Pencarian:</b> setiap dokumen diberi skor berdasarkan kata penting yang cocok dengan pertanyaan.</p>' +
-                ranked.map((x, i) => `<div style="margin:6px 0;opacity:${i < k && x.s > 0 ? 1 : .5}"><div style="display:flex;justify-content:space-between;font-size:14px"><b>${esc(x.d.title)}</b><span class="mono">skor ${x.s.toFixed(2)}${i < k && x.s > 0 ? ' ✓ diambil' : ''}</span></div><div class="prog"><i style="width:${(x.s / mx) * 100}%;background:var(--brand)"></i></div></div>`).join('') +
+                ranked.map((x, i) => `<div style="margin:6px 0;color:${i < k && x.s > 0 ? 'inherit' : 'var(--muted)'}"><div style="display:flex;justify-content:space-between;font-size:14px"><b>${esc(x.d.title)}</b><span class="mono">skor ${x.s.toFixed(2)}${i < k && x.s > 0 ? ' ✓ diambil' : ''}</span></div><div class="prog"><i style="width:${(x.s / mx) * 100}%;background:var(--brand)"></i></div></div>`).join('') +
                 `<p class="wd" style="margin:12px 0 4px"><b>2. Prompt yang dikirim ke model bahasa:</b></p><div class="out mono" style="font-size:13.5px;white-space:pre-wrap">${esc(top.length ? 'Jawab hanya berdasarkan dokumen berikut. Jika tidak ada jawabannya, katakan tidak tahu.\n\n' + top.map(x => '[' + x.d.title + '] ' + x.d.text).join('\n\n') + '\n\nPertanyaan: ' + q.value : 'Tidak ada dokumen yang cocok. Sistem yang baik menjawab "saya tidak menemukan informasinya" daripada mengarang.')}</div>`;
         };
         q.oninput = kr.oninput = draw;
@@ -785,7 +823,7 @@
                 const rows = Object.entries(f.vars);
                 return `<div class="tr-frame"><h4>${i === st.stack.length - 1 ? '▶ ' : ''}${esc(f.name === '(modul)' ? 'Variabel global' : f.name + '()')}</h4>${rows.length ? `<table>${rows.map(([n, v]) => `<tr><td>${esc(n)}</td><td>${esc(v)}</td></tr>`).join('')}</table>` : '<div style="padding:6px 10px;color:var(--muted)">(belum ada variabel)</div>'}</div>`;
             }).join('');
-            state.innerHTML = `<b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)">Memori</b><div style="margin-top:6px">${frames}</div><div class="tr-out"><small>Keluaran (print)</small>${esc(st.out) || '<span style="opacity:.5">(belum ada)</span>'}</div>`;
+            state.innerHTML = `<b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)">Memori</b><div style="margin-top:6px">${frames}</div><div class="tr-out"><small>Keluaran (print)</small>${esc(st.out) || '<span style="color:#8fc3a2">(belum ada)</span>'}</div>`;
             info.textContent = st.line === 0 ? `Program selesai. Langkah ${k + 1} dari ${cfg.steps.length}.` : `Langkah ${k + 1} dari ${cfg.steps.length}: akan menjalankan baris ${st.line}.`;
             prev.disabled = k === 0; next.disabled = k >= cfg.steps.length - 1;
         };
@@ -1078,9 +1116,10 @@
         $$('[data-share]').forEach(b => {
             b.onclick = () => {
                 const u = location.href.split('#')[0], t = document.title;
+                const say = m => { let r = $('#live'); if (!r) { r = el('div', { id: 'live', class: 'sr-only', role: 'status', 'aria-live': 'polite' }); document.body.append(r); } r.textContent = m; };
                 if (b.dataset.share === 'wa') window.open('https://wa.me/?text=' + encodeURIComponent(t + ' ' + u), '_blank', 'noopener');
                 else if (b.dataset.share === 'x') window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(t) + '&url=' + encodeURIComponent(u), '_blank', 'noopener');
-                else if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { b.textContent = 'Tautan disalin ✓'; setTimeout(() => (b.textContent = 'Salin tautan'), 1800); });
+                else if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { const label = b.textContent; say(T('Tautan disalin')); b.textContent = 'Tautan disalin ✓'; setTimeout(() => (b.textContent = label), 1800); });
             };
         });
 
@@ -1095,6 +1134,28 @@
         }
     }
 
+    /* ---------- accessibility sweep ----------
+       - anything that scrolls (long code lines, wide tables) must be reachable with Tab (WCAG 2.1.1)
+       - a <label> without "for" is tied to the field that follows it (WCAG 1.3.1 / 4.1.2) */
+    let fieldId = 0;
+    function sweep() {
+        const roots = $$('main, .toc');
+        roots.forEach(r => [r, ...$$('*', r)].forEach(n => {
+            if (n.hasAttribute('tabindex') || !(n.scrollWidth > n.clientWidth + 1 || n.scrollHeight > n.clientHeight + 1)) return;
+            const o = getComputedStyle(n);
+            if (/(auto|scroll)/.test(o.overflowX + o.overflowY)) n.tabIndex = 0;
+        }));
+        $$('label:not([for])').forEach(l => {
+            if (l.querySelector('input,select,textarea')) return;
+            const isField = n => n && /^(INPUT|SELECT|TEXTAREA)$/.test(n.tagName);
+            let f = l.nextElementSibling;
+            if (f && !isField(f)) f = f.querySelector && f.querySelector('input,select,textarea');
+            if (isField(f)) { f.id = f.id || 'f' + ++fieldId; l.setAttribute('for', f.id); }
+        });
+    }
+    let sweepTimer;
+    const queueSweep = () => { clearTimeout(sweepTimer); sweepTimer = setTimeout(sweep, 150); };
+
     function init() {
         chrome();
         $$('[data-w]').forEach(root => {
@@ -1104,7 +1165,13 @@
             const fn = W[root.dataset.w];
             if (!fn) return;
             fn(frame(root, cfg, cfg.label), cfg);
+            watchTranslation(root);
         });
+        $$('.share').forEach(watchTranslation);
+        sweep();
+        const main = $('main');
+        if (main && 'MutationObserver' in window) new MutationObserver(queueSweep).observe(main, { childList: true, subtree: true });
+        addEventListener('resize', queueSweep);
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

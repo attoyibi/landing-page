@@ -12,10 +12,12 @@ import AionPage from './components/pages/AionPage';
 import ArticlesPage from './components/pages/ArticlesPage';
 import { useHash, parseRoute } from './lib/hashRoute';
 import { isArticleList } from './lib/articleRoute';
+import { useI18n } from './i18n';
 
 const SITE_TITLE = document.title;
 
 function App() {
+    const { t } = useI18n();
     const hashRoute = parseRoute(useHash());
     const route = isArticleList(window.location.pathname) ? { name: 'articles' } : hashRoute;
 
@@ -30,15 +32,15 @@ function App() {
     }, [route.name]);
 
     useEffect(() => {
-        const names = { latihan: 'Latihan Python', aion: 'AION playgrounds', articles: 'Artikel' };
-        document.title = names[route.name] ? `${names[route.name]} · Muhammad Muchson` : SITE_TITLE;
-    }, [route.name]);
+        const names = { latihan: t('meta.latihan'), aion: t('meta.aion'), articles: t('meta.articlesTitle') };
+        document.title = names[route.name] ? (route.name === 'articles' ? names.articles : `${names[route.name]} · Muhammad Muchson`) : SITE_TITLE;
+    }, [route.name, t]);
 
     return (
         <MotionConfig reducedMotion="user">
             <div className="bg-surface-000 text-ink min-h-screen">
                 <Header />
-                <main>
+                <main id="isi" tabIndex={-1}>
                     {route.name === 'articles' && <ArticlesPage />}
                     {route.name === 'latihan' && <LatihanPage />}
                     {route.name === 'aion' && <AionPage course={route.course} index={route.index} />}

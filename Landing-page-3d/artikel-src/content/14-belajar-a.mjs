@@ -59,6 +59,13 @@ export default [
             { w: 'checklist', title: 'Setelah setiap sesi belajar', items: ['Menutup catatan dan menuliskan poin utama dari ingatan.', 'Mengerjakan minimal beberapa soal tanpa melihat jawaban.', 'Menandai hal yang salah atau lupa, dan mengulangnya besok.', 'Menjelaskan satu konsep dengan kata-kata sendiri.', 'Menjadwalkan ulang materi yang masih lemah.'] },
             { callout: 'Gunakan AI sebagai pembuat soal dan pemberi umpan balik, bukan sebagai penjawab. Bila AI selalu memberi jawaban lebih dulu, Anda kehilangan manfaat utama: usaha mengingat.', kind: 'info', title: 'Dengan bantuan AI' },
         ],
+        takeaways: [
+            'Membaca ulang terasa akrab tetapi hasilnya kecil; menguji diri memperkuat ingatan.',
+            'Tutup catatan lalu tulis apa yang diingat, kerjakan soal tanpa melihat jawaban, dan jelaskan dengan kata sendiri.',
+            'Rasa sulit saat mengingat adalah tanda belajar, bukan tanda gagal.',
+            'Pakai AI sebagai pembuat soal, bukan sebagai penjawab.',
+        ],
+        sources: [['Roediger dan Karpicke (2006), Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention, Psychological Science', 'https://doi.org/10.1111/j.1467-9280.2006.01693.x']],
         faq: [['Mengapa terasa lebih sulit?', 'Karena otak bekerja mengambil informasi. Kesulitan yang produktif itulah yang memperkuat ingatan.'], ['Apakah membaca ulang tidak berguna sama sekali?', 'Berguna untuk pengenalan awal, tetapi hasilnya jauh lebih kecil dibanding menguji diri.'], ['Berapa lama sebaiknya sesi menguji diri?', 'Sesi singkat tetapi sering. Misalnya 10-20 menit setelah belajar dan beberapa hari kemudian.']],
     },
 

@@ -3,15 +3,24 @@ import { motion } from 'framer-motion';
 import { ExternalLink, ChevronDown, Github } from 'lucide-react';
 
 import { MATERIALS } from '../../data/teaching';
+import { useI18n, Emph } from '../../i18n';
+
+// "Day 4" is shown as "Hari 4" on the Indonesian site
+const useDayLabel = () => {
+    const { lang } = useI18n();
+    return label => (lang === 'id' ? label.replace(/^Day /, 'Hari ') : label);
+};
 
 // One course: collapsed by default (title + count), expands to a compact grid of day links.
 const Course = ({ course }) => {
+    const { t, tx } = useI18n();
+    const dayLabel = useDayLabel();
     return (
         <details className="group border-t border-line-strong/30 first:border-t-0">
             <summary className="flex items-center justify-between gap-4 py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                 <span>
-                    <span className="h3 text-ink block">{course.title}</span>
-                    <span className="caption text-ink-muted">{course.playgrounds.length} {course.playgrounds.length === 1 ? 'playground' : 'playgrounds'}</span>
+                    <span className="h3 text-ink block">{tx(course.title)}</span>
+                    <span className="caption text-ink-muted">{t('teaching.playgrounds', { n: course.playgrounds.length })}</span>
                 </span>
                 <ChevronDown
                     size={20}
@@ -25,7 +34,7 @@ const Course = ({ course }) => {
                     {course.playgrounds.map(([label, href], i) => (
                         <li key={href}>
                             <a href={`#/aion/${course.id}/${i}`} className="chip-link">
-                                {label}
+                                {dayLabel(label)}
                             </a>
                         </li>
                     ))}
@@ -37,7 +46,8 @@ const Course = ({ course }) => {
                         rel="noopener noreferrer"
                         className="label inline-flex items-center gap-2 mt-4 text-brand-600 hover:text-brand-700 no-underline"
                     >
-                        <Github size={16} aria-hidden="true" /> Repositories
+                        <Github size={16} aria-hidden="true" /> {t('teaching.repositories')}
+                        <span className="sr-only"> {t('a11y.newTab')}</span>
                     </a>
                 )}
             </div>
@@ -46,6 +56,7 @@ const Course = ({ course }) => {
 };
 
 const MaterialCard = ({ item, index }) => {
+    const { t, tx } = useI18n();
     return (
         <motion.article
             initial={{ opacity: 0, y: 24 }}
@@ -56,10 +67,10 @@ const MaterialCard = ({ item, index }) => {
                 item.tint ? 'bg-brand-100 border-brand-100' : 'bg-surface-000 border-line'
             }`}
         >
-            <p className="overline text-brand-600 mb-2">{item.audience}</p>
-            <h3 className="h2 text-ink mb-4">{item.title}</h3>
-            <p className="body-lg text-ink-muted">{item.description}</p>
-            {item.meta && <p className="caption text-ink-muted mt-4">{item.meta}</p>}
+            <p className="overline text-brand-600 mb-2">{tx(item.audience)}</p>
+            <h3 className="h2 text-ink mb-4">{tx(item.title)}</h3>
+            <p className="body-lg text-ink-muted">{tx(item.description)}</p>
+            {item.meta && <p className="caption text-ink-muted mt-4">{tx(item.meta)}</p>}
 
             {item.courses.length > 0 && (
                 <div className="mt-6 border-y border-line-strong/30">
@@ -78,7 +89,13 @@ const MaterialCard = ({ item, index }) => {
                             {...(link.internal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                             className={`btn ${i === 0 ? 'btn-primary' : 'btn-secondary'}`}
                         >
-                            {link.label} {!link.internal && <ExternalLink size={14} aria-hidden="true" />}
+                            {tx(link.label)}{' '}
+                            {!link.internal && (
+                                <>
+                                    <ExternalLink size={14} aria-hidden="true" />
+                                    <span className="sr-only"> {t('a11y.newTab')}</span>
+                                </>
+                            )}
                         </a>
                     ))}
                 </div>
@@ -88,8 +105,9 @@ const MaterialCard = ({ item, index }) => {
 };
 
 const Teaching = () => {
+    const { t } = useI18n();
     return (
-        <section id="teaching" className="section bg-surface-000">
+        <section id="teaching" className="section bg-surface-000" aria-labelledby="teaching-title">
             <div className="container-page">
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
@@ -97,13 +115,9 @@ const Teaching = () => {
                     viewport={{ once: true }}
                     className="mb-8 max-w-[44rem]"
                 >
-                    <p className="overline text-brand-600 mb-2">Teaching</p>
-                    <h2 className="h1 text-ink mb-4">
-                        Learning <span className="text-brand-600">websites</span>
-                    </h2>
-                    <p className="body-lg text-ink-muted">
-                        Websites I build to support formal education and corporate training.
-                    </p>
+                    <p className="overline text-brand-600 mb-2">{t('teaching.eyebrow')}</p>
+                    <h2 id="teaching-title" className="h1 text-ink mb-4"><Emph text={t('teaching.title')} /></h2>
+                    <p className="body-lg text-ink-muted">{t('teaching.lead')}</p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-6 items-start">

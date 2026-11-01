@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 artikel-src/.cache/
+a11y-report.json
+a11y-*.json
+a11y-*.txt
+build-after*.txt

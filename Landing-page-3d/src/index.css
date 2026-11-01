@@ -208,3 +208,18 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Skip link: first thing a keyboard user reaches (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: 60;
+  padding: var(--space-2) var(--space-4);
+  background: var(--ink);
+  color: var(--ink-inverse);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.skip-link:focus { top: var(--space-2); }
+main:focus { outline: none; }

@@ -29,6 +29,19 @@ Alamat tiap artikel: `https://muchson.web.id/artikel/<nama-artikel>/`. Halaman d
 
 Karena tiap artikel adalah file HTML sungguhan di alamat sendiri, mesin pencari mengindeksnya langsung tanpa perlu menjalankan JavaScript.
 
+### Standar penulisan, aksesibilitas, dan dua bahasa
+
+Semua artikel mengikuti [artikel-src/STANDAR-PENULISAN.md](artikel-src/STANDAR-PENULISAN.md): struktur wajib, aturan gambar (alt text, ukuran, keterangan bernomor),
+WCAG 2.2 AA, dan alur terjemahan Inggris. Tiga perintah yang dipakai sehari-hari:
+
+```bash
+npm run artikel:lint            # cek standar penulisan; --verbose menampilkan semua artikel yang bermasalah
+npm run artikel                 # lint (error menghentikan) lalu buat semua halaman Indonesia dan Inggris
+npm run a11y                    # audit WCAG 2.2 di browser sungguhan (butuh Chrome/Edge); --lang en untuk halaman Inggris
+```
+
+Situs tersedia dalam dua bahasa: `/` (Indonesia) dan `/en/` (Inggris). Artikel Inggris ada di `/en/articles/<slug>/`, dibuat dari `artikel-src/content-en/`.
+
 ### Menambah artikel baru (cara utama)
 
 1. Buat folder `public/artikel/<nama-artikel>/` berisi `index.html` dan gambar sampul (`cover.svg`, atau `cover.jpg`/`cover.webp`).

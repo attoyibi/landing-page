@@ -4,6 +4,7 @@
 
 import { diagram } from './diagram.mjs';
 import { runPython, runJava, runNode, runDart, tracePython } from './runner.mjs';
+import { safe, sanitizeBlock } from './sanitize.mjs';
 
 export const SITE = 'https://muchson.web.id';
 export const STORE = 'https://cms-online-store-glasses.muhammadmuchson.workers.dev/';
@@ -167,25 +168,98 @@ const MOTIF = {
     coin: '<circle cx="0" cy="0" r="85" fill="none" stroke="#fff" stroke-width="12"/><text x="0" y="28" text-anchor="middle" font-size="86" font-weight="700" fill="#fff" font-family="Arial,sans-serif">Rp</text>',
 };
 export function coverSvg(a) {
-    const [c1, c2, motif] = PALETTE[a.category] || ['#0f1a33', '#1e5ab2', 'shield'];
+    const [c1, c2, motif] = PALETTE[a.categoryId || a.category] || ['#0f1a33', '#1e5ab2', 'shield'];
     const lines = wrap(a.title.replace(/\s*[:–-]\s.*$/, m => (a.title.length > 60 ? '' : m)), 24).slice(0, 4);
     const fs = lines.length > 3 ? 54 : 62, y0 = 250 - ((lines.length - 1) * (fs + 8)) / 2;
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="${esc(a.title)}" font-family="${FONT}"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="1200" height="630" fill="url(#bg)"/><circle cx="1010" cy="150" r="260" fill="#fff" opacity=".07"/><circle cx="1130" cy="560" r="180" fill="#fff" opacity=".06"/><g transform="translate(980 320) scale(1.25)" opacity=".92">${MOTIF[motif]}</g><text x="70" y="86" font-size="26" font-weight="700" letter-spacing="3" fill="#fff" opacity=".85">${esc(a.category.toUpperCase())}</text><text x="70" y="${y0 + 30}" font-size="${fs}" font-weight="700" fill="#fff">${tspans(lines, 70, fs + 8)}</text><text x="70" y="582" font-size="26" font-weight="600" fill="#fff" opacity=".85">muchson.web.id</text></svg>`;
 }
 
 /* ------------------------------------------------------------------ page */
-const dateId = iso => new Date(`${iso}T00:00:00`).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+// Every word the page chrome says, per language. Article text itself comes from the content files.
+export const STR = {
+    id: {
+        locale: 'id-ID', ogLocale: 'id_ID', home: 'Beranda', articles: 'Artikel', allArticles: 'Semua artikel', mainNav: 'Utama', skip: 'Lewati ke isi artikel',
+        toc: 'Daftar isi', by: 'Oleh', minRead: 'menit baca', level: 'Tingkat', updated: 'Diperbarui', prereq: 'Sebaiknya sudah paham', takeaways: 'Intisari',
+        faq: 'Tanya jawab', sources: 'Referensi', share: 'Bagikan', copyLink: 'Salin tautan', related: 'Baca juga', aboutMe: 'Tentang saya',
+        authorBio: 'Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari.',
+        newTab: 'membuka tab baru', figure: 'Gambar', table: 'Tabel', textAlt: 'Deskripsi teks diagram', switchTo: 'English', switchLang: 'en', switchLabel: 'Read this article in English',
+        photoSource: 'Sumber', topic: 'Topik', backToStart: 'lalu kembali ke langkah pertama', axisX: 'Sumbu mendatar', axisY: 'Sumbu tegak',
+        topLeft: 'Kiri atas', topRight: 'Kanan atas', bottomLeft: 'Kiri bawah', bottomRight: 'Kanan bawah', connections: 'Hubungan antar bagian', from: 'dari', to: 'ke',
+        callout: { good: 'Tips', warn: 'Perhatian', bad: 'Hindari' }, helpTag: 'Butuh bantuan?', helpTitle: 'Ingin ini diterapkan di tim atau proyek Anda?',
+        helpText: 'Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.', helpButton: 'Hubungi Muchson',
+        min: 'menit',
+    },
+    en: {
+        locale: 'en-US', ogLocale: 'en_US', home: 'Home', articles: 'Articles', allArticles: 'All articles', mainNav: 'Main', skip: 'Skip to article content',
+        toc: 'Contents', by: 'By', minRead: 'min read', level: 'Level', updated: 'Updated', prereq: 'Recommended background', takeaways: 'Key takeaways',
+        faq: 'FAQ', sources: 'References', share: 'Share', copyLink: 'Copy link', related: 'Read next', aboutMe: 'About me',
+        authorBio: 'Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics.',
+        newTab: 'opens in a new tab', figure: 'Figure', table: 'Table', textAlt: 'Text description of the diagram', switchTo: 'Bahasa Indonesia', switchLang: 'id', switchLabel: 'Baca artikel ini dalam Bahasa Indonesia',
+        photoSource: 'Source', topic: 'Topic', backToStart: 'then back to the first step', axisX: 'Horizontal axis', axisY: 'Vertical axis',
+        topLeft: 'Top left', topRight: 'Top right', bottomLeft: 'Bottom left', bottomRight: 'Bottom right', connections: 'Connections between parts', from: 'from', to: 'to',
+        callout: { good: 'Tip', warn: 'Caution', bad: 'Avoid' }, helpTag: 'Need help?', helpTitle: 'Want this applied in your team or project?',
+        helpText: 'I help build digital products, training material and AI-based automation. Tell me what you need and we will find the simplest step that works.', helpButton: 'Contact Muchson',
+        min: 'min',
+    },
+};
+
+// Category names shown on English pages (the Indonesian name stays the key everywhere else). Kept in one file shared with the React pages.
+import { CATEGORY_EN } from '../src/data/categories.js';
+export { CATEGORY_EN };
+
+export const articleUrl = (slug, lang = 'id') => (lang === 'en' ? `${SITE}/en/articles/${slug}/` : `${SITE}/artikel/${slug}/`);
+export const articlePath = (slug, lang = 'id') => (lang === 'en' ? `/en/articles/${slug}/` : `/artikel/${slug}/`);
+export const listPath = (lang = 'id') => (lang === 'en' ? '/en/articles/' : '/artikel/');
+export const categoryPath = (cat, lang = 'id') => `${listPath(lang)}${lang === 'en' ? 'category' : 'kategori'}/${slugify(cat)}/`;
+
+const fmtDate = (iso, lang) => new Date(`${iso}T00:00:00`).toLocaleDateString(STR[lang].locale, { day: 'numeric', month: 'long', year: 'numeric' });
 const widgetJson = cfg => JSON.stringify(cfg).replace(/</g, '\\u003c');
 
+/* A plain-text version of a diagram, so nothing in it depends on seeing it (WCAG 1.1.1). Shown in a collapsed block under the figure. */
+const li = x => `<li>${x}</li>`;
+const stepText = st => { const t = typeof st === 'string' ? { t: st } : st; return esc(t.t) + (t.d ? `: ${esc(t.d)}` : ''); };
+function describe(b, L) {
+    switch (b.svg) {
+        case 'flow': return `<ol>${b.steps.map(st => li(stepText(st))).join('')}</ol>`;
+        case 'cycle': return `<ol>${b.items.map(i => li(esc(i))).join('')}</ol><p>${L.backToStart}.</p>`;
+        case 'layers': return `<ol>${b.items.map(it => li(stepText(it))).join('')}</ol>`;
+        case 'bars': return `<ul>${b.data.map(([l, v, note]) => li(`${esc(l)}: ${esc(String(v))}${esc(b.unit || '')}${note ? ` ${esc(note)}` : ''}`)).join('')}</ul>`;
+        case 'timeline': return `<ul>${b.events.map(([when, t, d]) => li(`<b>${esc(when)}</b>: ${esc(t)}${d ? `. ${esc(d)}` : ''}`)).join('')}</ul>`;
+        case 'scale': return `<ul>${b.stops.map(([pos, l]) => li(`${pos}%: ${esc(l)}`)).join('')}</ul>`;
+        case 'versus': return [b.left, b.right].map(c => `<p><b>${esc(c.title)}</b></p><ul>${c.items.map(i => li(esc(i))).join('')}</ul>`).join('');
+        case 'matrix': {
+            const names = [L.topLeft, L.topRight, L.bottomLeft, L.bottomRight];
+            return `<p>${L.axisX}: ${esc(b.x)}. ${L.axisY}: ${esc(b.y)}.</p><ul>${b.quads.map((q, i) => li(`<b>${names[i]}</b>: ${stepText(q)}`)).join('')}</ul>`;
+        }
+        case 'diagram': {
+            const name = id => { const n = (b.nodes || []).find(x => x.id === id); return esc((n && n.t) || id); };
+            const nodes = (b.nodes || []).filter(n => n.t && n.shape !== 'frame' && n.shape !== 'text').map(n => li(esc(n.t) + ((n.attrs && n.attrs.length) || (n.methods && n.methods.length) ? `: ${[...(n.attrs || []), ...(n.methods || [])].map(esc).join('; ')}` : ''))).join('');
+            const edges = (b.edges || []).map(e => li(`${name(e.from)} → ${name(e.to)}${e.label ? ` (${esc(e.label)})` : ''}`)).join('');
+            return `${nodes ? `<ul>${nodes}</ul>` : ''}${edges ? `<p>${L.connections}:</p><ul>${edges}</ul>` : ''}`;
+        }
+        default: return '';
+    }
+}
+
 function renderBlock(b, ctx) {
+    const L = ctx.L;
     if (typeof b === 'string') return `<p>${b}</p>`;
     if (typeof b.w === 'string') { const { w, ...cfg } = b; return `<div data-w="${w}"><script type="application/json">${widgetJson(cfg)}</script></div>`; }
-    if (b.h2) { const id = slugify(b.h2); ctx.toc.push([id, strip(b.h2)]); return `<h2 id="${id}">${b.h2}</h2>`; }
-    if (b.h3) return `<h3>${b.h3}</h3>`;
+    if (b.h2) { const id = slugify(b.h2); ctx.toc.push([id, strip(b.h2)]); ctx.heading = strip(b.h2); return `<h2 id="${id}">${b.h2}</h2>`; }
+    if (b.h3) { ctx.heading = strip(b.h3); return `<h3>${b.h3}</h3>`; }
     if (b.ul) return `<ul>${b.ul.map(i => `<li>${i}</li>`).join('')}</ul>`;
     if (b.ol) return `<ol>${b.ol.map(i => `<li>${i}</li>`).join('')}</ol>`;
-    if (b.callout) return `<div class="callout ${b.kind || ''}">${b.title ? `<b>${b.title}</b>` : ''}<p>${b.callout}</p></div>`;
-    if (b.table) return `<table><thead><tr>${b.table.head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    if (b.callout) {
+        // a coloured box must not be the only thing saying "tip" or "warning": give it a text label (WCAG 1.4.1)
+        const label = b.title || L.callout[b.kind] || '';
+        return `<div class="callout ${b.kind || ''}" role="note">${label ? `<b>${label}</b>` : ''}<p>${b.callout}</p></div>`;
+    }
+    if (b.table) {
+        // the caption names the table for screen readers; it falls back to the heading right above it
+        const cap = b.table.caption || ctx.heading || '';
+        const n = (ctx.tables = (ctx.tables || 0) + 1);
+        return `<div class="table-wrap"><table><caption${b.table.caption ? '' : ' class="sr-only"'}>${b.table.caption ? `<b>${L.table} ${n}.</b> ` : `${L.table} ${n}: `}${cap}</caption><thead><tr>${b.table.head.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${b.table.rows.map(r => `<tr>${r.map((c, k) => (k === 0 && b.table.rowHeader ? `<th scope="row">${c}</th>` : `<td>${c}</td>`)).join('')}</tr>`).join('')}</tbody></table></div>`;
+    }
     if (b.trace) {
         if (b.lang && b.lang !== 'python') throw new Error('trace hanya untuk Python');
         const steps = tracePython(b.code, { input: b.input || '' });
@@ -208,48 +282,71 @@ function renderBlock(b, ctx) {
         const label = b.file ? `<span class="codefile">${esc(b.file)}</span>` : '';
         return `<figure class="codebox">${label}<pre${lang ? ` data-lang="${lang}"` : ''}><code>${esc(b.code)}</code></pre>${b.run ? `<pre class="runout" data-lang="keluaran"><code>${esc(out.replace(/\n$/, ''))}</code></pre>` : ''}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
     }
-    if (b.objectives) return `<div class="objectives"><b>Tujuan belajar</b><p>Setelah membaca dan mencoba materi ini, Anda mampu:</p><ul>${b.objectives.map(o => `<li>${o}</li>`).join('')}</ul></div>`;
+    if (b.objectives) return `<div class="objectives"><b>${ctx.lang === 'en' ? 'Learning objectives' : 'Tujuan belajar'}</b><p>${ctx.lang === 'en' ? 'After reading and trying this lesson, you can:' : 'Setelah membaca dan mencoba materi ini, Anda mampu:'}</p><ul>${b.objectives.map(o => `<li>${o}</li>`).join('')}</ul></div>`;
     if (b.exercise) {
-        return `<div class="exercise"><b>Latihan mandiri</b>${b.exercise.map(([q, a], i) => `<details><summary>${i + 1}. ${q}</summary><div>${a}</div></details>`).join('')}<small>Coba kerjakan dulu sebelum membuka jawaban.</small></div>`;
+        return `<div class="exercise"><b>${ctx.lang === 'en' ? 'Practice' : 'Latihan mandiri'}</b>${b.exercise.map(([q, a], i) => `<details><summary>${i + 1}. ${q}</summary><div>${a}</div></details>`).join('')}<small>${ctx.lang === 'en' ? 'Try it yourself before opening the answer.' : 'Coba kerjakan dulu sebelum membuka jawaban.'}</small></div>`;
     }
-    if (b.summary) return `<div class="callout good"><b>Ringkasan</b><ul>${b.summary.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
+    if (b.summary) return `<div class="callout good"><b>${ctx.lang === 'en' ? 'Summary' : 'Ringkasan'}</b><ul>${b.summary.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
     if (b.math) return `<p class="formula">${b.math}</p>`;
     if (b.html) return b.html;
-    if (b.svg) {
-        const fn = diagrams[b.svg];
-        if (!fn) throw new Error(`diagram tidak dikenal: ${b.svg}`);
-        return `<figure class="diagram">${fn(b)}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
+    if (b.img) {
+        // photo or screenshot: see STANDAR-PENULISAN.md. alt is required (or decorative: true), width and height prevent layout shift.
+        const n = (ctx.figs = (ctx.figs || 0) + 1);
+        const srcset = b.hires ? ` srcset="${esc(b.img)} 1x, ${esc(b.hires)} 2x"` : '';
+        const cap = [b.caption, b.credit ? `<span class="credit">${L.photoSource}: ${b.credit}</span>` : ''].filter(Boolean).join(' ');
+        return `<figure class="photo"><img src="${esc(b.img)}"${srcset} width="${b.width}" height="${b.height}" alt="${b.decorative ? '' : esc(b.alt || '')}" loading="lazy" decoding="async">${cap ? `<figcaption><b>${L.figure} ${n}.</b> ${cap}</figcaption>` : ''}</figure>`;
     }
-    if (b.svgraw) return `<figure class="diagram">${b.svgraw}${b.caption ? `<figcaption>${b.caption}</figcaption>` : ''}</figure>`;
+    if (b.svg || b.svgraw) {
+        const n = (ctx.figs = (ctx.figs || 0) + 1);
+        const raw = b.svg ? (diagrams[b.svg] ? diagrams[b.svg](b) : (() => { throw new Error(`diagram tidak dikenal: ${b.svg}`); })()) : b.svgraw;
+        const cap = b.caption || b.label || '';
+        const text = b.svg ? describe(b, L) : '';
+        return `<figure class="diagram">${raw}<figcaption><b>${L.figure} ${n}.</b> ${cap}</figcaption>${text ? `<details class="textalt"><summary>${L.textAlt}</summary>${text}</details>` : ''}</figure>`;
+    }
     throw new Error('blok tidak dikenal: ' + JSON.stringify(b).slice(0, 80));
 }
 
 const textOf = a => strip([a.lead, ...a.body.map(b => (typeof b === 'string' ? b : b.h2 || b.h3 || (b.ul || b.ol || b.objectives || b.summary || []).join(' ') || (b.exercise || []).flat().join(' ') || b.callout || b.math || b.desc || '')), ...(a.faq || []).flat()].join(' '));
 
-export function cta(a) {
-    if (a.cta === 'lensara') {
-        return `<aside class="cta" data-promo><span class="tag" data-p="tag">Info toko Lensara</span><h2 data-p="title">Promo sekarang: cukup Rp100.000</h2><p data-p="text">Lensara adalah optik di Madiun yang melayani konsultasi, pilihan frame, dan lensa minus, silinder, sampai blue light. Tanyakan kebutuhan mata Anda, lalu ambil promo yang sedang berjalan.</p><a class="btn" data-p="link" href="${STORE}" target="_blank" rel="noopener">Lihat koleksi dan promo</a><small data-p="terms">Syarat dan ketentuan berlaku. Cek rincian promo, ketersediaan, dan produk yang ikut promo di toko sebelum memesan.</small></aside>`;
+export function cta(a, lang = 'id') {
+    const L = STR[lang];
+    if (a.cta === 'lensara' && lang === 'id') {
+        return `<aside class="cta" data-promo><span class="tag" data-p="tag">Info toko Lensara</span><h2 data-p="title">Promo sekarang: cukup Rp100.000</h2><p data-p="text">Lensara adalah optik di Madiun yang melayani konsultasi, pilihan frame, dan lensa minus, silinder, sampai blue light. Tanyakan kebutuhan mata Anda, lalu ambil promo yang sedang berjalan.</p><a class="btn" data-p="link" href="${STORE}" target="_blank" rel="noopener noreferrer">Lihat koleksi dan promo<span class="sr-only"> (${L.newTab})</span></a><small data-p="terms">Syarat dan ketentuan berlaku. Cek rincian promo, ketersediaan, dan produk yang ikut promo di toko sebelum memesan.</small></aside>`;
     }
-    if (a.cta === 'jasa') {
-        return `<aside class="cta plain"><span class="tag">Butuh bantuan?</span><h2>Ingin ini diterapkan di tim atau proyek Anda?</h2><p>Saya membantu membangun produk digital, materi pelatihan, dan otomasi berbasis AI. Ceritakan kebutuhan Anda, kita cari langkah paling sederhana yang berhasil.</p><a class="btn" href="/#contact">Hubungi Muchson</a></aside>`;
+    if (a.cta === 'jasa' || (a.cta === 'lensara' && lang === 'en')) {
+        return `<aside class="cta plain"><span class="tag">${L.helpTag}</span><h2>${L.helpTitle}</h2><p>${L.helpText}</p><a class="btn" href="${lang === 'en' ? '/en/#contact' : '/#contact'}">${L.helpButton}</a></aside>`;
     }
     return '';
 }
 
-export function page(a, all) {
-    const ctx = { toc: [] };
-    const body = a.body.map(b => renderBlock(b, ctx)).join('\n');
+/* page(a, all, lang, alt)
+   a    the article (already merged with its English version when lang is "en")
+   all  the other articles in the same language (for "read next")
+   alt  { slug } of the same article in the other language, or null when there is no translation */
+export function page(a, all, lang = 'id', alt = null) {
+    const L = STR[lang];
+    const ctx = { toc: [], L, lang };
+    const body = a.body.map(b => renderBlock(sanitizeBlock(b), ctx)).join('\n');
+    const lead = safe(a.lead);
+    const takeaways = (a.takeaways || []).map(safe);
+    const faq = (a.faq || []).map(([q, an]) => [q, safe(an)]);
     const minutes = Math.max(1, Math.round(textOf(a).split(/\s+/).length / 200));
-    const url = `${SITE}/artikel/${a.slug}/`, img = `${SITE}/artikel/${a.slug}/cover.png`;
-    const faq = a.faq || [];
+    const url = articleUrl(a.slug, lang), img = `${url}cover.png`;
+    const updated = a.updated && a.updated > a.date ? a.updated : '';
     const related = all.filter(x => x.slug !== a.slug).map(x => ({ x, s: (x.category === a.category ? 2 : 0) + x.tags.filter(t => a.tags.includes(t)).length })).sort((p, q) => q.s - p.s).slice(0, 3).map(r => r.x);
+    const listUrl = `${SITE}${listPath(lang)}`, homeUrl = lang === 'en' ? `${SITE}/en/` : `${SITE}/`;
+    const author = { '@type': 'Person', name: 'Muhammad Muchson Attoyibi', url: homeUrl };
     const ld = [
-        { '@context': 'https://schema.org', '@type': 'Article', headline: a.title, description: a.description, image: [img], datePublished: a.date, dateModified: a.updated || a.date, inLanguage: 'id', keywords: a.tags.join(', '), articleSection: a.category, wordCount: textOf(a).split(/\s+/).length, mainEntityOfPage: url, author: { '@type': 'Person', name: 'Muhammad Muchson Attoyibi', url: `${SITE}/` }, publisher: { '@type': 'Person', name: 'Muhammad Muchson Attoyibi', url: `${SITE}/` } },
-        { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Beranda', item: `${SITE}/` }, { '@type': 'ListItem', position: 2, name: 'Artikel', item: `${SITE}/artikel/` }, { '@type': 'ListItem', position: 3, name: a.title, item: url }] },
+        { '@context': 'https://schema.org', '@type': 'Article', headline: a.title, description: a.description, image: [img], datePublished: a.date, dateModified: updated || a.date, inLanguage: lang, keywords: a.tags.join(', '), articleSection: a.category, wordCount: textOf(a).split(/\s+/).length, mainEntityOfPage: url, author, publisher: author },
+        { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: L.home, item: homeUrl }, { '@type': 'ListItem', position: 2, name: L.articles, item: listUrl }, { '@type': 'ListItem', position: 3, name: a.title, item: url }] },
     ];
     if (faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, an]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: strip(an) } })) });
+    const hreflang = alt
+        ? `<link rel="alternate" hreflang="${lang}" href="${url}">\n<link rel="alternate" hreflang="${L.switchLang}" href="${articleUrl(alt.slug, L.switchLang)}">\n<link rel="alternate" hreflang="x-default" href="${articleUrl(lang === 'id' ? a.slug : alt.slug, 'id')}">\n`
+        : '';
+    const home = lang === 'en' ? '/en/' : '/';
     return `<!doctype html>
-<html lang="id">
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -260,18 +357,19 @@ export function page(a, all) {
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#1e5ab2">
 <link rel="canonical" href="${url}">
-<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+${hreflang}<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Muhammad Muchson">
-<meta property="og:locale" content="id_ID">
-<meta property="og:url" content="${url}">
+<meta property="og:locale" content="${L.ogLocale}">
+${alt ? `<meta property="og:locale:alternate" content="${STR[L.switchLang].ogLocale}">\n` : ''}<meta property="og:url" content="${url}">
 <meta property="og:title" content="${esc(a.title)}">
 <meta property="og:description" content="${esc(a.description)}">
 <meta property="og:image" content="${img}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(a.title)}">
 <meta property="article:published_time" content="${a.date}">
-<meta property="article:section" content="${esc(a.category)}">
+${updated ? `<meta property="article:modified_time" content="${updated}">\n` : ''}<meta property="article:section" content="${esc(a.category)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(a.title)}">
 <meta name="twitter:description" content="${esc(a.description)}">
@@ -281,30 +379,33 @@ ${ld.map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 <link rel="stylesheet" href="/artikel/_shared/article.css">
 </head>
 <body>
-<a class="skip" href="#isi">Lewati ke isi artikel</a>
+<a class="skip" href="#isi">${L.skip}</a>
 <div class="bar" aria-hidden="true"><i></i></div>
-<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<header class="top"><div class="in"><a class="brand" href="${home}">Muhammad Muchson</a><nav aria-label="${L.mainNav}"><a href="${home}">${L.home}</a><a href="${listPath(lang)}">${L.allArticles}</a>${alt ? `<a class="langsw" href="${articlePath(alt.slug, L.switchLang)}" lang="${L.switchLang}" hreflang="${L.switchLang}" aria-label="${esc(L.switchLabel)}">${L.switchTo}</a>` : ''}</nav></div></header>
 <div class="wrap">
-<aside class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol>${ctx.toc.map(([id, t]) => `<li><a href="#${id}">${esc(t)}</a></li>`).join('')}${faq.length ? '<li><a href="#tanya-jawab">Tanya jawab</a></li>' : ''}</ol></aside>
-<article id="isi">
-<p class="crumb"><a href="/">Beranda</a> › <a href="/artikel/">Artikel</a> › <a href="/artikel/kategori/${slugify(a.category)}/">${esc(a.category)}</a></p>
-<a class="cat" href="/artikel/kategori/${slugify(a.category)}/">${esc(a.category)}</a>
+<nav class="toc" aria-label="${L.toc}"><strong>${L.toc}</strong><ol>${ctx.toc.map(([id, t]) => `<li><a href="#${id}">${esc(t)}</a></li>`).join('')}${faq.length ? `<li><a href="#tanya-jawab">${L.faq}</a></li>` : ''}</ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="${home}">${L.home}</a> › <a href="${listPath(lang)}">${L.articles}</a> › <a href="${categoryPath(a.categoryId || a.category, lang)}">${esc(a.category)}</a></p>
+<a class="cat" href="${categoryPath(a.categoryId || a.category, lang)}">${esc(a.category)}</a>
 <h1>${esc(a.title)}</h1>
-<p class="lead">${a.lead}</p>
-<div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span>·</span><time datetime="${a.date}">${dateId(a.date)}</time><span>·</span><span>${minutes} menit baca</span>${a.level ? `<span>·</span><span class="level">Tingkat: ${esc(a.level)}</span>` : ''}</div>
-${a.prereq && a.prereq.length ? `<p class="prereq"><b>Sebaiknya sudah paham:</b> ${a.prereq.join(', ')}</p>` : ''}
-<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="${esc(a.title)}" fetchpriority="high"></figure>
+<p class="lead">${lead}</p>
+<div class="meta"><span>${L.by} Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="${a.date}">${fmtDate(a.date, lang)}</time>${updated ? `<span aria-hidden="true">·</span><span>${L.updated} <time datetime="${updated}">${fmtDate(updated, lang)}</time></span>` : ''}<span aria-hidden="true">·</span><span>${minutes} ${L.minRead}</span>${a.level ? `<span aria-hidden="true">·</span><span class="level">${L.level}: ${esc(a.level)}</span>` : ''}</div>
+${a.prereq && a.prereq.length ? `<p class="prereq"><b>${L.prereq}:</b> ${a.prereq.join(', ')}</p>` : ''}
+${takeaways.length ? `<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">${L.takeaways}</h2><ul>${takeaways.map(t => `<li>${t}</li>`).join('')}</ul></aside>` : ''}
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 ${body}
-${faq.length ? `<h2 id="tanya-jawab">Tanya jawab</h2>\n${faq.map(([q, an]) => `<details class="faq"><summary>${esc(q)}</summary><div>${an}</div></details>`).join('\n')}` : ''}
-${a.sources && a.sources.length ? `<h2 id="sumber">Referensi</h2><ul class="sources">${a.sources.map(([l, u]) => `<li>${u ? `<a href="${u}" rel="noopener" target="_blank">${esc(l)}</a>` : esc(l)}</li>`).join('')}</ul>` : ''}
-${cta(a)}
-<div class="share"><b>Bagikan:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Salin tautan</button></div>
-<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software Engineer dan Academic Trainer di Malang. Menulis tentang teknologi, belajar, dan hal praktis sehari-hari. <a href="/">Tentang saya</a></div></div>
-<section class="related"><h2 style="font-size:22px">Baca juga</h2><div class="rel">${related.map(r => `<a href="/artikel/${r.slug}/"><img src="/artikel/${r.slug}/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>${esc(r.title)}</span></a>`).join('')}</div></section>
+${faq.length ? `<h2 id="tanya-jawab">${L.faq}</h2>\n${faq.map(([q, an]) => `<details class="faq"><summary>${esc(q)}</summary><div>${an}</div></details>`).join('\n')}` : ''}
+${a.sources && a.sources.length ? `<h2 id="sumber">${L.sources}</h2><ul class="sources">${a.sources.map(([l, u]) => `<li>${u ? `<a href="${u}" rel="noopener noreferrer" target="_blank">${esc(l)}<span class="sr-only"> (${L.newTab})</span></a>` : esc(l)}</li>`).join('')}</ul>` : ''}
+${cta(a, lang)}
+<div class="share"><b>${L.share}:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">${L.copyLink}</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>${L.authorBio} <a href="${home}">${L.aboutMe}</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">${L.related}</h2><div class="rel">${related.map(r => `<a href="${articlePath(r.slug, lang)}"><img src="${articlePath(r.slug, lang)}cover.svg" width="1200" height="630" alt="" loading="lazy"><span>${esc(r.title)}</span></a>`).join('')}</div></section>
 </article>
+</main>
 </div>
-<footer class="foot">© ${new Date().getFullYear()} Muhammad Muchson Attoyibi · <a href="/">Beranda</a> · <a href="/artikel/">Artikel</a></footer>
-<script src="/artikel/_shared/article.js" defer></script>
+<footer class="foot">© ${new Date().getFullYear()} Muhammad Muchson Attoyibi · <a href="${home}">${L.home}</a> · <a href="${listPath(lang)}">${L.articles}</a></footer>
+${lang === 'en' ? '<script src="/artikel/_shared/i18n-en.js" defer></script>\n' : ''}<script src="/artikel/_shared/article.js" defer></script>
 </body>
 </html>
 `;

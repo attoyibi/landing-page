@@ -6,12 +6,12 @@
 //   Then commit + push (or edit this file on github.com and commit there): the site redeploys itself.
 //
 // Card fields
-//   id, audience (small label), title, description, meta (small line, optional),
+//   id, audience (small label), title, description, meta (small line, optional): text fields are { id, en } pairs (Indonesian, English),
 //   tint (true = light-blue card, use for at most one card),
-//   links   buttons on the card: [{ label, href, internal? }], first one is the primary button,
+//   links   buttons on the card: [{ label: { id, en }, href, internal? }], first one is the primary button,
 //           internal: true = a route inside this site (#/...), opens in the same tab,
 //   courses (optional) groups of playgrounds, shown collapsed so the page stays calm:
-//           [{ id, title, repo (GitHub link), playgrounds: [[label, href], ...] }]
+//           [{ id, title: { id, en }, repo (GitHub link), playgrounds: [[label, href], ...] }]  ("Day N" labels are shown as "Hari N" in Indonesian)
 //           Each playground opens inside this site at #/aion/<course id>/<position>.
 
 // Address of the Latihan Python website that is shown inside this site at #/latihan.
@@ -20,32 +20,36 @@ export const LATIHAN_URL = 'https://latihan-usg.vercel.app/';
 export const MATERIALS = [
     {
         id: 'latihan-python',
-        audience: 'Formal education',
+        audience: { id: 'Pendidikan formal', en: 'Formal education' },
         title: 'Latihan Python',
-        description:
-            'A coding practice website for a programming course: students write and run Python right in the browser and move on by passing coding challenges. Already used by students.',
-        meta: 'Algorithms & programming · Bahasa Indonesia',
+        description: {
+            id: 'Website latihan coding untuk mata kuliah pemrograman: peserta menulis dan menjalankan Python langsung di browser, lalu lanjut setelah lulus tantangan koding. Sudah dipakai mahasiswa.',
+            en: 'A coding practice website for a programming course: students write and run Python right in the browser and move on by passing coding challenges. Already used by students.',
+        },
+        meta: { id: 'Algoritma & pemrograman · Bahasa Indonesia', en: 'Algorithms & programming · Bahasa Indonesia' },
         tint: false,
         links: [
             // internal: opens inside this site (see components/pages/LatihanPage.jsx)
-            { label: 'Open website', href: '#/latihan', internal: true },
-            { label: 'Source', href: 'https://github.com/attoyibi/latihan-python-usg' },
+            { label: { id: 'Buka website', en: 'Open website' }, href: '#/latihan', internal: true },
+            { label: { id: 'Kode sumber', en: 'Source' }, href: 'https://github.com/attoyibi/latihan-python-usg' },
         ],
         courses: [],
     },
     {
         id: 'aion',
-        audience: 'Corporate training',
-        title: 'Teaching materials, playgrounds and tasks for AION',
-        description:
-            'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Four courses are published, one playground per course day.',
-        meta: 'English and German',
+        audience: { id: 'Pelatihan korporat', en: 'Corporate training' },
+        title: { id: 'Materi ajar, playground, dan tugas untuk AION', en: 'Teaching materials, playgrounds and tasks for AION' },
+        description: {
+            id: 'Saya membantu AION membangun pembelajaran korporat untuk peserta di Jerman: materi belajar, playground interaktif, dan tugas dengan dokumen kerja yang bisa diekspor. Empat kursus sudah terbit, masing-masing satu playground per hari kursus.',
+            en: 'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Four courses are published, one playground per course day.',
+        },
+        meta: { id: 'Bahasa Inggris dan Jerman', en: 'English and German' },
         tint: true,
         links: [],
         courses: [
             {
                 id: 'customer-success',
-                title: 'Customer Success · Retention Lab',
+                title: { id: 'Customer Success · Retention Lab', en: 'Customer Success · Retention Lab' },
                 repo: 'https://github.com/orgs/AION-CS/repositories',
                 playgrounds: [
                     ['Day 1', 'https://aion-cs-day1.vercel.app/'],
@@ -68,7 +72,7 @@ export const MATERIALS = [
             },
             {
                 id: 'ux',
-                title: 'UX · Class playgrounds',
+                title: { id: 'UX · Playground kelas', en: 'UX · Class playgrounds' },
                 repo: null,
                 playgrounds: [
                     ['Day 9', 'https://aion-uiux-day-9-gamification.netlify.app/'],
@@ -84,7 +88,7 @@ export const MATERIALS = [
             },
             {
                 id: 'green-it',
-                title: 'Green IT',
+                title: { id: 'Green IT', en: 'Green IT' },
                 repo: 'https://github.com/orgs/AION-Green-IT/repositories',
                 playgrounds: [
                     ['Day 1', 'https://aion-green-it-day1-green-it-as-a-le.vercel.app/'],
@@ -108,7 +112,7 @@ export const MATERIALS = [
             {
                 // One website (aion-dl.vercel.app) with a route per day: /day/1/ ... /day/16/
                 id: 'digital-learning',
-                title: 'Digital Learning',
+                title: { id: 'Pembelajaran Digital', en: 'Digital Learning' },
                 playgrounds: Array.from({ length: 16 }, (_, i) => [`Day ${i + 1}`, `https://aion-dl.vercel.app/day/${i + 1}/`]),
             },
         ],
