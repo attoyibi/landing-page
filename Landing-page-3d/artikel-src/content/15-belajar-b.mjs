@@ -20,6 +20,12 @@ export default [
             { callout: 'AI dapat mempercepat pembuatan draf silabus, soal, dan contoh. Kualitas rancangan tetap bergantung pada pemahaman Anda tentang peserta dan tujuan. Anggap AI sebagai asisten produksi, bukan perancang utama.', kind: 'info', title: 'Dengan bantuan AI' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Tahap ADDIE yang memeriksa hasil dan memperbaiki?', options: ['Analyze', 'Implement', 'Evaluate'], answer: 2, why: 'Evaluate mengukur hasil dan memberi masukan.' }, { q: 'Kata kerja mana yang menunjukkan tujuan terukur?', options: ['Mengerti', 'Menerapkan', 'Menyadari'], answer: 1, why: '"Menerapkan" bisa diamati dan diukur.' }, { q: 'Tingkat Bloom yang paling tinggi?', options: ['Memahami', 'Menganalisis', 'Mencipta'], answer: 2, why: 'Mencipta berada di puncak taksonomi yang direvisi.' }] },
         ],
+        takeaways: [
+            'ADDIE punya lima tahap: Analyze, Design, Develop, Implement, dan Evaluate, dan berbentuk siklus, bukan garis lurus.',
+            'Tulis tujuan belajar dengan kata kerja terukur pada tingkat Bloom yang tepat: mengingat, memahami, menerapkan, menganalisis, mengevaluasi, mencipta.',
+            'Tujuan yang baik memuat siapa, kata kerja terukur, apa yang dikuasai, dan standar keberhasilan.',
+            'Sesuaikan latihan dengan tujuan, nilai kemampuan bukan hafalan, beri umpan balik cepat, dan pakai AI sebagai asisten produksi, bukan perancang utama.',
+        ],
         faq: [['Apakah ADDIE masih relevan?', 'Ya, sebagai kerangka proses, sering dipadukan dengan pendekatan yang lebih lincah dan iteratif.'], ['Bagaimana menentukan durasi pelatihan?', 'Mulai dari tujuan dan latihan yang dibutuhkan, bukan dari jumlah jam yang tersedia. Lalu sesuaikan dengan batasan nyata.'], ['Apakah tujuan belajar harus selalu tertulis?', 'Ya. Tujuan tertulis memandu materi, penilaian, dan komunikasi dengan peserta.']],
     },
 
@@ -39,6 +45,12 @@ export default [
             { w: 'cards', title: 'Ketuk kartu untuk menemukan jebakannya', items: [{ tag: 'Jebakan', front: 'Peserta menjawab asal demi poin.', backTag: 'Perbaikan', back: 'Beri nilai pada ketepatan dan penjelasan, kurangi poin untuk tebakan acak.' }, { tag: 'Jebakan', front: 'Pemula menyerah karena peringkatnya jauh di bawah.', backTag: 'Perbaikan', back: 'Tampilkan peringkat pribadi atau kelompok setingkat.' }, { tag: 'Jebakan', front: 'Setelah hadiah dihentikan, peserta berhenti belajar.', backTag: 'Perbaikan', back: 'Bangun motivasi dari kemajuan nyata, bukan hanya hadiah luar.' }, { tag: 'Jebakan', front: 'Tampilan ramai mengalihkan dari materi.', backTag: 'Perbaikan', back: 'Sederhanakan. Elemen permainan harus mendukung belajar.' }] },
             { callout: 'Gamifikasi memperbesar yang sudah baik: materi yang jelas dan relevan. Pada materi yang membingungkan, poin dan lencana tidak akan menyelamatkannya.', kind: 'warn', title: 'Perlu diingat' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Apa risiko utama poin yang tidak bermakna?', options: ['Peserta mengejar angka, bukan pemahaman', 'Aplikasi menjadi lambat', 'Materi terlalu pendek'], answer: 0, why: 'Poin tanpa kaitan dengan belajar mengalihkan fokus.' }, { q: 'Mengapa papan peringkat perlu hati-hati?', options: ['Bisa mematahkan semangat peserta pemula', 'Tidak bisa dibuat', 'Selalu meningkatkan belajar'], answer: 0, why: 'Tidak semua orang termotivasi oleh persaingan.' }] },
+        ],
+        takeaways: [
+            'Empat prinsip menjaga motivasi: tujuan jelas, tantangan pas, umpan balik cepat, dan rasa kemajuan.',
+            'Poin harus mencerminkan penguasaan, bukan kehadiran atau klik; lencana menandai pencapaian yang bermakna.',
+            'Papan peringkat bisa mematahkan semangat pemula, jadi buat opsional atau berbasis kemajuan pribadi.',
+            'Gamifikasi memperbesar yang sudah baik; ia tidak bisa menyelamatkan materi yang membingungkan, dan perlu diuji dengan peserta sungguhan.',
         ],
         faq: [['Apa bedanya gamifikasi dan game-based learning?', 'Gamifikasi menambahkan unsur permainan ke aktivitas belajar. Game-based learning memakai permainan utuh sebagai media belajar.'], ['Apakah gamifikasi cocok untuk semua usia?', 'Bisa, dengan penyesuaian. Orang dewasa sering lebih menghargai relevansi dan kemajuan nyata daripada hadiah kekanak-kanakan.'], ['Bagaimana mengukur keberhasilannya?', 'Lihat penyelesaian, penguasaan (skor penilaian), dan keterlibatan jangka panjang, bukan hanya jumlah poin.']],
     },
@@ -60,6 +72,12 @@ export default [
             { callout: 'Microlearning bagus untuk keterampilan spesifik dan penyegaran, kurang cocok sebagai satu-satunya cara mengajarkan topik yang saling bergantung dan membutuhkan pemahaman mendalam. Gabungkan dengan sesi latihan dan proyek.', kind: 'warn', title: 'Batasannya' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Ciri utama microlearning?', options: ['Satu tujuan per modul singkat', 'Sesi panjang tanpa jeda', 'Hanya video'], answer: 0, why: 'Fokus pada satu tujuan dalam unit kecil.' }, { q: 'Kapan microlearning kurang cocok?', options: ['Penyegaran keterampilan', 'Topik kompleks yang saling bergantung dan butuh pemahaman mendalam', 'Pengingat prosedur'], answer: 1, why: 'Topik kompleks butuh waktu dan konteks lebih utuh.' }] },
         ],
+        takeaways: [
+            'Modul mikro biasanya 3 sampai 10 menit dan mengejar satu tujuan belajar yang jelas.',
+            'Buka dengan alasan kenapa ini penting, sertakan satu latihan untuk langsung dicoba, dan hubungkan tiap modul dengan yang sebelum dan sesudahnya.',
+            'Tambahkan pengulangan berjarak untuk menjaga ingatan, dan buat modul aksesibel (teks untuk video, kontras cukup).',
+            'Cocok untuk keterampilan spesifik dan penyegaran, kurang cocok sebagai satu-satunya cara mengajarkan topik saling bergantung yang butuh pemahaman mendalam.',
+        ],
         faq: [['Berapa durasi ideal modul mikro?', 'Umumnya 3 sampai 10 menit, bergantung pada materi. Yang penting satu tujuan yang jelas.'], ['Apakah cocok untuk pelajar sekolah?', 'Bisa sebagai penguat dan latihan harian, dipadukan dengan pembelajaran utama bersama guru.'], ['Bagaimana mengukur keberhasilannya?', 'Lihat penyelesaian, skor latihan, dan penerapan di pekerjaan atau tugas nyata, bukan hanya jumlah penayangan.']],
     },
 
@@ -79,6 +97,12 @@ export default [
             { h2: 'Daftar periksa platform belajar' },
             { w: 'checklist', title: 'Uji platform Anda', desc: 'Centang yang sudah terpenuhi. Progres tersimpan di browser ini.', items: ['Kontras teks memenuhi minimal 4,5:1.', 'Semua fungsi dapat dipakai dengan papan ketik.', 'Indikator fokus terlihat jelas.', 'Gambar bermakna punya teks alternatif.', 'Video punya subtitel dan transkrip.', 'Formulir punya label jelas dan pesan error yang membantu.', 'Tata letak tetap terbaca saat diperbesar 200%.', 'Tidak ada konten berkedip cepat.', 'Bahasa sederhana dan tujuan tiap halaman jelas.', 'Sudah dicoba dengan pembaca layar atau alat pemeriksa otomatis.'] },
             { callout: 'Alat pemeriksa otomatis hanya menangkap sebagian masalah. Uji manual dengan papan ketik dan pembaca layar, dan libatkan pengguna dengan kebutuhan khusus bila memungkinkan.', kind: 'info', title: 'Catatan' },
+        ],
+        takeaways: [
+            'WCAG bertumpu pada empat prinsip, POUR: Perceivable, Operable, Understandable, dan Robust.',
+            'Target AA meminta rasio kontras teks minimal 4,5:1 (3:1 untuk teks besar).',
+            'Kesalahan paling umum: teks berkontras rendah, gambar tanpa teks alternatif, tidak bisa dipakai dengan papan ketik, video tanpa subtitel, dan status hanya dengan warna.',
+            'Alat pemeriksa otomatis hanya menangkap sebagian masalah, jadi uji juga secara manual dengan papan ketik dan pembaca layar.',
         ],
         faq: [['Apa itu AA dan AAA pada WCAG?', 'Tingkat kepatuhan. AA adalah target umum yang dianggap wajar. AAA lebih ketat dan tidak selalu mungkin untuk semua konten.'], ['Apakah aksesibilitas hanya untuk penyandang disabilitas?', 'Manfaatnya lebih luas: orang yang menggunakan perangkat kecil, di bawah sinar matahari, dengan tangan terluka, atau koneksi lambat juga terbantu.'], ['Dari mana memulai?', 'Mulai dari kontras, teks alternatif, dan keyboard. Lalu jadikan aksesibilitas bagian dari proses desain sejak awal.']],
     },

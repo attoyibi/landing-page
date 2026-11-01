@@ -19,6 +19,12 @@ export default [
             { callout: 'Bila Anda sedang sangat larut dalam sebuah tugas, tidak perlu memutus paksa. Teknik ini alat bantu, bukan aturan. Gunakan terutama saat sulit memulai atau mudah teralih.', kind: 'info', title: 'Fleksibel' },
             { w: 'checklist', title: 'Persiapan satu sesi', items: ['Tulis satu tugas spesifik untuk sesi ini.', 'Matikan notifikasi atau aktifkan mode fokus.', 'Siapkan air minum dan bahan yang dibutuhkan.', 'Siapkan kertas kecil untuk mencatat gangguan yang muncul.', 'Saat istirahat, benar-benar menjauh dari layar.'] },
         ],
+        takeaways: [
+            'Kerja 25 menit, istirahat 5 menit, ulangi empat kali, lalu istirahat panjang 15-30 menit.',
+            'Batas waktu yang jelas membuat memulai terasa ringan, dan jeda teratur mengurangi kelelahan serta menjaga kualitas fokus.',
+            'Catat gangguan dan tunda ke jeda, jangan ditanggapi seketika.',
+            'Sesuaikan dengan Anda (25/5, 50/10, atau 15/3), dan jangan memutus paksa bila sedang larut dalam tugas.',
+        ],
         faq: [['Bagaimana bila terganggu di tengah sesi?', 'Catat gangguan singkat dan kembali. Bila gangguan penting, akhiri sesi dan mulai ulang nanti.'], ['Apakah cocok untuk belajar?', 'Ya, sangat cocok. Gabungkan dengan latihan mengingat kembali pada akhir tiap sesi.'], ['Berapa pomodoro sehari yang wajar?', 'Banyak orang mencapai sekitar 6 sampai 10 sesi fokus berkualitas per hari. Mulai dari yang realistis.']],
     },
 
@@ -39,6 +45,12 @@ export default [
             { w: 'checklist', title: 'Kebiasaan yang mendukung', desc: 'Centang yang sudah Anda lakukan. Progres tersimpan di browser ini.', items: ['Membuat pertanyaan, bukan hanya menyalin catatan.', 'Menguji diri sebelum membuka jawaban.', 'Mengulang tepat ketika mulai lupa, bukan saat sudah lupa total.', 'Membuat kartu sendiri, bukan hanya memakai punya orang lain.', 'Menyisihkan 15-20 menit tiap hari untuk mengulang.'] },
             { callout: 'Mengulang dengan membaca ulang terasa nyaman tetapi kurang efektif. Mengingat kembali tanpa melihat (retrieval practice) memberi manfaat jauh lebih besar bagi ingatan jangka panjang.', kind: 'good', title: 'Penting' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Kapan waktu terbaik mengulang?', options: ['Tepat ketika mulai lupa', 'Hanya sehari sebelum ujian', 'Tidak perlu mengulang'], answer: 0, why: 'Mengulang saat mulai memudar memperkuat ingatan secara efisien.' }, { q: 'Apa yang terjadi pada jeda ulang setelah berhasil mengingat?', options: ['Diperpanjang', 'Diperpendek', 'Tetap'], answer: 0, why: 'Ingatan lebih kuat sehingga jeda bisa lebih panjang.' }] },
+        ],
+        takeaways: [
+            'Ingatan memudar cepat di awal lalu melambat; tiap mengingat kembali dengan berhasil membuat ingatan lebih kuat dan lebih lambat memudar.',
+            'Pengulangan berjarak mengulang pada jeda yang makin panjang, misalnya hari ke-1, 3, 7, 14, dan 30.',
+            'Ubah materi menjadi pertanyaan atau kartu, uji diri sebelum melihat jawaban, dan perpanjang jeda setelah jawaban benar.',
+            'Membaca ulang terasa nyaman tetapi kurang efektif; mengingat kembali tanpa melihat memberi manfaat jangka panjang jauh lebih besar.',
         ],
         faq: [['Apakah cocok untuk semua pelajaran?', 'Sangat cocok untuk fakta, kosakata, rumus, dan konsep. Untuk keterampilan, gabungkan dengan latihan langsung.'], ['Berapa kartu baru sebaiknya per hari?', 'Mulai dari sedikit (misalnya 10-20), karena jumlah ulangan menumpuk. Pertahankan yang bisa dikelola.'], ['Apakah ada aplikasinya?', 'Banyak aplikasi kartu dengan penjadwalan otomatis. Pilih yang sesuai kebutuhan Anda.']],
     },
@@ -109,6 +121,12 @@ export default [
             { h2: 'Kesalahan umum' },
             { w: 'cards', title: 'Ketuk kartu untuk solusinya', items: [{ tag: 'Kesalahan', front: 'Target terlalu besar di awal.', backTag: 'Solusi', back: 'Kecilkan sampai terasa konyol mudah. Naikkan perlahan.' }, { tag: 'Kesalahan', front: 'Mengandalkan motivasi.', backTag: 'Solusi', back: 'Motivasi naik turun. Bangun pemicu dan lingkungan yang membuatnya otomatis.' }, { tag: 'Kesalahan', front: 'Satu hari terlewat lalu menyerah.', backTag: 'Solusi', back: 'Aturan: jangan melewatkan dua kali berturut-turut.' }, { tag: 'Kesalahan', front: 'Membangun banyak kebiasaan sekaligus.', backTag: 'Solusi', back: 'Satu atau dua dulu sampai stabil.' }] },
             { w: 'checklist', title: 'Pekan pertama', items: ['Memilih satu kebiasaan saja.', 'Menentukan pemicu yang jelas.', 'Menyiapkan lingkungan (buku di bantal, sepatu di dekat pintu).', 'Mencatat setiap hari di kalender.', 'Meninjau di akhir pekan dan menyesuaikan.'] },
+        ],
+        takeaways: [
+            'Tiga prinsip: mulai sangat kecil, kaitkan dengan kebiasaan lama, dan rayakan serta catat.',
+            'Bangun identitas dan konsistensi dulu; jumlahnya menyusul.',
+            'Pakai rumus "Setelah saya [kebiasaan lama], saya akan [aksi sangat kecil]. Lalu saya [hadiah kecil]".',
+            'Jangan mengandalkan motivasi, jangan membangun banyak kebiasaan sekaligus, dan pegang aturan jangan melewatkan dua kali berturut-turut.',
         ],
         faq: [['Berapa lama membentuk kebiasaan?', 'Tidak ada angka ajaib. Penelitian menunjukkan rentangnya lebar, dari beberapa minggu hingga beberapa bulan, tergantung kebiasaan dan orangnya.'], ['Bagaimana bila saya gagal sebentar?', 'Wajar. Kembali secepatnya dan perkecil targetnya agar mudah dimulai lagi.'], ['Apakah aplikasi pelacak kebiasaan membantu?', 'Bisa, selama sederhana. Kalender dan centang di kertas juga efektif.']],
     },
