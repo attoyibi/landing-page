@@ -360,7 +360,7 @@ export function page(a, all, lang = 'id', alt = null) {
 <link rel="canonical" href="${url}">
 ${hreflang}<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:site_name" content="Muhammad Muchson Attoyibi">
 <meta property="og:locale" content="${L.ogLocale}">
 ${alt ? `<meta property="og:locale:alternate" content="${STR[L.switchLang].ogLocale}">\n` : ''}<meta property="og:url" content="${url}">
 <meta property="og:title" content="${esc(a.title)}">

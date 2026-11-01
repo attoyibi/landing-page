@@ -158,7 +158,7 @@ function aboutPage(lang) {
 <link rel="alternate" hreflang="x-default" href="${SITE}/tentang/">
 <link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
 <meta property="og:type" content="profile">
-<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:site_name" content="Muhammad Muchson Attoyibi">
 <meta property="og:locale" content="${L.ogLocale}">
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${esc(L.title)}">
