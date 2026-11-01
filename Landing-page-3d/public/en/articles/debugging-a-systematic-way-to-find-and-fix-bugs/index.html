@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debugging: A Systematic Way to Find and Fix Bugs</title>
+<meta name="description" content="Debugging is not guessing. Learn a systematic method: reproduce, narrow down, read the error message and test the fix, with a list of common causes.">
+<meta name="keywords" content="debugging, bug, error, programming, troubleshooting">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/">
+<meta property="og:title" content="Debugging: A Systematic Way to Find and Fix Bugs">
+<meta property="og:description" content="Debugging is not guessing. Learn a systematic method: reproduce, narrow down, read the error message and test the fix, with a list of common causes.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Debugging: A Systematic Way to Find and Fix Bugs">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Debugging: A Systematic Way to Find and Fix Bugs">
+<meta name="twitter:description" content="Debugging is not guessing. Learn a systematic method: reproduce, narrow down, read the error message and test the fix, with a list of common causes.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Debugging: A Systematic Way to Find and Fix Bugs","description":"Debugging is not guessing. Learn a systematic method: reproduce, narrow down, read the error message and test the fix, with a list of common causes.","image":["https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"debugging, bug, error, programming, troubleshooting","articleSection":"Coding & Algorithms","wordCount":267,"mainEntityOfPage":"https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Debugging: A Systematic Way to Find and Fix Bugs","item":"https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can AI help with debugging?","acceptedAnswer":{"@type":"Answer","text":"A great deal for explaining errors and suggesting causes. Still test its suggestions and understand the reasons."}},{"@type":"Question","name":"How do I deal with a bug that appears occasionally?","acceptedAnswer":{"@type":"Answer","text":"Add logging, look for a pattern (time, particular data, order) and try to reproduce it with the same data."}},{"@type":"Question","name":"What is a breakpoint?","acceptedAnswer":{"@type":"Answer","text":"A point where the program stops so you can inspect variable values and run line by line."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/debugging-cara-mencari-dan-memperbaiki-bug/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#the-debugging-cycle">The debugging cycle</a></li><li><a href="#the-practical-steps">The practical steps</a></li><li><a href="#helpful-tools">Helpful tools</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Debugging: A Systematic Way to Find and Fix Bugs</h1>
+<p class="lead">Experienced programmers are not always better at writing code without bugs. They are better at finding them. Debugging is a skill that can be learned, with a method much like a scientist's: hypothesis, experiment, conclusion.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>The cycle: reproduce the problem, guess the cause, test the guess with an experiment, then fix and verify.</li><li>Read the error message from the bottom up, narrow the area by switching parts off or halving it and check your assumptions by printing values.</li><li>Change one thing at a time, and add a test so the bug does not return.</li><li>When asking for help, include what you expected, what happened, the full error and the smallest code that still shows the bug.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="the-debugging-cycle">The debugging cycle</h2>
+<figure class="diagram"><svg viewBox="0 0 520 330" role="img" aria-label="The debugging cycle" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><path d="M291.5 86.5 Q328.05634918610406 91.94365081389596 335.6 130.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M333.5 191.5 Q328.05634918610406 228.05634918610406 289.4 235.6" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M228.5 233.5 Q191.94365081389594 228.05634918610406 184.4 189.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><path d="M186.5 128.5 Q191.94365081389594 91.94365081389596 230.6 84.4" fill="none" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="198" y="33" width="124" height="54" rx="10" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><text x="260" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Reproduce the</tspan><tspan x="260" dy="15">problem</tspan></text><rect x="303" y="138" width="124" height="54" rx="10" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><text x="365" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="365" dy="0">Guess the</tspan><tspan x="365" dy="15">cause</tspan></text><rect x="198" y="243" width="124" height="69" rx="10" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><text x="260" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="260" dy="0">Test the guess</tspan><tspan x="260" dy="15">with an</tspan><tspan x="260" dy="15">experiment</tspan></text><rect x="93" y="138" width="124" height="39" rx="10" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><text x="155" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#0f1a33"><tspan x="155" dy="0">Fix and verify</tspan></text></svg><figcaption><b>Figure 1.</b> If the guess was wrong, go back to the guess step with new information.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Reproduce the problem</li><li>Guess the cause</li><li>Test the guess with an experiment</li><li>Fix and verify</li></ol><p>then back to the first step.</p></details></figure>
+<h2 id="the-practical-steps">The practical steps</h2>
+<ol><li><b>Reproduce.</b> Find the exact steps that bring up the bug. A bug that cannot be reproduced cannot be confirmed fixed.</li><li><b>Read the error message.</b> It usually names the kind of problem, the file and the line. Read from the bottom up to see the source.</li><li><b>Narrow it down.</b> Switch off parts of the code or halve the suspect area, then see whether the bug still appears.</li><li><b>Check assumptions.</b> Print variable values at key points. Do they hold what you imagined?</li><li><b>Change one thing at a time.</b> If you change many, you do not know which one worked.</li><li><b>Verify and add a test.</b> Make sure the bug is gone and does not come back.</li></ol>
+<div data-w="cards"><script type="application/json">{"title":"Common causes of bugs, tap to see how to check","items":[{"tag":"Cause","front":"Off-by-one: a loop that runs one too many or one too few.","backTag":"Check","back":"Print the start and end indexes. Test with an empty list and a single element."},{"tag":"Cause","front":"An unexpected None/null/undefined value.","backTag":"Check","back":"Print the value before using it; add a check."},{"tag":"Cause","front":"The wrong data type: the text \"5\" treated as the number 5.","backTag":"Check","back":"Print the type with type() or typeof."},{"tag":"Cause","front":"Shared data (state) changed without you noticing.","backTag":"Check","back":"Find who else changes that variable."},{"tag":"Cause","front":"A different environment: library version or configuration.","backTag":"Check","back":"Compare versions and environment variables between machines."}]}</script></div>
+<h2 id="helpful-tools">Helpful tools</h2>
+<div data-w="checklist"><script type="application/json">{"title":"Debugging kit","items":["Print statements or logs at key points.","A debugger with breakpoints to see values step by step.","Git to compare and return to a version that worked.","Automated tests that catch the bug so it does not return.","Searching the error message in documentation or forums, then checking the context is the same.","Explaining the problem in words (rubber duck) to find the flaw in your thinking."]}</script></div>
+<div class="callout good" role="note"><b>How to ask</b><p>When asking for help (from a colleague or an AI), include: what you expected, what happened, the full error message and the smallest piece of code that still shows the bug. A good question often answers half the problem.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"Why change one thing at a time?","options":["To know which change had an effect","To make the code shorter","To be faster"],"answer":0,"why":"Many changes make the cause unclear."},{"q":"A good first step in debugging?","options":["Rewrite everything","Reproduce the problem consistently","Delete the tests"],"answer":1,"why":"Without reproduction, it is hard to be sure of a fix."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Can AI help with debugging?</summary><div>A great deal for explaining errors and suggesting causes. Still test its suggestions and understand the reasons.</div></details>
+<details class="faq"><summary>How do I deal with a bug that appears occasionally?</summary><div>Add logging, look for a pattern (time, particular data, order) and try to reproduce it with the same data.</div></details>
+<details class="faq"><summary>What is a breakpoint?</summary><div>A point where the program stops so you can inspect variable values and run line by line.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/what-is-an-api/"><img src="/en/articles/what-is-an-api/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>What Is an API? A Simple Restaurant Analogy</span></a><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/binary-search-explained-visually/"><img src="/en/articles/binary-search-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Explained Visually: Search by Halving</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

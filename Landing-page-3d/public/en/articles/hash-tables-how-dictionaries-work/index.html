@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hash Tables: How a Dictionary Is So Fast · Muhammad Muchson</title>
+<meta name="description" content="Why is looking up data in a Python dictionary almost instant? Understand hash functions, collisions and try a hash table simulation right in your browser.">
+<meta name="keywords" content="hash table, dictionary, data structures, hash, Python">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/">
+<meta property="og:title" content="Hash Tables: How a Dictionary Is So Fast">
+<meta property="og:description" content="Why is looking up data in a Python dictionary almost instant? Understand hash functions, collisions and try a hash table simulation right in your browser.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hash Tables: How a Dictionary Is So Fast">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hash Tables: How a Dictionary Is So Fast">
+<meta name="twitter:description" content="Why is looking up data in a Python dictionary almost instant? Understand hash functions, collisions and try a hash table simulation right in your browser.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hash Tables: How a Dictionary Is So Fast","description":"Why is looking up data in a Python dictionary almost instant? Understand hash functions, collisions and try a hash table simulation right in your browser.","image":["https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"hash table, dictionary, data structures, hash, Python","articleSection":"Coding & Algorithms","wordCount":236,"mainEntityOfPage":"https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Hash Tables: How a Dictionary Is So Fast","item":"https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is a hash table always O(1)?","acceptedAnswer":{"@type":"Answer","text":"On average yes. In the worst case with many collisions it can become O(n), but modern implementations avoid that."}},{"@type":"Question","name":"Is hashing the same as encryption?","acceptedAnswer":{"@type":"Answer","text":"No. A hash is for fast lookup or a data fingerprint. Encryption is for keeping data secret and can be reversed."}},{"@type":"Question","name":"Is dictionary order guaranteed?","acceptedAnswer":{"@type":"Answer","text":"In Python 3.7 and later, insertion order is preserved. That is a property of the language, not a general property of hash tables."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/hash-table-cara-kerja-dictionary/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#the-basic-idea">The basic idea</a></li><li><a href="#collisions">Collisions</a></li><li><a href="#in-python">In Python</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Hash Tables: How a Dictionary Is So Fast</h1>
+<p class="lead">A Python dictionary, a JavaScript object and a database index use the same idea: turn a key into a drawer number, then open that drawer directly. There is no need to check one by one.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>A hash function turns a key into a number, the number picks a drawer, and you open that drawer directly: O(1) on average.</li><li>Two different keys can land in the same drawer; this is a collision and cannot be avoided entirely.</li><li>Two common fixes are chaining (each drawer holds a list) and open addressing (look for the nearest empty drawer).</li><li>Dictionary keys must be hashable and unchanging (strings, numbers, tuples), which is why a list cannot be a key.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="the-basic-idea">The basic idea</h2>
+<figure class="diagram"><svg viewBox="0 0 728 118" role="img" aria-label="How a hash table stores and looks up" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Key</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">for example the word</tspan><tspan x="85" dy="14">&quot;apple&quot;</tspan></text><line x1="164" y1="59" x2="192" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Hash function</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">turns the key into a</tspan><tspan x="271" dy="14">number</tspan></text><line x1="350" y1="59" x2="378" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Drawer number</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">the number mod the</tspan><tspan x="457" dy="14">number of drawers</tspan></text><line x1="536" y1="59" x2="564" y2="59" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="98" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Open the drawer</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">store or fetch the</tspan><tspan x="643" dy="14">value</tspan></text></svg><figcaption><b>Figure 1.</b> Because it goes straight to the right drawer, lookup is O(1) on average.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Key: for example the word &quot;apple&quot;</li><li>Hash function: turns the key into a number</li><li>Drawer number: the number mod the number of drawers</li><li>Open the drawer: store or fetch the value</li></ol></details></figure>
+<div data-w="hash"><script type="application/json">{"title":"A mini hash table","desc":"The hash function in this demo adds up the letter codes, then takes the remainder after dividing by 7. Store a few words and look for collisions."}</script></div>
+<h2 id="collisions">Collisions</h2>
+<p>Two different keys can produce the same drawer number. This is called a collision, and it cannot be avoided entirely. There are two common approaches: <b>chaining</b> (a drawer holds a list, as in the demo) and <b>open addressing</b> (look for the nearest empty drawer). A good hash table spreads keys evenly and grows the table when it starts to fill up.</p>
+<div data-w="compare"><script type="application/json">{"title":"Two ways to handle collisions","tabs":[{"label":"Chaining","html":"Each drawer holds a list. A collision just adds an item to that list. Simple, but a long list slows down lookup."},{"label":"Open addressing","html":"If a drawer is taken, try the next one by a rule. It saves memory, but needs special handling when deleting."}]}</script></div>
+<h2 id="in-python">In Python</h2>
+<figure class="codebox"><pre><code>prices = {&quot;apple&quot;: 12000, &quot;orange&quot;: 15000}
+prices[&quot;mango&quot;] = 20000        # store: O(1) on average
+print(prices[&quot;orange&quot;])        # look up: O(1) on average
+print(&quot;banana&quot; in prices)      # check a key exists: False</code></pre></figure>
+<div class="callout info" role="note"><b>The key rule</b><p>A dictionary key must be "hashable" and unchanging (for example a string, a number or a tuple). A list cannot be a key because its contents can change.</p></div>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"Why is hash table lookup fast?","options":["It goes straight to the drawer given by the hash function","It sorts first","It checks all the data"],"answer":0,"why":"The drawer number is calculated from the key."},{"q":"What is a collision?","options":["Two keys go into the same drawer","The program stops","A key is lost"],"answer":0,"why":"That is a hash collision."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Is a hash table always O(1)?</summary><div>On average yes. In the worst case with many collisions it can become O(n), but modern implementations avoid that.</div></details>
+<details class="faq"><summary>Is hashing the same as encryption?</summary><div>No. A hash is for fast lookup or a data fingerprint. Encryption is for keeping data secret and can be reversed.</div></details>
+<details class="faq"><summary>Is dictionary order guaranteed?</summary><div>In Python 3.7 and later, insertion order is preserved. That is a property of the language, not a general property of hash tables.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/binary-search-explained-visually/"><img src="/en/articles/binary-search-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Explained Visually: Search by Halving</span></a><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/selection-sort-and-insertion-sort-explained/"><img src="/en/articles/selection-sort-and-insertion-sort-explained/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Selection Sort and Insertion Sort: Two Simple Methods</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

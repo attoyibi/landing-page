@@ -20,6 +20,12 @@ export default [
             { callout: 'Alat pengembang di browser (tekan F12, tab Network) menunjukkan setiap permintaan yang terjadi saat halaman dibuka, lengkap dengan ukuran dan waktunya. Itu cara terbaik untuk melihat sendiri semua langkah di atas.', kind: 'good', title: 'Coba sendiri' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Tugas DNS adalah...', options: ['Mengenkripsi data', 'Mengubah nama domain menjadi alamat IP', 'Menampilkan halaman'], answer: 1, why: 'DNS menerjemahkan nama ke alamat IP.' }, { q: 'Kode 404 artinya...', options: ['Halaman tidak ditemukan', 'Server rusak', 'Berhasil'], answer: 0, why: 'Not Found.' }] },
         ],
+        takeaways: [
+            'Perjalanannya: ketik alamat, DNS mencari alamat IP, koneksi aman dibuat, browser mengirim permintaan HTTP, server menjawab, dan browser merender halaman.',
+            'DNS adalah buku telepon internet; HTTPS adalah HTTP dengan enkripsi, ditandai gembok di bilah alamat.',
+            'Kenali kode status: 200 berhasil, 301/302 dialihkan, 403 dilarang, 404 tidak ditemukan, 500 kesalahan server, 503 tidak tersedia.',
+            'Situs lambat biasanya karena gambar besar, JavaScript berat, server jauh tanpa CDN, tanpa cache, atau terlalu banyak permintaan eksternal.',
+        ],
         faq: [['Apa bedanya HTTP dan HTTPS?', 'HTTPS adalah HTTP dengan enkripsi (TLS) sehingga data tidak mudah disadap di perjalanan. Hampir semua situs kini memakainya.'], ['Apa itu CDN?', 'Jaringan server di banyak lokasi yang menyimpan salinan konten agar dikirim dari titik terdekat pengunjung.'], ['Mengapa kadang situs bisa dibuka di satu jaringan tetapi tidak di jaringan lain?', 'Bisa karena masalah DNS, pemblokiran, atau rute jaringan penyedia layanan internet.']],
     },
 
@@ -41,6 +47,12 @@ export default [
             { w: 'checklist', title: 'Urutan belajar React', items: ['JavaScript modern dikuasai (fungsi, array, destructuring).', 'Memahami komponen dan JSX.', 'Memakai props dan state.', 'Menangani event dan formulir.', 'Menampilkan daftar dengan map dan key.', 'Mengambil data dari API (useEffect).', 'Membagi aplikasi menjadi beberapa komponen dan halaman.'] },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Data yang dikirim dari induk ke anak disebut...', options: ['State', 'Props', 'Hook'], answer: 1, why: 'Itu props.' }, { q: 'Apa yang terjadi saat state berubah?', options: ['Tidak ada', 'React menggambar ulang komponen', 'Halaman dimuat ulang penuh'], answer: 1, why: 'React memperbarui tampilan sesuai data baru.' }] },
         ],
+        takeaways: [
+            'Komponen adalah potongan UI yang bisa dipakai ulang; props adalah data hanya-baca dari induk ke anak; state adalah data milik komponen yang bisa berubah dan memicu tampilan ulang.',
+            'Anda tidak mengubah halaman secara manual; Anda mengubah data, dan tampilan mengikuti.',
+            'Selalu ubah state lewat fungsi setter, beri item daftar key yang unik dan stabil, dan jaga komponen tetap kecil.',
+            'Pelajari JavaScript dulu, lalu komponen dan JSX, props dan state, event, daftar, pengambilan data API dengan useEffect, dan pemecahan aplikasi.',
+        ],
         faq: [['Apakah React itu framework atau library?', 'Secara resmi pustaka untuk membangun UI. Banyak proyek memadukannya dengan alat lain (router, pengelola data) atau memakai kerangka kerja berbasis React.'], ['Perlu belajar JavaScript dulu?', 'Ya. Dasar JavaScript yang kuat membuat React jauh lebih mudah.'], ['Apa itu hook?', 'Fungsi khusus seperti useState dan useEffect yang menambahkan kemampuan seperti state dan efek samping ke komponen fungsi.']],
     },
 
@@ -58,6 +70,12 @@ export default [
             { w: 'choose', title: 'Jawab tiga pertanyaan', questions: [{ q: 'Keahlian utama Anda saat ini?', options: [{ t: 'JavaScript dan React', add: { rn: 3 } }, { t: 'Belum punya, mulai dari nol', add: { fl: 2, rn: 1 } }, { t: 'Java, Kotlin, atau C#', add: { fl: 2 } }] }, { q: 'Jenis aplikasi yang akan dibuat?', options: [{ t: 'Aplikasi bisnis dengan formulir dan daftar', add: { rn: 1, fl: 1 } }, { t: 'UI sangat kustom dan banyak animasi', add: { fl: 3 } }, { t: 'Mengikuti tampilan native Android dan iOS', add: { rn: 2 } }] }, { q: 'Apakah juga butuh web atau desktop dari kode yang sama?', options: [{ t: 'Ya', add: { fl: 2 } }, { t: 'Tidak, hanya mobile', add: { rn: 1 } }] }], results: { fl: { title: 'Flutter lebih sesuai', text: 'Satu sistem UI yang konsisten dan cocok untuk tampilan kustom. Siapkan waktu mempelajari Dart.' }, rn: { title: 'React Native lebih sesuai', text: 'Anda bisa memanfaatkan keahlian JavaScript dan React, sehingga kurva belajarnya lebih landai.' } } },
             { callout: 'Banyak perbandingan di internet berasal dari blog vendor dengan angka yang tidak selalu seragam. Anggap sebagai gambaran, lalu bangun satu prototipe kecil dengan masing-masing sebelum memutuskan untuk proyek besar.', kind: 'warn', title: 'Cara memutuskan' },
             { w: 'checklist', title: 'Sebelum memilih', items: ['Mencoba tutorial resmi keduanya selama beberapa jam.', 'Memastikan paket yang dibutuhkan (peta, notifikasi, pembayaran) tersedia dan terawat.', 'Memeriksa apakah tim Anda bisa merekrut atau melatih untuk teknologi itu.', 'Membuat prototipe satu layar utama dengan masing-masing.', 'Mempertimbangkan perawatan jangka panjang, bukan hanya kecepatan awal.'] },
+        ],
+        takeaways: [
+            'Flutter memakai Dart dan menggambar UI sendiri sehingga tampilannya sama di mana-mana; React Native memakai JavaScript atau TypeScript dan komponen native platform.',
+            'Bila sudah bisa JavaScript dan React, React Native lebih landai; bila ingin UI kustom, banyak animasi, atau web dan desktop dari kode yang sama, Flutter cocok.',
+            'Untuk kebanyakan aplikasi bisnis keduanya memadai; performa ekstrem atau akses perangkat keras khusus mungkin memerlukan native.',
+            'Buat prototipe kecil di masing-masing, pastikan paket yang dibutuhkan tersedia, dan pertimbangkan perawatan jangka panjang sebelum proyek besar.',
         ],
         faq: [['Mana yang lebih mudah untuk pemula?', 'Bila Anda sudah bisa JavaScript dan React, React Native terasa lebih mudah. Dari nol, keduanya setara tantangannya; Flutter menawarkan sistem yang lebih seragam.'], ['Mana yang lebih banyak lowongannya?', 'Bergantung pada pasar kerja di daerah dan industri Anda. Periksa lowongan nyata di kota atau sektor yang Anda tuju.'], ['Apakah aplikasi lintas platform seburuk native?', 'Untuk kebanyakan aplikasi bisnis, hasilnya memadai. Pada kebutuhan performa ekstrem atau akses perangkat keras khusus, native bisa lebih tepat.']],
     },
@@ -82,6 +100,12 @@ export default [
             { callout: 'Jangan menaruh kunci rahasia di dalam image atau Dockerfile. Berikan lewat variabel lingkungan atau pengelola rahasia saat container dijalankan.', kind: 'warn', title: 'Keamanan' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Image dan container: yang mana yang sedang berjalan?', options: ['Image', 'Container', 'Dockerfile'], answer: 1, why: 'Container adalah instans yang berjalan dari image.' }, { q: 'Masalah apa yang paling dibantu Docker?', options: ['"Di komputer saya jalan" tapi gagal di tempat lain', 'Menulis kode lebih cepat', 'Mengurangi ukuran database'], answer: 0, why: 'Docker menyamakan lingkungan.' }] },
         ],
+        takeaways: [
+            'Image adalah cetak biru yang tidak berubah, container adalah instans image yang berjalan, dan Dockerfile adalah resep pembuat image.',
+            'Container lebih ringan daripada mesin virtual karena berbagi kernel sistem operasi tuan rumah.',
+            'Docker membantu lingkungan tim yang seragam, menjalankan database tanpa pemasangan manual, deploy yang dapat diprediksi, dan mengisolasi aplikasi.',
+            'Jangan menaruh kunci rahasia di image atau Dockerfile; berikan lewat variabel lingkungan atau pengelola rahasia saat dijalankan.',
+        ],
         faq: [['Apakah Docker sama dengan mesin virtual?', 'Mirip tujuannya (isolasi), berbeda cara kerjanya. Container lebih ringan karena berbagi kernel sistem operasi.'], ['Apakah pemula perlu belajar Docker?', 'Tidak di tahap paling awal. Berguna setelah Anda membuat aplikasi yang perlu dijalankan di tempat lain atau bekerja dalam tim.'], ['Apa itu Docker Compose?', 'Alat untuk mendefinisikan dan menjalankan beberapa container sekaligus, misalnya aplikasi dan database, lewat satu berkas konfigurasi.']],
     },
 
@@ -101,6 +125,12 @@ export default [
             { w: 'checklist', title: 'Perlengkapan debugging', items: ['Pernyataan print atau log di titik kunci.', 'Debugger dengan breakpoint untuk melihat nilai langkah demi langkah.', 'Git untuk membandingkan dan kembali ke versi yang bekerja.', 'Tes otomatis yang menangkap bug supaya tidak kembali.', 'Mencari pesan error di dokumentasi atau forum, lalu memeriksa apakah konteksnya sama.', 'Menjelaskan masalah dengan kata-kata (rubber duck) untuk menemukan kekeliruan pikiran.'] },
             { callout: 'Saat meminta bantuan (kepada rekan atau AI), sertakan: apa yang diharapkan, apa yang terjadi, pesan error lengkap, dan potongan kode terkecil yang masih memunculkan bug. Pertanyaan yang baik sering menjawab separuh masalah.', kind: 'good', title: 'Cara bertanya' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Mengapa mengubah satu hal setiap kali?', options: ['Agar tahu perubahan mana yang berpengaruh', 'Agar kode lebih pendek', 'Agar lebih cepat'], answer: 0, why: 'Perubahan banyak membuat sebab tidak jelas.' }, { q: 'Langkah pertama debugging yang baik?', options: ['Menulis ulang semuanya', 'Mereproduksi masalah secara konsisten', 'Menghapus tes'], answer: 1, why: 'Tanpa reproduksi, sulit memastikan perbaikan.' }] },
+        ],
+        takeaways: [
+            'Siklusnya: reproduksi masalah, buat dugaan penyebab, uji dugaan dengan eksperimen, lalu perbaiki dan verifikasi.',
+            'Baca pesan error dari bawah ke atas, persempit area dengan mematikan atau membagi dua bagian kode, dan periksa asumsi dengan mencetak nilai.',
+            'Ubah satu hal sekaligus, dan tambahkan tes agar bug tidak kembali.',
+            'Saat meminta bantuan, sertakan apa yang diharapkan, apa yang terjadi, pesan error lengkap, dan potongan kode terkecil yang masih memunculkan bug.',
         ],
         faq: [['Apakah AI bisa membantu debugging?', 'Sangat bisa untuk menjelaskan error dan mengusulkan penyebab. Tetap uji usulannya dan pahami alasannya.'], ['Bagaimana menghadapi bug yang muncul sesekali?', 'Tambahkan logging, cari pola (waktu, data tertentu, urutan), dan coba reproduksi dengan data yang sama.'], ['Apa itu breakpoint?', 'Titik tempat program berhenti sehingga Anda bisa memeriksa nilai variabel dan menjalankan baris demi baris.']],
     },

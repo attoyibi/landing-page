@@ -22,6 +22,12 @@ export default [
             { ul: ['Mencari kata di kamus atau data terurut pada database (indeks).', 'Menebak parameter, misalnya mencari versi pertama yang memunculkan bug (git bisect).', 'Fungsi bawaan bahasa pemrograman untuk data terurut (misalnya modul bisect di Python).'] },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Berapa kira-kira langkah terburuk binary search untuk 1.000 data?', options: ['10', '500', '1000'], answer: 0, why: 'log₂(1000) kira-kira 10.' }, { q: 'Apa syarat binary search?', options: ['Data harus terurut', 'Data harus berupa angka genap', 'Data harus kurang dari 100'], answer: 0, why: 'Tanpa urutan, membuang separuh tidak valid.' }] },
         ],
+        takeaways: [
+            'Ambil nilai tengah dari rentang tersisa, bandingkan dengan target, buang separuh yang tidak mungkin berisi target, lalu ulangi.',
+            'Syaratnya data terurut; tanpa urutan, membuang separuh tidak valid.',
+            'Langkahnya sekitar log₂(n), yaitu O(log n): kira-kira 20 langkah untuk satu juta data.',
+            'Mengurutkan dulu juga butuh waktu, jadi untuk satu kali pencarian pada data acak, pencarian linear bisa lebih sederhana.',
+        ],
         faq: [['Apa bedanya binary search dan linear search?', 'Linear memeriksa satu per satu, biner membagi dua rentang setiap langkah. Biner jauh lebih cepat pada data besar yang terurut.'], ['Apakah binary search bisa untuk teks?', 'Bisa, selama data terurut berdasarkan aturan yang sama dengan perbandingan yang dipakai.'], ['Mengapa mid dihitung dengan (lo + hi) // 2?', 'Itu nilai tengah rentang. Pada bahasa dengan bilangan bulat terbatas, rumus lo + (hi - lo) // 2 menghindari overflow.']],
     },
 
@@ -43,6 +49,12 @@ export default [
             { h2: 'Kapan Big O penting?' },
             `Pada data kecil, hampir semua algoritma terasa cepat. Big O menjadi penting ketika data tumbuh: puluhan ribu pengguna, jutaan baris, atau perhitungan yang dijalankan berulang. Pada saat itu, memilih O(n log n) daripada O(n²) bisa berarti selisih detik dan jam.`,
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Dua perulangan bersarang, masing-masing n kali, kira-kira berkelas...', options: ['O(n)', 'O(n²)', 'O(log n)'], answer: 1, why: 'n kali n langkah.' }, { q: 'Data digandakan. Algoritma O(n) bekerja kira-kira...', options: ['Sama', 'Dua kali lebih lama', 'Empat kali lebih lama'], answer: 1, why: 'Pertumbuhan linear.' }, { q: 'Manakah yang paling cepat untuk data sangat besar?', options: ['O(n²)', 'O(n log n)', 'O(2ⁿ)'], answer: 1, why: 'n log n jauh lebih landai dibanding n² dan 2ⁿ.' }] },
+        ],
+        takeaways: [
+            'Big O mengukur bagaimana jumlah langkah tumbuh terhadap jumlah data (n), bukan detik yang sebenarnya.',
+            'Kelas yang umum: O(1) konstan, O(log n), O(n) linear, O(n log n), O(n²) kuadrat, O(2ⁿ) eksponensial.',
+            'Satu perulangan adalah O(n), perulangan di dalam perulangan adalah O(n²), membuang separuh tiap langkah adalah O(log n).',
+            'Konstanta dan suku kecil diabaikan (3n + 10 tetap O(n)); Big O penting saat data besar atau pekerjaan berulang.',
         ],
         faq: [['Apakah Big O mengukur waktu nyata?', 'Tidak. Ia mengukur pertumbuhan langkah terhadap ukuran data. Waktu nyata juga bergantung pada perangkat keras dan implementasi.'], ['Apa bedanya kasus terbaik, rata-rata, dan terburuk?', 'Kasus terbaik adalah input paling menguntungkan, terburuk adalah paling merugikan, rata-rata adalah gambaran umum. Biasanya yang dibahas adalah kasus terburuk atau rata-rata.'], ['Apakah selalu memilih Big O terkecil?', 'Tidak selalu. Kesederhanaan kode, ukuran data, dan memori juga dipertimbangkan.']],
     },
@@ -67,6 +79,12 @@ export default [
             { callout: 'Algoritma pengurutan canggih seperti Timsort (dipakai oleh sorted() di Python) memakai insertion sort untuk potongan kecil, karena pada ukuran kecil ia sangat efisien.', kind: 'info', title: 'Fakta menarik' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Algoritma yang paling cepat untuk data yang hampir urut?', options: ['Selection sort', 'Insertion sort', 'Semuanya sama'], answer: 1, why: 'Insertion sort hanya menggeser sedikit.' }, { q: 'Selection sort dikenal karena...', options: ['Jumlah penukaran yang sedikit', 'Selalu O(n)', 'Hanya untuk angka negatif'], answer: 0, why: 'Paling banyak n-1 penukaran.' }] },
         ],
+        takeaways: [
+            'Selection sort memilih yang terkecil dari sisa data lalu menukarnya ke tempatnya: penukaran sedikit, tetapi selalu memindai seluruh sisa.',
+            'Insertion sort menyisipkan tiap elemen ke posisinya di antara yang sudah terurut, seperti menyusun kartu di tangan.',
+            'Pada data yang hampir urut, insertion sort sangat cepat, sedangkan selection sort tetap lambat.',
+            'Algoritma canggih seperti Timsort memakai insertion sort untuk potongan kecil, karena pada ukuran kecil ia sangat efisien.',
+        ],
         faq: [['Mana yang sebaiknya dipelajari lebih dulu?', 'Bubble sort, lalu selection, lalu insertion. Setelah itu merge sort dan quick sort yang lebih efisien.'], ['Apakah insertion sort dipakai di dunia nyata?', 'Ya, terutama untuk data kecil dan sebagai bagian dari algoritma hibrida.'], ['Apa artinya algoritma stabil?', 'Elemen dengan nilai sama tetap dalam urutan asalnya setelah diurutkan.']],
     },
 
@@ -86,6 +104,12 @@ export default [
             { code: '# Stack: pakai list\nstack = []\nstack.append("A")   # push\nstack.append("B")\nprint(stack.pop())  # B (terakhir masuk)\n\n# Queue: pakai deque agar cepat di kedua ujung\nfrom collections import deque\nq = deque()\nq.append("A")       # enqueue\nq.append("B")\nprint(q.popleft())  # A (pertama masuk)' },
             { callout: 'Pada Python, list sudah cocok untuk stack. Untuk queue, gunakan collections.deque karena menghapus elemen pertama dari list biasa lambat pada data besar.', kind: 'good', title: 'Tips Python' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Ada tiga item masuk berurutan A, B, C. Pada stack, mana yang pertama keluar?', options: ['A', 'B', 'C'], answer: 2, why: 'Last in, first out: C masuk terakhir.' }, { q: 'Pada queue dengan urutan masuk yang sama, mana yang pertama keluar?', options: ['A', 'B', 'C'], answer: 0, why: 'First in, first out: A masuk pertama.' }] },
+        ],
+        takeaways: [
+            'Stack adalah masuk terakhir keluar pertama (LIFO) dengan push dan pop; queue adalah masuk pertama keluar pertama (FIFO) dengan enqueue dan dequeue.',
+            'Stack dipakai pada undo, tombol kembali di browser, pemeriksaan tanda kurung, dan rekursi; queue dipakai pada antrean cetak, antrean pesan, dan BFS.',
+            'Di Python, list bekerja sebagai stack, dan collections.deque bekerja sebagai queue yang cepat.',
+            'Menghapus elemen pertama list biasa lambat pada data besar, jadi pakai deque untuk queue.',
         ],
         faq: [['Apa itu call stack?', 'Tumpukan yang dipakai komputer untuk melacak fungsi yang sedang dijalankan. Setiap pemanggilan fungsi ditumpuk, lalu dikeluarkan saat selesai.'], ['Apa itu stack overflow?', 'Terjadi saat tumpukan pemanggilan fungsi terlalu dalam, misalnya rekursi tanpa titik berhenti.'], ['Apakah ada struktur lain yang mirip?', 'Ya, misalnya deque (antrean dua arah) dan priority queue (yang paling penting keluar lebih dulu).']],
     },
@@ -111,6 +135,12 @@ export default [
             { callout: 'Rekursi cocok untuk masalah yang berstruktur pohon atau bersarang: folder dalam folder, menjelajah graf, membagi dan menaklukkan. Untuk perulangan sederhana, for atau while biasanya lebih jelas dan hemat memori.', kind: 'info', title: 'Kapan memakainya' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Apa yang terjadi bila fungsi rekursif tidak punya kasus dasar?', options: ['Berjalan lebih cepat', 'Memanggil diri tanpa henti hingga error', 'Otomatis berhenti'], answer: 1, why: 'Tumpukan pemanggilan penuh dan terjadi stack overflow.' }, { q: 'Apa tujuan memoization?', options: ['Menyimpan hasil agar tidak dihitung ulang', 'Memperpanjang kode', 'Mengubah rekursi menjadi iterasi otomatis'], answer: 0, why: 'Mengurangi pekerjaan berulang.' }] },
         ],
+        takeaways: [
+            'Setiap fungsi rekursif butuh kasus dasar (jawaban langsung) dan kasus rekursif (memanggil diri dengan masalah lebih kecil).',
+            'Tanpa kasus dasar, fungsi memanggil diri tanpa henti dan program berhenti dengan stack overflow.',
+            'Fibonacci rekursif yang naif menghitung nilai yang sama berulang kali; memoization menyimpan hasil dan membuatnya cepat.',
+            'Pakai rekursi untuk masalah berstruktur pohon atau bersarang; untuk perulangan sederhana, for atau while lebih jelas dan hemat memori.',
+        ],
         faq: [['Apakah rekursi lebih lambat dari perulangan?', 'Sering sedikit lebih lambat dan memakai lebih banyak memori karena tumpukan pemanggilan. Kejelasan kode bisa membuatnya tetap pilihan baik.'], ['Berapa kedalaman rekursi maksimum?', 'Bergantung bahasa dan pengaturan. Python membatasi kedalaman default untuk mencegah stack overflow.'], ['Apa itu rekursi ekor?', 'Rekursi yang panggilan rekursifnya adalah langkah terakhir. Beberapa bahasa mengoptimalkannya, tetapi Python tidak melakukannya secara otomatis.']],
     },
 
@@ -131,6 +161,12 @@ export default [
             { code: 'harga = {"apel": 12000, "jeruk": 15000}\nharga["mangga"] = 20000        # simpan: O(1) rata-rata\nprint(harga["jeruk"])          # cari: O(1) rata-rata\nprint("pisang" in harga)       # cek keberadaan kunci: False' },
             { callout: 'Kunci dictionary harus bersifat "dapat di-hash" dan tidak berubah (misalnya string, angka, tuple). List tidak bisa dijadikan kunci karena isinya bisa berubah.', kind: 'info', title: 'Aturan kunci' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Mengapa pencarian hash table cepat?', options: ['Langsung menuju laci hasil fungsi hash', 'Mengurutkan dulu', 'Memeriksa semua data'], answer: 0, why: 'Nomor laci dihitung dari kunci.' }, { q: 'Apa itu collision?', options: ['Dua kunci masuk ke laci yang sama', 'Program berhenti', 'Kunci hilang'], answer: 0, why: 'Itu tabrakan hash.' }] },
+        ],
+        takeaways: [
+            'Fungsi hash mengubah kunci menjadi angka, angka itu memilih laci, lalu laci dibuka langsung: rata-rata O(1).',
+            'Dua kunci berbeda bisa jatuh ke laci yang sama; ini tabrakan dan tidak bisa dihindari sepenuhnya.',
+            'Dua penanganan umum adalah chaining (tiap laci berisi daftar) dan open addressing (cari laci kosong terdekat).',
+            'Kunci dictionary harus dapat di-hash dan tidak berubah (string, angka, tuple), karena itu list tidak bisa jadi kunci.',
         ],
         faq: [['Apakah hash table selalu O(1)?', 'Rata-rata ya. Pada kasus terburuk dengan banyak tabrakan bisa menjadi O(n), tetapi implementasi modern menghindarinya.'], ['Apakah hash sama dengan enkripsi?', 'Bukan. Hash untuk pencarian cepat atau sidik jari data. Enkripsi untuk merahasiakan data dan bisa dibuka kembali.'], ['Apakah urutan dictionary dijamin?', 'Pada Python 3.7 ke atas, urutan penyisipan dipertahankan. Itu sifat bahasa, bukan sifat umum hash table.']],
     },
@@ -154,6 +190,12 @@ export default [
             { callout: 'Aplikasi peta modern memakai algoritma yang jauh lebih canggih dari BFS, tetapi prinsip menjelajah graf tetap menjadi dasarnya.', kind: 'info', title: 'Dalam praktik' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Struktur data yang dipakai BFS?', options: ['Stack', 'Queue', 'Hash table saja'], answer: 1, why: 'Queue menjaga urutan penjelajahan lapis demi lapis.' }, { q: 'Mengapa BFS menemukan jalur terpendek pada peta tanpa bobot?', options: ['Karena menjelajah dari jarak terdekat dulu', 'Karena acak', 'Karena memakai rekursi'], answer: 0, why: 'Kotak ditemukan berurutan menurut jumlah langkah.' }] },
         ],
+        takeaways: [
+            'BFS memasukkan titik awal ke antrean, mengambil kotak terdepan, menambahkan tetangga yang belum dikunjungi, dan mengulang sampai tujuan tercapai.',
+            'Karena menyebar merata seperti riak, saat pertama kali mencapai tujuan jalurnya pasti yang terpendek (pada peta tanpa bobot).',
+            'Kuncinya adalah antrean: yang masuk lebih dulu dijelajahi lebih dulu.',
+            'Untuk peta dengan biaya langkah berbeda pakai Dijkstra atau A*; DFS menyelam dalam dengan stack atau rekursi.',
+        ],
         faq: [['Apa bedanya BFS dan DFS?', 'BFS menjelajah per lapisan memakai queue, DFS menyelam sedalam mungkin memakai stack atau rekursi.'], ['Apakah BFS bisa dipakai untuk peta jalan sungguhan?', 'Untuk jarak yang bobotnya berbeda, dipakai Dijkstra atau A*. BFS cocok bila setiap langkah berbiaya sama.'], ['Apa yang dimaksud graf?', 'Kumpulan titik (node) yang dihubungkan garis (edge). Peta, jaringan pertemanan, dan jaringan komputer adalah contohnya.']],
     },
 
@@ -176,6 +218,12 @@ export default [
             { h2: 'Latihan cepat' },
             { w: 'quiz', title: 'Kuis singkat', questions: [{ q: 'Berapa nilai biner 00000101?', options: ['3', '5', '10'], answer: 1, why: '4 + 1 = 5.' }, { q: 'Berapa nilai berbeda yang bisa dinyatakan oleh 8 bit?', options: ['8', '128', '256'], answer: 2, why: '2 pangkat 8 = 256.' }, { q: 'Satu byte terdiri dari...', options: ['4 bit', '8 bit', '16 bit'], answer: 1, why: 'Satu byte = 8 bit.' }] },
             { callout: 'Heksadesimal (basis 16) sering dipakai sebagai singkatan biner yang lebih ringkas: satu digit heksa mewakili empat bit. Itu sebabnya kode warna berbentuk #1E5AB2.', kind: 'info', title: 'Kaitan dengan kode warna' },
+        ],
+        takeaways: [
+            'Bit adalah satu angka biner dan byte adalah delapan bit; delapan bit dapat menyatakan 256 nilai, dari 0 sampai 255.',
+            'Setiap posisi bit bernilai pangkat dua (1, 2, 4, 8, 16, 32, 64, 128); jumlahkan posisi yang bernilai 1.',
+            'Huruf disimpan sebagai nomor dari tabel kode: "A" bernomor 65 di ASCII, dan Unicode mencakup ribuan karakter termasuk emoji.',
+            'Heksadesimal adalah singkatan biner yang ringkas (satu digit heksa adalah empat bit), karena itu kode warna berbentuk #1E5AB2.',
         ],
         faq: [['Bagaimana komputer menyimpan angka pecahan?', 'Dengan format bilangan titik mengambang (floating point), yang menyimpan angka dalam bentuk mantissa dan eksponen. Itu sebabnya 0,1 + 0,2 kadang tidak persis 0,3.'], ['Bagaimana gambar disimpan?', 'Sebagai kumpulan piksel, tiap piksel berisi angka untuk warnanya (merah, hijau, biru).'], ['Mengapa kapasitas penyimpanan memakai kelipatan 1024?', 'Karena basis dua: 1 KiB = 1024 byte. Produsen kadang memakai 1000 sehingga angkanya berbeda.']],
     },

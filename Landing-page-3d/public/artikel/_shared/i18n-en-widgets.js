@@ -91,6 +91,10 @@
         ['Hitung bilangan Fibonacci ke-n', 'Compute the n-th Fibonacci number'],
         ['Rekursi biasa:', 'Plain recursion:'],
         ['pemanggilan fungsi', 'function calls'],
+        ['Dengan menyimpan hasil (memoization):', 'With stored results (memoization):'],
+        ['perhitungan', 'calculations'],
+        ['Tarik slider ke kanan: rekursi biasa meledak, memoization hampir tidak berubah.', 'Drag the slider to the right: plain recursion explodes, memoization hardly changes.'],
+        ['nilai', 'value'],
 
         // bfs grid
         ['Jalur terpendek:', 'Shortest path:'],

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bubble Sort Explained Visually: How It Works, Python Code</title>
+<meta name="description" content="Learn bubble sort step by step with an interactive animation, Python code, a comparison with other algorithms and when it is worth using.">
+<meta name="keywords" content="bubble sort, algorithm, sorting, Python, big O">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/bubble-sort-explained-visually/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bubble-sort-explained-visually/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/bubble-sort-explained-visually/">
+<meta property="og:title" content="Bubble Sort Explained Visually: How It Works, Python Code">
+<meta property="og:description" content="Learn bubble sort step by step with an interactive animation, Python code, a comparison with other algorithms and when it is worth using.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/bubble-sort-explained-visually/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bubble Sort Explained Visually: How It Works, Python Code">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bubble Sort Explained Visually: How It Works, Python Code">
+<meta name="twitter:description" content="Learn bubble sort step by step with an interactive animation, Python code, a comparison with other algorithms and when it is worth using.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/bubble-sort-explained-visually/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Bubble Sort Explained Visually: How It Works, Python Code","description":"Learn bubble sort step by step with an interactive animation, Python code, a comparison with other algorithms and when it is worth using.","image":["https://muchson.web.id/en/articles/bubble-sort-explained-visually/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"bubble sort, algorithm, sorting, Python, big O","articleSection":"Coding & Algorithms","wordCount":458,"mainEntityOfPage":"https://muchson.web.id/en/articles/bubble-sort-explained-visually/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Bubble Sort Explained Visually: How It Works, Python Code","item":"https://muchson.web.id/en/articles/bubble-sort-explained-visually/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between bubble sort and selection sort?","acceptedAnswer":{"@type":"Answer","text":"Bubble sort repeatedly swaps neighbours that are in the wrong order. Selection sort finds the smallest value in the remaining data and puts it at the front, so it makes far fewer swaps."}},{"@type":"Question","name":"Why is bubble sort considered slow?","acceptedAnswer":{"@type":"Answer","text":"Because it is O(n²): it compares almost every pair of items and makes many swaps."}},{"@type":"Question","name":"Is bubble sort stable?","acceptedAnswer":{"@type":"Answer","text":"Yes. Elements with equal values are never passed over each other, so their original order is kept."}},{"@type":"Question","name":"Which sorting algorithm should I use in a real project?","acceptedAnswer":{"@type":"Answer","text":"Use your language's built-in function (for example sorted() in Python or Array.sort() in JavaScript). It is already optimised and well tested."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/bubble-sort-dijelaskan-visual/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#the-basic-idea-in-one-sentence">The basic idea in one sentence</a></li><li><a href="#try-it-yourself">Try it yourself</a></li><li><a href="#python-code">Python code</a></li><li><a href="#how-slow-is-it-time-complexity">How slow is it? Time complexity</a></li><li><a href="#compare-it-with-its-two-siblings">Compare it with its two siblings</a></li><li><a href="#when-is-bubble-sort-worth-using">When is bubble sort worth using?</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Bubble Sort Explained Visually: How It Works, Python Code</h1>
+<p class="lead">Bubble sort is not the fastest algorithm. But because it is so simple, it is often the way in to understanding how computers sort data. Here you can run it step by step, go backwards and repeat until you really get it.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>2 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>Compare two neighbouring numbers, swap them if they are in the wrong order, and repeat until nothing needs swapping.</li><li>After each full pass the largest number is in its final place at the right end, so the next pass can skip it.</li><li>Two nested loops make it O(n²): ten times the data means about a hundred times the work.</li><li>Learn from it, but in real projects use the built-in sort (sorted() in Python, Array.sort() in JavaScript).</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="the-basic-idea-in-one-sentence">The basic idea in one sentence</h2>
+<p>Compare two neighbouring numbers, swap them if the order is wrong, then repeat from the start until nothing needs swapping. The largest number "bubbles" to the right end on every pass, like an air bubble rising to the surface, which is where the name comes from.</p>
+<figure class="diagram"><svg viewBox="0 0 728 120" role="img" aria-label="One pass of bubble sort" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Start at the left</tspan></text><text x="85" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">take the first two</tspan><tspan x="85" dy="14">numbers</tspan></text><line x1="164" y1="60" x2="192" y2="60" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Compare</tspan></text><text x="271" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">is the left one</tspan><tspan x="271" dy="14">bigger?</tspan></text><line x1="350" y1="60" x2="378" y2="60" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Swap if needed</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">so the smaller is on</tspan><tspan x="457" dy="14">the left</tspan></text><line x1="536" y1="60" x2="564" y2="60" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="100" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Move one box</tspan><tspan x="643" dy="16">along</tspan></text><text x="643" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">repeat to the end</tspan></text></svg><figcaption><b>Figure 1.</b> After one full pass, the largest number is certain to be in the rightmost position.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Start at the left: take the first two numbers</li><li>Compare: is the left one bigger?</li><li>Swap if needed: so the smaller is on the left</li><li>Move one box along: repeat to the end</li></ol></details></figure>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<div data-w="sort"><script type="application/json">{"algo":"bubble","size":9,"title":"Bubble sort step by step","desc":"Yellow = being compared. Green = already in its final position. Press \"Next\" one step at a time, or play automatically."}</script></div>
+<p>Watch two things: the tallest bar always "walks" to the right, and after the first pass one bar at the right end is already final. That is why the next pass no longer needs to check that end.</p>
+<h2 id="python-code">Python code</h2>
+<figure class="codebox"><pre><code>def bubble_sort(a):
+    n = len(a)
+    for i in range(n - 1):
+        swapped = False
+        for j in range(n - 1 - i):
+            if a[j] &gt; a[j + 1]:
+                a[j], a[j + 1] = a[j + 1], a[j]
+                swapped = True
+        if not swapped:      # already sorted, stop early
+            break
+    return a
+
+print(bubble_sort([5, 2, 9, 1, 7]))   # [1, 2, 5, 7, 9]</code></pre></figure>
+<div class="callout good" role="note"><b>One trick that makes it smarter</b><p>The variable <code>swapped</code> is a small optimisation: if a full pass swaps nothing, the data must already be sorted and we may stop. On almost-sorted data this makes bubble sort very fast.</p></div>
+<h2 id="how-slow-is-it-time-complexity">How slow is it? Time complexity</h2>
+<p>There are two nested loops, so for n items about n × n comparisons are needed. In Big O notation that is written <b>O(n²)</b>. It means that if the amount of data doubles, the work becomes about four times as much. Move the slider below and see for yourself how O(n²) balloons compared with other algorithms.</p>
+<div data-w="bigo"><script type="application/json">{"title":"Compare Big O growth","desc":"Move the number of items (n). A red bar means the work is no longer reasonable."}</script></div>
+<div class="table-wrap"><table><caption class="sr-only">Table 1: How slow is it? Time complexity</caption><thead><tr><th scope="col">Algorithm</th><th scope="col">Best case</th><th scope="col">Average case</th><th scope="col">Worst case</th><th scope="col">Extra memory</th></tr></thead><tbody><tr><td>Bubble sort</td><td>O(n) (with the swapped flag)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr><tr><td>Selection sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr><tr><td>Insertion sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr><tr><td>Merge sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td></tr><tr><td>Quick sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td></tr></tbody></table></div>
+<h2 id="compare-it-with-its-two-siblings">Compare it with its two siblings</h2>
+<div data-w="compare"><script type="application/json">{"title":"Three simple sorting algorithms","tabs":[{"label":"Bubble","html":"\u003cb>Idea:\u003c/b> swap neighbours that are out of order, over and over.\u003cbr>\u003cb>Pros:\u003c/b> the shortest code, easy to understand.\u003cbr>\u003cb>Cons:\u003c/b> the most swaps."},{"label":"Selection","html":"\u003cb>Idea:\u003c/b> find the smallest number, put it at the front, repeat for the rest.\u003cbr>\u003cb>Pros:\u003c/b> few swaps (at most n-1).\u003cbr>\u003cb>Cons:\u003c/b> always O(n²), gains nothing from data that is already sorted."},{"label":"Insertion","html":"\u003cb>Idea:\u003c/b> like arranging cards in your hand, insert each card in its right place.\u003cbr>\u003cb>Pros:\u003c/b> very fast for small or almost-sorted data; used inside more advanced algorithms.\u003cbr>\u003cb>Cons:\u003c/b> still O(n²) on large random data."}]}</script></div>
+<p>Want to see its siblings move? Change the settings in another article on this site, or copy the code above and change the contents yourself.</p>
+<h2 id="when-is-bubble-sort-worth-using">When is bubble sort worth using?</h2>
+<ul><li><b>Learning.</b> To understand nested loops, swapping and Big O.</li><li><b>Very small data</b> or almost-sorted data, with an early-stop flag.</li><li><b>Not for production with large data.</b> Programming languages already provide much faster sorting (<code>sorted()</code> in Python uses Timsort).</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"After one full pass of bubble sort on random data, what is certainly true?","options":["All the data is sorted","The largest number is at the right end","The smallest number is at the left end"],"answer":1,"why":"The largest number keeps being swapped to the right until it hits the end."},{"q":"The amount of data becomes 10 times larger. Bubble sort's work becomes about...","options":["10 times","100 times","1000 times"],"answer":1,"why":"O(n²): 10² = 100 times."},{"q":"What is the \"swapped\" flag for?","options":["Counting the items","Stopping early when the data is already sorted","Sorting in descending order"],"answer":1,"why":"If nothing is swapped in a pass, the data must already be sorted."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>What is the difference between bubble sort and selection sort?</summary><div>Bubble sort repeatedly swaps neighbours that are in the wrong order. Selection sort finds the smallest value in the remaining data and puts it at the front, so it makes far fewer swaps.</div></details>
+<details class="faq"><summary>Why is bubble sort considered slow?</summary><div>Because it is O(n²): it compares almost every pair of items and makes many swaps.</div></details>
+<details class="faq"><summary>Is bubble sort stable?</summary><div>Yes. Elements with equal values are never passed over each other, so their original order is kept.</div></details>
+<details class="faq"><summary>Which sorting algorithm should I use in a real project?</summary><div>Use your language's built-in function (for example sorted() in Python or Array.sort() in JavaScript). It is already optimised and well tested.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/binary-search-explained-visually/"><img src="/en/articles/binary-search-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Explained Visually: Search by Halving</span></a><a href="/en/articles/selection-sort-and-insertion-sort-explained/"><img src="/en/articles/selection-sort-and-insertion-sort-explained/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Selection Sort and Insertion Sort: Two Simple Methods</span></a><a href="/en/articles/recursion-explained-with-fibonacci/"><img src="/en/articles/recursion-explained-with-fibonacci/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Recursion Explained: A Function That Calls Itself</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

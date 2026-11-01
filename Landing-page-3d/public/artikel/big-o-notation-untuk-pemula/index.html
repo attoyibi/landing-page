@@ -10,10 +10,14 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#1e5ab2">
 <link rel="canonical" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
 <link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Muhammad Muchson">
 <meta property="og:locale" content="id_ID">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
 <meta property="og:title" content="Big O Notation untuk Pemula: Mengukur Kecepatan Algoritma">
 <meta property="og:description" content="Big O menjelaskan bagaimana waktu kerja algoritma tumbuh saat data membesar. Pahami O(1), O(n), O(n²) dan lainnya dengan grafik dan kalkulator interaktif.">
@@ -36,7 +40,7 @@
 <body>
 <a class="skip" href="#isi">Lewati ke isi artikel</a>
 <div class="bar" aria-hidden="true"><i></i></div>
-<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a><a class="langsw" href="/en/articles/big-o-notation-for-beginners/" lang="en" hreflang="en" aria-label="Read this article in English">English</a></nav></div></header>
 <div class="wrap">
 <nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#yang-diukur-pertumbuhan-bukan-detik">Yang diukur: pertumbuhan, bukan detik</a></li><li><a href="#kelas-kelas-yang-paling-sering-ditemui">Kelas-kelas yang paling sering ditemui</a></li><li><a href="#cara-membaca-kode">Cara membaca kode</a></li><li><a href="#kapan-big-o-penting">Kapan Big O penting?</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
 <main id="isi" tabindex="-1">
@@ -47,7 +51,7 @@
 <p class="lead">Dua program yang sama-sama benar bisa sangat berbeda kecepatannya saat datanya membesar. Big O adalah bahasa untuk membicarakan perbedaan itu tanpa harus mengukur dengan stopwatch di komputer tertentu.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">23 Oktober 2026</time><span aria-hidden="true">·</span><span>1 menit baca</span></div>
 
-
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Intisari</h2><ul><li>Big O mengukur bagaimana jumlah langkah tumbuh terhadap jumlah data (n), bukan detik yang sebenarnya.</li><li>Kelas yang umum: O(1) konstan, O(log n), O(n) linear, O(n log n), O(n²) kuadrat, O(2ⁿ) eksponensial.</li><li>Satu perulangan adalah O(n), perulangan di dalam perulangan adalah O(n²), membuang separuh tiap langkah adalah O(log n).</li><li>Konstanta dan suku kecil diabaikan (3n + 10 tetap O(n)); Big O penting saat data besar atau pekerjaan berulang.</li></ul></aside>
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <h2 id="yang-diukur-pertumbuhan-bukan-detik">Yang diukur: pertumbuhan, bukan detik</h2>
 <p>Big O tidak menyebut berapa detik, tetapi bagaimana jumlah langkah <b>tumbuh</b> ketika jumlah data (n) membesar. Jika data digandakan, apakah pekerjaan tetap, ikut dua kali lipat, atau menjadi empat kali? Itulah yang dijawab.</p>

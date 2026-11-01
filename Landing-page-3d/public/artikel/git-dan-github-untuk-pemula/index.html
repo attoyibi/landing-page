@@ -10,10 +10,14 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#1e5ab2">
 <link rel="canonical" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/git-and-github-for-beginners/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/">
 <link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Muhammad Muchson">
 <meta property="og:locale" content="id_ID">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/">
 <meta property="og:title" content="Git dan GitHub untuk Pemula: Konsep, Perintah, dan Alur Kerja">
 <meta property="og:description" content="Git menyimpan riwayat perubahan kode, GitHub membagikannya. Pahami commit, branch, merge, dan pull request, plus perintah dasar yang paling sering dipakai.">
@@ -36,7 +40,7 @@
 <body>
 <a class="skip" href="#isi">Lewati ke isi artikel</a>
 <div class="bar" aria-hidden="true"><i></i></div>
-<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a><a class="langsw" href="/en/articles/git-and-github-for-beginners/" lang="en" hreflang="en" aria-label="Read this article in English">English</a></nav></div></header>
 <div class="wrap">
 <nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#git-dan-github-itu-berbeda">Git dan GitHub itu berbeda</a></li><li><a href="#konsep-inti">Konsep inti</a></li><li><a href="#alur-kerja-sehari-hari">Alur kerja sehari-hari</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
 <main id="isi" tabindex="-1">
@@ -47,7 +51,7 @@
 <p class="lead">Pernah menyimpan file bernama "laporan_final_revisi_baru_FIX2"? Git menyelesaikan masalah itu untuk kode: setiap perubahan tercatat, bisa dibatalkan, dan bisa dikerjakan bersama tanpa saling menimpa.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">23 Oktober 2026</time><span aria-hidden="true">·</span><span>1 menit baca</span></div>
 
-
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Intisari</h2><ul><li>Git berjalan di komputer Anda dan mencatat riwayat perubahan; GitHub adalah layanan web untuk menyimpan dan membagikan repositori Git.</li><li>Konsep inti: repository, commit (titik simpan), branch (cabang kerja terpisah), merge, dan pull request.</li><li>Alur harian: ubah file, git add, git commit, git push; ulangi dalam potongan kecil dan sering.</li><li>Jangan pernah meng-commit kunci rahasia, kata sandi, atau file .env; pakai .gitignore untuk mengecualikan file sensitif.</li></ul></aside>
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <h2 id="git-dan-github-itu-berbeda">Git dan GitHub itu berbeda</h2>
 <figure class="diagram"><svg viewBox="0 0 640 228" role="img" aria-label="Git dan GitHub" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="10" y="6" width="300" height="216" rx="14" fill="#e8f1ff"/><text x="160" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1e5ab2">Git</text><circle cx="32" cy="70" r="4" fill="#1e5ab2"/><text x="46" y="75" font-size="13.5" fill="#0f1a33">Program di komputer Anda</text><circle cx="32" cy="108" r="4" fill="#1e5ab2"/><text x="46" y="113" font-size="13.5" fill="#0f1a33">Mencatat riwayat perubahan</text><circle cx="32" cy="146" r="4" fill="#1e5ab2"/><text x="46" y="151" font-size="13.5" fill="#0f1a33">Bisa dipakai tanpa internet</text><circle cx="32" cy="184" r="4" fill="#1e5ab2"/><text x="46" y="189" font-size="13.5" fill="#0f1a33">Dibuat sebagai alat baris perintah</text><rect x="330" y="6" width="300" height="216" rx="14" fill="#e4f6cc"/><text x="480" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#1f7a46">GitHub</text><circle cx="352" cy="70" r="4" fill="#1f7a46"/><text x="366" y="75" font-size="13.5" fill="#0f1a33">Layanan web untuk menyimpan repositori Git</text><circle cx="352" cy="108" r="4" fill="#1f7a46"/><text x="366" y="113" font-size="13.5" fill="#0f1a33">Berbagi dan kolaborasi</text><circle cx="352" cy="146" r="4" fill="#1f7a46"/><text x="366" y="151" font-size="13.5" fill="#0f1a33">Pull request dan tinjauan kode</text><circle cx="352" cy="184" r="4" fill="#1f7a46"/><text x="366" y="189" font-size="13.5" fill="#0f1a33">Ada layanan serupa: GitLab, Bitbucket</text></svg><figcaption><b>Gambar 1.</b> Git dan GitHub</figcaption><details class="textalt"><summary>Deskripsi teks diagram</summary><p><b>Git</b></p><ul><li>Program di komputer Anda</li><li>Mencatat riwayat perubahan</li><li>Bisa dipakai tanpa internet</li><li>Dibuat sebagai alat baris perintah</li></ul><p><b>GitHub</b></p><ul><li>Layanan web untuk menyimpan repositori Git</li><li>Berbagi dan kolaborasi</li><li>Pull request dan tinjauan kode</li><li>Ada layanan serupa: GitLab, Bitbucket</li></ul></details></figure>

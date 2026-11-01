@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big O Notation for Beginners: Measuring Algorithm Speed</title>
+<meta name="description" content="Big O describes how an algorithm's running time grows as data grows. Understand O(1), O(n), O(n²) and more with charts and an interactive calculator.">
+<meta name="keywords" content="Big O, complexity, algorithm, performance, beginners">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/big-o-notation-for-beginners/">
+<meta property="og:title" content="Big O Notation for Beginners: Measuring Algorithm Speed">
+<meta property="og:description" content="Big O describes how an algorithm's running time grows as data grows. Understand O(1), O(n), O(n²) and more with charts and an interactive calculator.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/big-o-notation-for-beginners/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Big O Notation for Beginners: Measuring Algorithm Speed">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Big O Notation for Beginners: Measuring Algorithm Speed">
+<meta name="twitter:description" content="Big O describes how an algorithm's running time grows as data grows. Understand O(1), O(n), O(n²) and more with charts and an interactive calculator.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/big-o-notation-for-beginners/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Big O Notation for Beginners: Measuring Algorithm Speed","description":"Big O describes how an algorithm's running time grows as data grows. Understand O(1), O(n), O(n²) and more with charts and an interactive calculator.","image":["https://muchson.web.id/en/articles/big-o-notation-for-beginners/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"Big O, complexity, algorithm, performance, beginners","articleSection":"Coding & Algorithms","wordCount":271,"mainEntityOfPage":"https://muchson.web.id/en/articles/big-o-notation-for-beginners/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Big O Notation for Beginners: Measuring Algorithm Speed","item":"https://muchson.web.id/en/articles/big-o-notation-for-beginners/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Big O measure real time?","acceptedAnswer":{"@type":"Answer","text":"No. It measures how the steps grow relative to the data size. Real time also depends on hardware and implementation."}},{"@type":"Question","name":"What is the difference between best, average and worst case?","acceptedAnswer":{"@type":"Answer","text":"The best case is the most favourable input, the worst is the least favourable, and the average is the general picture. Usually the worst or average case is discussed."}},{"@type":"Question","name":"Should I always pick the smallest Big O?","acceptedAnswer":{"@type":"Answer","text":"Not always. Code simplicity, data size and memory also matter."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/big-o-notation-untuk-pemula/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#what-is-measured-growth-not-seconds">What is measured: growth, not seconds</a></li><li><a href="#the-classes-you-meet-most-often">The classes you meet most often</a></li><li><a href="#how-to-read-code">How to read code</a></li><li><a href="#when-does-big-o-matter">When does Big O matter?</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Big O Notation for Beginners: Measuring Algorithm Speed</h1>
+<p class="lead">Two programs that are both correct can differ hugely in speed once the data grows. Big O is the language for talking about that difference without having to time them with a stopwatch on one particular computer.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>Big O measures how the number of steps grows with the amount of data (n), not real seconds.</li><li>Common classes: O(1) constant, O(log n), O(n) linear, O(n log n), O(n²) quadratic, O(2ⁿ) exponential.</li><li>One loop is O(n), a loop inside a loop is O(n²), halving at each step is O(log n).</li><li>Constants and small terms are ignored (3n + 10 is O(n)); Big O matters when data is large or the work is repeated.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="what-is-measured-growth-not-seconds">What is measured: growth, not seconds</h2>
+<p>Big O does not say how many seconds, but how the number of steps <b>grows</b> as the amount of data (n) gets bigger. If the data doubles, does the work stay the same, double, or become four times as much? That is what it answers.</p>
+<div data-w="bigo"><script type="application/json">{"title":"Compare the growth","desc":"Move the number of items (n). Notice which ones stay calm and which explode."}</script></div>
+<h2 id="the-classes-you-meet-most-often">The classes you meet most often</h2>
+<div class="table-wrap"><table><caption class="sr-only">Table 1: The classes you meet most often</caption><thead><tr><th scope="col">Notation</th><th scope="col">Name</th><th scope="col">Example</th></tr></thead><tbody><tr><td>O(1)</td><td>Constant</td><td>Getting a list element by index</td></tr><tr><td>O(log n)</td><td>Logarithmic</td><td>Binary search</td></tr><tr><td>O(n)</td><td>Linear</td><td>Searching an unsorted list</td></tr><tr><td>O(n log n)</td><td>Linearithmic</td><td>Efficient sorting (merge sort)</td></tr><tr><td>O(n²)</td><td>Quadratic</td><td>Two nested loops, bubble sort</td></tr><tr><td>O(2ⁿ)</td><td>Exponential</td><td>Naive recursion such as Fibonacci without storing results</td></tr></tbody></table></div>
+<h2 id="how-to-read-code">How to read code</h2>
+<div data-w="cards"><script type="application/json">{"title":"Tap a card to guess the class","items":[{"tag":"Code","front":"One loop from 0 to n.","backTag":"Class","back":"O(n). The work rises in a straight line with n."},{"tag":"Code","front":"A loop inside a loop, both up to n.","backTag":"Class","back":"O(n²). For n = 1000 that is about a million steps."},{"tag":"Code","front":"Each step throws away half the data.","backTag":"Class","back":"O(log n). Binary search is an example."},{"tag":"Code","front":"Accessing data by key in a dictionary.","backTag":"Class","back":"Usually O(1) on average."}]}</script></div>
+<div class="callout info" role="note"><b>A simplification</b><p>Big O simplifies: constants and small terms are ignored. 3n + 10 is still called O(n). That is because when n is very large, the dominant term decides.</p></div>
+<h2 id="when-does-big-o-matter">When does Big O matter?</h2>
+<p>With small data, almost every algorithm feels fast. Big O becomes important when data grows: tens of thousands of users, millions of rows, or calculations that run repeatedly. Then choosing O(n log n) over O(n²) can mean the difference between seconds and hours.</p>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"Two nested loops, each n times, are roughly of class...","options":["O(n)","O(n²)","O(log n)"],"answer":1,"why":"n times n steps."},{"q":"The data doubles. An O(n) algorithm takes about...","options":["The same","Twice as long","Four times as long"],"answer":1,"why":"Linear growth."},{"q":"Which is the fastest for very large data?","options":["O(n²)","O(n log n)","O(2ⁿ)"],"answer":1,"why":"n log n is far flatter than n² and 2ⁿ."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>Does Big O measure real time?</summary><div>No. It measures how the steps grow relative to the data size. Real time also depends on hardware and implementation.</div></details>
+<details class="faq"><summary>What is the difference between best, average and worst case?</summary><div>The best case is the most favourable input, the worst is the least favourable, and the average is the general picture. Usually the worst or average case is discussed.</div></details>
+<details class="faq"><summary>Should I always pick the smallest Big O?</summary><div>Not always. Code simplicity, data size and memory also matter.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/recursion-explained-with-fibonacci/"><img src="/en/articles/recursion-explained-with-fibonacci/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Recursion Explained: A Function That Calls Itself</span></a><a href="/en/articles/bfs-shortest-path-on-a-map/"><img src="/en/articles/bfs-shortest-path-on-a-map/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>BFS: The Shortest-Path Algorithm (Interactive Demo)</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

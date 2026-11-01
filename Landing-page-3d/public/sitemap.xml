@@ -161,6 +161,8 @@
     <loc>https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bubble-sort-explained-visually/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/kacamata-blue-light-efektif-atau-mitos/</loc>
@@ -537,51 +539,71 @@
     <loc>https://muchson.web.id/artikel/binary-search-dijelaskan-visual/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-search-explained-visually/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/big-o-notation-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/selection-sort-and-insertion-sort-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/stack-and-queue-data-structures-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/recursion-explained-with-fibonacci/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/git-dan-github-untuk-pemula/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/git-and-github-for-beginners/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/apa-itu-api-penjelasan-sederhana/</loc>
@@ -594,41 +616,57 @@
     <loc>https://muchson.web.id/artikel/html-css-javascript-peran-masing-masing/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/html-css-javascript-peran-masing-masing/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/html-css-javascript-what-each-does/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/sql-basics-select-where-order-by/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/cara-kerja-internet-dns-http-saat-membuka-website/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-kerja-internet-dns-http-saat-membuka-website/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-the-internet-works-when-you-open-a-website/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/react-for-beginners-components-props-state/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/flutter-atau-react-native-mana-yang-dipelajari/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/flutter-atau-react-native-mana-yang-dipelajari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/flutter-or-react-native-which-to-learn/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/</loc>
     <lastmod>2026-10-23</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/"/>
   </url>
   <url>
     <loc>https://muchson.web.id/artikel/password-kuat-dan-password-manager-cara-memakainya/</loc>
@@ -1897,5 +1935,138 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/apa-itu-embedding-dan-pencarian-semantik/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/what-are-embeddings-and-semantic-search/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/bubble-sort-explained-visually/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bubble-sort-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bubble-sort-explained-visually/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/binary-search-explained-visually/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-search-explained-visually/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/big-o-notation-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/big-o-notation-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/big-o-notation-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/selection-sort-and-insertion-sort-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/selection-sort-dan-insertion-sort-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/selection-sort-and-insertion-sort-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/stack-and-queue-data-structures-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/stack-dan-queue-struktur-data-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/stack-and-queue-data-structures-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/recursion-explained-with-fibonacci/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/rekursi-dijelaskan-dengan-contoh-fibonacci/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/recursion-explained-with-fibonacci/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/hash-table-cara-kerja-dictionary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/hash-tables-how-dictionaries-work/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bfs-pencarian-jalur-terpendek-di-peta/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/bfs-shortest-path-on-a-map/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/binary-numbers-how-computers-count/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/roadmap-belajar-python-dari-nol/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/python-learning-roadmap-from-scratch/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/git-and-github-for-beginners/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/git-dan-github-untuk-pemula/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/git-and-github-for-beginners/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/html-css-javascript-what-each-does/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/html-css-javascript-peran-masing-masing/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/html-css-javascript-what-each-does/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/sql-basics-select-where-order-by/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/sql-dasar-untuk-pemula-select-where-order-by/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/sql-basics-select-where-order-by/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/regex-untuk-pemula-pola-teks-dengan-contoh/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/regex-for-beginners-text-patterns/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/how-the-internet-works-when-you-open-a-website/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/cara-kerja-internet-dns-http-saat-membuka-website/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/how-the-internet-works-when-you-open-a-website/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/react-for-beginners-components-props-state/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/react-for-beginners-components-props-state/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/flutter-or-react-native-which-to-learn/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/flutter-atau-react-native-mana-yang-dipelajari/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/flutter-or-react-native-which-to-learn/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/docker-untuk-pemula-container-dijelaskan/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/docker-for-beginners-containers-explained/"/>
+  </url>
+  <url>
+    <loc>https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/debugging-cara-mencari-dan-memperbaiki-bug/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/debugging-a-systematic-way-to-find-and-fix-bugs/"/>
   </url>
 </urlset>

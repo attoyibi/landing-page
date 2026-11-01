@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Search Explained Visually: Search by Halving</title>
+<meta name="description" content="Binary search finds an item among millions in only dozens of steps. See how it works step by step, the Python code and when this algorithm can be used.">
+<meta name="keywords" content="binary search, search algorithm, Python, big O, data structures">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/binary-search-explained-visually/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-search-explained-visually/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/binary-search-dijelaskan-visual/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/binary-search-explained-visually/">
+<meta property="og:title" content="Binary Search Explained Visually: Search by Halving">
+<meta property="og:description" content="Binary search finds an item among millions in only dozens of steps. See how it works step by step, the Python code and when this algorithm can be used.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/binary-search-explained-visually/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Binary Search Explained Visually: Search by Halving">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Binary Search Explained Visually: Search by Halving">
+<meta name="twitter:description" content="Binary search finds an item among millions in only dozens of steps. See how it works step by step, the Python code and when this algorithm can be used.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/binary-search-explained-visually/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Binary Search Explained Visually: Search by Halving","description":"Binary search finds an item among millions in only dozens of steps. See how it works step by step, the Python code and when this algorithm can be used.","image":["https://muchson.web.id/en/articles/binary-search-explained-visually/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"binary search, search algorithm, Python, big O, data structures","articleSection":"Coding & Algorithms","wordCount":287,"mainEntityOfPage":"https://muchson.web.id/en/articles/binary-search-explained-visually/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Binary Search Explained Visually: Search by Halving","item":"https://muchson.web.id/en/articles/binary-search-explained-visually/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between binary search and linear search?","acceptedAnswer":{"@type":"Answer","text":"Linear checks one by one, binary halves the range at every step. Binary is much faster on large sorted data."}},{"@type":"Question","name":"Can binary search be used for text?","acceptedAnswer":{"@type":"Answer","text":"Yes, as long as the data is sorted by the same rule as the comparison being used."}},{"@type":"Question","name":"Why is mid computed with (lo + hi) // 2?","acceptedAnswer":{"@type":"Answer","text":"It is the middle of the range. In languages with limited integers, the formula lo + (hi - lo) // 2 avoids overflow."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/binary-search-dijelaskan-visual/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#the-idea-throw-away-half-at-every-step">The idea: throw away half at every step</a></li><li><a href="#how-fast-is-it">How fast is it?</a></li><li><a href="#python-code">Python code</a></li><li><a href="#where-is-binary-search-used">Where is binary search used?</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Binary Search Explained Visually: Search by Halving</h1>
+<p class="lead">Guessing a number from 1 to 100 with "higher" or "lower" hints? The best strategy is always to guess in the middle. That is binary search: each step throws away half the possibilities, so data of any size is still searched quickly.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>1 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>Take the middle value of the remaining range, compare it with the target, throw away the half that cannot contain it and repeat.</li><li>It needs sorted data; without an order, discarding half is not valid.</li><li>It takes about log₂(n) steps, which is O(log n): about 20 steps for a million items.</li><li>Sorting first also costs time, so for a single search on random data, linear search can be simpler.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="the-idea-throw-away-half-at-every-step">The idea: throw away half at every step</h2>
+<figure class="diagram"><svg viewBox="0 0 728 134" role="img" aria-label="Steps of binary search" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4a5568"/></marker></defs><rect x="10" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1e5ab2" stroke-width="2.5"/><circle cx="26" cy="26" r="11" fill="#1e5ab2"/><text x="26" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text><text x="85" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="85" dy="0">Take the middle</tspan><tspan x="85" dy="16">value</tspan></text><text x="85" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="85" dy="0">of the remaining range</tspan></text><line x1="164" y1="67" x2="192" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="196" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#1f7a46" stroke-width="2.5"/><circle cx="212" cy="26" r="11" fill="#1f7a46"/><text x="212" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text><text x="271" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="271" dy="0">Compare with the</tspan><tspan x="271" dy="16">target</tspan></text><text x="271" y="86" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="271" dy="0">equal, bigger or</tspan><tspan x="271" dy="14">smaller?</tspan></text><line x1="350" y1="67" x2="378" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="382" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#9a5b00" stroke-width="2.5"/><circle cx="398" cy="26" r="11" fill="#9a5b00"/><text x="398" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text><text x="457" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="457" dy="0">Discard half</tspan></text><text x="457" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="457" dy="0">the one that cannot</tspan><tspan x="457" dy="14">hold the target</tspan></text><line x1="536" y1="67" x2="564" y2="67" stroke="#4a5568" stroke-width="2.5" marker-end="url(#ah)"/><rect x="568" y="10" width="150" height="114" rx="12" fill="#fff" stroke="#7a3fb4" stroke-width="2.5"/><circle cx="584" cy="26" r="11" fill="#7a3fb4"/><text x="584" y="30" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text><text x="643" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#0f1a33"><tspan x="643" dy="0">Repeat</tspan></text><text x="643" y="70" text-anchor="middle" font-size="11.5" fill="#4a5568"><tspan x="643" dy="0">until found or</tspan><tspan x="643" dy="14">exhausted</tspan></text></svg><figcaption><b>Figure 1.</b> The condition: the data is already sorted.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ol><li>Take the middle value: of the remaining range</li><li>Compare with the target: equal, bigger or smaller?</li><li>Discard half: the one that cannot hold the target</li><li>Repeat: until found or exhausted</li></ol></details></figure>
+<div data-w="search"><script type="application/json">{"title":"Compare binary and linear search","desc":"Pick the number to look for, press the next step, then switch to the linear method to see the difference in the number of checks."}</script></div>
+<h2 id="how-fast-is-it">How fast is it?</h2>
+<p>Linear search checks one by one: for n items, the worst case is n steps. Binary search checks about log₂(n) steps. For a million items that is about 20 steps, not a million. That is why binary search is called <b>O(log n)</b>.</p>
+<figure class="diagram"><svg viewBox="0 0 640 136" role="img" aria-label="Worst-case steps to find one item" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><text x="160" y="29" text-anchor="end" font-size="13.5" fill="#0f1a33">100 items (linear)</text><rect x="170" y="12" width="380" height="26" rx="6" fill="#1e5ab2"/><text x="558" y="30" font-size="13.5" font-weight="700" fill="#0f1a33">100 steps</text><text x="160" y="69" text-anchor="end" font-size="13.5" fill="#0f1a33">100 items (binary)</text><rect x="170" y="52" width="26.6" height="26" rx="6" fill="#1f7a46"/><text x="204.6" y="70" font-size="13.5" font-weight="700" fill="#0f1a33">7 steps</text><text x="160" y="109" text-anchor="end" font-size="13.5" fill="#0f1a33">1,000,000 items (binary)</text><rect x="170" y="92" width="76" height="26" rx="6" fill="#9a5b00"/><text x="254" y="110" font-size="13.5" font-weight="700" fill="#0f1a33">20 steps</text></svg><figcaption><b>Figure 2.</b> For a million items with linear search, the worst case is a million steps, far off the chart.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ul><li>100 items (linear): 100 steps</li><li>100 items (binary): 7 steps</li><li>1,000,000 items (binary): 20 steps</li></ul></details></figure>
+<h2 id="python-code">Python code</h2>
+<figure class="codebox"><pre><code>def binary_search(data, target):
+    lo, hi = 0, len(data) - 1
+    while lo &lt;= hi:
+        mid = (lo + hi) // 2
+        if data[mid] == target:
+            return mid
+        if data[mid] &lt; target:
+            lo = mid + 1      # discard the left half
+        else:
+            hi = mid - 1      # discard the right half
+    return -1                 # not found
+
+print(binary_search([3, 8, 15, 21, 40, 57], 21))   # 3</code></pre></figure>
+<div class="callout warn" role="note"><b>An important condition</b><p>Binary search only works when the data is already sorted. Sorting first also takes time, so for a single search on random data, linear search can be simpler.</p></div>
+<h2 id="where-is-binary-search-used">Where is binary search used?</h2>
+<ul><li>Finding a word in a dictionary, or sorted data in a database (an index).</li><li>Guessing a parameter, for example finding the first version that introduced a bug (git bisect).</li><li>Built-in functions in programming languages for sorted data (for example the bisect module in Python).</li></ul>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"About how many worst-case steps does binary search take for 1,000 items?","options":["10","500","1000"],"answer":0,"why":"log₂(1000) is about 10."},{"q":"What is the condition for binary search?","options":["The data must be sorted","The data must be even numbers","The data must be less than 100"],"answer":0,"why":"Without an order, discarding half is not valid."}]}</script></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>What is the difference between binary search and linear search?</summary><div>Linear checks one by one, binary halves the range at every step. Binary is much faster on large sorted data.</div></details>
+<details class="faq"><summary>Can binary search be used for text?</summary><div>Yes, as long as the data is sorted by the same rule as the comparison being used.</div></details>
+<details class="faq"><summary>Why is mid computed with (lo + hi) // 2?</summary><div>It is the middle of the range. In languages with limited integers, the formula lo + (hi - lo) // 2 avoids overflow.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/selection-sort-and-insertion-sort-explained/"><img src="/en/articles/selection-sort-and-insertion-sort-explained/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Selection Sort and Insertion Sort: Two Simple Methods</span></a><a href="/en/articles/hash-tables-how-dictionaries-work/"><img src="/en/articles/hash-tables-how-dictionaries-work/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Hash Tables: How a Dictionary Is So Fast</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

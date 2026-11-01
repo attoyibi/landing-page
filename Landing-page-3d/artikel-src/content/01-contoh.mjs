@@ -110,6 +110,12 @@ export default [
             { ul: ['<b>Belajar.</b> Untuk memahami perulangan bersarang, penukaran, dan Big O.', '<b>Data sangat kecil</b> atau hampir urut, dengan penanda berhenti dini.', '<b>Tidak untuk produksi dengan data besar.</b> Bahasa pemrograman sudah menyediakan pengurutan yang jauh lebih cepat (<code>sorted()</code> di Python memakai Timsort).'] },
             { w: 'quiz', title: 'Kuis cepat', questions: [{ q: 'Setelah satu putaran penuh bubble sort pada data acak, apa yang pasti benar?', options: ['Semua data sudah urut', 'Angka terbesar sudah di ujung kanan', 'Angka terkecil sudah di ujung kiri'], answer: 1, why: 'Angka terbesar terus ditukar ke kanan sampai mentok di ujung.' }, { q: 'Jumlah data menjadi 10 kali lipat. Kira-kira pekerjaan bubble sort menjadi...', options: ['10 kali', '100 kali', '1000 kali'], answer: 1, why: 'O(n²): 10² = 100 kali.' }, { q: 'Apa gunanya penanda "ada_tukar"?', options: ['Menghitung jumlah data', 'Berhenti lebih awal ketika data sudah urut', 'Mengurutkan menurun'], answer: 1, why: 'Jika tidak ada penukaran dalam satu putaran, data pasti sudah urut.' }] },
         ],
+        takeaways: [
+            'Bandingkan dua angka bersebelahan, tukar bila urutannya salah, dan ulangi sampai tidak ada yang perlu ditukar.',
+            'Setelah satu putaran penuh, angka terbesar sudah berada di posisi akhirnya di ujung kanan, sehingga putaran berikutnya bisa melewatinya.',
+            'Dua perulangan bersarang membuatnya O(n²): data 10 kali lipat berarti kerja sekitar 100 kali lipat.',
+            'Bagus untuk belajar, tetapi di proyek nyata pakai pengurutan bawaan (sorted() di Python, Array.sort() di JavaScript).',
+        ],
         faq: [['Apa bedanya bubble sort dan selection sort?', 'Bubble sort menukar tetangga yang terbalik berulang kali. Selection sort mencari nilai terkecil di sisa data lalu menaruhnya di depan, sehingga penukarannya jauh lebih sedikit.'], ['Mengapa bubble sort dianggap lambat?', 'Karena O(n²): ia membandingkan hampir setiap pasangan data, dan melakukan banyak penukaran.'], ['Apakah bubble sort stabil?', 'Ya. Elemen dengan nilai sama tidak saling dilewati, sehingga urutan awalnya tetap terjaga.'], ['Mana algoritma pengurutan yang sebaiknya dipakai di proyek nyata?', 'Pakai fungsi bawaan bahasa Anda (misalnya sorted() di Python atau Array.sort() di JavaScript). Itu sudah dioptimalkan dan teruji.']],
     },
 

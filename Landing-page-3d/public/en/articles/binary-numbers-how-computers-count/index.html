@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Numbers: How Computers Store Numbers and Letters</title>
+<meta name="description" content="Why do computers use only 0 and 1? Learn how to read binary, convert it to decimal and how letters are stored, with an interactive bit simulation.">
+<meta name="keywords" content="binary numbers, bits and bytes, ASCII, computer basics, decimal">
+<meta name="author" content="Muhammad Muchson Attoyibi">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1e5ab2">
+<link rel="canonical" href="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/bilangan-biner-cara-komputer-menghitung/">
+<link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Muhammad Muchson">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="id_ID">
+<meta property="og:url" content="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/">
+<meta property="og:title" content="Binary Numbers: How Computers Store Numbers and Letters">
+<meta property="og:description" content="Why do computers use only 0 and 1? Learn how to read binary, convert it to decimal and how letters are stored, with an interactive bit simulation.">
+<meta property="og:image" content="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Binary Numbers: How Computers Store Numbers and Letters">
+<meta property="article:published_time" content="2026-10-23">
+<meta property="article:section" content="Coding &amp; Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Binary Numbers: How Computers Store Numbers and Letters">
+<meta name="twitter:description" content="Why do computers use only 0 and 1? Learn how to read binary, convert it to decimal and how letters are stored, with an interactive bit simulation.">
+<meta name="twitter:image" content="https://muchson.web.id/en/articles/binary-numbers-how-computers-count/cover.png">
+<meta name="cover" content="cover.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Binary Numbers: How Computers Store Numbers and Letters","description":"Why do computers use only 0 and 1? Learn how to read binary, convert it to decimal and how letters are stored, with an interactive bit simulation.","image":["https://muchson.web.id/en/articles/binary-numbers-how-computers-count/cover.png"],"datePublished":"2026-10-23","dateModified":"2026-10-23","inLanguage":"en","keywords":"binary numbers, bits and bytes, ASCII, computer basics, decimal","articleSection":"Coding & Algorithms","wordCount":302,"mainEntityOfPage":"https://muchson.web.id/en/articles/binary-numbers-how-computers-count/","author":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"},"publisher":{"@type":"Person","name":"Muhammad Muchson Attoyibi","url":"https://muchson.web.id/en/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://muchson.web.id/en/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://muchson.web.id/en/articles/"},{"@type":"ListItem","position":3,"name":"Binary Numbers: How Computers Store Numbers and Letters","item":"https://muchson.web.id/en/articles/binary-numbers-how-computers-count/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does a computer store fractions?","acceptedAnswer":{"@type":"Answer","text":"In floating-point format, which stores a number as a mantissa and an exponent. That is why 0.1 + 0.2 is sometimes not exactly 0.3."}},{"@type":"Question","name":"How are images stored?","acceptedAnswer":{"@type":"Answer","text":"As a collection of pixels, each holding numbers for its colour (red, green, blue)."}},{"@type":"Question","name":"Why is storage capacity counted in multiples of 1024?","acceptedAnswer":{"@type":"Answer","text":"Because of base two: 1 KiB = 1024 bytes. Manufacturers sometimes use 1000, so the figures differ."}}]}</script>
+<link rel="stylesheet" href="/artikel/_shared/article.css">
+</head>
+<body>
+<a class="skip" href="#isi">Skip to article content</a>
+<div class="bar" aria-hidden="true"><i></i></div>
+<header class="top"><div class="in"><a class="brand" href="/en/">Muhammad Muchson</a><nav aria-label="Main"><a href="/en/">Home</a><a href="/en/articles/">All articles</a><a class="langsw" href="/artikel/bilangan-biner-cara-komputer-menghitung/" lang="id" hreflang="id" aria-label="Baca artikel ini dalam Bahasa Indonesia">Bahasa Indonesia</a></nav></div></header>
+<div class="wrap">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ol><li><a href="#why-only-0-and-1">Why only 0 and 1?</a></li><li><a href="#how-do-you-read-it">How do you read it?</a></li><li><a href="#how-are-letters-stored">How are letters stored?</a></li><li><a href="#a-quick-exercise">A quick exercise</a></li><li><a href="#tanya-jawab">FAQ</a></li></ol></nav>
+<main id="isi" tabindex="-1">
+<article>
+<p class="crumb"><a href="/en/">Home</a> › <a href="/en/articles/">Articles</a> › <a href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a></p>
+<a class="cat" href="/en/articles/category/coding-algoritma/">Coding &amp; Algorithms</a>
+<h1>Binary Numbers: How Computers Store Numbers and Letters</h1>
+<p class="lead">Everything on a computer, from photos to WhatsApp messages, is in the end stored as a series of zeros and ones. That sounds scary, but the rules are simple and you can master them in a few minutes.</p>
+<div class="meta"><span>By Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">October 23, 2026</time><span aria-hidden="true">·</span><span>2 min read</span></div>
+
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Key takeaways</h2><ul><li>A bit is one binary digit and a byte is eight bits; eight bits can express 256 values, from 0 to 255.</li><li>Each bit position is worth a power of two (1, 2, 4, 8, 16, 32, 64, 128); add up the positions that hold a 1.</li><li>Letters are stored as numbers from a code table: "A" is 65 in ASCII, and Unicode covers thousands of characters including emoji.</li><li>Hexadecimal is a compact shorthand for binary (one hex digit is four bits), which is why colour codes look like #1E5AB2.</li></ul></aside>
+<figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
+<h2 id="why-only-0-and-1">Why only 0 and 1?</h2>
+<p>Electronic devices are most reliable at telling two states apart: current or no current, high or low voltage. Those two states are written as 1 and 0. A single binary digit is called a <b>bit</b>, and eight bits are called a <b>byte</b>.</p>
+<h2 id="how-do-you-read-it">How do you read it?</h2>
+<p>In decimal, each position is worth a multiple of 10 (ones, tens, hundreds). In binary, each position is worth a power of 2: 1, 2, 4, 8, 16, 32, 64, 128. Add up the values of the positions that hold a 1.</p>
+<div data-w="binary"><script type="application/json">{"title":"Change the bits, see the value","desc":"Tap a box to flip a bit. Watch the number and letter that appear."}</script></div>
+<figure class="diagram"><svg viewBox="0 0 640 336" role="img" aria-label="The value of each bit position in one byte" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><text x="160" y="29" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 1 (leftmost)</text><rect x="170" y="12" width="380" height="26" rx="6" fill="#1e5ab2"/><text x="558" y="30" font-size="13.5" font-weight="700" fill="#0f1a33">128</text><text x="160" y="69" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 2</text><rect x="170" y="52" width="190" height="26" rx="6" fill="#1f7a46"/><text x="368" y="70" font-size="13.5" font-weight="700" fill="#0f1a33">64</text><text x="160" y="109" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 3</text><rect x="170" y="92" width="95" height="26" rx="6" fill="#9a5b00"/><text x="273" y="110" font-size="13.5" font-weight="700" fill="#0f1a33">32</text><text x="160" y="149" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 4</text><rect x="170" y="132" width="47.5" height="26" rx="6" fill="#7a3fb4"/><text x="225.5" y="150" font-size="13.5" font-weight="700" fill="#0f1a33">16</text><text x="160" y="189" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 5</text><rect x="170" y="172" width="23.75" height="26" rx="6" fill="#b3261e"/><text x="201.75" y="190" font-size="13.5" font-weight="700" fill="#0f1a33">8</text><text x="160" y="229" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 6</text><rect x="170" y="212" width="11.875" height="26" rx="6" fill="#0b7285"/><text x="189.875" y="230" font-size="13.5" font-weight="700" fill="#0f1a33">4</text><text x="160" y="269" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 7</text><rect x="170" y="252" width="5.9375" height="26" rx="6" fill="#1e5ab2"/><text x="183.9375" y="270" font-size="13.5" font-weight="700" fill="#0f1a33">2</text><text x="160" y="309" text-anchor="end" font-size="13.5" fill="#0f1a33">Bit 8</text><rect x="170" y="292" width="3" height="26" rx="6" fill="#1f7a46"/><text x="181" y="310" font-size="13.5" font-weight="700" fill="#0f1a33">1</text></svg><figcaption><b>Figure 1.</b> Eight bits can express 256 values, from 0 to 255.</figcaption><details class="textalt"><summary>Text description of the diagram</summary><ul><li>Bit 1 (leftmost): 128</li><li>Bit 2: 64</li><li>Bit 3: 32</li><li>Bit 4: 16</li><li>Bit 5: 8</li><li>Bit 6: 4</li><li>Bit 7: 2</li><li>Bit 8: 1</li></ul></details></figure>
+<h2 id="how-are-letters-stored">How are letters stored?</h2>
+<p>Letters are given numbers from a code table. In ASCII, the letter "A" is number 65, which is 01000001 in binary, and "a" is number 97. Modern tables such as Unicode cover thousands of characters, including non-Latin letters and emoji, using more than one byte per character.</p>
+<div class="table-wrap"><table><caption class="sr-only">Table 1: How are letters stored?</caption><thead><tr><th scope="col">Character</th><th scope="col">Number (decimal)</th><th scope="col">Binary (8 bits)</th></tr></thead><tbody><tr><td>A</td><td>65</td><td>01000001</td></tr><tr><td>B</td><td>66</td><td>01000010</td></tr><tr><td>a</td><td>97</td><td>01100001</td></tr><tr><td>0</td><td>48</td><td>00110000</td></tr></tbody></table></div>
+<h2 id="a-quick-exercise">A quick exercise</h2>
+<div data-w="quiz"><script type="application/json">{"title":"Quick quiz","questions":[{"q":"What is the value of the binary 00000101?","options":["3","5","10"],"answer":1,"why":"4 + 1 = 5."},{"q":"How many different values can 8 bits express?","options":["8","128","256"],"answer":2,"why":"2 to the power of 8 = 256."},{"q":"One byte consists of...","options":["4 bits","8 bits","16 bits"],"answer":1,"why":"One byte = 8 bits."}]}</script></div>
+<div class="callout info" role="note"><b>The link to colour codes</b><p>Hexadecimal (base 16) is often used as a more compact shorthand for binary: one hex digit stands for four bits. That is why colour codes look like #1E5AB2.</p></div>
+<h2 id="tanya-jawab">FAQ</h2>
+<details class="faq"><summary>How does a computer store fractions?</summary><div>In floating-point format, which stores a number as a mantissa and an exponent. That is why 0.1 + 0.2 is sometimes not exactly 0.3.</div></details>
+<details class="faq"><summary>How are images stored?</summary><div>As a collection of pixels, each holding numbers for its colour (red, green, blue).</div></details>
+<details class="faq"><summary>Why is storage capacity counted in multiples of 1024?</summary><div>Because of base two: 1 KiB = 1024 bytes. Manufacturers sometimes use 1000, so the figures differ.</div></details>
+
+
+<div class="share"><b>Share:</b><button class="btn ghost" type="button" data-share="wa">WhatsApp</button><button class="btn ghost" type="button" data-share="x">X</button><button class="btn ghost" type="button" data-share="copy">Copy link</button></div>
+<div class="author"><div><b>Muhammad Muchson Attoyibi</b>Software engineer and academic trainer based in Malang, Indonesia. Writes about technology, learning, and practical everyday topics. <a href="/en/">About me</a></div></div>
+<section class="related" aria-labelledby="baca-juga"><h2 id="baca-juga" style="font-size:22px">Read next</h2><div class="rel"><a href="/en/articles/what-is-an-api/"><img src="/en/articles/what-is-an-api/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>What Is an API? A Simple Restaurant Analogy</span></a><a href="/en/articles/bubble-sort-explained-visually/"><img src="/en/articles/bubble-sort-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Bubble Sort Explained Visually: How It Works, Python Code</span></a><a href="/en/articles/binary-search-explained-visually/"><img src="/en/articles/binary-search-explained-visually/cover.svg" width="1200" height="630" alt="" loading="lazy"><span>Binary Search Explained Visually: Search by Halving</span></a></div></section>
+</article>
+</main>
+</div>
+<footer class="foot">© 2026 Muhammad Muchson Attoyibi · <a href="/en/">Home</a> · <a href="/en/articles/">Articles</a></footer>
+<script src="/artikel/_shared/i18n-en.js" defer></script>
+<script src="/artikel/_shared/i18n-en-widgets.js" defer></script>
+<script src="/artikel/_shared/article.js" defer></script>
+</body>
+</html>

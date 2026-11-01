@@ -10,10 +10,14 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#1e5ab2">
 <link rel="canonical" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/">
+<link rel="alternate" hreflang="id" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/">
+<link rel="alternate" hreflang="en" href="https://muchson.web.id/en/articles/react-for-beginners-components-props-state/">
+<link rel="alternate" hreflang="x-default" href="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/">
 <link rel="icon" type="image/jpeg" href="/mp-logo.jpeg">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Muhammad Muchson">
 <meta property="og:locale" content="id_ID">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://muchson.web.id/artikel/react-untuk-pemula-komponen-props-dan-state/">
 <meta property="og:title" content="React untuk Pemula: Komponen, Props, dan State dengan Contoh">
 <meta property="og:description" content="Pahami tiga konsep inti React: komponen, props, dan state. Dengan analogi sederhana, contoh kode kecil, dan kebiasaan yang membuat belajar React lebih lancar.">
@@ -36,7 +40,7 @@
 <body>
 <a class="skip" href="#isi">Lewati ke isi artikel</a>
 <div class="bar" aria-hidden="true"><i></i></div>
-<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a></nav></div></header>
+<header class="top"><div class="in"><a class="brand" href="/">Muhammad Muchson</a><nav aria-label="Utama"><a href="/">Beranda</a><a href="/artikel/">Semua artikel</a><a class="langsw" href="/en/articles/react-for-beginners-components-props-state/" lang="en" hreflang="en" aria-label="Read this article in English">English</a></nav></div></header>
 <div class="wrap">
 <nav class="toc" aria-label="Daftar isi"><strong>Daftar isi</strong><ol><li><a href="#tiga-konsep-inti">Tiga konsep inti</a></li><li><a href="#contoh-paling-kecil">Contoh paling kecil</a></li><li><a href="#kesalahan-umum-pemula">Kesalahan umum pemula</a></li><li><a href="#tanya-jawab">Tanya jawab</a></li></ol></nav>
 <main id="isi" tabindex="-1">
@@ -47,7 +51,7 @@
 <p class="lead">React membangun antarmuka dari potongan kecil yang bisa dipakai ulang. Bila Anda menguasai tiga ide, komponen, props, dan state, sebagian besar kode React akan terbaca masuk akal. Sisanya adalah variasi.</p>
 <div class="meta"><span>Oleh Muhammad Muchson Attoyibi</span><span aria-hidden="true">·</span><time datetime="2026-10-23">23 Oktober 2026</time><span aria-hidden="true">·</span><span>1 menit baca</span></div>
 
-
+<aside class="takeaways" aria-labelledby="intisari"><h2 id="intisari">Intisari</h2><ul><li>Komponen adalah potongan UI yang bisa dipakai ulang; props adalah data hanya-baca dari induk ke anak; state adalah data milik komponen yang bisa berubah dan memicu tampilan ulang.</li><li>Anda tidak mengubah halaman secara manual; Anda mengubah data, dan tampilan mengikuti.</li><li>Selalu ubah state lewat fungsi setter, beri item daftar key yang unik dan stabil, dan jaga komponen tetap kecil.</li><li>Pelajari JavaScript dulu, lalu komponen dan JSX, props dan state, event, daftar, pengambilan data API dengan useEffect, dan pemecahan aplikasi.</li></ul></aside>
 <figure class="cover"><img src="cover.svg" width="1200" height="630" alt="" fetchpriority="high" decoding="async"></figure>
 <h2 id="tiga-konsep-inti">Tiga konsep inti</h2>
 <figure class="diagram"><svg viewBox="0 0 560 184" role="img" aria-label="Tiga konsep inti React" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif"><rect x="20" y="8" width="520" height="48" rx="10" fill="#e8f1ff" stroke="#1e5ab2" stroke-width="2"/><text x="280" y="29" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Komponen</text><text x="280" y="47" text-anchor="middle" font-size="12" fill="#4a5568">Potongan UI yang bisa dipakai ulang (tombol, kartu, formulir)</text><rect x="34" y="64" width="492" height="48" rx="10" fill="#e4f6cc" stroke="#1f7a46" stroke-width="2"/><text x="280" y="85" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">Props</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="#4a5568">Data yang dikirim dari induk ke komponen anak (hanya baca)</text><rect x="48" y="120" width="464" height="48" rx="10" fill="#fff1d6" stroke="#9a5b00" stroke-width="2"/><text x="280" y="141" text-anchor="middle" font-size="14.5" font-weight="700" fill="#0f1a33">State</text><text x="280" y="159" text-anchor="middle" font-size="12" fill="#4a5568">Data milik komponen yang bisa berubah dan memicu tampilan ulang</text></svg><figcaption><b>Gambar 1.</b> Komponen adalah fungsi: menerima props, menyimpan state, dan mengembalikan tampilan.</figcaption><details class="textalt"><summary>Deskripsi teks diagram</summary><ol><li>Komponen: Potongan UI yang bisa dipakai ulang (tombol, kartu, formulir)</li><li>Props: Data yang dikirim dari induk ke komponen anak (hanya baca)</li><li>State: Data milik komponen yang bisa berubah dan memicu tampilan ulang</li></ol></details></figure>
