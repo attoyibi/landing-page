@@ -8,9 +8,9 @@
     "build": "vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predev": "node scripts/build-articles.mjs && node scripts/build-profile.mjs",
-    "prebuild": "node scripts/build-articles.mjs && node scripts/build-profile.mjs",
-    "artikel": "node artikel-src/build.mjs && node scripts/build-articles.mjs && node scripts/build-profile.mjs",
+    "predev": "node scripts/build-articles.mjs && node scripts/build-profile.mjs && node scripts/build-services.mjs",
+    "prebuild": "node scripts/build-articles.mjs && node scripts/build-profile.mjs && node scripts/build-services.mjs",
+    "artikel": "node artikel-src/build.mjs && node scripts/build-articles.mjs && node scripts/build-profile.mjs && node scripts/build-services.mjs",
     "a11y": "node scripts/a11y-audit.mjs",
     "artikel:lint": "node artikel-src/lint.mjs"
   },

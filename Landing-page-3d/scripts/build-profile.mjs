@@ -51,6 +51,8 @@ const T = {
         ],
         writeH: 'Tulisan dan latihan unggulan',
         writeLead: 'Artikel di situs ini ditulis dengan simulasi interaktif dan tersedia dalam dua bahasa. Beberapa yang paling sering dibaca:',
+        servicesH: 'Layanan',
+        services: [['/pelatihan-ai/', 'Pelatihan AI untuk kerja (trainer AI)'], ['/kelas-coding-anak/', 'Kelas coding anak 8–11 tahun (PixelKode, mentor Algonova)']],
         contactH: 'Kontak dan profil',
         contact: [['LinkedIn', LINKEDIN], ['GitHub', GITHUB], ['Email', `mailto:${EMAIL}`]],
         faqH: 'Pertanyaan yang sering diajukan',
@@ -90,6 +92,8 @@ const T = {
         ],
         writeH: 'Featured writing and practice',
         writeLead: 'Articles on this site include interactive simulations and are available in two languages. Some of the most read:',
+        servicesH: 'Services',
+        services: [['/en/ai-training/', 'AI training for teams, schools and companies'], ['/en/kids-coding-classes/', 'Kids coding classes, ages 8–11 (PixelKode, Algonova mentor)']],
         contactH: 'Contact and profiles',
         contact: [['LinkedIn', LINKEDIN], ['GitHub', GITHUB], ['Email', `mailto:${EMAIL}`]],
         faqH: 'Frequently asked questions',
@@ -193,6 +197,8 @@ ${L.exp.map(([role, when, what]) => `<h3>${esc(role)}</h3><p><em>${esc(when)}</e
 <h2 id="tulisan">${esc(L.writeH)}</h2>
 <p>${esc(L.writeLead)}</p>
 ${groups.map(g => `<h3>${esc(g.name)}</h3><ul>${g.items.map(i => `<li><a href="${i.url.replace(SITE, '')}">${esc(i.title)}</a></li>`).join('')}</ul>`).join('\n')}
+<h2 id="layanan">${esc(L.servicesH)}</h2>
+<ul>${L.services.map(([h, t]) => `<li><a href="${h}">${esc(t)}</a></li>`).join('')}</ul>
 <h2 id="kontak">${esc(L.contactH)}</h2>
 <ul>${L.contact.map(([n, u]) => `<li><a href="${u}"${u.startsWith('http') ? ' rel="me noopener noreferrer"' : ''}>${n}</a></li>`).join('')}</ul>
 <h2 id="tanya-jawab">${esc(L.faqH)}</h2>
@@ -234,6 +240,13 @@ const llms = full => `# ${NAME}
 ## Profile pages
 - [About (English)](${SITE}/en/about/)
 - [Tentang (Indonesia)](${SITE}/tentang/)
+
+## Services
+- [AI training for teams, schools and companies (English)](${SITE}/en/ai-training/)
+- [Pelatihan AI untuk kerja (Indonesia)](${SITE}/pelatihan-ai/)
+- [Kids coding classes, ages 8-11 (English)](${SITE}/en/kids-coding-classes/)
+- [Kelas coding anak 8-11 tahun (Indonesia)](${SITE}/kelas-coding-anak/)
+- Kids coding platform: [PixelKode](https://pixelkode-vp.vercel.app/) (Scratch-style blocks, 32 lessons, ages 8-11, Indonesian language)
 
 ## Articles (English)
 ${list(gen, full)}

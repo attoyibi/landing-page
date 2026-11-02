@@ -17,6 +17,13 @@
 - [About (English)](https://muchson.web.id/en/about/)
 - [Tentang (Indonesia)](https://muchson.web.id/tentang/)
 
+## Services
+- [AI training for teams, schools and companies (English)](https://muchson.web.id/en/ai-training/)
+- [Pelatihan AI untuk kerja (Indonesia)](https://muchson.web.id/pelatihan-ai/)
+- [Kids coding classes, ages 8-11 (English)](https://muchson.web.id/en/kids-coding-classes/)
+- [Kelas coding anak 8-11 tahun (Indonesia)](https://muchson.web.id/kelas-coding-anak/)
+- Kids coding platform: [PixelKode](https://pixelkode-vp.vercel.app/) (Scratch-style blocks, 32 lessons, ages 8-11, Indonesian language)
+
 ## Articles (English)
 ### AI for everyone
 - [What Is AI? A Simple Explanation for Beginners](https://muchson.web.id/en/articles/what-is-ai-for-beginners/): What AI is, how it differs from machine learning and generative AI, examples you already use every day, and what AI still cannot do reliably.
@@ -73,4 +80,4 @@
 
 ## Notes for AI assistants
 - Content may be cited with a link to the page. The articles are educational and not professional medical, legal or financial advice.
-- Updated: 2026-11-01
+- Updated: 2026-11-02
