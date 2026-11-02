@@ -49,8 +49,10 @@ const About = () => {
                         <Card key={feature.icon} title={tx(feature.title)} description={tx(feature.description)} icon={feature.icon} index={index} />
                     ))}
                 </div>
-                <p className="mt-8">
+                <p className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
                     <a className="text-brand-600 font-semibold underline underline-offset-4" href={t('about.profilePath')}>{t('about.profile')} →</a>
+                    <a className="text-brand-600 font-semibold underline underline-offset-4" href={t('about.aiPath')}>{t('about.ai')} →</a>
+                    <a className="text-brand-600 font-semibold underline underline-offset-4" href={t('about.kidsPath')}>{t('about.kids')} →</a>
                 </p>
             </div>
         </section>

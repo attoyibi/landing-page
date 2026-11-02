@@ -14,7 +14,7 @@ export const UI = {
         a11y: { skip: 'Lewati ke konten utama', mainNav: 'Navigasi utama', language: 'Bahasa', switchTo: 'Ganti bahasa ke Inggris', newTab: '(membuka tab baru)' },
         nav: { about: 'Tentang', teaching: 'Mengajar', articles: 'Artikel', work: 'Karya', contact: 'Kontak' },
         hero: { greeting: 'Halo, saya', viewWork: 'Lihat karya', collaborate: 'Ayo berkolaborasi', skills: 'Keahlian' },
-        about: { eyebrow: 'Tentang', title: 'Tentang *saya*', profile: 'Baca profil lengkap', profilePath: '/tentang/' },
+        about: { eyebrow: 'Tentang', title: 'Tentang *saya*', profile: 'Baca profil lengkap', profilePath: '/tentang/', ai: 'Pelatihan AI', aiPath: '/pelatihan-ai/', kids: 'Kelas coding anak', kidsPath: '/kelas-coding-anak/' },
         teaching: {
             eyebrow: 'Mengajar',
             title: 'Website *belajar*',
@@ -71,7 +71,7 @@ export const UI = {
         a11y: { skip: 'Skip to main content', mainNav: 'Main navigation', language: 'Language', switchTo: 'Switch language to Indonesian', newTab: '(opens in a new tab)' },
         nav: { about: 'About', teaching: 'Teaching', articles: 'Articles', work: 'Work', contact: 'Contact' },
         hero: { greeting: "Hi, I'm", viewWork: 'View work', collaborate: "Let's collaborate", skills: 'Skills' },
-        about: { eyebrow: 'About', title: 'About *me*', profile: 'Read the full profile', profilePath: '/en/about/' },
+        about: { eyebrow: 'About', title: 'About *me*', profile: 'Read the full profile', profilePath: '/en/about/', ai: 'AI training', aiPath: '/en/ai-training/', kids: 'Kids coding classes', kidsPath: '/en/kids-coding-classes/' },
         teaching: {
             eyebrow: 'Teaching',
             title: 'Learning *websites*',
