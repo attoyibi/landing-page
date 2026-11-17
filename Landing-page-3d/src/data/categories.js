@@ -17,6 +17,7 @@ export const CATEGORY_EN = {
     'Otomasi & AI Kerja': 'Automation & AI at Work',
     'Desain Pembelajaran': 'Learning Design',
     'UX & Green IT': 'UX & Green IT',
+    'CPNS & Seleksi ASN': 'Civil Service (CPNS) Exams',
 };
 
 export const categoryLabel = (category, lang) => (lang === 'en' ? CATEGORY_EN[category] ?? category : category);
