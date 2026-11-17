@@ -255,4 +255,9 @@ export const ARTICLES = [
     'webhook-n8n-menerima-data-dari-form-dan-aplikasi-lain',
     'n8n-google-sheets-otomasi-pencatatan-dan-laporan-otomatis',
     'whatsapp-otomatis-dengan-n8n-notifikasi-dan-chatbot-sederhana',
+    'perbedaan-skd-dan-skb-cpns-bobot-materi-dan-urutan',
+    'alur-seleksi-cpns-dari-pelamaran-sampai-nip-dan-pns',
+    'penyebab-gugur-administrasi-cpns-dan-cara-menghindarinya',
+    'gaji-dan-tunjangan-cpns-pns-per-golongan-pp-5-2024',
+    'waspada-penipuan-cpns-calo-jalur-dalam-dan-situs-palsu',
 ];

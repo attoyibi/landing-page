@@ -3,6 +3,7 @@
 // generated files in public/artikel/<slug>/.
 
 import { diagram } from './diagram.mjs';
+import { lolos } from './lolos.mjs';
 import { runPython, runJava, runNode, runDart, tracePython } from './runner.mjs';
 import { safe, sanitizeBlock } from './sanitize.mjs';
 
@@ -312,6 +313,9 @@ export function cta(a, lang = 'id') {
     const L = STR[lang];
     if (a.cta === 'lensara' && lang === 'id') {
         return `<aside class="cta" data-promo><span class="tag" data-p="tag">Info toko Lensara</span><h2 data-p="title">Promo sekarang: cukup Rp100.000</h2><p data-p="text">Lensara adalah optik di Madiun yang melayani konsultasi, pilihan frame, dan lensa minus, silinder, sampai blue light. Tanyakan kebutuhan mata Anda, lalu ambil promo yang sedang berjalan.</p><a class="btn" data-p="link" href="${STORE}" target="_blank" rel="noopener noreferrer">Lihat koleksi dan promo<span class="sr-only"> (${L.newTab})</span></a><small data-p="terms">Syarat dan ketentuan berlaku. Cek rincian promo, ketersediaan, dan produk yang ikut promo di toko sebelum memesan.</small></aside>`;
+    }
+    if (a.cta === 'lolosseleksi' && lang === 'id') {
+        return `<aside class="cta plain"><span class="tag">Latihan gratis</span><h2>Coba tryout SKD gratis di LolosSeleksi</h2><p>LolosSeleksi adalah situs latihan CPNS yang dikembangkan oleh penulis. Paket tryout SKD pertama gratis (110 soal, 100 menit, dinilai di server) lengkap dengan rapor PDF, ditambah 1.740 soal latihan per bab berpembahasan dan latihan harian. Soalnya disusun sendiri, bukan bocoran, dan situs ini bukan bagian dari BKN atau KemenPANRB. Paket berbayar bersifat opsional.</p><p><a class="btn" href="${lolos('/simulasi', a.slug)}" rel="noopener">Coba tryout gratis</a> <a class="btn ghost" href="${lolos('/latihan', a.slug)}" rel="noopener">Latihan per bab</a></p></aside>`;
     }
     if (a.cta === 'jasa' || (a.cta === 'lensara' && lang === 'en')) {
         return `<aside class="cta plain"><span class="tag">${L.helpTag}</span><h2>${L.helpTitle}</h2><p>${L.helpText}</p><a class="btn" href="${lang === 'en' ? '/en/#contact' : '/#contact'}">${L.helpButton}</a></aside>`;
