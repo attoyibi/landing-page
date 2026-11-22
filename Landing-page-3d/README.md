@@ -217,7 +217,7 @@ Setelah deploy, daftarkan `https://muchson.web.id/sitemap.xml` di Google Search 
 
 ## Bagian lain situs
 
-- **Teaching**: kartu materi di `src/data/teaching.js`. Kursus AION "Digital Learning" membuka `https://aion-dl.vercel.app/day/1/` sampai `/day/16/` di dalam situs.
+- **Teaching**: kartu materi di `src/data/teaching.js`. Kursus AION "Digital Learning" membuka `https://aion-dl.vercel.app/day/1/` sampai `/day/16/` di dalam situs; kursus "Database" membuka `https://aion-db-lab.vercel.app/day/1/` sampai `/day/16/` dengan cara yang sama.
 - **Latihan Python**: ditampilkan di `#/latihan` lewat iframe.
 - **Cloudflare**: `wrangler.jsonc` memberi tahu Workers Builds untuk mengunggah folder `dist`.
 
