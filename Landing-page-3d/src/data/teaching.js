@@ -40,8 +40,8 @@ export const MATERIALS = [
         audience: { id: 'Pelatihan korporat', en: 'Corporate training' },
         title: { id: 'Materi ajar, playground, dan tugas untuk AION', en: 'Teaching materials, playgrounds and tasks for AION' },
         description: {
-            id: 'Saya membantu AION membangun pembelajaran korporat untuk peserta di Jerman: materi belajar, playground interaktif, dan tugas dengan dokumen kerja yang bisa diekspor. Empat kursus sudah terbit, masing-masing satu playground per hari kursus.',
-            en: 'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Four courses are published, one playground per course day.',
+            id: 'Saya membantu AION membangun pembelajaran korporat untuk peserta di Jerman: materi belajar, playground interaktif, dan tugas dengan dokumen kerja yang bisa diekspor. Lima kursus sudah terbit, masing-masing satu playground per hari kursus.',
+            en: 'I help AION build corporate learning for German learners: study material, interactive playgrounds and tasks with exportable working documents. Five courses are published, one playground per course day.',
         },
         meta: { id: 'Bahasa Inggris dan Jerman', en: 'English and German' },
         tint: true,
@@ -114,6 +114,12 @@ export const MATERIALS = [
                 id: 'digital-learning',
                 title: { id: 'Pembelajaran Digital', en: 'Digital Learning' },
                 playgrounds: Array.from({ length: 16 }, (_, i) => [`Day ${i + 1}`, `https://aion-dl.vercel.app/day/${i + 1}/`]),
+            },
+            {
+                // One website (aion-db-lab.vercel.app) with a route per day: /day/1/ ... /day/16/
+                id: 'database',
+                title: { id: 'Database · Database Lab', en: 'Database · Database Lab' },
+                playgrounds: Array.from({ length: 16 }, (_, i) => [`Day ${i + 1}`, `https://aion-db-lab.vercel.app/day/${i + 1}/`]),
             },
         ],
     },
